@@ -1,0 +1,90 @@
+Ilyen színnel a mai (2012.03.06) megbeszélés döntései. 
+
+Sziasztok!
+ 
+Itt mellékelem az összeírt funkciókat, melyek a konkurencia webáruházait megnéve min kell, hogy utolérjük õket.
+Zsolt, ami ker döntés azt beszéld végig a kervezetõkkel, hogy hogyan szeretnétek. Peti, Attila a többit illeszétek be a megcsinálandó feladatok közé.
+Zsolt, mihelyst megvan a döntés a te soraidról, jelezz vissza, és a fiúk azt is beillesztik a megcsinálandók közé.
+Attila amikhez Ax fejelsztés kell, azokat küld vissza, hogy mit kell hozzájuk fejlesztetnem.
+ 
+1., Hírek ,mint külön funkció megvalósítása
+2., a gyártó listábqan az új gyártó meg legyen jelölve
+3., a tesztek a cikkhez kapcsolva linkként elérhetõek.
+4., Események a bejelentkezett oldalra regisztrációval, esetleg végén letöltésssel
+5., a szolgáltatásokat marketing nagyon rövid egyértelmû átfogalmazása. (Kint,bent)
+6., devizás eladási ár lehetõsége
+7., garancia a részletes jellemzõkhöz szûrhetõen.
+8., Szállítási infó a sorra, eldönteni milyen formában.  ha úton van -  a visszaigazolt dátum+3 napot kell megjeleníteni/ ha rendelésre – a várható szállítási idõt napokban – ez így ok, + minél pontosabb infó kell, amit rendelünk pl. Dell esetében is jó lenne láttatni, és nem csak a beérkezés elõtt pár nappal feltölteni.
+ 
+Döntés: a dátum így íródik: x napon/héten belül. Amikora már rendelés van rá, akkor: Érkezik várhatóan: x napon belül. Ha nincs még rá rendelés, akkor Várható szállítási idõ: x hét (csak akkor írjuk ki, hogy érkezik, ha van belõle szabad) (legkisebb: 1-3 nap felirat)
+ 
+9., a kereskedõ gyos elérée (lync, email ) a kereskedõhöz. – támogatom, ha a kereskedõ „available”, akkor jelenjen meg a chat lehetõsége.
+ 
+Döntés:  Ha a lync tud webes beépíthetõ felületet, akkor az.  A helyettesítés kérdését meg kell oldani! (ha õ elérhetõ azt írjuk ki, ha nem akkor az ügyfélszolgálatot) (elsõ üzenet entere elõtt leellenõrizni, hogy elérhetõ-e Gyuri.)
+ 
+10, cikk részletes adatlapja új lapon
+11.,  xls árlistra egybõl a szûrésrõl.
+12., kosár feladásnál minden legyen megadható: száll  cím, stb..
+13., ker vezetõk eldöntik pl atut30 vevõ KP fizfeltételt választ, akkor kapjon-e x% kedvezmányt. – legyen ilyen lehetõség csak készpénzre, beállítható 30 napra mennyi a kedvezmény. A többi átut napot arányosan számolja. Az ajánlatnál kiírja, hogy ez most ennyi, de ha kp fizetsz, akkor ennyi (tehát nem % jelenik meg)
+ 
+Döntés:  elõreutalásosnál legyen ez a kedvezmény.
+ 
+14., felhasználói beállítások "felhasználóbarát" kezelése, miont pl chs
+15., cikklista képekkel gombot csinálni
+16., kijelentkezve a jelszó mellé a regisztráció és az elfelejtett jelszó. Bejeletkezve mellé a jelszó módosíatás és a hírlevél módosítás
+17., a csak írásos megrendelésre (nem lemondható) cikkek jelölve legyenek? azt a felvetést támogatom, hogy ilyen „csak rendelésre hozott” termék esetében az aut. törlés pipa lehetõség eleve ne legyen benne és a törlést is csak TM engedéllyel lehessen megtenni.
++ még akkor egy felvetés/kérdés, hogy ha a vevõ ilyen terméket tesz bele a kosarába, akkor neki ott el kell fogadnia valamilyen feltételt, hogy ha nem viszi el akkor lemondási díjat számolunk vagy ilyesmi?
+ 
+Döntés: a termék legyen jelölve, hogy kötelezõ érvényû rendelés! Jogi háttér: A weben ezt a termék listájában megjelenítjük. Az ÁSZF-ben lerögzítjük.
+ 
+18..gyorsrendelés és fájlból importálás a kosárba.
+19., Korábban vásárolt termékek listája, hogy újra vásárloshassa 
+20., az xml gateway-t akarjuk-e reklámozni? – Tamással egyeztessük! a szubok szerintem egybõl jelentkezni fognak, utána meg persze nehéz kimagyarázni ha mégsem adunk nekik. szerintem nem (VZs)
+ 
+Elkérni aki adja attól. Döntés: xml gateway igénylõ lap.  Részleteket késõbb meghatározzuk.
+ 
+21., weben lehessen valamit módosítani a nyitott rendeléseken? Pl: szállítási feltétel, tétel törlés, db szám – lehessen, de törlés nincs, és a darabszám módosítást sem támogatom, max. új tételként plusszolhasson. a kiszállítás kérése, kiszállítási cím megadása, hivatkozási szám beírása/módosítása kell mindenképp.
+ 
+Döntés: lehessen a nem köt érvényû rendelést törölni. Errõl értesítõ a kapcsolattartónak.   Darabszámmódosítás.  Vevõ rendelés száma.  Szállítási dátum:  akkor  állítható, ha minden raktáron van. Ekkor fix idõszak pl naptárból holnap és +1 hét között.
+ 
+ 
+21.a Legyen-e több kosár? – LEGYEN
+ 
+Legyen.
+ 
+22.,a kompatibilis termékeket érdemes-e jelölni, hogy ez toner, hogy lehessen rá építeni toner keresõt? – igen, ahogy a kapcsolódó termékek jelölése is kell
+ 
+Döntés: Vászon, patron, lámpa, toner struktúra alapján.
+ 
+23., rendelés menete varázsló
+24: számlakeresõ a bennel lévõ adatokra, cikkszám, rendelési szám, sorozatszám
+25., a jelleg találat mellé kiírni a találati darabszámot.
+26., A szám típusú részletes technikai adatoknál elõtt kiválaszthatom, hogy: <=, =, >=
+27., megjegyzi az ucsó 5 böngészési helyet.
+28., Minden mellet van kis ? Ami rövid magyarázatot mond róla, ez felhasználó barát!
+29., ajánlott termékek mik legyenekl elöl a listában. Ezt hogy kezeljük, tartjuk karban? – szerintem ez TM feladat. mindenképp a fókuszban lévõ termékek, a koros termékek és az épp akcióban lévõk közül választanék  A legkorosabb akciósak legyenek elöl 
+ 
+Döntés: akciós elöl, azon belül az öregebb. Utána öregség szerint a nem akciós. 
+A legelsõ szûrés nélkülinél  akciós jelleg1. Ahol jelleg1 paramáterben állítható, elsõre notebook.
+ 
+ 
+30, Legyen végfelhasználói árajánlatadó a kosár alapján – igen, ez plusz szolgáltatásként jó ötlet. 
+ 
+Döntés: Ok, és kössük össze a finance-val.
+ 
+ 
+31., 2. ütem licence konfigurátor.
+32.,A mostani megálmodott részletes jellemzõinket el kell látni sorrenddel, hogy úgy jelenjenek meg a weben és ax-ban.
+ 
+33., Finance a weben hogy jelenjen meg:
+Kosárba mindenképpen.  A bérleti idõszak állítható.
+
+
+Verebélyi József 
+Operatív Igazgató 
+HRP Hungary Kft. 
+1133 Budapest Vésõ utca 7. 
+Tel: 06-1-452-4627 
+Fax: 06-1-350-1351 
+jverebelyi@hrp.hu
+

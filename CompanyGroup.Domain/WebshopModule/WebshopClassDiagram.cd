@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="CompanyGroup.Domain.WebshopModule.Category" Collapsed="true">
+    <Position X="0.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Manufacturer" Collapsed="true">
+    <Position X="4.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\Manufacturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Structure" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\Structure.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Structures" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\Structure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.StructureFactory" Collapsed="true">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\StructureFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.History" Collapsed="true">
+    <Position X="2.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAEAAAAAAAAAAABCAAAAAAAAAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\History.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Permission" Collapsed="true">
+    <Position X="6.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\Permission.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Profile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAABAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\Profile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.RequestParameter" Collapsed="true">
+    <Position X="2.25" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\RequestParameter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyGroup.Domain.WebshopModule.Visitor" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEACAAAAACBAAIAAAAAAgAAAAABAAAAAAAAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\Visitor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="CompanyGroup.Domain.WebshopModule.IStructureRepository" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>WebshopModule\StructureAggregates\IStructureRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="LoginType" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAEAAAA=</HashCode>
+      <FileName>WebshopModule\ProfileAggregates\LoginType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

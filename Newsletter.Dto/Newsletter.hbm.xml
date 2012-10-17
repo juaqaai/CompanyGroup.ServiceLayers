@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.GetNewsletterSendOut" callable="true">
+    <return-scalar column="HeaderId" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    <return-scalar column="NewsletterId" type="System.String"/>
+    <return-scalar column="SenderName" type="System.String"/>
+    <return-scalar column="SenderEmail" type="System.String"/>
+    <return-scalar column="DecodingId" type="System.Int32"/>
+    <return-scalar column="HtmlPath" type="System.String"/>
+    <return-scalar column="Subject" type="System.String"/>
+    exec InternetUser.GetNewsletterSendOut  
+  </sql-query>
+</hibernate-mapping>

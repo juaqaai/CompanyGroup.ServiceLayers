@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_NewsletterList" callable="true">
+    <query-param name="TopN" type="System.Int32"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="BusinessUnitId" type="System.String"/>
+    <query-param name="ManufacturerId" type="System.String"/>
+    <return-scalar column="Id" type="System.String"/>
+    <return-scalar column="Title" type="System.String"/>
+    <return-scalar column="Description" type="System.String"/>
+    <return-scalar column="HtmlPath" type="System.String"/>
+    <return-scalar column="EndDate" type="System.DateTime"/>
+    <return-scalar column="PicturePath" type="System.String"/>
+    <return-scalar column="AllowedDate" type="System.DateTime"/>
+    <return-scalar column="AllowedTime" type="System.Int32"/>
+    exec InternetUser.cms_NewsletterList @TopN=:TopN, @DataAreaId=:DataAreaId, @BusinessUnitId=:BusinessUnitId, @ManufacturerId=:ManufacturerId
+  </sql-query>
+</hibernate-mapping>

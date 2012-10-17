@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsContainer" targetNamespace="http://tempuri.org/dsContainer.xsd" xmlns:mstns="http://tempuri.org/dsContainer.xsd" xmlns="http://tempuri.org/dsContainer.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsContainer" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsContainer" msprop:Generator_DataSetName="dsContainer" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ContainerItems" msprop:Generator_UserTableName="ContainerItems" msprop:Generator_RowDeletedName="ContainerItemsRowDeleted" msprop:Generator_RowChangedName="ContainerItemsRowChanged" msprop:Generator_RowClassName="ContainerItemsRow" msprop:Generator_RowChangingName="ContainerItemsRowChanging" msprop:Generator_RowEvArgName="ContainerItemsRowChangeEvent" msprop:Generator_RowEvHandlerName="ContainerItemsRowChangeEventHandler" msprop:Generator_TableClassName="ContainerItemsDataTable" msprop:Generator_TableVarName="tableContainerItems" msprop:Generator_RowDeletingName="ContainerItemsRowDeleting" msprop:Generator_TablePropName="ContainerItems">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ContainerItem" msprop:Generator_UserColumnName="ContainerItem" msprop:Generator_ColumnVarNameInTable="columnContainerItem" msprop:Generator_ColumnPropNameInRow="ContainerItem" msprop:Generator_ColumnPropNameInTable="ContainerItemColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="iReferenceID" msprop:Generator_UserColumnName="iReferenceID" msprop:Generator_ColumnPropNameInRow="iReferenceID" msprop:Generator_ColumnVarNameInTable="columniReferenceID" msprop:Generator_ColumnPropNameInTable="iReferenceIDColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="sReference" msprop:Generator_UserColumnName="sReference" msprop:Generator_ColumnPropNameInRow="sReference" msprop:Generator_ColumnVarNameInTable="columnsReference" msprop:Generator_ColumnPropNameInTable="sReferenceColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtReference" msprop:Generator_UserColumnName="dtReference" msprop:Generator_ColumnPropNameInRow="dtReference" msprop:Generator_ColumnVarNameInTable="columndtReference" msprop:Generator_ColumnPropNameInTable="dtReferenceColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,20 @@
+﻿Finanszírozási ajánlat adatai
+
+$OfferItems$
+
+Finanszírozási ajánlatot beküldő adatai
+
+Cégnév:						$CustName$
+Név:						$CustPersonName$
+Telefon:					$CustPhone$
+Email:						$CustEmail$
+
+Finanszírozási ajánlatban megadott végfelhasználói adatok
+
+Vezeték és keresztnév:       $PersonName$
+Cím:                         $Address$
+Telefon:                     $Phone$
+Cégjegyzékszám:              $StatNumber$
+Futamidő:					 $NumOfMonth$ hónap
+Finanszírozandó összeg:		 $FinancedAmount$ Ft
+Kelt:                        $SentDate$

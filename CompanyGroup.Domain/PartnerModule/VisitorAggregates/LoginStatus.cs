@@ -1,0 +1,1 @@
+﻿public enum LoginStatus { Passive = 0, Active = 1, Permanent = 2 }

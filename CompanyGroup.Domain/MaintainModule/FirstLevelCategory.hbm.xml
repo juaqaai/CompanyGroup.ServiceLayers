@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_Category1List" callable="true">
+    <return-scalar column="Category1Id" type="System.String"/>
+    <return-scalar column="Category1Name" type="System.String"/>
+    <return-scalar column="Category1NameEnglish" type="System.String"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.cms_Category1List :DataAreaId
+  </sql-query>
+</hibernate-mapping>
+

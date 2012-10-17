@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CompanyGroup.ApplicationServices.WebshopModule.NewsletterService" Factory="System.ServiceModel.Activation.WebServiceHostFactory" %>

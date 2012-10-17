@@ -1,0 +1,27 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Eg"
+    namespace="Eg">
+
+  <class name="Cat" table="CATS" discriminator-value="C">
+    <id name="Id" column="uid" type="Int64">
+      <generator class="hilo"/>
+    </id>
+    <discriminator column="subclass" type="Char"/>
+    <property name="BirthDate" type="Date"/>
+    <property name="Color" not-null="true"/>
+    <property name="Sex" not-null="true" update="false"/>
+    <property name="Weight"/>
+    <many-to-one name="Mate" column="mate_id"/>
+    <set name="Kittens">
+      <key column="mother_id"/>
+      <one-to-many class="Cat"/>
+    </set>
+    <subclass name="DomesticCat" discriminator-value="D">
+      <property name="Name" type="String"/>
+    </subclass>
+  </class>
+
+  <class name="Dog">
+    <!-- mapping for Dog could go here -->
+  </class>
+
+</hibernate-mapping>

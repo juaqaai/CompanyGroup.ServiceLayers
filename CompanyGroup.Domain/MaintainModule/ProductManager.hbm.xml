@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_EmployeeList" callable="true">
+    <return-scalar column="EmployeeId" type="System.String"/>
+    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="Email" type="System.String"/>
+    <return-scalar column="Extension" type="System.String"/>
+    <return-scalar column="Mobile" type="System.String"/>
+    exec InternetUser.cms_EmployeeList :DataAreaId
+  </sql-query>
+</hibernate-mapping>

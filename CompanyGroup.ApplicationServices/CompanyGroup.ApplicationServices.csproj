@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3EF7105F-5854-49AC-8EA2-C6DDECC0864F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyGroup.ApplicationServices</RootNamespace>
+    <AssemblyName>CompanyGroup.ApplicationServices</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\Binaries\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\Binaries\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="MailMergeLib">
+      <HintPath>..\Binaries\MailMergeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\Binaries\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\Binaries\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.3.1.4349, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PartnerModule\Adapter\InvoiceInfoToInvoiceInfo.cs" />
+    <Compile Include="PartnerModule\Adapter\OrderInfoToOrderInfo.cs" />
+    <Compile Include="PartnerModule\Service\ContactPersonService.cs" />
+    <Compile Include="PartnerModule\Service\IContactPersonService.cs" />
+    <Compile Include="RegistrationModule\Adapter\BankAccountToBankAccount.cs" />
+    <Compile Include="RegistrationModule\Adapter\ContactPersonToContactPerson.cs" />
+    <Compile Include="RegistrationModule\Adapter\WebAdministratorToWebAdministrator.cs" />
+    <Compile Include="RegistrationModule\Adapter\CompanyDataToCompanyData.cs" />
+    <Compile Include="RegistrationModule\Adapter\DataRecordingToDataRecording.cs" />
+    <Compile Include="RegistrationModule\Adapter\DeliveryAddressToDeliveryAddress.cs" />
+    <Compile Include="RegistrationModule\Adapter\InvoiceAddressToInvoiceAddress.cs" />
+    <Compile Include="RegistrationModule\Adapter\MailAddressToMailAddress.cs" />
+    <Compile Include="RegistrationModule\Adapter\RegistrationToRegistration.cs" />
+    <Compile Include="ServiceCoreBase.cs" />
+    <Compile Include="InstanceProviders\Container.cs" />
+    <Compile Include="InstanceProviders\UnityInstanceProvider.cs" />
+    <Compile Include="InstanceProviders\UnityInstanceProviderServiceBehavior.cs" />
+    <Compile Include="InstanceProviders\UnityServiceHost.cs" />
+    <Compile Include="InstanceProviders\UnityServiceHostFactory.cs" />
+    <Compile Include="MaintainModule\Service\IProductService.cs" />
+    <Compile Include="MaintainModule\Service\ProductService.cs" />
+    <Compile Include="PartnerModule\Adapter\AddressZipCodeToAddressZipCode.cs" />
+    <Compile Include="PartnerModule\Adapter\ContactPersonToContactPerson.cs" />
+    <Compile Include="PartnerModule\Adapter\BankAccountToBankAccount.cs" />
+    <Compile Include="PartnerModule\Adapter\ContactPersonToWebAdministrator.cs" />
+    <Compile Include="PartnerModule\Adapter\CustomerToMailAddress.cs" />
+    <Compile Include="PartnerModule\Adapter\CustomerToInvoiceAddress.cs" />
+    <Compile Include="PartnerModule\Adapter\CustomerToCustomer.cs" />
+    <Compile Include="PartnerModule\Adapter\DeliveryAddressToDeliveryAddress.cs" />
+    <Compile Include="PartnerModule\Adapter\MailAddressToMailAddress.cs" />
+    <Compile Include="PartnerModule\Service\CustomerService.cs" />
+    <Compile Include="PartnerModule\Service\ICustomerService.cs" />
+    <Compile Include="PartnerModule\Service\ISalesOrderService.cs" />
+    <Compile Include="PartnerModule\Service\IVisitorService.cs" />
+    <Compile Include="PartnerModule\Service\SalesOrderService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistrationModule\Service\IRegistrationService.cs" />
+    <Compile Include="RegistrationModule\Service\RegistrationService.cs" />
+    <Compile Include="ServiceBase.cs" />
+    <Compile Include="WebshopModule\Adapter\AdapterBase.cs" />
+    <Compile Include="WebshopModule\Adapter\CategoryToCategory.cs" />
+    <Compile Include="WebshopModule\Adapter\CompletionToCompletion.cs" />
+    <Compile Include="WebshopModule\Adapter\NewsletterToNewsletter.cs" />
+    <Compile Include="WebshopModule\Adapter\FinanceOfferToFinanceOffer.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions.cs" />
+    <Compile Include="WebshopModule\Adapter\LeasingOptionsToLeasingOptions.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductToBannerProduct.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductsToBannerList.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductToCompatibleProduct.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductToProductDetails.cs" />
+    <Compile Include="WebshopModule\Adapter\PriceListToPriceList.cs" />
+    <Compile Include="WebshopModule\Adapter\SecondHandToSecondHand.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartToOpenedShoppingCart.cs" />
+    <Compile Include="WebshopModule\Adapter\ShippingToShipping.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartCollectionToStoredShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartToStoredShoppingCart.cs" />
+    <Compile Include="WebshopModule\Adapter\GarantyToGaranty.cs" />
+    <Compile Include="WebshopModule\Adapter\ManufacturerToManufacturer.cs" />
+    <Compile Include="WebshopModule\Adapter\PagerToPager.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductManagerToProductManager.cs" />
+    <Compile Include="WebshopModule\Adapter\PicturesToPictures.cs" />
+    <Compile Include="WebshopModule\Adapter\PictureToPicture.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductsToProducts.cs" />
+    <Compile Include="WebshopModule\Adapter\ProductToProduct.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartCollectionToShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartItemToShoppingCartItem.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartToShoppingCart.cs" />
+    <Compile Include="WebshopModule\Adapter\StockToStock.cs" />
+    <Compile Include="WebshopModule\Adapter\StructuresToCategory1List.cs" />
+    <Compile Include="WebshopModule\Adapter\StructuresToCategory2List.cs" />
+    <Compile Include="WebshopModule\Adapter\StructuresToCategory3List.cs" />
+    <Compile Include="WebshopModule\Adapter\StructuresToManufacturerList.cs" />
+    <Compile Include="WebshopModule\Adapter\StructuresToStructures.cs" />
+    <Compile Include="PartnerModule\Adapter\VisitorToVisitor.cs" />
+    <Compile Include="WebshopModule\Service\INewsletterService.cs" />
+    <Compile Include="WebshopModule\Service\NewsletterService.cs" />
+    <Compile Include="WebshopModule\Service\FinanceService.cs" />
+    <Compile Include="WebshopModule\Service\IFinanceService.cs" />
+    <Compile Include="WebshopModule\Service\IPictureService.cs" />
+    <Compile Include="WebshopModule\Service\IProductService.cs" />
+    <Compile Include="WebshopModule\Service\IShoppingCartService.cs" />
+    <Compile Include="WebshopModule\Service\IStructureService.cs" />
+    <Compile Include="WebshopModule\Service\PictureService.cs" />
+    <Compile Include="WebshopModule\Service\ProductService.cs" />
+    <Compile Include="WebshopModule\Service\ShoppingCartService.cs" />
+    <Compile Include="WebshopModule\Service\StructureService.cs" />
+    <Compile Include="PartnerModule\Service\VisitorService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MaintainModule\Adapter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyGroup.Data\CompanyGroup.Data.csproj">
+      <Project>{B5745945-E479-483F-8853-686632796022}</Project>
+      <Name>CompanyGroup.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyGroup.Domain\CompanyGroup.Domain.csproj">
+      <Project>{D73A25A5-CE2D-432B-B18A-F914E451B348}</Project>
+      <Name>CompanyGroup.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyGroup.Dto\CompanyGroup.Dto.csproj">
+      <Project>{68A772C3-C742-4282-A5B3-2A11C17FC867}</Project>
+      <Name>CompanyGroup.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

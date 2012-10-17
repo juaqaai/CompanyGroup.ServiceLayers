@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.SignIn" callable="true">
+    <query-param name="UserName" type="System.String"/>
+    <query-param name="Password" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <return-scalar column="CompanyId" type="System.String"/>
+    <return-scalar column="CompanyName" type="System.String"/>
+    <return-scalar column="PersonId" type="System.String"/>
+    <return-scalar column="PersonName" type="System.String"/>
+    <return-scalar column="LoginType" type="System.Int32"/>
+    <return-scalar column="IsWebAdministrator" type="System.Boolean"/>
+    <return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
+    <return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
+    <return-scalar column="CanOrder" type="System.Boolean"/>
+    <return-scalar column="RecieveGoods" type="System.Boolean"/>
+    <!--<return alias="person"
+                class="Person"/>-->
+    exec InternetUser.SignIn @UserName=:UserName,  @Password=:Password, @DataAreaId=:DataAreaId
+  </sql-query>
+</hibernate-mapping>

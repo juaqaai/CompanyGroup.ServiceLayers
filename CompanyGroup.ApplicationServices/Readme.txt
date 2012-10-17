@@ -1,0 +1,1 @@
+﻿	CompanyGroup.Application.xxxModule.Adapter a domain objektumok és DTO objektumok közötti konverziót végzik.

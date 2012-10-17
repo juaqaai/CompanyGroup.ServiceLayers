@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_SalesOrderList" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <return-scalar column="SalesId" type="System.String"/>
+    <return-scalar column="CreatedDate" type="System.DateTime"/>
+    <return-scalar column="LineNum" type="System.Int32"/>
+    <return-scalar column="ShippingDateRequested" type="System.DateTime"/>
+    <return-scalar column="ItemId" type="System.String"/>
+    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="SalesPrice" type="System.Decimal"/>
+    <return-scalar column="CurrencyCode" type="System.String"/>
+    <return-scalar column="Quantity" type="System.Int32"/>
+    <return-scalar column="LineAmount" type="System.Decimal"/>
+    <return-scalar column="SalesDeliverNow" type="System.Int32"/>
+    <return-scalar column="RemainSalesPhysical" type="System.Int32"/>
+    <return-scalar column="StatusIssue" type="System.Int32"/>
+    <return-scalar column="InventLocationId" type="System.String"/>
+    <return-scalar column="Payment" type="System.String"/>
+    exec InternetUser.cms_SalesOrderList @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+  </sql-query>
+</hibernate-mapping>

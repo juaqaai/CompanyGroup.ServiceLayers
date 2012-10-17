@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPartnerIdentity" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsPartnerIdentity.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsPartnerIdentity.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsPartnerIdentity.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPartnerIdentity" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsPartnerIdentity" msprop:Generator_UserDSName="dsPartnerIdentity">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PartnerIdentity" msprop:Generator_UserTableName="PartnerIdentity" msprop:Generator_RowEvArgName="PartnerIdentityRowChangeEvent" msprop:Generator_TableVarName="tablePartnerIdentity" msprop:Generator_TablePropName="PartnerIdentity" msprop:Generator_RowDeletingName="PartnerIdentityRowDeleting" msprop:Generator_RowChangingName="PartnerIdentityRowChanging" msprop:Generator_RowDeletedName="PartnerIdentityRowDeleted" msprop:Generator_TableClassName="PartnerIdentityDataTable" msprop:Generator_RowChangedName="PartnerIdentityRowChanged" msprop:Generator_RowEvHandlerName="PartnerIdentityRowChangeEventHandler" msprop:Generator_RowClassName="PartnerIdentityRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sPartnerCode" msprop:Generator_ColumnVarNameInTable="columnsPartnerCode" msprop:Generator_ColumnPropNameInRow="sPartnerCode" msprop:Generator_ColumnPropNameInTable="sPartnerCodeColumn" msprop:Generator_UserColumnName="sPartnerCode" type="xs:string" />
+              <xs:element name="nPartnerCodeType" msprop:Generator_ColumnVarNameInTable="columnnPartnerCodeType" msprop:Generator_ColumnPropNameInRow="nPartnerCodeType" msprop:Generator_ColumnPropNameInTable="nPartnerCodeTypeColumn" msprop:Generator_UserColumnName="nPartnerCodeType" type="xs:short" />
+              <xs:element name="b64ClientPrivateCertificate" msprop:Generator_ColumnVarNameInTable="columnb64ClientPrivateCertificate" msprop:Generator_ColumnPropNameInRow="b64ClientPrivateCertificate" msprop:Generator_ColumnPropNameInTable="b64ClientPrivateCertificateColumn" msprop:Generator_UserColumnName="b64ClientPrivateCertificate" type="xs:string" minOccurs="0" />
+              <xs:element name="b64ServerPublicCertificate" msprop:Generator_ColumnVarNameInTable="columnb64ServerPublicCertificate" msprop:Generator_ColumnPropNameInRow="b64ServerPublicCertificate" msprop:Generator_ColumnPropNameInTable="b64ServerPublicCertificateColumn" msprop:Generator_UserColumnName="b64ServerPublicCertificate" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PartnerIdentity_Partners" msprop:Generator_TableClassName="PartnerIdentity_PartnersDataTable" msprop:Generator_RowEvArgName="PartnerIdentity_PartnersRowChangeEvent" msprop:Generator_TableVarName="tablePartnerIdentity_Partners" msprop:Generator_TablePropName="PartnerIdentity_Partners" msprop:Generator_RowDeletingName="PartnerIdentity_PartnersRowDeleting" msprop:Generator_UserTableName="PartnerIdentity_Partners" msprop:Generator_RowChangingName="PartnerIdentity_PartnersRowChanging" msprop:Generator_RowDeletedName="PartnerIdentity_PartnersRowDeleted" msprop:Generator_RowChangedName="PartnerIdentity_PartnersRowChanged" msprop:Generator_RowEvHandlerName="PartnerIdentity_PartnersRowChangeEventHandler" msprop:Generator_RowClassName="PartnerIdentity_PartnersRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sPartnerCode" msprop:Generator_ColumnVarNameInTable="columnsPartnerCode" msprop:Generator_ColumnPropNameInRow="sPartnerCode" msprop:Generator_ColumnPropNameInTable="sPartnerCodeColumn" msprop:Generator_UserColumnName="sPartnerCode" type="xs:string" />
+              <xs:element name="nPartnerCodeType" msprop:Generator_ColumnVarNameInTable="columnnPartnerCodeType" msprop:Generator_ColumnPropNameInRow="nPartnerCodeType" msprop:Generator_ColumnPropNameInTable="nPartnerCodeTypeColumn" msprop:Generator_UserColumnName="nPartnerCodeType" type="xs:short" />
+              <xs:element name="sCode" msprop:Generator_ColumnVarNameInTable="columnsCode" msprop:Generator_ColumnPropNameInRow="sCode" msprop:Generator_ColumnPropNameInTable="sCodeColumn" msprop:Generator_UserColumnName="sCode" type="xs:string" />
+              <xs:element name="nCodeType" msprop:Generator_ColumnVarNameInTable="columnnCodeType" msprop:Generator_ColumnPropNameInRow="nCodeType" msprop:Generator_ColumnPropNameInTable="nCodeTypeColumn" msprop:Generator_UserColumnName="nCodeType" type="xs:short" />
+              <xs:element name="sName" msprop:Generator_ColumnVarNameInTable="columnsName" msprop:Generator_ColumnPropNameInRow="sName" msprop:Generator_ColumnPropNameInTable="sNameColumn" msprop:Generator_UserColumnName="sName" type="xs:string" minOccurs="0" />
+              <xs:element name="sAddress" msprop:Generator_ColumnVarNameInTable="columnsAddress" msprop:Generator_ColumnPropNameInRow="sAddress" msprop:Generator_ColumnPropNameInTable="sAddressColumn" msprop:Generator_UserColumnName="sAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="sTaxNumber" msprop:Generator_ColumnVarNameInTable="columnsTaxNumber" msprop:Generator_ColumnPropNameInRow="sTaxNumber" msprop:Generator_ColumnPropNameInTable="sTaxNumberColumn" msprop:Generator_UserColumnName="sTaxNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="sBankAcctNumber" msprop:Generator_ColumnVarNameInTable="columnsBankAcctNumber" msprop:Generator_ColumnPropNameInRow="sBankAcctNumber" msprop:Generator_ColumnPropNameInTable="sBankAcctNumberColumn" msprop:Generator_UserColumnName="sBankAcctNumber" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PartnerIdentity" />
+      <xs:field xpath="mstns:sPartnerCode" />
+      <xs:field xpath="mstns:nPartnerCodeType" />
+    </xs:unique>
+    <xs:unique name="PartnerIdentity_Partners_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PartnerIdentity_Partners" />
+      <xs:field xpath="mstns:sPartnerCode" />
+      <xs:field xpath="mstns:nCodeType" />
+      <xs:field xpath="mstns:sCode" />
+      <xs:field xpath="mstns:nPartnerCodeType" />
+    </xs:unique>
+    <xs:keyref name="FK_PartnerIdentity_PartnerIdentity_Partners" refer="Constraint1" msprop:rel_Generator_UserChildTable="PartnerIdentity_Partners" msprop:rel_Generator_ChildPropName="GetPartnerIdentity_PartnersRows" msprop:rel_Generator_UserParentTable="PartnerIdentity" msprop:rel_Generator_UserRelationName="FK_PartnerIdentity_PartnerIdentity_Partners" msprop:rel_Generator_RelationVarName="relationFK_PartnerIdentity_PartnerIdentity_Partners" msprop:rel_Generator_ParentPropName="PartnerIdentityRowParent">
+      <xs:selector xpath=".//mstns:PartnerIdentity_Partners" />
+      <xs:field xpath="mstns:sPartnerCode" />
+      <xs:field xpath="mstns:nPartnerCodeType" />
+    </xs:keyref>
+  </xs:element>
+</xs:schema>

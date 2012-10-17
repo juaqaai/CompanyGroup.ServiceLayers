@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsInvoicesRelation" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS20.DataSets/Request/dsInvoicesRelations.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS20.DataSets/Request/dsInvoicesRelations.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS20.DataSets/Request/dsInvoicesRelations.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsInvoicesRelation" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsInvoicesRelation" msprop:Generator_DataSetName="dsInvoicesRelation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="InvoiceRelation" msprop:Generator_UserTableName="InvoiceRelation" msprop:Generator_RowDeletedName="InvoiceRelationRowDeleted" msprop:Generator_RowChangedName="InvoiceRelationRowChanged" msprop:Generator_RowClassName="InvoiceRelationRow" msprop:Generator_RowChangingName="InvoiceRelationRowChanging" msprop:Generator_RowEvArgName="InvoiceRelationRowChangeEvent" msprop:Generator_RowEvHandlerName="InvoiceRelationRowChangeEventHandler" msprop:Generator_TableClassName="InvoiceRelationDataTable" msprop:Generator_TableVarName="tableInvoiceRelation" msprop:Generator_RowDeletingName="InvoiceRelationRowDeleting" msprop:Generator_TablePropName="InvoiceRelation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iRelationID" msprop:Generator_UserColumnName="iRelationID" msprop:Generator_ColumnVarNameInTable="columniRelationID" msprop:Generator_ColumnPropNameInRow="iRelationID" msprop:Generator_ColumnPropNameInTable="iRelationIDColumn" type="xs:int" />
+              <xs:element name="dtValidFrom" msprop:Generator_UserColumnName="dtValidFrom" msprop:Generator_ColumnPropNameInRow="dtValidFrom" msprop:Generator_ColumnVarNameInTable="columndtValidFrom" msprop:Generator_ColumnPropNameInTable="dtValidFromColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="nRelationTypeCode" msprop:Generator_UserColumnName="nRelationTypeCode" msprop:Generator_ColumnPropNameInRow="nRelationTypeCode" msprop:Generator_ColumnVarNameInTable="columnnRelationTypeCode" msprop:Generator_ColumnPropNameInTable="nRelationTypeCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sRelationRemark" msprop:Generator_UserColumnName="sRelationRemark" msprop:Generator_ColumnPropNameInRow="sRelationRemark" msprop:Generator_ColumnVarNameInTable="columnsRelationRemark" msprop:Generator_ColumnPropNameInTable="sRelationRemarkColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sInvoiceNumber" msprop:Generator_UserColumnName="sInvoiceNumber" msprop:Generator_ColumnPropNameInRow="sInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sInvoiceNumberColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sExtID" msprop:Generator_UserColumnName="sExtID" msprop:Generator_ColumnPropNameInRow="sExtID" msprop:Generator_ColumnVarNameInTable="columnsExtID" msprop:Generator_ColumnPropNameInTable="sExtIDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sAncestorInvoiceNumber" msprop:Generator_UserColumnName="sAncestorInvoiceNumber" msprop:Generator_ColumnPropNameInRow="sAncestorInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsAncestorInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sAncestorInvoiceNumberColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sAncestorExtID" msprop:Generator_UserColumnName="sAncestorExtID" msprop:Generator_ColumnPropNameInRow="sAncestorExtID" msprop:Generator_ColumnVarNameInTable="columnsAncestorExtID" msprop:Generator_ColumnPropNameInTable="sAncestorExtIDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="bFinalRelation" msprop:Generator_UserColumnName="bFinalRelation" msprop:Generator_ColumnPropNameInRow="bFinalRelation" msprop:Generator_ColumnVarNameInTable="columnbFinalRelation" msprop:Generator_ColumnPropNameInTable="bFinalRelationColumn" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:InvoiceRelation" />
+      <xs:field xpath="mstns:iRelationID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

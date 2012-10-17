@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SXDoc>
+  <Document id="main">
+    <Name>LastKnownStatus</Name>
+    <Value encoded="raw/xml">
+      <LastKnownStatus CreatedAt="yyyy-MM-dd HH:mm:ss" PartnerCodeType="WEB1/HFCODE" PartnerCode="12345/PRO">
+        <ID>123456 vagy -1</ID>
+        <DateTime>yyyy-MM-dd HH:mm:ss, pl. 2000-01-01</DateTime>
+      </LastKnownStatus>
+    </Value>
+  </Document>
+  <Signature />
+</SXDoc>

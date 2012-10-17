@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsInvoiceAudit" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceAudit.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceAudit.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceAudit.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsInvoiceAudit" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsInvoiceAudit" msprop:Generator_DataSetName="dsInvoiceAudit" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="InvoiceAuditList" msprop:Generator_UserTableName="InvoiceAuditList" msprop:Generator_RowDeletedName="InvoiceAuditListRowDeleted" msprop:Generator_RowChangedName="InvoiceAuditListRowChanged" msprop:Generator_RowClassName="InvoiceAuditListRow" msprop:Generator_RowChangingName="InvoiceAuditListRowChanging" msprop:Generator_RowEvArgName="InvoiceAuditListRowChangeEvent" msprop:Generator_RowEvHandlerName="InvoiceAuditListRowChangeEventHandler" msprop:Generator_TableClassName="InvoiceAuditListDataTable" msprop:Generator_TableVarName="tableInvoiceAuditList" msprop:Generator_RowDeletingName="InvoiceAuditListRowDeleting" msprop:Generator_TablePropName="InvoiceAuditList">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sInvoiceNumber" msprop:Generator_UserColumnName="sInvoiceNumber" msprop:Generator_ColumnPropNameInRow="sInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sInvoiceNumberColumn" type="xs:string" />
+              <xs:element name="nSerial" msprop:Generator_UserColumnName="nSerial" msprop:Generator_ColumnPropNameInRow="nSerial" msprop:Generator_ColumnVarNameInTable="columnnSerial" msprop:Generator_ColumnPropNameInTable="nSerialColumn" type="xs:short" />
+              <xs:element name="sInvoicePart" msprop:Generator_UserColumnName="sInvoicePart" msprop:Generator_ColumnPropNameInRow="sInvoicePart" msprop:Generator_ColumnVarNameInTable="columnsInvoicePart" msprop:Generator_ColumnPropNameInTable="sInvoicePartColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nResultCode" msprop:Generator_UserColumnName="nResultCode" msprop:Generator_ColumnPropNameInRow="nResultCode" msprop:Generator_ColumnVarNameInTable="columnnResultCode" msprop:Generator_ColumnPropNameInTable="nResultCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sIsErrorText" msprop:Generator_UserColumnName="sIsErrorText" msprop:Generator_ColumnPropNameInRow="sIsErrorText" msprop:Generator_ColumnVarNameInTable="columnsIsErrorText" msprop:Generator_ColumnPropNameInTable="sIsErrorTextColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sAuditText" msprop:Generator_UserColumnName="sAuditText" msprop:Generator_ColumnPropNameInRow="sAuditText" msprop:Generator_ColumnVarNameInTable="columnsAuditText" msprop:Generator_ColumnPropNameInTable="sAuditTextColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sRemark" msprop:Generator_UserColumnName="sRemark" msprop:Generator_ColumnPropNameInRow="sRemark" msprop:Generator_ColumnVarNameInTable="columnsRemark" msprop:Generator_ColumnPropNameInTable="sRemarkColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtChecked" msprop:Generator_UserColumnName="dtChecked" msprop:Generator_ColumnPropNameInRow="dtChecked" msprop:Generator_ColumnVarNameInTable="columndtChecked" msprop:Generator_ColumnPropNameInTable="dtCheckedColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="nInvoiceItemSerialNumber" msprop:Generator_UserColumnName="nInvoiceItemSerialNumber" msprop:Generator_ColumnVarNameInTable="columnnInvoiceItemSerialNumber" msprop:Generator_ColumnPropNameInRow="nInvoiceItemSerialNumber" msprop:Generator_ColumnPropNameInTable="nInvoiceItemSerialNumberColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:InvoiceAuditList" />
+      <xs:field xpath="mstns:sInvoiceNumber" />
+      <xs:field xpath="mstns:nSerial" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

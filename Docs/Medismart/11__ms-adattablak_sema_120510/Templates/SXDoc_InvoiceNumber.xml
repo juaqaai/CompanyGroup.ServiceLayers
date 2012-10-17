@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SXDoc>
+  <Document id="main">
+    <Name>InvoiceNumber</Name>
+    <Value encoded="raw/xml">
+      <InvoiceNumber CreatedAt="yyyy-MM-dd HH:mm:ss" PartnerCodeType="WEB1/HFCODE" PartnerCode="12345/PRO">MKK-01234/012345</InvoiceNumber>
+    </Value>
+  </Document>
+  <Signature />
+</SXDoc>

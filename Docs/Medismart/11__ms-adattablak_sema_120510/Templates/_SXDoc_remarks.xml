@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SXDoc>
+  <Document id="main">
+    <Name>Valami</Name>
+    <Value encoded="raw/xml/base64/zraw/zxml">
+      <!-- 5 féle enkódolást ismerünk, a "z" prefix jelenti, hogy tömörített az adat -->
+      <![CDATA[]]>
+      
+      vagy
+      
+      <Valami>
+        
+      </Valami>
+      
+      vagy
+      
+      Valamilyen szöveges információ.
+    </Value>
+  </Document>
+  <Signature />
+</SXDoc>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_SignIn" callable="true">
+    <query-param name="UserName" type="System.String"/>
+    <query-param name="Password" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <return-scalar column="CompanyId" type="System.String"/>
+    <return-scalar column="CompanyName" type="System.String"/>
+    <return-scalar column="PersonId" type="System.String"/>
+    <return-scalar column="PersonName" type="System.String"/>
+    <return-scalar column="Email" type="System.String"/>
+    <return-scalar column="CanOrder" type="System.Boolean"/>
+    <return-scalar column="RecieveGoods" type="System.Boolean"/>
+    <return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
+    <return-scalar column="IsWebAdministrator" type="System.Boolean"/>
+    <return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
+    <return-scalar column="LoginType" type="System.Int32"/>
+    <return-scalar column="PartnerModel" type="System.Int32"/>
+    <return-scalar column="PaymTermId" type="System.String"/>
+    <return-scalar column="Currency" type="System.String"/>
+    <return-scalar column="InventLocation" type="System.String"/>
+    <return-scalar column="LanguageId" type="System.String"/>
+    <return-scalar column="PriceGroup" type="System.Int32"/>
+    <return-scalar column="RepresentativeId" type="System.String"/>
+    <return-scalar column="RepresentativeName" type="System.String"/>
+    <return-scalar column="RepresentativePhone" type="System.String"/>
+    <return-scalar column="RepresentativeMobile" type="System.String"/>
+    <return-scalar column="RepresentativeExtension" type="System.String"/>
+    <return-scalar column="RepresentativeEmail" type="System.String"/>
+    exec InternetUser.cms_SignIn @UserName=:UserName,  @Password=:Password, @DataAreaId=:DataAreaId
+  </sql-query>
+</hibernate-mapping>
+
+
+

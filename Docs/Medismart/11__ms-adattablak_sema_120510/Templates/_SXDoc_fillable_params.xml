@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1250" ?>
+<SXDoc>
+  <Document id="main">
+    <Name>@documentname</Name>
+    <Value encoded="@encodingtypename">
+      <@bodytagname CreatedAt="@created" PartnerCodeType="@pctype" PartnerCode="@pc" @params>
+        @innerxml
+      </@bodytagname>
+    </Value>
+  </Document>
+</SXDoc>

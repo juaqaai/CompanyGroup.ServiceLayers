@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D73A25A5-CE2D-432B-B18A-F914E451B348}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyGroup.Domain</RootNamespace>
+    <AssemblyName>CompanyGroup.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Binaries\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Binaries\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Adapter.cs" />
+    <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\Entity.cs" />
+    <Compile Include="Core\INoSqlEntity.cs" />
+    <Compile Include="Core\NoSqlEntity.cs" />
+    <Compile Include="MaintainModule\CompatibilityItem.cs" />
+    <Compile Include="MaintainModule\InventName.cs" />
+    <Compile Include="MaintainModule\Manufacturer.cs" />
+    <Compile Include="MaintainModule\PurchaseOrderLine.cs" />
+    <Compile Include="MaintainModule\SecondHand.cs" />
+    <Compile Include="MaintainModule\SecondLevelCategory.cs" />
+    <Compile Include="MaintainModule\Stock.cs" />
+    <Compile Include="MaintainModule\ThirdLevelCategory.cs" />
+    <Compile Include="MaintainModule\FirstLevelCategory.cs" />
+    <Compile Include="MaintainModule\Product.cs" />
+    <Compile Include="MaintainModule\Picture.cs" />
+    <Compile Include="MaintainModule\ProductDescription.cs" />
+    <Compile Include="MaintainModule\ProductManager.cs" />
+    <Compile Include="Core\IRepository.cs" />
+    <Compile Include="MaintainModule\IProductRepository.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ChangePassword.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordCreate.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordStatus.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\IChangePasswordRepository.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordCreateResult.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\IContactPersonRepository.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\Address.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\BankAccount.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoicePaymentType.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\IInvoiceRepository.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceLineInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceSalesType.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\ISalesOrderRepository.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\ProductOrderCheck.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\OrderInfo.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\SalesOrderCreate.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\SalesOrderCreateResult.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\OrderLineInfo.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\SalesOrderLineCreate.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\StatusIssue.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationModule\AddressAggregates\InvoiceAddress.cs" />
+    <Compile Include="RegistrationModule\AddressAggregates\MailAddress.cs" />
+    <Compile Include="RegistrationModule\ContactPersonAggregates\ContactPerson.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\BankAccount.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\CrudMethod.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\DeliveryAddress.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\LoginInfo.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\PartnerModel.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\Factory.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\IVisitorRepository.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\LoginStatus.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\Representative.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\Customer.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\Registration.cs" />
+    <Compile Include="RegistrationModule\AddressAggregates\DeliveryAddress.cs" />
+    <Compile Include="RegistrationModule\ContactPersonAggregates\WebAdministrator.cs" />
+    <Compile Include="RegistrationModule\Factory.cs" />
+    <Compile Include="RegistrationModule\IRegistrationRepository.cs" />
+    <Compile Include="RegistrationModule\RegistratorAggregates\CompanyData.cs" />
+    <Compile Include="RegistrationModule\RegistratorAggregates\DataRecording.cs" />
+    <Compile Include="RegistrationModule\RegistratorAggregates\RegistrationStatus.cs" />
+    <Compile Include="WebshopModule\ComparableAggregates\ComparableCollection.cs" />
+    <Compile Include="WebshopModule\ComparableAggregates\ComparableItem.cs" />
+    <Compile Include="WebshopModule\CustomerAggregates\Address.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ContactPerson.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\Customer.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\Permission.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\ExchangeRate.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\FinanceOffer.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\FinanceOfferLine.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\IFinanceRepository.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\LeasingOption.cs" />
+    <Compile Include="WebshopModule\FinanceAggregates\MinMaxLeasingValue.cs" />
+    <Compile Include="WebshopModule\NewsletterAggregates\INewsletterRepository.cs" />
+    <Compile Include="WebshopModule\NewsletterAggregates\Newsletter.cs" />
+    <Compile Include="WebshopModule\NewsletterAggregates\NewsletterCollection.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Completion.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\CompletionType.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\DataAreaId.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Garanty.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\IPictureRepository.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\ItemState.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\LangId.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Pager.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Picture.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\PriceList.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Prices.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ProductManager.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Factory.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\SecondHand.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Sequence.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Stock.cs" />
+    <Compile Include="PartnerModule\ProfileAggregates\History.cs" />
+    <Compile Include="PartnerModule\ProfileAggregates\Profile.cs" />
+    <Compile Include="PartnerModule\ProfileAggregates\RequestParameter.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\CartStatus.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\CartItemStatus.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\DeliveryTerms.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\IShoppingCartRepository.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\PaymentTerms.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\Shipping.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCart.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCartItem.cs" />
+    <Compile Include="WebshopModule\StructureAggregates\Category.cs" />
+    <Compile Include="WebshopModule\StructureAggregates\IStructureRepository.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\AddressZipCode.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\ICustomerRepository.cs" />
+    <Compile Include="Core\EntityBase.cs" />
+    <Compile Include="Core\IdentityGenerator.cs" />
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="WebshopModule\ProductAggregates\IProductRepository.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Product.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\MailAddress.cs" />
+    <Compile Include="Core\DomainObject.cs" />
+    <Compile Include="Core\IHasAssignedId.cs" />
+    <Compile Include="WebshopModule\StructureAggregates\Manufacturer.cs" />
+    <Compile Include="WebshopModule\StructureAggregates\Structure.cs" />
+    <Compile Include="Core\ValueObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\DesignByContract.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\LoginType.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\Visitor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebshopModule\NewsletterAggregates\Newsletter.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\FinanceAggregates\LeasingOption.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\FinanceAggregates\MinMaxLeasingValue.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\FinanceAggregates\ExchangeRate.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductManager.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductDescription.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\FirstLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\SecondLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ThirdLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\Manufacturer.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\Product.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainModule\Picture.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\Stock.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\SecondHand.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\InventName.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainModule\CompatibilityItem.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\PurchaseOrderLine.hbm.xml" />
+    <Content Include="MaintainModule\NHibernate.txt" />
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\LoginInfo.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\DeliveryAddress.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
+    <Content Include="Readme.txt" />
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\MailAddress.hbm.xml" />
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="WebshopModule\WebshopClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PartnerModule\Services\" />
+    <Folder Include="WebshopModule\PricelistAggregates\" />
+    <Folder Include="WebshopModule\Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

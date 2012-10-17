@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="CompanyGroup.Core.Domain.Order, CompanyGroup.Core" table="Orders" lazy="false">
+		<id name="ID" column="OrderID" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="OrderDate" column="OrderDate" />
+		<property name="ShipToName" column="ShipName" />
+
+    <many-to-one name="OrderedBy" column="CustomerID" 
+      class="CompanyGroup.Core.Domain.Customer, CompanyGroup.Core" not-null="true" />
+	</class>
+</hibernate-mapping>

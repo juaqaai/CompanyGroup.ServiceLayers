@@ -1,0 +1,2 @@
+
+	CompanyGroup.Domain.Core

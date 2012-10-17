@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_MinMaxFinanceLeasingValues" callable="true">
+    <return-scalar column="MinValue" type="System.Int32"/>
+    <return-scalar column="MaxValue" type="System.Int32"/>
+    exec InternetUser.cms_MinMaxFinanceLeasingValues
+  </sql-query>
+</hibernate-mapping>

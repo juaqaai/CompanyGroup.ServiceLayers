@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{68A772C3-C742-4282-A5B3-2A11C17FC867}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyGroup.Dto</RootNamespace>
+    <AssemblyName>CompanyGroup.Dto</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PartnerModule\BankAccount.cs" />
+    <Compile Include="PartnerModule\ChangePassword.cs" />
+    <Compile Include="PartnerModule\ContactPerson.cs" />
+    <Compile Include="PartnerModule\UndoChangePassword.cs" />
+    <Compile Include="PartnerModule\InvoiceLineInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceInfo.cs" />
+    <Compile Include="PartnerModule\OrderLineInfo.cs" />
+    <Compile Include="PartnerModule\OrderInfo.cs" />
+    <Compile Include="PartnerModule\WebAdministrator.cs" />
+    <Compile Include="PartnerModule\InvoiceAddress.cs" />
+    <Compile Include="RegistrationModule\BankAccount.cs" />
+    <Compile Include="RegistrationModule\ContactPerson.cs" />
+    <Compile Include="RegistrationModule\CompanyData.cs" />
+    <Compile Include="RegistrationModule\DeliveryAddress.cs" />
+    <Compile Include="RegistrationModule\InvoiceAddress.cs" />
+    <Compile Include="RegistrationModule\MailAddress.cs" />
+    <Compile Include="RegistrationModule\Registration.cs" />
+    <Compile Include="PartnerModule\DeliveryAddress.cs" />
+    <Compile Include="PartnerModule\Representative.cs" />
+    <Compile Include="RegistrationModule\DataRecording.cs" />
+    <Compile Include="RegistrationModule\WebAdministrator.cs" />
+    <Compile Include="ServiceRequest\ActivateCart.cs" />
+    <Compile Include="ServiceRequest\AddBankAccount.cs" />
+    <Compile Include="ServiceRequest\AddDeliveryAddress.cs" />
+    <Compile Include="ServiceRequest\AddNewRegistration.cs" />
+    <Compile Include="ServiceRequest\AssociateCart.cs" />
+    <Compile Include="ServiceRequest\AddContactPerson.cs" />
+    <Compile Include="ServiceRequest\ChangePassword.cs" />
+    <Compile Include="ServiceRequest\UndoChangePassword.cs" />
+    <Compile Include="ServiceRequest\GetNewsletterCollection.cs" />
+    <Compile Include="ServiceRequest\GetInvoiceInfo.cs" />
+    <Compile Include="ServiceRequest\GetContactPerson.cs" />
+    <Compile Include="ServiceRequest\GetDeliveryAddress.cs" />
+    <Compile Include="ServiceRequest\GetBankAccounts.cs" />
+    <Compile Include="ServiceRequest\GetOrderInfo.cs" />
+    <Compile Include="ServiceRequest\GetRegistrationByKey.cs" />
+    <Compile Include="ServiceRequest\PostRegistration.cs" />
+    <Compile Include="ServiceRequest\RemoveContactPerson.cs" />
+    <Compile Include="ServiceRequest\UpdateContactPerson.cs" />
+    <Compile Include="ServiceRequest\RemoveBankAccount.cs" />
+    <Compile Include="ServiceRequest\RemoveDeliveryAddress.cs" />
+    <Compile Include="ServiceRequest\UpdateBankAccount.cs" />
+    <Compile Include="ServiceRequest\UpdateDeliveryAddress.cs" />
+    <Compile Include="ServiceRequest\UpdateDataRecording.cs" />
+    <Compile Include="ServiceRequest\SalesOrderCreate.cs" />
+    <Compile Include="ServiceRequest\CreateOrder.cs" />
+    <Compile Include="ServiceRequest\CreateFinanceOffer.cs" />
+    <Compile Include="ServiceRequest\FinanceOffer.cs" />
+    <Compile Include="ServiceRequest\GetShoppingCartInfo.cs" />
+    <Compile Include="ServiceRequest\GetBannerList.cs" />
+    <Compile Include="ServiceRequest\GetActiveCart.cs" />
+    <Compile Include="ServiceRequest\GetCustomerRegistration.cs" />
+    <Compile Include="ServiceRequest\GetDeliveryAddresses.cs" />
+    <Compile Include="ServiceRequest\GetPriceList.cs" />
+    <Compile Include="ServiceRequest\RemoveLine.cs" />
+    <Compile Include="ServiceRequest\GetCartByKey.cs" />
+    <Compile Include="ServiceRequest\GetCartCollectionByVisitorId.cs" />
+    <Compile Include="ServiceRequest\SaveCart.cs" />
+    <Compile Include="ServiceRequest\UpdateLineQuantity.cs" />
+    <Compile Include="ServiceRequest\RemoveCart.cs" />
+    <Compile Include="ServiceRequest\Empty.cs" />
+    <Compile Include="ServiceRequest\AddCart.cs" />
+    <Compile Include="ServiceRequest\AddLine.cs" />
+    <Compile Include="ServiceRequest\UpdateRegistrationData.cs" />
+    <Compile Include="ServiceRequest\UpdateWebAdministrator.cs" />
+    <Compile Include="ServiceRequest\VisitorInfo.cs" />
+    <Compile Include="ServiceResponse\UpdateWebAdministrator.cs" />
+    <Compile Include="ServiceResponse\UpdateRegistrationData.cs" />
+    <Compile Include="ServiceResponse\UpdateDataRecording.cs" />
+    <Compile Include="ServiceResponse\PostRegistration.cs" />
+    <Compile Include="WebshopModule\Completion.cs" />
+    <Compile Include="WebshopModule\BannerProduct.cs" />
+    <Compile Include="WebshopModule\FinanceOffer.cs" />
+    <Compile Include="WebshopModule\OrderFulFillment.cs" />
+    <Compile Include="WebshopModule\FinanceOfferFulFillment.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAndLeasingOptions.cs" />
+    <Compile Include="WebshopModule\LeasingOptions.cs" />
+    <Compile Include="WebshopModule\ShoppingCartInfo2.cs" />
+    <Compile Include="WebshopModule\ShoppingCartInfo.cs" />
+    <Compile Include="ServiceResponse\Empty.cs" />
+    <Compile Include="PartnerModule\AddressZipCodes.cs" />
+    <Compile Include="PartnerModule\MailAddress.cs" />
+    <Compile Include="PartnerModule\Permission.cs" />
+    <Compile Include="PartnerModule\Visitor.cs" />
+    <Compile Include="ServiceRequest\AddressZipCode.cs" />
+    <Compile Include="ServiceRequest\CatalogueFilter.cs" />
+    <Compile Include="ServiceRequest\SignOut.cs" />
+    <Compile Include="ServiceRequest\PictureFilter.cs" />
+    <Compile Include="ServiceRequest\GetAllProduct.cs" />
+    <Compile Include="ServiceRequest\GetItemByProductId.cs" />
+    <Compile Include="ServiceRequest\SignIn.cs" />
+    <Compile Include="ServiceRequest\GetAllStructure.cs" />
+    <Compile Include="WebshopModule\NewsletterCollection.cs" />
+    <Compile Include="WebshopModule\Category.cs" />
+    <Compile Include="WebshopModule\CompatibleProduct.cs" />
+    <Compile Include="WebshopModule\CompatibleProducts.cs" />
+    <Compile Include="WebshopModule\ProductDetails.cs" />
+    <Compile Include="WebshopModule\PriceList.cs" />
+    <Compile Include="WebshopModule\OpenedShoppingCart.cs" />
+    <Compile Include="WebshopModule\Garanty.cs" />
+    <Compile Include="WebshopModule\Manufacturer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebshopModule\Pager.cs" />
+    <Compile Include="WebshopModule\Picture.cs" />
+    <Compile Include="WebshopModule\Product.cs" />
+    <Compile Include="PartnerModule\ProductManager.cs" />
+    <Compile Include="WebshopModule\Products.cs" />
+    <Compile Include="WebshopModule\SecondHand.cs" />
+    <Compile Include="WebshopModule\Shipping.cs" />
+    <Compile Include="WebshopModule\ShoppingCart.cs" />
+    <Compile Include="WebshopModule\ShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\ShoppingCartItem.cs" />
+    <Compile Include="WebshopModule\Stock.cs" />
+    <Compile Include="WebshopModule\StoredOpenedShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\StoredShoppingCart.cs" />
+    <Compile Include="WebshopModule\Structures.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MaintainModule\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

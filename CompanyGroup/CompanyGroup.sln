@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{8DF29E3D-16D8-41EB-B61D-B9FB4B9449BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F4E9B8EF-1419-4274-87F2-A1DBB61CA59C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "..\Helpers\Helpers.csproj", "{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DF29E3D-16D8-41EB-B61D-B9FB4B9449BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF29E3D-16D8-41EB-B61D-B9FB4B9449BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF29E3D-16D8-41EB-B61D-B9FB4B9449BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF29E3D-16D8-41EB-B61D-B9FB4B9449BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E9B8EF-1419-4274-87F2-A1DBB61CA59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E9B8EF-1419-4274-87F2-A1DBB61CA59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E9B8EF-1419-4274-87F2-A1DBB61CA59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E9B8EF-1419-4274-87F2-A1DBB61CA59C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

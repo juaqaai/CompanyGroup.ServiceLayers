@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsInvoiceState" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceState.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceState.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoiceState.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsInvoiceState" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsInvoiceState" msprop:Generator_UserDSName="dsInvoiceState">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="InvoiceState" msprop:Generator_UserTableName="InvoiceState" msprop:Generator_RowEvArgName="InvoiceStateRowChangeEvent" msprop:Generator_TableVarName="tableInvoiceState" msprop:Generator_TablePropName="InvoiceState" msprop:Generator_RowDeletingName="InvoiceStateRowDeleting" msprop:Generator_RowChangingName="InvoiceStateRowChanging" msprop:Generator_RowDeletedName="InvoiceStateRowDeleted" msprop:Generator_TableClassName="InvoiceStateDataTable" msprop:Generator_RowChangedName="InvoiceStateRowChanged" msprop:Generator_RowEvHandlerName="InvoiceStateRowChangeEventHandler" msprop:Generator_RowClassName="InvoiceStateRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sInvoiceNumber" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="sInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sInvoiceNumberColumn" msprop:Generator_UserColumnName="sInvoiceNumber" type="xs:string" />
+              <xs:element name="sExtID" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="sExtID" msprop:Generator_ColumnVarNameInTable="columnsExtID" msprop:Generator_ColumnPropNameInTable="sExtIDColumn" msprop:Generator_UserColumnName="sExtID" type="xs:string" />
+              <xs:element name="nStateType" msprop:Generator_ColumnVarNameInTable="columnnStateType" msprop:Generator_ColumnPropNameInRow="nStateType" msprop:Generator_ColumnPropNameInTable="nStateTypeColumn" msprop:Generator_UserColumnName="nStateType" type="xs:short" />
+              <xs:element name="nStateCode" msprop:Generator_ColumnVarNameInTable="columnnStateCode" msprop:Generator_ColumnPropNameInRow="nStateCode" msprop:Generator_ColumnPropNameInTable="nStateCodeColumn" msprop:Generator_UserColumnName="nStateCode" type="xs:short" />
+              <xs:element name="dtValidFrom" msprop:Generator_ColumnVarNameInTable="columndtValidFrom" msprop:Generator_ColumnPropNameInRow="dtValidFrom" msprop:Generator_ColumnPropNameInTable="dtValidFromColumn" msprop:Generator_UserColumnName="dtValidFrom" type="xs:dateTime" />
+              <xs:element name="sStateName" msprop:Generator_ColumnVarNameInTable="columnsStateName" msprop:Generator_ColumnPropNameInRow="sStateName" msprop:Generator_ColumnPropNameInTable="sStateNameColumn" msprop:Generator_UserColumnName="sStateName" type="xs:string" minOccurs="0" />
+              <xs:element name="sRemark" msprop:Generator_ColumnVarNameInTable="columnsRemark" msprop:Generator_ColumnPropNameInRow="sRemark" msprop:Generator_ColumnPropNameInTable="sRemarkColumn" msprop:Generator_UserColumnName="sRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="iCentralStateID" msprop:Generator_ColumnVarNameInTable="columniCentralStateID" msprop:Generator_ColumnPropNameInRow="iCentralStateID" msprop:Generator_ColumnPropNameInTable="iCentralStateIDColumn" msprop:Generator_UserColumnName="iCentralStateID" type="xs:int" />
+              <xs:element name="sInvoiceWebID" msprop:Generator_ColumnVarNameInTable="columnsInvoiceWebID" msprop:Generator_ColumnPropNameInRow="sInvoiceWebID" msprop:Generator_ColumnPropNameInTable="sInvoiceWebIDColumn" msprop:Generator_UserColumnName="sInvoiceWebID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:InvoiceState" />
+      <xs:field xpath="mstns:sInvoiceNumber" />
+      <xs:field xpath="mstns:sExtID" />
+      <xs:field xpath="mstns:nStateType" />
+      <xs:field xpath="mstns:nStateCode" />
+      <xs:field xpath="mstns:dtValidFrom" />
+      <xs:field xpath="mstns:iCentralStateID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

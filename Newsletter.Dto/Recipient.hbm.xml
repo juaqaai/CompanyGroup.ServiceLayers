@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.GetNewsletterRecipientList" callable="true">
+    <query-param name="HeaderId" type="System.Int32"/>
+    <return-scalar column="DetailId" type="System.Int64"/>
+    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="Email" type="System.String"/>
+    <return-scalar column="Type" type="System.Int32"/>
+    exec InternetUser.GetNewsletterRecipientList @HeaderId=:HeaderId
+  </sql-query>
+</hibernate-mapping>

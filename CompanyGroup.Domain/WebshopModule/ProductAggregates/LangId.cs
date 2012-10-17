@@ -1,0 +1,1 @@
+﻿public enum Language { Hungarian = 0, Serbian = 1, English = 2 }

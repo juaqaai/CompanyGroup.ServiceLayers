@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsTransactionList" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsTransactionList.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsTransactionList.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsTransactionList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsTransactionList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsTransactionList" msprop:Generator_DataSetName="dsTransactionList" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Transaction" msprop:Generator_UserTableName="Transaction" msprop:Generator_RowDeletedName="TransactionRowDeleted" msprop:Generator_RowChangedName="TransactionRowChanged" msprop:Generator_RowClassName="TransactionRow" msprop:Generator_RowChangingName="TransactionRowChanging" msprop:Generator_RowEvArgName="TransactionRowChangeEvent" msprop:Generator_RowEvHandlerName="TransactionRowChangeEventHandler" msprop:Generator_TableClassName="TransactionDataTable" msprop:Generator_TableVarName="tableTransaction" msprop:Generator_RowDeletingName="TransactionRowDeleting" msprop:Generator_TablePropName="Transaction">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iTransactionID" msprop:Generator_UserColumnName="iTransactionID" msprop:Generator_ColumnPropNameInRow="iTransactionID" msprop:Generator_ColumnVarNameInTable="columniTransactionID" msprop:Generator_ColumnPropNameInTable="iTransactionIDColumn" type="xs:int" />
+              <xs:element name="nTransactionType" msprop:Generator_UserColumnName="nTransactionType" msprop:Generator_ColumnPropNameInRow="nTransactionType" msprop:Generator_ColumnVarNameInTable="columnnTransactionType" msprop:Generator_ColumnPropNameInTable="nTransactionTypeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sTransactionTypeName" msdata:Caption="sTransactionType" msprop:Generator_UserColumnName="sTransactionTypeName" msprop:Generator_ColumnPropNameInRow="sTransactionTypeName" msprop:Generator_ColumnVarNameInTable="columnsTransactionTypeName" msprop:Generator_ColumnPropNameInTable="sTransactionTypeNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sSupplierCode" msdata:Caption="sPartnerCode" msprop:Generator_UserColumnName="sSupplierCode" msprop:Generator_ColumnPropNameInRow="sSupplierCode" msprop:Generator_ColumnVarNameInTable="columnsSupplierCode" msprop:Generator_ColumnPropNameInTable="sSupplierCodeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nSupplierCodeType" msdata:Caption="nPartnerCodeType" msprop:Generator_UserColumnName="nSupplierCodeType" msprop:Generator_ColumnPropNameInRow="nSupplierCodeType" msprop:Generator_ColumnVarNameInTable="columnnSupplierCodeType" msprop:Generator_ColumnPropNameInTable="nSupplierCodeTypeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sCardNumber" msprop:Generator_UserColumnName="sCardNumber" msprop:Generator_ColumnPropNameInRow="sCardNumber" msprop:Generator_ColumnVarNameInTable="columnsCardNumber" msprop:Generator_ColumnPropNameInTable="sCardNumberColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sCustomerCode" msdata:Caption="sCardPartnerCode" msprop:Generator_UserColumnName="sCustomerCode" msprop:Generator_ColumnPropNameInRow="sCustomerCode" msprop:Generator_ColumnVarNameInTable="columnsCustomerCode" msprop:Generator_ColumnPropNameInTable="sCustomerCodeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nCustomerCodeType" msdata:Caption="nCardPartnerCodeType" msprop:Generator_UserColumnName="nCustomerCodeType" msprop:Generator_ColumnPropNameInRow="nCustomerCodeType" msprop:Generator_ColumnVarNameInTable="columnnCustomerCodeType" msprop:Generator_ColumnPropNameInTable="nCustomerCodeTypeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="dtTran" msprop:Generator_UserColumnName="dtTran" msprop:Generator_ColumnPropNameInRow="dtTran" msprop:Generator_ColumnVarNameInTable="columndtTran" msprop:Generator_ColumnPropNameInTable="dtTranColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="sAuthCode" msprop:Generator_UserColumnName="sAuthCode" msprop:Generator_ColumnPropNameInRow="sAuthCode" msprop:Generator_ColumnVarNameInTable="columnsAuthCode" msprop:Generator_ColumnPropNameInTable="sAuthCodeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dValue" msprop:Generator_UserColumnName="dValue" msprop:Generator_ColumnPropNameInRow="dValue" msprop:Generator_ColumnVarNameInTable="columndValue" msprop:Generator_ColumnPropNameInTable="dValueColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="nSubAccount" msdata:Caption="nNewSubAccount" msprop:Generator_UserColumnName="nSubAccount" msprop:Generator_ColumnPropNameInRow="nSubAccount" msprop:Generator_ColumnVarNameInTable="columnnSubAccount" msprop:Generator_ColumnPropNameInTable="nSubAccountColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sSubAccountName" msdata:Caption="sNewSubAccountName" msprop:Generator_UserColumnName="sSubAccountName" msprop:Generator_ColumnPropNameInRow="sSubAccountName" msprop:Generator_ColumnVarNameInTable="columnsSubAccountName" msprop:Generator_ColumnPropNameInTable="sSubAccountNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sCurrency" msprop:Generator_UserColumnName="sCurrency" msprop:Generator_ColumnPropNameInRow="sCurrency" msprop:Generator_ColumnVarNameInTable="columnsCurrency" msprop:Generator_ColumnPropNameInTable="sCurrencyColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sTerminalType" msprop:Generator_UserColumnName="sTerminalType" msprop:Generator_ColumnPropNameInRow="sTerminalType" msprop:Generator_ColumnVarNameInTable="columnsTerminalType" msprop:Generator_ColumnPropNameInTable="sTerminalTypeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sHUB" msprop:Generator_UserColumnName="sHUB" msprop:Generator_ColumnPropNameInRow="sHUB" msprop:Generator_ColumnVarNameInTable="columnsHUB" msprop:Generator_ColumnPropNameInTable="sHUBColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sMID" msprop:Generator_UserColumnName="sMID" msprop:Generator_ColumnPropNameInRow="sMID" msprop:Generator_ColumnVarNameInTable="columnsMID" msprop:Generator_ColumnPropNameInTable="sMIDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sTID" msprop:Generator_UserColumnName="sTID" msprop:Generator_ColumnPropNameInRow="sTID" msprop:Generator_ColumnVarNameInTable="columnsTID" msprop:Generator_ColumnPropNameInTable="sTIDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nReplyCode" msdata:Caption="nTransactionResult" msprop:Generator_UserColumnName="nReplyCode" msprop:Generator_ColumnPropNameInRow="nReplyCode" msprop:Generator_ColumnVarNameInTable="columnnReplyCode" msprop:Generator_ColumnPropNameInTable="nReplyCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sReplyMessage" msprop:Generator_UserColumnName="sReplyMessage" msprop:Generator_ColumnPropNameInRow="sReplyMessage" msprop:Generator_ColumnVarNameInTable="columnsReplyMessage" msprop:Generator_ColumnPropNameInTable="sReplyMessageColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TransactionInvoice" msprop:Generator_UserTableName="TransactionInvoice" msprop:Generator_RowDeletedName="TransactionInvoiceRowDeleted" msprop:Generator_RowChangedName="TransactionInvoiceRowChanged" msprop:Generator_RowClassName="TransactionInvoiceRow" msprop:Generator_RowChangingName="TransactionInvoiceRowChanging" msprop:Generator_RowEvArgName="TransactionInvoiceRowChangeEvent" msprop:Generator_RowEvHandlerName="TransactionInvoiceRowChangeEventHandler" msprop:Generator_TableClassName="TransactionInvoiceDataTable" msprop:Generator_TableVarName="tableTransactionInvoice" msprop:Generator_RowDeletingName="TransactionInvoiceRowDeleting" msprop:Generator_TablePropName="TransactionInvoice">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iTransactionID" msprop:Generator_UserColumnName="iTransactionID" msprop:Generator_ColumnPropNameInRow="iTransactionID" msprop:Generator_ColumnVarNameInTable="columniTransactionID" msprop:Generator_ColumnPropNameInTable="iTransactionIDColumn" type="xs:int" />
+              <xs:element name="sInvoiceNumber" msprop:Generator_UserColumnName="sInvoiceNumber" msprop:Generator_ColumnPropNameInRow="sInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sInvoiceNumberColumn" type="xs:string" />
+              <xs:element name="dtRelated" msprop:Generator_UserColumnName="dtRelated" msprop:Generator_ColumnPropNameInRow="dtRelated" msprop:Generator_ColumnVarNameInTable="columndtRelated" msprop:Generator_ColumnPropNameInTable="dtRelatedColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TransactionModification" msprop:Generator_UserTableName="TransactionModification" msprop:Generator_RowDeletedName="TransactionModificationRowDeleted" msprop:Generator_RowChangedName="TransactionModificationRowChanged" msprop:Generator_RowClassName="TransactionModificationRow" msprop:Generator_RowChangingName="TransactionModificationRowChanging" msprop:Generator_RowEvArgName="TransactionModificationRowChangeEvent" msprop:Generator_RowEvHandlerName="TransactionModificationRowChangeEventHandler" msprop:Generator_TableClassName="TransactionModificationDataTable" msprop:Generator_TableVarName="tableTransactionModification" msprop:Generator_RowDeletingName="TransactionModificationRowDeleting" msprop:Generator_TablePropName="TransactionModification">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iTransactionID" msprop:Generator_UserColumnName="iTransactionID" msprop:Generator_ColumnPropNameInRow="iTransactionID" msprop:Generator_ColumnVarNameInTable="columniTransactionID" msprop:Generator_ColumnPropNameInTable="iTransactionIDColumn" type="xs:int" />
+              <xs:element name="sNewSupplierCode" msprop:Generator_UserColumnName="sNewSupplierCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="sNewSupplierCode" msprop:Generator_ColumnPropNameInTable="sNewSupplierCodeColumn" msprop:Generator_ColumnVarNameInTable="columnsNewSupplierCode" type="xs:string" minOccurs="0" />
+              <xs:element name="nNewSupplierCodeType" msprop:Generator_UserColumnName="nNewSupplierCodeType" msprop:Generator_ColumnPropNameInRow="nNewSupplierCodeType" msprop:Generator_ColumnVarNameInTable="columnnNewSupplierCodeType" msprop:Generator_ColumnPropNameInTable="nNewSupplierCodeTypeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="nNewSubAccount" msprop:Generator_UserColumnName="nNewSubAccount" msprop:Generator_ColumnPropNameInRow="nNewSubAccount" msprop:Generator_ColumnVarNameInTable="columnnNewSubAccount" msprop:Generator_ColumnPropNameInTable="nNewSubAccountColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sNewSubAccountName" msprop:Generator_UserColumnName="sNewSubAccountName" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="sNewSubAccountName" msprop:Generator_ColumnPropNameInTable="sNewSubAccountNameColumn" msprop:Generator_ColumnVarNameInTable="columnsNewSubAccountName" type="xs:string" minOccurs="0" />
+              <xs:element name="dNewValue" msprop:Generator_UserColumnName="dNewValue" msprop:Generator_ColumnPropNameInRow="dNewValue" msprop:Generator_ColumnVarNameInTable="columndNewValue" msprop:Generator_ColumnPropNameInTable="dNewValueColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="dtModified" msprop:Generator_UserColumnName="dtModified" msprop:Generator_ColumnPropNameInRow="dtModified" msprop:Generator_ColumnVarNameInTable="columndtModified" msprop:Generator_ColumnPropNameInTable="dtModifiedColumn" type="xs:dateTime" />
+              <xs:element name="sRemark" msprop:Generator_UserColumnName="sRemark" msprop:Generator_ColumnPropNameInRow="sRemark" msprop:Generator_ColumnVarNameInTable="columnsRemark" msprop:Generator_ColumnPropNameInTable="sRemarkColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nModificationType" msprop:Generator_UserColumnName="nModificationType" msprop:Generator_ColumnPropNameInRow="nModificationType" msprop:Generator_ColumnVarNameInTable="columnnModificationType" msprop:Generator_ColumnPropNameInTable="nModificationTypeColumn" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Transaction" />
+      <xs:field xpath="mstns:iTransactionID" />
+    </xs:unique>
+    <xs:unique name="TransactionKey1">
+      <xs:selector xpath=".//mstns:Transaction" />
+      <xs:field xpath="mstns:sSupplierCode" />
+      <xs:field xpath="mstns:nSupplierCodeType" />
+      <xs:field xpath="mstns:sCardNumber" />
+      <xs:field xpath="mstns:dtTran" />
+      <xs:field xpath="mstns:sAuthCode" />
+    </xs:unique>
+    <xs:unique name="TransactionInvoice_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TransactionInvoice" />
+      <xs:field xpath="mstns:iTransactionID" />
+      <xs:field xpath="mstns:sInvoiceNumber" />
+    </xs:unique>
+    <xs:unique name="TransactionModification_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TransactionModification" />
+      <xs:field xpath="mstns:iTransactionID" />
+      <xs:field xpath="mstns:dtModified" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

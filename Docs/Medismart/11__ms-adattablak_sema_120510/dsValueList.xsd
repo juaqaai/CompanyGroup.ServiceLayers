@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsValueList" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsValueList.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsValueList.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsValueList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsValueList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsValueList" msprop:Generator_DataSetName="dsValueList">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ValueList" msprop:Generator_UserTableName="ValueList" msprop:Generator_RowDeletedName="ValueListRowDeleted" msprop:Generator_RowChangedName="ValueListRowChanged" msprop:Generator_RowClassName="ValueListRow" msprop:Generator_RowChangingName="ValueListRowChanging" msprop:Generator_RowEvArgName="ValueListRowChangeEvent" msprop:Generator_RowEvHandlerName="ValueListRowChangeEventHandler" msprop:Generator_TableClassName="ValueListDataTable" msprop:Generator_TableVarName="tableValueList" msprop:Generator_RowDeletingName="ValueListRowDeleting" msprop:Generator_TablePropName="ValueList">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sGroup" msprop:Generator_UserColumnName="sGroup" msprop:Generator_ColumnPropNameInRow="sGroup" msprop:Generator_ColumnVarNameInTable="columnsGroup" msprop:Generator_ColumnPropNameInTable="sGroupColumn" type="xs:string" />
+              <xs:element name="sName" msprop:Generator_UserColumnName="sName" msprop:Generator_ColumnPropNameInRow="sName" msprop:Generator_ColumnVarNameInTable="columnsName" msprop:Generator_ColumnPropNameInTable="sNameColumn" type="xs:string" />
+              <xs:element name="iValue" msprop:Generator_UserColumnName="iValue" msprop:Generator_ColumnPropNameInRow="iValue" msprop:Generator_ColumnVarNameInTable="columniValue" msprop:Generator_ColumnPropNameInTable="iValueColumn" type="xs:int" />
+              <xs:element name="sValue" msprop:Generator_UserColumnName="sValue" msprop:Generator_ColumnPropNameInRow="sValue" msprop:Generator_ColumnVarNameInTable="columnsValue" msprop:Generator_ColumnPropNameInTable="sValueColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtValue" msprop:Generator_UserColumnName="dtValue" msprop:Generator_ColumnPropNameInRow="dtValue" msprop:Generator_ColumnVarNameInTable="columndtValue" msprop:Generator_ColumnPropNameInTable="dtValueColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="sRemark" msprop:Generator_UserColumnName="sRemark" msprop:Generator_ColumnPropNameInRow="sRemark" msprop:Generator_ColumnVarNameInTable="columnsRemark" msprop:Generator_ColumnPropNameInTable="sRemarkColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ValueList" />
+      <xs:field xpath="mstns:sGroup" />
+      <xs:field xpath="mstns:iValue" />
+      <xs:field xpath="mstns:sName" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

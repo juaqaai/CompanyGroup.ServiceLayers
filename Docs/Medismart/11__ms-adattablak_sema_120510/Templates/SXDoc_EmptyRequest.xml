@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SXDoc>
+  <Document id="main">
+    <Name>Empty</Name>
+    <Value encoded="raw/xml">
+      <Empty CreatedAt="yyyy-MM-dd HH:mm:ss" PartnerCodeType="WEB1/HFCODE" PartnerCode="12345/PRO" />
+    </Value>
+  </Document>
+  <Signature />
+</SXDoc>

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5745945-E479-483F-8853-686632796022}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyGroup.Data</RootNamespace>
+    <AssemblyName>CompanyGroup.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Binaries\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Binaries\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\Binaries\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dynamics\Repository.cs" />
+    <Compile Include="NoSql\MongoHelper.cs" />
+    <Compile Include="NoSql\ISettings.cs" />
+    <Compile Include="NoSql\Settings.cs" />
+    <Compile Include="PartnerModule\ChangePasswordRepository.cs" />
+    <Compile Include="PartnerModule\ContactPersonRepository.cs" />
+    <Compile Include="PartnerModule\InvoiceRepository.cs" />
+    <Compile Include="PartnerModule\CustomerRepository.cs" />
+    <Compile Include="NoSql\Repository.cs" />
+    <Compile Include="PartnerModule\SalesOrderRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NHibernateSessionManager.cs" />
+    <Compile Include="MaintainModule\ProductRepository.cs" />
+    <Compile Include="PartnerModule\VisitorRepository.cs" />
+    <Compile Include="RegistrationModule\RegistrationRepository.cs" />
+    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="WebshopModule\NewsletterRepository.cs" />
+    <Compile Include="WebshopModule\FinanceRepository.cs" />
+    <Compile Include="WebshopModule\ShoppingCartRepository.cs" />
+    <Compile Include="WebshopModule\PictureRepository.cs" />
+    <Compile Include="WebshopModule\ProductRepository.cs" />
+    <Compile Include="WebshopModule\StructureRepository.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyGroup.Domain\CompanyGroup.Domain.csproj">
+      <Project>{D73A25A5-CE2D-432B-B18A-F914E451B348}</Project>
+      <Name>CompanyGroup.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

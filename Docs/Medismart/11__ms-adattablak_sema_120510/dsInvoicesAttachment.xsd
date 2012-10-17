@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsInvoicesAttachment" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoicesAttachment.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoicesAttachment.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/dsInvoicesAttachment.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsInvoicesAttachment" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsInvoicesAttachment" msprop:Generator_DataSetName="dsInvoicesAttachment" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="InvoiceAttachment" msprop:Generator_UserTableName="InvoiceAttachment" msprop:Generator_RowDeletedName="InvoiceAttachmentRowDeleted" msprop:Generator_RowChangedName="InvoiceAttachmentRowChanged" msprop:Generator_RowClassName="InvoiceAttachmentRow" msprop:Generator_RowChangingName="InvoiceAttachmentRowChanging" msprop:Generator_RowEvArgName="InvoiceAttachmentRowChangeEvent" msprop:Generator_RowEvHandlerName="InvoiceAttachmentRowChangeEventHandler" msprop:Generator_TableClassName="InvoiceAttachmentDataTable" msprop:Generator_TableVarName="tableInvoiceAttachment" msprop:Generator_RowDeletingName="InvoiceAttachmentRowDeleting" msprop:Generator_TablePropName="InvoiceAttachment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iAttachmentID" msprop:Generator_UserColumnName="iAttachmentID" msprop:Generator_ColumnPropNameInRow="iAttachmentID" msprop:Generator_ColumnVarNameInTable="columniAttachmentID" msprop:Generator_ColumnPropNameInTable="iAttachmentIDColumn" type="xs:int" />
+              <xs:element name="sInvoiceNumber" msprop:Generator_UserColumnName="sInvoiceNumber" msprop:Generator_ColumnPropNameInRow="sInvoiceNumber" msprop:Generator_ColumnVarNameInTable="columnsInvoiceNumber" msprop:Generator_ColumnPropNameInTable="sInvoiceNumberColumn" type="xs:string" />
+              <xs:element name="sName" msprop:Generator_UserColumnName="sName" msprop:Generator_ColumnVarNameInTable="columnsName" msprop:Generator_ColumnPropNameInRow="sName" msprop:Generator_ColumnPropNameInTable="sNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sAttachmentType" msprop:Generator_UserColumnName="sAttachmentType" msprop:Generator_ColumnPropNameInRow="sAttachmentType" msprop:Generator_ColumnVarNameInTable="columnsAttachmentType" msprop:Generator_ColumnPropNameInTable="sAttachmentTypeColumn" type="xs:string" />
+              <xs:element name="sDescription" msprop:Generator_UserColumnName="sDescription" msprop:Generator_ColumnPropNameInRow="sDescription" msprop:Generator_ColumnVarNameInTable="columnsDescription" msprop:Generator_ColumnPropNameInTable="sDescriptionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtCreated" msprop:Generator_UserColumnName="dtCreated" msprop:Generator_ColumnPropNameInRow="dtCreated" msprop:Generator_ColumnVarNameInTable="columndtCreated" msprop:Generator_ColumnPropNameInTable="dtCreatedColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="b64Attachment" msprop:Generator_UserColumnName="b64Attachment" msprop:Generator_ColumnVarNameInTable="columnb64Attachment" msprop:Generator_ColumnPropNameInRow="b64Attachment" msprop:Generator_ColumnPropNameInTable="b64AttachmentColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="bIsPrivate" msprop:Generator_UserColumnName="bIsPrivate" msprop:Generator_ColumnVarNameInTable="columnbIsPrivate" msprop:Generator_ColumnPropNameInRow="bIsPrivate" msprop:Generator_ColumnPropNameInTable="bIsPrivateColumn" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InvalidatedAttachment" msprop:Generator_UserTableName="InvalidatedAttachment" msprop:Generator_RowDeletedName="InvalidatedAttachmentRowDeleted" msprop:Generator_RowChangedName="InvalidatedAttachmentRowChanged" msprop:Generator_RowClassName="InvalidatedAttachmentRow" msprop:Generator_RowChangingName="InvalidatedAttachmentRowChanging" msprop:Generator_RowEvArgName="InvalidatedAttachmentRowChangeEvent" msprop:Generator_RowEvHandlerName="InvalidatedAttachmentRowChangeEventHandler" msprop:Generator_TableClassName="InvalidatedAttachmentDataTable" msprop:Generator_TableVarName="tableInvalidatedAttachment" msprop:Generator_RowDeletingName="InvalidatedAttachmentRowDeleting" msprop:Generator_TablePropName="InvalidatedAttachment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="iAttachmentID" msprop:Generator_UserColumnName="iAttachmentID" msprop:Generator_ColumnPropNameInRow="iAttachmentID" msprop:Generator_ColumnVarNameInTable="columniAttachmentID" msprop:Generator_ColumnPropNameInTable="iAttachmentIDColumn" type="xs:int" />
+              <xs:element name="dtInvalidated" msprop:Generator_UserColumnName="dtInvalidated" msprop:Generator_ColumnPropNameInRow="dtInvalidated" msprop:Generator_ColumnVarNameInTable="columndtInvalidated" msprop:Generator_ColumnPropNameInTable="dtInvalidatedColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="sRemark" msprop:Generator_UserColumnName="sRemark" msprop:Generator_ColumnPropNameInRow="sRemark" msprop:Generator_ColumnVarNameInTable="columnsRemark" msprop:Generator_ColumnPropNameInTable="sRemarkColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:InvoiceAttachment" />
+      <xs:field xpath="mstns:iAttachmentID" />
+      <xs:field xpath="mstns:sInvoiceNumber" />
+      <xs:field xpath="mstns:sAttachmentType" />
+    </xs:unique>
+    <xs:unique name="InvalidatedAttachment_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:InvalidatedAttachment" />
+      <xs:field xpath="mstns:iAttachmentID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

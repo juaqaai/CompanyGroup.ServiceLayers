@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsItemAcceptance" targetNamespace="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsItemAcceptance.xsd" xmlns:mstns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsItemAcceptance.xsd" xmlns="http://ws.medismart.hu/MS.eNvoice.WS.B2B.DataSets/HF/dsItemAcceptance.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsItemAcceptance" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsItemAcceptance" msprop:Generator_DataSetName="dsItemAcceptance">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ItemAcceptanceList" msprop:Generator_UserTableName="ItemAcceptanceList" msprop:Generator_RowDeletedName="ItemAcceptanceListRowDeleted" msprop:Generator_RowChangedName="ItemAcceptanceListRowChanged" msprop:Generator_RowClassName="ItemAcceptanceListRow" msprop:Generator_RowChangingName="ItemAcceptanceListRowChanging" msprop:Generator_RowEvArgName="ItemAcceptanceListRowChangeEvent" msprop:Generator_RowEvHandlerName="ItemAcceptanceListRowChangeEventHandler" msprop:Generator_TableClassName="ItemAcceptanceListDataTable" msprop:Generator_TableVarName="tableItemAcceptanceList" msprop:Generator_RowDeletingName="ItemAcceptanceListRowDeleting" msprop:Generator_TablePropName="ItemAcceptanceList">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nRegnumTypeCode" msprop:Generator_UserColumnName="nRegnumTypeCode" msprop:Generator_ColumnPropNameInRow="nRegnumTypeCode" msprop:Generator_ColumnVarNameInTable="columnnRegnumTypeCode" msprop:Generator_ColumnPropNameInTable="nRegnumTypeCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sRegnum" msprop:Generator_UserColumnName="sRegnum" msprop:Generator_ColumnPropNameInRow="sRegnum" msprop:Generator_ColumnVarNameInTable="columnsRegnum" msprop:Generator_ColumnPropNameInTable="sRegnumColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sItemName" msprop:Generator_UserColumnName="sItemName" msprop:Generator_ColumnPropNameInRow="sItemName" msprop:Generator_ColumnVarNameInTable="columnsItemName" msprop:Generator_ColumnPropNameInTable="sItemNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtValidFrom" msprop:Generator_UserColumnName="dtValidFrom" msprop:Generator_ColumnPropNameInRow="dtValidFrom" msprop:Generator_ColumnVarNameInTable="columndtValidFrom" msprop:Generator_ColumnPropNameInTable="dtValidFromColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="nAcceptanceCode" msprop:Generator_UserColumnName="nAcceptanceCode" msprop:Generator_ColumnPropNameInRow="nAcceptanceCode" msprop:Generator_ColumnVarNameInTable="columnnAcceptanceCode" msprop:Generator_ColumnPropNameInTable="nAcceptanceCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sAcceptanceReference" msprop:Generator_UserColumnName="sAcceptanceReference" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="sAcceptanceReference" msprop:Generator_ColumnPropNameInTable="sAcceptanceReferenceColumn" msprop:Generator_ColumnVarNameInTable="columnsAcceptanceReference" type="xs:string" minOccurs="0" />
+              <xs:element name="sAcceptanceRefID" msprop:Generator_UserColumnName="sAcceptanceRefID" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="sAcceptanceRefID" msprop:Generator_ColumnPropNameInTable="sAcceptanceRefIDColumn" msprop:Generator_ColumnVarNameInTable="columnsAcceptanceRefID" type="xs:string" minOccurs="0" />
+              <xs:element name="sHealthFund_PartnerCode" msprop:Generator_UserColumnName="sHealthFund_PartnerCode" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="sHealthFund_PartnerCode" msprop:Generator_ColumnPropNameInTable="sHealthFund_PartnerCodeColumn" msprop:Generator_ColumnVarNameInTable="columnsHealthFund_PartnerCode" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemAcceptanceResult" msprop:Generator_UserTableName="ItemAcceptanceResult" msprop:Generator_RowDeletedName="ItemAcceptanceResultRowDeleted" msprop:Generator_RowChangedName="ItemAcceptanceResultRowChanged" msprop:Generator_RowClassName="ItemAcceptanceResultRow" msprop:Generator_RowChangingName="ItemAcceptanceResultRowChanging" msprop:Generator_RowEvArgName="ItemAcceptanceResultRowChangeEvent" msprop:Generator_RowEvHandlerName="ItemAcceptanceResultRowChangeEventHandler" msprop:Generator_TableClassName="ItemAcceptanceResultDataTable" msprop:Generator_TableVarName="tableItemAcceptanceResult" msprop:Generator_RowDeletingName="ItemAcceptanceResultRowDeleting" msprop:Generator_TablePropName="ItemAcceptanceResult">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dtProcessed" msprop:Generator_UserColumnName="dtProcessed" msprop:Generator_ColumnPropNameInRow="dtProcessed" msprop:Generator_ColumnVarNameInTable="columndtProcessed" msprop:Generator_ColumnPropNameInTable="dtProcessedColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="nSimilarity" msprop:Generator_UserColumnName="nSimilarity" msprop:Generator_ColumnPropNameInRow="nSimilarity" msprop:Generator_ColumnVarNameInTable="columnnSimilarity" msprop:Generator_ColumnPropNameInTable="nSimilarityColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="nRegnumTypeCode" msprop:Generator_UserColumnName="nRegnumTypeCode" msprop:Generator_ColumnPropNameInRow="nRegnumTypeCode" msprop:Generator_ColumnVarNameInTable="columnnRegnumTypeCode" msprop:Generator_ColumnPropNameInTable="nRegnumTypeCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sRegnum" msprop:Generator_UserColumnName="sRegnum" msprop:Generator_ColumnPropNameInRow="sRegnum" msprop:Generator_ColumnVarNameInTable="columnsRegnum" msprop:Generator_ColumnPropNameInTable="sRegnumColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sItemName" msprop:Generator_UserColumnName="sItemName" msprop:Generator_ColumnPropNameInRow="sItemName" msprop:Generator_ColumnVarNameInTable="columnsItemName" msprop:Generator_ColumnPropNameInTable="sItemNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dtValidFrom" msprop:Generator_UserColumnName="dtValidFrom" msprop:Generator_ColumnPropNameInRow="dtValidFrom" msprop:Generator_ColumnVarNameInTable="columndtValidFrom" msprop:Generator_ColumnPropNameInTable="dtValidFromColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="nAcceptanceCode" msprop:Generator_UserColumnName="nAcceptanceCode" msprop:Generator_ColumnPropNameInRow="nAcceptanceCode" msprop:Generator_ColumnVarNameInTable="columnnAcceptanceCode" msprop:Generator_ColumnPropNameInTable="nAcceptanceCodeColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="sAcceptanceReference" msprop:Generator_UserColumnName="sAcceptanceReference" msprop:Generator_ColumnPropNameInRow="sAcceptanceReference" msprop:Generator_ColumnVarNameInTable="columnsAcceptanceReference" msprop:Generator_ColumnPropNameInTable="sAcceptanceReferenceColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sAcceptanceRefID" msprop:Generator_UserColumnName="sAcceptanceRefID" msprop:Generator_ColumnPropNameInRow="sAcceptanceRefID" msprop:Generator_ColumnVarNameInTable="columnsAcceptanceRefID" msprop:Generator_ColumnPropNameInTable="sAcceptanceRefIDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="sHealthFund_PartnerCode" msprop:Generator_UserColumnName="sHealthFund_PartnerCode" msprop:Generator_ColumnPropNameInRow="sHealthFund_PartnerCode" msprop:Generator_ColumnVarNameInTable="columnsHealthFund_PartnerCode" msprop:Generator_ColumnPropNameInTable="sHealthFund_PartnerCodeColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

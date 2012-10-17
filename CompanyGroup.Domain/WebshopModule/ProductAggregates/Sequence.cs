@@ -1,0 +1,1 @@
+﻿public enum Sequence { Price = 0, Name = 1, Stock = 2, Garanty = 3 }
