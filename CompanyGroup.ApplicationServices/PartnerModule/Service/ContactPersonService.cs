@@ -195,6 +195,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private static readonly string UndoChangePasswordUrl = Helpers.ConfigSettingsParser.GetString("UndoChangePasswordUrl", "http://1juhasza/cms/PartnerInfo/UndoChangePassword/{0}/{1}/");
 
+        private static readonly bool TestMode = Helpers.ConfigSettingsParser.GetBoolean("TestMode", true);
+
         /// <summary>
         /// jelszómódosítás email küldés
         /// </summary>
@@ -224,11 +226,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
                                         .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, visitor.Id.ToString(), changePassword.Id.ToString()));
 
-                string toAddress = visitor.Email;
+                string toAddress = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcAddress : visitor.Email;
 
                 string toName = visitor.PersonName;
 
-                MailMergeLib.MailMergeMessage mmm = new MailMergeLib.MailMergeMessage(ChangePasswordMailSubject, plain, html);
+                MailMergeLib.MailMergeMessage mmm = new MailMergeLib.MailMergeMessage(ContactPersonService.ChangePasswordMailSubject, plain, html);
 
                 mmm.BinaryTransferEncoding = System.Net.Mime.TransferEncoding.Base64;
                 mmm.CharacterEncoding = System.Text.Encoding.GetEncoding("iso-8859-2");
@@ -238,9 +240,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 mmm.TextTransferEncoding = System.Net.Mime.TransferEncoding.SevenBit;
 
                 mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.To, "<" + toAddress + ">", toName, System.Text.Encoding.Default));
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.From, String.Format("<{0}>", ChangePasswordMailFromAddress), ChangePasswordMailFromName, System.Text.Encoding.Default));
+                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.From, String.Format("<{0}>", ContactPersonService.ChangePasswordMailFromAddress), ContactPersonService.ChangePasswordMailFromName, System.Text.Encoding.Default));
 
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.Bcc, String.Format("<{0}>", ChangePasswordMailBCcAddress), ChangePasswordMailBCcName, System.Text.Encoding.Default));
+                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.Bcc, String.Format("<{0}>", ContactPersonService.ChangePasswordMailBCcAddress), ContactPersonService.ChangePasswordMailBCcName, System.Text.Encoding.Default));
 
                 //mail sender
                 MailMergeLib.MailMergeSender mailSender = new MailMergeLib.MailMergeSender();
