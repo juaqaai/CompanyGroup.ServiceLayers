@@ -161,7 +161,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SignIn")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_SignIn")
                                             .SetString("UserName", userName)
                                             .SetString("Password", password)
                                             .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
