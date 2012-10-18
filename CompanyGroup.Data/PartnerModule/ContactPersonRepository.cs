@@ -37,5 +37,29 @@ namespace CompanyGroup.Data.PartnerModule
 
             return result;
         }
+
+        /// <summary>
+        /// kapcsolattartó lekérdezés
+        /// InternetUser.cms_ContactPerson( @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.ContactPerson GetContactPerson(string contactPersonId, string dataAreaId)
+        {
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(contactPersonId), "ContactPersonId may not be null or empty");
+
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
+
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ContactPerson")
+                                                            .SetString("CustomerId", contactPersonId)
+                                                            .SetString("DataAreaId", dataAreaId)
+                                                            .SetResultTransformer(
+                                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.ContactPerson).GetConstructors()[0]));
+
+            CompanyGroup.Domain.PartnerModule.ContactPerson contactPerson = query.UniqueResult<CompanyGroup.Domain.PartnerModule.ContactPerson>();
+
+            return contactPerson;
+        }
     }
 }

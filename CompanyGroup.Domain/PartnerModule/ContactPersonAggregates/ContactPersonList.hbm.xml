@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_ContactPersons" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <return-scalar column="ContactPersonId" type="System.String"/>
+    <return-scalar column="LastName" type="System.String"/>
+    <return-scalar column="FirstName" type="System.String"/>
+    <return-scalar column="Email" type="System.String"/>
+    <return-scalar column="CellularPhone" type="System.String"/>
+    <return-scalar column="Phone" type="System.String"/>
+    <return-scalar column="PhoneLocal" type="System.String"/>
+    <return-scalar column="AllowOrder" type="System.Boolean"/>
+    <return-scalar column="AllowReceiptOfGoods" type="System.Boolean"/>
+    <return-scalar column="SmsArriveOfGoods" type="System.Boolean"/>
+    <return-scalar column="SmsOrderConfirm" type="System.Boolean"/>
+    <return-scalar column="SmsOfDelivery" type="System.Boolean"/>
+    <return-scalar column="EmailArriveOfGoods" type="System.Boolean"/>
+    <return-scalar column="EmailOfOrderConfirm" type="System.Boolean"/>
+    <return-scalar column="EmailOfDelivery" type="System.Boolean"/>
+    <return-scalar column="WebAdmin" type="System.Boolean"/>
+    <return-scalar column="PriceListDownload" type="System.Boolean"/>
+    <return-scalar column="InvoiceInfo" type="System.Boolean"/>
+    <return-scalar column="UserName" type="System.String"/>
+    <return-scalar column="Password" type="System.String"/>
+    <return-scalar column="LeftCompany" type="System.Boolean"/>
+    <return-scalar column="Newsletter" type="System.Boolean"/>
+    exec InternetUser.cms_ContactPersons @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+  </sql-query>
+</hibernate-mapping>

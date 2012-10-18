@@ -221,10 +221,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\DeliveryAddress.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
-    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPersonList.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

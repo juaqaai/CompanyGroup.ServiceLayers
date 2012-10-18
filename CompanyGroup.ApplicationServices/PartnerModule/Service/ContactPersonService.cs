@@ -52,6 +52,30 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         }
 
         /// <summary>
+        /// kapcsolattartó lekérdezése azonosító alapján
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request)
+        {
+            //ha üres a látogató azonosító
+            CompanyGroup.Helpers.DesignByContract.Require( !String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
+
+            try
+            {
+                //látogató kikeresése
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                CompanyGroup.Domain.PartnerModule.ContactPerson contactPerson = contactPersonRepository.GetContactPerson(visitor.PersonId, visitor.DataAreaId);
+
+                CompanyGroup.Dto.PartnerModule.ContactPerson result = new ContactPersonToContactPerson().MapToPartnerModuleContactPerson(contactPerson);
+
+                return result;
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
         /// jelszómódosítás visszavonása
         /// </summary>
         /// <param name="request"></param>

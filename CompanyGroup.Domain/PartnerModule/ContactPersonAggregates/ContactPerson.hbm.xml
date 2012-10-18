@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.cms_ContactPersons" callable="true">
-    <query-param name="CustomerId" type="System.String"/>
+  <sql-query name="InternetUser.cms_ContactPerson" callable="true">
+    <query-param name="ContactPersonId" type="System.String"/>
     <query-param name="DataAreaId" type="System.String"/>
     <return-scalar column="ContactPersonId" type="System.String"/>
     <return-scalar column="LastName" type="System.String"/>
@@ -25,6 +25,6 @@
     <return-scalar column="Password" type="System.String"/>
     <return-scalar column="LeftCompany" type="System.Boolean"/>
     <return-scalar column="Newsletter" type="System.Boolean"/>
-    exec InternetUser.cms_ContactPersons @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+    exec InternetUser.cms_ContactPerson @ContactPersonId=:ContactPersonId, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>
