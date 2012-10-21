@@ -179,7 +179,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                                     NewPassword = request.NewPassword,
                                                                                     OldPassword = request.OldPassword, 
                                                                                     UserName = request.UserName,
-                                                                                    Status = Domain.PartnerModule.ChangePasswordStatus.Active,
+                                                                                    Status = changePasswordCreateResult.Succeeded ? Domain.PartnerModule.ChangePasswordStatus.Active : Domain.PartnerModule.ChangePasswordStatus.Failed,
                                                                                     VisitorId = visitor.Id.ToString(),
                                                                                     Id = MongoDB.Bson.ObjectId.GenerateNewId()
                                                                                 };
@@ -193,6 +193,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             {
                 sendMailSucceeded = this.SendChangePasswordMail(changePassword, visitor);
             }
+            else
+            {
+                sendMailSucceeded = this.SendChangePasswordFailedMail(changePassword, visitor, changePasswordCreateResult);
+            }
 
             string message = ( changePasswordCreateResult.Succeeded && !sendMailSucceeded ) ? CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordMailSendFailed : changePasswordCreateResult.Message;
 
@@ -203,13 +207,23 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private static readonly string ChangePasswordMailSubject = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailSubject", "Jelszó módosítás értesítő üzenet");
 
+        private static readonly string ChangePasswordFailedMailSubject = Helpers.ConfigSettingsParser.GetString("ChangePasswordFailedMailSubject", "Hibás jelszó módosítás értesítő üzenet");
+
         private static readonly string ChangePasswordMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailHtmlTemplateFile", "changepassword.html");
+
+        private static readonly string ChangePasswordFailedMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("ChangePasswordFailedMailHtmlTemplateFile", "changepasswordfailed.html");
 
         private static readonly string ChangePasswordMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailTextTemplateFile", "changepassword.txt");
 
-        private static readonly string ChangePasswordMailFromAddress = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailFromAddress", "webadmin@hrp.hu"); 
+        private static readonly string ChangePasswordFailedMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("ChangePasswordFailedMailTextTemplateFile", "changepasswordfailed.txt");
+
+        private static readonly string ChangePasswordMailFromAddress = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailFromAddress", "webadmin@hrp.hu");
 
         private static readonly string ChangePasswordMailFromName = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailFromName", "HRP-BSC web adminisztrátor csoport");
+
+        private static readonly string ChangePasswordFailedMailToAddress = Helpers.ConfigSettingsParser.GetString("ChangePasswordFailedMailToAddress", "webadmin@hrp.hu");
+
+        private static readonly string ChangePasswordFailedMailToName = Helpers.ConfigSettingsParser.GetString("ChangePasswordFailedMailToName", "HRP-BSC web adminisztrátor csoport"); 
 
         private static readonly string ChangePasswordMailBCcAddress = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailBCcAddress", "ajuhasz@hrp.hu"); 
 
@@ -224,7 +238,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <summary>
         /// jelszómódosítás email küldés
         /// </summary>
-        /// <param name="changePasswordCreate"></param>
+        /// <param name="changePassword"></param>
         /// <param name="visitor"></param>
         /// <returns></returns>
         private bool SendChangePasswordMail(CompanyGroup.Domain.PartnerModule.ChangePassword changePassword, 
@@ -254,55 +268,78 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 string toName = visitor.PersonName;
 
-                MailMergeLib.MailMergeMessage mmm = new MailMergeLib.MailMergeMessage(ContactPersonService.ChangePasswordMailSubject, plain, html);
+                CompanyGroup.Domain.Core.MailSettings mailSettings = new CompanyGroup.Domain.Core.MailSettings(ContactPersonService.ChangePasswordMailSmtpHost,
+                                                                                                               ContactPersonService.ChangePasswordMailSubject,
+                                                                                                               plain,
+                                                                                                               html, 
+                                                                                                               ContactPersonService.ChangePasswordMailFromName, 
+                                                                                                               ContactPersonService.ChangePasswordMailFromAddress);
 
-                mmm.BinaryTransferEncoding = System.Net.Mime.TransferEncoding.Base64;
-                mmm.CharacterEncoding = System.Text.Encoding.GetEncoding("iso-8859-2");
-                mmm.CultureInfo = new System.Globalization.CultureInfo("hu-HU");
-                mmm.FileBaseDir = System.IO.Path.GetFullPath(System.Web.HttpContext.Current.Server.MapPath("../"));
-                mmm.Priority = System.Net.Mail.MailPriority.Normal;
-                mmm.TextTransferEncoding = System.Net.Mime.TransferEncoding.SevenBit;
+                mailSettings.BccAddressList.Add(ContactPersonService.ChangePasswordMailBCcName, ContactPersonService.ChangePasswordMailBCcAddress);
 
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.To, "<" + toAddress + ">", toName, System.Text.Encoding.Default));
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.From, String.Format("<{0}>", ContactPersonService.ChangePasswordMailFromAddress), ContactPersonService.ChangePasswordMailFromName, System.Text.Encoding.Default));
+                mailSettings.ToAddressList.Add(toAddress, toName);
 
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.Bcc, String.Format("<{0}>", ContactPersonService.ChangePasswordMailBCcAddress), ContactPersonService.ChangePasswordMailBCcName, System.Text.Encoding.Default));
+                return this.SendMail(mailSettings);
 
-                //mail sender
-                MailMergeLib.MailMergeSender mailSender = new MailMergeLib.MailMergeSender();
+            }
+            catch (Exception ex)
+            {
+                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                return false;
+            }
 
-                //esemenykezelok beallitasa, ha van
-                mailSender.OnSendFailure += new EventHandler<MailMergeLib.MailSenderSendFailureEventArgs>(delegate(object obj, MailMergeLib.MailSenderSendFailureEventArgs args)
-                //( ( obj, args ) =>
-                {
-                    string errorMsg = args.Error.Message;
-                    MailMergeLib.MailMergeMessage.MailMergeMessageException ex = args.Error as MailMergeLib.MailMergeMessage.MailMergeMessageException;
-                    if (ex != null && ex.Exceptions.Count > 0)
-                    {
-                        errorMsg = string.Format("{0}", ex.Exceptions[0].Message);
-                    }
-                    string text = string.Format("Error: {0}", errorMsg);
-                });
+        }
 
-                mailSender.LocalHostName = Environment.MachineName; //"mail." + 
-                mailSender.MaxFailures = 1;
-                mailSender.DelayBetweenMessages = 1000;
-                string messageOutputDir = System.IO.Path.GetTempPath() + @"\mail";
-                if (!System.IO.Directory.Exists(messageOutputDir))
-                {
-                    System.IO.Directory.CreateDirectory(messageOutputDir);
-                }
-                mailSender.MailOutputDirectory = messageOutputDir;
-                mailSender.MessageOutput = MailMergeLib.MessageOutput.SmtpServer;  // change to MessageOutput.Directory if you like
+        /// <summary>
+        /// jelszómódosítás email küldés
+        /// </summary>
+        /// <param name="changePassword"></param>
+        /// <param name="visitor"></param>
+        /// <param name="changePasswordCreateResult"></param>
+        /// <returns></returns>
+        private bool SendChangePasswordFailedMail(CompanyGroup.Domain.PartnerModule.ChangePassword changePassword,
+                                                  CompanyGroup.Domain.PartnerModule.Visitor visitor, 
+                                                  CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult)
+        {
+            try
+            {
+                string tmpHtml = ContactPersonService.HtmlText(ContactPersonService.ChangePasswordFailedMailHtmlTemplateFile);
+                string html = tmpHtml.Replace("$Name$", visitor.PersonName)
+                                        .Replace("$NewPassword$", changePassword.NewPassword)
+                                        .Replace("$OldPassword$", changePassword.OldPassword)
+                                        .Replace("$WebLoginName$", changePassword.UserName)
+                                        .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.ResultCode))
+                                        .Replace("$ErrorMessage$", changePasswordCreateResult.Message);
 
-                // smtp details
-                mailSender.SmtpHost = ChangePasswordMailSmtpHost;
-                mailSender.SmtpPort = 25;
-                //mailSender.SetSmtpAuthentification( "username", "password" );
+                string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ChangePasswordFailedMailTextTemplateFile);
+                string plain = tmpPlain.Replace("$PersonName$", visitor.PersonName)
+                                        .Replace("$NewPassword$", changePassword.NewPassword)
+                                        .Replace("$OldPassword$", changePassword.OldPassword)
+                                        .Replace("$WebLoginName$", changePassword.UserName)
+                                        .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.ResultCode))
+                                        .Replace("$ErrorMessage$", changePasswordCreateResult.Message);
 
-                mailSender.Send(mmm);
+                string toAddress = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcAddress : ContactPersonService.ChangePasswordFailedMailToAddress;
 
-                return true;
+                string toName = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcName : ContactPersonService.ChangePasswordFailedMailToName;
+
+                CompanyGroup.Domain.Core.MailSettings mailSettings = new CompanyGroup.Domain.Core.MailSettings(ContactPersonService.ChangePasswordMailSmtpHost,
+                                                                                                               ContactPersonService.ChangePasswordFailedMailSubject,
+                                                                                                               plain,
+                                                                                                               html,
+                                                                                                               ContactPersonService.ChangePasswordMailFromName,
+                                                                                                               ContactPersonService.ChangePasswordMailFromAddress);
+
+                mailSettings.BccAddressList.Add(ContactPersonService.ChangePasswordMailBCcName, ContactPersonService.ChangePasswordMailBCcAddress);
+
+                mailSettings.ToAddressList.Add(toAddress, toName);
+
+                return this.SendMail(mailSettings);
+
             }
             catch (Exception ex)
             {

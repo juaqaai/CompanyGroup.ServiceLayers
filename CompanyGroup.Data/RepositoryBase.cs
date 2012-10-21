@@ -62,6 +62,14 @@ namespace CompanyGroup.Data
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="xml"></param>
+        /// <example>
+        /// CarCollection cars = null;
+        ///string path = "cars.xml";
+        ///XmlSerializer serializer = new XmlSerializer(typeof(CarCollection));
+        ///StreamReader reader = new StreamReader(path);
+        ///cars = (CarCollection)serializer.Deserialize(reader);
+        ///reader.Close();
+        /// </example>
         /// <returns></returns>
         protected T DeSerialize<T>(string xml)
         {
@@ -90,5 +98,7 @@ namespace CompanyGroup.Data
                 }
             }
         }
+
+
     }
 }

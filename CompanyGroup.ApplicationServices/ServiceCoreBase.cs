@@ -141,5 +141,79 @@ namespace CompanyGroup.ApplicationServices
             }
         }
 
+        /// <summary>
+        /// levélküldés
+        /// </summary>
+        /// <param name="mailSettings"></param>
+        /// <returns></returns>
+        protected bool SendMail(CompanyGroup.Domain.Core.MailSettings mailSettings)
+        {
+            try
+            {
+                MailMergeLib.MailMergeMessage mmm = new MailMergeLib.MailMergeMessage(mailSettings.Subject, mailSettings.PlainText, mailSettings.HtmlText);
+
+                mmm.BinaryTransferEncoding = System.Net.Mime.TransferEncoding.Base64;
+                mmm.CharacterEncoding = System.Text.Encoding.GetEncoding("iso-8859-2");
+                mmm.CultureInfo = new System.Globalization.CultureInfo("hu-HU");
+                mmm.FileBaseDir = System.IO.Path.GetFullPath(System.Web.HttpContext.Current.Server.MapPath("../"));
+                mmm.Priority = System.Net.Mail.MailPriority.Normal;
+                mmm.TextTransferEncoding = System.Net.Mime.TransferEncoding.SevenBit;
+
+                foreach (KeyValuePair<string, string> toAddress in mailSettings.ToAddressList.Addresses)
+                {
+                    mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.To, "<" + toAddress.Key + ">", toAddress.Value, System.Text.Encoding.Default));
+                }
+
+                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.From, String.Format("<{0}>", mailSettings.FromAddress), mailSettings.FromName, System.Text.Encoding.Default));
+
+                foreach (KeyValuePair<string, string> bccAddress in mailSettings.ToAddressList.Addresses)
+                {
+                    mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.Bcc, String.Format("<{0}>", bccAddress.Key), bccAddress.Value, System.Text.Encoding.Default));
+                }
+
+                //mail sender
+                MailMergeLib.MailMergeSender mailSender = new MailMergeLib.MailMergeSender();
+
+                //esemenykezelok beallitasa, ha van
+                mailSender.OnSendFailure += new EventHandler<MailMergeLib.MailSenderSendFailureEventArgs>(delegate(object obj, MailMergeLib.MailSenderSendFailureEventArgs args)
+                //( ( obj, args ) =>
+                {
+                    string errorMsg = args.Error.Message;
+                    MailMergeLib.MailMergeMessage.MailMergeMessageException ex = args.Error as MailMergeLib.MailMergeMessage.MailMergeMessageException;
+                    if (ex != null && ex.Exceptions.Count > 0)
+                    {
+                        errorMsg = string.Format("{0}", ex.Exceptions[0].Message);
+                    }
+                    string text = string.Format("Error: {0}", errorMsg);
+                });
+
+                mailSender.LocalHostName = Environment.MachineName; //"mail." + 
+                mailSender.MaxFailures = 1;
+                mailSender.DelayBetweenMessages = 1000;
+                string messageOutputDir = System.IO.Path.GetTempPath() + @"\mail";
+                if (!System.IO.Directory.Exists(messageOutputDir))
+                {
+                    System.IO.Directory.CreateDirectory(messageOutputDir);
+                }
+                mailSender.MailOutputDirectory = messageOutputDir;
+                mailSender.MessageOutput = MailMergeLib.MessageOutput.SmtpServer;  // change to MessageOutput.Directory if you like
+
+                // smtp details
+                mailSender.SmtpHost = mailSettings.SmtpHost;
+                mailSender.SmtpPort = 25;
+                //mailSender.SetSmtpAuthentification( "username", "password" );
+
+                mailSender.Send(mmm);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                return false;
+            }
+
+        }
+
     }
 }

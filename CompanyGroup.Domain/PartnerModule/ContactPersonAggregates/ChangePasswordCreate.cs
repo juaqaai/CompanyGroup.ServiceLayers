@@ -22,13 +22,13 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="writer"></param>
         public void WriteXml(System.Xml.XmlWriter writer)
         {
+            //writer.WriteStartElement("ChangePassword");
             writer.WriteElementString("ContactPersonId", this.ContactPersonId);
             writer.WriteElementString("DataAreaId", this.DataAreaId);
             writer.WriteElementString("OldPassword", this.OldPassword);
             writer.WriteElementString("NewPassword", this.NewPassword);
             writer.WriteElementString("WebLoginName", this.WebLoginName);
-
-            writer.WriteEndElement();
+            //writer.WriteEndElement();
         }
 
         public System.Xml.Schema.XmlSchema GetSchema()

@@ -52,6 +52,7 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\INoSqlEntity.cs" />
+    <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\CompatibilityItem.cs" />
     <Compile Include="MaintainModule\InventName.cs" />
