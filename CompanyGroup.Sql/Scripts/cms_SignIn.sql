@@ -144,8 +144,10 @@ DECLARE @CompanyId nvarchar(10),
 GO
 GRANT EXECUTE ON InternetUser.cms_SignIn TO InternetUser
 GO
--- exec InternetUser.cms_SignIn 'elektroplaza', '58915891', 'hrp';
--- exec InternetUser.cms_SignIn 'tiop', 'tiop', 'hrp';
+-- exec InternetUser.cms_SignIn 'elektroplaza', '58915891', 'bsc';
+-- exec InternetUser.cms_SignIn 'joci', 'joci', 'hrp';
+-- exec InternetUser.cms_SignIn 'plorinczy', 'pikolo', 'hrp';
+
 -- select * from AxDb.dbo.EmplTable
 
 DROP FUNCTION InternetUser.CalculatePartnerModel
@@ -180,3 +182,7 @@ GRANT EXECUTE ON InternetUser.CalculatePartnerModel TO InternetUser
 GO
 
 -- select * from AxDb.dbo.PBAUserProfiles
+
+/*
+select * from AxDb.dbo.WebShopUserInfo where CustAccount = 'V005024'
+*/

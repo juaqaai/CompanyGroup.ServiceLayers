@@ -29,12 +29,20 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         CompanyGroup.Domain.PartnerModule.IChangePasswordRepository changePasswordRepository;
 
         /// <summary>
+        /// elfelejtett jelszó repository
+        /// </summary>
+        CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository forgetPasswordRepository;
+
+        /// <summary>
         /// konstruktor repository paraméterekkel
         /// </summary>
         /// <param name="contactPersonRepository"></param>
         /// <param name="changePasswordRepository"></param>
         /// <param name="visitorRepository"></param>
-        public ContactPersonService(CompanyGroup.Domain.PartnerModule.IContactPersonRepository contactPersonRepository, CompanyGroup.Domain.PartnerModule.IChangePasswordRepository changePasswordRepository, CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
+        public ContactPersonService(CompanyGroup.Domain.PartnerModule.IContactPersonRepository contactPersonRepository, 
+                                    CompanyGroup.Domain.PartnerModule.IChangePasswordRepository changePasswordRepository, 
+                                    CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository forgetPasswordRepository, 
+                                    CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
         {
             if (contactPersonRepository == null)
             {
@@ -46,9 +54,16 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 throw new ArgumentNullException("ChangePasswordRepository");
             }
 
+            if (forgetPasswordRepository == null)
+            {
+                throw new ArgumentNullException("ForgetPasswordRepository");
+            }
+
             this.contactPersonRepository = contactPersonRepository;
 
             this.changePasswordRepository = changePasswordRepository;
+
+            this.forgetPasswordRepository = forgetPasswordRepository;
         }
 
         /// <summary>
@@ -82,23 +97,27 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request)
         {
-            //ha üres a látogató azonosító
-            if (String.IsNullOrEmpty(request.VisitorId))
-            {
-                return new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Message = CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, Succeeded = false };
-            }
-
-            //látogató kikeresése
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
             if (String.IsNullOrEmpty(request.Id))
             {
                 return new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Message = CompanyGroup.Domain.Resources.Messages.validation_ChangePasswordLogIdCannotBeNull, Succeeded = false };
             }
 
+            //visszavonandó jelszómódosítás
             CompanyGroup.Domain.PartnerModule.ChangePassword chagePassword = changePasswordRepository.GetItemByKey(request.Id);
 
-            //jelszómódosítsítás művelet előkészítése
+            //visszavonandó jelszómódosítás státuszának passzívra állítása
+            changePasswordRepository.SetStatus(request.Id, Domain.PartnerModule.ChangePasswordStatus.Passive);
+
+            //látogató kikeresése
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(chagePassword.VisitorId);
+
+            //ha üres a látogató azonosító
+            if (visitor.Id.Equals(MongoDB.Bson.ObjectId.Empty))
+            {
+                return new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Message = CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, Succeeded = false };
+            }
+
+            //jelszómódosítás művelet előkészítése
             CompanyGroup.Domain.PartnerModule.ChangePasswordCreate changePasswordCreate = new CompanyGroup.Domain.PartnerModule.ChangePasswordCreate()
             {
                 ContactPersonId = visitor.PersonId,
@@ -107,7 +126,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 OldPassword = chagePassword.NewPassword,
                 WebLoginName = chagePassword.UserName
             };
-            //jelszómódosítás AX
+            //jelszómódosítás AX (visszaállítás)
             CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult = changePasswordRepository.Change(changePasswordCreate);
 
             //jelszómódosítás log hozzáadás
@@ -231,7 +250,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private static readonly string ChangePasswordMailSmtpHost = Helpers.ConfigSettingsParser.GetString("ChangePasswordMailSmtpHost", "195.30.7.14");
 
-        private static readonly string UndoChangePasswordUrl = Helpers.ConfigSettingsParser.GetString("UndoChangePasswordUrl", "http://1juhasza/cms/PartnerInfo/UndoChangePassword/{0}/{1}/");
+        private static readonly string UndoChangePasswordUrl = Helpers.ConfigSettingsParser.GetString("UndoChangePasswordUrl", "http://1juhasza/cms/PartnerInfo/UndoChangePassword/{0}/");
 
         private static readonly bool TestMode = Helpers.ConfigSettingsParser.GetBoolean("TestMode", true);
 
@@ -253,7 +272,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                         .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, visitor.Id.ToString(), changePassword.Id.ToString()));
+                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString()));
 
                 string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ChangePasswordMailTextTemplateFile);
                 string plain = tmpPlain.Replace("$PersonName$", visitor.PersonName)
@@ -262,7 +281,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                         .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, visitor.Id.ToString(), changePassword.Id.ToString()));
+                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString()));
 
                 string toAddress = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcAddress : visitor.Email;
 
@@ -335,6 +354,143 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                                                                ContactPersonService.ChangePasswordMailFromAddress);
 
                 mailSettings.BccAddressList.Add(ContactPersonService.ChangePasswordMailBCcName, ContactPersonService.ChangePasswordMailBCcAddress);
+
+                mailSettings.ToAddressList.Add(toAddress, toName);
+
+                return this.SendMail(mailSettings);
+
+            }
+            catch (Exception ex)
+            {
+                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                return false;
+            }
+
+        }
+
+        #endregion
+
+        /// <summary>
+        /// elfelejtett jelszó
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request)
+        {
+            //ha üres a felhasználónév 
+            if (String.IsNullOrEmpty(request.UserName))
+            {
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull, Succeeded = false };
+            }
+
+            string dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+
+            //lehetséges-e a megadott adatokkal az elfelejtett jelszó művelet?
+            CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify verify = contactPersonRepository.VerifyForgetPassword(request.UserName, dataAreaId);
+
+            //vizsgálat a bsc-re
+            if (!verify.Success)
+            {
+                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+
+                verify = contactPersonRepository.VerifyForgetPassword(request.UserName, dataAreaId);
+            }
+
+            //ha nem, akkor kilépés hibaüzenettel
+            if (!verify.Success)
+            {
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = verify.Message, Succeeded = false };
+            }
+
+            //elfelejtett jelszó művelet előkészítése
+            CompanyGroup.Domain.PartnerModule.ForgetPasswordCreate forgetPasswordCreate = new CompanyGroup.Domain.PartnerModule.ForgetPasswordCreate()
+            {
+                DataAreaId = dataAreaId,
+                WebLoginName = request.UserName
+            };
+            //elfelejtett jelszó AX
+            CompanyGroup.Domain.PartnerModule.ForgetPasswordCreateResult forgetPasswordCreateResult = forgetPasswordRepository.Forget(forgetPasswordCreate);
+
+            //elfelejtett jelszó log hozzáadás
+            CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword = new CompanyGroup.Domain.PartnerModule.ForgetPassword()
+            {
+                CreatedDate = DateTime.Now,
+                DataAreaId = dataAreaId,
+                UserName = request.UserName,
+                Status = forgetPasswordCreateResult.Succeeded ? Domain.PartnerModule.ForgetPasswordStatus.Active : Domain.PartnerModule.ForgetPasswordStatus.Failed,
+                Id = MongoDB.Bson.ObjectId.GenerateNewId()
+            };
+
+            forgetPasswordRepository.Add(forgetPassword);
+
+            //levél elküldése dbManagers-nek sikertelen esetben
+            if (!forgetPasswordCreateResult.Succeeded)
+            {
+                this.SendForgetPasswordFailedMail(forgetPassword, forgetPasswordCreateResult);
+            }
+
+            return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = forgetPasswordCreateResult.Message, Succeeded = forgetPasswordCreateResult.Succeeded };
+        }
+
+        #region "Elfelejtett jelszó email küldés"
+
+        private static readonly string ForgetPasswordFailedMailSubject = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailSubject", "Hibás elfelejtett jelszó művelet értesítő üzenet");
+
+        private static readonly string ForgetPasswordFailedMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailHtmlTemplateFile", "forgetpasswordfailed.html");
+
+        private static readonly string ForgetPasswordFailedMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailTextTemplateFile", "forgetpasswordfailed.txt");
+
+        private static readonly string ForgetPasswordMailFromAddress = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailFromAddress", "webadmin@hrp.hu");
+
+        private static readonly string ForgetPasswordMailFromName = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailFromName", "HRP-BSC web adminisztrátor csoport");
+
+        private static readonly string ForgetPasswordFailedMailToAddress = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailToAddress", "webadmin@hrp.hu");
+
+        private static readonly string ForgetPasswordFailedMailToName = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailToName", "HRP-BSC web adminisztrátor csoport"); 
+
+        private static readonly string ForgetPasswordMailBCcAddress = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailBCcAddress", "ajuhasz@hrp.hu"); 
+
+        private static readonly string ForgetPasswordMailBCcName = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailBCcName", "Juhász Attila");
+
+        private static readonly string ForgetPasswordMailSmtpHost = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailSmtpHost", "195.30.7.14");
+
+        /// <summary>
+        /// elfelejtett jelszó email küldés, sikertelen művelet esetére
+        /// </summary>
+        /// <param name="forgetPassword"></param>
+        /// <param name="forgetPasswordCreateResult"></param>
+        /// <returns></returns>
+        private bool SendForgetPasswordFailedMail(CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword,
+                                                  CompanyGroup.Domain.PartnerModule.ForgetPasswordCreateResult forgetPasswordCreateResult)
+        {
+            try
+            {
+                string tmpHtml = ContactPersonService.HtmlText(ContactPersonService.ForgetPasswordFailedMailHtmlTemplateFile);
+                string html = tmpHtml.Replace("$WebLoginName$", forgetPassword.UserName)
+                                     .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                     .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                     .Replace("$ErrorCode$", String.Format("{0}", forgetPasswordCreateResult.ResultCode))
+                                     .Replace("$ErrorMessage$", forgetPasswordCreateResult.Message);
+
+                string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ForgetPasswordFailedMailTextTemplateFile);
+                string plain = tmpPlain.Replace("$WebLoginName$", forgetPassword.UserName)
+                                     .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                     .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                     .Replace("$ErrorCode$", String.Format("{0}", forgetPasswordCreateResult.ResultCode))
+                                     .Replace("$ErrorMessage$", forgetPasswordCreateResult.Message);
+
+                string toAddress = ContactPersonService.TestMode ? ContactPersonService.ForgetPasswordMailBCcAddress : ContactPersonService.ForgetPasswordFailedMailToAddress;
+
+                string toName = ContactPersonService.TestMode ? ContactPersonService.ForgetPasswordMailBCcName : ContactPersonService.ForgetPasswordFailedMailToName;
+
+                CompanyGroup.Domain.Core.MailSettings mailSettings = new CompanyGroup.Domain.Core.MailSettings(ContactPersonService.ForgetPasswordMailSmtpHost,
+                                                                                                               ContactPersonService.ForgetPasswordFailedMailSubject,
+                                                                                                               plain,
+                                                                                                               html,
+                                                                                                               ContactPersonService.ForgetPasswordMailFromName,
+                                                                                                               ContactPersonService.ForgetPasswordMailFromAddress);
+
+                mailSettings.BccAddressList.Add(ContactPersonService.ForgetPasswordMailBCcName, ContactPersonService.ForgetPasswordMailBCcAddress);
 
                 mailSettings.ToAddressList.Add(toAddress, toName);
 

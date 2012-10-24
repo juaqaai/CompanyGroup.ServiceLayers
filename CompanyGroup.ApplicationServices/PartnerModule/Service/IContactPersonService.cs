@@ -48,5 +48,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
         CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request);
+
+        [OperationContract(Action = "ForgetPassword")]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/ForgetPassword",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request);
     }
 }

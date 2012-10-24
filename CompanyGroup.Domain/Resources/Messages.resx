@@ -156,11 +156,26 @@
   <data name="verification_ChangePasswordNotAllowed" xml:space="preserve">
     <value>The change password operation not allowed!</value>
   </data>
+  <data name="verification_DataAreaIdCannotBeNull" xml:space="preserve">
+    <value>The dataarea id can not be null, or empty.</value>
+  </data>
+  <data name="verification_ForgetPasswordNotAllowed" xml:space="preserve">
+    <value>The forgetpassword operation is not allowed.</value>
+  </data>
   <data name="verification_PasswordAleradyExists" xml:space="preserve">
     <value>The password is alerady in use!</value>
   </data>
   <data name="verification_UndoChangePassword" xml:space="preserve">
     <value>The undo change password operation is successed!</value>
+  </data>
+  <data name="verification_UserNameCannotBeNull" xml:space="preserve">
+    <value>The user name can not be null or empty.</value>
+  </data>
+  <data name="verification_UserNameNotFound" xml:space="preserve">
+    <value>The user name was not found!</value>
+  </data>
+  <data name="verification_UserNameOK" xml:space="preserve">
+    <value>The user name is valid!</value>
   </data>
   <data name="verification_UserNamePasswordNotFound" xml:space="preserve">
     <value>Username and password are not found!</value>

@@ -73,6 +73,12 @@
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordCreate.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordStatus.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\IForgetPasswordRepository.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ForgetPasswordCreateResult.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ForgetPasswordCreate.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ForgetPasswordStatus.cs" />
+    <Compile Include="PartnerModule\ContactPersonAggregates\ForgetPassword.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\IChangePasswordRepository.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordCreateResult.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\IContactPersonRepository.cs" />
@@ -227,6 +233,7 @@
     <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.hbm.xml" />
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

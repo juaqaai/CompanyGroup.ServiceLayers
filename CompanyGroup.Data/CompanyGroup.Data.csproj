@@ -57,6 +57,7 @@
     <Compile Include="NoSql\Settings.cs" />
     <Compile Include="PartnerModule\ChangePasswordRepository.cs" />
     <Compile Include="PartnerModule\ContactPersonRepository.cs" />
+    <Compile Include="PartnerModule\ForgetPasswordRepository.cs" />
     <Compile Include="PartnerModule\InvoiceRepository.cs" />
     <Compile Include="PartnerModule\CustomerRepository.cs" />
     <Compile Include="NoSql\Repository.cs" />

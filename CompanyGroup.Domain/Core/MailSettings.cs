@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CompanyGroup.Domain.Core
 {
+    /// <summary>
+    /// Levélküldéshez használt, levélküldés paramétereit összefogó osztály
+    /// </summary>
     public class MailSettings
     {
         public MailSettings(string smtpHost, string subject, string plainText, string htmlText, string fromName, string fromAddress)
@@ -43,6 +46,9 @@ namespace CompanyGroup.Domain.Core
         public string SmtpHost {get; set;} 
     }
 
+    /// <summary>
+    /// levelezési címlista (név - cím párok)
+    /// </summary>
     public class MailAddressList
     {
         public System.Collections.Generic.Dictionary<string, string> Addresses { get; private set; }

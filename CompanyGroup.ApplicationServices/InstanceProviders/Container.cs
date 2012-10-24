@@ -61,6 +61,7 @@ namespace CompanyGroup.ApplicationServices.InstanceProviders
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IContactPersonRepository, CompanyGroup.Data.PartnerModule.ContactPersonRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IChangePasswordRepository, CompanyGroup.Data.PartnerModule.ChangePasswordRepository>();
+            _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository, CompanyGroup.Data.PartnerModule.ForgetPasswordRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IStructureRepository,CompanyGroup.Data.WebshopModule.StructureRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IProductRepository, CompanyGroup.Data.WebshopModule.ProductRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IPictureRepository, CompanyGroup.Data.WebshopModule.PictureRepository>();

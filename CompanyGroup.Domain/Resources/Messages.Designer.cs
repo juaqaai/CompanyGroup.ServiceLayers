@@ -178,6 +178,24 @@ namespace CompanyGroup.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The dataarea id can not be null, or empty..
+        /// </summary>
+        public static string verification_DataAreaIdCannotBeNull {
+            get {
+                return ResourceManager.GetString("verification_DataAreaIdCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The forgetpassword operation is not allowed..
+        /// </summary>
+        public static string verification_ForgetPasswordNotAllowed {
+            get {
+                return ResourceManager.GetString("verification_ForgetPasswordNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password is alerady in use!.
         /// </summary>
         public static string verification_PasswordAleradyExists {
@@ -192,6 +210,33 @@ namespace CompanyGroup.Domain.Resources {
         public static string verification_UndoChangePassword {
             get {
                 return ResourceManager.GetString("verification_UndoChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name can not be null or empty..
+        /// </summary>
+        public static string verification_UserNameCannotBeNull {
+            get {
+                return ResourceManager.GetString("verification_UserNameCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name was not found!.
+        /// </summary>
+        public static string verification_UserNameNotFound {
+            get {
+                return ResourceManager.GetString("verification_UserNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user name is valid!.
+        /// </summary>
+        public static string verification_UserNameOK {
+            get {
+                return ResourceManager.GetString("verification_UserNameOK", resourceCulture);
             }
         }
         

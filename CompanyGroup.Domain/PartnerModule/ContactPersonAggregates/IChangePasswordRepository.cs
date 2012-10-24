@@ -12,13 +12,13 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <returns></returns>
         CompanyGroup.Domain.PartnerModule.ChangePassword GetItemByKey(string id);
 
-                /// <summary>
+        /// <summary>
         /// jelszómódosítás új bejegyzés hozzáadása
         /// </summary>
         /// <param name="visitor"></param>
         void Add(CompanyGroup.Domain.PartnerModule.ChangePassword changePassword);
 
-                /// <summary>
+        /// <summary>
         /// jelszómódosítás státusz állapot beállítása 
         /// </summary>
         /// <param name="id"></param>
