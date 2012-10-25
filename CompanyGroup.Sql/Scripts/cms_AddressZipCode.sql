@@ -21,12 +21,12 @@ SET NOCOUNT ON;
 
 	--SET @@RowCount = @iRowCount;
 
-	SELECT ZipCode FROM AxDb.dbo.ADDRESSZIPCODE
+	SELECT ZipCode FROM axdb_20120614.dbo.ADDRESSZIPCODE
 	WHERE DataAreaId = @VirtualDataAreaId AND 
 		  ZipCode LIKE CASE WHEN @Prefix <> '' THEN @Prefix + '%' ELSE ZipCode END;
 	-- COUNTRYREGIONID = 'HU' AND
 RETURN
 
 GO
-
+-- EXEC [InternetUser].[cms_AddressZipCode] '10', 'hrp'
 

@@ -22,7 +22,7 @@ SET NOCOUNT ON
 		   PhoneLocal as Extension,
 	       Email as Email,
 		   CellularPhone as Mobile
-	FROM AxDb.dbo.EmplTable
+	FROM axdb_20120614.dbo.EmplTable
 	WHERE DataAreaID = @VirtualDataAreaId;
 RETURN;
 -- exec [InternetUser].[cms_EmployeeList]

@@ -15,7 +15,7 @@ AS
 		   MCountryRegionId as Country,
 		   MStreet AS Street, 
 		   MZipCode AS ZipCode 
-	FROM AxDb.dbo.CustTable
+	FROM axdb_20120614.dbo.CustTable
 	WHERE DataAreaId = @DataAreaId AND AccountNum = @CustomerId;
 	RETURN
 GO

@@ -22,8 +22,8 @@ SET NOCOUNT ON
 			   c.jellegNev  as Category3Name,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END as Category3NameEnglish,
 			   @DataAreaId as DataAreaId
-		FROM AxDb.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN AxDb.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3id = ec.jelleg3id and ec.LanguageId = 'en-gb'
+		FROM axdb_20120614.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN axdb_20120614.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3id = ec.jelleg3id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = @VirtualDataAreaId AND c.jelleg3id <> '' AND c.jellegNev <> ''
 		ORDER BY Category3Id, Category3Name;
 	END
@@ -33,11 +33,11 @@ SET NOCOUNT ON
 			   c.MegJelenitesiNev  as Category3Name,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.MegJelenitesiNev ELSE ec.MegJelenitesiNev END as Category3NameEnglish,
 			   @DataAreaId as DataAreaId
-		FROM AxDb.dbo.updJelleg3Lng as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN AxDb.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3id = ec.jelleg3id and ec.LanguageId = 'en-gb'
+		FROM axdb_20120614.dbo.updJelleg3Lng as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN axdb_20120614.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3id = ec.jelleg3id and ec.LanguageId = 'en-gb'
 		WHERE c.LanguageId = 'en-ca' AND c.jelleg3id <> '' AND c.MegJelenitesiNev <> ''
 		ORDER BY Category3Id, Category3Name;
 	END
 RETURN;
 
--- EXEC [InternetUser].[cms_Category3List] 'ser'
+-- EXEC [InternetUser].[cms_Category3List] 'hrp'

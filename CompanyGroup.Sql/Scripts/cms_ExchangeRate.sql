@@ -23,7 +23,7 @@ DECLARE @MaxFromDate DateTime2;
       ,[CURRENCYCODE] as CurrencyCode
       ,[EXCHRATEMNB] as Rate
       ,[DATAAREAID] as DataAreaId
-	FROM [AXDB].[dbo].[EXCHRATES]
+	FROM axdb_20120614.[dbo].[EXCHRATES]
 	WHERE FromDate = @MaxFromDate;
 
   RETURN

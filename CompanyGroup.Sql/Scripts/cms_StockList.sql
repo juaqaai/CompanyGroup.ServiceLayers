@@ -14,11 +14,11 @@ SET NOCOUNT ON
 	BEGIN
 		select invent.StandardConfigId, invent.ItemId as ProductId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ) as Quantity, 
 			   ind.InventLocationId, invent.DataAreaId
-		from AxDb.dbo.InventTable as invent
-		inner join AxDb.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
+		from axdb_20120614.dbo.InventTable as invent
+		inner join axdb_20120614.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 														ind.dataAreaId = invent.DataAreaId and 
 														ind.InventLocationId in ( 'BELSO', 'KULSO', 'HASZNALT' ) 
-		inner join AxDb.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
+		inner join axdb_20120614.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 														ins.inventDimId = ind.inventDimId and 
 														ins.ItemId = invent.ItemId and 
 														ins.Closed = 0
@@ -33,11 +33,11 @@ SET NOCOUNT ON
 		BEGIN
 			select invent.StandardConfigId, invent.ItemId as ProductId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ) as Quantity, 
 				   ind.InventLocationId, invent.DataAreaId
-			from AxDb.dbo.InventTable as invent
-			inner join AxDb.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
+			from axdb_20120614.dbo.InventTable as invent
+			inner join axdb_20120614.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 															ind.dataAreaId = invent.DataAreaId and 
 															ind.InventLocationId in ( '1000', '7000', '2100' ) 
-			inner join AxDb.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
+			inner join axdb_20120614.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 															ins.inventDimId = ind.inventDimId and 
 															ins.ItemId = invent.ItemId and 
 															ins.Closed = 0
@@ -51,11 +51,11 @@ SET NOCOUNT ON
 		BEGIN
 			select invent.StandardConfigId, invent.ItemId as ProductId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ) as Quantity, 
 				   ind.InventLocationId, invent.DataAreaId
-			from AxDb.dbo.InventTable as invent
-			inner join AxDb.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
+			from axdb_20120614.dbo.InventTable as invent
+			inner join axdb_20120614.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 															ind.dataAreaId = invent.DataAreaId and 
 															ind.InventLocationId = 'ser'
-			inner join AxDb.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
+			inner join axdb_20120614.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 													 ins.inventDimId = ind.inventDimId and 
 													 ins.ItemId = invent.ItemId and 
 													 ins.Closed = 0

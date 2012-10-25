@@ -120,11 +120,11 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 		   --D.SerialNum as SerialNumber, -- sorozatszam
 		   --CONVERT( INT, D.VisszaruQty ) as VisszaruQty
 
-	FROM AxDb.dbo.CUSTINVOICEJOUR as H
-	INNER JOIN  AxDb.dbo.CUSTINVOICETRANS as D ON H.INVOICEID = D.INVOICEID AND H.DATAAREAID = D.DATAAREAID
-	INNER JOIN AxDb.dbo.PAYMTERM AS Pt ON H.Payment = Pt.PaymTermID AND Pt.DATAAREAID = 'mst'
-	LEFT JOIN AxDb.dbo.custTrans as t on t.DATAAREAID = h.DATAAREAID and t.INVOICE = H.INVOICEID 
-	LEFT JOIN AxDb.dbo.custTransOpen as o on o.DATAAREAID = t.DATAAREAID and o.RefRecId = t.RECID
+	FROM axdb_20120614.dbo.CUSTINVOICEJOUR as H
+	INNER JOIN  axdb_20120614.dbo.CUSTINVOICETRANS as D ON H.INVOICEID = D.INVOICEID AND H.DATAAREAID = D.DATAAREAID
+	INNER JOIN axdb_20120614.dbo.PAYMTERM AS Pt ON H.Payment = Pt.PaymTermID AND Pt.DATAAREAID = 'mst'
+	LEFT JOIN axdb_20120614.dbo.custTrans as t on t.DATAAREAID = h.DATAAREAID and t.INVOICE = H.INVOICEID 
+	LEFT JOIN axdb_20120614.dbo.custTransOpen as o on o.DATAAREAID = t.DATAAREAID and o.RefRecId = t.RECID
 	WHERE H.ORDERACCOUNT = @CustomerId
 		  AND H.DATAAREAID = @DataAreaId 
 		  AND year(H.INVOICEDATE) >= 2008

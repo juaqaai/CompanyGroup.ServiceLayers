@@ -12,7 +12,8 @@ where sl.CustAccount = 'V000787' and
 
     IF (!InventTrans) return DispoStatus::Diszponalt;
 
-    Select InventTrans where InventTrans.InventTransId == this.InventTransId && inventtrans.StatusReceipt != statusReceipt::Purchased; 	-- bevételezés állapota: 0 none, 1 purchased (beszerezve), 2 Received (fogadott), 3 Registered (regisztrálva), 4 Arrived (beérkezett), 5 Ordered (rendelt), 6 QuotationReceipt (árajánlat - bevételezés)
+    Select InventTrans where InventTrans.InventTransId == this.InventTransId && inventtrans.StatusReceipt != statusReceipt::Purchased; 
+	-- bevételezés állapota: 0 none, 1 purchased (beszerezve), 2 Received (fogadott), 3 Registered (regisztrálva), 4 Arrived (beérkezett), 5 Ordered (rendelt), 6 QuotationReceipt (árajánlat - bevételezés)
     
 	IF (!InventTrans)
         return DispoStatus::Diszponalt;
@@ -50,7 +51,8 @@ where sl.CustAccount = 'V000787' and
    -- 
    Select sum(qty) from InventTrans where
      InventTrans.InventTransId == this.InventTransId &&
-     InventTrans.StatusIssue > StatusIssue::ReservPhysical;(foglalt tényleges)-nél nagyobb a foglalt rendelt, vagy 
+     InventTrans.StatusIssue > StatusIssue::ReservPhysical;(foglalt tényleges)-nél nagyobb a foglalt rendelt, vagy 
+
 a rendelés alatti státusz és nincs belõle, akkor diszponálható
    IF (!InventTrans.qty)
        return DispoStatus::Diszponalhato;

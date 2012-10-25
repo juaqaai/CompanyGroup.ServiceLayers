@@ -28,8 +28,8 @@ SET NOCOUNT ON
 		   0 as Price,
 		   cfg.Name,
 	       cfg.DataAreaId
-		FROM AxDb.dbo.ConfigTable as cfg 
-		INNER JOIN AxDb.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+		FROM axdb_20120614.dbo.ConfigTable as cfg 
+		INNER JOIN axdb_20120614.dbo.InventDim as idim ON cfg.configId = idim.configId and 
 												 cfg.dataAreaId = idim.dataAreaId AND 
 												 cfg.ConfigId like 'xx%' AND 
 												 idim.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END
@@ -45,8 +45,8 @@ SET NOCOUNT ON
 	INSERT INTO @StockTable
 	SELECT c.ConfigId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), c.DataAreaId
 	FROM @SecondHandTable as c 
-	INNER JOIN AxDb.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
-	INNER JOIN AxDb.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+	INNER JOIN axdb_20120614.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
+	INNER JOIN axdb_20120614.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
 	WHERE ins.Closed = 0 
 	GROUP BY c.ConfigId, c.ProductId, c.DataAreaId;
 

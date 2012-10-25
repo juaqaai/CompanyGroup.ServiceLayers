@@ -17,7 +17,7 @@ SET NOCOUNT ON
 	SET @VirtualDataAreaId = InternetUser.GetVirtualDataAreaId( @DataAreaId );
 
 	SELECT AccountNum as Number, RecID as RecId
-	FROM AxDb.dbo.CustBankAccount 
+	FROM axdb_20120614.dbo.CustBankAccount 
 	WHERE CustAccount = @CustomerId AND DataAreaID = @VirtualDataAreaId; 
 	
 RETURN

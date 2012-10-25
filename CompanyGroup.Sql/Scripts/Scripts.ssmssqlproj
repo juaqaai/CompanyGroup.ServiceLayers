@@ -19,6 +19,12 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
+        <FileNode Name="cms_AddressZipCode.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>cms_AddressZipCode.sql</FullPath>
+        </FileNode>
         <FileNode Name="cms_BankAccountList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -67,6 +73,12 @@
           <AssociatedConnUserName />
           <FullPath>cms_CustomerData.sql</FullPath>
         </FileNode>
+        <FileNode Name="cms_CustomerPriceGroups.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>cms_CustomerPriceGroups.sql</FullPath>
+        </FileNode>
         <FileNode Name="cms_DeliveryAddress.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -78,6 +90,12 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>cms_EmployeeList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cms_ExchangeRate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>cms_ExchangeRate.sql</FullPath>
         </FileNode>
         <FileNode Name="cms_Finance.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -182,8 +200,8 @@
           <FullPath>cms_VerifyForgetPassword.sql</FullPath>
         </FileNode>
         <FileNode Name="DispoStatus.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>DispoStatus.sql</FullPath>
         </FileNode>

@@ -16,13 +16,13 @@ AS
 SET NOCOUNT ON
 	IF ( @Part = 0 )
 		SELECT cat.ItemId, cat.DataAreaId
-		FROM AxDb.dbo.updCompatib as cmp
-		INNER JOIN AxDb.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.CompatItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
+		FROM axdb_20120614.dbo.updCompatib as cmp
+		INNER JOIN axdb_20120614.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.CompatItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
 		WHERE cat.DataAreaId = @DataAreaId AND cmp.ItemId = @ProductId;
 	ELSE
 		SELECT cat.ItemId, cat.DataAreaId
-		FROM AxDb.dbo.updCompatib as cmp
-		INNER JOIN AxDb.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.ItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
+		FROM axdb_20120614.dbo.updCompatib as cmp
+		INNER JOIN axdb_20120614.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.ItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
 		WHERE cat.DataAreaId = @DataAreaId AND cmp.CompatItemId = @ProductId;		
 RETURN
 GO

@@ -35,11 +35,11 @@ AS
 		   Cust.mZipCode AS MailZipCode, 
 		   CONVERT( SMALLDATETIME, ISNULL( tmp.ModifiedDate, GetDate() ) ) as dtDateTime
 
-	FROM AxDb.dbo.CustTable AS Cust
-		 LEFT OUTER JOIN AxDB.dbo.updTmpCustTable as tmp ON tmp.CustRegId = Cust.RegAzon AND tmp.CustRegId <> '' AND tmp.DataAreaId = 'hun'
+	FROM axdb_20120614.dbo.CustTable AS Cust
+		 LEFT OUTER JOIN axdb_20120614.dbo.updTmpCustTable as tmp ON tmp.CustRegId = Cust.RegAzon AND tmp.CustRegId <> '' AND tmp.DataAreaId = 'hun'
 	WHERE Cust.DataAreaId = @DataAreaId AND 
 		  Cust.AccountNum = @CustomerId AND
-		  EXISTS ( SELECT TOP 1 CASE WHEN CONVERT( BIT, HRP ) = 1 OR CONVERT( BIT, BSC ) = 1 THEN 1 ELSE 0 END FROM AxDb.dbo.CustTable WHERE DataAreaID IN ('Hrp', 'Bsc') AND AccountNum = @CustomerId );
+		  EXISTS ( SELECT TOP 1 CASE WHEN CONVERT( BIT, HRP ) = 1 OR CONVERT( BIT, BSC ) = 1 THEN 1 ELSE 0 END FROM axdb_20120614.dbo.CustTable WHERE DataAreaID IN ('Hrp', 'Bsc') AND AccountNum = @CustomerId );
 
 	RETURN
 GO

@@ -15,7 +15,7 @@ AS
 	SET @VirtualDataAreaId = InternetUser.GetVirtualDataAreaId( @DataAreaId );
 
 	SELECT TOP 1 @PersonId = ContactPersonId, @CompanyId = CustAccount 
-	FROM AxDb.dbo.WebShopUserInfo WHERE (WebLoginName = @UserName) AND 
+	FROM axdb_20120614.dbo.WebShopUserInfo WHERE (WebLoginName = @UserName) AND 
 										(RightHrp = CASE WHEN @DataAreaId = 'hrp' THEN 1 ELSE RightHrp END) AND 
 										(RightBsc = CASE WHEN @DataAreaId = 'bsc' THEN 1 ELSE RightBsc END) AND 
 										(@DataAreaId IN ('hrp', 'bsc'));
@@ -26,8 +26,8 @@ AS
 		IF (ISNULL(@PersonId, '') = '' AND ISNULL(@CompanyId, '') <> '' )
 			SET @Code = 'NotAllowed';
 		ELSE
-			IF (EXISTS( SELECT * FROM AxDb.dbo.ContactPerson as Cp 
-						   INNER JOIN AxDb.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
+			IF (EXISTS( SELECT * FROM axdb_20120614.dbo.ContactPerson as Cp 
+						   INNER JOIN axdb_20120614.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
 								 WHERE Cp.LeftCompany = 0 AND Cust.StatisticsGroup <> 'Arhív' AND Cust.StatisticsGroup <> 'Archív' AND
 									   Cust.DataAreaID = @DataAreaId AND cp.ContactPersonId = @PersonId AND Cp.[Admin] <> 1 ))
 				SET @Code = 'UserNameOK';
@@ -45,4 +45,4 @@ GO
 -- EXEC InternetUser.cms_VerifyForgetPassword 'ghsport', 'hrp';
 -- EXEC InternetUser.cms_VerifyForgetPassword 'elektroplaza', 'bsc';
 
--- SELECT * FROM AxDb.dbo.WebShopUserInfo WHERE (ContactPersonId = '23614/SZL') AND (WebLoginName = 'plorinczy') AND (Pwd = 'pikolo')
+-- SELECT * FROM axdb_20120614.dbo.WebShopUserInfo WHERE (ContactPersonId = '23614/SZL') AND (WebLoginName = 'plorinczy') AND (Pwd = 'pikolo')

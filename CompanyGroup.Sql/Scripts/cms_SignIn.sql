@@ -42,7 +42,7 @@ DECLARE @CompanyId nvarchar(10),
 
 		SELECT @CompanyId = CustAccount, 
 			   @PersonId = ContactPersonId 
-		FROM AxDb.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
+		FROM axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
 											( Pwd = @Password ) AND 
 											( RightHrp = 1 OR RightBsc = 1 OR RightSzerviz = 1 ) AND 
 											( DataAreaId = @VirtualDataAreaId );
@@ -67,8 +67,8 @@ DECLARE @CompanyId nvarchar(10),
 				   @PriceGroup = Cust.PriceGroup, 
 				   @Representative = Cust.Kepviselo, 
 				   @LoginType = 2
-			FROM AxDb.dbo.ContactPerson as Cp 
-				 INNER JOIN AxDb.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
+			FROM axdb_20120614.dbo.ContactPerson as Cp 
+				 INNER JOIN axdb_20120614.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
 			WHERE Cp.LeftCompany = 0 AND Cust.StatisticsGroup <> 'Arhív' AND Cust.StatisticsGroup <> 'Archív' AND
 				  Cust.DataAreaID = @DataAreaId AND 
 				  cp.ContactPersonId = @PersonId AND 
@@ -89,7 +89,7 @@ DECLARE @CompanyId nvarchar(10),
 					   @LanguageId = LanguageId, 
 					   @PriceGroup = PriceGroup, 
 					   @Representative = Kepviselo
-				FROM AxDb.dbo.CustTable
+				FROM axdb_20120614.dbo.CustTable
 				WHERE StatisticsGroup <> 'Arhív' AND 
 					  StatisticsGroup <> 'Archív' AND 
 					  DataAreaID = @DataAreaId AND 

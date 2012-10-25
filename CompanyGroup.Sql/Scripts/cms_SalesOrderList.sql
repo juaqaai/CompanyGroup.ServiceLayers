@@ -41,12 +41,12 @@ SET NOCOUNT ON
 		   it.StatusIssue as StatusIssue, 
 		   MAX( it.RecID ) as RecID,
 		   InventDim.InventLocationID as ItemInventLocationID  
-	FROM AxDb.dbo.SALESTABLE AS H 
-		 INNER JOIN AxDb.dbo.SALESLINE AS D ON H.SALESID = D.SALESID AND H.DataAreaID = D.DataAreaID
-		 INNER JOIN AxDb.dbo.InventTrans as it ON D.DataAreaID = it.DataAreaID and D.InventTransId = it.InventTransId -- it.TRANSREFID = D.SALESID AND D.ItemID = it.ItemID AND 
-		 INNER JOIN AxDb.dbo.InventDim AS InventDim ON InventDim.InventDimID = D.InventDimID AND InventDim.DataAreaID = H.DataAreaID
-		 INNER JOIN AxDb.dbo.PAYMTERM AS Pt ON H.Payment = Pt.PaymTermID AND Pt.DATAAREAID = 'mst'
-		 INNER JOIN AxDb.dbo.Currency as C ON C.CURRENCYCODE = H.CURRENCYCODE AND C.DATAAREAID = H.DATAAREAID
+	FROM axdb_20120614.dbo.SALESTABLE AS H 
+		 INNER JOIN axdb_20120614.dbo.SALESLINE AS D ON H.SALESID = D.SALESID AND H.DataAreaID = D.DataAreaID
+		 INNER JOIN axdb_20120614.dbo.InventTrans as it ON D.DataAreaID = it.DataAreaID and D.InventTransId = it.InventTransId -- it.TRANSREFID = D.SALESID AND D.ItemID = it.ItemID AND 
+		 INNER JOIN axdb_20120614.dbo.InventDim AS InventDim ON InventDim.InventDimID = D.InventDimID AND InventDim.DataAreaID = H.DataAreaID
+		 INNER JOIN axdb_20120614.dbo.PAYMTERM AS Pt ON H.Payment = Pt.PaymTermID AND Pt.DATAAREAID = 'mst'
+		 INNER JOIN axdb_20120614.dbo.Currency as C ON C.CURRENCYCODE = H.CURRENCYCODE AND C.DATAAREAID = H.DATAAREAID
 	WHERE H.CustAccount = @CustomerID AND 
 		  H.DataAreaID = @DataAreaID
 		  AND
@@ -78,6 +78,8 @@ GO
 -- select * from Axdb.dbo.PaymTerm
 -- select * from Axdb.dbo.Currency
 
+GO
+DROP FUNCTION InternetUser.cms_ConvertInventLocationId
 GO
 CREATE FUNCTION InternetUser.cms_ConvertInventLocationId( @InventLocationId NVARCHAR(10) )
 RETURNS NVARCHAR(10)	
@@ -119,9 +121,9 @@ with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId,
 				  CONVERT( INT, sl.RemainSalesPhysical ) as RemainSalesPhysical, 
 				  it.StatusIssue as StatusIssue, 
 				  id.InventLocationId 
-				  from AxDb.dbo.SALESLINE as sl
-				  INNER JOIN AxDb.dbo.InventTrans as it ON sl.DataAreaID = it.DataAreaID and sl.InventTransId = it.InventTransId
-				  INNER JOIN AxDb.dbo.InventDim AS id ON id.InventDimId = sl.InventDimId AND id.DataAreaId = sl.DataAreaId
+				  from axdb_20120614.dbo.SALESLINE as sl
+				  INNER JOIN axdb_20120614.dbo.InventTrans as it ON sl.DataAreaID = it.DataAreaID and sl.InventTransId = it.InventTransId
+				  INNER JOIN axdb_20120614.dbo.InventDim AS id ON id.InventDimId = sl.InventDimId AND id.DataAreaId = sl.DataAreaId
 				  where sl.CustAccount = @CustomerId and 
 						sl.SalesStatus = 1 and	-- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
 						id.InventLocationId IN ( 'BELSO', 'KULSO', '1000', '7000', 'HASZNALT', '2100' ) and 
@@ -140,4 +142,4 @@ with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId,
 RETURN 
 GO
 
-exec InternetUser.cms_SalesOrderList 'V001446'; --'V001686'	--'V000787'
+-- exec InternetUser.cms_SalesOrderList 'V001446'; --'V001686'	--'V000787'

@@ -19,7 +19,7 @@ SET NOCOUNT ON
 		   WHEN 'en-gb' THEN 'eng'
 		   WHEN 'en-ca' THEN 'ser'
 		   ELSE '' END as [LangId]	 	 
-	FROM AxDb.dbo.INVENTTXT
+	FROM axdb_20120614.dbo.INVENTTXT
 	WHERE DataAreaId = @DataAreaId AND ItemId <> '' AND Txt <> ''
 	ORDER BY ItemId, [LangId];
 
