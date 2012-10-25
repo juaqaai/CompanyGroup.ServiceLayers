@@ -52,4 +52,4 @@ GO
 GRANT EXECUTE ON InternetUser.cms_ContactPerson TO InternetUser
 GO
 
--- exec InternetUser.cms_ContactPerson 'CP100027', 'hrp';
+-- exec InternetUser.cms_ContactPerson 'KAPCS06231', 'hrp';

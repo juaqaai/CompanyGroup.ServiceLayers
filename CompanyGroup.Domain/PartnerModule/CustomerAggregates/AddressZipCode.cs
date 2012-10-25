@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.PartnerModule
 {
+    /// <summary>
+    /// címhez tartozó irányítószám 
+    /// </summary>
     public class AddressZipCode
     {
         private string zipCode = String.Empty;

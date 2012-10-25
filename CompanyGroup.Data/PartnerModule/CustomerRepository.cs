@@ -69,7 +69,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.AddressZipCode")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_AddressZipCode")
                                             .SetString("Prefix", prefix)
                                             .SetString("DataAreaId", dataAreaId)
                                             .SetResultTransformer(
@@ -183,7 +183,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetCustomerPriceGroups")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CustomerPriceGroups")
                                             .SetString("CustomerId", customerId)
                                             .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
 

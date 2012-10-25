@@ -13,7 +13,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.ExchangeRate> GetCurrentRates()
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ExchangeRate")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ExchangeRate")
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.ExchangeRate).GetConstructors()[0]));
 
