@@ -6,12 +6,12 @@ using System.ServiceModel;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    [ServiceBehavior(UseSynchronizationContext = false,
-                     InstanceContextMode = InstanceContextMode.PerCall,
-                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                     IncludeExceptionDetailInFaults = true),
-                     System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                 InstanceContextMode = InstanceContextMode.PerCall,
+    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                 IncludeExceptionDetailInFaults = true),
+    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
     public class ProductService : ServiceBase, IProductService
     {
         private const string CACHEKEY_PRODUCT = "product";

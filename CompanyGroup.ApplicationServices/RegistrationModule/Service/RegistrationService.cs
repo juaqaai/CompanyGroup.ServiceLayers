@@ -4,12 +4,12 @@ using System.ServiceModel;
 
 namespace CompanyGroup.ApplicationServices.RegistrationModule
 {
-    [ServiceBehavior(UseSynchronizationContext = false,
-                     InstanceContextMode = InstanceContextMode.PerCall,
-                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                     IncludeExceptionDetailInFaults = true),
-                     System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                 InstanceContextMode = InstanceContextMode.PerCall,
+    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                 IncludeExceptionDetailInFaults = true),
+    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
     public class RegistrationService : ServiceCoreBase, IRegistrationService 
     {
         private CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository;

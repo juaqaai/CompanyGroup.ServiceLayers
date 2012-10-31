@@ -6,12 +6,12 @@ using System.ServiceModel;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    [ServiceBehavior(UseSynchronizationContext = false,
-                     InstanceContextMode = InstanceContextMode.PerCall,
-                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                     IncludeExceptionDetailInFaults = true),
-                     System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                 InstanceContextMode = InstanceContextMode.PerCall,
+    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                 IncludeExceptionDetailInFaults = true),
+    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
     public class StructureService : IStructureService
     {
         private const string CACHEKEY_STRUCTURE = "structure";

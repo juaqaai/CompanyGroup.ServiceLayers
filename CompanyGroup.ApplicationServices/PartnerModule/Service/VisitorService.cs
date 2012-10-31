@@ -6,12 +6,12 @@ using System.ServiceModel.Web;
 
 namespace CompanyGroup.ApplicationServices.PartnerModule
 {
-    [ServiceBehavior(UseSynchronizationContext = false,
-                     InstanceContextMode = InstanceContextMode.PerCall,
-                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                     IncludeExceptionDetailInFaults = true),
-                     System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                 InstanceContextMode = InstanceContextMode.PerCall,
+    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                 IncludeExceptionDetailInFaults = true),
+    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
     public class VisitorService : ServiceCoreBase, IVisitorService
     {
         /// <summary>

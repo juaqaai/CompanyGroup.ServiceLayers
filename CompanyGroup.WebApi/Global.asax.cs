@@ -36,6 +36,15 @@ namespace CompanyGroup.WebApi
 
             //-> WebApi controllers
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ContactPersonController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.MaintainController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.SalesOrderController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.VisitorController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.RegistrationController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.NewsletterController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.PictureController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ShoppingCartController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ProductController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.StructureController>();
 
             unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IProductRepository, CompanyGroup.Data.MaintainModule.ProductRepository>();   
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>();

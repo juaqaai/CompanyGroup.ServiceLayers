@@ -10,12 +10,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     /// <summary>
     /// bevásárlókosárhoz tartozó application szervizek
     /// </summary>
-    [ServiceBehavior(UseSynchronizationContext = false,
-                    InstanceContextMode = InstanceContextMode.PerCall,
-                    ConcurrencyMode = ConcurrencyMode.Multiple,
-                    IncludeExceptionDetailInFaults = true),
-                    System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()]
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                InstanceContextMode = InstanceContextMode.PerCall,
+    //                ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                IncludeExceptionDetailInFaults = true),
+    //                System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()]
     public class ShoppingCartService : ServiceBase, IShoppingCartService
     {
         private CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository;

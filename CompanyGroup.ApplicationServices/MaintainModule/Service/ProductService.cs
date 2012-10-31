@@ -9,12 +9,12 @@ using CompanyGroup.Domain.MaintainModule;
 
 namespace CompanyGroup.ApplicationServices.MaintainModule
 {
-    [ServiceBehavior(UseSynchronizationContext = false,
-                     InstanceContextMode = InstanceContextMode.PerCall,
-                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                     IncludeExceptionDetailInFaults = true),
-                     System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    [CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
+    //[ServiceBehavior(UseSynchronizationContext = false,
+    //                 InstanceContextMode = InstanceContextMode.PerCall,
+    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
+    //                 IncludeExceptionDetailInFaults = true),
+    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
+    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
     public class ProductService : IProductService
     {
         private CompanyGroup.Domain.MaintainModule.IProductRepository productMaintainRepository;

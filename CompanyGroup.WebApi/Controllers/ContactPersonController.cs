@@ -5,8 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-using AttributeRouting.Web.Http;
-
 namespace CompanyGroup.WebApi.Controllers
 {
 
@@ -25,20 +23,20 @@ namespace CompanyGroup.WebApi.Controllers
             this.service = service;
         }
 
-        [POST("ChangePassword")]
+        [AttributeRouting.Web.Http.POST("ChangePassword")]
         public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.ServiceRequest.ChangePassword request)
         {
             return service.ChangePassword(request);
         }
 
-        [POST("UndoChangePassword")]
+        [AttributeRouting.Web.Http.POST("UndoChangePassword")]
         public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request)
         {
             return service.UndoChangePassword(request);
         }
 
-        //[POST("ContactPerson")]
-        [GET("ContactPerson/{visitorId}/{languageId}")]
+        [AttributeRouting.Web.Http.POST("ContactPerson")]
+        //[AttributeRouting.Web.Http.GET("ContactPerson/{visitorId}/{languageId}")]
         public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(string visitorId, string languageId)
         {
             CompanyGroup.Dto.ServiceRequest.GetContactPersonById request = new Dto.ServiceRequest.GetContactPersonById() { LanguageId = languageId, VisitorId = visitorId };
@@ -53,7 +51,7 @@ namespace CompanyGroup.WebApi.Controllers
             return response;
         }
 
-        [POST("ForgetPassword")]
+        [AttributeRouting.Web.Http.POST("ForgetPassword")]
         public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request)
         {
             return service.ForgetPassword(request);
