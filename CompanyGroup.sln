@@ -60,6 +60,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.GlobalServices
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.GlobalServices", "CompanyGroup.GlobalServices\CompanyGroup.GlobalServices.csproj", "{5A3FFA39-B925-456F-89A2-2FB437B4FC0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.WebClient", "CompanyGroup.WebClient\CompanyGroup.WebClient.csproj", "{75933679-965F-4E0E-876C-01D3C472EC6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.WebApi", "CompanyGroup.WebApi\CompanyGroup.WebApi.csproj", "{3A132538-2971-4B26-8B3D-E574BCC6C428}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CompanyGroup.vsmdi
@@ -136,6 +140,18 @@ Global
 		{5A3FFA39-B925-456F-89A2-2FB437B4FC0E}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{5A3FFA39-B925-456F-89A2-2FB437B4FC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A3FFA39-B925-456F-89A2-2FB437B4FC0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75933679-965F-4E0E-876C-01D3C472EC6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A132538-2971-4B26-8B3D-E574BCC6C428}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,8 +165,12 @@ Global
 		{063AA617-A51A-4A18-8711-A549AF5A3CCF} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
 		{0E5CC355-9429-4AA4-A977-864FBE1D78AD} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
 		{5A3FFA39-B925-456F-89A2-2FB437B4FC0E} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
+		{3A132538-2971-4B26-8B3D-E574BCC6C428} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
 		{D73A25A5-CE2D-432B-B18A-F914E451B348} = {CC18C824-5846-486E-B804-A22CD332AA2A}
 		{D67FDCA6-EDE3-401B-950F-40435DBF0058} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
 		{B30FD063-1790-4E66-B251-E5EAB44D6499} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal
