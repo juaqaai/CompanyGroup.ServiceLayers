@@ -6,6 +6,8 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
+    <script src="@Url.Script("head.load")"></script>
+
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
@@ -44,5 +46,18 @@
 
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
+    <script>
+        head.js("@Url.Script("jquery-1.4.4")", function() {
+            head.js("@Url.Script("jquery-ui")")
+                .js("@Url.Script("jquery.unobtrusive-ajax")")
+                .js("@Url.Script("jquery.validate")", "@Url.Script("jquery.validate.unobtrusive")")
+                .js("@Url.Script("jquery.customSharedPlugin")");
+            @RenderSection("scriptFiles", false)
+        });
+        head.ready(function() {
+            $('#main').customSharedPlugin();
+            @RenderSection("scriptOnReady", false)
+        });
+    </script>
     </body>
 </html>

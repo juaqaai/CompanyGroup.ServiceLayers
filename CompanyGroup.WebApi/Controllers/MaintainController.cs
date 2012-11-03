@@ -26,7 +26,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// <summary>
         /// terméklista cache újra töltése
         /// </summary>
-        [AttributeRouting.Web.Http.GET("FillProductCache/{dataAreaId}")]
+        [ActionName("FillProductCache/{dataAreaId}")]
+        [HttpGet]
         public bool FillProductCache(string dataAreaId)
         {
             return service.FillProductCache(dataAreaId);
@@ -36,7 +37,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// terméklista cache törlése
         /// </summary>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.GET("ClearProductCache")]
+        [ActionName("ClearProductCache")]
+        [HttpGet]
         public bool ClearProductCache()
         {
             return service.ClearProductCache();
@@ -47,7 +49,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.GET("RefillProductCache")]
+        [ActionName("RefillProductCache")]
+        [HttpGet]
         public bool RefillProductCache(string dataAreaId)
         {
             return service.RefillProductCache(dataAreaId);

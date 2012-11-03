@@ -18,8 +18,26 @@ namespace CompanyGroup.WebApi
             //kontroller/metódus/paraméter (opcionális)
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "MaintainApi",
+                routeTemplate: "api/{controller}/{action}/{dataAreaId}",
+                defaults: new { dataAreaId = "hrp" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "ComplationApi",
+                routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}/{completionType}",
+                defaults: new { dataAreaId = "hrp" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "PictureApi",
+                routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{dataAreaId}/{maxWidth}/{maxHeight}",
+                defaults: new { dataAreaId = "hrp" }
             );
         }
     }

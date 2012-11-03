@@ -23,9 +23,7 @@ namespace CompanyGroup.WebApi
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
             Configure(GlobalConfiguration.Configuration);
-
         }
 
         void Configure(HttpConfiguration httpConfiguration)
@@ -73,6 +71,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IContactPersonService, CompanyGroup.ApplicationServices.PartnerModule.ContactPersonService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IShoppingCartService, CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IFinanceService, CompanyGroup.ApplicationServices.WebshopModule.FinanceService>();
+            unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.INewsletterService, CompanyGroup.ApplicationServices.WebshopModule.NewsletterService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.RegistrationModule.IRegistrationService, CompanyGroup.ApplicationServices.RegistrationModule.RegistrationService>();
 
             unityContainer.RegisterInstance<CompanyGroup.Data.NoSql.ISettings>(CompanyGroup.Data.NoSql.SettingsFactory.Create(), new ContainerControlledLifetimeManager());

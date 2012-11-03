@@ -23,24 +23,24 @@ namespace CompanyGroup.WebApi.Controllers
             this.service = service;
         }
 
-        [AttributeRouting.Web.Http.POST("ChangePassword")]
+        [HttpPost]
+        [ActionName("ChangePassword")]
         public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.ServiceRequest.ChangePassword request)
         {
             return service.ChangePassword(request);
         }
 
-        [AttributeRouting.Web.Http.POST("UndoChangePassword")]
+        [HttpPost]
+        [ActionName("UndoChangePassword")]
         public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request)
         {
             return service.UndoChangePassword(request);
         }
 
-        [AttributeRouting.Web.Http.POST("ContactPerson")]
-        //[AttributeRouting.Web.Http.GET("ContactPerson/{visitorId}/{languageId}")]
-        public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(string visitorId, string languageId)
+        [HttpPost]
+        [ActionName("GetById")]
+        public CompanyGroup.Dto.PartnerModule.ContactPerson GetById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request)
         {
-            CompanyGroup.Dto.ServiceRequest.GetContactPersonById request = new Dto.ServiceRequest.GetContactPersonById() { LanguageId = languageId, VisitorId = visitorId };
-
             CompanyGroup.Dto.PartnerModule.ContactPerson response = service.GetContactPersonById(request);
 
             if (response == null)
@@ -51,7 +51,8 @@ namespace CompanyGroup.WebApi.Controllers
             return response;
         }
 
-        [AttributeRouting.Web.Http.POST("ForgetPassword")]
+        [HttpPost]
+        [ActionName("ForgetPassword")]
         public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request)
         {
             return service.ForgetPassword(request);

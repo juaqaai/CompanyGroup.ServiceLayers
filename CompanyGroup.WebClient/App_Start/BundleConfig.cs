@@ -23,6 +23,16 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            //head.load.js regisztráció
+            bundles.Add(new ScriptBundle("~/bundles/head").Include(
+            "~/Scripts/head.load.js"));
+
+            //legutolsó verziójú sammy.js regisztráció
+            bundles.Add(new ScriptBundle("~/bundles/sammy").Include(
+            "~/Scripts/sammy-{version}.js"));
+
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

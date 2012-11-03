@@ -30,7 +30,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="productId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetListByProduct")]
+        [ActionName("GetListByProduct")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.ServiceRequest.PictureFilter request)
         {
             return this.service.GetListByProduct(request);
@@ -45,7 +46,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.GET("GetItem/{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}")]
+        [ActionName("GetItem")] ///{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}
+        [HttpGet]
         public Stream GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
             return this.service.GetItem(productId, recId, dataAreaId, maxWidth, maxHeight);

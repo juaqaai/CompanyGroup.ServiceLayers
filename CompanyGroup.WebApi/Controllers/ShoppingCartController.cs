@@ -25,7 +25,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>CompanyGroup.Dto.ServiceResponse
-        [AttributeRouting.Web.Http.POST("AssociateCart")]
+        [ActionName("AssociateCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AssociateCart(CompanyGroup.Dto.ServiceRequest.AssociateCart request)
         {
             return service.AssociateCart(request);
@@ -35,7 +36,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// bevásárlókosár hozzáadása bevásárlókosár kollekcióhoz, 
         /// új kosár inicializálása + új elem hozzáadása
         /// </summary>
-        [AttributeRouting.Web.Http.POST("AddCart")]
+        [ActionName("AddCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AddCart(CompanyGroup.Dto.ServiceRequest.AddCart request)
         {
             return service.AddCart(request);
@@ -46,7 +48,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("SaveCart")]
+        [ActionName("SaveCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.ServiceRequest.SaveCart request)
         {
             return service.SaveCart(request);
@@ -56,7 +59,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// látogatóhoz tartozó aktív kosár törlése kosár kollekcióból 
         /// </summary>
         /// <param name="cartId"></param>
-        [AttributeRouting.Web.Http.POST("RemoveCart")]
+        [ActionName("RemoveCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.ServiceRequest.RemoveCart request)
         {
             return service.RemoveCart(request);
@@ -67,7 +71,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="active"></param>
-        [AttributeRouting.Web.Http.POST("ActivateCart")]
+        [ActionName("ActivateCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.ServiceRequest.ActivateCart request)
         {
             return service.ActivateCart(request);
@@ -78,7 +83,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// ha nincs aktív kosár, akkor létrehoz egy új kosarat és ahhoz adja hozzá az új elemet
         /// </summary>
         /// <param name="request"></param>
-        [AttributeRouting.Web.Http.POST("AddLine")]
+        [ActionName("AddLine")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.ServiceRequest.AddLine request)
         {
             return service.AddLine(request);
@@ -88,7 +94,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// elem törlése meglévő kosárból
         /// </summary>
         /// <param name="request"></param>
-        [AttributeRouting.Web.Http.POST("RemoveLine")]
+        [ActionName("RemoveLine")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.ServiceRequest.RemoveLine request)
         {
             return service.RemoveLine(request);
@@ -98,7 +105,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// meglévő kosárban elem frissítése 
         /// </summary>
         /// <param name="request"></param>
-        [AttributeRouting.Web.Http.POST("UpdateLineQuantity")]
+        [ActionName("UpdateLineQuantity")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity request)
         {
             return service.UpdateLineQuantity(request);
@@ -114,7 +122,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetStoredOpenedShoppingCartCollectionByVisitor")]
+        [ActionName("GetStoredOpenedShoppingCartCollectionByVisitor")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
         {
             return service.GetStoredOpenedShoppingCartCollectionByVisitor(request);
@@ -125,7 +134,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="visitorId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetCartCollectionByVisitor")]
+        [ActionName("GetCartCollectionByVisitor")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
         {
             return service.GetCartCollectionByVisitor(request);
@@ -136,7 +146,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="cartId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetCartByKey")]
+        [ActionName("GetCartByKey")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.ServiceRequest.GetCartByKey request)
         {
             return service.GetCartByKey(request);
@@ -147,7 +158,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetActiveCart")]
+        [ActionName("GetActiveCart")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.ServiceRequest.GetActiveCart request)
         {
             return service.GetActiveCart(request);
@@ -158,7 +170,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("CreateFinanceOffer")]
+        [ActionName("CreateFinanceOffer")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request)
         {
             return service.CreateFinanceOffer(request);
@@ -169,7 +182,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("CreateOrder")]
+        [ActionName("CreateOrder")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.ServiceRequest.SalesOrderCreate request)
         {
             return service.CreateOrder(request);

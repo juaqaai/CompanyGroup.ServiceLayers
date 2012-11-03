@@ -28,10 +28,21 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetAll")]
+        /// [GET("contactRange/{id:range(1,3)}")]
+        /// [GET(@"text/{e:regex(^[A-Z][a-z][0-9]$)}")]
+        /// [RoutePrefix("items", TranslationKey = "itemsKey")]
+        [ActionName("GetAll")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
-            return this.service.GetAll(request);
+            CompanyGroup.Dto.WebshopModule.Products response = this.service.GetAll(request);
+
+            if (response == null)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
+
+            return response;
         }
 
         /// <summary>
@@ -44,7 +55,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetBannerList")]
+        [ActionName("GetBannerList")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request)
         {
             return this.service.GetBannerList(request);
@@ -55,7 +67,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetPriceList")]
+        [ActionName("GetPriceList")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.PriceList GetPriceList(CompanyGroup.Dto.ServiceRequest.GetPriceList request)
         {
             return this.service.GetPriceList(request);
@@ -66,10 +79,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.GET("GetItemByObjectId/{objectId}/{visitorId}")]
+        [ActionName("GetItemByObjectId")]   //{objectId}/{visitorId}
+        [HttpGet]
         public CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId)
         {
-            return this.service.GetItemByObjectId(request);
+            return this.service.GetItemByObjectId(objectId, visitorId);
         }
 
         /// <summary>
@@ -77,7 +91,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetItemByProductId")]
+        [ActionName("GetItemByProductId")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.Product GetItemByProductId(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
         {
             return this.service.GetItemByProductId(request);
@@ -90,13 +105,20 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="prefix"></param>
         /// <param name="completionType">0: nincs megadva, 1: termékazonosító-cikkszám, 2: minden</param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.GET("GetCompletionList/{DataAreaId}/{Prefix}/{CompletionType}")]
+        [ActionName("GetCompletionList")]
+        [HttpGet]
         public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(string dataAreaId, string prefix, string completionType) //CompanyGroup.Dto.ServiceRequest.ProductListComplation request
         {
             return this.service.GetCompletionList(dataAreaId, prefix, completionType);
         }
 
-        [AttributeRouting.Web.Http.POST("GetCompatibleProducts")]
+        /// <summary>
+        /// kompatibilitás lista
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("GetCompatibleProducts")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.CompatibleProducts GetCompatibleProducts(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
         {
             return this.service.GetCompatibleProducts(request);

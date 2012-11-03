@@ -426,7 +426,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void SignInTest()
         { 
-            CompanyGroup.Dto.ServiceRequest.SignIn request = new Dto.ServiceRequest.SignIn() { DataAreaId = "hrp", UserName = "elektroplaza", Password = "58915891", IPAddress = "" };
+            CompanyGroup.Dto.ServiceRequest.SignIn request = new Dto.ServiceRequest.SignIn("hrp", "elektroplaza", "58915891", "");
 
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 

@@ -29,7 +29,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetAddressZipCodes")]
+        [ActionName("GetAddressZipCodes")]
+        [HttpGet]
         public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCode request)
         {
             return service.GetAddressZipCodes(request);
@@ -40,7 +41,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetCustomerRegistration")]
+        [ActionName("GetCustomerRegistration")]
+        [HttpPost]
         public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request)
         {
             return service.GetCustomerRegistration(request);
@@ -51,7 +53,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetDeliveryAddresses")]
+        [ActionName("GetDeliveryAddresses")]
+        [HttpPost]
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request)
         {
             return service.GetDeliveryAddresses(request);
@@ -62,7 +65,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("SignIn")]
+        [ActionName("SignIn")]
+        [HttpPost]
         public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
         {
             return service.SignIn(request);
@@ -72,7 +76,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// kijelentkezés   
         /// </summary>
         /// <param name="request"></param>
-        [AttributeRouting.Web.Http.POST("SignOut")]
+        [ActionName("SignOut")]
+        [HttpPost]
         public CompanyGroup.Dto.ServiceResponse.Empty SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
         {
             return service.SignOut(request);
@@ -83,7 +88,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetInvoiceInfo")]
+        [ActionName("GetInvoiceInfo")]
+        [HttpPost]
         public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetInvoiceInfo(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
         {
             return service.GetInvoiceInfo(request);

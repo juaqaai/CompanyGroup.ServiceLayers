@@ -43,3 +43,9 @@
         <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn more…</a>
     </li>
 </ol>
+@section scriptFiles {
+    head.js("@Url.Script("jquery.customPlugin1")");
+}
+@section scriptOnReady {
+    $('#main > h2').customPlugin1();
+}

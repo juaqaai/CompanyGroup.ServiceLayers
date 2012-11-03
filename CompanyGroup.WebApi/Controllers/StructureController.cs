@@ -28,6 +28,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [ActionName("GetAll")]
+        [HttpPost]
         public CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
         {
             return this.service.GetAll(request);

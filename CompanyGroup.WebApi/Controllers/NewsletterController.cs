@@ -28,8 +28,9 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetNewsletterCollection")]
-        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterCollection(CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request)
+        [HttpPost]
+        [ActionName("GetCollection")]
+        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetCollection(CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request)
         {
             return service.GetNewsletterCollection(request);
         }

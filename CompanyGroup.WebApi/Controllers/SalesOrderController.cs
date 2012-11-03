@@ -28,7 +28,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AttributeRouting.Web.Http.POST("GetOrderInfo")]
+        [ActionName("GetOrderInfo")]
+        [HttpPost]
         public List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.ServiceRequest.GetOrderInfo request)
         {
             return service.GetOrderInfo(request);
