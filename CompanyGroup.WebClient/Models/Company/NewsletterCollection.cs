@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Company.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class NewsletterCollection : CompanyGroup.Dto.WebshopModule.NewsletterCollection
     {

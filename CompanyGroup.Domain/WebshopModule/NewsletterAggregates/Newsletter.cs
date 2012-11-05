@@ -33,6 +33,10 @@ namespace CompanyGroup.Domain.WebshopModule
             this.PicturePath = picturePath;
 
             this.AllowedDateTime = allowedDate;    //allowedTime   
+
+            this.Body = String.Empty;
+
+            this.ProductId = String.Empty;
         }
 
         /// <summary>

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CacheHelper.cs" />
     <Compile Include="ContextKeyManager.cs" />
+    <Compile Include="CookieHelper.cs" />
     <Compile Include="DesignByContract.cs" />
     <Compile Include="DynamicsConnector.cs" />
     <Compile Include="ConfigSettingsParser.cs" />

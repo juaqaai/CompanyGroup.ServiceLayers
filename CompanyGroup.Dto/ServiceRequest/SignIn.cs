@@ -8,6 +8,8 @@ namespace CompanyGroup.Dto.ServiceRequest
     /// </summary>
     public class SignIn
     {
+        public SignIn() : this("", "", "", "") { }
+
         public SignIn(string dataAreaId, string userName, string password, string ipAddress)
         {
             this.DataAreaId = dataAreaId;

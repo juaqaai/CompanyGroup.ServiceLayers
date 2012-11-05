@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// webshop lista view-hoz tartozó típus, webshop catalogue controller index action JSonResult-ban
@@ -9,8 +9,8 @@ namespace Cms.Webshop.Models
     public class Catalogue
     {
         public Catalogue(CompanyGroup.Dto.WebshopModule.Structures structures, 
-                         CompanyGroup.Dto.WebshopModule.Products products, 
-                         Cms.CommonCore.Models.Visitor visitor,
+                         CompanyGroup.Dto.WebshopModule.Products products,
+                         CompanyGroup.WebClient.Models.Visitor visitor,
                          CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
                          List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems, 
                          List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems,
@@ -47,7 +47,7 @@ namespace Cms.Webshop.Models
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
 
-        public Cms.CommonCore.Models.Visitor Visitor { get; set; }
+        public CompanyGroup.WebClient.Models.Visitor Visitor { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.ShoppingCart ActiveCart { get; set; } 
 

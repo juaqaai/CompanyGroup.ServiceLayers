@@ -12,7 +12,7 @@ namespace CompanyGroup.WebClient
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { action = "index", id = RouteParameter.Optional }
+                defaults: new { action = "Index", id = RouteParameter.Optional }
             );
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.PartnerInfo.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// regisztráció adatokat összefogó osztály
@@ -18,7 +18,7 @@ namespace Cms.PartnerInfo.Models
                             string registrationId, string visitorId, 
                             CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator)
         {
-            this.BankAccounts = new Cms.PartnerInfo.Models.BankAccounts() { Items = bankAccounts, SelectedId = "" };
+            this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts() { Items = bankAccounts, SelectedId = "" };
 
             this.CompanyData = new CompanyData(companyData);
 
@@ -39,15 +39,15 @@ namespace Cms.PartnerInfo.Models
             this.WebAdministrator = new WebAdministrator(webAdministrator);
         }
 
-        public Cms.PartnerInfo.Models.BankAccounts BankAccounts { get; set; }
+        public CompanyGroup.WebClient.Models.BankAccounts BankAccounts { get; set; }
 
         public CompanyData CompanyData { get; set; }
 
-        public Cms.PartnerInfo.Models.ContactPersons ContactPersons { get; set; }
+        public CompanyGroup.WebClient.Models.ContactPersons ContactPersons { get; set; }
 
         public DataRecording DataRecording { get; set; }
 
-        public Cms.PartnerInfo.Models.DeliveryAddresses DeliveryAddresses { get; set; }
+        public CompanyGroup.WebClient.Models.DeliveryAddresses DeliveryAddresses { get; set; }
 
         public InvoiceAddress InvoiceAddress { get; set; }
 

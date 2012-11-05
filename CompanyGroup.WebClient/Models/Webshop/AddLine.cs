@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class AddLine
     {

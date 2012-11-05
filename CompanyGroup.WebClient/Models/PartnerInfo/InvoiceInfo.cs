@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.PartnerInfo.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// számla info lista
     /// </summary>
     public class InvoiceInfoList
     {
-        public InvoiceInfoList(List<Cms.PartnerInfo.Models.InvoiceInfo> items)
+        public InvoiceInfoList(List<CompanyGroup.WebClient.Models.InvoiceInfo> items)
         {
             this.Items = items;
 
@@ -17,7 +17,7 @@ namespace Cms.PartnerInfo.Models
             this.NettoSumCredit = String.Format("{0}", 0);
         }
 
-        public List<Cms.PartnerInfo.Models.InvoiceInfo> Items { get; set; }
+        public List<CompanyGroup.WebClient.Models.InvoiceInfo> Items { get; set; }
 
         public int ItemCount { get; set; }
 
@@ -107,7 +107,7 @@ namespace Cms.PartnerInfo.Models
         /// <summary>
         /// számla sorok     
         /// </summary>
-        public List<Cms.PartnerInfo.Models.InvoiceLineInfo> Lines { get; set; }
+        public List<CompanyGroup.WebClient.Models.InvoiceLineInfo> Lines { get; set; }
     }
 
     /// <summary>

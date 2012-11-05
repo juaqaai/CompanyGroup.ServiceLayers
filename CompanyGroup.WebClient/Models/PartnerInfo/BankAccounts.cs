@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.PartnerInfo.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class BankAccounts : CompanyGroup.Dto.RegistrationModule.BankAccounts
     {

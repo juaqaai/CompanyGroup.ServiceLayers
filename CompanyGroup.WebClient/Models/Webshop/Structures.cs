@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// struktúra model 

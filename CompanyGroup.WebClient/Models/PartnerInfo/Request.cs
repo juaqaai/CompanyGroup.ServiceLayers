@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.PartnerInfo.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class WebAdministrator : CompanyGroup.Dto.RegistrationModule.WebAdministrator
     {

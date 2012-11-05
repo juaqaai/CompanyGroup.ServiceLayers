@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// kosár azonosító alapján történő lekérdezés adatait összefogó POCO

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class Products
     {
-        public Products(CompanyGroup.Dto.WebshopModule.Products items, Cms.CommonCore.Models.Visitor visitor)
+        public Products(CompanyGroup.Dto.WebshopModule.Products items, CompanyGroup.WebClient.Models.Visitor visitor)
         {
             this.Items = items;
 
@@ -16,7 +16,7 @@ namespace Cms.Webshop.Models
 
         public long ListCount { get; set; }
 
-        public Cms.CommonCore.Models.Visitor Visitor { get; set; }
+        public CompanyGroup.WebClient.Models.Visitor Visitor { get; set; }
 
     }
 }

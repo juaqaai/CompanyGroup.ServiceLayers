@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// CatalogueItem model for product details view
@@ -11,8 +11,8 @@ namespace Cms.Webshop.Models
         public CatalogueItem(CompanyGroup.Dto.WebshopModule.Structures structures, 
                              CompanyGroup.Dto.WebshopModule.Product product, 
                              List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> compatibleProducts,
-                             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> reverseCompatibleProducts, 
-                             Cms.CommonCore.Models.Visitor visitor,
+                             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> reverseCompatibleProducts,
+                             CompanyGroup.WebClient.Models.Visitor visitor,
                              CompanyGroup.Dto.WebshopModule.BannerList bannerList,
                              CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart,
                              List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems,
@@ -57,7 +57,7 @@ namespace Cms.Webshop.Models
 
         public List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> ReverseCompatibleProducts { get; set; }
 
-        public Cms.CommonCore.Models.Visitor Visitor { get; set; }
+        public CompanyGroup.WebClient.Models.Visitor Visitor { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.BannerList BannerList { get; set; }
 

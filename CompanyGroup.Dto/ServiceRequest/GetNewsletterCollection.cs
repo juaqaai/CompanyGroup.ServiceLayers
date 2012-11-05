@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CompanyGroup.Dto.ServiceRequest
 {
     [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "GetNewsletterCollection", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    [System.Runtime.Serialization.DataContract(Name = "GetNewsletterCollection", Namespace = "CompanyGroup.Dto.ServiceRequest")]
     public class GetNewsletterCollection
     {
         public GetNewsletterCollection() : this("", "", "") { }

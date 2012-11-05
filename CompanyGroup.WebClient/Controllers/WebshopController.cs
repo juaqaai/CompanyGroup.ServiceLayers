@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebClient.Controllers
 {
-    public class WebshopController : ApiController
+    public class WebshopController : ApiBaseController
     {
         // GET api/webshop
         public IEnumerable<string> Get()

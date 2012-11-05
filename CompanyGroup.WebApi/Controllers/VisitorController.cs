@@ -28,6 +28,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [ActionName("GetVisitorInfo")]
+        [HttpPost]
         public CompanyGroup.Dto.PartnerModule.Visitor GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
         {
             return service.GetVisitorInfo(request);
@@ -38,6 +40,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [ActionName("GetRoles")]
+        [HttpPost]
         public List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
         {
             return service.GetRoles(request);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     public class ManufacturerItem
     {

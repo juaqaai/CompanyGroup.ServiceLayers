@@ -4,108 +4,58 @@ using System.Web;
 
 namespace CompanyGroup.Helpers
 {
+    /// <summary>
+    /// http cookie helper
+    /// </summary>
     public static class CookieHelper
     {
         /// <summary>
-        /// session id-t kiolvassa http sütiből és visszaadja a hívónak
-        /// ha nincs a sessionId-nek értéke és a createIfEmpty igaz, akkor generál egy új értéket a sütinek és beleteszi a http válaszba     
+        /// http süti kiolvasása http kérésből
         /// </summary>
-        /// <param name="req"></param>
-        /// <param name="res"></param>
-        /// <param name="createIfEmpty"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="cookieName"></param>
         /// <returns></returns>
-        public static string ReadSessionId(HttpRequestBase req, HttpResponseBase res, bool createIfEmpty)
-        {
-            string sessionId = String.Empty;
-            HttpCookie cookie = req.Cookies.Get("hrp_rs_sess");
-            if (cookie != null)
-            {
-                sessionId = cookie.Value;
-            }
-            if (String.IsNullOrEmpty(sessionId) && createIfEmpty)
-            {
-                sessionId = Guid.NewGuid().ToString("N");
-                res.Cookies.Add(new HttpCookie("hrp_rs_sess", sessionId) { Expires = DateTime.Now.AddDays(30d) });
-            }
-            return sessionId;
-        }
-
-        /// <summary>
-        /// kiolvassa az objectId beállítást tartalmazó cookie értékét
-        /// </summary>
-        /// <param name="req"></param>
-        /// <returns></returns>
-        public static string ReadObjectId(HttpRequestBase req, string cookieName)
-        {
-            if (cookieName == null) { return String.Empty; }
-
-            string result = String.Empty;
-            HttpCookie cookie = req.Cookies.Get(cookieName);
-            if (cookie != null)
-            {
-                result = cookie.Value;
-            }
-            return (result != null) ? result : String.Empty;
-        }
-
-        public static void WriteObjectId(HttpResponseBase res, string cookieName, string value)
+        public static T ReadCookie<T>(HttpRequestBase request, string cookieName) where T : class
         {
             try
             {
-                if (value == null) { return; }
+                HttpCookie cookie = request.Cookies.Get(cookieName);
 
-                res.Cookies.Add(new HttpCookie(cookieName, value) { Expires = DateTime.Now.AddDays(1d), HttpOnly = true });
+                if (cookie == null) { return default(T); }
+
+                return CompanyGroup.Helpers.JsonConverter.FromJSON<T>(cookie.Value);
+            }
+            catch { return default(T); }
+        }
+
+        /// <summary>
+        /// http süti írása http válaszba
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="cookieName"></param>
+        /// <param name="value"></param>
+        public static void WriteCookie(HttpResponseBase response, string cookieName, string value)
+        {
+            try
+            {
+                if ((String.IsNullOrEmpty(value))) { return; }
+
+                HttpCookie cookie = response.Cookies.Get(cookieName);
+
+                if (cookie == null)
+                {
+                    response.Cookies.Add(new HttpCookie(cookieName, value) { Expires = DateTime.Now.AddDays(30d), HttpOnly = true });
+                }
+                else
+                {
+                    cookie.Value = value;
+
+                    response.Cookies.Set(cookie);
+                }
             }
             catch { }
         }
 
-        /// <summary>
-        /// kiolvassa a nyelvi beállítást tartalmazó cookie értékét
-        /// ha nincs a langId-nek értéke és a createIfEmpty igaz, akkor beállítja az alapértelmezett értéket és beleteszi a sütit a http válaszba
-        /// </summary>
-        /// <param name="req"></param>
-        /// <returns></returns>
-        public static string ReadLangIdCookieValue(HttpRequestBase req, HttpResponseBase res, bool createIfEmpty)
-        {
-            string langId = String.Empty;
-            HttpCookie cookie = req.Cookies.Get("hrp_rs_lang");
-            if (cookie != null)
-            {
-                langId = cookie.Value;
-            }
-            if (String.IsNullOrEmpty(langId) && createIfEmpty)
-            {
-                langId = Shared.Web.Helpers.ConfigSettingsParser.GetString("LangId", "sb");
-                res.Cookies.Add(new HttpCookie("hrp_rs_lang", langId) { Expires = DateTime.Now.AddDays(30d) });
-            }
-            return (String.IsNullOrEmpty(langId)) ? "sb" : langId;
-        }
-
-        /// <summary>
-        /// beállítja a nyelvi beállítást tartalmazó cookie értékét
-        /// </summary>
-        /// <param name="req"></param>
-        /// <param name="res"></param>
-        /// <param name="langId"></param>
-        /// <returns></returns>
-        public static bool WriteLangIdCookieValue(HttpRequestBase req, HttpResponseBase res, string langId)
-        {
-            try
-            {
-                if (String.IsNullOrEmpty(langId)) { return false; }
-                HttpCookie cookie = req.Cookies.Get("hrp_rs_lang");
-                if (cookie == null)
-                {
-                    res.Cookies.Add(new HttpCookie("hrp_rs_lang", langId) { Expires = DateTime.Now.AddDays(30d) });
-                }
-                else
-                {
-                    cookie.Value = langId;
-                    res.Cookies.Set(cookie);
-                }
-                return true;
-            }
-            catch { return false; }
-        }
     }
 }

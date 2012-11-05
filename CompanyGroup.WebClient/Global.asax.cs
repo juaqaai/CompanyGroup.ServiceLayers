@@ -23,6 +23,8 @@ namespace CompanyGroup.WebClient
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            //BundleTable.Bundles.EnableDefaultBundles();
         }
     }
 }

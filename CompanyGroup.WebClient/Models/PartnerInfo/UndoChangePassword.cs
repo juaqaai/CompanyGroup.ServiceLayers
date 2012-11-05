@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cms.PartnerInfo.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// jelszó visszavonás eredmény
     /// </summary>
     public class UndoChangePassword : CompanyGroup.Dto.PartnerModule.UndoChangePassword
     {
-        public UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePassword undoChangePassword, Cms.CommonCore.Models.Visitor visitor)
+        public UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePassword undoChangePassword, CompanyGroup.WebClient.Models.Visitor visitor)
         {
             this.Message = undoChangePassword.Message;
 
@@ -17,6 +17,6 @@ namespace Cms.PartnerInfo.Models
             this.Visitor = visitor;
         }
 
-        public Cms.CommonCore.Models.Visitor Visitor { get; set; }
+        public CompanyGroup.WebClient.Models.Visitor Visitor { get; set; }
     }
 }

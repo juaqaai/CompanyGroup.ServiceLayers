@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cms.Webshop.Models
+namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
     /// finance ajánlatkészítés kérés adatokat összefogó POCO
