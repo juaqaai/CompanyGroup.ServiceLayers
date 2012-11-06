@@ -16,13 +16,13 @@ namespace CompanyGroup.WebClient
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Webshop", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-                name: "WebshopDetail",
+                name: "Details",
                 url: "{controller}/{action}/{productId}",
-                defaults: new { controller = "Home", action = "Webshop", productId = "" }
+                defaults: new { controller = "Webshop", action = "Details", productId = UrlParameter.Optional }
             );
         }
     }

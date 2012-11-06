@@ -21,7 +21,7 @@
 			</div>
 		</header>
         <!-- alsó felnyíló panel div -->
-		<div id="bottom_button_open">
+@*		<div id="bottom_button_open">
 			<div id="cus_bottom_content_on">
 				<div id="openclose_button"><img src="/Cms/Media/images/openclose.png" alt=""/>
 				</div>
@@ -34,7 +34,7 @@
 				</table>
 			</div>
 		</div>
-		<div id="cus_bottom_panel_on"></div>
+		<div id="cus_bottom_panel_on"></div>*@
 		<!-- *** alsó felnyíló panel div vége *** -->
 		<div id="cus_header1"></div>
 
@@ -42,13 +42,13 @@
 			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="100%">
-                    {{if CompanyGroupCms.Visitor.Instance().IsValidLogin()}}
+                    {{if IsValidLogin}}
                         <span>Bejelentkezve:</span> 
-                        <strong><span>${CompanyGroupCms.Visitor.Instance().CompanyName()}</span> <span>${CompanyGroupCms.Visitor.Instance().PersonName()}</span></strong>
+                        <strong><span>${CompanyName}</span> <span>${PersonName}</span></strong>
                         <span>Képviselő:</span>
-                        <strong><span>${CompanyGroupCms.Visitor.Instance().RepresentativeName()}</span></strong> 
-                        <a href="mailto:${CompanyGroupCms.Visitor.Instance().RepresentativeEmail()}">${CompanyGroupCms.Visitor.Instance().RepresentativeEmail()}</a>
-                        <strong><span>${CompanyGroupCms.Visitor.Instance().RepresentativePhone()}</span></strong>
+                        <strong><span>${RepresentativeName}</span></strong> 
+                        <a href="mailto:${RepresentativeEmail}">${RepresentativeEmail}</a>
+                        <strong><span>${RepresentativePhone}</span></strong>
                         <a id="anchor_signout" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.SignOut();"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{else}}
                         <img src="@Url.Content("~/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés </strong></a>
@@ -56,10 +56,30 @@
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
 					<td nowrap="nowrap">Nyelv&nbsp;</td>
-					<td nowrap="nowrap"><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">${CompanyGroupCms.Visitor.Instance().InverseLanguageId()}</span></a></strong>
-                                        {{if CompanyGroupCms.Visitor.Instance().IsValidLogin()}}
-                                        Pénznem <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('HUF')"><span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span></a></strong><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('EUR')"><span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span></a></strong><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('USD')"><span id="currency_usd" style="background: #666; padding: 2px;">USD</span></a></strong>
-                                        {{/if}}
+					<td nowrap="nowrap">
+                        {{if IsValidLogin}}
+                            <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">${InverseLanguageId}</span></a></strong>
+                            Pénznem <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('HUF')">
+                            {{if Currency == '' || Currency == 'HUF'}}
+                            <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
+                            {{else}}
+                            <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span>
+                            {{/if}}
+                            </a></strong>
+                            <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('EUR')">
+                            {{if Currency == 'EUR'}}
+                            <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px;">EUR</span>
+                            {{else}}
+                            <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span>
+                            {{/if}}
+                            </a></strong><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('USD')">
+                            {{if Currency == 'USD'}}
+                            <span id="currency_usd" style="background: #900; padding: 2px;">USD</span>
+                            {{else}}
+                            <span id="currency_usd" style="background: #666; padding: 2px;">USD</span>
+                            {{/if}}
+                            </a></strong>
+                        {{/if}}
                     </td>
 				</tr>
 			</table>
@@ -79,7 +99,7 @@
 									Gyorsmenü
 								</div>
 								<ul>
-                                    {{if CompanyGroupCms.Visitor.Instance().IsValidLogin()}}
+                                    {{if IsValidLogin}}
 									<li>
 										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByStock(true)">Készleten lévő termékek </a>
 									</li>
@@ -134,7 +154,7 @@
 						<td nowrap="nowrap" id="usermenuContainer">
 						</td>
                         <script id="usermenuTemplate" type="text/x-jquery-tmpl">
-                        {{if CompanyGroupCms.Visitor.Instance().IsValidLogin()}}
+                        {{if IsValidLogin}}
                         <ul id="usermenu">
 							<li>
 								<div id="cus_usermenu_text">
@@ -172,36 +192,36 @@
 				</table>
 			</div>
 			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Media/images/hrp_bsc_logo.png")" alt="" />
-		    <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
-        	<a href="#top" id="top-link">Top of Page</a>
-			<!-- menü -->
-			<div id="cus_ax_nav">
-				<ul id="navmenu_o">
-					<li>
-						<a href="@Url.Content("~/Home/Index")">WEBÁRUHÁZ</a>
-					</li>
-					<li>
-						<a href="@Url.Content("~/Home/Newsletter")">AKCIÓK</a>
-						<ul>
-							<li>
-								<a href="#"><img src="@Url.Content("~/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="@Url.Content("~/Home/About")">CÉGINFORMÁCIÓ</a>
-					</li>
-					<li>
-						<a href="@Url.Content("~/Home/Registration")">PARTNERRÉ VÁLÁS</a>
-					</li>
-					<li>
-						<a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">SZERVIZ</a>
-					</li>
-					<li>
-						<a rel="nofollow" href="@Url.Content("~/Home/Carreer")">KARRIER</a>
-					</li>
-				</ul>
-			</div>
+		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
+        	    <a href="#top" id="top-link">Top of Page</a>
+			    <!-- menü -->
+			    <div id="cus_ax_nav">
+				    <ul id="navmenu_o">
+					    <li>
+						    <a href="@Url.Content("~/Home/Index")">WEBÁRUHÁZ</a>
+					    </li>
+					    <li>
+						    <a href="@Url.Content("~/Home/Newsletter")">AKCIÓK</a>
+						    <ul>
+							    <li>
+								    <a href="#"><img src="@Url.Content("~/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
+							    </li>
+						    </ul>
+					    </li>
+					    <li>
+						    <a href="@Url.Content("~/Home/About")">CÉGINFORMÁCIÓ</a>
+					    </li>
+					    <li>
+						    <a href="@Url.Content("~/Home/Registration")">PARTNERRÉ VÁLÁS</a>
+					    </li>
+					    <li>
+						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">SZERVIZ</a>
+					    </li>
+					    <li>
+						    <a rel="nofollow" href="@Url.Content("~/Home/Carreer")">KARRIER</a>
+					    </li>
+				    </ul>
+			    </div>
 			<!-- menü -->
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->

@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebClient.Controllers
 {
-    public class ContactPersonController : ApiBaseController
+    public class PictureApiController : ApiBaseController
     {
     }
 }

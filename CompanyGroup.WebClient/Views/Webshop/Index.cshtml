@@ -35,4 +35,10 @@
 
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
+
+    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
+
+    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
+
+    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");
 }

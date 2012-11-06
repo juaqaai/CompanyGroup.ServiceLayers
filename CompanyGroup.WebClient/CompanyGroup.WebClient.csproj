@@ -163,14 +163,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiBaseController.cs" />
-    <Compile Include="Controllers\ContactPersonController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\PictureController.cs" />
-    <Compile Include="Controllers\RegistrationController.cs" />
-    <Compile Include="Controllers\SalesOrderController.cs" />
-    <Compile Include="Controllers\ShoppingCartController.cs" />
-    <Compile Include="Controllers\StructureController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ContactPersonApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\InvoiceApiController.cs" />
+    <Compile Include="Controllers\PartnerInfoController.cs" />
+    <Compile Include="Controllers\PictureApiController.cs" />
+    <Compile Include="Controllers\RegistrationApiController.cs" />
+    <Compile Include="Controllers\SalesOrderApiController.cs" />
+    <Compile Include="Controllers\ShoppingCartApiController.cs" />
+    <Compile Include="Controllers\StructureApiController.cs" />
+    <Compile Include="Controllers\WebshopApiController.cs" />
     <Compile Include="Controllers\WebshopController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -1097,9 +1100,9 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\Newsletter.cshtml" />
-    <Content Include="Views\Home\PartnerInfo.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Company\Newsletter.cshtml" />
+    <Content Include="Views\PartnerInfo\Index.cshtml" />
+    <Content Include="Views\Webshop\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1108,6 +1111,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1123,32 +1127,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\WebshopDetails.cshtml" />
+    <Content Include="Views\Webshop\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\InvoiceInfo.cshtml" />
+    <Content Include="Views\PartnerInfo\InvoiceInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\OrderInfo.cshtml" />
+    <Content Include="Views\PartnerInfo\OrderInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Registration.cshtml" />
+    <Content Include="Views\PartnerInfo\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\PartnerInfo\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\UndoChangePassword.cshtml" />
+    <Content Include="Views\PartnerInfo\UndoChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ForgetPassword.cshtml" />
+    <Content Include="Views\PartnerInfo\ForgetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Carreer.cshtml" />
+    <Content Include="Views\Company\Carreer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Media\Default\RecipeJournal\78fa6518c77340858c88440d2c2201b2" />
     <None Include="Media\images\_notes\filterdelete.png.mno" />
+    <Content Include="Views\Company\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebClient.Controllers
 {
-    public class InvoiceController : ApiBaseController
+    public class SalesOrderApiController : ApiBaseController
     {
     }
 }
