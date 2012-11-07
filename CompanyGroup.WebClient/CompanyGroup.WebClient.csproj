@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExcelLibrary">
+      <HintPath>..\Binaries\ExcelLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
@@ -196,7 +199,9 @@
     <Compile Include="Models\Common\VisitorRequest.cs" />
     <Compile Include="Models\Company\NewsletterCollection.cs" />
     <Compile Include="Models\PartnerInfo\BankAccounts.cs" />
+    <Compile Include="Models\PartnerInfo\ChangePasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\ContactPersons.cs" />
+    <Compile Include="Models\PartnerInfo\ForgetPasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\OrderLineInfo.cs" />
     <Compile Include="Models\PartnerInfo\OrderInfoList.cs" />
     <Compile Include="Models\PartnerInfo\DeliveryAddresses.cs" />

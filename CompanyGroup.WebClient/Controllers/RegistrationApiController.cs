@@ -9,5 +9,6 @@ namespace CompanyGroup.WebClient.Controllers
 {
     public class RegistrationApiController : ApiBaseController
     {
+
     }
 }

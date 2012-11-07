@@ -17,7 +17,11 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "PartnerInfo view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return View(visitor);
         }
 
         /// <summary>
@@ -28,7 +32,24 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "InvoiceInfo view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
+            {
+                LanguageId = visitorData.Language,
+                VisitorId = visitorData.ObjectId,
+                PaymentType = 1
+            };
+
+            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
+
+            List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
+
+            invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
+
+            CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList);
+
+            return View(model);
         }
 
         /// <summary>
@@ -39,7 +60,23 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "OrderInfo view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.Dto.ServiceRequest.GetOrderInfo request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfo()
+            {
+                LanguageId = visitorData.Language,
+                VisitorId = visitorData.ObjectId,
+            };
+
+            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfo, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
+
+            List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
+
+            orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+
+            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList);
+
+             return View(model);
         }
 
         /// <summary>
@@ -61,18 +98,43 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "ChangePassword view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return View(visitor);
         }
 
         /// <summary>
-        /// UndoChangePassword view kezdőérték beállításokkal
+        /// jelszómódosítást visszavonó művelet - view kezdőérték beállításokkal
         /// </summary>
+        /// <param name="undoChangePassword"></param>
         /// <returns></returns>
-        public ActionResult UndoChangePassword()
+        [HttpGet]
+        public ActionResult UndoChangePassword(string undoChangePassword)
         {
             ViewBag.Message = "UndoChangePassword view.";
 
-            return View();
+            CompanyGroup.Dto.PartnerModule.UndoChangePassword response;
+
+            if (String.IsNullOrEmpty(undoChangePassword))
+            {
+                CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+
+                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
+            }
+            else
+            {
+                response = new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Succeeded = false, Message = "A jelszómódosítás visszavonásához tartozó azonosító nem lett megadva!" };
+            }
+
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            CompanyGroup.WebClient.Models.UndoChangePassword model = new CompanyGroup.WebClient.Models.UndoChangePassword(response, visitor);
+
+            return View(model);
         }
 
         /// <summary>
@@ -83,7 +145,11 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "ForgetPassword view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return View(visitor);
         }
 
 

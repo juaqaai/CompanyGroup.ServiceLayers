@@ -200,7 +200,7 @@ namespace CompanyGroup.WebClient.Models
     /// <summary>
     /// jelszómódosítás
     /// </summary>
-    public class ChangePassword
+    public class ChangePasswordRequest
     {
         public string OldPassword { get; set; }
 
@@ -212,7 +212,7 @@ namespace CompanyGroup.WebClient.Models
     /// <summary>
     /// elfelejtett jelszó
     /// </summary>
-    public class ForgetPassword
+    public class ForgetPasswordRequest
     {
         public string UserName { get; set; }
     }

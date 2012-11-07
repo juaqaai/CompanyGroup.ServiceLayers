@@ -27,8 +27,28 @@ namespace CompanyGroup.WebClient.Models
     /// <summary>
     /// számla info
     /// </summary>
-    public class InvoiceInfo
+    public class InvoiceInfo 
     {
+        public InvoiceInfo(CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo)
+        { 
+                ContactPersonId = invoiceInfo.ContactPersonId;
+                CurrencyCode = invoiceInfo.CurrencyCode;
+                CusomerRef = invoiceInfo.CusomerRef;
+                DueDate = invoiceInfo.DueDate;
+                InvoiceAmount = invoiceInfo.InvoiceAmount;
+                InvoiceCredit = invoiceInfo.InvoiceCredit;
+                InvoiceDate = invoiceInfo.InvoiceDate;
+                InvoiceId = invoiceInfo.InvoiceId;
+                InvoicingAddress = invoiceInfo.InvoicingAddress;
+                InvoicingName = invoiceInfo.InvoicingName;
+                Payment = invoiceInfo.Payment;
+                Printed = invoiceInfo.Printed;
+                ReturnItemId = invoiceInfo.ReturnItemId;
+                SalesType = invoiceInfo.SalesType;
+                SalesId = invoiceInfo.SalesId;
+                Lines = invoiceInfo.Lines.ConvertAll(x => new InvoiceLineInfo(x));      
+        }
+
         /// <summary>
         /// VR, vagy BR azonosító
         /// </summary>
@@ -115,5 +135,17 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class InvoiceLineInfo : CompanyGroup.Dto.PartnerModule.InvoiceLineInfo
     {
+        public InvoiceLineInfo(CompanyGroup.Dto.PartnerModule.InvoiceLineInfo invoiceLineInfo)
+        { 
+            this.CurrencyCode = invoiceLineInfo.CurrencyCode;
+            this.DeliveryType = invoiceLineInfo.DeliveryType;
+            this.ItemDate = invoiceLineInfo.ItemDate;
+            this.ItemId = invoiceLineInfo.ItemId;
+            this.LineAmount = invoiceLineInfo.LineAmount;
+            this.Name = invoiceLineInfo.Name;
+            this.TaxAmount = invoiceLineInfo.TaxAmount;
+            this.Quantity = invoiceLineInfo.Quantity;
+            this.SalesPrice = invoiceLineInfo.SalesPrice;
+        }
     }
 }

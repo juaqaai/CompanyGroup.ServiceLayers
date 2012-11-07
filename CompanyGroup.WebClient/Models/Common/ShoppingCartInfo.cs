@@ -37,6 +37,8 @@ namespace CompanyGroup.WebClient.Models
 
     public class ShoppingCartInfo : CompanyGroup.Dto.WebshopModule.ShoppingCartInfo
     {
+        public ShoppingCartInfo() : this (new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(), new Visitor(), false, false) { }
+
         public ShoppingCartInfo(CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo, Visitor visitor, bool catalogueOpenStatus, bool shoppingCartOpenStatus)
         { 
             this.ActiveCart = shoppingCartInfo.ActiveCart;
