@@ -3,39 +3,43 @@
     ViewBag.Title = "Newsletter";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
+	<aside id="aside-first" class="aside-first group">
+		<div class="zone zone-aside-first">
+            <article class="widget-html-widget widget">
+                <p align="center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
+                <p align="center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
+            </article>
+        </div>
+	</aside>
+	<div id="layout-content" class="group">
+        @*cms Messages
+		<div id="messages">
+			Messages
+		</div>*@
+        @*cms BeforeContent
+		<div id="before-content">
+			BeforeContent
+		</div>*@
+		<div id="preloader">
+			loadnig...
+		</div>
+		<div id="content" class="group">
+			<div class="zone zone-content">
 
-<article>
-    <p>
-        Use this area to provide additional information.
-    </p>
+                <div id="div_newsletter_container" class="wrapper">
+                </div>
 
-    <p>
-        Use this area to provide additional information.
-    </p>
-
-    <p>
-        Use this area to provide additional information.
-    </p>
-</article>
-
-<aside>
-    <h3>Aside Title</h3>
-    <p>
-        Use this area to provide additional information.
-    </p>
-    <ul>
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-    </ul>
-</aside>
-
-<div id="div_newsletter_container" class="wrapper">
-</div>
+            </div>
+		</div>
+        @*cms AfterContent
+		<div id="after-content">
+			AfterContent
+		</div>*@
+	</div>
+    @*cms AsideSecond
+    <aside id="aside-second" class="aside-second">
+		AsideSecond
+	</aside>*@
 
 @section ScriptOnReady {
     var model = @(Html.Raw(Json.Encode(Model)));
@@ -51,7 +55,7 @@
 <div class="expand_heading">
 	<table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 		<tr>
-			<td valign="top"><img src="@Url.Content("~/Media/images/plusicon.png")" alt="" /></td>
+			<td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
 			<td width="100%" valign="top" class="cus_prod_header_middle_cell">
 			<span class="cus_prod_table_item_number">${item.SequenceNumber}</span><span class="cus_product_data">${item.NewsletterId}</span>
             <span class="cus_prod_table_item_code">${item.AllowedDateTime}</span>
@@ -72,7 +76,7 @@
                     {{if item.PicturePath.length > 0}}
 				    <a class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
                     {{else}}
-				    <a class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img src="@Url.Content("~/Media/images/demopic.jpg")" width="180" height="134" alt="" /></a>
+				    <a class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="180" height="134" alt="" /></a>
                     {{/if}}
 				    </div>
                 </td>

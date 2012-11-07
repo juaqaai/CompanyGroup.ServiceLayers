@@ -51,14 +51,14 @@
                         <strong><span>${RepresentativePhone}</span></strong>
                         <a id="anchor_signout" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.SignOut();"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{else}}
-                        <img src="@Url.Content("~/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés </strong></a>
+                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés </strong></a>
                     {{/if}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
 					<td nowrap="nowrap">Nyelv&nbsp;</td>
 					<td nowrap="nowrap">
+                        <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{if LanguageId == 'EN'}} HU {{else}} EN {{/if}}</span></a></strong>
                         {{if IsValidLogin}}
-                            <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">${InverseLanguageId}</span></a></strong>
                             Pénznem <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('HUF')">
                             {{if Currency == '' || Currency == 'HUF'}}
                             <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
@@ -191,8 +191,8 @@
 					</tr>
 				</table>
 			</div>
-			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Media/images/hrp_bsc_logo.png")" alt="" />
-		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
+			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
+		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
         	    <a href="#top" id="top-link">Top of Page</a>
 			    <!-- menü -->
 			    <div id="cus_ax_nav">
@@ -204,7 +204,7 @@
 						    <a href="@Url.Content("~/Home/Newsletter")">AKCIÓK</a>
 						    <ul>
 							    <li>
-								    <a href="#"><img src="@Url.Content("~/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
+								    <a href="#"><img src="@Url.Content("~/Content/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
 							    </li>
 						    </ul>
 					    </li>
@@ -226,32 +226,69 @@
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
 			<div id="cus_catalogue_container">
+                @* cms Featured
+				<div id="layout-featured" class="group">
+					Featured
+				</div>*@
+                @*cms BeforeMain
+				<div id="layout-before-main" class="group">
+					BeforeMain
+				</div>*@
+
 				<div id="layout-main-container">
 					<div id="layout-main" class="group">
-						<aside id="aside-first" class="aside-first group">
-							<div class="zone zone-aside-first">
-                                <article class="widget-html-widget widget">
-                                    <p align="center"><img src="@Url.Content("~/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
-                                    <p align="center"><img src="@Url.Content("~/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
-                                </article>
-                            </div>
-						</aside>
-						<div id="layout-content" class="group">
-							<div id="preloader">
-								loadnig...
-							</div>
-							<div id="content" class="group">
-								<div class="zone zone-content">
-                                    @RenderBody()
-                                </div>
-							</div>
-						</div>
+                        @RenderBody()
 					</div>
 				</div>
+
+				<div id="layout-after-main" class="group">
+					@*cms AfterMain*@
+					<table id="cus_copyright" border="0" cellpadding="0" cellspacing="0" width="990" align="center">
+						<tbody>
+							<tr>
+								<td class="cus_copyright_table_small_text" colspan="2" align="center"><a href="#">felhaszn&aacute;l&aacute;si felt&eacute;telek</a> &bull; <a href="#">adatv&eacute;delmi nyilatkozat</a> &bull; <a href="#">sz&aacute;ll&iacute;t&aacute;si &eacute;s fizet&eacute;si felt&eacute;telek</a> &bull; <a href="#">vissz&aacute;ru felt&eacute;telek</a> &bull; <a href="#">garancia &eacute;rv&eacute;nyes&iacute;t&eacute;se</a> &bull; <a href="#">v&aacute;s&aacute;rl&aacute;s a web&aacute;ruh&aacute;zban</a>
+								<hr />
+								</td>
+							</tr>
+							<tr>
+								<td>k&eacute;p helye</td>
+								<td class="cus_copyright_table_small_text" align="center">Az &aacute;rak az &Aacute;F&Aacute;-t nem tartalmazz&aacute;k &eacute;s a mindenkori doll&aacute;r, illetve euro &aacute;rfolyam f&uuml;ggv&eacute;ny&eacute;ben v&aacute;ltozhatnak. Az akci&oacute;k a felt&uuml;ntetett időpontig, illetve visszavon&aacute;sig &eacute;rv&eacute;nyesek. Az &aacute;rv&aacute;ltoztat&aacute;s jog&aacute;t fenntartjuk. Az oldal tartalm&aacute;nak felhaszn&aacute;l&aacute;s&aacute;hoz, m&aacute;sol&aacute;s&aacute;hoz az oldal tulajdonos&aacute;nak enged&eacute;lye sz&uuml;ks&eacute;ges. &copy;2002-2011 HRP Hungary Kft. Minden jog fenntartva.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+                @*cms Tripel
+				<div id="layout-tripel-container">
+					<div id="layout-tripel" class="group">
+						<div id="tripel-first">
+							Tripel
+						</div>
+						<div id="tripel-second">
+							Tripel
+						</div>
+						<div id="tripel-third">
+							Tripel
+						</div>
+					</div>
+				</div>*@
+
 				<div id="layout-footer" class="group">
 					<footer id="footer">
+@*                        cms FooterQuad
 						<div id="footer-quad" class="group">
-						</div>
+                            <div id="footer-quad-first">
+								FooterQuadFirst
+							</div>
+                            <div id="footer-quad-second">
+								FooterQuadSecond
+							</div>
+							<div id="footer-quad-third">
+								FooterQuadThird
+							</div>
+							<div id="footer-quad-fourth">
+								FooterQuadFourth
+							</div>
+						</div>*@
 						<div id="footer-sig" class="group">
 							<div class="zone zone-footer">   
                                 <div class="user-display">
@@ -430,7 +467,7 @@
         });
 
         head.ready(function() {
-            $.vegas({ src: '@Url.Content("~/Media/images/background6.jpg")'});
+            $.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
             @RenderSection("ScriptOnReady", false)
         }); 
 

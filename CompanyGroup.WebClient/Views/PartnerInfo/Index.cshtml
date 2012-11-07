@@ -2,49 +2,53 @@
     ViewBag.Title = "Contact";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
+	<aside id="aside-first" class="aside-first group">
+		<div class="zone zone-aside-first">
+            <article class="widget-html-widget widget">
+                <p align="center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
+                <p align="center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
+            </article>
+        </div>
+	</aside>
+	<div id="layout-content" class="group">
+        @*cms Messages
+		<div id="messages">
+			Messages
+		</div>*@
+        @*cms BeforeContent
+		<div id="before-content">
+			BeforeContent
+		</div>*@
+		<div id="preloader">
+			loadnig...
+		</div>
+		<div id="content" class="group">
+			<div class="zone zone-content">
+                        Main content            
+            </div>
+		</div>
+        @*cms AfterContent
+		<div id="after-content">
+			AfterContent
+		</div>*@
+	</div>
+    @*cms AsideSecond
+    <aside id="aside-second" class="aside-second">
+		AsideSecond
+	</aside>*@
 
-<section class="contact">
-    <header>
-        <h3>Phone</h3>
-    </header>
-    <p>
-        <span class="label">Main:</span>
-        <span>425.555.0100</span>
-    </p>
-    <p>
-        <span class="label">After Hours:</span>
-        <span>425.555.0199</span>
-    </p>
-</section>
+@section ScriptFiles {
+    head.js('@Scripts.Url("~/bundles/appconstants")');
+}
+@section ScriptOnReady {
+    console.log('ScriptOnReady section');
 
-<section class="contact">
-    <header>
-        <h3>Email</h3>
-    </header>
-    <p>
-        <span class="label">Support:</span>
-        <span><a href="mailto:Support@example.com">Support@example.com</a></span>
-    </p>
-    <p>
-        <span class="label">Marketing:</span>
-        <span><a href="mailto:Marketing@example.com">Marketing@example.com</a></span>
-    </p>
-    <p>
-        <span class="label">General:</span>
-        <span><a href="mailto:General@example.com">General@example.com</a></span>
-    </p>
-</section>
+    var model = @(Html.Raw(Json.Encode(Model)));
+    console.log(model);
 
-<section class="contact">
-    <header>
-        <h3>Address</h3>
-    </header>
-    <p>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399
-    </p>
-</section>
+    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
+
+    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
+
+    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");
+}
