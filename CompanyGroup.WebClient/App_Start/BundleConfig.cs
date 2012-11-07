@@ -29,6 +29,8 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/sammytmpl").Include("~/Scripts/sammy.tmpl.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/amplify").Include("~/Scripts/amplify.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/chosen").Include("~/Scripts/chosen.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include("~/Scripts/jquery.autocomplete.js"));
