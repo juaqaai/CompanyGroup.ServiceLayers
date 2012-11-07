@@ -24,7 +24,9 @@ namespace CompanyGroup.Dto.WebshopModule
 
             this.ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart();
 
-            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions(); 
+            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
+
+            this.LineMessages = new List<string>();
         }
 
         /// <summary>

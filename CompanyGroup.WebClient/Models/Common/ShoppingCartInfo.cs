@@ -37,25 +37,26 @@ namespace CompanyGroup.WebClient.Models
 
     public class ShoppingCartInfo : CompanyGroup.Dto.WebshopModule.ShoppingCartInfo
     {
+        public ShoppingCartInfo(CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo, Visitor visitor, bool catalogueOpenStatus, bool shoppingCartOpenStatus)
+        { 
+            this.ActiveCart = shoppingCartInfo.ActiveCart;
+            this.CatalogueOpenStatus = catalogueOpenStatus;
+            this.ErrorMessage = "";
+            this.FinanceOffer = shoppingCartInfo.FinanceOffer;
+            this.LeasingOptions = shoppingCartInfo.LeasingOptions;
+            this.OpenedItems = shoppingCartInfo.OpenedItems;
+            this.StoredItems = shoppingCartInfo.StoredItems;
+            this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
+            this.Visitor = visitor;
+        }
+
         public string ErrorMessage { get; set; }
 
-        public static CompanyGroup.WebClient.Models.ShoppingCartInfo CreateShoppingCartInfo()
-        {
-            return new CompanyGroup.WebClient.Models.ShoppingCartInfo()
-            {
-                ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart()
-                {
-                    DeliveryTerms = 1,
-                    Id = "",
-                    Items = new List<CompanyGroup.Dto.WebshopModule.ShoppingCartItem>(),
-                    PaymentTerms = 0,
-                    Shipping = new CompanyGroup.Dto.WebshopModule.Shipping() { AddrRecId = 0, City = "", Country = "", DateRequested = DateTime.Now, InvoiceAttached = false, Street = "", ZipCode = "" },
-                    SumTotal = 0
-                },
-                ErrorMessage = "",
-                OpenedItems = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
-                StoredItems = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>()
-            };
-        }
+        public Visitor Visitor { get; set; }
+
+        public bool ShoppingCartOpenStatus { get; set; }
+
+        public bool CatalogueOpenStatus { get; set; }
+
     }
 }

@@ -239,7 +239,9 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("VisitorInfo")]
         public CompanyGroup.WebClient.Models.Visitor VisitorInfo()
         {
-            CompanyGroup.WebClient.Models.Visitor visitor = GetVisitorInfo();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             return visitor;
         }
@@ -248,18 +250,17 @@ namespace CompanyGroup.WebClient.Controllers
         /// látogató adatainak kiolvasása szerviz hívással  
         /// </summary>
         /// <returns></returns>
-        protected CompanyGroup.WebClient.Models.Visitor GetVisitorInfo()
+        protected CompanyGroup.WebClient.Models.Visitor GetVisitor(CompanyGroup.WebClient.Models.VisitorData visitorData)
         {
             try
             {
-                string objectId = ReadObjectIdFromCookie();
 
-                if (String.IsNullOrWhiteSpace(objectId))
+                if (String.IsNullOrWhiteSpace(visitorData.ObjectId))
                 {
                     return new CompanyGroup.WebClient.Models.Visitor();
                 }
 
-                CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { ObjectId = objectId, DataAreaId = ApiBaseController.DataAreaId };
+                CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { ObjectId = visitorData.ObjectId, DataAreaId = ApiBaseController.DataAreaId };
 
                 CompanyGroup.Dto.PartnerModule.Visitor response  = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 

@@ -8,8 +8,7 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class CatalogueItem
     {
-        public CatalogueItem(CompanyGroup.Dto.WebshopModule.Structures structures, 
-                             CompanyGroup.Dto.WebshopModule.Product product, 
+        public CatalogueItem(CompanyGroup.Dto.WebshopModule.Product product, 
                              List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> compatibleProducts,
                              List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> reverseCompatibleProducts,
                              CompanyGroup.WebClient.Models.Visitor visitor,
@@ -22,8 +21,6 @@ namespace CompanyGroup.WebClient.Models
                              CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
                              CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
         {
-            this.Structures = new Structures(structures);
-
             this.Product = product;
 
             this.ReverseCompatibleProducts = reverseCompatibleProducts;
@@ -48,8 +45,6 @@ namespace CompanyGroup.WebClient.Models
 
             this.LeasingOptions = leasingOptions;
         }
-
-        public Structures Structures { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.Product Product { get; set; }
 

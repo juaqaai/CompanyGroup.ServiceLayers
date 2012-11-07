@@ -5,14 +5,16 @@ namespace CompanyGroup.WebClient.Models
 {
     public class Products
     {
-        public Products(CompanyGroup.Dto.WebshopModule.Products items, CompanyGroup.WebClient.Models.Visitor visitor)
+        public Products(CompanyGroup.Dto.WebshopModule.Products products, CompanyGroup.WebClient.Models.Visitor visitor)
         {
-            this.Items = items;
+            this.Products = products;
+
+            this.ListCount = products.Items.Count;
 
             this.Visitor = visitor;
         }
 
-        public CompanyGroup.Dto.WebshopModule.Products Items { get; set; }
+        public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
 
         public long ListCount { get; set; }
 
