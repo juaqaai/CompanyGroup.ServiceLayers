@@ -172,6 +172,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ContactPersonApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomerApiController.cs" />
     <Compile Include="Controllers\InvoiceApiController.cs" />
     <Compile Include="Controllers\PartnerInfoController.cs" />
     <Compile Include="Controllers\PictureApiController.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Controllers\SalesOrderApiController.cs" />
     <Compile Include="Controllers\ShoppingCartApiController.cs" />
     <Compile Include="Controllers\StructureApiController.cs" />
+    <Compile Include="Controllers\VisitorApiController.cs" />
     <Compile Include="Controllers\WebshopApiController.cs" />
     <Compile Include="Controllers\WebshopController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -197,9 +199,11 @@
     <Compile Include="Models\Common\VisitorData.cs" />
     <Compile Include="Models\Common\VisitorRequest.cs" />
     <Compile Include="Models\Company\NewsletterCollection.cs" />
+    <Compile Include="Models\PartnerInfo\AddressZipCodes.cs" />
     <Compile Include="Models\PartnerInfo\BankAccounts.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\ContactPersons.cs" />
+    <Compile Include="Models\PartnerInfo\DeliveryAddress.cs" />
     <Compile Include="Models\PartnerInfo\ForgetPasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\OrderLineInfo.cs" />
     <Compile Include="Models\PartnerInfo\OrderInfoList.cs" />

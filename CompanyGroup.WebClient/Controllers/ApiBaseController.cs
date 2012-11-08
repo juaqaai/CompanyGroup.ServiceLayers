@@ -9,12 +9,12 @@ using System.Net.Http.Headers;
 namespace CompanyGroup.WebClient.Controllers
 {
     /// <summary>
-    /// base controller
+    /// api base controller
     /// - PostJSonData
     /// - GetJSonData
     /// - GetVisitorInfo
-    /// - ReadObjectIdFromCookie
-    /// - WriteObjectIdToCookie
+    /// - ReadCookie
+    /// - WriteCookie
     /// </summary>
     public class ApiBaseController : ApiController
     {
@@ -142,115 +142,6 @@ namespace CompanyGroup.WebClient.Controllers
 
         #endregion
 
-        #region "SignIn( CompanyGroup.WebClient.SignIn request), SignOut( CompanyGroup.WebClient.SignOut request), VisitorInfo(), GetVisitorInfo()"
-
-        /// <summary>
-        /// bejelentkezés
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public CompanyGroup.WebClient.Models.Visitor SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require((request != null), "SignIn request can not be null!");
-
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Password), "A jelszó megadása kötelező!");
-
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.UserName), "A belépési név megadása kötelező!");
-
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                //előző belépés azonosítójának mentése
-                string permanentObjectId = visitorData.PermanentId;
-
-                CompanyGroup.Dto.ServiceRequest.SignIn signIn = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
-                                                                                                           request.UserName, 
-                                                                                                           request.Password, 
-                                                                                                           System.Web.HttpContext.Current.Request.UserHostAddress);
-
-                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", signIn);
-
-                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
-
-                //check status
-                if (!visitor.LoggedIn)
-                {
-                    visitor.ErrorMessage = "A bejelentkezés nem sikerült!";
-                }
-                else    //SignIn process, set http cookie, etc...
-                {
-                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.Id), "A bejelentkezés nem sikerült! (üres azonosító)");
-
-                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
-
-                    //kosár társítása
-                    CompanyGroup.Dto.ServiceRequest.AssociateCart associateRequest = new CompanyGroup.Dto.ServiceRequest.AssociateCart(visitor.Id, permanentObjectId) { Language = visitorData.Language };
-
-                    CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AssociateCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
-
-                    //visitor adatok http sütibe írása     
-                    this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
-
-                    visitor.ErrorMessage = String.Empty;
-
-                }
-                return visitor;
-            }
-            catch (CompanyGroup.Helpers.DesignByContractException ex)
-            {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message };
-            }
-            catch
-            {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = "A bejelentkezés nem sikerült! (hiba)" };
-            }
-        }
-
-        /// <summary>
-        /// kijelentkezés
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public CompanyGroup.WebClient.Models.Visitor SignOut()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
-
-                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
-
-                visitorData.ObjectId = String.Empty;
-
-                this.WriteCookie(visitorData);
-
-                return new CompanyGroup.WebClient.Models.Visitor();
-            }
-            catch (Exception ex)
-            {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message };
-            }
-        }
-
-        /// <summary>
-        /// látogató adatainak kiolvasása
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("VisitorInfo")]
-        public CompanyGroup.WebClient.Models.Visitor VisitorInfo()
-        {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
-
-            return visitor;
-        }
-
         /// <summary>
         /// látogató adatainak kiolvasása szerviz hívással  
         /// </summary>
@@ -267,61 +158,14 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { ObjectId = visitorData.ObjectId, DataAreaId = ApiBaseController.DataAreaId };
 
-                CompanyGroup.Dto.PartnerModule.Visitor response  = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
+                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
 
                 return visitor;
             }
             catch (Exception ex) { return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message }; }
-        }
-
-        /// <summary>
-        /// beállítja a http süti Currency mező értékét.
-        /// /// </summary>
-        /// <returns></returns>
-        [ActionName("ChangeCurrency")]
-        [HttpPost]
-        public void ChangeCurrency(string currency)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                visitorData.Currency = String.IsNullOrEmpty(currency) ? ApiBaseController.DefaultCurrency : currency;
-
-                this.WriteCookie(visitorData);
-            }
-            catch 
-            { 
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)); 
-            }
-        }
-
-        /// <summary>
-        /// beállítja a http süti Language mező értékét.
-        /// </summary>
-        /// <param name="language"></param>
-        /// <returns></returns>
-        [ActionName("ChangeLanguage")]
-        [HttpPost]
-        public void ChangeLanguage(string language)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                visitorData.Language = String.IsNullOrEmpty(language) ? ApiBaseController.LanguageHungarian : language;
-
-                this.WriteCookie(visitorData);
-            }
-            catch 
-            { 
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)); 
-            }
-        }
-
-        #endregion
+        }        
 
         #region "cookie funkciók - ReadCookie, WriteCookie"
 

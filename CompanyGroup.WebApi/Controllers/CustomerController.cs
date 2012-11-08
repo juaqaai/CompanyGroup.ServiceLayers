@@ -8,12 +8,19 @@ using System.Web.Http;
 namespace CompanyGroup.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    /// vevőhöz kapcsolódó műveletek
     /// </summary>
     public class CustomerController : ApiController
     {
+        /// <summary>
+        /// privát szerviz interfész referencia
+        /// </summary>
         private CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service;
 
+        /// <summary>
+        /// konstruktor customer service interfésszel
+        /// </summary>
+        /// <param name="service"></param>
         public CustomerController(CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service)
         {
             if (service == null)
@@ -83,16 +90,5 @@ namespace CompanyGroup.WebApi.Controllers
             return service.SignOut(request);
         }
 
-        /// <summary>
-        /// vevőhöz tartozó számlák listája
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("GetInvoiceInfo")]
-        [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetInvoiceInfo(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
-        {
-            return service.GetInvoiceInfo(request);
-        }
     }
 }

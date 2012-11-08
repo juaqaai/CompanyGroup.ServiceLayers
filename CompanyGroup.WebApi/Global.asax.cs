@@ -43,6 +43,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ShoppingCartController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ProductController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.StructureController>();
+            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.InvoiceController>();
 
             unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IProductRepository, CompanyGroup.Data.MaintainModule.ProductRepository>();   
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>();
