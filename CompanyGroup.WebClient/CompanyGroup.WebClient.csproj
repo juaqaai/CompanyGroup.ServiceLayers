@@ -193,7 +193,6 @@
     <Compile Include="Models\Common\ShoppingCartInfo.cs" />
     <Compile Include="Models\Common\ShoppingCartLineInfo.cs" />
     <Compile Include="Models\Common\SignInRequest.cs" />
-    <Compile Include="Models\Common\SignOutRequest.cs" />
     <Compile Include="Models\Common\Visitor.cs" />
     <Compile Include="Models\Common\VisitorData.cs" />
     <Compile Include="Models\Common\VisitorRequest.cs" />

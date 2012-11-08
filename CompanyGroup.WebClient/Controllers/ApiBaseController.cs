@@ -160,14 +160,15 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.UserName), "A belépési név megadása kötelező!");
 
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
                 //előző belépés azonosítójának mentése
-                string permanentObjectId = this.ReadPermanentIdFromCookie();
+                string permanentObjectId = visitorData.PermanentId;
 
                 CompanyGroup.Dto.ServiceRequest.SignIn signIn = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
                                                                                                            request.UserName, 
                                                                                                            request.Password, 
                                                                                                            System.Web.HttpContext.Current.Request.UserHostAddress);
-
 
                 CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", signIn);
 
@@ -185,12 +186,12 @@ namespace CompanyGroup.WebClient.Controllers
                     CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
 
                     //kosár társítása
-                    CompanyGroup.Dto.ServiceRequest.AssociateCart associateRequest = new CompanyGroup.Dto.ServiceRequest.AssociateCart(visitor.Id, permanentObjectId) { Language = this.ReadLanguageFromCookie() };
+                    CompanyGroup.Dto.ServiceRequest.AssociateCart associateRequest = new CompanyGroup.Dto.ServiceRequest.AssociateCart(visitor.Id, permanentObjectId) { Language = visitorData.Language };
 
                     CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AssociateCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
 
                     //visitor adatok http sütibe írása     
-                    this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, false, false, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, ""));
+                    this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
 
                     visitor.ErrorMessage = String.Empty;
 
@@ -213,15 +214,19 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompanyGroup.WebClient.Models.Visitor SignOut(CompanyGroup.WebClient.Models.SignOutRequest request)
+        public CompanyGroup.WebClient.Models.Visitor SignOut()
         {
             try
             {
-                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = this.ReadObjectIdFromCookie() });
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                this.RemoveObjectIdFromCookie();
+                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
 
-                //this.RemoveCurrencyFromCookie();
+                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
+
+                visitorData.ObjectId = String.Empty;
+
+                this.WriteCookie(visitorData);
 
                 return new CompanyGroup.WebClient.Models.Visitor();
             }
@@ -281,9 +286,11 @@ namespace CompanyGroup.WebClient.Controllers
         {
             try
             {
-                currency = String.IsNullOrEmpty(currency) ? ApiBaseController.DefaultCurrency : currency;
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                this.WriteCurrencyToCookie(currency);
+                visitorData.Currency = String.IsNullOrEmpty(currency) ? ApiBaseController.DefaultCurrency : currency;
+
+                this.WriteCookie(visitorData);
             }
             catch 
             { 
@@ -302,9 +309,11 @@ namespace CompanyGroup.WebClient.Controllers
         {
             try
             {
-                language = String.IsNullOrEmpty(language) ? ApiBaseController.LanguageHungarian : language;
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                this.WriteLanguageToCookie(language);
+                visitorData.Language = String.IsNullOrEmpty(language) ? ApiBaseController.LanguageHungarian : language;
+
+                this.WriteCookie(visitorData);
             }
             catch 
             { 
@@ -314,7 +323,7 @@ namespace CompanyGroup.WebClient.Controllers
 
         #endregion
 
-        #region "private cookie funkciók - ReadCookie, WriteCookie"
+        #region "cookie funkciók - ReadCookie, WriteCookie"
 
         /// <summary>
         /// visitor adatok kiolvasása http cookie-ból (string -> Json conversion)
@@ -350,10 +359,10 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="visitorData"></param>
         protected void WriteCookie(CompanyGroup.WebClient.Models.VisitorData visitorData)
         {
+            CompanyGroup.Helpers.DesignByContract.Require((visitorData != null), "visitorData object can not be null or empty!");
+
             try
             {
-                CompanyGroup.Helpers.DesignByContract.Require((visitorData != null), "visitorData object can not be null or empty!");
-
                 //konverzió json string-be
                 string json = CompanyGroup.Helpers.JsonConverter.ToJSON<CompanyGroup.WebClient.Models.VisitorData>(visitorData);
 
@@ -383,53 +392,53 @@ namespace CompanyGroup.WebClient.Controllers
         /// read objectId string from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadObjectIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadObjectIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.ObjectId;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.ObjectId;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the objectId string to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteObjectIdToCookie(string objectId)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(objectId), "ObjectId can not be null or empty!");
+        //protected void WriteObjectIdToCookie(string objectId)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(objectId), "ObjectId can not be null or empty!");
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.ObjectId = objectId;
+        //        visitorData.ObjectId = objectId;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// delete objectId value from the http cookie
         /// </summary>
         /// <param name="objectId"></param>
-        protected void RemoveObjectIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void RemoveObjectIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.ObjectId = String.Empty;
+        //        visitorData.ObjectId = String.Empty;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -439,34 +448,34 @@ namespace CompanyGroup.WebClient.Controllers
         /// read PermanentId value from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadPermanentIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadPermanentIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.PermanentId;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.PermanentId;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the PermanentId value to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WritePermanentIdToCookie(string permanentId)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void WritePermanentIdToCookie(string permanentId)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.PermanentId = permanentId;
+        //        visitorData.PermanentId = permanentId;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -476,34 +485,34 @@ namespace CompanyGroup.WebClient.Controllers
         /// read PermanentId value from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadCartIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadCartIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.CartId;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.CartId;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the PermanentId value to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteCartIdToCookie(string cartId)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void WriteCartIdToCookie(string cartId)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.CartId = cartId;
+        //        visitorData.CartId = cartId;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -513,53 +522,53 @@ namespace CompanyGroup.WebClient.Controllers
         /// read language string from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadLanguageFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadLanguageFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.Language;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.Language;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the language string to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteLanguageToCookie(string language)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(language), "Language can not be null or empty!");
+        //protected void WriteLanguageToCookie(string language)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(language), "Language can not be null or empty!");
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.Language = language;
+        //        visitorData.Language = language;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// delete language value from the http cookie
         /// </summary>
         /// <param name="objectId"></param>
-        protected void RemoveLanguageFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void RemoveLanguageFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.Language = String.Empty;
+        //        visitorData.Language = String.Empty;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -569,52 +578,52 @@ namespace CompanyGroup.WebClient.Controllers
         /// read RegistrationId string from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadRegistrationIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadRegistrationIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.RegistrationId;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.RegistrationId;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the RegistrationId string to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteRegistrationIdToCookie(string registrationId)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(registrationId), "Language can not be null or empty!");
+        //protected void WriteRegistrationIdToCookie(string registrationId)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(registrationId), "Language can not be null or empty!");
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.RegistrationId = registrationId;
+        //        visitorData.RegistrationId = registrationId;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// regisztrációs azonosító eltávolítása a sütiből
         /// </summary>
-        protected void RemoveRegistrationIdFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void RemoveRegistrationIdFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.RegistrationId = String.Empty;
+        //        visitorData.RegistrationId = String.Empty;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -624,36 +633,36 @@ namespace CompanyGroup.WebClient.Controllers
         /// read Currency string from http cookie
         /// </summary>
         /// <returns></returns>
-        protected string ReadCurrencyFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected string ReadCurrencyFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.Currency;
-            }
-            catch { return String.Empty; }
-        }
+        //        return visitorData.Currency;
+        //    }
+        //    catch { return String.Empty; }
+        //}
 
         /// <summary>
         /// write the Currency string to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteCurrencyToCookie(string currency)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(currency), "Currency can not be null or empty!");
+        //protected void WriteCurrencyToCookie(string currency)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(currency), "Currency can not be null or empty!");
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.Currency = currency;
+        //        visitorData.Currency = currency;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// delete currency value from the http cookie
@@ -680,51 +689,51 @@ namespace CompanyGroup.WebClient.Controllers
         /// read IsCartOpened value from http cookie
         /// </summary>
         /// <returns></returns>
-        protected bool ReadShoppingCartOpenedFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected bool ReadShoppingCartOpenedFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.IsShoppingCartOpened;
-            }
-            catch { return false; }
-        }
+        //        return visitorData.IsShoppingCartOpened;
+        //    }
+        //    catch { return false; }
+        //}
 
         /// <summary>
         /// write the IsShoppingCartOpened value to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteShoppingCartOpenedToCookie(bool isShoppingCartOpened)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void WriteShoppingCartOpenedToCookie(bool isShoppingCartOpened)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.IsShoppingCartOpened = isShoppingCartOpened;
+        //        visitorData.IsShoppingCartOpened = isShoppingCartOpened;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// delete isShoppingCartOpened value from the http cookie
         /// </summary>
         /// <param name="objectId"></param>
-        protected void RemoveShoppingCartOpenedFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void RemoveShoppingCartOpenedFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.IsShoppingCartOpened = false;
+        //        visitorData.IsShoppingCartOpened = false;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -734,51 +743,51 @@ namespace CompanyGroup.WebClient.Controllers
         /// read IsCatalogueOpened value from http cookie
         /// </summary>
         /// <returns></returns>
-        protected bool ReadCatalogueOpenedFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected bool ReadCatalogueOpenedFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                return visitorData.IsCatalogueOpened;
-            }
-            catch { return false; }
-        }
+        //        return visitorData.IsCatalogueOpened;
+        //    }
+        //    catch { return false; }
+        //}
 
         /// <summary>
         /// write the IsCatalogueOpened value to http cookie (if the named cookie exists than existing cookie will be used, otherwise new cookie will be created)
         /// The cookie expiring date is: current date + 30 day 
         /// </summary>
         /// <param name="objectId"></param>
-        protected void WriteCatalogueOpenedToCookie(bool isCatalogueOpened)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void WriteCatalogueOpenedToCookie(bool isCatalogueOpened)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.IsCatalogueOpened = isCatalogueOpened;
+        //        visitorData.IsCatalogueOpened = isCatalogueOpened;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         /// <summary>
         /// delete IsCatalogueOpened value from the http cookie
         /// </summary>
         /// <param name="objectId"></param>
-        protected void RemoveCatalogueOpenedFromCookie()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //protected void RemoveCatalogueOpenedFromCookie()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                visitorData.IsCatalogueOpened = false;
+        //        visitorData.IsCatalogueOpened = false;
 
-                this.WriteCookie(visitorData);
-            }
-            catch { }
-        }
+        //        this.WriteCookie(visitorData);
+        //    }
+        //    catch { }
+        //}
 
         #endregion
 
@@ -800,33 +809,6 @@ namespace CompanyGroup.WebClient.Controllers
         //    }
         //    catch (Exception ex) { return new CompanyGroup.WebClient.Response.StoredOpenedShoppingCartCollection() { ErrorMessage = ex.Message }; }            
         //}
-
-        /// <summary>
-        /// bevásárlókosár kiolvasása       
-        /// </summary>
-        /// <param name="visitor"></param>
-        /// <returns></returns>
-        public CompanyGroup.WebClient.Models.ShoppingCartInfo GetCartInfo()
-        {
-            CompanyGroup.Dto.ServiceRequest.GetActiveCart request = new CompanyGroup.Dto.ServiceRequest.GetActiveCart(this.ReadLanguageFromCookie(), this.ReadObjectIdFromCookie());
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetActiveCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetActiveCart", request);
-
-            if (response == null)
-            {
-                return new CompanyGroup.WebClient.Models.ShoppingCartInfo();
-            }
-
-            return new CompanyGroup.WebClient.Models.ShoppingCartInfo() 
-                       { 
-                           ActiveCart = response.ActiveCart, 
-                           OpenedItems = response.OpenedItems, 
-                           StoredItems = response.StoredItems, 
-                           ErrorMessage = "", 
-                           FinanceOffer = new Dto.WebshopModule.FinanceOffer(), 
-                           LeasingOptions = new Dto.WebshopModule.LeasingOptions() 
-                       };
-        }
 
         #endregion
     }
