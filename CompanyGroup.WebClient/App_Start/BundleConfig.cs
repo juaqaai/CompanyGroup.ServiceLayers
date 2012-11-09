@@ -23,11 +23,13 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/head").Include("~/Scripts/head.load.js"));
 
             //legutolsó verziójú sammy.js regisztráció
-            bundles.Add(new ScriptBundle("~/bundles/sammy").Include("~/Scripts/sammy-{version}.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/sammytitle").Include("~/Scripts/sammy.title.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sammy").Include("~/Scripts/sammy.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/sammytmpl").Include("~/Scripts/sammy.tmpl.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sammytitle").Include("~/Scripts/sammy.title-latest.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sammytmpl").Include("~/Scripts/sammy.tmpl-latest.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sammymustache").Include("~/Scripts/sammy.mustache-latest.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/amplify").Include("~/Scripts/amplify.js"));
 

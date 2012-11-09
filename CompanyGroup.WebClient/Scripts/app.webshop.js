@@ -4,7 +4,7 @@ companyGroup.scripts = companyGroup.scripts || {};
 
 companyGroup.scripts.webshop = $.sammy('#main', function () {
 
-    this.use(Sammy.Tmpl, 'html').use(Sammy.Title);
+    this.use(Sammy.Mustache, 'html').use(Sammy.Title);
     
     this.get('#/', function (context) {
         console.log(context);

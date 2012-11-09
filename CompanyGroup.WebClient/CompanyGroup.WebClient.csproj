@@ -1067,6 +1067,7 @@
     <Content Include="Content\Media\images\ujdonsag.png" />
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
+    <Content Include="Scripts\app.partnerinfo.js" />
     <Content Include="Scripts\app.webshop.js" />
     <Content Include="Scripts\amplify-vsdoc.js" />
     <Content Include="Scripts\amplify.js" />
@@ -1092,6 +1093,13 @@
     <Content Include="Scripts\sammy-0.7.1-vsdoc.js" />
     <Content Include="Scripts\sammy-0.7.1.js" />
     <Content Include="Scripts\sammy-0.7.1.min.js" />
+    <Content Include="Scripts\sammy-0.7.2.js" />
+    <Content Include="Scripts\sammy-0.7.2.min.js" />
+    <Content Include="Scripts\sammy.mustache-0.7.2.min.js" />
+    <Content Include="Scripts\sammy.mustache-latest.min.js" />
+    <Content Include="Scripts\sammy.title-0.7.2.min.js" />
+    <Content Include="Scripts\sammy.title-latest.min.js" />
+    <Content Include="Views\PartnerInfo\index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -7,6 +7,9 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebClient.Controllers
 {
+    /// <summary>
+    /// kapcsolattartóhoz kapcsolt műveletek
+    /// </summary>
     public class ContactPersonApiController : ApiBaseController
     {
         /// <summary>

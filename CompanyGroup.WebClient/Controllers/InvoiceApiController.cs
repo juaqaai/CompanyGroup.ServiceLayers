@@ -9,6 +9,11 @@ namespace CompanyGroup.WebClient.Controllers
 {
     public class InvoiceApiController : ApiBaseController
     {
+        /// <summary>
+        /// számla információk lekérdezése műveletek
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("GetInvoiceInfo")]
         public CompanyGroup.WebClient.Models.InvoiceInfoList GetInvoiceInfo(CompanyGroup.WebClient.Models.GetInvoiceInfo request)

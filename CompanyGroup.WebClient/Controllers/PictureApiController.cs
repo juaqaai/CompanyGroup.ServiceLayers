@@ -9,6 +9,10 @@ namespace CompanyGroup.WebClient.Controllers
 {
     public class PictureApiController : ApiBaseController
     {
+        /// <summary>
+        /// kép lekérdezés műveletek
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("PictureItem")]
         public System.Web.Mvc.FileStreamResult PictureItem()
