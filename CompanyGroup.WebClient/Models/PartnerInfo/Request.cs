@@ -118,20 +118,6 @@ namespace CompanyGroup.WebClient.Models
         public DataRecording() { }
     }
 
-    public class DeliveryAddress : CompanyGroup.Dto.RegistrationModule.DeliveryAddress
-    {
-        public DeliveryAddress(CompanyGroup.Dto.RegistrationModule.DeliveryAddress deliveryAddress)
-        {
-            this.City = deliveryAddress.City;
-            this.CountryRegionId = deliveryAddress.CountryRegionId;
-            this.Id = deliveryAddress.Id;
-            this.RecId = deliveryAddress.RecId;
-            this.Street = deliveryAddress.Street;
-        }
-
-        public DeliveryAddress() { }
-    }
-
     public class RemoveDeliveryAddress
     {
         public string Id { get; set; }

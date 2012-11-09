@@ -26,7 +26,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.DataRecording = new DataRecording(dataRecording);
 
-            this.DeliveryAddresses = new DeliveryAddresses() { Items = deliveryAddresses, SelectedId = "" };
+            //this.DeliveryAddresses = new DeliveryAddresses(new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses() { Items = deliveryAddresses });
 
             this.InvoiceAddress = new InvoiceAddress(invoiceAddress);
 

@@ -200,16 +200,16 @@ namespace CompanyGroup.WebClient.Controllers
                 Category1IdList = new List<string>() { product.FirstLevelCategory.Id },
                 Category2IdList = new List<string>() { product.SecondLevelCategory.Id },
                 Category3IdList = new List<string>() { product.ThirdLevelCategory.Id },
-                Currency = this.ReadCurrencyFromCookie(),
+                Currency = visitorData.Currency,
                 VisitorId = visitor.Id
             };
 
             CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBannerList, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
 
             //kosár lekérdezések     
-            bool shoppingCartOpenStatus = this.ReadShoppingCartOpenedFromCookie();
+            bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
 
-            bool catalogueOpenStatus = this.ReadCatalogueOpenedFromCookie();
+            bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
 
             CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
 
@@ -231,7 +231,7 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses deliveryAddressesRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = WebshopApiController.DataAreaId, VisitorId = visitor.Id };
 
-                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("CustomerService", "GetDeliveryAddresses", deliveryAddressesRequest);
+                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressesRequest);
             }
             else
             {

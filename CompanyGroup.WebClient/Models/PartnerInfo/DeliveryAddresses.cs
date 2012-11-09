@@ -3,11 +3,15 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.WebClient.Models
 {
-    public class DeliveryAddresses : CompanyGroup.Dto.RegistrationModule.DeliveryAddresses
+    public class DeliveryAddresses
     {
-        public DeliveryAddresses() : base()
+        public List<DeliveryAddress> Items { get; set; }
+
+        public DeliveryAddresses(CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses)
         {
-            SelectedId = String.Empty;
+            this.Items = deliveryAddresses.Items.ConvertAll(x => new DeliveryAddress(x));
+
+            this.SelectedId = String.Empty;
         }
 
         /// <summary>

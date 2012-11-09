@@ -3,9 +3,32 @@
 companyGroup.scripts = companyGroup.scripts || {};
 
 companyGroup.scripts.webshop = $.sammy('#main', function () {
+
+    this.use(Sammy.Tmpl, 'html').use(Sammy.Title);
+    
     this.get('#/', function (context) {
         console.log(context);
     });
+
+    this.get('#/about', function (context) {
+
+        this.title('About Us - Sammy Fourth Coffee');
+
+        this.partial(viewPath('about'));
+    });
+
+    this.get('#/', function (context) {
+
+        this.title('Home - Sammy Fourth Coffee');
+        this.load('/app/products')
+            .then(function (response) {
+                context.partial(viewPath('index'), response);
+            });
+    });
+
+    function viewPath(name) {
+        return '/assets/views/' + name + '.html';
+    }
 });
 
 
