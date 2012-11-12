@@ -22,14 +22,16 @@ namespace CompanyGroup.WebClient
             //head.load.js regisztráció
             bundles.Add(new ScriptBundle("~/bundles/head").Include("~/Scripts/head.load.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/mustache").Include("~/Scripts/mustache.js"));
+
             //legutolsó verziójú sammy.js regisztráció
             bundles.Add(new ScriptBundle("~/bundles/sammy").Include("~/Scripts/sammy.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/sammytitle").Include("~/Scripts/sammy.title-latest.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sammytitle").Include("~/Scripts/sammy.title.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sammytmpl").Include("~/Scripts/sammy.tmpl-latest.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/sammymustache").Include("~/Scripts/sammy.mustache-latest.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sammymustache").Include("~/Scripts/sammy.mustache.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/amplify").Include("~/Scripts/amplify.js"));
 
@@ -49,6 +51,8 @@ namespace CompanyGroup.WebClient
 
 
             bundles.Add(new ScriptBundle("~/bundles/appconstants").Include("~/Scripts/application.constants.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));
 
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));

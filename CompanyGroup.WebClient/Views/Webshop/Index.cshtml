@@ -896,6 +896,8 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
+    companyGroup.scripts.webshop.run('#/');
+
     $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
 
     $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");

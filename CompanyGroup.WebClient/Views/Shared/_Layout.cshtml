@@ -38,48 +38,52 @@
 		<!-- *** alsó felnyíló panel div vége *** -->
 		<div id="cus_header1"></div>
 
-        <script id="visitorInfoTemplate" type="text/x-jquery-tmpl">
+        <script id="visitorInfoTemplate" type="text/html">
 			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="100%">
-                    {{if IsValidLogin}}
+                    {{#IsValidLogin}}
                         <span>Bejelentkezve:</span> 
-                        <strong><span>${CompanyName}</span> <span>${PersonName}</span></strong>
+                        <strong><span>{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
                         <span>Képviselő:</span>
-                        <strong><span>${RepresentativeName}</span></strong> 
-                        <a href="mailto:${RepresentativeEmail}">${RepresentativeEmail}</a>
-                        <strong><span>${RepresentativePhone}</span></strong>
+                        <strong><span>{{RepresentativeName}}/span></strong> 
+                        <a href="mailto:{{RepresentativeEmail}}">{{RepresentativeEmail}}</a>
+                        <strong><span>{{RepresentativePhone}}</span></strong>
                         <a id="anchor_signout" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.SignOut();"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
-                    {{else}}
+                    {{/IsValidLogin}}
+                    {{^IsValidLogin}}
                         <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés </strong></a>
-                    {{/if}}
+                    {{/IsValidLogin}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
 					<td nowrap="nowrap">Nyelv&nbsp;</td>
 					<td nowrap="nowrap">
-                        <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{if LanguageId == 'EN'}} HU {{else}} EN {{/if}}</span></a></strong>
-                        {{if IsValidLogin}}
+                        <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{#LanguageIsEng}} HU {{/LanguageIsEng}} {{#LanguageIsHun}} EN {{/LanguageIsHun}}</span></a></strong>
+                        {{#IsValidLogin}}
                             Pénznem <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('HUF')">
-                            {{if Currency == '' || Currency == 'HUF'}}
+                            {{#CurrencyIsHuf}}
                             <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
-                            {{else}}
+                            {{/CurrencyIsHuf}}
+                            {{^CurrencyIsHuf}}
                             <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span>
-                            {{/if}}
+                            {{/CurrencyIsHuf}}
                             </a></strong>
                             <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('EUR')">
-                            {{if Currency == 'EUR'}}
+                            {{#CurrencyIsEur}}
                             <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px;">EUR</span>
-                            {{else}}
+                            {{/CurrencyIsEur}}
+                            {{^CurrencyIsEur}}
                             <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span>
-                            {{/if}}
+                            {{/CurrencyIsEur}}
                             </a></strong><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('USD')">
-                            {{if Currency == 'USD'}}
+                            {{#CurrencyIsUsd}}
                             <span id="currency_usd" style="background: #900; padding: 2px;">USD</span>
-                            {{else}}
+                            {{/CurrencyIsUsd}}
+                            {{^CurrencyIsUsd}}
                             <span id="currency_usd" style="background: #666; padding: 2px;">USD</span>
-                            {{/if}}
+                            {{/CurrencyIsUsd}}
                             </a></strong>
-                        {{/if}}
+                        {{/IsValidLogin}}
                     </td>
 				</tr>
 			</table>
@@ -92,14 +96,14 @@
 				<table width="100%" border="0" cellspacing="1" cellpadding="5">
 					<tr id="cus_header_navigation_b_table">
 						<td nowrap="nowrap" id="quickmenuContainer"></td>
-                        <script id="quickmenuTemplate" type="text/x-jquery-tmpl">
+                        <script id="quickmenuTemplate" type="text/html">
 						<ul id="navmenu">
 							<li>
 								<div id="cus_speedmenu_text">
 									Gyorsmenü
 								</div>
 								<ul>
-                                    {{if IsValidLogin}}
+                                    {{#IsValidLogin}}
 									<li>
 										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByStock(true)">Készleten lévő termékek </a>
 									</li>
@@ -112,7 +116,7 @@
 									<li>
 										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByNew(true)"><strong>Új TERMÉKEK</strong></a>
 									</li>
-                                    {{/if}}
+                                    {{/IsValidLogin}}
 									<li>
 										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByHrp()">HRP termékek +</a>
 										<ul>
@@ -153,8 +157,8 @@
                         </script>
 						<td nowrap="nowrap" id="usermenuContainer">
 						</td>
-                        <script id="usermenuTemplate" type="text/x-jquery-tmpl">
-                        {{if IsValidLogin}}
+                        <script id="usermenuTemplate" type="text/html">
+                        {{#IsValidLogin}}
                         <ul id="usermenu">
 							<li>
 								<div id="cus_usermenu_text">
@@ -176,7 +180,7 @@
 								</ul>
 							</li>
 						</ul>
-                        {{/if}}
+                        {{/IsValidLogin}}
                         </script>
 						<td width="100%" nowrap="nowrap">&nbsp;</td>
 						<td align="right" nowrap="nowrap"></td>
@@ -447,7 +451,10 @@
                 .js('@Scripts.Url("~/bundles/json2")')
                 .js('@Scripts.Url("~/bundles/tmpl")')
                 .js('@Scripts.Url("~/bundles/vegas")')
-                .js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammymustache")', '@Scripts.Url("~/bundles/sammytitle")' )
+                .js('@Scripts.Url("~/bundles/mustache")')
+                .js('@Scripts.Url("~/bundles/sammy")')
+                .js('@Scripts.Url("~/bundles/sammymustache")')
+                .js('@Scripts.Url("~/bundles/sammytitle")')
                 .js('@Scripts.Url("~/bundles/amplify")');  
 
             @RenderSection("ScriptFiles", false)

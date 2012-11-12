@@ -1,6 +1,7 @@
 ﻿@model CompanyGroup.WebClient.Models.Visitor
+
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Registration";
 }
 
 	<aside id="aside-first" class="aside-first group">
@@ -25,7 +26,7 @@
 		</div>
 		<div id="content" class="group">
 			<div id="main_content" class="zone zone-content">
-                                   
+                               
             </div>
 		</div>
         @*cms AfterContent
@@ -40,16 +41,12 @@
 
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/appconstants")');
-
-    head.js('@Scripts.Url("~/bundles/partnerinfo")');
 }
 @section ScriptOnReady {
-
+    console.log('ScriptOnReady section');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
-
-    companyGroup.partnerinfo.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
   	$('#cus_header1').html(visitorInfoHtml);
@@ -59,5 +56,4 @@
 
     var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
   	$('#quickmenuContainer').html(quickmenuHtml);
-
 }

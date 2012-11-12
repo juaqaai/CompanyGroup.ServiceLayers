@@ -62,6 +62,36 @@ namespace CompanyGroup.WebClient.Controllers
             return new CompanyGroup.WebClient.Models.ForgetPasswordResponse(response, visitor);
         }
 
+        /// <summary>
+        /// jelszómódosítást visszavonó művelet - view kezdőérték beállításokkal
+        /// </summary>
+        /// <param name="undoChangePassword"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public CompanyGroup.WebClient.Models.UndoChangePassword UndoChangePassword(string id)
+        {
+            string undoChangePassword = id;
 
+            CompanyGroup.Dto.PartnerModule.UndoChangePassword response;
+
+            if (String.IsNullOrEmpty(undoChangePassword))
+            {
+                CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+
+                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
+            }
+            else
+            {
+                response = new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Succeeded = false, Message = "A jelszómódosítás visszavonásához tartozó azonosító nem lett megadva!" };
+            }
+
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            CompanyGroup.WebClient.Models.UndoChangePassword model = new CompanyGroup.WebClient.Models.UndoChangePassword(response, visitor);
+
+            return model;
+        }
     }
 }

@@ -1,0 +1,105 @@
+﻿{{#Visitor.IsValidLogin}} 
+<div id="szamlainfo">
+    <div id="szamlaszuro">
+      <table width="100%" border="0" cellspacing="1" cellpadding="0">
+        <tr>
+          <td nowrap="nowrap">
+            <input type="radio" name="radio_paymenttype" value="0" />
+          </td>
+          <td nowrap="nowrap">Összes számla</td>
+          <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="1" checked="checked" /></td>
+          <td nowrap="nowrap">Kifizetetlen számlák</td>
+          <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="2" /></td>
+          <td nowrap="nowrap">Lejárt számlák</td>
+          <td width="100%"></td>
+          <td nowrap="nowrap">Kezdő dátum:&nbsp;</td>
+          <td nowrap="nowrap"><input name="naptar_kezd" id="naptar_kezd" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" />&nbsp;&nbsp;</td>
+      
+          <td nowrap="nowrap">Záró dátum:&nbsp;</td>
+          <td nowrap="nowrap"><input name="naptar_zar" id="naptar_zar" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+      
+        </tr>
+      </table>
+    </div>
+  
+    <h3 style="margin-left:3px; color: #666;">Elemek száma: <span id="itemCount"></span></h3>
+    {{#Items}}
+    <table id="invoiceInfoListContainer" width="100%" border="0" cellspacing="1" cellpadding="2">
+    <tr>
+      <td colspan="6" nowrap="nowrap">
+      <div id="szamla_header">
+      <table width="100%" border="0" cellspacing="1" cellpadding="2">
+        <tr>
+          <td width="50%"><strong>Számla száma:</strong> {{InvoiceId}}</td>
+          <td width="50%"><strong>Számla kelte:</strong> {{InvoiceDate}}</td>
+          <td nowrap="nowrap"><strong>Fizetési határidő:</strong> {{DueDate}}</td>
+        </tr>
+      </table>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6"><hr size="1" noshade="noshade" /></td>
+    </tr>
+    {{#Lines}}
+    <tr>
+      <td nowrap="nowrap"><strong>Azonosító</strong></td>
+      <td nowrap="nowrap"><strong>Cikknév</strong></td>
+      <td width="100%">&nbsp;</td>
+      <td style="text-align: left; padding: 0px;" nowrap="nowrap"><strong>Mennyiség [ db ]</strong></td>
+      <td style="text-align: right; padding: 5px;" nowrap="nowrap"><strong>Egységár</strong></td>
+      <td style="text-align: right; padding: 5px;" nowrap="nowrap"><strong>Összesen</strong></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">{{ItemId}}</td>
+      <td nowrap="nowrap">{{Name}}</td>
+      <td width="100%">&nbsp;</td>
+      <td style="text-align: center; padding: 5px; border-right: 1px solid #999;" nowrap="nowrap">{{Quantity}} </td>
+      <td style="text-align: center; padding: 5px; border-right: 1px solid #999;" nowrap="nowrap">{{SalesPrice}} {{CurrencyCode}}</td>
+      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{LineAmount}} {{CurrencyCode}}</td>
+    </tr>
+    <tr>
+      <td colspan="6"><hr size="1" noshade="noshade" /></td>
+    </tr>
+    {{/Lines}}
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td width="100%">&nbsp;</td>
+      <td colspan="2" nowrap="nowrap">Netto összesen:</td>
+      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{InvoiceAmount}} {{CurrencyCode}}</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td width="100%">&nbsp;</td>
+      <td colspan="2" nowrap="nowrap">Netto tartozás összesen:</td>
+      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{InvoiceCredit}} {{CurrencyCode}}</td>
+    </tr>
+    {{/Items}}
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td width="100%">&nbsp;</td>
+      <td colspan="2" nowrap="nowrap"><strong>Netto össz. tartozás:</strong></td>
+      <td style="padding: 5px; text-align: right; font-weight: bold; color: #900;" nowrap="nowrap">{{NettoSumCredit}} Ft</td>
+    </tr>
+    </table>
+    {{^Items}}
+        Nem áll rendelkezésre számla információ!
+    {{/Items}}
+</div>
+    {{/Visitor.IsValidLogin}}
+    {{^Visitor.IsValidLogin}}
+    <table id="dashboardtable" width="350" border="0" cellpadding="0" cellspacing="0">
+        <tr>    
+            <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+        </tr>
+        <tr>    
+            <td>ACCESS DENIED KÉP...</td>
+        </tr>
+        <tr>    
+            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+        </tr>
+    </table>
+    {{/Visitor.IsValidLogin}}

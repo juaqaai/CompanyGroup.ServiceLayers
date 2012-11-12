@@ -4,27 +4,6 @@ using System.Collections.Generic;
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// számla info lista
-    /// </summary>
-    public class InvoiceInfoList
-    {
-        public InvoiceInfoList(List<CompanyGroup.WebClient.Models.InvoiceInfo> items)
-        {
-            this.Items = items;
-
-            this.ItemCount = items.Count;
-
-            this.NettoSumCredit = String.Format("{0}", 0);
-        }
-
-        public List<CompanyGroup.WebClient.Models.InvoiceInfo> Items { get; set; }
-
-        public int ItemCount { get; set; }
-
-        public string NettoSumCredit { get; set; }
-    }
-
-    /// <summary>
     /// számla info
     /// </summary>
     public class InvoiceInfo 
@@ -128,24 +107,5 @@ namespace CompanyGroup.WebClient.Models
         /// számla sorok     
         /// </summary>
         public List<CompanyGroup.WebClient.Models.InvoiceLineInfo> Lines { get; set; }
-    }
-
-    /// <summary>
-    /// számla sor info
-    /// </summary>
-    public class InvoiceLineInfo : CompanyGroup.Dto.PartnerModule.InvoiceLineInfo
-    {
-        public InvoiceLineInfo(CompanyGroup.Dto.PartnerModule.InvoiceLineInfo invoiceLineInfo)
-        { 
-            this.CurrencyCode = invoiceLineInfo.CurrencyCode;
-            this.DeliveryType = invoiceLineInfo.DeliveryType;
-            this.ItemDate = invoiceLineInfo.ItemDate;
-            this.ItemId = invoiceLineInfo.ItemId;
-            this.LineAmount = invoiceLineInfo.LineAmount;
-            this.Name = invoiceLineInfo.Name;
-            this.TaxAmount = invoiceLineInfo.TaxAmount;
-            this.Quantity = invoiceLineInfo.Quantity;
-            this.SalesPrice = invoiceLineInfo.SalesPrice;
-        }
     }
 }

@@ -14,6 +14,12 @@ namespace CompanyGroup.WebClient
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "PartnerInfo",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "PartnerInfo", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Webshop", action = "Index", id = UrlParameter.Optional }

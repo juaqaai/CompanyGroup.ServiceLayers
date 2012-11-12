@@ -14,6 +14,12 @@ namespace CompanyGroup.WebClient
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { action = "Index", id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "InvoiceInfoApi",
+                routeTemplate: "api/{controller}/{action}/{paymentType}",
+                defaults: new { action = "GetInvoiceInfo", paymentType = RouteParameter.Optional }
+            );
         }
     }
 }

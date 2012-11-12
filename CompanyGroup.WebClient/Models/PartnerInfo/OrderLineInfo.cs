@@ -21,5 +21,11 @@ namespace CompanyGroup.WebClient.Models
             this.Quantity = invoiceLineInfo.Quantity;
             this.SalesPrice = invoiceLineInfo.SalesPrice;
         }
+
+        public bool StatusIssueIsReservPhysical { get { return this.StatusIssue.Equals(4); } }
+
+        public bool StatusIssueIsReservOrdered { get { return this.StatusIssue.Equals(5); } }
+
+        public bool StatusIssueIsOnOrder { get { return this.StatusIssue.Equals(6); } }
     }
 }

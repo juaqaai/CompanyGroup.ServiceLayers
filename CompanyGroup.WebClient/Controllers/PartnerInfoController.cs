@@ -19,7 +19,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+            CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
             return View(visitor);
         }
@@ -28,82 +28,71 @@ namespace CompanyGroup.WebClient.Controllers
         /// InvoiceInfo view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        public ActionResult InvoiceInfo()
-        {
-            ViewBag.Message = "InvoiceInfo view.";
+        //public ActionResult InvoiceInfo()
+        //{
+        //    ViewBag.Message = "InvoiceInfo view.";
 
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
 
-            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
-            {
-                LanguageId = visitorData.Language,
-                VisitorId = visitorData.ObjectId,
-                PaymentType = 1
-            };
+        //    CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
+        //    {
+        //        LanguageId = visitorData.Language,
+        //        VisitorId = visitorData.ObjectId,
+        //        PaymentType = 1
+        //    };
 
-            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
+        //    List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
 
-            List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
+        //    List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
 
-            invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
+        //    invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
 
-            CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList);
+        //    CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         /// <summary>
         /// OrderInfo view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        public ActionResult OrderInfo()
-        {
-            ViewBag.Message = "OrderInfo view.";
+        //public ActionResult OrderInfo()
+        //{
+        //    ViewBag.Message = "OrderInfo view.";
 
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
 
-            CompanyGroup.Dto.ServiceRequest.GetOrderInfo request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfo()
-            {
-                LanguageId = visitorData.Language,
-                VisitorId = visitorData.ObjectId,
-            };
+        //    CompanyGroup.Dto.ServiceRequest.GetOrderInfo request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfo()
+        //    {
+        //        LanguageId = visitorData.Language,
+        //        VisitorId = visitorData.ObjectId,
+        //    };
 
-            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfo, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
+        //    List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfo, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
 
-            List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
+        //    List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
 
-            orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+        //    orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
 
-            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList);
+        //    CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList);
 
-             return View(model);
-        }
-
-        /// <summary>
-        /// Registration view kezdőérték beállításokkal
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Registration()
-        {
-            ViewBag.Message = "Registration view.";
-
-            return View();
-        }
+        //     return View(model);
+        //}
 
         /// <summary>
         /// ChangePassword view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        public ActionResult ChangePassword()
-        {
-            ViewBag.Message = "ChangePassword view.";
+        //public ActionResult ChangePassword()
+        //{
+        //    ViewBag.Message = "ChangePassword view.";
 
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+        //    CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return View(visitor);
-        }
+        //    return View(visitor);
+        //}
 
         /// <summary>
         /// jelszómódosítást visszavonó művelet - view kezdőérték beállításokkal
@@ -141,16 +130,16 @@ namespace CompanyGroup.WebClient.Controllers
         /// ForgetPassword view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        public ActionResult ForgetPassword()
-        {
-            ViewBag.Message = "ForgetPassword view.";
+        //public ActionResult ForgetPassword()
+        //{
+        //    ViewBag.Message = "ForgetPassword view.";
 
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+        //    CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return View(visitor);
-        }
+        //    return View(visitor);
+        //}
 
 
     }

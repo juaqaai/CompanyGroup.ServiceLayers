@@ -13,11 +13,16 @@ namespace CompanyGroup.WebClient.Controllers
         /// látogató adatainak kiolvasása
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [ActionName("GetVisitorInfo")]
         public CompanyGroup.WebClient.Models.Visitor GetVisitorInfo()
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+            if (visitorData == null)
+            {
+                return new CompanyGroup.WebClient.Models.Visitor();
+            }
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 

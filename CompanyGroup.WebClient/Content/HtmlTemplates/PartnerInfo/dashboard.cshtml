@@ -1,0 +1,95 @@
+﻿    {{#IsValidLogin}} 
+    <table id="dashboardtable" width="350" border="0" cellpadding="0" cellspacing="0">
+        {{#PersonId}}
+        <tr>
+            <td><img src="@Url.Content("~/Media/images/dashboard_01.png")" width="46" height="44" alt="" /></td>
+            <td>
+                <div id="dashboardtext">@Html.ActionLink("ADATLAP / MÓDOSÍTÁS", "Index", "/Registration")</div>
+            </td>
+            <td><img src="@Url.Content("~/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
+            <td>
+                <div id="dashboardtext">@Html.ActionLink("JELSZÓVÁLTOZTATÁS", "ChangePassword", "/ContactPerson")</div>
+                <br/>
+                <div id="changepass"></div>
+            </td>
+        </tr>
+        {{/PersonId}}
+        {{^PersonId}}
+        <tr>
+            <td><img src="@Url.Content("~/Media/images/dashboard_01.png")" width="46" height="44" alt="" /></td>
+            <td><div id="dashboardtext">@Html.ActionLink("ADATLAP / MÓDOSÍTÁS", "Index", "/Registration")</div></td>
+            <td><img src="@Url.Content("~/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
+            <td>
+                <div id="dashboardtext">JELSZÓVÁLTOZTATÁS</div>
+                <br/>
+                <div id="changepass">Ön egy cég nevében van bejelentkezve! 
+                <br/><br/> céges belépéshez tartozó jelszó megváltoztatása csak a regisztrációs folyamat végigvitelével lehetséges.<br/>
+                Kérjük válassza a regisztráció / cégadat módosítás funkció- adminisztrátori beállításoknál - a jelszó megadását.
+                </div>
+            </td>
+        </tr>
+        {{/PersonId}}
+        <tr>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_05.png")" width="46" height="56" alt="" /></td>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_06.png")" width="234" height="56" alt="" /></td>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_07.png")" width="44" height="56" alt="" /></td>
+            <td>
+                <!-- <img src="@Url.Content("~/Media/images/dashboard_08.png")" width="246" height="56" alt=""> --></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Content("~/Media/images/dashboard_09.png")" width="46" height="44" alt="" /></td>
+            {{#Permission.InvoiceInfoEnabled}}
+            <td><div id="dashboardtext">@Html.ActionLink("SZÁMLÁK", "Index", "/Invoice")</div><!-- <img src="@Url.Content("~/Media/images/dashboard_10.png")" width="234" height="44" alt=""> --></td>
+            {{/Permission.InvoiceInfoEnabled}}
+            {{^Permission.InvoiceInfoEnabled}}
+                <td><div id="dashboardtext">A számlák megtekintéséhez nem áll rendelkezésre megfelelő jogosultság!</div></td>
+            {{/Permission.InvoiceInfoEnabled}}             
+            <td><img src="@Url.Content("~/Media/images/dashboard_11.png")" width="44" height="44" alt="" /></td>
+            
+            {{#Permission.InvoiceInfoEnabled}}
+            <td><div id="dashboardtext">@Html.ActionLink("MEGRENDELÉSEK", "Index", "/SalesOrder")</div>
+               <!--  <img src="@Url.Content("~/Media/images/dashboard_12.png")" width="246" height="44" alt=""> --></td>
+            {{/Permission.InvoiceInfoEnabled}}
+            {{^Permission.InvoiceInfoEnabled}}
+            <td><div id="dashboardtext">A megrendelések megtekintéséhez nem áll rendelkezésre megfelelő jogosultság!</div></td>
+            {{/Permission.InvoiceInfoEnabled}}
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_13.png")" width="46" height="52" alt="" /></td>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_14.png")" width="234" height="52" alt="" /></td>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_15.png")" width="44" height="52" alt="" /></td>
+            <td>
+                <!-- <img src="@Url.Content("~/Media/images/dashboard_16.png")" width="246" height="52" alt=""> --></td>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content("~/Media/images/dashboard_17.png")" width="46" height="45" alt="" /></td>
+            <td>
+                <div id="dashboardtext"><a href="#">RENDSZERÜZENETEK</a></div>
+                <!-- <img src="@Url.Content("~/Media/images/dashboard_18.png")" width="234" height="45" alt=""> --></td>
+            <td>
+                <!-- <img src="@Url.Content("~/Media/images/dashboard_19.png")" width="44" height="45" alt=""> --></td>
+            <td>
+                <!-- <img src="@Url.Content("~/Media/images/dashboard_20.png")" width="246" height="45" alt=""> --></td>
+        </tr>
+    </table>
+    {{/IsValidLogin}}
+    {{^IsValidLogin}}
+    <table id="dashboardtable" width="350" border="0" cellpadding="0" cellspacing="0">
+        <tr>    
+            <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+        </tr>
+        <tr>    
+            <td>ACCESS DENIED KÉP...</td>
+        </tr>
+        <tr>    
+            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+        </tr>
+    </table>
+    {{/IsValidLogin}}

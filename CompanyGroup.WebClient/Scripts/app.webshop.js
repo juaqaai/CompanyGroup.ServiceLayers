@@ -1,8 +1,6 @@
 ﻿var companyGroup = companyGroup || {};
 
-companyGroup.scripts = companyGroup.scripts || {};
-
-companyGroup.scripts.webshop = $.sammy('#main', function () {
+companyGroup.webshop = $.sammy('#main', function () {
 
     this.use(Sammy.Mustache, 'html').use(Sammy.Title);
     

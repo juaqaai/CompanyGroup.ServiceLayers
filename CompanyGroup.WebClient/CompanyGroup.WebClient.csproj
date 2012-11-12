@@ -177,6 +177,7 @@
     <Compile Include="Controllers\PartnerInfoController.cs" />
     <Compile Include="Controllers\PictureApiController.cs" />
     <Compile Include="Controllers\RegistrationApiController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SalesOrderApiController.cs" />
     <Compile Include="Controllers\ShoppingCartApiController.cs" />
     <Compile Include="Controllers\StructureApiController.cs" />
@@ -203,12 +204,13 @@
     <Compile Include="Models\PartnerInfo\BankAccounts.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\ContactPersons.cs" />
+    <Compile Include="Models\PartnerInfo\InvoiceInfoList.cs" />
+    <Compile Include="Models\PartnerInfo\InvoiceLineInfo.cs" />
     <Compile Include="Models\PartnerInfo\DeliveryAddress.cs" />
     <Compile Include="Models\PartnerInfo\ForgetPasswordResponse.cs" />
     <Compile Include="Models\PartnerInfo\OrderLineInfo.cs" />
     <Compile Include="Models\PartnerInfo\OrderInfoList.cs" />
     <Compile Include="Models\PartnerInfo\DeliveryAddresses.cs" />
-    <Compile Include="Models\PartnerInfo\GetInvoiceInfo.cs" />
     <Compile Include="Models\PartnerInfo\InvoiceInfo.cs" />
     <Compile Include="Models\PartnerInfo\OrderInfo.cs" />
     <Compile Include="Models\PartnerInfo\Registration.cs" />
@@ -245,6 +247,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword_failed.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword_succeeded.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_notallowed.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_succeeded.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_failed.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\invoiceinfo.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\salesorderinfo.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\undochangepassword.html" />
     <Content Include="Content\themes\custom\hrp_bsc_html_css.css" />
     <Content Include="Content\themes\custom\images\1.jpg" />
     <Content Include="Content\themes\custom\images\13.png" />
@@ -1068,6 +1080,7 @@
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
     <Content Include="Scripts\app.partnerinfo.js" />
+    <Content Include="Scripts\app.utils.js" />
     <Content Include="Scripts\app.webshop.js" />
     <Content Include="Scripts\amplify-vsdoc.js" />
     <Content Include="Scripts\amplify.js" />
@@ -1089,6 +1102,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\MIT-LICENSE.txt" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\README.txt" />
     <Content Include="Scripts\sammy-0.7.1-vsdoc.js" />
     <Content Include="Scripts\sammy-0.7.1.js" />
@@ -1097,9 +1111,10 @@
     <Content Include="Scripts\sammy-0.7.2.min.js" />
     <Content Include="Scripts\sammy.mustache-0.7.2.min.js" />
     <Content Include="Scripts\sammy.mustache-latest.min.js" />
+    <Content Include="Scripts\sammy.mustache.js" />
     <Content Include="Scripts\sammy.title-0.7.2.min.js" />
     <Content Include="Scripts\sammy.title-latest.min.js" />
-    <Content Include="Views\PartnerInfo\index.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\dashboard.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1164,30 +1179,14 @@
     <Content Include="Views\Webshop\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PartnerInfo\InvoiceInfo.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PartnerInfo\OrderInfo.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PartnerInfo\Registration.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PartnerInfo\ChangePassword.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PartnerInfo\UndoChangePassword.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PartnerInfo\ForgetPassword.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Company\Carreer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Media\Default\RecipeJournal\78fa6518c77340858c88440d2c2201b2" />
     <None Include="Content\Media\images\_notes\filterdelete.png.mno" />
     <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\dashboard.cshtml" />
+    <Content Include="Views\Registration\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1203,12 +1202,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63306</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/CompanyGroup.WebClient</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
