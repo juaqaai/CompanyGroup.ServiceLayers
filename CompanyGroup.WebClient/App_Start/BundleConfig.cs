@@ -54,6 +54,7 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/registration").Include("~/Scripts/app.registration.js"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 

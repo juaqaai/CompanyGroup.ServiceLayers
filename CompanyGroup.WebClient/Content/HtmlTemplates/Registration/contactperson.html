@@ -1,0 +1,327 @@
+﻿            <table align="center" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="top">
+  		                <div id="tabs" class="stContainer">
+                            <ul>
+  				                <li><a href="#tabs-1">
+                                <h2>1. lépés<br />
+                                <small>Regisztrációs szerződés</small></h2></a>
+                                <div id="elfogad_chx"><input type="checkbox" name="nextstep1" id="nextstep1" />A szerződés feltételeit elfogadom</div>
+                                </li>
+  				                <li id="regstep2" style="display: none;"><a href="#tabs-2">
+                                <h2>2. lépés<br />
+                                <small>Ügyintéző adatai</small></h2>
+                                </a></li>
+  			                    <li id="regstep3" style="display: none;"><a href="#tabs-3">
+                                <h2>3. lépés<br />
+                                <small>Cég alapadatai</small></h2>
+                                </a></li>
+  			                    <li id="regstep4" style="display: none;"><a href="#tabs-4">
+                                <h2>4. lépés<br />
+                                <small>Web adminisztrátor</small></h2>
+                                </a></li>
+  			                    <li id="regstep5"><a href="#tabs-5">
+                                <h2>5. lépés<br />
+                                <small>Kapcsolattartók</small></h2>
+                                </a></li>
+  			                    <li id="regstep6" style="display: none;"><a href="#tabs-5">
+                                <h2>6. lépés<br />
+                                <small>Nyomtatási nézet</small></h2>
+                                </a></li>
+  			                </ul>  
+                            <div id="tabs-5">
+                                <h2>Kapcsolattartók</h2>
+                                @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/Registration/AddContactPerson")), System.Web.Mvc.FormMethod.Post, new { id = "form_step6" }))
+                                { 	
+                                 <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                 <tr>
+                                  <td><strong>Kapcsolattartók<br />
+                                  és jogosultságok</strong></td>
+                                  <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                                 </tr>
+                                 <tr>
+                                  <td>&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                 </tr>
+                                 </table>
+                                 <table id="contactPersonContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
+                                 </table>
+                    
+                                 <script id="contactPersonTemplate" type="text/x-jquery-tmpl">
+                                {{each( i, item ) Items}}
+                                {{if item.Id == SelectedId}}
+                                <tr>
+                                  <td colspan="2" style="font-size:9px"></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Belépési név</td>
+                                  <td align="right"><input type="text" id="txtContactPersonUserName_${item.Id}" class="regfields" value="${item.UserName}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó</td>
+                                  <td align="right"><input type="text" id="txtContactPersonPassword_${item.Id}" class="regfields" value="${item.Password}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó mégegyszer</td>
+                                  <td align="right"><input type="text" id="txtContactPersonPassword2_${item.Id}" class="regfields" value="${item.Password}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">&nbsp;</td>
+                                  <td align="right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Vezetéknév</td>
+                                  <td align="right"><input type="text" id="txtContactPersonFirstName_${item.Id}" class="regfields" value="${item.FirstName}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Keresztnév</td>
+                                  <td align="right"><input type="text" id="txtContactPersonLastName_${item.Id}" class="regfields" value="${item.LastName}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">E-mail</td>
+                                  <td align="right"><input type="text" id="txtContactPersonEmail_${item.Id}" class="regfields" value="${item.Email}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Telefon</td>
+                                  <td align="right"><input type="text" id="txtContactPersonPhone_${item.Id}" class="regfields" value="${item.Phone}" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Rendelhet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonAllowOrder" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árut átvehet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailOfDelivery" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés rendelésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Számlainformáció?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonInvoiceInfo" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Hírlevél?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonNewsletter" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árlistát letölthet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonPriceListDownload" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árubeérkezésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsArriveOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árukiszállításról?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsOfDelivery" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms rendelésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsOrderConfirm" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap"></td>
+                                  <td align="right"><a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.UpdateContactPerson('${item.Id}', '${item.RecId}')">Mentés</a></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" nowrap="nowrap"><hr /></td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                  <td colspan="2" style="font-size:9px"></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Belépési név</td>
+                                  <td align="right">${item.UserName} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó</td>
+                                  <td align="right">${item.Password} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó mégegyszer</td>
+                                  <td align="right">${item.Password} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">&nbsp;</td>
+                                  <td align="right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Vezetéknév</td>
+                                  <td align="right">${item.FirstName} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Keresztnév</td>
+                                  <td align="right">${item.LastName} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">E-mail</td>
+                                  <td align="right">${item.Email} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Telefon</td>
+                                  <td align="right">${item.Phone} /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Rendelhet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonAllowOrder" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árut átvehet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailOfDelivery" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés rendelésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Számlainformáció?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonInvoiceInfo" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Hírlevél?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonNewsletter" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árlistát letölthet?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonPriceListDownload" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árubeérkezésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsArriveOfGoods" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árukiszállításról?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsOfDelivery" /></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms rendelésről?</td>
+                                  <td align="right"><input type="checkbox" id="chkContactPersonSmsOrderConfirm" /></td>
+                                </tr>
+                                <tr>
+                                <td nowrap="nowrap"></td>
+                                  <td>
+                                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.SelectForUpdateContactPerson('${item.Id}')">Módosít</a>
+                                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.RemoveContactPerson('${item.Id}')">Törlés</a>
+                                  </td>
+                                </tr>
+                                {{/if}}
+                                {{/each}}
+                                 </script>
+                                <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                <tr>
+                                  <td><strong>Kapcsolattartó </strong></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size:9px"></td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Belépési név</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonUserName", "", new { id = "txtContactPersonUserName", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonPassword", "", new { id = "txtContactPersonPassword", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Jelszó mégegyszer</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonPassword2", "", new { id = "txtContactPersonPassword2", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">&nbsp;</td>
+                                  <td align="right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Vezetéknév</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonFirstName", "", new { id = "txtContactPersonFirstName", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Keresztnév</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonLastName", "", new { id = "txtContactPersonLastName", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">E-mail</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonEmail", "", new { id = "txtContactPersonEmail", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Telefon</td>
+                                  <td align="right">@Html.TextBox("txtContactPersonPhone", "", new { id = "txtContactPersonPhone", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Rendelhet?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonAllowOrder", false, new { id = "chkContactPersonAllowOrder" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árut átvehet?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonAllowReceiptOfGoods", false, new { id = "chkContactPersonAllowReceiptOfGoods" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonEmailArriveOfGoods", false, new { id = "chkContactPersonEmailArriveOfGoods" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonEmailOfDelivery", false, new { id = "chkContactPersonEmailOfDelivery" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Email értesítés rendelésről?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonEmailOfOrderConfirm", false, new { id = "chkContactPersonEmailOfOrderConfirm" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Számlainformáció?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonInvoiceInfo", false, new { id = "chkContactPersonInvoiceInfo" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Hírlevél?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonNewsletter", false, new { id = "chkContactPersonNewsletter" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Árlistát letölthet?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonPriceListDownload", false, new { id = "chkContactPersonPriceListDownload" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árubeérkezésről?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonSmsArriveOfGoods", false, new { id = "chkContactPersonSmsArriveOfGoods" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms árukiszállításról?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonSmsOfDelivery", false, new { id = "chkContactPersonSmsOfDelivery" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms rendelésről?</td>
+                                  <td align="right">@Html.CheckBox("chkContactPersonSmsOrderConfirm", false, new { id = "chkContactPersonSmsOrderConfirm" })</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap">Sms rendelésről?</td>
+                                  <td align="right"> <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddContactPerson()">[+] Hozzáadás</a></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" nowrap="nowrap"><hr /></td>
+                                </tr>
+                                <tr><td colspan="2"><input type="submit" name="nextstep6" id="nextstep6" value="Tovább" /></td></tr>
+                                </table>                    
+                                }               			
+                            </div>
+  	                </div>
+                </td>
+            </tr>
+            </table>

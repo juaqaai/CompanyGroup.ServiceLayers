@@ -60,4 +60,14 @@
     var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
   	$('#quickmenuContainer').html(quickmenuHtml);
 
+    $("#chk_accept").change(function () {
+        if($('#chk_accept').is(':checked')) {
+            //CompanyGroupCms.Registration.AddNew();
+            //$('#regstep2').show();
+        }
+        else {
+            //$('#regstep2').hide();
+        }
+    });
+
 }

@@ -257,6 +257,11 @@
     <Content Include="Content\HtmlTemplates\PartnerInfo\invoiceinfo.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\salesorderinfo.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\undochangepassword.html" />
+    <Content Include="Content\HtmlTemplates\Registration\contactperson.html" />
+    <Content Include="Content\HtmlTemplates\Registration\termsandconditions.html" />
+    <Content Include="Content\HtmlTemplates\Registration\datarecording.html" />
+    <Content Include="Content\HtmlTemplates\Registration\registrationdata.html" />
+    <Content Include="Content\HtmlTemplates\Registration\webadministrator.html" />
     <Content Include="Content\themes\custom\hrp_bsc_html_css.css" />
     <Content Include="Content\themes\custom\images\1.jpg" />
     <Content Include="Content\themes\custom\images\13.png" />
@@ -1080,6 +1085,7 @@
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
     <Content Include="Scripts\app.partnerinfo.js" />
+    <Content Include="Scripts\app.registration.js" />
     <Content Include="Scripts\app.utils.js" />
     <Content Include="Scripts\app.webshop.js" />
     <Content Include="Scripts\amplify-vsdoc.js" />
