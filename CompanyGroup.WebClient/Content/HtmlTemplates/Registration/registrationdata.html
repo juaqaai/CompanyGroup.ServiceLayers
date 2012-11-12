@@ -110,29 +110,29 @@
                             <tr>
                               <td>* Cégnév</td>
                               <td><label class="error" for="txtCustomerName" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                  @Html.TextBox("txtCustomerName", Model.CompanyData.CustomerName, new { id = "txtCustomerName", @class = "regfields" })
-                                  @Html.Hidden("hfCustomerId", Model.CompanyData.CustomerId, new { id = "hfCustomerId" })
+                                  <input type="text" id="txtCustomerName", class = "regfields" />
+                                  <input type="hidden" id="hfCustomerId" />
                               </td>
                             </tr>
                             <tr>
                               <td>Cégjegyzékszám</td>
                               <td><label class="error" for="txtCompanyRegisterNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                  @Html.TextBox("txtCompanyRegisterNumber", Model.CompanyData.RegistrationNumber, new { id = "txtRegistrationNumber", @class = "regfields" })</td>
+                                  <input type="text" id="txtCompanyRegisterNumber" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td>* Adószám</td>
                               <td><label class="error" for="txtVatNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                  @Html.TextBox("txtVatNumber", Model.CompanyData.VatNumber, new { id = "txtVatNumber", @class = "regfields", size = "10" })</td>
+                                  <input type="text" id="txtVatNumber" class = "regfields" size = "10" /></td>
                             </tr>
                             <tr>
                               <td>Uniós adószám</td>
-                              <td>@Html.TextBox("txtEUVatNumber", Model.CompanyData.EUVatNumber, new { id = "txtEUVatNumber", @class = "regfields" })</td>
+                              <td><input type="text" id="txtEUVatNumber" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td>* Központi email</td>
                               <td align="right">
                                 <label class="error" for="txtMainEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                @Html.TextBox("txtMainEmail", Model.CompanyData.MainEmail, new { id = "txtMainEmail", @class = "regfields" }) 
+                                <input type="text" id="txtMainEmail" class = "regfields" /> 
                               </td>
                             </tr>
                             <tr>
@@ -141,7 +141,7 @@
                             <tr>
                               <td nowrap="nowrap">Hírlevelek a központi e-mailre</td>
                               <td>
-                                @Html.CheckBox("chkNewsletterToMainEmail", Model.CompanyData.NewsletterToMainEmail, new { id = "chkNewsletterToMainEmail" }) 
+                                <input type="checkbox" id=chkNewsletterToMainEmail" value="{{CompanyData.NewsletterToMainEmail}}" /> 
                               </td>
                             </tr>
                             </table><h3>Bankszámlaszám</h3>
@@ -151,7 +151,7 @@
                               <td></td>
                             </tr>
                             </table>
-                            <script id="bankAccountTemplate" type="text/x-jquery-tmpl">
+                            <script id="bankAccountTemplate" type="text/html">
                             {{each( i, item ) Items}}
                             {{if item.Id == SelectedId}}
                             <tr>
@@ -175,15 +175,14 @@
                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
                             <tr>
                               <td nowrap="nowrap"></td>
-                              <td>@Html.TextBox("txtBankAccountPart1", "", new { id = "txtBankAccountPart1", @class = "regfields" }) 
-                                  - @Html.TextBox("txtBankAccountPart2", "", new { id = "txtBankAccountPart2", @class = "regfields" })
-                                  - @Html.TextBox("txtBankAccountPart3", "", new { id = "txtBankAccountPart3", @class = "regfields" })
+                              <td><input type="text" id="txtBankAccountPart1", "", new { id = "txtBankAccountPart1", @class = "regfields" }) 
+                                  - <input type="text" id="txtBankAccountPart2", "", new { id = "txtBankAccountPart2", @class = "regfields" })
+                                  - <input type="text" id="txtBankAccountPart3", "", new { id = "txtBankAccountPart3", @class = "regfields" })
                               <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddBankAccount()">[+] Hozzáadás</a></td>
                             </tr>
                             </table>
-                            }
-                            @using (Html.BeginForm("UploadFile", "Registration", System.Web.Mvc.FormMethod.Post, new { id = "form_fileupload", enctype = "multipart/form-data" }))
-                            {   
+                            </form>
+                            <form id="form_fileupload" action="#/uploadfile/" method="post" enctype = "multipart/form-data">
                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
                             <tr>
                               <td nowrap="nowrap">Aláírási címpéldány</td>
@@ -207,9 +206,10 @@
                                 A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk. </td>
                             </tr>
                             </table>
-                            }
-                            @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/Registration/UpdateRegistrationData2")), System.Web.Mvc.FormMethod.Post, new { id = "form_step4" }))
-                            {
+                            </form>
+
+                            <form id="form_registrationdata2" action="#/registrationdata2/" method="post"> 
+
                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
                             <tr>
                               <td colspan="2"><hr /></td>

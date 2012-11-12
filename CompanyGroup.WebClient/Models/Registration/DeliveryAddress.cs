@@ -5,9 +5,9 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
-    public class DeliveryAddress : CompanyGroup.Dto.PartnerModule.DeliveryAddress
+    public class DeliveryAddress : CompanyGroup.Dto.RegistrationModule.DeliveryAddress
     {
-        public DeliveryAddress(CompanyGroup.Dto.PartnerModule.DeliveryAddress deliveryAddress)
+        public DeliveryAddress(CompanyGroup.Dto.RegistrationModule.DeliveryAddress deliveryAddress)
         {
             this.City = deliveryAddress.City;
 

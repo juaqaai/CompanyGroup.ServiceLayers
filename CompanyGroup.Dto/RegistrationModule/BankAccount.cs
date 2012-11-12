@@ -6,6 +6,15 @@ namespace CompanyGroup.Dto.RegistrationModule
     [System.Runtime.Serialization.DataContract(Name = "BankAccount", Namespace = "CompanyGroup.Dto.RegistrationModule")]
     public class BankAccount
     {
+        public BankAccount()
+        {
+            this.Part1 = String.Empty;
+            this.Part2 = String.Empty;
+            this.Part3 = String.Empty;
+            this.RecId = 0;
+            this.Id = String.Empty;
+        }
+
         [System.Runtime.Serialization.DataMember(Name = "Part1", Order = 1)]
         public string Part1 { set; get; }
 
