@@ -6,6 +6,18 @@ namespace CompanyGroup.Dto.RegistrationModule
     [System.Runtime.Serialization.DataContract(Name = "DeliveryAddress", Namespace = "CompanyGroup.Dto.RegistrationModule")]
     public class DeliveryAddress
     {
+        public DeliveryAddress() : this(0, "", "", "", "", "") { }
+
+        public DeliveryAddress(long recId, string city, string street, string zipCode, string countryRegionId, string id)
+        {
+            this.RecId = recId;
+            this.City = city;
+            this.Street = street;
+            this.ZipCode = zipCode;
+            this.CountryRegionId = countryRegionId;
+            this.Id = id;
+        }
+
         [System.Runtime.Serialization.DataMember(Name = "RecId", Order = 1)] 
         public long RecId { get; set; }
 
@@ -34,6 +46,11 @@ namespace CompanyGroup.Dto.RegistrationModule
         public DeliveryAddresses()
         {
             this.Items = new List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress>();
+        }
+
+        public DeliveryAddresses(List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> items)
+        {
+            this.Items = items;
         }
     }
 }

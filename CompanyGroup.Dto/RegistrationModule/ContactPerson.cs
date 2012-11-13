@@ -6,6 +6,36 @@ namespace CompanyGroup.Dto.RegistrationModule
     [System.Runtime.Serialization.DataContract(Name = "ContactPerson", Namespace = "CompanyGroup.Dto.RegistrationModule")]
     public class ContactPerson
     {
+        public ContactPerson() : this("", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, "", "", false, "") { }
+
+        public ContactPerson(string contactPersonId, string firstName, string lastName,
+                             bool allowOrder, bool allowReceiptOfGoods, bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery,
+                             bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, bool webAdmin, bool priceListDownload, bool invoiceInfo,
+                             string userName, string password, bool newsletter, string telephone, string email, bool leftCompany, string id)
+        {
+            this.ContactPersonId = contactPersonId;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.AllowOrder = allowOrder;
+            this.AllowReceiptOfGoods = allowReceiptOfGoods;
+            this.SmsArriveOfGoods = smsArriveOfGoods;
+            this.SmsOrderConfirm = smsOrderConfirm;
+            this.SmsOfDelivery = smsOfDelivery;
+            this.EmailArriveOfGoods = emailArriveOfGoods;
+            this.EmailOfOrderConfirm = emailOfOrderConfirm;
+            this.EmailOfDelivery = emailOfDelivery;
+            this.WebAdmin = webAdmin;
+            this.PriceListDownload = priceListDownload;
+            this.InvoiceInfo = invoiceInfo;
+            this.UserName = userName;
+            this.Password = password;
+            this.Newsletter = newsletter;
+            this.Telephone = telephone;
+            this.Email = email;
+            this.LeftCompany = leftCompany;
+            this.Id = id;
+        }
+
         /// <summary>
         /// kapcsolattartó egyedi azonosító
         /// </summary>
@@ -126,6 +156,9 @@ namespace CompanyGroup.Dto.RegistrationModule
         [System.Runtime.Serialization.DataMember(Name = "LeftCompany", Order = 20)]
         public bool LeftCompany { get; set; }
 
+        /// <summary>
+        /// azonosító
+        /// </summary>
         [System.Runtime.Serialization.DataMember(Name = "Id", Order = 21)]
         public string Id { set; get; }
     }
@@ -139,6 +172,11 @@ namespace CompanyGroup.Dto.RegistrationModule
         public ContactPersons()
         {
             this.Items = new List<CompanyGroup.Dto.RegistrationModule.ContactPerson>();
+        }
+
+        public ContactPersons(List<CompanyGroup.Dto.RegistrationModule.ContactPerson> items)
+        {
+            this.Items = items;
         }
     }
 }

@@ -15,7 +15,8 @@ namespace CompanyGroup.WebClient.Models
                             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses,
                             CompanyGroup.Dto.RegistrationModule.InvoiceAddress invoiceAddress,
                             CompanyGroup.Dto.RegistrationModule.MailAddress mailAddress,
-                            string registrationId, string visitorId, 
+                            string registrationId, 
+                            string visitorId, 
                             CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator)
         {
             this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts);

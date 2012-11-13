@@ -15,6 +15,15 @@ namespace CompanyGroup.Dto.RegistrationModule
             this.Id = String.Empty;
         }
 
+        public BankAccount(string part1, string part2, string part3, long recId, string id)
+        {
+            this.Part1 = part1;
+            this.Part2 = part2;
+            this.Part3 = part3;
+            this.RecId = recId;
+            this.Id = id;
+        }
+
         [System.Runtime.Serialization.DataMember(Name = "Part1", Order = 1)]
         public string Part1 { set; get; }
 
@@ -40,6 +49,11 @@ namespace CompanyGroup.Dto.RegistrationModule
         public BankAccounts()
         {
             this.Items = new List<CompanyGroup.Dto.RegistrationModule.BankAccount>();
+        }
+
+        public BankAccounts(List<CompanyGroup.Dto.RegistrationModule.BankAccount> items)
+        {
+            this.Items = items;
         }
     }
 }

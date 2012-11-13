@@ -44,11 +44,17 @@ namespace CompanyGroup.WebClient.Controllers
                 response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
             }
 
-            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(response.BankAccounts,
+            CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+            CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
                                                                                                 response.CompanyData,
-                                                                                                response.ContactPersons,
+                                                                                                contactPersons,
                                                                                                 response.DataRecording,
-                                                                                                response.DeliveryAddresses,
+                                                                                                deliveryAddresses,
                                                                                                 response.InvoiceAddress,
                                                                                                 response.MailAddress,
                                                                                                 response.RegistrationId,
@@ -145,16 +151,23 @@ namespace CompanyGroup.WebClient.Controllers
 
             this.WriteCookie(visitorData);
 
-            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(response.BankAccounts,
-                                                                                                response.CompanyData,
-                                                                                                response.ContactPersons,
-                                                                                                response.DataRecording,
-                                                                                                response.DeliveryAddresses,
-                                                                                                response.InvoiceAddress,
-                                                                                                response.MailAddress,
-                                                                                                response.RegistrationId,
-                                                                                                response.VisitorId,
-                                                                                                response.WebAdministrator);
+            CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+            CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+
+            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                      response.CompanyData,
+                                                                                                                      contactPersons,
+                                                                                                                      response.DataRecording,
+                                                                                                                      deliveryAddresses,
+                                                                                                                      response.InvoiceAddress,
+                                                                                                                      response.MailAddress,
+                                                                                                                      response.RegistrationId,
+                                                                                                                      response.VisitorId,
+                                                                                                                      response.WebAdministrator);
 
             return model;
         }
@@ -194,18 +207,22 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns>Successed, Message</returns>
         [HttpPost]
-        public JsonResult UpdateDataRecording([Bind(Prefix = "")] Cms.PartnerInfo.Models.DataRecording request)
+        [ActionName("UpdateDataRecording")]
+        public CompanyGroup.WebClient.Models.UpdateDataRecording UpdateDataRecording(CompanyGroup.WebClient.Models.DataRecording request)
         {
+            //regisztrációs azonosító kiolvasása sütiből
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
             CompanyGroup.Dto.ServiceRequest.UpdateDataRecording req = new CompanyGroup.Dto.ServiceRequest.UpdateDataRecording()
             {
-                RegistrationId = this.ReadRegistrationIdFromCookie(),
-                LanguageId = this.ReadLanguageFromCookie(),
+                RegistrationId = visitorData.RegistrationId,
+                LanguageId = visitorData.Language,
                 DataRecording = request
             };
 
-            CompanyGroup.Dto.ServiceResponse.UpdateDataRecording response = this.PostJSonData<CompanyGroup.Dto.ServiceResponse.UpdateDataRecording>("RegistrationService", "UpdateDataRecording", req);
+            CompanyGroup.Dto.ServiceResponse.UpdateDataRecording response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateDataRecording, CompanyGroup.Dto.ServiceResponse.UpdateDataRecording>("Registration", "UpdateDataRecording", req);
 
-            return Json(response, "application/json; charset=utf-8", System.Text.Encoding.UTF8, JsonRequestBehavior.DenyGet);
+            return new CompanyGroup.WebClient.Models.UpdateDataRecording(response);
         }
 
         /// <summary>
@@ -214,20 +231,23 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns>Successed, Message</returns>
         [HttpPost]
-        public JsonResult UpdateRegistrationData([Bind(Prefix = "")] Cms.PartnerInfo.Models.UpdateRegistrationData request)
+        public CompanyGroup.WebClient.Models.UpdateRegistrationData UpdateRegistrationData(CompanyGroup.WebClient.Models.UpdateRegistrationData request)
         {
+            //regisztrációs azonosító kiolvasása sütiből
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
             CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData req = new CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData()
             {
-                RegistrationId = this.ReadRegistrationIdFromCookie(),
-                LanguageId = this.ReadLanguageFromCookie(),
+                RegistrationId = visitorData.RegistrationId,
+                LanguageId = visitorData.Language,
                 CompanyData = request.CompanyData,
                 InvoiceAddress = request.InvoiceAddress,
                 MailAddress = request.MailAddress
             };
 
-            CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData response = this.PostJSonData<CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData>("RegistrationService", "UpdateRegistrationData", req);
+            CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData, CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData>("Registration", "UpdateRegistrationData", req);
 
-            return Json(response, "application/json; charset=utf-8", System.Text.Encoding.UTF8, JsonRequestBehavior.DenyGet);
+            return new CompanyGroup.WebClient.Models.UpdateRegistrationData(response);
         }
 
         /// <summary>
