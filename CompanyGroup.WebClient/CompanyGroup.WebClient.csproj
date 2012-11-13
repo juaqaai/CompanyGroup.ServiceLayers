@@ -224,9 +224,11 @@
     <Compile Include="Models\Registration\RegistrationData.cs" />
     <Compile Include="Models\PartnerInfo\UndoChangePassword.cs" />
     <Compile Include="Models\Registration\UpdateDataRecording.cs" />
+    <Compile Include="Models\Registration\UpdateRegistrationDataRequest.cs" />
     <Compile Include="Models\Registration\UpdateRegistrationData.cs" />
     <Compile Include="Models\Registration\WebAdministrator.cs" />
     <Compile Include="Models\Registration\UploadedFile.cs" />
+    <Compile Include="Models\Registration\WebAdministratorResponse.cs" />
     <Compile Include="Models\Webshop\AddCart.cs" />
     <Compile Include="Models\Webshop\AddLine.cs" />
     <Compile Include="Models\Webshop\Catalogue.cs" />

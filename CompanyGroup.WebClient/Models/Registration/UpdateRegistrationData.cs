@@ -5,24 +5,13 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
-    /// <summary>
-    /// regisztrációs adatok módosítása
-    /// </summary>
-    public class UpdateRegistrationData
+    public class UpdateRegistrationData : CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData
     {
-        public UpdateRegistrationData(CompanyData companyData, InvoiceAddress invoiceAddress, MailAddress mailAddress)
+        public UpdateRegistrationData(CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData updateRegistrationData)
         {
-            this.CompanyData = companyData;
+            this.Message = updateRegistrationData.Message;
 
-            this.InvoiceAddress = invoiceAddress;
-
-            this.MailAddress = mailAddress;
+            this.Successed = updateRegistrationData.Successed;
         }
-
-        public CompanyGroup.WebClient.Models.CompanyData CompanyData { get; set; }
-
-        public CompanyGroup.WebClient.Models.InvoiceAddress InvoiceAddress { get; set; }
-
-        public CompanyGroup.WebClient.Models.MailAddress MailAddress { get; set; }
     }
 }
