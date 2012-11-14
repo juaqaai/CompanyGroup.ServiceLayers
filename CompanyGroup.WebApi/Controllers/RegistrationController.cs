@@ -29,9 +29,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ActionName("GetByKey")]
-        [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request)
+        [HttpGet]
+        public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(string id)
         {
+            CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id);
+
             return service.GetByKey(request);
         }
 

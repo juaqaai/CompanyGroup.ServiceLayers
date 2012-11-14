@@ -84,14 +84,32 @@ namespace CompanyGroup.WebClient.Controllers
         }
 
         /// <summary>
-        /// retriewe json data from an application service url
+        /// GET json data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="controllerName"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        protected T GetJSonData<T>(string controllerName, string actionName, string parameters) where T : new()
+        {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(controllerName), "ControllerName can not be null or empty!");
+
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(actionName), "ActionName can not be null or empty!");
+
+            if (!String.IsNullOrWhiteSpace(parameters)) { parameters = String.Format("/{0}", parameters); }
+
+            return GetJSonData<T>(String.Format("{0}/{1}{2}", controllerName, actionName, parameters));
+        }
+
+        /// <summary>
+        /// GET json data 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="requestUrl"></param>
         /// <returns></returns>
         protected T GetJSonData<T>(string requestUrl) where T : new()
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(requestUrl), "RequestUrl name can not be null or empty!");
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(requestUrl), "RequestUrl can not be null or empty!");
 
             try
             {

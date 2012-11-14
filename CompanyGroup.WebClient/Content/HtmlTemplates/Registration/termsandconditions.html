@@ -142,3 +142,12 @@
                   </td>
                 </tr>
                 </table>
+<script type="text/javascript">
+    (function ($) {
+        $("#chk_accept").change(function () {
+            if ($('#chk_accept').is(':checked')) {
+                document.location.hash = '/datarecording';
+            }
+        });
+    })(jQuery);
+</script>

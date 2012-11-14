@@ -29,7 +29,7 @@
                                 </a></li>
   			                </ul>
   			                <div id="tabs-2">
-                            <form id="form_datarecording" action="#/datarecording/" method="post"> 
+                            <form id="form_datarecording" action="#/registrationdata" method="post"> 
                             <table border="0" cellspacing="2" cellpadding="3">
                             <tr>
                               <td><strong>Ügyintéző (adatlapot kitöltő)</strong></td>
@@ -68,3 +68,27 @@
                 </td>
             </tr>
             </table>
+<script type="text/javascript">
+    (function ($) {
+        $('#form_datarecording').validate({
+            rules: {
+                txtDataRecordingName: {
+                    required: true
+                }, 
+                txtDataRecordingPhone: {
+                    required: true
+                },
+                txtDataRecordingEmail: {
+                    required: true, email: true
+                }
+            },
+            messages: {
+                txtDataRecordingName: "A név kitöltése kötelező!", 
+                txtDataRecordingPhone:"A telefonszám kitöltése kötelező!",
+                txtDataRecordingEmail:"Az email cím kitöltése kötelező!"
+            }
+        });
+
+
+    })(jQuery);
+</script>

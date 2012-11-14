@@ -21,6 +21,21 @@ namespace CompanyGroup.WebClient.Models
 
             this.ZipCode = deliveryAddress.ZipCode;
         }
+
+        public DeliveryAddress(CompanyGroup.Dto.PartnerModule.DeliveryAddress deliveryAddress)
+        {
+            this.City = deliveryAddress.City;
+
+            this.CountryRegionId = deliveryAddress.CountryRegionId;
+
+            this.Id = String.Empty; //deliveryAddress.;
+
+            this.RecId = deliveryAddress.RecId;
+
+            this.Street = deliveryAddress.Street;
+
+            this.ZipCode = deliveryAddress.ZipCode;
+        }
     }
 
 

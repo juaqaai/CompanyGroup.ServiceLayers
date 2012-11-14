@@ -27,21 +27,11 @@ namespace CompanyGroup.WebClient.Controllers
             //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
             if (String.IsNullOrEmpty(visitorData.RegistrationId))
             {
-
-                CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration()
-                {
-                    DataAreaId = RegistrationApiController.DataAreaId,
-                    VisitorId = visitorData.ObjectId
-                };
-
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", request);
-
+                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId));
             }
             else //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
             {
-                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey() { Id = visitorData.RegistrationId };
-
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
+                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
             }
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
@@ -80,9 +70,7 @@ namespace CompanyGroup.WebClient.Controllers
             //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
             if (!String.IsNullOrEmpty(visitorData.RegistrationId))
             {
-                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey getRegistrationByKey = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey() { Id = visitorData.RegistrationId };
-
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", getRegistrationByKey);
+                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
             }
 
             //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
@@ -156,7 +144,6 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
 
             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
-
 
             CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
                                                                                                                       response.CompanyData,
@@ -592,7 +579,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompanyGroup.WebClient.Models.ContactPersons UpdateContactPerson([Bind(Prefix = "")] Cms.PartnerInfo.Models.ContactPerson request)
+        public CompanyGroup.WebClient.Models.ContactPersons UpdateContactPerson(CompanyGroup.WebClient.Models.ContactPersonRequest request)
         {
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();

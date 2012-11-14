@@ -44,14 +44,16 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// vevő regisztrációs adatok kiolvasása vevőazonosító és vállalatkód alapján
+        /// vevő regisztrációs adatok kiolvasása vevőazonosító és vállalatkód alapján TODO: CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetCustomerRegistration")]
-        [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request)
+        [HttpGet]
+        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(string visitorId, string dataAreaId)
         {
+            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new Dto.ServiceRequest.GetCustomerRegistration(visitorId, dataAreaId);
+
             return service.GetCustomerRegistration(request);
         }
 

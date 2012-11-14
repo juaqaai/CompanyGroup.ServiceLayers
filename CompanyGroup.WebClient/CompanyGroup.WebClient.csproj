@@ -201,6 +201,8 @@
     <Compile Include="Models\Common\VisitorRequest.cs" />
     <Compile Include="Models\Company\NewsletterCollection.cs" />
     <Compile Include="Models\PartnerInfo\AddressZipCodes.cs" />
+    <Compile Include="Models\PartnerInfo\ChangePasswordRequest.cs" />
+    <Compile Include="Models\PartnerInfo\ForgetPasswordRequest.cs" />
     <Compile Include="Models\Registration\BankAccount.cs" />
     <Compile Include="Models\Registration\BankAccounts.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordResponse.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Models\PartnerInfo\InvoiceInfoList.cs" />
     <Compile Include="Models\PartnerInfo\InvoiceLineInfo.cs" />
     <Compile Include="Models\Registration\CompanyData.cs" />
+    <Compile Include="Models\Registration\ContactPersonRequest.cs" />
     <Compile Include="Models\Registration\ContactPerson.cs" />
     <Compile Include="Models\Registration\MailAddress.cs" />
     <Compile Include="Models\Registration\InvoiceAddress.cs" />

@@ -171,23 +171,7 @@ namespace CompanyGroup.WebClient.Models
         public string SelectedId { get; set; }
     }
 
-    /// <summary>
-    /// jelszómódosítás
-    /// </summary>
-    public class ChangePasswordRequest
-    {
-        public string OldPassword { get; set; }
 
-        public string NewPassword { get; set; }
 
-        public string UserName { get; set; }
-    }
 
-    /// <summary>
-    /// elfelejtett jelszó
-    /// </summary>
-    public class ForgetPasswordRequest
-    {
-        public string UserName { get; set; }
-    }
 }
