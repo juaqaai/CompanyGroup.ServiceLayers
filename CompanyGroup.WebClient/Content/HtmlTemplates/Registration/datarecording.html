@@ -82,6 +82,9 @@
                     required: true, email: true
                 }
             },
+            errorPlacement: function (error, element) {
+                element.parent().children('span.field-validation-error').text(error.text());
+            },
             messages: {
                 txtDataRecordingName: "A név kitöltése kötelező!", 
                 txtDataRecordingPhone:"A telefonszám kitöltése kötelező!",

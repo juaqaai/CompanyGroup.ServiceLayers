@@ -2,7 +2,7 @@
 
 companyGroup.registration = $.sammy('#main_content', function () {
 
-    this.use(Sammy.Mustache, 'html');
+    //this.use(Sammy.Mustache);
 
     this.use(Sammy.Title);
 
@@ -11,7 +11,9 @@ companyGroup.registration = $.sammy('#main_content', function () {
         this.title('Regisztráció - ');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
             .then(function (response) {
-                context.partial(viewPath('termsandconditions'), response);
+                //context.partial(viewPath('termsandconditions'), response);
+                $("#tabs-1").show();
+                $("#tabs-2").hide();
             });
     });
 
@@ -20,7 +22,9 @@ companyGroup.registration = $.sammy('#main_content', function () {
         this.title('Regisztráció - kitöltő adatai');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
         .then(function (response) {
-            context.partial(viewPath('datarecording'), response);
+            //context.partial(viewPath('datarecording'), response);
+            $("#tabs-1").hide();
+            $("#tabs-2").show();
         });
     });
 
