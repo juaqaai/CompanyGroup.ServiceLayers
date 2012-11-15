@@ -18,30 +18,41 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("GetInvoiceInfo")]
         public CompanyGroup.WebClient.Models.InvoiceInfoList GetInvoiceInfo(int id)
         {
-
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo req = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
+            if (!visitor.IsValidLogin)
             {
-                LanguageId = visitorData.Language,
-                VisitorId = visitorData.ObjectId,
-                PaymentType = id
-            };
-
-            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetInvoiceInfo", req);
-
-            List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
-
-            if (response != null)
-            {
-                invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Unauthorized));
             }
 
-            CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList, visitor);
+            try
+            {
+                CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo req = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
+                {
+                    LanguageId = visitorData.Language,
+                    VisitorId = visitorData.ObjectId,
+                    PaymentType = id
+                };
 
-            return model;
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetInvoiceInfo", req);
+
+                List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
+
+                if (response != null)
+                {
+                    invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
+                }
+
+                CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList, visitor);
+
+                return model;
+            }
+            catch
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
         }
 
     }

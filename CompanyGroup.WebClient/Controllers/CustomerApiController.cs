@@ -43,7 +43,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetDeliveryAddresses")]
-        [HttpPost]
+        [HttpGet]
         public CompanyGroup.WebClient.Models.DeliveryAddresses GetDeliveryAddresses()
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
@@ -61,7 +61,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompanyGroup.WebClient.Models.Visitor SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
+        [ActionName("SignIn")]
+        public HttpResponseMessage SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
         {
             try
             {
@@ -77,13 +78,15 @@ namespace CompanyGroup.WebClient.Controllers
                 string permanentObjectId = visitorData.PermanentId;
 
                 CompanyGroup.Dto.ServiceRequest.SignIn req = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
-                                                                                                           request.UserName,
-                                                                                                           request.Password,
-                                                                                                           System.Web.HttpContext.Current.Request.UserHostAddress);
+                                                                                                        request.UserName,
+                                                                                                        request.Password,
+                                                                                                        System.Web.HttpContext.Current.Request.UserHostAddress);
 
                 CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", req);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
+
+                HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
 
                 //check status
                 if (!visitor.LoggedIn)
@@ -106,16 +109,22 @@ namespace CompanyGroup.WebClient.Controllers
 
                     visitor.ErrorMessage = String.Empty;
 
+                    httpStatusCode = HttpStatusCode.Created;
                 }
-                return visitor;
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(httpStatusCode, visitor);
+
+                return httpResponseMessage;
             }
             catch (CompanyGroup.Helpers.DesignByContractException ex)
             {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message };
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
+
+                //ex.Message
             }
             catch
             {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = "A bejelentkezés nem sikerült! (hiba)" };
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
             }
         }
 
@@ -125,7 +134,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompanyGroup.WebClient.Models.Visitor SignOut()
+        [ActionName("SignOut")]
+        public HttpResponseMessage SignOut()
         {
             try
             {
@@ -139,11 +149,15 @@ namespace CompanyGroup.WebClient.Controllers
 
                 this.WriteCookie(visitorData);
 
-                return new CompanyGroup.WebClient.Models.Visitor();
+                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(HttpStatusCode.OK, visitor);
+
+                return httpResponseMessage;
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message };
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
             }
         }
 
@@ -152,7 +166,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// /// </summary>
         /// <returns></returns>
         [ActionName("ChangeCurrency")]
-        [HttpPost]
+        [HttpPut]
         public void ChangeCurrency(string currency)
         {
             try
@@ -175,7 +189,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="language"></param>
         /// <returns></returns>
         [ActionName("ChangeLanguage")]
-        [HttpPost]
+        [HttpPut]
         public void ChangeLanguage(string language)
         {
             try
