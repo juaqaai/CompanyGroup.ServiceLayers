@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace CompanyGroup.WebClient.Controllers
 {
     /// <summary>
-    /// kapcsolattartóhoz kapcsolt műveletek
+    /// kapcsolattartóhoz kapcsolt műveletek (jelszómódosítás, jelszóemlékeztező, jelszómódosítás visszavonás)
     /// </summary>
     public class ContactPersonApiController : ApiBaseController
     {
@@ -18,7 +18,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("ChangePwd")]
-        public CompanyGroup.WebClient.Models.ChangePasswordResponse ChangePwd(CompanyGroup.WebClient.Models.ChangePasswordRequest request)
+        public HttpResponseMessage ChangePwd(CompanyGroup.WebClient.Models.ChangePasswordRequest request)
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -35,7 +35,11 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return new CompanyGroup.WebClient.Models.ChangePasswordResponse( response, visitor);
+            CompanyGroup.WebClient.Models.ChangePasswordResponse changePasswordResponse = new CompanyGroup.WebClient.Models.ChangePasswordResponse( response, visitor);
+
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ChangePasswordResponse>(HttpStatusCode.Created, changePasswordResponse);
+
+            return httpResponseMessage;
         }
 
         /// <summary>
@@ -45,7 +49,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("ForgetPwd")]
-        public CompanyGroup.WebClient.Models.ForgetPasswordResponse ForgetPwd(CompanyGroup.WebClient.Models.ForgetPasswordRequest request)
+        public HttpResponseMessage ForgetPwd(CompanyGroup.WebClient.Models.ForgetPasswordRequest request)
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -59,7 +63,11 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return new CompanyGroup.WebClient.Models.ForgetPasswordResponse(response, visitor);
+            CompanyGroup.WebClient.Models.ForgetPasswordResponse forgetPasswordResponse = new CompanyGroup.WebClient.Models.ForgetPasswordResponse(response, visitor);
+
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ForgetPasswordResponse>(HttpStatusCode.Created, forgetPasswordResponse);
+
+            return httpResponseMessage;
         }
 
         /// <summary>
@@ -68,22 +76,24 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="undoChangePassword"></param>
         /// <returns></returns>
         [HttpGet]
+        [ActionName("UndoChangePassword")]
         public CompanyGroup.WebClient.Models.UndoChangePassword UndoChangePassword(string id)
         {
             string undoChangePassword = id;
 
             CompanyGroup.Dto.PartnerModule.UndoChangePassword response;
 
+            //üres jleszómódosítás token
             if (String.IsNullOrEmpty(undoChangePassword))
             {
-                CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
 
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
-            }
-            else
-            {
-                response = new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Succeeded = false, Message = "A jelszómódosítás visszavonásához tartozó azonosító nem lett megadva!" };
-            }
+            CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+
+            response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
+
+//          response = new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Succeeded = false, Message = "A jelszómódosítás visszavonásához tartozó azonosító nem lett megadva!" };
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
