@@ -41,8 +41,13 @@ SET @iRet = 0
 --											  sFollower = @sFollower, 
 --											  sMenu = @sMenu
 --	WHERE iID = @iRet;
-END
-
+--END
+	RETURN;
 GO
 
+/*
+declare @iRet INT = 0;
+exec [InternetUser].[web_EventRegister_Set] 'test', 'HRP Hungary', 'Teszt Elek', '06 1 452 46 00', 'ajuhasz@hrp.hu', '', 'menu', '12345678', @iRet OUTPUT;
+print convert(varchar(16), @iRet);
+*/
 

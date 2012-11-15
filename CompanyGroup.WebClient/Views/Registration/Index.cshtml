@@ -197,595 +197,595 @@
                             </div>  
 
                             <div id="tabs-3">
-            <h2>Cégadatok</h2>	
-            <form id="form_registrationdata" action="#/webadministrator" method="post"> 
-                <table width="100%" border="0" cellspacing="2" cellpadding="3">
-                <tr>
-                  <td><strong>Cég alap adatai</strong></td>
-                  <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" alt="" width="20" height="20" /></td>
-                </tr>
-                <tr>
-                  <td>* Ország</td>
-                  <td>
-                      <select name="selectCountry" id="selectCountry" class="regfields">
-                        <option value="HU" selected="selected">Magyarország</option>
-                        <option value="AE" >Egyesült Arab Emirátus</option>
-                        <option value="AL" >Albánia</option>
-                        <option value="AT" >AUSZTRIA</option>
-                        <option value="AU" >AUSZTRÁLIA</option>
-                        <option value="AZ" >Azerbajdzsán</option>
-                        <option value="BE" >BELGIUM</option>
-                        <option value="BG" >BULGÁRIA</option>
-                        <option value="BR" >BRAZILIA</option>
-                        <option value="CA" >KANADA</option>
-                        <option value="CH" >SVÁJC</option>
-                        <option value="CN" >KINA</option>
-                        <option value="CY" >CIPRUS</option>
-                        <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                        <option value="DE" >NÉMETORSZÁG</option>
-                        <option value="DK" >DÁNIA</option>
-                        <option value="EE" >ÉSZTORSZÁG</option>
-                        <option value="ES" >SPANYOLORSZÁG</option>
-                        <option value="EU" >EURÓPAI UNIÓ</option>
-                        <option value="FI" >FINNORSZÁG</option>
-                        <option value="FR" >FRANCIAORSZÁG</option>
-                        <option value="GB" >NAGY-BRITANNIA</option>
-                        <option value="GR" >GÖRÖGORSZÁG</option>
-                        <option value="HK" >HONG KONG</option>
-                        <option value="HR" >HORVÁTORSZÁG</option>
-                        <option value="ID" >INDONÉZIA</option>
-                        <option value="IE" >IRORSZÁG</option>
-                        <option value="IL" >IZRAEL</option>
-                        <option value="IN" >INDIA</option>
-                        <option value="IS" >IZLAND</option>
-                        <option value="IT" >OLASZORSZÁG</option>
-                        <option value="JP" >JAPÁN</option>
-                        <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                        <option value="LI" >LICHTENSTEIN</option>
-                        <option value="LT" >LITVÁNIA</option>
-                        <option value="LU" >LUXEMBURG</option>
-                        <option value="LV" >LETTORSZÁG</option>
-                        <option value="MD" >MOLDOVA</option>
-                        <option value="MN" >MONGOLIA</option>
-                        <option value="MT" >MÁLTA</option>
-                        <option value="MX" >MEXIKO</option>
-                        <option value="MY" >MALAYSIA</option>
-                        <option value="MZ" >MOZAMBIK</option>
-                        <option value="NL" >HOLLANDIA</option>
-                        <option value="NO" >NORVÉGIA</option>
-                        <option value="NZ" >Új-Zéland</option>
-                        <option value="PH" >FÜLÖPSZIGETEK</option>
-                        <option value="PL" >LENGYELORSZÁG</option>
-                        <option value="PT" >PORTUGÁLIA</option>
-                        <option value="RO" >ROMÁNIA</option>
-                        <option value="RS" >Szerbia</option>
-                        <option value="RU" >Oroszország</option>
-                        <option value="SE" >SVÉDORSZÁG</option>
-                        <option value="SG" >SZINGAPUR</option>
-                        <option value="SI" >SZLOVÉNIA</option>
-                        <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                        <option value="TH" >THAIFÖLD</option>
-                        <option value="TN" >TUNÉZIA</option>
-                        <option value="TR" >TÖRÖKORSZÁG</option>
-                        <option value="TW" >TAIWAN</option>
-                        <option value="UA" >UKRAJNA</option>
-                        <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                        <option value="VN" >VIETNAM</option>
-                        <option value="XS" >SZERBIA</option>
-                      </select>
-                 </td>
-                </tr>
-                <tr>
-                  <td>* Cégnév</td>
-                  <td><label class="error" for="txtCustomerName" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                      @Html.TextBox("txtCustomerName", Model.CompanyData.CustomerName, new { id = "txtCustomerName", @class = "regfields" })
-                      @Html.Hidden("hfCustomerId", Model.CompanyData.CustomerId, new { id = "hfCustomerId" })
-                  </td>
-                </tr>
-                <tr>
-                  <td>Cégjegyzékszám</td>
-                  <td><label class="error" for="txtCompanyRegisterNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                      @Html.TextBox("txtCompanyRegisterNumber", Model.CompanyData.RegistrationNumber, new { id = "txtRegistrationNumber", @class = "regfields" })</td>
-                </tr>
-                <tr>
-                  <td>* Adószám</td>
-                  <td><label class="error" for="txtVatNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                      @Html.TextBox("txtVatNumber", Model.CompanyData.VatNumber, new { id = "txtVatNumber", @class = "regfields", size = "10" })</td>
-                </tr>
-                <tr>
-                  <td>Uniós adószám</td>
-                  <td>@Html.TextBox("txtEUVatNumber", Model.CompanyData.EUVatNumber, new { id = "txtEUVatNumber", @class = "regfields" })</td>
-                </tr>
-                <tr>
-                  <td>* Központi email</td>
-                  <td align="right">
-                    <label class="error" for="txtMainEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                    @Html.TextBox("txtMainEmail", Model.CompanyData.MainEmail, new { id = "txtMainEmail", @class = "regfields" }) 
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="2" style="font-size:9px">(Figyelem! A központi e-mail címre küldünk el minden automatikus e-mail visszaigazolást: rendelés, árubeérkezés, kiszállítás)</td>
-                </tr>
-                <tr>
-                  <td nowrap="nowrap">Hírlevelek a központi e-mailre</td>
-                  <td>
-                    @Html.CheckBox("chkNewsletterToMainEmail", Model.CompanyData.NewsletterToMainEmail, new { id = "chkNewsletterToMainEmail" }) 
-                  </td>
-                </tr>
-                </table><h3>Bankszámlaszám</h3>
-                <table id="bankAccountContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
-                <tr>
-                  <td nowrap="nowrap"></td>
-                  <td></td>
-                </tr>
-                </table>
-                <script id="bankAccountTemplate" type="text/html">
-                {{each( i, item ) Items}}
-                {{if item.Id == SelectedId}}
-                <tr>
-                  <td nowrap="nowrap"></td>
-                  <td><input type="text" id="txtBankAccountPart1_${item.Id}" class="regfields" value="${item.Part1}" />
-                      - <input type="text" id="txtBankAccountPart2_${item.Id}" class="regfields" value="${item.Part2}" />
-                      - <input type="text" id="txtBankAccountPart3_${item.Id}" class="regfields" value="${item.Part3}" />
-                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.UpdateBankAccount('${item.Id}', '${item.RecId}')">Mentés</a></td>
-                </tr>
-                {{else}}
-                <tr>
-                <td nowrap="nowrap"></td>
-                  <td>${item.Part1} - ${item.Part2} - ${item.Part3} 
-                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.SelectForUpdateBankAccount('${item.Id}')">Módosít</a>
-                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.RemoveBankAccount('${item.Id}')">Törlés</a>
-                  </td>
-                </tr>
-                {{/if}}
-                {{/each}}
-                </script>   
-                <table width="100%" border="0" cellspacing="2" cellpadding="3">
-                <tr>
-                  <td nowrap="nowrap"></td>
-                  <td>@Html.TextBox("txtBankAccountPart1", "", new { id = "txtBankAccountPart1", @class = "regfields" }) 
-                      - @Html.TextBox("txtBankAccountPart2", "", new { id = "txtBankAccountPart2", @class = "regfields" })
-                      - @Html.TextBox("txtBankAccountPart3", "", new { id = "txtBankAccountPart3", @class = "regfields" })
-                  <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddBankAccount()">[+] Hozzáadás</a></td>
-                </tr>
-                </table>
-            </form>
-            @using (Html.BeginForm("UploadFile", "Registration", System.Web.Mvc.FormMethod.Post, new { id = "form_fileupload", enctype = "multipart/form-data" }))
-            {   
-            <table width="100%" border="0" cellspacing="2" cellpadding="3">
-            <tr>
-              <td nowrap="nowrap">Aláírási címpéldány</td>
-              <td>
-                @*@Html.Label("spanSignatureEntityFile", Model.CompanyData.SignatureEntityFile)*@
-                <span class="fileupload-buttonbar">
-		            <span class="progressbar fileupload-progressbar"></span>
-		            <span class="fileinput-button"></span>
-			            <!-- <a href="javascript:void(0)" class="upload-image">feltöltés</a> -->
-			            <input name="uploadSignatureEntityFile" type="file" id="uploadSignatureEntityFile" />
+                                <h2>Cégadatok</h2>	
+                                <form id="form_registrationdata" action="#/webadministrator" method="post"> 
+                                    <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                    <tr>
+                                      <td><strong>Cég alap adatai</strong></td>
+                                      <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td>* Ország</td>
+                                      <td>
+                                          <select name="selectCountry" id="selectCountry" class="regfields">
+                                            <option value="HU" selected="selected">Magyarország</option>
+                                            <option value="AE" >Egyesült Arab Emirátus</option>
+                                            <option value="AL" >Albánia</option>
+                                            <option value="AT" >AUSZTRIA</option>
+                                            <option value="AU" >AUSZTRÁLIA</option>
+                                            <option value="AZ" >Azerbajdzsán</option>
+                                            <option value="BE" >BELGIUM</option>
+                                            <option value="BG" >BULGÁRIA</option>
+                                            <option value="BR" >BRAZILIA</option>
+                                            <option value="CA" >KANADA</option>
+                                            <option value="CH" >SVÁJC</option>
+                                            <option value="CN" >KINA</option>
+                                            <option value="CY" >CIPRUS</option>
+                                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                                            <option value="DE" >NÉMETORSZÁG</option>
+                                            <option value="DK" >DÁNIA</option>
+                                            <option value="EE" >ÉSZTORSZÁG</option>
+                                            <option value="ES" >SPANYOLORSZÁG</option>
+                                            <option value="EU" >EURÓPAI UNIÓ</option>
+                                            <option value="FI" >FINNORSZÁG</option>
+                                            <option value="FR" >FRANCIAORSZÁG</option>
+                                            <option value="GB" >NAGY-BRITANNIA</option>
+                                            <option value="GR" >GÖRÖGORSZÁG</option>
+                                            <option value="HK" >HONG KONG</option>
+                                            <option value="HR" >HORVÁTORSZÁG</option>
+                                            <option value="ID" >INDONÉZIA</option>
+                                            <option value="IE" >IRORSZÁG</option>
+                                            <option value="IL" >IZRAEL</option>
+                                            <option value="IN" >INDIA</option>
+                                            <option value="IS" >IZLAND</option>
+                                            <option value="IT" >OLASZORSZÁG</option>
+                                            <option value="JP" >JAPÁN</option>
+                                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                                            <option value="LI" >LICHTENSTEIN</option>
+                                            <option value="LT" >LITVÁNIA</option>
+                                            <option value="LU" >LUXEMBURG</option>
+                                            <option value="LV" >LETTORSZÁG</option>
+                                            <option value="MD" >MOLDOVA</option>
+                                            <option value="MN" >MONGOLIA</option>
+                                            <option value="MT" >MÁLTA</option>
+                                            <option value="MX" >MEXIKO</option>
+                                            <option value="MY" >MALAYSIA</option>
+                                            <option value="MZ" >MOZAMBIK</option>
+                                            <option value="NL" >HOLLANDIA</option>
+                                            <option value="NO" >NORVÉGIA</option>
+                                            <option value="NZ" >Új-Zéland</option>
+                                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                                            <option value="PL" >LENGYELORSZÁG</option>
+                                            <option value="PT" >PORTUGÁLIA</option>
+                                            <option value="RO" >ROMÁNIA</option>
+                                            <option value="RS" >Szerbia</option>
+                                            <option value="RU" >Oroszország</option>
+                                            <option value="SE" >SVÉDORSZÁG</option>
+                                            <option value="SG" >SZINGAPUR</option>
+                                            <option value="SI" >SZLOVÉNIA</option>
+                                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                                            <option value="TH" >THAIFÖLD</option>
+                                            <option value="TN" >TUNÉZIA</option>
+                                            <option value="TR" >TÖRÖKORSZÁG</option>
+                                            <option value="TW" >TAIWAN</option>
+                                            <option value="UA" >UKRAJNA</option>
+                                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                                            <option value="VN" >VIETNAM</option>
+                                            <option value="XS" >SZERBIA</option>
+                                          </select>
+                                     </td>
+                                    </tr>
+                                    <tr>
+                                      <td>* Cégnév</td>
+                                      <td><label class="error" for="txtCustomerName" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                          @Html.TextBox("txtCustomerName", Model.CompanyData.CustomerName, new { id = "txtCustomerName", @class = "regfields" })
+                                          @Html.Hidden("hfCustomerId", Model.CompanyData.CustomerId, new { id = "hfCustomerId" })
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Cégjegyzékszám</td>
+                                      <td><label class="error" for="txtCompanyRegisterNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                          @Html.TextBox("txtCompanyRegisterNumber", Model.CompanyData.RegistrationNumber, new { id = "txtRegistrationNumber", @class = "regfields" })</td>
+                                    </tr>
+                                    <tr>
+                                      <td>* Adószám</td>
+                                      <td><label class="error" for="txtVatNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                          @Html.TextBox("txtVatNumber", Model.CompanyData.VatNumber, new { id = "txtVatNumber", @class = "regfields", size = "10" })</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Uniós adószám</td>
+                                      <td>@Html.TextBox("txtEUVatNumber", Model.CompanyData.EUVatNumber, new { id = "txtEUVatNumber", @class = "regfields" })</td>
+                                    </tr>
+                                    <tr>
+                                      <td>* Központi email</td>
+                                      <td align="right">
+                                        <label class="error" for="txtMainEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                        @Html.TextBox("txtMainEmail", Model.CompanyData.MainEmail, new { id = "txtMainEmail", @class = "regfields" }) 
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2" style="font-size:9px">(Figyelem! A központi e-mail címre küldünk el minden automatikus e-mail visszaigazolást: rendelés, árubeérkezés, kiszállítás)</td>
+                                    </tr>
+                                    <tr>
+                                      <td nowrap="nowrap">Hírlevelek a központi e-mailre</td>
+                                      <td>
+                                        @Html.CheckBox("chkNewsletterToMainEmail", Model.CompanyData.NewsletterToMainEmail, new { id = "chkNewsletterToMainEmail" }) 
+                                      </td>
+                                    </tr>
+                                    </table><h3>Bankszámlaszám</h3>
+                                    <table id="bankAccountContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
+                                    <tr>
+                                      <td nowrap="nowrap"></td>
+                                      <td></td>
+                                    </tr>
+                                    </table>
+                                    <script id="bankAccountTemplate" type="text/html">
+                                    {{each( i, item ) Items}}
+                                    {{if item.Id == SelectedId}}
+                                    <tr>
+                                      <td nowrap="nowrap"></td>
+                                      <td><input type="text" id="txtBankAccountPart1_${item.Id}" class="regfields" value="${item.Part1}" />
+                                          - <input type="text" id="txtBankAccountPart2_${item.Id}" class="regfields" value="${item.Part2}" />
+                                          - <input type="text" id="txtBankAccountPart3_${item.Id}" class="regfields" value="${item.Part3}" />
+                                      <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.UpdateBankAccount('${item.Id}', '${item.RecId}')">Mentés</a></td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                    <td nowrap="nowrap"></td>
+                                      <td>${item.Part1} - ${item.Part2} - ${item.Part3} 
+                                      <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.SelectForUpdateBankAccount('${item.Id}')">Módosít</a>
+                                      <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.RemoveBankAccount('${item.Id}')">Törlés</a>
+                                      </td>
+                                    </tr>
+                                    {{/if}}
+                                    {{/each}}
+                                    </script>   
+                                    <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                    <tr>
+                                      <td nowrap="nowrap"></td>
+                                      <td>@Html.TextBox("txtBankAccountPart1", "", new { id = "txtBankAccountPart1", @class = "regfields" }) 
+                                          - @Html.TextBox("txtBankAccountPart2", "", new { id = "txtBankAccountPart2", @class = "regfields" })
+                                          - @Html.TextBox("txtBankAccountPart3", "", new { id = "txtBankAccountPart3", @class = "regfields" })
+                                      <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddBankAccount()">[+] Hozzáadás</a></td>
+                                    </tr>
+                                    </table>
+                                </form>
+                                @using (Html.BeginForm("UploadFile", "Registration", System.Web.Mvc.FormMethod.Post, new { id = "form_fileupload", enctype = "multipart/form-data" }))
+                                {   
+                                <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                <tr>
+                                  <td nowrap="nowrap">Aláírási címpéldány</td>
+                                  <td>
+                                    @*@Html.Label("spanSignatureEntityFile", Model.CompanyData.SignatureEntityFile)*@
+                                    <span class="fileupload-buttonbar">
+		                                <span class="progressbar fileupload-progressbar"></span>
+		                                <span class="fileinput-button"></span>
+			                                <!-- <a href="javascript:void(0)" class="upload-image">feltöltés</a> -->
+			                                <input name="uploadSignatureEntityFile" type="file" id="uploadSignatureEntityFile" />
 		            
-                </span>
-                <br /><br />
-                <span id="signatureEntityFile_Name"></span>
-                <span id="file_type"></span>
-                <span id="file_size"></span>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2" style="font-size:9px">Feltölthető formátumok: .jpg, .jpeg, .pdf, .png, .tiff<br /><br />Egy dokumentum feltöltése lehetséges!
-                A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk. </td>
-            </tr>
-            </table>
-            }
-            <form id="form_registrationdata2" action="#/webadministrator" method="post"> 
-            <table width="100%" border="0" cellspacing="2" cellpadding="3">
-            <tr>
-              <td colspan="2"><hr /></td>
-            </tr>
-            <tr>
-              <td><strong>Számlázási cím</strong></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>Ország</td>
-              <td><select name="selectInvoiceCountry" class="regfields" id="selectInvoiceCountry">
-                    <option value="HU" selected="selected">Magyarország</option>
-                    <option value="AE" >Egyesült Arab Emirátus</option>
-                    <option value="AL" >Albánia</option>
-                    <option value="AT" >AUSZTRIA</option>
-                    <option value="AU" >AUSZTRÁLIA</option>
-                    <option value="AZ" >Azerbajdzsán</option>
-                    <option value="BE" >BELGIUM</option>
-                    <option value="BG" >BULGÁRIA</option>
-                    <option value="BR" >BRAZILIA</option>
-                    <option value="CA" >KANADA</option>
-                    <option value="CH" >SVÁJC</option>
-                    <option value="CN" >KINA</option>
-                    <option value="CY" >CIPRUS</option>
-                    <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                    <option value="DE" >NÉMETORSZÁG</option>
-                    <option value="DK" >DÁNIA</option>
-                    <option value="EE" >ÉSZTORSZÁG</option>
-                    <option value="ES" >SPANYOLORSZÁG</option>
-                    <option value="EU" >EURÓPAI UNIÓ</option>
-                    <option value="FI" >FINNORSZÁG</option>
-                    <option value="FR" >FRANCIAORSZÁG</option>
-                    <option value="GB" >NAGY-BRITANNIA</option>
-                    <option value="GR" >GÖRÖGORSZÁG</option>
-                    <option value="HK" >HONG KONG</option>
-                    <option value="HR" >HORVÁTORSZÁG</option>
-                    <option value="ID" >INDONÉZIA</option>
-                    <option value="IE" >IRORSZÁG</option>
-                    <option value="IL" >IZRAEL</option>
-                    <option value="IN" >INDIA</option>
-                    <option value="IS" >IZLAND</option>
-                    <option value="IT" >OLASZORSZÁG</option>
-                    <option value="JP" >JAPÁN</option>
-                    <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                    <option value="LI" >LICHTENSTEIN</option>
-                    <option value="LT" >LITVÁNIA</option>
-                    <option value="LU" >LUXEMBURG</option>
-                    <option value="LV" >LETTORSZÁG</option>
-                    <option value="MD" >MOLDOVA</option>
-                    <option value="MN" >MONGOLIA</option>
-                    <option value="MT" >MÁLTA</option>
-                    <option value="MX" >MEXIKO</option>
-                    <option value="MY" >MALAYSIA</option>
-                    <option value="MZ" >MOZAMBIK</option>
-                    <option value="NL" >HOLLANDIA</option>
-                    <option value="NO" >NORVÉGIA</option>
-                    <option value="NZ" >Új-Zéland</option>
-                    <option value="PH" >FÜLÖPSZIGETEK</option>
-                    <option value="PL" >LENGYELORSZÁG</option>
-                    <option value="PT" >PORTUGÁLIA</option>
-                    <option value="RO" >ROMÁNIA</option>
-                    <option value="RS" >Szerbia</option>
-                    <option value="RU" >Oroszország</option>
-                    <option value="SE" >SVÉDORSZÁG</option>
-                    <option value="SG" >SZINGAPUR</option>
-                    <option value="SI" >SZLOVÉNIA</option>
-                    <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                    <option value="TH" >THAIFÖLD</option>
-                    <option value="TN" >TUNÉZIA</option>
-                    <option value="TR" >TÖRÖKORSZÁG</option>
-                    <option value="TW" >TAIWAN</option>
-                    <option value="UA" >UKRAJNA</option>
-                    <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                    <option value="VN" >VIETNAM</option>
-                    <option value="XS" >SZERBIA</option>
-              </select></td>
-            </tr>
-            <tr>
-              <td>Irányítószám</td>
-              <td><label class="error" for="txtInvoiceZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtInvoiceZipCode", Model.InvoiceAddress.ZipCode, new { id = "txtInvoiceZipCode", @class = "regfields", size = "4" })
-              </td>
-            </tr>
-            <tr>
-              <td>Város</td>
-              <td><label class="error" for="txtInvoiceCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtInvoiceCity", Model.InvoiceAddress.City, new { id = "txtInvoiceCity", @class = "regfields" })
-              </td>
-            </tr>
-            <tr>
-              <td>Utca, házszám</td>
-              <td><label class="error" for="txtInvoiceStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtInvoiceStreet", Model.InvoiceAddress.Street, new { id = "txtInvoiceStreet", @class = "regfields" })</td>
-            </tr>
-            <tr>
-              <td>Telefon</td>
-              <td><label class="error" for="txtInvoicePhone" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtInvoicePhone", Model.InvoiceAddress.Phone, new { id = "txtInvoicePhone", @class = "regfields" })</td>
-            </tr>
-            <tr>
-              <td colspan="2"><hr /></td>
-            </tr>
-            <tr>
-              <td><strong>Levelezési cím</strong></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td colspan="2" style="font-size:9px">(kérjük itt írja át, ha nem egyezik a számlázási címmel)</td>
-            </tr>
-            <tr>
-              <td>Ország</td>
-              <td><select name="selectMailCountry" class="regfields" id="selectMailCountry">
-                    <option value="HU" selected="selected">Magyarország</option>
-                    <option value="AE" >Egyesült Arab Emirátus</option>
-                    <option value="AL" >Albánia</option>
-                    <option value="AT" >AUSZTRIA</option>
-                    <option value="AU" >AUSZTRÁLIA</option>
-                    <option value="AZ" >Azerbajdzsán</option>
-                    <option value="BE" >BELGIUM</option>
-                    <option value="BG" >BULGÁRIA</option>
-                    <option value="BR" >BRAZILIA</option>
-                    <option value="CA" >KANADA</option>
-                    <option value="CH" >SVÁJC</option>
-                    <option value="CN" >KINA</option>
-                    <option value="CY" >CIPRUS</option>
-                    <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                    <option value="DE" >NÉMETORSZÁG</option>
-                    <option value="DK" >DÁNIA</option>
-                    <option value="EE" >ÉSZTORSZÁG</option>
-                    <option value="ES" >SPANYOLORSZÁG</option>
-                    <option value="EU" >EURÓPAI UNIÓ</option>
-                    <option value="FI" >FINNORSZÁG</option>
-                    <option value="FR" >FRANCIAORSZÁG</option>
-                    <option value="GB" >NAGY-BRITANNIA</option>
-                    <option value="GR" >GÖRÖGORSZÁG</option>
-                    <option value="HK" >HONG KONG</option>
-                    <option value="HR" >HORVÁTORSZÁG</option>
-                    <option value="ID" >INDONÉZIA</option>
-                    <option value="IE" >IRORSZÁG</option>
-                    <option value="IL" >IZRAEL</option>
-                    <option value="IN" >INDIA</option>
-                    <option value="IS" >IZLAND</option>
-                    <option value="IT" >OLASZORSZÁG</option>
-                    <option value="JP" >JAPÁN</option>
-                    <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                    <option value="LI" >LICHTENSTEIN</option>
-                    <option value="LT" >LITVÁNIA</option>
-                    <option value="LU" >LUXEMBURG</option>
-                    <option value="LV" >LETTORSZÁG</option>
-                    <option value="MD" >MOLDOVA</option>
-                    <option value="MN" >MONGOLIA</option>
-                    <option value="MT" >MÁLTA</option>
-                    <option value="MX" >MEXIKO</option>
-                    <option value="MY" >MALAYSIA</option>
-                    <option value="MZ" >MOZAMBIK</option>
-                    <option value="NL" >HOLLANDIA</option>
-                    <option value="NO" >NORVÉGIA</option>
-                    <option value="NZ" >Új-Zéland</option>
-                    <option value="PH" >FÜLÖPSZIGETEK</option>
-                    <option value="PL" >LENGYELORSZÁG</option>
-                    <option value="PT" >PORTUGÁLIA</option>
-                    <option value="RO" >ROMÁNIA</option>
-                    <option value="RS" >Szerbia</option>
-                    <option value="RU" >Oroszország</option>
-                    <option value="SE" >SVÉDORSZÁG</option>
-                    <option value="SG" >SZINGAPUR</option>
-                    <option value="SI" >SZLOVÉNIA</option>
-                    <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                    <option value="TH" >THAIFÖLD</option>
-                    <option value="TN" >TUNÉZIA</option>
-                    <option value="TR" >TÖRÖKORSZÁG</option>
-                    <option value="TW" >TAIWAN</option>
-                    <option value="UA" >UKRAJNA</option>
-                    <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                    <option value="VN" >VIETNAM</option>
-                    <option value="XS" >SZERBIA</option>
-              </select></td>
-            </tr>
-            <tr>
-              <td>Irányítószám</td>
-              <td><label class="error" for="txtMailAddressZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtMailAddressZipCode", Model.MailAddress.ZipCode, new { id = "txtMailAddressZipCode", @class = "regfields" })</td>
-            </tr>
-            <tr>
-              <td>Város</td>
-              <td><label class="error" for="txtMailAddressCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtMailAddressCity", Model.MailAddress.City, new { id = "txtMailAddressCity", @class = "regfields" })</td>
-            </tr>
-            <tr>
-              <td>Utca, házszám</td>
-              <td><label class="error" for="txtMailAddressStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
-              @Html.TextBox("txtMailAddressStreet", Model.MailAddress.Street, new { id = "txtMailAddressStreet", @class = "regfields" })</td>
-            </tr>
-            <tr>
-              <td colspan="2"><hr /></td>
-            </tr>
-            <tr>
-              <td colspan="2"><strong>Szállítási cím/telephely</strong></td>
-            </tr>
-            <tr>
-              <td colspan="2" style="font-size:9px">(kérjük itt írja át, ha nem egyezik a számlázási címmel)</td>
-            </tr>
-            </table>
-            <table id="deliveryAddressContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
-            </table>
-            <script id="deliveryAddressTemplate" type="text/x-jquery-tmpl">
-            {{each( i, item ) Items}}
-            {{if item.Id == SelectedId}}
-            <tr>
-              <td>Ország</td>
-              <td><select id="selectDeliveryAddressCountry_${item.Id}" class="regfields">
-                    <option value="HU" selected="selected">Magyarország</option>
-                    <option value="AE" >Egyesült Arab Emirátus</option>
-                    <option value="AL" >Albánia</option>
-                    <option value="AT" >AUSZTRIA</option>
-                    <option value="AU" >AUSZTRÁLIA</option>
-                    <option value="AZ" >Azerbajdzsán</option>
-                    <option value="BE" >BELGIUM</option>
-                    <option value="BG" >BULGÁRIA</option>
-                    <option value="BR" >BRAZILIA</option>
-                    <option value="CA" >KANADA</option>
-                    <option value="CH" >SVÁJC</option>
-                    <option value="CN" >KINA</option>
-                    <option value="CY" >CIPRUS</option>
-                    <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                    <option value="DE" >NÉMETORSZÁG</option>
-                    <option value="DK" >DÁNIA</option>
-                    <option value="EE" >ÉSZTORSZÁG</option>
-                    <option value="ES" >SPANYOLORSZÁG</option>
-                    <option value="EU" >EURÓPAI UNIÓ</option>
-                    <option value="FI" >FINNORSZÁG</option>
-                    <option value="FR" >FRANCIAORSZÁG</option>
-                    <option value="GB" >NAGY-BRITANNIA</option>
-                    <option value="GR" >GÖRÖGORSZÁG</option>
-                    <option value="HK" >HONG KONG</option>
-                    <option value="HR" >HORVÁTORSZÁG</option>
-                    <option value="ID" >INDONÉZIA</option>
-                    <option value="IE" >IRORSZÁG</option>
-                    <option value="IL" >IZRAEL</option>
-                    <option value="IN" >INDIA</option>
-                    <option value="IS" >IZLAND</option>
-                    <option value="IT" >OLASZORSZÁG</option>
-                    <option value="JP" >JAPÁN</option>
-                    <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                    <option value="LI" >LICHTENSTEIN</option>
-                    <option value="LT" >LITVÁNIA</option>
-                    <option value="LU" >LUXEMBURG</option>
-                    <option value="LV" >LETTORSZÁG</option>
-                    <option value="MD" >MOLDOVA</option>
-                    <option value="MN" >MONGOLIA</option>
-                    <option value="MT" >MÁLTA</option>
-                    <option value="MX" >MEXIKO</option>
-                    <option value="MY" >MALAYSIA</option>
-                    <option value="MZ" >MOZAMBIK</option>
-                    <option value="NL" >HOLLANDIA</option>
-                    <option value="NO" >NORVÉGIA</option>
-                    <option value="NZ" >Új-Zéland</option>
-                    <option value="PH" >FÜLÖPSZIGETEK</option>
-                    <option value="PL" >LENGYELORSZÁG</option>
-                    <option value="PT" >PORTUGÁLIA</option>
-                    <option value="RO" >ROMÁNIA</option>
-                    <option value="RS" >Szerbia</option>
-                    <option value="RU" >Oroszország</option>
-                    <option value="SE" >SVÉDORSZÁG</option>
-                    <option value="SG" >SZINGAPUR</option>
-                    <option value="SI" >SZLOVÉNIA</option>
-                    <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                    <option value="TH" >THAIFÖLD</option>
-                    <option value="TN" >TUNÉZIA</option>
-                    <option value="TR" >TÖRÖKORSZÁG</option>
-                    <option value="TW" >TAIWAN</option>
-                    <option value="UA" >UKRAJNA</option>
-                    <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                    <option value="VN" >VIETNAM</option>
-                    <option value="XS" >SZERBIA</option>
-              </select></td>
-            </tr>
-            <tr>
-              <td>Irányítószám</td>
-              <td><input id="txtDeliveryAddressZipCode_${item.Id}" type="text" value="${ZipCode}" class="regfields" size="4" /></td>
-            </tr>
-            <tr>
-              <td>Város</td>
-              <td><input id="txtDeliveryAddressCity_${item.Id}" type="text" value="${City}" class="regfields" /></td>
-            </tr>
-            <tr>
-              <td>Utca, házszám</td>
-              <td><input id="txtDeliveryAddressStreet_${item.Id}" value="${Street}" type="text" class="regfields" /></td>
-            </tr>
-            <tr>
-              <td><input type="hidden" value="${item.RecId}" /></td>
-              <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.UpdateDeliveryAddress('${item.Id}', '${item.RecId}')">Mentés</a></td>
-            </tr>
-            {{else}}
-            <tr>
-              <td>Ország</td>
-              <td>${item.CountryRegionId}</td>
-            </tr>
-            <tr>
-              <td>Irányítószám</td>
-              <td>${item.ZipCode}</td>
-            </tr>
-            <tr>
-              <td>Város</td>
-              <td>${item.City}</td>
-            </tr>
-            <tr>
-              <td>Utca, házszám</td>
-              <td>${item.Street}</td>
-            </tr>
-            <tr>
-              <td nowrap="nowrap"></td>
-              <td>
-                <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.SelectForUpdateDeliveryAddress('${item.Id}')">Módosít</a>
-                <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.RemoveDeliveryAddress('${item.Id}')">Törlés</a>              
-              </td>
-            </tr>
-            {{/if}}
-            {{/each}}            
-            </script>
-            <table width="100%" border="0" cellspacing="2" cellpadding="3">
-            <tr>
-              <td>Ország</td>
-              <td><select id="selectDeliveryAddressCountry" class="regfields">
-                    <option value="HU" selected="selected">Magyarország</option>
-                    <option value="AE" >Egyesült Arab Emirátus</option>
-                    <option value="AL" >Albánia</option>
-                    <option value="AT" >AUSZTRIA</option>
-                    <option value="AU" >AUSZTRÁLIA</option>
-                    <option value="AZ" >Azerbajdzsán</option>
-                    <option value="BE" >BELGIUM</option>
-                    <option value="BG" >BULGÁRIA</option>
-                    <option value="BR" >BRAZILIA</option>
-                    <option value="CA" >KANADA</option>
-                    <option value="CH" >SVÁJC</option>
-                    <option value="CN" >KINA</option>
-                    <option value="CY" >CIPRUS</option>
-                    <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                    <option value="DE" >NÉMETORSZÁG</option>
-                    <option value="DK" >DÁNIA</option>
-                    <option value="EE" >ÉSZTORSZÁG</option>
-                    <option value="ES" >SPANYOLORSZÁG</option>
-                    <option value="EU" >EURÓPAI UNIÓ</option>
-                    <option value="FI" >FINNORSZÁG</option>
-                    <option value="FR" >FRANCIAORSZÁG</option>
-                    <option value="GB" >NAGY-BRITANNIA</option>
-                    <option value="GR" >GÖRÖGORSZÁG</option>
-                    <option value="HK" >HONG KONG</option>
-                    <option value="HR" >HORVÁTORSZÁG</option>
-                    <option value="ID" >INDONÉZIA</option>
-                    <option value="IE" >IRORSZÁG</option>
-                    <option value="IL" >IZRAEL</option>
-                    <option value="IN" >INDIA</option>
-                    <option value="IS" >IZLAND</option>
-                    <option value="IT" >OLASZORSZÁG</option>
-                    <option value="JP" >JAPÁN</option>
-                    <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                    <option value="LI" >LICHTENSTEIN</option>
-                    <option value="LT" >LITVÁNIA</option>
-                    <option value="LU" >LUXEMBURG</option>
-                    <option value="LV" >LETTORSZÁG</option>
-                    <option value="MD" >MOLDOVA</option>
-                    <option value="MN" >MONGOLIA</option>
-                    <option value="MT" >MÁLTA</option>
-                    <option value="MX" >MEXIKO</option>
-                    <option value="MY" >MALAYSIA</option>
-                    <option value="MZ" >MOZAMBIK</option>
-                    <option value="NL" >HOLLANDIA</option>
-                    <option value="NO" >NORVÉGIA</option>
-                    <option value="NZ" >Új-Zéland</option>
-                    <option value="PH" >FÜLÖPSZIGETEK</option>
-                    <option value="PL" >LENGYELORSZÁG</option>
-                    <option value="PT" >PORTUGÁLIA</option>
-                    <option value="RO" >ROMÁNIA</option>
-                    <option value="RS" >Szerbia</option>
-                    <option value="RU" >Oroszország</option>
-                    <option value="SE" >SVÉDORSZÁG</option>
-                    <option value="SG" >SZINGAPUR</option>
-                    <option value="SI" >SZLOVÉNIA</option>
-                    <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                    <option value="TH" >THAIFÖLD</option>
-                    <option value="TN" >TUNÉZIA</option>
-                    <option value="TR" >TÖRÖKORSZÁG</option>
-                    <option value="TW" >TAIWAN</option>
-                    <option value="UA" >UKRAJNA</option>
-                    <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                    <option value="VN" >VIETNAM</option>
-                    <option value="XS" >SZERBIA</option>
-              </select></td>
-            </tr>
-            <tr>
-              <td>Irányítószám</td>
-              <td>@Html.TextBox("txtDeliveryAddressZipCode", "", new { id = "txtDeliveryAddressZipCode", @class = "regfields", size = "4" })</td>
-            </tr>
-            <tr>
-              <td>Város</td>
-              <td>@Html.TextBox("txtDeliveryAddressCity", "", new { id = "txtDeliveryAddressCity", @class = "regfields", size = "10" })</td>
-            </tr>
-            <tr>
-              <td>Utca, házszám</td>
-              <td>@Html.TextBox("txtDeliveryAddressStreet", "", new { id = "txtDeliveryAddressStreet", @class = "regfields", size = "10" })</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddDeliveryAddress()">[+] Hozzáad</a></td>
-            </tr>
-            <tr><td colspan="2"><input type="button" name="nextstep4" id="nextstep4" value="Tovább" /></td></tr>
-            </table>
-            </form>        				          
+                                    </span>
+                                    <br /><br />
+                                    <span id="signatureEntityFile_Name"></span>
+                                    <span id="file_type"></span>
+                                    <span id="file_size"></span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size:9px">Feltölthető formátumok: .jpg, .jpeg, .pdf, .png, .tiff<br /><br />Egy dokumentum feltöltése lehetséges!
+                                    A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk. </td>
+                                </tr>
+                                </table>
+                                }
+                                <form id="form_registrationdata2" action="#/webadministrator" method="post"> 
+                                <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                <tr>
+                                  <td colspan="2"><hr /></td>
+                                </tr>
+                                <tr>
+                                  <td><strong>Számlázási cím</strong></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>Ország</td>
+                                  <td><select name="selectInvoiceCountry" class="regfields" id="selectInvoiceCountry">
+                                        <option value="HU" selected="selected">Magyarország</option>
+                                        <option value="AE" >Egyesült Arab Emirátus</option>
+                                        <option value="AL" >Albánia</option>
+                                        <option value="AT" >AUSZTRIA</option>
+                                        <option value="AU" >AUSZTRÁLIA</option>
+                                        <option value="AZ" >Azerbajdzsán</option>
+                                        <option value="BE" >BELGIUM</option>
+                                        <option value="BG" >BULGÁRIA</option>
+                                        <option value="BR" >BRAZILIA</option>
+                                        <option value="CA" >KANADA</option>
+                                        <option value="CH" >SVÁJC</option>
+                                        <option value="CN" >KINA</option>
+                                        <option value="CY" >CIPRUS</option>
+                                        <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                                        <option value="DE" >NÉMETORSZÁG</option>
+                                        <option value="DK" >DÁNIA</option>
+                                        <option value="EE" >ÉSZTORSZÁG</option>
+                                        <option value="ES" >SPANYOLORSZÁG</option>
+                                        <option value="EU" >EURÓPAI UNIÓ</option>
+                                        <option value="FI" >FINNORSZÁG</option>
+                                        <option value="FR" >FRANCIAORSZÁG</option>
+                                        <option value="GB" >NAGY-BRITANNIA</option>
+                                        <option value="GR" >GÖRÖGORSZÁG</option>
+                                        <option value="HK" >HONG KONG</option>
+                                        <option value="HR" >HORVÁTORSZÁG</option>
+                                        <option value="ID" >INDONÉZIA</option>
+                                        <option value="IE" >IRORSZÁG</option>
+                                        <option value="IL" >IZRAEL</option>
+                                        <option value="IN" >INDIA</option>
+                                        <option value="IS" >IZLAND</option>
+                                        <option value="IT" >OLASZORSZÁG</option>
+                                        <option value="JP" >JAPÁN</option>
+                                        <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                                        <option value="LI" >LICHTENSTEIN</option>
+                                        <option value="LT" >LITVÁNIA</option>
+                                        <option value="LU" >LUXEMBURG</option>
+                                        <option value="LV" >LETTORSZÁG</option>
+                                        <option value="MD" >MOLDOVA</option>
+                                        <option value="MN" >MONGOLIA</option>
+                                        <option value="MT" >MÁLTA</option>
+                                        <option value="MX" >MEXIKO</option>
+                                        <option value="MY" >MALAYSIA</option>
+                                        <option value="MZ" >MOZAMBIK</option>
+                                        <option value="NL" >HOLLANDIA</option>
+                                        <option value="NO" >NORVÉGIA</option>
+                                        <option value="NZ" >Új-Zéland</option>
+                                        <option value="PH" >FÜLÖPSZIGETEK</option>
+                                        <option value="PL" >LENGYELORSZÁG</option>
+                                        <option value="PT" >PORTUGÁLIA</option>
+                                        <option value="RO" >ROMÁNIA</option>
+                                        <option value="RS" >Szerbia</option>
+                                        <option value="RU" >Oroszország</option>
+                                        <option value="SE" >SVÉDORSZÁG</option>
+                                        <option value="SG" >SZINGAPUR</option>
+                                        <option value="SI" >SZLOVÉNIA</option>
+                                        <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                                        <option value="TH" >THAIFÖLD</option>
+                                        <option value="TN" >TUNÉZIA</option>
+                                        <option value="TR" >TÖRÖKORSZÁG</option>
+                                        <option value="TW" >TAIWAN</option>
+                                        <option value="UA" >UKRAJNA</option>
+                                        <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                                        <option value="VN" >VIETNAM</option>
+                                        <option value="XS" >SZERBIA</option>
+                                  </select></td>
+                                </tr>
+                                <tr>
+                                  <td>Irányítószám</td>
+                                  <td><label class="error" for="txtInvoiceZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtInvoiceZipCode", Model.InvoiceAddress.ZipCode, new { id = "txtInvoiceZipCode", @class = "regfields", size = "4" })
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Város</td>
+                                  <td><label class="error" for="txtInvoiceCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtInvoiceCity", Model.InvoiceAddress.City, new { id = "txtInvoiceCity", @class = "regfields" })
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Utca, házszám</td>
+                                  <td><label class="error" for="txtInvoiceStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtInvoiceStreet", Model.InvoiceAddress.Street, new { id = "txtInvoiceStreet", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td>Telefon</td>
+                                  <td><label class="error" for="txtInvoicePhone" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtInvoicePhone", Model.InvoiceAddress.Phone, new { id = "txtInvoicePhone", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2"><hr /></td>
+                                </tr>
+                                <tr>
+                                  <td><strong>Levelezési cím</strong></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size:9px">(kérjük itt írja át, ha nem egyezik a számlázási címmel)</td>
+                                </tr>
+                                <tr>
+                                  <td>Ország</td>
+                                  <td><select name="selectMailCountry" class="regfields" id="selectMailCountry">
+                                        <option value="HU" selected="selected">Magyarország</option>
+                                        <option value="AE" >Egyesült Arab Emirátus</option>
+                                        <option value="AL" >Albánia</option>
+                                        <option value="AT" >AUSZTRIA</option>
+                                        <option value="AU" >AUSZTRÁLIA</option>
+                                        <option value="AZ" >Azerbajdzsán</option>
+                                        <option value="BE" >BELGIUM</option>
+                                        <option value="BG" >BULGÁRIA</option>
+                                        <option value="BR" >BRAZILIA</option>
+                                        <option value="CA" >KANADA</option>
+                                        <option value="CH" >SVÁJC</option>
+                                        <option value="CN" >KINA</option>
+                                        <option value="CY" >CIPRUS</option>
+                                        <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                                        <option value="DE" >NÉMETORSZÁG</option>
+                                        <option value="DK" >DÁNIA</option>
+                                        <option value="EE" >ÉSZTORSZÁG</option>
+                                        <option value="ES" >SPANYOLORSZÁG</option>
+                                        <option value="EU" >EURÓPAI UNIÓ</option>
+                                        <option value="FI" >FINNORSZÁG</option>
+                                        <option value="FR" >FRANCIAORSZÁG</option>
+                                        <option value="GB" >NAGY-BRITANNIA</option>
+                                        <option value="GR" >GÖRÖGORSZÁG</option>
+                                        <option value="HK" >HONG KONG</option>
+                                        <option value="HR" >HORVÁTORSZÁG</option>
+                                        <option value="ID" >INDONÉZIA</option>
+                                        <option value="IE" >IRORSZÁG</option>
+                                        <option value="IL" >IZRAEL</option>
+                                        <option value="IN" >INDIA</option>
+                                        <option value="IS" >IZLAND</option>
+                                        <option value="IT" >OLASZORSZÁG</option>
+                                        <option value="JP" >JAPÁN</option>
+                                        <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                                        <option value="LI" >LICHTENSTEIN</option>
+                                        <option value="LT" >LITVÁNIA</option>
+                                        <option value="LU" >LUXEMBURG</option>
+                                        <option value="LV" >LETTORSZÁG</option>
+                                        <option value="MD" >MOLDOVA</option>
+                                        <option value="MN" >MONGOLIA</option>
+                                        <option value="MT" >MÁLTA</option>
+                                        <option value="MX" >MEXIKO</option>
+                                        <option value="MY" >MALAYSIA</option>
+                                        <option value="MZ" >MOZAMBIK</option>
+                                        <option value="NL" >HOLLANDIA</option>
+                                        <option value="NO" >NORVÉGIA</option>
+                                        <option value="NZ" >Új-Zéland</option>
+                                        <option value="PH" >FÜLÖPSZIGETEK</option>
+                                        <option value="PL" >LENGYELORSZÁG</option>
+                                        <option value="PT" >PORTUGÁLIA</option>
+                                        <option value="RO" >ROMÁNIA</option>
+                                        <option value="RS" >Szerbia</option>
+                                        <option value="RU" >Oroszország</option>
+                                        <option value="SE" >SVÉDORSZÁG</option>
+                                        <option value="SG" >SZINGAPUR</option>
+                                        <option value="SI" >SZLOVÉNIA</option>
+                                        <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                                        <option value="TH" >THAIFÖLD</option>
+                                        <option value="TN" >TUNÉZIA</option>
+                                        <option value="TR" >TÖRÖKORSZÁG</option>
+                                        <option value="TW" >TAIWAN</option>
+                                        <option value="UA" >UKRAJNA</option>
+                                        <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                                        <option value="VN" >VIETNAM</option>
+                                        <option value="XS" >SZERBIA</option>
+                                  </select></td>
+                                </tr>
+                                <tr>
+                                  <td>Irányítószám</td>
+                                  <td><label class="error" for="txtMailAddressZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtMailAddressZipCode", Model.MailAddress.ZipCode, new { id = "txtMailAddressZipCode", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td>Város</td>
+                                  <td><label class="error" for="txtMailAddressCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtMailAddressCity", Model.MailAddress.City, new { id = "txtMailAddressCity", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td>Utca, házszám</td>
+                                  <td><label class="error" for="txtMailAddressStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                  @Html.TextBox("txtMailAddressStreet", Model.MailAddress.Street, new { id = "txtMailAddressStreet", @class = "regfields" })</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2"><hr /></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2"><strong>Szállítási cím/telephely</strong></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size:9px">(kérjük itt írja át, ha nem egyezik a számlázási címmel)</td>
+                                </tr>
+                                </table>
+                                <table id="deliveryAddressContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
+                                </table>
+                                <script id="deliveryAddressTemplate" type="text/x-jquery-tmpl">
+                                {{each( i, item ) Items}}
+                                {{if item.Id == SelectedId}}
+                                <tr>
+                                  <td>Ország</td>
+                                  <td><select id="selectDeliveryAddressCountry_${item.Id}" class="regfields">
+                                        <option value="HU" selected="selected">Magyarország</option>
+                                        <option value="AE" >Egyesült Arab Emirátus</option>
+                                        <option value="AL" >Albánia</option>
+                                        <option value="AT" >AUSZTRIA</option>
+                                        <option value="AU" >AUSZTRÁLIA</option>
+                                        <option value="AZ" >Azerbajdzsán</option>
+                                        <option value="BE" >BELGIUM</option>
+                                        <option value="BG" >BULGÁRIA</option>
+                                        <option value="BR" >BRAZILIA</option>
+                                        <option value="CA" >KANADA</option>
+                                        <option value="CH" >SVÁJC</option>
+                                        <option value="CN" >KINA</option>
+                                        <option value="CY" >CIPRUS</option>
+                                        <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                                        <option value="DE" >NÉMETORSZÁG</option>
+                                        <option value="DK" >DÁNIA</option>
+                                        <option value="EE" >ÉSZTORSZÁG</option>
+                                        <option value="ES" >SPANYOLORSZÁG</option>
+                                        <option value="EU" >EURÓPAI UNIÓ</option>
+                                        <option value="FI" >FINNORSZÁG</option>
+                                        <option value="FR" >FRANCIAORSZÁG</option>
+                                        <option value="GB" >NAGY-BRITANNIA</option>
+                                        <option value="GR" >GÖRÖGORSZÁG</option>
+                                        <option value="HK" >HONG KONG</option>
+                                        <option value="HR" >HORVÁTORSZÁG</option>
+                                        <option value="ID" >INDONÉZIA</option>
+                                        <option value="IE" >IRORSZÁG</option>
+                                        <option value="IL" >IZRAEL</option>
+                                        <option value="IN" >INDIA</option>
+                                        <option value="IS" >IZLAND</option>
+                                        <option value="IT" >OLASZORSZÁG</option>
+                                        <option value="JP" >JAPÁN</option>
+                                        <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                                        <option value="LI" >LICHTENSTEIN</option>
+                                        <option value="LT" >LITVÁNIA</option>
+                                        <option value="LU" >LUXEMBURG</option>
+                                        <option value="LV" >LETTORSZÁG</option>
+                                        <option value="MD" >MOLDOVA</option>
+                                        <option value="MN" >MONGOLIA</option>
+                                        <option value="MT" >MÁLTA</option>
+                                        <option value="MX" >MEXIKO</option>
+                                        <option value="MY" >MALAYSIA</option>
+                                        <option value="MZ" >MOZAMBIK</option>
+                                        <option value="NL" >HOLLANDIA</option>
+                                        <option value="NO" >NORVÉGIA</option>
+                                        <option value="NZ" >Új-Zéland</option>
+                                        <option value="PH" >FÜLÖPSZIGETEK</option>
+                                        <option value="PL" >LENGYELORSZÁG</option>
+                                        <option value="PT" >PORTUGÁLIA</option>
+                                        <option value="RO" >ROMÁNIA</option>
+                                        <option value="RS" >Szerbia</option>
+                                        <option value="RU" >Oroszország</option>
+                                        <option value="SE" >SVÉDORSZÁG</option>
+                                        <option value="SG" >SZINGAPUR</option>
+                                        <option value="SI" >SZLOVÉNIA</option>
+                                        <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                                        <option value="TH" >THAIFÖLD</option>
+                                        <option value="TN" >TUNÉZIA</option>
+                                        <option value="TR" >TÖRÖKORSZÁG</option>
+                                        <option value="TW" >TAIWAN</option>
+                                        <option value="UA" >UKRAJNA</option>
+                                        <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                                        <option value="VN" >VIETNAM</option>
+                                        <option value="XS" >SZERBIA</option>
+                                  </select></td>
+                                </tr>
+                                <tr>
+                                  <td>Irányítószám</td>
+                                  <td><input id="txtDeliveryAddressZipCode_${item.Id}" type="text" value="${ZipCode}" class="regfields" size="4" /></td>
+                                </tr>
+                                <tr>
+                                  <td>Város</td>
+                                  <td><input id="txtDeliveryAddressCity_${item.Id}" type="text" value="${City}" class="regfields" /></td>
+                                </tr>
+                                <tr>
+                                  <td>Utca, házszám</td>
+                                  <td><input id="txtDeliveryAddressStreet_${item.Id}" value="${Street}" type="text" class="regfields" /></td>
+                                </tr>
+                                <tr>
+                                  <td><input type="hidden" value="${item.RecId}" /></td>
+                                  <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.UpdateDeliveryAddress('${item.Id}', '${item.RecId}')">Mentés</a></td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                  <td>Ország</td>
+                                  <td>${item.CountryRegionId}</td>
+                                </tr>
+                                <tr>
+                                  <td>Irányítószám</td>
+                                  <td>${item.ZipCode}</td>
+                                </tr>
+                                <tr>
+                                  <td>Város</td>
+                                  <td>${item.City}</td>
+                                </tr>
+                                <tr>
+                                  <td>Utca, házszám</td>
+                                  <td>${item.Street}</td>
+                                </tr>
+                                <tr>
+                                  <td nowrap="nowrap"></td>
+                                  <td>
+                                    <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.SelectForUpdateDeliveryAddress('${item.Id}')">Módosít</a>
+                                    <a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.RemoveDeliveryAddress('${item.Id}')">Törlés</a>              
+                                  </td>
+                                </tr>
+                                {{/if}}
+                                {{/each}}            
+                                </script>
+                                <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                                <tr>
+                                  <td>Ország</td>
+                                  <td><select id="selectDeliveryAddressCountry" class="regfields">
+                                        <option value="HU" selected="selected">Magyarország</option>
+                                        <option value="AE" >Egyesült Arab Emirátus</option>
+                                        <option value="AL" >Albánia</option>
+                                        <option value="AT" >AUSZTRIA</option>
+                                        <option value="AU" >AUSZTRÁLIA</option>
+                                        <option value="AZ" >Azerbajdzsán</option>
+                                        <option value="BE" >BELGIUM</option>
+                                        <option value="BG" >BULGÁRIA</option>
+                                        <option value="BR" >BRAZILIA</option>
+                                        <option value="CA" >KANADA</option>
+                                        <option value="CH" >SVÁJC</option>
+                                        <option value="CN" >KINA</option>
+                                        <option value="CY" >CIPRUS</option>
+                                        <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                                        <option value="DE" >NÉMETORSZÁG</option>
+                                        <option value="DK" >DÁNIA</option>
+                                        <option value="EE" >ÉSZTORSZÁG</option>
+                                        <option value="ES" >SPANYOLORSZÁG</option>
+                                        <option value="EU" >EURÓPAI UNIÓ</option>
+                                        <option value="FI" >FINNORSZÁG</option>
+                                        <option value="FR" >FRANCIAORSZÁG</option>
+                                        <option value="GB" >NAGY-BRITANNIA</option>
+                                        <option value="GR" >GÖRÖGORSZÁG</option>
+                                        <option value="HK" >HONG KONG</option>
+                                        <option value="HR" >HORVÁTORSZÁG</option>
+                                        <option value="ID" >INDONÉZIA</option>
+                                        <option value="IE" >IRORSZÁG</option>
+                                        <option value="IL" >IZRAEL</option>
+                                        <option value="IN" >INDIA</option>
+                                        <option value="IS" >IZLAND</option>
+                                        <option value="IT" >OLASZORSZÁG</option>
+                                        <option value="JP" >JAPÁN</option>
+                                        <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                                        <option value="LI" >LICHTENSTEIN</option>
+                                        <option value="LT" >LITVÁNIA</option>
+                                        <option value="LU" >LUXEMBURG</option>
+                                        <option value="LV" >LETTORSZÁG</option>
+                                        <option value="MD" >MOLDOVA</option>
+                                        <option value="MN" >MONGOLIA</option>
+                                        <option value="MT" >MÁLTA</option>
+                                        <option value="MX" >MEXIKO</option>
+                                        <option value="MY" >MALAYSIA</option>
+                                        <option value="MZ" >MOZAMBIK</option>
+                                        <option value="NL" >HOLLANDIA</option>
+                                        <option value="NO" >NORVÉGIA</option>
+                                        <option value="NZ" >Új-Zéland</option>
+                                        <option value="PH" >FÜLÖPSZIGETEK</option>
+                                        <option value="PL" >LENGYELORSZÁG</option>
+                                        <option value="PT" >PORTUGÁLIA</option>
+                                        <option value="RO" >ROMÁNIA</option>
+                                        <option value="RS" >Szerbia</option>
+                                        <option value="RU" >Oroszország</option>
+                                        <option value="SE" >SVÉDORSZÁG</option>
+                                        <option value="SG" >SZINGAPUR</option>
+                                        <option value="SI" >SZLOVÉNIA</option>
+                                        <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                                        <option value="TH" >THAIFÖLD</option>
+                                        <option value="TN" >TUNÉZIA</option>
+                                        <option value="TR" >TÖRÖKORSZÁG</option>
+                                        <option value="TW" >TAIWAN</option>
+                                        <option value="UA" >UKRAJNA</option>
+                                        <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                                        <option value="VN" >VIETNAM</option>
+                                        <option value="XS" >SZERBIA</option>
+                                  </select></td>
+                                </tr>
+                                <tr>
+                                  <td>Irányítószám</td>
+                                  <td>@Html.TextBox("txtDeliveryAddressZipCode", "", new { id = "txtDeliveryAddressZipCode", @class = "regfields", size = "4" })</td>
+                                </tr>
+                                <tr>
+                                  <td>Város</td>
+                                  <td>@Html.TextBox("txtDeliveryAddressCity", "", new { id = "txtDeliveryAddressCity", @class = "regfields", size = "10" })</td>
+                                </tr>
+                                <tr>
+                                  <td>Utca, házszám</td>
+                                  <td>@Html.TextBox("txtDeliveryAddressStreet", "", new { id = "txtDeliveryAddressStreet", @class = "regfields", size = "10" })</td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Registration.AddDeliveryAddress()">[+] Hozzáad</a></td>
+                                </tr>
+                                <tr><td colspan="2"><input type="button" name="nextstep4" id="nextstep4" value="Tovább" /></td></tr>
+                                </table>
+                                </form>        				          
         </div>
   	    </div>
     </td>
