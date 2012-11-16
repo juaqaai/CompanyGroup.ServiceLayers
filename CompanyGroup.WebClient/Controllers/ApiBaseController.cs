@@ -201,7 +201,11 @@ namespace CompanyGroup.WebClient.Controllers
 
                 if (cookieHeaderValue == null) { return new CompanyGroup.WebClient.Models.VisitorData(); }
 
-                return CompanyGroup.Helpers.JsonConverter.FromJSON<CompanyGroup.WebClient.Models.VisitorData>(cookieHeaderValue[ApiBaseController.CookieName].Value);
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.JsonConverter.FromJSON<CompanyGroup.WebClient.Models.VisitorData>(cookieHeaderValue[ApiBaseController.CookieName].Value);
+
+                if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
+
+                return visitorData;
             }
             catch { return new CompanyGroup.WebClient.Models.VisitorData(); }
         }

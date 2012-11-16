@@ -6,31 +6,35 @@ companyGroup.registration = $.sammy('#main_content', function () {
 
     this.use(Sammy.Title);
 
+    //szerződési feltételek
     this.get('#/', function (context) {
-        //console.log(context);
-        this.title('Regisztráció - ');
+        this.title('Regisztráció - szerződési feltételek');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
             .then(function (response) {
                 //context.partial(viewPath('termsandconditions'), response);
                 $("#tabs-1").show();
                 $("#tabs-2").hide();
                 $("#tabs-3").hide();
+                $("#tabs-4").hide();
+                $("#tabs-5").hide();
             });
     });
-    //adatrögzítő
+    //adatrögzítő adatai (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/datarecording', function (context) {
         //console.log(context);
         this.title('Regisztráció - kitöltő adatai');
-        this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
+        this.load('/CompanyGroup.WebClient/api/RegistrationApi/GetRegistrationData')
         .then(function (response) {
             //context.partial(viewPath('datarecording'), response);
             $("#tabs-1").hide();
             $("#tabs-2").show();
             $("#tabs-3").hide();
+            $("#tabs-4").hide();
+            $("#tabs-5").hide();
         });
     });
-
-    this.get('#/registrationdata', function (context) {
+    //cégregisztrációs adatok
+    this.post('#/registrationdata', function (context) {
         //console.log(context);
         this.title('Regisztráció - törzsadatok');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
@@ -38,8 +42,8 @@ companyGroup.registration = $.sammy('#main_content', function () {
             //context.partial(viewPath('registrationdata'), response);
         });
     });
-
-    this.get('#/webadministrator', function (context) {
+    //webadmin adatai
+    this.post('#/webadministrator', function (context) {
         //console.log(context);
         this.title('Regisztráció - web adminisztrátor');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
@@ -47,8 +51,8 @@ companyGroup.registration = $.sammy('#main_content', function () {
             //context.partial(viewPath('webadministrator'), response);
         });
     });
-
-    this.get('#/contactperson', function (context) {
+    //kapcsolattartó adatai
+    this.post('#/contactperson', function (context) {
         //console.log(context);
         this.title('Regisztráció - kapcsolattartó');
         this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
@@ -57,6 +61,77 @@ companyGroup.registration = $.sammy('#main_content', function () {
         });
     });
 
+    this.get('#/addcontactperson', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó hozzáadás');
+
+    });
+
+    this.get('#/addbankaccount', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó hozzáadás');
+
+    });
+
+    this.get('#/selectforupdatebankaccount/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó hozzáadás');
+
+    });
+
+    this.get('#/updatebankaccount/:id/:recId', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó hozzáadás');
+
+    });
+    this.get('#/removebankaccount/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó hozzáadás');
+
+    });
+
+    this.get('#/adddeliveryaddress', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - szállítási cím hozzáadás');
+
+    });
+
+    this.get('#/updatedeliveryaddress', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - szállítási cím módosítás');
+
+    });
+
+    this.get('#/selectforupdatedeliveryaddress/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - szállítási cím kiválasztás');
+
+    });
+
+    this.get('#/removedeliveryaddress/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - szállítási cím törlés');
+
+    });
+
+    this.get('#/selectforupdatecontactperson/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó választás');
+
+    });
+
+    this.get('#/removecontactperson/:id', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - kapcsolattartó törlés');
+
+    });
+
+    this.post('#/save', function (context) {
+        //console.log(context);
+        this.title('Regisztráció - szállítási cím hozzáadás');
+
+    });
+    
 //    function viewPath(name) {
 //        return '/CompanyGroup.WebClient/Content/HtmlTemplates/Registration/' + name + '.html';
 //    }
