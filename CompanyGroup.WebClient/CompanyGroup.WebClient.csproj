@@ -212,6 +212,7 @@
     <Compile Include="Models\Registration\CompanyData.cs" />
     <Compile Include="Models\Registration\ContactPersonRequest.cs" />
     <Compile Include="Models\Registration\ContactPerson.cs" />
+    <Compile Include="Models\Registration\Country.cs" />
     <Compile Include="Models\Registration\MailAddress.cs" />
     <Compile Include="Models\Registration\InvoiceAddress.cs" />
     <Compile Include="Models\Registration\DataRecording.cs" />

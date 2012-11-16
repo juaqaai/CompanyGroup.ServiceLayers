@@ -10,6 +10,80 @@ namespace CompanyGroup.WebClient.Controllers
     public class RegistrationApiController : ApiBaseController
     {
         /// <summary>
+        /// országlista
+        /// </summary>
+        /// <returns></returns>
+        private CompanyGroup.WebClient.Models.Countries GetCountries()
+        {
+            CompanyGroup.WebClient.Models.Countries countries = new CompanyGroup.WebClient.Models.Countries();
+            countries.Add(new Models.Country("HU", "Magyarország"));
+            countries.Add(new Models.Country("AE", "Egyesült Arab Emirátus"));
+            countries.Add(new Models.Country("AL", "Albánia"));
+            countries.Add(new Models.Country("AT", "AUSZTRIA"));
+            countries.Add(new Models.Country("AU", "AUSZTRÁLIA"));
+            countries.Add(new Models.Country("AZ", "Azerbajdzsán"));
+            countries.Add(new Models.Country("BE", "BELGIUM"));
+            countries.Add(new Models.Country("BG", "BULGÁRIA"));
+            countries.Add(new Models.Country("BR", "BRAZILIA"));
+            countries.Add(new Models.Country("CA", "KANADA"));
+            countries.Add(new Models.Country("CH", "SVÁJC"));
+            countries.Add(new Models.Country("CN", "KINA"));
+            countries.Add(new Models.Country("CY", "CIPRUS"));
+            countries.Add(new Models.Country("CZ", "CSEH-KÖZTÁRSASÁG"));
+            countries.Add(new Models.Country("DE", "NÉMETORSZÁG"));
+            countries.Add(new Models.Country("DK", "DÁNIA"));
+            countries.Add(new Models.Country("EE", "ÉSZTORSZÁG"));
+            countries.Add(new Models.Country("ES", "SPANYOLORSZÁG"));
+            countries.Add(new Models.Country("EU", "EURÓPAI UNIÓ"));
+            countries.Add(new Models.Country("FI", "FINNORSZÁG"));
+            countries.Add(new Models.Country("FR", "FRANCIAORSZÁG"));
+            countries.Add(new Models.Country("GB", "NAGY-BRITANNIA"));
+            countries.Add(new Models.Country("GR", "GÖRÖGORSZÁG"));
+            countries.Add(new Models.Country("HK", "HONG KONG"));
+            countries.Add(new Models.Country("HR", "HORVÁTORSZÁG"));
+            countries.Add(new Models.Country("ID", "INDONÉZIA"));
+            countries.Add(new Models.Country("IE", "IRORSZÁG"));
+            countries.Add(new Models.Country("IL", "IZRAEL"));
+            countries.Add(new Models.Country("IN", "INDIA"));
+            countries.Add(new Models.Country("IS", "IZLAND"));
+            countries.Add(new Models.Country("IT", "OLASZORSZÁG"));
+            countries.Add(new Models.Country("JP", "JAPÁN"));
+            countries.Add(new Models.Country("KR", "KOREAI KÖZTÁRSASÁG"));
+            countries.Add(new Models.Country("LI", "LICHTENSTEIN"));
+            countries.Add(new Models.Country("LT", "LITVÁNIA"));
+            countries.Add(new Models.Country("LU", "LUXEMBURG"));
+            countries.Add(new Models.Country("LV", "LETTORSZÁG"));
+            countries.Add(new Models.Country("MD", "MOLDOVA"));
+            countries.Add(new Models.Country("MN", "MONGOLIA"));
+            countries.Add(new Models.Country("MT", "MÁLTA"));
+            countries.Add(new Models.Country("MX", "MEXIKO"));
+            countries.Add(new Models.Country("MY", "MALAYSIA"));
+            countries.Add(new Models.Country("MZ", "MOZAMBIK"));
+            countries.Add(new Models.Country("NL", "HOLLANDIA"));
+            countries.Add(new Models.Country("NO", "NORVÉGIA"));
+            countries.Add(new Models.Country("NZ", "Új-Zéland"));
+            countries.Add(new Models.Country("PH", "FÜLÖPSZIGETEK"));
+            countries.Add(new Models.Country("PL", "LENGYELORSZÁG"));
+            countries.Add(new Models.Country("PT", "PORTUGÁLIA"));
+            countries.Add(new Models.Country("RO", "ROMÁNIA"));
+            countries.Add(new Models.Country("RS", "Szerbia"));
+            countries.Add(new Models.Country("RU", "Oroszország"));
+            countries.Add(new Models.Country("SE", "SVÉDORSZÁG"));
+            countries.Add(new Models.Country("SG", "SZINGAPUR"));
+            countries.Add(new Models.Country("SI", "SZLOVÉNIA"));
+            countries.Add(new Models.Country("SK", "SZLOVÁK KÖZTÁRSASÁG"));
+            countries.Add(new Models.Country("TH", "THAIFÖLD"));
+            countries.Add(new Models.Country("TN", "TUNÉZIA"));
+            countries.Add(new Models.Country("TR", "TÖRÖKORSZÁG"));
+            countries.Add(new Models.Country("TW", "TAIWAN"));
+            countries.Add(new Models.Country("UA", "UKRAJNA"));
+            countries.Add(new Models.Country("US", "AMERIKAI EGYESÜLT ÁLLAMOK"));
+            countries.Add(new Models.Country("VN", "VIETNAM"));
+            countries.Add(new Models.Country("XS", "SZERBIA"));
+            return countries;
+        }
+
+        /// <summary>
         /// regisztrációs adatok kiolvasása (betöltéskor, frissítéskor hívódik)
         /// </summary>
         /// <returns></returns>
@@ -27,7 +101,7 @@ namespace CompanyGroup.WebClient.Controllers
             //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
             if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.ObjectId))
             {
-                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId));
+                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId));;
             }
             else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
             {
@@ -53,7 +127,8 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                       response.MailAddress,
                                                                                                                       response.RegistrationId,
                                                                                                                       response.VisitorId,
-                                                                                                                      response.WebAdministrator);
+                                                                                                                      response.WebAdministrator, 
+                                                                                                                      this.GetCountries());
 
             return model;        
         }
@@ -72,13 +147,13 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
-            if (!String.IsNullOrEmpty(visitorData.RegistrationId))
+            if (!String.IsNullOrEmpty(visitorData.RegistrationId));
             {
                 response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
             }
 
             //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
-            if ((response == null) || (response.RegistrationId.Equals(RegistrationApiController.MongoDbEmptyObjectId)))
+            if ((response == null) || (response.RegistrationId.Equals(RegistrationApiController.MongoDbEmptyObjectId));)
             {
                 CompanyGroup.Dto.ServiceRequest.AddNewRegistration addNewRegistration = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
                 {
@@ -90,13 +165,13 @@ namespace CompanyGroup.WebClient.Controllers
             }
 
             //ha a válaszban nincs bankszámlaszám, akkor egy üres elemet hozzá kell adni
-            //if (response.BankAccounts.Count.Equals(0))
+            //if (response.BankAccounts.Count.Equals(0));
             //{ 
             //    response.BankAccounts.Add(new CompanyGroup.Dto.RegistrationModule.BankAccount(){ Id = "", Part1 = "", Part2 = "", Part3 = "", RecId = 0 });
             //}
 
             //ha a válaszban nincs kapcsolattartó, akkor egy üres elemet hozzá kell adni
-            //if (response.ContactPersons.Count.Equals(0))
+            //if (response.ContactPersons.Count.Equals(0));
             //{
             //    response.ContactPersons.Add(new CompanyGroup.Dto.RegistrationModule.ContactPerson() 
             //                                    { 
@@ -125,7 +200,7 @@ namespace CompanyGroup.WebClient.Controllers
             //}
 
             //ha a válaszban nincs szállítási cím, akkor egy üres elemet hozzá kell adni
-            //if (response.DeliveryAddresses.Count.Equals(0))
+            //if (response.DeliveryAddresses.Count.Equals(0));
             //{
             //    response.DeliveryAddresses.Add(new CompanyGroup.Dto.RegistrationModule.DeliveryAddress()
             //    {
@@ -158,7 +233,8 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                       response.MailAddress,
                                                                                                                       response.RegistrationId,
                                                                                                                       response.VisitorId,
-                                                                                                                      response.WebAdministrator);
+                                                                                                                      response.WebAdministrator, 
+                                                                                                                      this.GetCountries());
 
             HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
 

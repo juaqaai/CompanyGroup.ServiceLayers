@@ -17,7 +17,8 @@ namespace CompanyGroup.WebClient.Models
                             CompanyGroup.Dto.RegistrationModule.MailAddress mailAddress,
                             string registrationId, 
                             string visitorId, 
-                            CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator)
+                            CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator, 
+                            Countries countries)
         {
             this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts);
 
@@ -38,6 +39,8 @@ namespace CompanyGroup.WebClient.Models
             this.VisitorId = visitorId;
 
             this.WebAdministrator = new CompanyGroup.WebClient.Models.WebAdministrator(webAdministrator);
+
+            this.Countries = countries;
         }
 
         public CompanyGroup.WebClient.Models.BankAccounts BankAccounts { get; set; }
@@ -59,5 +62,7 @@ namespace CompanyGroup.WebClient.Models
         public string VisitorId { get; set; }
 
         public CompanyGroup.WebClient.Models.WebAdministrator WebAdministrator { get; set; }
+
+        public Countries Countries { get; set; }
     }
 }
