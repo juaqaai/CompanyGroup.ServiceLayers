@@ -10,9 +10,9 @@ namespace CompanyGroup.WebClient.Models
     {
         public ContactPersons(CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons)
         {
-            SelectedId = String.Empty;
-
             this.Items = contactPersons.Items.ConvertAll(x => new CompanyGroup.WebClient.Models.ContactPerson(x));
+
+            selectedId = String.Empty;
         }
 
         public List<CompanyGroup.WebClient.Models.ContactPerson> Items { get; set; }
@@ -20,6 +20,23 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// módosításra kiválasztott kapcsolattartó azonosító
         /// </summary>
-        public string SelectedId { get; set; }
+        private string selectedId = String.Empty;
+
+        /// <summary>
+        /// módosításra kiválasztott kapcsolattartó azonosító
+        /// </summary>
+        public string SelectedId
+        {
+            get { return selectedId; }
+            set
+            {
+                selectedId = value;
+
+                if (!String.IsNullOrEmpty(value))
+                {
+                    this.Items.ForEach(x => x.SelectedItem = x.Id.Equals(value));
+                }
+            }
+        }
     }
 }

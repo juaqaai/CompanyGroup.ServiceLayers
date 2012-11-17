@@ -452,10 +452,9 @@
                 .js('@Scripts.Url("~/bundles/tmpl")')
                 .js('@Scripts.Url("~/bundles/vegas")')
                 .js('@Scripts.Url("~/bundles/mustache")')
-                .js('@Scripts.Url("~/bundles/sammy")')
-                .js('@Scripts.Url("~/bundles/sammymustache")')
-                .js('@Scripts.Url("~/bundles/sammytitle")')
-                .js('@Scripts.Url("~/bundles/amplify")');  
+                .js('@Scripts.Url("~/bundles/amplify")')
+                .js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/registration")');
+                //.js('@Scripts.Url("~/bundles/sammymustache")')
 
             @RenderSection("ScriptFiles", false)
         });

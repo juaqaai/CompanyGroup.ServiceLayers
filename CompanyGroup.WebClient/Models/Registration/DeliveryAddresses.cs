@@ -12,21 +12,35 @@ namespace CompanyGroup.WebClient.Models
         {
             this.Items = deliveryAddresses.Items.ConvertAll(x => new CompanyGroup.WebClient.Models.DeliveryAddress(x));
 
-            this.SelectedId = String.Empty;
+            selectedId = String.Empty;
         }
 
         public DeliveryAddresses(CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses)
         {
             this.Items = deliveryAddresses.Items.ConvertAll(x => new CompanyGroup.WebClient.Models.DeliveryAddress(x));
 
-            this.SelectedId = String.Empty;
+            selectedId = String.Empty;
         }
 
         public List<CompanyGroup.WebClient.Models.DeliveryAddress> Items { get; set; }
 
+        private string selectedId = String.Empty;
+
         /// <summary>
         /// módosításra kiválasztott szállítási cím azonosító
         /// </summary>
-        public string SelectedId { get; set; }
+        public string SelectedId
+        {
+            get { return selectedId; }
+            set
+            {
+                selectedId = value;
+
+                if (!String.IsNullOrEmpty(value))
+                {
+                    this.Items.ForEach(x => x.SelectedItem = x.Id.Equals(value));
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿var companyGroup = companyGroup || {};
+﻿//var companyGroup = companyGroup || {};
 
-companyGroup.registration = $.sammy('#main_content', function () {
+var companyGroupRegistration = $.sammy(function () {
 
     //this.use(Sammy.Mustache);
 
@@ -8,28 +8,60 @@ companyGroup.registration = $.sammy('#main_content', function () {
 
     //szerződési feltételek
     this.get('#/', function (context) {
-        this.title('Regisztráció - szerződési feltételek');
-        this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
-            .then(function (response) {
-                $("#tabs-1").show();
-                $("#tabs-2").hide();
-                $("#tabs-3").hide();
-                $("#tabs-4").hide();
-                $("#tabs-5").hide();
-            });
+        context.title('Regisztráció - szerződési feltételek');
+
+        $.ajax({
+            url: "/CompanyGroup.WebClient/api/RegistrationApi/GetRegistrationData",
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000
+        }).then(function (response) {
+            console.log(response);
+            initRegistrationData(response);
+            $("#tabs-1").show();
+            $("#tabs-2").hide();
+            $("#tabs-3").hide();
+            $("#tabs-4").hide();
+            $("#tabs-5").hide();
+        });
     });
     //adatrögzítő adatai (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/datarecording', function (context) {
         //console.log(context);
         this.title('Regisztráció - kitöltő adatai');
-        this.load('/CompanyGroup.WebClient/api/RegistrationApi/GetRegistrationData')
-        .then(function (response) {
-            initRegistrationData(response);
-            $("#tabs-1").hide();
-            $("#tabs-2").show();
-            $("#tabs-3").hide();
-            $("#tabs-4").hide();
-            $("#tabs-5").hide();
+//        this.load('/CompanyGroup.WebClient/api/RegistrationApi/GetRegistrationData')
+//        .then(function (response) {
+        $.ajax({
+            type: "POST",
+            url: '/CompanyGroup.WebClient/api/RegistrationApi/AddNew',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (response) {
+                if (response) {
+//                    $("#bankAccountContainer").empty();
+//                    $("#bankAccountTemplate").tmpl(response.BankAccounts).appendTo("#bankAccountContainer");
+//                    $("#contactPersonContainer").empty();
+//                    $("#contactPersonTemplate").tmpl(response.ContactPersons).appendTo("#contactPersonContainer");
+//                    $("#deliveryAddressContainer").empty();
+//                    $("#deliveryAddressTemplate").tmpl(response.DeliveryAddresses).appendTo("#deliveryAddressContainer");
+
+                    $("#tabs-1").hide();
+                    $("#tabs-2").show();
+                    $("#tabs-3").hide();
+                    $("#tabs-4").hide();
+                    $("#tabs-5").hide();
+                }
+                else {
+                    console.log('addNew result failed');
+                }
+            },
+            error: function () {
+                console.log('addNew call failed');
+            }
         });
     });
     //cégregisztrációs adatok
@@ -142,7 +174,6 @@ companyGroup.registration = $.sammy('#main_content', function () {
 
     var initRegistrationData = function (data) {
         $('#txtDataRecordingName').val(data.DataRecording.Name);
-        $('#txtDataRecordingName').val(data.DataRecording.Name);
         $('#txtDataRecordingPhone').val(data.DataRecording.Phone);
         $('#txtDataRecordingEmail').val(data.DataRecording.Email);
 
@@ -154,7 +185,7 @@ companyGroup.registration = $.sammy('#main_content', function () {
         $('#txtMainEmail').val(data.CompanyData.MainEmail);
         $('#chkNewsletterToMainEmail').val(data.CompanyData.NewsletterToMainEmail);
 
-        $('#bankAccountContainer').html(Mustache.render($('#bankAccountTemplate').html(), data.CompanyData.BankAccounts));
+        $('#bankAccountContainer').html(Mustache.render($('#bankAccountTemplate').html(), data.BankAccounts));
 
         //$('#txtBankAccountPart1').val();
         //$('#txtBankAccountPart2').val();

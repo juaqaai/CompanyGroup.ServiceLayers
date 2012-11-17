@@ -9,6 +9,15 @@ namespace CompanyGroup.Dto.PartnerModule
     [System.Runtime.Serialization.DataContract(Name = "Representative", Namespace = "CompanyGroup.Dto.PartnerModule")]
     public class Representative
     {
+        public Representative()
+        {
+            this.Id = String.Empty;
+            this.Name = String.Empty;
+            this.Email = String.Empty;
+            this.Phone = String.Empty;
+            this.Mobile = String.Empty;
+        }
+
         [System.Runtime.Serialization.DataMember(Name = "Id", Order = 1)]
         public string Id { get; set; }
 

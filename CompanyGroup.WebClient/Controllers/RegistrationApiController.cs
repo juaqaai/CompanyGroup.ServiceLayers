@@ -91,50 +91,60 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("GetRegistrationData")]
         public CompanyGroup.WebClient.Models.RegistrationData GetRegistrationData()
         {
-            CompanyGroup.Dto.RegistrationModule.Registration response = null;
-
-            //regisztrációs azonosító kiolvasása sütiből
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
-
-            //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
-            if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.ObjectId))
+            try
             {
-                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId));;
+                CompanyGroup.Dto.RegistrationModule.Registration response = null;
+
+                //regisztrációs azonosító kiolvasása sütiből
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
+                //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
+                if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.ObjectId))
+                {
+                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId)); ;
+                }
+                else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
+                {
+                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
+                }
+                else
+                {
+                    response = new CompanyGroup.Dto.RegistrationModule.Registration();
+                }
+
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          response.Visitor,
+                                                                                                                          response.WebAdministrator,
+                                                                                                                          this.GetCountries());
+
+                return model;
             }
-            else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
+            catch(Exception ex)
             {
-                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
+                throw ex;
             }
-            else
-            {
-                response = new CompanyGroup.Dto.RegistrationModule.Registration();
-            }
-
-            CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
-
-            CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
-
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
-
-            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
-                                                                                                                      response.CompanyData,
-                                                                                                                      contactPersons,
-                                                                                                                      response.DataRecording,
-                                                                                                                      deliveryAddresses,
-                                                                                                                      response.InvoiceAddress,
-                                                                                                                      response.MailAddress,
-                                                                                                                      response.RegistrationId,
-                                                                                                                      response.VisitorId,
-                                                                                                                      response.WebAdministrator, 
-                                                                                                                      this.GetCountries());
-
-            return model;        
         }
 
         /// <summary>
         /// új regisztráció hozzáadás (akkor hívódik, ha elfogadásra kerültek a szerződési feltételek)
+        /// süti tartalma alapján, ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cache-ből.
+        /// ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik.
+        /// regisztrációs azonosító beírása sütibe.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -146,72 +156,25 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
+            //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
             //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
-            if (!String.IsNullOrEmpty(visitorData.RegistrationId));
+            if (!String.IsNullOrEmpty(visitorData.RegistrationId))
             {
                 response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
             }
 
             //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
-            if ((response == null) || (response.RegistrationId.Equals(RegistrationApiController.MongoDbEmptyObjectId));)
+            if ((response == null) || (response.RegistrationId.Equals(RegistrationApiController.MongoDbEmptyObjectId)) || (String.IsNullOrEmpty(response.RegistrationId)))
             {
-                CompanyGroup.Dto.ServiceRequest.AddNewRegistration addNewRegistration = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
+                CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
                 {
                     VisitorId = visitorData.ObjectId,
                     LanguageId = visitorData.Language
                 };
 
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddNewRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "AddNew", addNewRegistration);
+                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddNewRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "AddNew", request);
             }
-
-            //ha a válaszban nincs bankszámlaszám, akkor egy üres elemet hozzá kell adni
-            //if (response.BankAccounts.Count.Equals(0));
-            //{ 
-            //    response.BankAccounts.Add(new CompanyGroup.Dto.RegistrationModule.BankAccount(){ Id = "", Part1 = "", Part2 = "", Part3 = "", RecId = 0 });
-            //}
-
-            //ha a válaszban nincs kapcsolattartó, akkor egy üres elemet hozzá kell adni
-            //if (response.ContactPersons.Count.Equals(0));
-            //{
-            //    response.ContactPersons.Add(new CompanyGroup.Dto.RegistrationModule.ContactPerson() 
-            //                                    { 
-            //                                        AllowOrder = false, 
-            //                                        AllowReceiptOfGoods = false, 
-            //                                        ContactPersonId = "", 
-            //                                        Email = "", 
-            //                                        EmailArriveOfGoods = false, 
-            //                                        EmailOfDelivery = false, 
-            //                                        EmailOfOrderConfirm = false, 
-            //                                        FirstName = "", 
-            //                                        Id = "", 
-            //                                        InvoiceInfo = false, 
-            //                                        LastName = "", 
-            //                                        LeftCompany = false, 
-            //                                        Newsletter = false, 
-            //                                        Password = "", 
-            //                                        PriceListDownload = false, 
-            //                                        SmsArriveOfGoods = false, 
-            //                                        SmsOfDelivery = false, 
-            //                                        SmsOrderConfirm = false, 
-            //                                        Telephone = "", 
-            //                                        UserName = "", 
-            //                                        WebAdmin = false 
-            //                                    });
-            //}
-
-            //ha a válaszban nincs szállítási cím, akkor egy üres elemet hozzá kell adni
-            //if (response.DeliveryAddresses.Count.Equals(0));
-            //{
-            //    response.DeliveryAddresses.Add(new CompanyGroup.Dto.RegistrationModule.DeliveryAddress()
-            //    {
-            //        City = "",
-            //        CountryRegionId = "",
-            //        Id = "",
-            //        RecId = 0,
-            //        Street = "",
-            //        ZipCode = ""
-            //    });
-            //}
 
             //létrehozott regisztrációs azonosító beírása sütibe
             visitorData.RegistrationId = response.RegistrationId;
@@ -232,13 +195,13 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                       response.InvoiceAddress,
                                                                                                                       response.MailAddress,
                                                                                                                       response.RegistrationId,
-                                                                                                                      response.VisitorId,
+                                                                                                                      response.Visitor,
                                                                                                                       response.WebAdministrator, 
                                                                                                                       this.GetCountries());
 
             HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
 
-            string uri = Url.Route(null, new { id = model.RegistrationId });
+            string uri = String.Format("/api/GetRegistrationData/{0}", model.RegistrationId);
 
             httpResponseMsg.Headers.Location = new Uri(Request.RequestUri, uri);
 

@@ -23,8 +23,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                            InvoiceAddress = new InvoiceAddressToInvoiceAddress().MapDomainToDto(from.InvoiceAddress),
                            MailAddress = new MailAddressToMailAddress().MapDomainToDto(from.MailAddress),
                            WebAdministrator = new WebAdministratorToWebAdministrator().MapDomainToDto(from.WebAdministrator), 
-                           RegistrationId = from.Id.ToString(), 
-                           VisitorId = from.VisitorId
+                           RegistrationId = from.Id.ToString()
                        };
         }
 
@@ -40,7 +39,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 InvoiceAddress = new InvoiceAddressToInvoiceAddress().MapDtoToDomain(from.InvoiceAddress),
                 MailAddress = new MailAddressToMailAddress().MapDtoToDomain(from.MailAddress),
                 WebAdministrator = new WebAdministratorToWebAdministrator().MapDtoToDomain(from.WebAdministrator), 
-                VisitorId = from.VisitorId
+                VisitorId = from.Visitor.Id
                 //Id = 
                 
             };

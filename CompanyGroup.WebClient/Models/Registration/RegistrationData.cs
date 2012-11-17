@@ -15,8 +15,8 @@ namespace CompanyGroup.WebClient.Models
                             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses,
                             CompanyGroup.Dto.RegistrationModule.InvoiceAddress invoiceAddress,
                             CompanyGroup.Dto.RegistrationModule.MailAddress mailAddress,
-                            string registrationId, 
-                            string visitorId, 
+                            string registrationId,
+                            CompanyGroup.Dto.PartnerModule.Visitor visitor, 
                             CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator, 
                             Countries countries)
         {
@@ -36,7 +36,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.RegistrationId = registrationId;
 
-            this.VisitorId = visitorId;
+            this.VisitorId = visitor;
 
             this.WebAdministrator = new CompanyGroup.WebClient.Models.WebAdministrator(webAdministrator);
 
@@ -59,7 +59,7 @@ namespace CompanyGroup.WebClient.Models
 
         public string RegistrationId { get; set; }
 
-        public string VisitorId { get; set; }
+        public CompanyGroup.Dto.PartnerModule.Visitor VisitorId { get; set; }
 
         public CompanyGroup.WebClient.Models.WebAdministrator WebAdministrator { get; set; }
 

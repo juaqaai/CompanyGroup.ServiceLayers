@@ -49,6 +49,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
+
+            response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
+
             return response;
         }
 
@@ -56,31 +60,31 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// új regisztráció hozzáadása
         /// </summary>
         /// <param name="visitor"></param>
-        public string Add(CompanyGroup.Dto.RegistrationModule.Registration request)
-        {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration cannot be null!");
+        //public string Add(CompanyGroup.Dto.RegistrationModule.Registration request)
+        //{
+        //    CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration cannot be null!");
 
-            try
-            {
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
+        //    try
+        //    {
+        //        CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
 
-                CompanyGroup.Domain.RegistrationModule.Registration registration = new RegistrationToRegistration().MapDtoToDomain(request);
+        //        CompanyGroup.Domain.RegistrationModule.Registration registration = new RegistrationToRegistration().MapDtoToDomain(request);
 
-                registration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
+        //        registration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
 
-                registration.CompanyId = visitor.CompanyId;
+        //        registration.CompanyId = visitor.CompanyId;
 
-                registration.PersonId = visitor.PersonId;
+        //        registration.PersonId = visitor.PersonId;
 
-                registrationRepository.Add(registration);
+        //        registrationRepository.Add(registration);
 
-                return registration.Id.ToString();
-            }
-            catch(Exception ex)
-            {
-                throw(ex);
-            }
-        }
+        //        return registration.Id.ToString();
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw(ex);
+        //    }
+        //}
 
         /// <summary>
         /// új regisztráció hozzáadása 
@@ -117,6 +121,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
                 CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
+
+                response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
 
                 return response;
             }

@@ -464,14 +464,14 @@
                             </tr>
                             <tr>
                                 <td>Város</td>
-                                <td><input id="txtDeliveryAddressCity_{{Id}" type="text" value="{{City}}" class="regfields" /></td>
+                                <td><input id="txtDeliveryAddressCity_{{Id}}" type="text" value="{{City}}" class="regfields" /></td>
                             </tr>
                             <tr>
                                 <td>Utca, házszám</td>
-                                <td><input id="txtDeliveryAddressStreet_{{Id}" value="{{Street}}" type="text" class="regfields" /></td>
+                                <td><input id="txtDeliveryAddressStreet_{{Id}}" value="{{Street}}" type="text" class="regfields" /></td>
                             </tr>
                             <tr>
-                                <td><input type="hidden" value="{{RecId}" /></td>
+                                <td><input type="hidden" value="{{RecId}}" /></td>
                                 <td><a href="#/updatedeliveryaddress/{{Id}}/{{RecId}}">Mentés</a></td>
                             </tr>
                             {{/SelectedItem}}
@@ -657,15 +657,15 @@
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Belépési név</td>
-                              <td align="right"><input type="text" id="txtContactPersonUserName_{{Id}" class="regfields" value="{{UserName}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonUserName_{{Id}}" class="regfields" value="{{UserName}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Jelszó</td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword_{{Id}" class="regfields" value="{{Password}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonPassword_{{Id}}" class="regfields" value="{{Password}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Jelszó mégegyszer</td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword2_{{Id}" class="regfields" value="{{Password}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonPassword2_{{Id}" class="regfields" value="{{Password}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">&nbsp;</td>
@@ -673,19 +673,19 @@
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Vezetéknév</td>
-                              <td align="right"><input type="text" id="txtContactPersonFirstName_{{Id}" class="regfields" value="{{FirstName}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonFirstName_{{Id}" class="regfields" value="{{FirstName}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Keresztnév</td>
-                              <td align="right"><input type="text" id="txtContactPersonLastName_{{Id}" class="regfields" value="{{LastName}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonLastName_{{Id}" class="regfields" value="{{LastName}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">E-mail</td>
-                              <td align="right"><input type="text" id="txtContactPersonEmail_{{Id}" class="regfields" value="{{Email}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonEmail_{{Id}" class="regfields" value="{{Email}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Telefon</td>
-                              <td align="right"><input type="text" id="txtContactPersonPhone_{{Id}" class="regfields" value="{{Phone}" /></td>
+                              <td align="right"><input type="text" id="txtContactPersonPhone_{{Id}" class="regfields" value="{{Phone}}" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Rendelhet?</td>
@@ -936,7 +936,6 @@
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/appconstants")');
 
-    head.js('@Scripts.Url("~/bundles/registration")');
 }
 @section ScriptOnReady {
     console.log('ScriptOnReady section');
@@ -944,7 +943,7 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
-    companyGroup.registration.run('#/');
+    companyGroupRegistration.run('#/');
 
     $("#chk_accept").change(function () {
         if ($('#chk_accept').is(':checked')) {

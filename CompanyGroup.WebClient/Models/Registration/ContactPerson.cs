@@ -29,8 +29,12 @@ namespace CompanyGroup.WebClient.Models
             this.Telephone = contactPerson.Telephone;
             this.UserName = contactPerson.UserName;
             this.WebAdmin = contactPerson.WebAdmin;
+
+            this.SelectedItem = false;
         }
 
         public ContactPerson() { }
+
+        public bool SelectedItem { get; set; }
     }
 }

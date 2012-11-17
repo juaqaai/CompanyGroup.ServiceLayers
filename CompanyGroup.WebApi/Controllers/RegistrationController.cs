@@ -30,9 +30,14 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetByKey")]
         [HttpGet]
-        public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(string id)
+        public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(string id, string visitorId)
         {
-            CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id);
+            if (String.IsNullOrEmpty(id))
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id, visitorId);
 
             return service.GetByKey(request);
         }

@@ -52,7 +52,12 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpGet]
         public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(string visitorId, string dataAreaId)
         {
-            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new Dto.ServiceRequest.GetCustomerRegistration(visitorId, dataAreaId);
+            if(String.IsNullOrEmpty(visitorId))
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration(visitorId, dataAreaId);
 
             return service.GetCustomerRegistration(request);
         }

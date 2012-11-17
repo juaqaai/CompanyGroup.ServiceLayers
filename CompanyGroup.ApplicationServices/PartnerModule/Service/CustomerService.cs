@@ -105,6 +105,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
             result.WebAdministrator = (webAdministrator == null) ? new ContactPersonToWebAdministrator().Map(new CompanyGroup.Domain.PartnerModule.ContactPerson()) : new ContactPersonToWebAdministrator().Map(webAdministrator);
 
+            result.Visitor = new VisitorToVisitor().Map(visitor);
+
             return result;
         }
 

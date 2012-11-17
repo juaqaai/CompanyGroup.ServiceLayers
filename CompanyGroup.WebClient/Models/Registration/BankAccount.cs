@@ -14,8 +14,11 @@ namespace CompanyGroup.WebClient.Models
             this.Part2 = bankAccount.Part2;
             this.Part3 = bankAccount.Part3;
             this.RecId = bankAccount.RecId;
+            this.SelectedItem = false;
         }
 
         public BankAccount() : base() { }
+
+        public bool SelectedItem { get; set; }
     }
 }

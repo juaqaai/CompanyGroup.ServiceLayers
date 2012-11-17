@@ -20,6 +20,8 @@ namespace CompanyGroup.WebClient.Models
             this.Street = deliveryAddress.Street;
 
             this.ZipCode = deliveryAddress.ZipCode;
+
+            this.SelectedItem = false;
         }
 
         public DeliveryAddress(CompanyGroup.Dto.PartnerModule.DeliveryAddress deliveryAddress)
@@ -35,7 +37,11 @@ namespace CompanyGroup.WebClient.Models
             this.Street = deliveryAddress.Street;
 
             this.ZipCode = deliveryAddress.ZipCode;
+
+            this.SelectedItem = false;
         }
+
+        public bool SelectedItem { get; set; }
     }
 
 

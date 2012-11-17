@@ -50,7 +50,7 @@ namespace CompanyGroup.Dto.RegistrationModule
                                             UserName = "" 
                                         };
 
-            this.VisitorId = String.Empty;
+            this.Visitor = new CompanyGroup.Dto.PartnerModule.Visitor();
 
             this.RegistrationId = String.Empty;
         }
@@ -79,8 +79,8 @@ namespace CompanyGroup.Dto.RegistrationModule
         [System.Runtime.Serialization.DataMember(Name = "WebAdministrator", Order = 7)]
         public CompanyGroup.Dto.RegistrationModule.WebAdministrator WebAdministrator { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "VisitorId", Order = 8)]
-        public string VisitorId { get; set; }
+        [System.Runtime.Serialization.DataMember(Name = "Visitor", Order = 8)]
+        public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 9)]
         public string RegistrationId { get; set; }
