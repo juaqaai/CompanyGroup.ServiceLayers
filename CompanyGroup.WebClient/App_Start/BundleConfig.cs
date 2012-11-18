@@ -52,9 +52,11 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/vegas").Include("~/Scripts/jquery.vegas.js"));
 
 
-            bundles.Add(new ScriptBundle("~/bundles/appconstants").Include("~/Scripts/application.constants.js"));
+            bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/webshop").Include("~/Scripts/app.webshop.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/registration").Include("~/Scripts/app.registration.js"));
 

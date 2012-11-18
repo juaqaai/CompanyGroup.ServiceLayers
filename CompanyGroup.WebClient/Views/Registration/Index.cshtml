@@ -154,7 +154,7 @@
                             <table border="0" cellspacing="2" cellpadding="3">
                             <tr>
                                 <td><strong>Ügyintéző (adatlapot kitöltő)</strong></td>
-                                <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" width="20" height="20" alt="" /></td>
+                                <td align="right"><img src="@Url.Content("~/Content/Media/images/gear.png")" width="20" height="20" alt="" /></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
@@ -163,25 +163,26 @@
                             <tr>
                                 <td>* Név</td>
                                 <td align="right">
-                                <label class="error" for="txtDataRecordingName" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <label class="error" for="txtDataRecordingName" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtDataRecordingName" class="regfields" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>* Telefon</td>
                                 <td align="right">
-                                <label class="error" for="txtDataRecordingPhone" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <label class="error" for="txtDataRecordingPhone" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtDataRecordingPhone" class="regfields" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>* Ügyintéző email</td>
                                 <td align="right">
-                                <label class="error" for="txtDataRecordingEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <label class="error" for="txtDataRecordingEmail" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtDataRecordingEmail" class="regfields" /> 
                                 </td>
                             </tr>
                             <tr><td colspan="2"><input type="submit" value="Tovább" style="border-radius: 5px;" /></td></tr>
+                            <tr><td colspan="2"><span id="spanDataRecordingError"></span></td></tr>
                             </table> 
                             </form>               
                         </div>  
@@ -191,47 +192,46 @@
                                 <table width="100%" border="0" cellspacing="2" cellpadding="3">
                                 <tr>
                                     <td><strong>Cég alap adatai</strong></td>
-                                    <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                                    <td align="right"><img src="@Url.Content("~/Content/Media/images/gear.png")" alt="" width="20" height="20" /></td>
                                 </tr>
                                 <tr>
                                     <td>* Ország</td>
-                                    <td>
-                                        <select name="selectCountry" id="selectCountry" class="regfields">
-
-                                        </select>
+                                    <td><div id="countryContainer"></div>
                                         <script id="countryTemplate" type="text/html">
+                                        <select name="selectCountry" id="selectCountry" class="regfields">
                                             {{#Countries}}
                                             <option value="{{Id}}">{{Name}}</option>
                                             {{/Countries}}
+                                            </select>
                                         </script>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>* Cégnév</td>
-                                    <td><label class="error" for="txtCustomerName" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                        <input type="text" id="txtCustomerName" value="{{CompanyData.CustomerName}}" class="regfields" />
-                                        <input type="hidden" value="{{CompanyData.CustomerId}}" id="hfCustomerId" />
+                                    <td><label class="error" for="txtCustomerName" style="display:none; color:#900;">( ! )</label><br />
+                                        <input type="text" id="txtCustomerName" class="regfields" />
+                                        <input type="hidden" id="hfCustomerId" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Cégjegyzékszám</td>
-                                    <td><label class="error" for="txtCompanyRegisterNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                        <input type="text" id="txtCompanyRegisterNumber" value="{{CompanyData.RegistrationNumber}}" class = "regfields" /></td>
+                                    <td><label class="error" for="txtRegistrationNumber" style="display:none; color:#900;">( ! )</label><br />
+                                        <input type="text" id="txtRegistrationNumber" class="regfields" /></td>
                                 </tr>
                                 <tr>
                                     <td>* Adószám</td>
-                                    <td><label class="error" for="txtVatNumber" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                        <input type="text" id="txtVatNumber" value="{{CompanyData.VatNumber}}" class="regfields" size="10" /></td>
+                                    <td><label class="error" for="txtVatNumber" style="display:none; color:#900;">( ! )</label><br />
+                                        <input type="text" id="txtVatNumber" class="regfields" size="10" /></td>
                                 </tr>
                                 <tr>
                                     <td>Uniós adószám</td>
-                                    <td><input type="text" id="txtEUVatNumber" value="{{CompanyData.EUVatNumber}}" class="regfields" /></td>
+                                    <td><input type="text" id="txtEUVatNumber" class="regfields" /></td>
                                 </tr>
                                 <tr>
                                     <td>* Központi email</td>
                                     <td align="right">
-                                    <label class="error" for="txtMainEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
-                                    <input type="text" id="txtMainEmail" value="{{CompanyData.MainEmail}}" class="regfields" /> 
+                                    <label class="error" for="txtMainEmail" style="display:none; color:#900;">( ! )</label><br />
+                                    <input type="text" id="txtMainEmail" class="regfields" /> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -319,29 +319,36 @@
                             </tr>
                             <tr>
                                 <td>Ország</td>
-                                <td><select name="selectInvoiceCountry" class="regfields" id="selectInvoiceCountry">
-                                </select></td>
+                                <td><div id="invoiceCountryContainer"></div>
+                                <script id="invoiceCountryTemplate" type="text/html">
+                                <select name="selectInvoiceCountry" id="selectInvoiceCountry" class="regfields">
+                                    {{#Countries}}
+                                    <option value="{{Id}}">{{Name}}</option>
+                                    {{/Countries}}
+                                    </select>
+                                </script>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Irányítószám</td>
-                                <td><label class="error" for="txtInvoiceZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtInvoiceZipCode" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtInvoiceZipCode" class="regfields" size="4" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Város</td>
-                                <td><label class="error" for="txtInvoiceCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtInvoiceCity" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtInvoiceCity" class="regfields" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Utca, házszám</td>
-                                <td><label class="error" for="txtInvoiceStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtInvoiceStreet" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtInvoiceStreet" class="regfields" /></td>
                             </tr>
                             <tr>
                                 <td>Telefon</td>
-                                <td><label class="error" for="txtInvoicePhone" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtInvoicePhone" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtInvoicePhone" class="regfields" /></td>
                             </tr>
                             <tr>
@@ -356,22 +363,29 @@
                             </tr>
                             <tr>
                                 <td>Ország</td>
-                                <td><select name="selectMailCountry" class="regfields" id="selectMailCountry">
-                                </select></td>
+                                <td><div id="mailCountryContainer"></div>
+                                <script id="mailCountryTemplate" type="text/html">
+                                <select name="selectMailCountry" id="selectMailCountry" class="regfields">
+                                    {{#Countries}}
+                                    <option value="{{Id}}">{{Name}}</option>
+                                    {{/Countries}}
+                                </select>
+                                </script>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Irányítószám</td>
-                                <td><label class="error" for="txtMailAddressZipCode" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtMailAddressZipCode" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtMailAddressZipCode" class="regfields" /></td>
                             </tr>
                             <tr>
                                 <td>Város</td>
-                                <td><label class="error" for="txtMailAddressCity" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtMailAddressCity" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtMailAddressCity" class="regfields" /></td>
                             </tr>
                             <tr>
                                 <td>Utca, házszám</td>
-                                <td><label class="error" for="txtMailAddressStreet" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                                <td><label class="error" for="txtMailAddressStreet" style="display:none; color:#900;">( ! )</label><br />
                                 <input type="text" id="txtMailAddressStreet" class="regfields" /></td>
                             </tr>
                             <tr>
@@ -505,8 +519,15 @@
                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
                             <tr>
                                 <td>Ország</td>
-                                <td><select id="selectDeliveryAddressCountry" class="regfields">
-                                </select></td>
+                                <td><div id="deliveryAddressCountryContainer"></div>
+                                <script id="deliveryAddressCountryTemplate" type="text/html">
+                                <select name="selectDeliveryAddressCountry" id="selectDeliveryAddressCountry" class="regfields">
+                                    {{#Countries}}
+                                    <option value="{{Id}}">{{Name}}</option>
+                                    {{/Countries}}
+                                </select>
+                                </script>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Irányítószám</td>
@@ -525,6 +546,7 @@
                                 <td><a href="#/adddeliveryaddress">[+] Hozzáad</a></td>
                             </tr>
                             <tr><td colspan="2"><input type="button" value="Tovább" /></td></tr>
+                            <tr><td colspan="2"><span id="spanCompanyDataError"></span></td></tr>
                             </table>
                             </form>        				          
                         </div>
@@ -541,17 +563,17 @@
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Belépési név</td>
-                              <td align="right"><label class="error" for="txtWebAdminUserName" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminUserName" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminUserName" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Jelszó</td>
-                              <td align="right"><label class="error" for="txtWebAdminPassword" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminPassword" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminPassword" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Jelszó mégegyszer</td>
-                              <td align="right"><label class="error" for="txtWebAdminPassword2" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminPassword2" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminPassword2" class="regfields" /></td>
                             </tr>
                             <tr>
@@ -560,7 +582,7 @@
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Vezetéknév</td>
-                              <td align="right"><label class="error" for="txtWebAdminFirstName" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminFirstName" style="display:none; color:#900;">( ! )</label><br />
                                                 <input type="text" id="txtWebAdminFirstName" />
                                                 <input type="hidden" id="hiddenWebAdminContactPersonId" />
                                                 <input type="hidden" id="hiddenWebAdminRecId" />
@@ -568,17 +590,17 @@
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Keresztnév</td>
-                              <td align="right"><label class="error" for="txtWebAdminLastName" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminLastName" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminLastName" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">E-mail</td>
-                              <td align="right"><label class="error" for="txtWebAdminEmail" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminEmail" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminEmail" class="regfields" /></td>
                             </tr>
                             <tr>
                               <td nowrap="nowrap">Telefon</td>
-                              <td align="right"><label class="error" for="txtWebAdminPhone" generated="true" style="display:none; color:#900;">( ! )</label><br />
+                              <td align="right"><label class="error" for="txtWebAdminPhone" style="display:none; color:#900;">( ! )</label><br />
                               <input type="text" id="txtWebAdminPhone" class="regfields" /></td>
                             </tr>
                             <tr>
@@ -629,17 +651,19 @@
                               <td colspan="2" nowrap="nowrap"><hr /></td>
                             </tr>
                             <tr><td colspan="2"><input type="submit" name="nextstep5" id="nextstep5" value="Tovább" /></td></tr>
+                            <tr><td colspan="2"><span id="spanWebAdminDataError"></span></td></tr>
+                            
                             </table>			
                         </form>
                         </div>
                         <div id="tabs-5">
                             <h2>Kapcsolattartók</h2>
-                            <form action="#/save" method="post"> 
+                            <form action="#/preview" method="post"> 
                              <table width="100%" border="0" cellspacing="2" cellpadding="3">
                              <tr>
                               <td><strong>Kapcsolattartók<br />
                               és jogosultságok</strong></td>
-                              <td align="right"><img src="@Url.Content("~/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                              <td align="right"><img src="@Url.Content("~/Content/Media/images/gear.png")" alt="" width="20" height="20" /></td>
                              </tr>
                              <tr>
                               <td>&nbsp;</td>
@@ -648,187 +672,186 @@
                              </table>
                              <table id="contactPersonContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
                              </table>
-                    
                              <script id="contactPersonTemplate" type="text/html">
-                            {{#Items}}
-                            {{#SelectedItem}}
-                            <tr>
-                              <td colspan="2" style="font-size:9px"></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Belépési név</td>
-                              <td align="right"><input type="text" id="txtContactPersonUserName_{{Id}}" class="regfields" value="{{UserName}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Jelszó</td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword_{{Id}}" class="regfields" value="{{Password}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Jelszó mégegyszer</td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword2_{{Id}" class="regfields" value="{{Password}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td align="right">&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Vezetéknév</td>
-                              <td align="right"><input type="text" id="txtContactPersonFirstName_{{Id}" class="regfields" value="{{FirstName}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Keresztnév</td>
-                              <td align="right"><input type="text" id="txtContactPersonLastName_{{Id}" class="regfields" value="{{LastName}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">E-mail</td>
-                              <td align="right"><input type="text" id="txtContactPersonEmail_{{Id}" class="regfields" value="{{Email}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Telefon</td>
-                              <td align="right"><input type="text" id="txtContactPersonPhone_{{Id}" class="regfields" value="{{Phone}}" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Rendelhet?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonAllowOrder" {{#AllowOrder}} checked="checked" {{/AllowOrder}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Árut átvehet?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" {{#AllowReceiptOfGoods}} checked="checked" {{/AllowReceiptOfGoods}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" {{#EmailArriveOfGoods}} checked="checked" {{/EmailArriveOfGoods}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonEmailOfDelivery" {{#EmailOfDelivery}} checked="checked" {{/EmailOfDelivery}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés rendelésről?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" {{#EmailOfOrderConfirm}} checked="checked" {{/EmailOfOrderConfirm}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Számlainformáció?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonInvoiceInfo" {{#InvoiceInfo}} checked="checked" {{/InvoiceInfo}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Hírlevél?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonNewsletter" {{#Newsletter}} checked="checked" {{/Newsletter}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Árlistát letölthet?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonPriceListDownload" {{#PriceListDownload}} checked="checked" {{/PriceListDownload}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árubeérkezésről?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonSmsArriveOfGoods" {{#SmsArriveOfGoods}} checked="checked" {{/SmsArriveOfGoods}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árukiszállításról?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonSmsOfDelivery" {{#SmsOfDelivery}} checked="checked" {{/SmsOfDelivery}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms rendelésről?</td>
-                              <td align="right"><input type="checkbox" id="chkContactPersonSmsOrderConfirm" {{#SmsOrderConfirm}} checked="checked" {{/SmsOrderConfirm}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap"></td>
-                              <td align="right"><a href="#/updatecontactperson/{{Id}}/{{RecId}}">Mentés</a></td>
-                            </tr>
-                            <tr>
-                              <td colspan="2" nowrap="nowrap"><hr /></td>
-                            </tr>
-                            {{/SelectedItem}}
-                            {{^SelectedItem}}
-                            <tr>
-                              <td colspan="2" style="font-size:9px"></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Belépési név</td>
-                              <td align="right">{{UserName}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Jelszó</td>
-                              <td align="right">{{Password}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Jelszó mégegyszer</td>
-                              <td align="right">{{Password}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td align="right">&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Vezetéknév</td>
-                              <td align="right">{{FirstName}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Keresztnév</td>
-                              <td align="right">{{LastName}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">E-mail</td>
-                              <td align="right">{{Email}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Telefon</td>
-                              <td align="right">{{Phone}} /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Rendelhet?</td>
-                              <td align="right">{{#AllowOrder}} igen {{/AllowOrder}} {{^AllowOrder}} nem {{/AllowOrder}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Árut átvehet?</td>
-                              <td align="right">{{#AllowReceiptOfGoods}} igen {{/AllowReceiptOfGoods}} {{^AllowReceiptOfGoods}} nem {{/AllowReceiptOfGoods}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
-                              <td align="right">{{#EmailArriveOfGoods}} igen {{/EmailArriveOfGoods}} {{^EmailArriveOfGoods}} nem {{/EmailArriveOfGoods}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
-                              <td align="right">{{#EmailOfDelivery}} igen {{/EmailOfDelivery}} {{^EmailOfDelivery}} nem {{/EmailOfDelivery}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés rendelésről?</td>
-                              <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Számlainformáció?</td>
-                              <td align="right">{{#InvoiceInfo}} igen {{/InvoiceInfo}} {{^InvoiceInfo}} nem {{/InvoiceInfo}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Hírlevél?</td>
-                              <td align="right">{{#Newsletter}} igen {{/Newsletter}} {{^Newsletter}} nem {{/Newsletter}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Árlistát letölthet?</td>
-                              <td align="right">{{#PriceListDownload}} igen {{/PriceListDownload}} {{^PriceListDownload}} nem {{/PriceListDownload}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árubeérkezésről?</td>
-                              <td align="right">{{#SmsArriveOfGoods}} igen {{/SmsArriveOfGoods}} {{^SmsArriveOfGoods}} nem {{/SmsArriveOfGoods}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árukiszállításról?</td>
-                              <td align="right">{{#SmsOfDelivery}} igen {{/SmsOfDelivery}} {{^SmsOfDelivery}} nem {{/SmsOfDelivery}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms rendelésről?</td>
-                              <td align="right">{{#SmsOrderConfirm}} igen {{/SmsOrderConfirm}} {{^SmsOrderConfirm}} nem {{/SmsOrderConfirm}}</td>
-                            </tr>
-                            <tr>
-                            <td nowrap="nowrap"></td>
-                              <td>
-                              <a href="#/selectforupdatecontactperson/{{Id}}">Módosít</a>
-                              <a href="#/removecontactperson/{{Id}}">Törlés</a>
-                              </td>
-                            </tr>
-                            {{/SelectedItem}}
-                            {{/Items}}
-                             </script>
+                                {{#Items}}
+                                {{#SelectedItem}}
+                                <tr>
+                                    <td colspan="2" style="font-size:9px"></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Belépési név</td>
+                                    <td align="right"><input type="text" id="txtContactPersonUserName_{{Id}}" class="regfields" value="{{UserName}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Jelszó</td>
+                                    <td align="right"><input type="text" id="txtContactPersonPassword_{{Id}}" class="regfields" value="{{Password}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Jelszó mégegyszer</td>
+                                    <td align="right"><input type="text" id="txtContactPersonPassword2_{{Id}" class="regfields" value="{{Password}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">&nbsp;</td>
+                                    <td align="right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Vezetéknév</td>
+                                    <td align="right"><input type="text" id="txtContactPersonFirstName_{{Id}" class="regfields" value="{{FirstName}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Keresztnév</td>
+                                    <td align="right"><input type="text" id="txtContactPersonLastName_{{Id}" class="regfields" value="{{LastName}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">E-mail</td>
+                                    <td align="right"><input type="text" id="txtContactPersonEmail_{{Id}" class="regfields" value="{{Email}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Telefon</td>
+                                    <td align="right"><input type="text" id="txtContactPersonPhone_{{Id}" class="regfields" value="{{Phone}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Rendelhet?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonAllowOrder" {{#AllowOrder}} checked="checked" {{/AllowOrder}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Árut átvehet?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" {{#AllowReceiptOfGoods}} checked="checked" {{/AllowReceiptOfGoods}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" {{#EmailArriveOfGoods}} checked="checked" {{/EmailArriveOfGoods}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonEmailOfDelivery" {{#EmailOfDelivery}} checked="checked" {{/EmailOfDelivery}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés rendelésről?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" {{#EmailOfOrderConfirm}} checked="checked" {{/EmailOfOrderConfirm}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Számlainformáció?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonInvoiceInfo" {{#InvoiceInfo}} checked="checked" {{/InvoiceInfo}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Hírlevél?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonNewsletter" {{#Newsletter}} checked="checked" {{/Newsletter}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Árlistát letölthet?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonPriceListDownload" {{#PriceListDownload}} checked="checked" {{/PriceListDownload}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms árubeérkezésről?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonSmsArriveOfGoods" {{#SmsArriveOfGoods}} checked="checked" {{/SmsArriveOfGoods}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms árukiszállításról?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonSmsOfDelivery" {{#SmsOfDelivery}} checked="checked" {{/SmsOfDelivery}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms rendelésről?</td>
+                                    <td align="right"><input type="checkbox" id="chkContactPersonSmsOrderConfirm" {{#SmsOrderConfirm}} checked="checked" {{/SmsOrderConfirm}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap"></td>
+                                    <td align="right"><a href="#/updatecontactperson/{{Id}}/{{RecId}}">Mentés</a></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" nowrap="nowrap"><hr /></td>
+                                </tr>
+                                {{/SelectedItem}}
+                                {{^SelectedItem}}
+                                <tr>
+                                    <td colspan="2" style="font-size:9px"></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Belépési név</td>
+                                    <td align="right">{{UserName}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Jelszó</td>
+                                    <td align="right">{{Password}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Jelszó mégegyszer</td>
+                                    <td align="right">{{Password}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">&nbsp;</td>
+                                    <td align="right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Vezetéknév</td>
+                                    <td align="right">{{FirstName}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Keresztnév</td>
+                                    <td align="right">{{LastName}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">E-mail</td>
+                                    <td align="right">{{Email}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Telefon</td>
+                                    <td align="right">{{Phone}} /></td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Rendelhet?</td>
+                                    <td align="right">{{#AllowOrder}} igen {{/AllowOrder}} {{^AllowOrder}} nem {{/AllowOrder}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Árut átvehet?</td>
+                                    <td align="right">{{#AllowReceiptOfGoods}} igen {{/AllowReceiptOfGoods}} {{^AllowReceiptOfGoods}} nem {{/AllowReceiptOfGoods}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
+                                    <td align="right">{{#EmailArriveOfGoods}} igen {{/EmailArriveOfGoods}} {{^EmailArriveOfGoods}} nem {{/EmailArriveOfGoods}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
+                                    <td align="right">{{#EmailOfDelivery}} igen {{/EmailOfDelivery}} {{^EmailOfDelivery}} nem {{/EmailOfDelivery}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Email értesítés rendelésről?</td>
+                                    <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Számlainformáció?</td>
+                                    <td align="right">{{#InvoiceInfo}} igen {{/InvoiceInfo}} {{^InvoiceInfo}} nem {{/InvoiceInfo}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Hírlevél?</td>
+                                    <td align="right">{{#Newsletter}} igen {{/Newsletter}} {{^Newsletter}} nem {{/Newsletter}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Árlistát letölthet?</td>
+                                    <td align="right">{{#PriceListDownload}} igen {{/PriceListDownload}} {{^PriceListDownload}} nem {{/PriceListDownload}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms árubeérkezésről?</td>
+                                    <td align="right">{{#SmsArriveOfGoods}} igen {{/SmsArriveOfGoods}} {{^SmsArriveOfGoods}} nem {{/SmsArriveOfGoods}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms árukiszállításról?</td>
+                                    <td align="right">{{#SmsOfDelivery}} igen {{/SmsOfDelivery}} {{^SmsOfDelivery}} nem {{/SmsOfDelivery}}</td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">Sms rendelésről?</td>
+                                    <td align="right">{{#SmsOrderConfirm}} igen {{/SmsOrderConfirm}} {{^SmsOrderConfirm}} nem {{/SmsOrderConfirm}}</td>
+                                </tr>
+                                <tr>
+                                <td nowrap="nowrap"></td>
+                                    <td>
+                                    <a href="#/selectforupdatecontactperson/{{Id}}">Módosít</a>
+                                    <a href="#/removecontactperson/{{Id}}">Törlés</a>
+                                    </td>
+                                </tr>
+                                {{/SelectedItem}}
+                                {{/Items}}
+                            </script>
                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
                             <tr>
                               <td><strong>Kapcsolattartó </strong></td>
@@ -924,6 +947,49 @@
                             </table>                    
                             </form>               			
                         </div>
+                        <div id="tabs-6">
+                            <h2>Regisztráció lezárása, szerződés nyomtatás</h2>
+                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                             <tr>
+                              <td><strong>lezárás<br />
+                              és szerződés nyomtatás</strong></td>
+                              <td align="right"><img src="@Url.Content("~/Content/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                             </tr>
+                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                             </tr>
+                             <tr>
+                              <td>&nbsp;</td>
+                              <td><a href="#/print">Szerződés nyomtatása</a></td>
+                             </tr>
+                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                             </tr>
+                             <tr>
+                              <td>&nbsp;</td>
+                              <td><a href="#/saveregistration">Regisztráció lezárása</a></td>
+                             </tr>
+                             </table>
+                         </div>
+                        <div id="tabs-7">
+                            <h2>Regisztráció eredménye</h2>
+                             <table width="100%" border="0" cellspacing="2" cellpadding="3">
+                             <tr>
+                              <td><strong>A rendszer üzenete<br /></strong></td>
+                              <td align="right"><img src="@Url.Content("~/Content/Media/images/gear.png")" alt="" width="20" height="20" /></td>
+                             </tr>
+                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                             </tr>
+                             <tr>
+                              <td>Az Ön által megadott regisztrációs adatok rendszerünkben rögzítésre kerültek.</td>
+                              <td></td>
+                             </tr>
+                             </table>
+                         </div>
   	                </div>
                 </td>
             </tr>
@@ -934,7 +1000,7 @@
 	@*	</div>*@
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/appconstants")');
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/registration")');
 
 }
 @section ScriptOnReady {
@@ -943,7 +1009,9 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
-    companyGroupRegistration.run('#/');
+    companyGroup.utils.instance().setRegistrationBaseApiUrl('@Url.Content("~/api/RegistrationApi/")');
+
+    companyGroup.registration.run('#/');
 
     $("#chk_accept").change(function () {
         if ($('#chk_accept').is(':checked')) {
@@ -954,7 +1022,24 @@
         }
     });
 
-    $('#form_datarecording').validate({
+        $('#form_datarecording').validate({
+            rules: {
+                txtDataRecordingEmail: { required: true, email: true },
+                txtDataRecordingName: { required: true },
+                txtDataRecordingPhone: { required: true }
+            },
+            errorPlacement: function (error, element) {
+                element.parent().children('label.error').text(error.text());
+            },
+            highlight: function (element, errorClass) {
+                $(element).parent().children('label.error').show();
+            },
+            unhighlight: function (element, errorClass) {
+                $(element).parent().children('label.error').hide();
+            }
+        });
+
+    /* $('#form_datarecording').validate({
         submitHandler: function () {
             console.log('CompanyGroupCms.Registration.UpdateDataRecording()');
             return false;
@@ -984,7 +1069,7 @@
             txtDataRecordingPhone:"A telefonszám kitöltése kötelező!",
             txtDataRecordingEmail:"Az email cím kitöltése kötelező!"
         }
-    });
+    }); */
 
 
         $('#orderForm').validate({

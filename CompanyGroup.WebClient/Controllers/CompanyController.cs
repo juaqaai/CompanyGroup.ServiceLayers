@@ -26,7 +26,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "Newsletter view.";
 
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, BaseController.CookieName);
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, BaseController.CookieName);
 
             if (visitorData == null)
             {

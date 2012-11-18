@@ -1,47 +1,270 @@
 ﻿var companyGroup = companyGroup || {};
 
-companyGroup.webshop = $.sammy('#main', function () {
+companyGroup.webshop = $.sammy(function () {
 
-    this.use(Sammy.Mustache, 'html').use(Sammy.Title);
-    
-    this.get('#/', function (context) {
-        console.log(context);
-    });
-
-    this.get('#/about', function (context) {
-
-        this.title('About Us - Sammy Fourth Coffee');
-
-        this.partial(viewPath('about'));
-    });
+    this.use(Sammy.Title);
 
     this.get('#/', function (context) {
+        //console.log(context);
+        context.title('Webshop - Kezdőoldal');
 
-        this.title('Home - Sammy Fourth Coffee');
-        this.load('/app/products')
-            .then(function (response) {
-                context.partial(viewPath('index'), response);
-            });
     });
-
-    function viewPath(name) {
-        return '/assets/views/' + name + '.html';
-    }
-});
-
-
-
-(function () {
-    var showPicture = function (productId, dataAreaId, productName) {
+    //ugrás az első oldalra
+    this.get('#/firstpage', function (context) {
+        //console.log(context);
+        var currentPageIndex = catalogueRequest.CurrentPageIndex;
+        if (currentPageIndex > 1) {
+            catalogueRequest.CurrentPageIndex = 1;
+            loadCatalogue();
+            context.title('Webshop - Első oldal');
+        }
+    });
+    //ugrás az utolsó oldalra
+    this.get('#/lastPage', function (context) {
+        //console.log(context);
+        var currentPageIndex = catalogueRequest.CurrentPageIndex;
+        var lastPageIndex = $("#spanTopLastPageIndex").text();
+        if (currentPageIndex < (lastPageIndex)) {
+            catalogueRequest.CurrentPageIndex = lastPageIndex;
+            loadCatalogue();
+            context.title('Webshop - Utolsó oldal');
+        }
+    });
+    //ugrás a következő oldalra
+    this.get('#/nextPage', function (context) {
+        //console.log(context);
+        var currentPageIndex = catalogueRequest.CurrentPageIndex;
+        var lastPageIndex = $("#spanTopLastPageIndex").text();
+        if (currentPageIndex < (lastPageIndex)) {
+            currentPageIndex = currentPageIndex + 1;
+            catalogueRequest.CurrentPageIndex = currentPageIndex;
+            loadCatalogue();
+            context.title('Webshop - Következő oldal');
+        }
+    });
+    //ugrás az előző oldalra
+    this.get('#/previousPage', function (context) {
+        //console.log(context);
+        var currentPageIndex = catalogueRequest.CurrentPageIndex;
+        if (currentPageIndex > 1) {
+            currentPageIndex = currentPageIndex - 1;
+            catalogueRequest.CurrentPageIndex = currentPageIndex;
+            loadCatalogue();
+            context.title('Webshop - Előző oldal');
+        }
+    });
+    //megjelenített elemek száma változás
+    this.get('#/visibleItemListChanged', function (context) {
+        //console.log(context);
+        catalogueRequest.CurrentPageIndex = 1;
+        if (value === 'top') {
+            catalogueRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_top").val(), 0);
+        }
+        else {
+            catalogueRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_bottom").val(), 0);
+        }
+        loadCatalogue();
+        context.title('Webshop - megjelenített elemek száma változás');
+    });
+    //kiválasztott sorszámú lapra ugrás
+    this.get('#/selectedPageIndexChanged', function (context) {
+        //console.log(context);
+        if (value === 'top') {
+            catalogueRequest.CurrentPageIndex = parseInt($("#select_pageindex_top").val(), 0);
+        }
+        else {
+            catalogueRequest.CurrentPageIndex = parseInt($("#select_pageindex_bottom").val(), 0);
+        }
+        loadCatalogue();
+        context.title('Webshop - kiválasztott sorszámú lapra ugrás');
+    });
+    /*
+    /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
+    /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
+    /// 2: azonosito növekvő, (cikkszám)
+    /// 3: azonosito csökkenő, (cikkszám)
+    /// 4 nev növekvő,
+    /// 5: nev csökkenő,
+    /// 6: ar növekvő,
+    /// 7: ar csökkenő, 
+    /// 8: belső készlet növekvően, 
+    /// 9: belső készlet csökkenően
+    /// 10: külső készlet növekvően
+    /// 11: külső készlet csökkenően
+    /// 12: garancia növekvően
+    /// 13: garancia csökkenő    
+    */
+    //rendezés árra növekvően
+    this.get('#/sequenceByPriceUp', function (context) {
+        catalogueRequest.Sequence = 6;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés ár szerint növekvőleg');
+    });
+    //rendezés árra csökkenően
+    this.get('#/sequenceByPriceDown', function (context) {
+        catalogueRequest.Sequence = 7;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés ár szerint csökkenőleg');
+    });
+    //rendezés cikkszámta növekvően
+    this.get('#/sequenceByPartNumberUp', function (context) {
+        //console.log(self);
+        catalogueRequest.Sequence = 2;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés cikkszám szerint növekvőleg');
+    });
+    //rendezés cikkszámta csökkenőleg
+    this.get('#/sequenceByPartNumberDown', function (context) {
+        //console.log(self);
+        catalogueRequest.Sequence = 3;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
+    });
+    //rendezés név szerint növekvőleg
+    this.get('#/sequenceByNameUp', function (context) {
+        //console.log(this);
+        catalogueRequest.Sequence = 4;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés név szerint növekvőleg');
+    });
+    //rendezés név szerint csökkenőleg
+    this.get('#/sequenceByNameDown', function (context) {
+        //console.log(this);
+        catalogueRequest.Sequence = 5;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés név szerint csökkenőleg');
+    });
+    //rendezés készletre növekvően
+    this.get('#/sequenceByStockUp', function (context) {
+        catalogueRequest.Sequence = 8;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés készlet szerint növekvőleg');
+    });
+    //rendezés készletre csökkenőleg
+    this.get('#/sequenceByStockDown', function (context) {
+        catalogueRequest.Sequence = 9;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés készlet szerint csökkenőleg');
+    });
+    //rendezés garanciaidőre növekvően
+    this.get('#/sequenceByGarantyUp', function (context) {
+        catalogueRequest.Sequence = 12;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés garancia szerint növekvőleg');
+    });
+    //rendezés garanciaidőre csökkenőleg
+    this.get('#/sequenceByGarantyDown', function (context) {
+        catalogueRequest.Sequence = 13;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés garancia szerint csökkenőleg');
+    });
+    //szűrés készleten lévő termékekre
+    this.get('#/filterByStock/:value', function (context) {
+        catalogueRequest.StockFilter = value;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szűrés készleten lévő termékekre');
+    });
+    //szűrés akciós termékekre
+    this.get('#/filterByAction/:value', function (context) {
+        catalogueRequest.ActionFilter = value;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szűrés akciós termékekre');
+    });
+    //szűrés használt termékekre
+    this.get('#/filterByBargain/:value', function (context) {
+        catalogueRequest.BargainFilter = value;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szűrés használt termékekre');
+    });
+    //szűrés új termékekre
+    this.get('#/filterByNew/:value', function (context) {
+        catalogueRequest.NewFilter = value;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szűrés új termékekre');
+    });
+    //szűrés a hrp termékekre
+    this.get('#/filterByHrp', function (context) {
+        catalogueRequest.clear();
+        catalogueRequest.HrpFilter = true;
+        catalogueRequest.BscFilter = false;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - hardver termékek');
+    });
+    //szűrés a hrp hardvare termékekre
+    this.get('#/filterByCategoryHrp/:value', function (context) {
+        catalogueRequest.clear();
+        catalogueRequest.Category1IdList.push(value);
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        $('#category1List').val(value);
+        $("#category1List").trigger("liszt:updated");
+        context.title('Webshop - hardver termékek');
+    });
+    //szűrés a bsc termékekre
+    this.get('#/filterByBsc', function (context) {
+        catalogueRequest.clear();
+        catalogueRequest.HrpFilter = false;
+        catalogueRequest.BscFilter = true;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szoftver termékek');
+    });
+    //szűrés a bsc szoftvertermékeire
+    this.get('#/filterByCategoryBsc/:value', function (context) {
+        catalogueRequest.clear();
+        catalogueRequest.Category1IdList.push(value);
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        $('#category1List').val(value);
+        $("#category1List").trigger("liszt:updated");
+        context.title('Webshop - szoftver termékek');
+    });
+    //szűrőfeltételek törlése
+    this.get('#/clearFilters', function (context) {
+        catalogueRequest.clear();
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - szűrőfeltételek törlése');
+    });
+    //használtcikk lista
+    this.get('#/showSecondHandList/:productId/:dataAreaId', function (context) {
+        alert('Ide jön a ' + productId + '-hoz kapcsolt használtcikk lista,');
+        context.title('Webshop - leértékelt lista');
+    });
+    //keresés a termékek között
+    this.get('#/searchByTextFilter/:textfilter', function (context) {
+        catalogueRequest.TextFilter = textfilter;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - keresés');
+    });
+    //nagyobb méretű termékkép
+    this.get('#/showPicture/:productId/:dataAreaId/:productName', function (context) {
         var arr_pics = new Array();
-        var data = new Object();
-        data.ProductId = productId;
-        data.DataAreaId = dataAreaId;
-        var dataString = $.toJSON(data);
+        var data = {
+            ProductId: productId,
+            DataAreaId: dataAreaId
+        };
         $.ajax({
             type: "POST",
-            url: CompanyGroupCms.Constants.Instance().getPictureListServiceUrl(),
-            data: dataString,
+            url: companyGroup.utils.instance().getPictureApiUrl('GetListByProduct'),
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             timeout: 15000,
             dataType: "json",
@@ -50,7 +273,7 @@ companyGroup.webshop = $.sammy('#main', function () {
                 if (result.Items.length > 0) {
                     $.each(result.Items, function (i, pic) {
                         var item = new Object();
-                        item.href = CompanyGroupCms.Constants.Instance().getBigPictureUrl(productId, pic.RecId, dataAreaId);
+                        item.href = companyGroup.utils.instance().getBigPictureUrl(productId, pic.RecId, dataAreaId);
                         item.title = productId;
                         arr_pics.push(item);
                         $.fancybox(
@@ -68,7 +291,7 @@ companyGroup.webshop = $.sammy('#main', function () {
                                 'autoScale': true,
                                 'titlePosition': 'inside',
                                 'titleFormat': function (title, currentArray, currentIndex, currentOpts) {
-                                    return '<a href="' + CompanyGroupCms.Constants.Instance().getProductDetailsUrl(productId) + '"><span id="fancybox-title-over"> ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? '&nbsp; ' + title + '&nbsp;&nbsp;' + productName + '&nbsp;' : '') + '</span></a>';
+                                    return '<a href="' + companyGroup.utils.instance().getProductDetailsUrl(productId) + '"><span id="fancybox-title-over"> ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? '&nbsp; ' + title + '&nbsp;&nbsp;' + productName + '&nbsp;' : '') + '</span></a>';
                                 }
                             });
                     });
@@ -78,192 +301,153 @@ companyGroup.webshop = $.sammy('#main', function () {
                 alert('Service call failed: GetListByProduct');
             }
         });
+    });
+
+    //struktúra betöltés
+    var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getStructureApiUrl('GetStructure'),
+            data: JSON.stringify(catalogueRequest),
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                if (result) {
+                    if (loadManufacturer) {
+                        var manufacturer = $('#manufacturerList').val()
+                        $("#manufacturerList").empty();
+                        $.each(result.Manufacturers, function (key, value) {
+                            var option = $('<option>').text(value.Name).val(value.Id);
+                            $("#manufacturerList").append(option);
+                        });
+                        if (manufacturer != '') {
+                            $("#manufacturerList").val(manufacturer);
+                        }
+                        $("#manufacturerList").trigger("liszt:updated");
+                    }
+                    if (loadCategory1) {
+                        var selectList = $("#category1List");
+                        var categories = selectList.val();
+                        selectList.empty();
+                        $.each(result.FirstLevelCategories, function (key, value) {
+                            var option = $('<option>').text(value.Name).val(value.Id);
+                            selectList.append(option);
+                        });
+                        if (categories != '') {
+                            selectList.val(categories);
+                        }
+                        $("#category1List").trigger("liszt:updated");
+                    }
+                    if (loadCategory2) {
+                        var selectList = $("#category2List");
+                        var categories = selectList.val();
+                        selectList.empty();
+                        $.each(result.SecondLevelCategories, function (key, value) {
+                            var option = $('<option>').text(value.Name).val(value.Id);
+                            selectList.append(option);
+                        });
+                        if (categories != '') {
+                            selectList.val(categories);
+                        }
+                        $("#category2List").trigger("liszt:updated");
+                    }
+                    if (loadCategory3) {
+                        var selectList = $("#category3List");
+                        var categories = selectList.val();
+                        selectList.empty();
+                        $.each(result.ThirdLevelCategories, function (key, value) {
+                            var option = $('<option>').text(value.Name).val(value.Id);
+                            selectList.append(option);
+                        });
+                        if (categories != '') {
+                            selectList.val(categories);
+                        }
+                        $("#category3List").trigger("liszt:updated");
+                    }
+                }
+                else {
+                    console.log('LoadStructure call failed!');
+                }
+            },
+            error: function () {
+                console.log('LoadStructure call failed!');
+            }
+        });
     };
-    var firstPage = function () {
-        var currentPageIndex = CompanyGroupCms.CatalogueListRequest.CurrentPageIndex;
-        if (currentPageIndex > 1) {
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-            loadCatalogue();
+    //terméklista betöltés
+    var loadCatalogue = function () {
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getWebshopApiUrl('GetCatalogue'),
+            data: JSON.stringify(catalogueRequest),
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                if (result) {
+                    //console.log(result);
+                    $("#div_pager_top").empty();
+                    $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
+                    $("#div_pager_bottom").empty();
+                    $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
+                    $("#div_catalogue").empty();
+                    $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
+                    $('.number').spin();
+                }
+                else {
+                    console.log('loadCatalogueList result failed');
+                }
+            },
+            error: function () {
+                console.log('loadCatalogueList call failed');
+            }
+        });
+    };
+    //kérés paramétereit összefogó objektum
+    var catalogueRequest = {
+        ManufacturerIdList: [],
+        Category1IdList: [],
+        Category2IdList: [],
+        Category3IdList: [],
+        ActionFilter: false,
+        BargainFilter: false,
+        NewFilter: false,
+        StockFilter: false,
+        TextFilter: '',
+        HrpFilter: true,
+        BscFilter: true,
+        PriceFilter: '0',
+        PriceFilterRelation: '0',
+        NameOrPartNumberFilter: '',
+        Sequence: 0,
+        CurrentPageIndex: 1,
+        ItemsOnPage: 30, 
+        clear: function() {
+            this.ManufacturerIdList = [];
+            this.Category1IdList = [];
+            this.Category2IdList = [];
+            this.Category3IdList = [];
+            this.ActionFilter = false;
+            this.BargainFilter = false;
+            this.NewFilter = false;
+            this.StockFilter = false;
+            this.TextFilter = '';
+            this.HrpFilter = true;
+            this.BscFilter = true;
+            this.PriceFilter = '0';
+            this.PriceFilterRelation = '0';
+            this.NameOrPartNumberFilter = '';
+            this.Sequence = 0;
+            this.CurrentPageIndex = 1;
+            this.ItemsOnPage = 30;       
         }
     };
-    var lastPage = function () {
-        var currentPageIndex = CompanyGroupCms.CatalogueListRequest.CurrentPageIndex;
-        var lastPageIndex = $("#spanTopLastPageIndex").text();
-        if (currentPageIndex < (lastPageIndex)) {
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = lastPageIndex;
-            loadCatalogue();
-        }
-    };
-    var nextPage = function () {
-        var currentPageIndex = CompanyGroupCms.CatalogueListRequest.CurrentPageIndex;
-        var lastPageIndex = $("#spanTopLastPageIndex").text();
-        if (currentPageIndex < (lastPageIndex)) {
-            currentPageIndex = currentPageIndex + 1;
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = currentPageIndex;
-            loadCatalogue();
-        }
-    };
-    var previousPage = function () {
-        var currentPageIndex = CompanyGroupCms.CatalogueListRequest.CurrentPageIndex;
-        if (currentPageIndex > 1) {
-            currentPageIndex = currentPageIndex - 1;
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = currentPageIndex;
-            loadCatalogue();
-        }
-    };
-    var visibleItemListChanged = function (value) {
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        if (value === 'top') {
-            CompanyGroupCms.CatalogueListRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_top").val(), 0);
-        }
-        else {
-            CompanyGroupCms.CatalogueListRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_bottom").val(), 0);
-        }
-        loadCatalogue();
-    };
-    var selectedPageIndexChanged = function (value) {
-        if (value === 'top') {
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = parseInt($("#select_pageindex_top").val(), 0);
-        }
-        else {
-            CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = parseInt($("#select_pageindex_bottom").val(), 0);
-        }
-        loadCatalogue();
-    };
-    /*
-    /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
-    /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
-    /// 2: azonosito növekvő, (cikkszám)
-    /// 3: azonosito csökkenő, (cikkszám)
-    /// 4 nev növekvő,
-    /// 5: nev csökkenő,
-    /// 6: ar növekvő,
-    /// 7: ar csökkenő, 
-    /// 8: belső készlet növekvően, 
-    /// 9: belső készlet csökkenően
-    /// 10: külső készlet növekvően
-    /// 11: külső készlet csökkenően
-    /// 12: garancia növekvően
-    /// 13: garancia csökkenő    
-    */
-    var sequenceByPriceUp = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 6;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByPriceDown = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 7;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByPartNumberUp = function () {
-        //console.log(self);
-        CompanyGroupCms.CatalogueListRequest.Sequence = 2;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByPartNumberDown = function () {
-        //console.log(self);
-        CompanyGroupCms.CatalogueListRequest.Sequence = 3;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByNameUp = function () {
-        //console.log(this);
-        CompanyGroupCms.CatalogueListRequest.Sequence = 4;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByNameDown = function () {
-        //console.log(this);
-        CompanyGroupCms.CatalogueListRequest.Sequence = 5;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByStockUp = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 8;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByStockDown = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 9;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByGarantyUp = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 12;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var sequenceByGarantyDown = function () {
-        CompanyGroupCms.CatalogueListRequest.Sequence = 13;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-    };
-    var filterByStock = function (value) {
-        CompanyGroupCms.CatalogueListRequest.StockFilter = value;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByAction = function (value) {
-        CompanyGroupCms.CatalogueListRequest.ActionFilter = value;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByBargain = function (value) {
-        CompanyGroupCms.CatalogueListRequest.BargainFilter = value;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByNew = function (value) {
-        CompanyGroupCms.CatalogueListRequest.NewFilter = value;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByHrp = function () {
-        CompanyGroupCms.CatalogueListRequest.Clear();
-        CompanyGroupCms.CatalogueListRequest.HrpFilter = true;
-        CompanyGroupCms.CatalogueListRequest.BscFilter = false;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByCategoryHrp = function (value) {
-        CompanyGroupCms.CatalogueListRequest.Clear();
-        CompanyGroupCms.CatalogueListRequest.Category1IdList.push(value);
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        $('#category1List').val(value);
-        $("#category1List").trigger("liszt:updated");
-    };
-    var filterByBsc = function () {
-        CompanyGroupCms.CatalogueListRequest.Clear();
-        CompanyGroupCms.CatalogueListRequest.HrpFilter = false;
-        CompanyGroupCms.CatalogueListRequest.BscFilter = true;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var filterByCategoryBsc = function (value) {
-        CompanyGroupCms.CatalogueListRequest.Clear();
-        CompanyGroupCms.CatalogueListRequest.Category1IdList.push(value);
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        $('#category1List').val(value);
-        $("#category1List").trigger("liszt:updated");
-    };
-    var clearFilters = function () {
-        CompanyGroupCms.CatalogueListRequest.Clear();
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
-    var showSecondHandList = function (productId, dataAreaId) {
-        alert('Ide jön a ' + productId + '-hoz kapcsolt használtcikk lista,');
-    };
-    var searchByTextFilter = function (value) {
-        CompanyGroupCms.CatalogueListRequest.TextFilter = value;
-        CompanyGroupCms.CatalogueListRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-    };
+});
+
+companyGroup.autocomplete = (function () {
     var initAutoCompletionBaseProduct = function () {
         $("#txt_filterbynameorpartnumber").autocomplete({
             source: function (request, response) {
@@ -371,164 +555,118 @@ companyGroup.webshop = $.sammy('#main', function () {
 
     };
 
-    var loadCatalogue = function () {
-        var dataString = $.toJSON(CompanyGroupCms.CatalogueListRequest);
-        $.ajax({
-            type: "POST",
-            url: CompanyGroupCms.Constants.Instance().getProductListServiceUrl(),
-            data: dataString,
-            contentType: "application/json; charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            processData: true,
-            success: function (result) {
-                if (result) {
-                    //console.log(result);
-                    $("#div_pager_top").empty();
-                    $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
-                    $("#div_pager_bottom").empty();
-                    $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
-                    $("#div_catalogue").empty();
-                    $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
-                    $('.number').spin();
-                }
-                else {
-                    alert('loadCatalogueList result failed');
-                }
-            },
-            error: function () {
-                alert('loadCatalogueList call failed');
-            }
-        });
-    };
+//    var loadCatalogue = function () {
+//        var dataString = $.toJSON(catalogueRequest);
+//        $.ajax({
+//            type: "POST",
+//            url: CompanyGroupCms.Constants.Instance().getProductListServiceUrl(),
+//            data: dataString,
+//            contentType: "application/json; charset=utf-8",
+//            timeout: 10000,
+//            dataType: "json",
+//            processData: true,
+//            success: function (result) {
+//                if (result) {
+//                    //console.log(result);
+//                    $("#div_pager_top").empty();
+//                    $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
+//                    $("#div_pager_bottom").empty();
+//                    $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
+//                    $("#div_catalogue").empty();
+//                    $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
+//                    $('.number').spin();
+//                }
+//                else {
+//                    alert('loadCatalogueList result failed');
+//                }
+//            },
+//            error: function () {
+//                alert('loadCatalogueList call failed');
+//            }
+//        });
+//    };
     var downloadPriceList = function () {
         console.log('downloadPriceList');
-        window.location = CompanyGroupCms.Constants.Instance().getDownloadPriceListServiceUrl() + '?' + $.param(CompanyGroupCms.CatalogueListRequest);
-        //        var dataString = $.toJSON(CompanyGroupCms.CatalogueListRequest);
-        //        $.ajax({
-        //            type: "POST",
-        //            url: CompanyGroupCms.Constants.Instance().getDownloadPriceListServiceUrl(),
-        //            data: dataString,
-        //            contentType: "application/json; charset=utf-8",
-        //            timeout: 1000000,
-        //            dataType: "json",
-        //            processData: false,
-        //            success: function (result) {
-        //                alert('DownloadPriceList call completed!');
-        //            },
-        //            error: function (status) {
-
-        //                console.log(status);
-
-        //            }
-        //        });
+        window.location = CompanyGroupCms.Constants.Instance().getDownloadPriceListServiceUrl() + '?' + $.param(catalogueRequest);
     };
-    var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {
-        var dataString = $.toJSON(CompanyGroupCms.CatalogueListRequest);
-        $.ajax({
-            type: "POST",
-            url: CompanyGroupCms.Constants.Instance().getStructureServiceUrl(),
-            data: dataString,
-            contentType: "application/json; charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            processData: true,
-            success: function (result) {
-                if (result) {
-                    if (loadManufacturer) {
-                        var manufacturer = $('#manufacturerList').val()
-                        $("#manufacturerList").empty();
-                        $.each(result.Manufacturers, function (key, value) {
-                            var option = $('<option>').text(value.Name).val(value.Id);
-                            $("#manufacturerList").append(option);
-                        });
-                        if (manufacturer != '') {
-                            $("#manufacturerList").val(manufacturer);
-                        }
-                        $("#manufacturerList").trigger("liszt:updated");
-                    }
-                    if (loadCategory1) {
-                        var selectList = $("#category1List");
-                        var categories = selectList.val();
-                        selectList.empty();
-                        $.each(result.FirstLevelCategories, function (key, value) {
-                            var option = $('<option>').text(value.Name).val(value.Id);
-                            selectList.append(option);
-                        });
-                        if (categories != '') {
-                            selectList.val(categories);
-                        }
-                        $("#category1List").trigger("liszt:updated");
-                    }
-                    if (loadCategory2) {
-                        var selectList = $("#category2List");
-                        var categories = selectList.val();
-                        selectList.empty();
-                        $.each(result.SecondLevelCategories, function (key, value) {
-                            var option = $('<option>').text(value.Name).val(value.Id);
-                            selectList.append(option);
-                        });
-                        if (categories != '') {
-                            selectList.val(categories);
-                        }
-                        $("#category2List").trigger("liszt:updated");
-                    }
-                    if (loadCategory3) {
-                        var selectList = $("#category3List");
-                        var categories = selectList.val();
-                        selectList.empty();
-                        $.each(result.ThirdLevelCategories, function (key, value) {
-                            var option = $('<option>').text(value.Name).val(value.Id);
-                            selectList.append(option);
-                        });
-                        if (categories != '') {
-                            selectList.val(categories);
-                        }
-                        $("#category3List").trigger("liszt:updated");
-                    }
-                }
-                else {
-                    alert('LoadStructure call failed!');
-                }
-            },
-            error: function () {
-                alert('LoadStructure call failed!');
-            }
-        });
-    };
+//    var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {
+//        var dataString = $.toJSON(catalogueRequest);
+//        $.ajax({
+//            type: "POST",
+//            url: CompanyGroupCms.Constants.Instance().getStructureServiceUrl(),
+//            data: dataString,
+//            contentType: "application/json; charset=utf-8",
+//            timeout: 10000,
+//            dataType: "json",
+//            processData: true,
+//            success: function (result) {
+//                if (result) {
+//                    if (loadManufacturer) {
+//                        var manufacturer = $('#manufacturerList').val()
+//                        $("#manufacturerList").empty();
+//                        $.each(result.Manufacturers, function (key, value) {
+//                            var option = $('<option>').text(value.Name).val(value.Id);
+//                            $("#manufacturerList").append(option);
+//                        });
+//                        if (manufacturer != '') {
+//                            $("#manufacturerList").val(manufacturer);
+//                        }
+//                        $("#manufacturerList").trigger("liszt:updated");
+//                    }
+//                    if (loadCategory1) {
+//                        var selectList = $("#category1List");
+//                        var categories = selectList.val();
+//                        selectList.empty();
+//                        $.each(result.FirstLevelCategories, function (key, value) {
+//                            var option = $('<option>').text(value.Name).val(value.Id);
+//                            selectList.append(option);
+//                        });
+//                        if (categories != '') {
+//                            selectList.val(categories);
+//                        }
+//                        $("#category1List").trigger("liszt:updated");
+//                    }
+//                    if (loadCategory2) {
+//                        var selectList = $("#category2List");
+//                        var categories = selectList.val();
+//                        selectList.empty();
+//                        $.each(result.SecondLevelCategories, function (key, value) {
+//                            var option = $('<option>').text(value.Name).val(value.Id);
+//                            selectList.append(option);
+//                        });
+//                        if (categories != '') {
+//                            selectList.val(categories);
+//                        }
+//                        $("#category2List").trigger("liszt:updated");
+//                    }
+//                    if (loadCategory3) {
+//                        var selectList = $("#category3List");
+//                        var categories = selectList.val();
+//                        selectList.empty();
+//                        $.each(result.ThirdLevelCategories, function (key, value) {
+//                            var option = $('<option>').text(value.Name).val(value.Id);
+//                            selectList.append(option);
+//                        });
+//                        if (categories != '') {
+//                            selectList.val(categories);
+//                        }
+//                        $("#category3List").trigger("liszt:updated");
+//                    }
+//                }
+//                else {
+//                    alert('LoadStructure call failed!');
+//                }
+//            },
+//            error: function () {
+//                alert('LoadStructure call failed!');
+//            }
+//        });
+//    };
     return {
         DownloadPriceList: downloadPriceList,
-        LoadStructure: loadStructure,
-        LoadCatalogue: loadCatalogue,
-        ShowPicture: showPicture,
-        FirstPage: firstPage,
-        LastPage: lastPage,
-        NextPage: nextPage,
-        PreviousPage: previousPage,
-        VisibleItemListChanged: visibleItemListChanged,
-        SelectedPageIndexChanged: selectedPageIndexChanged,
-        SequenceByPriceUp: sequenceByPriceUp,
-        SequenceByPriceDown: sequenceByPriceDown,
-        SequenceByPartNumberUp: sequenceByPartNumberUp,
-        SequenceByPartNumberDown: sequenceByPartNumberDown,
-        SequenceByNameUp: sequenceByNameUp,
-        SequenceByNameDown: sequenceByNameDown,
-        SequenceByStockUp: sequenceByStockUp,
-        SequenceByStockDown: sequenceByStockDown,
-        SequenceByGarantyUp: sequenceByGarantyUp,
-        SequenceByGarantyDown: sequenceByGarantyDown,
-        FilterByStock: filterByStock,
-        FilterByAction: filterByAction,
-        FilterByBargain: filterByBargain,
-        FilterByNew: filterByNew,
-        FilterByHrp: filterByHrp,
-        FilterByBsc: filterByBsc,
-        FilterByCategoryHrp: filterByCategoryHrp,
-        FilterByCategoryBsc: filterByCategoryBsc,
-        ClearFilters: clearFilters,
-        ShowSecondHandList: showSecondHandList,
-        SearchByTextFilter: searchByTextFilter,
         InitAutoCompletionAllProduct: initAutoCompletionAllProduct,
         InitAutoCompletionBaseProduct: initAutoCompletionBaseProduct
     };
 })();
+
+

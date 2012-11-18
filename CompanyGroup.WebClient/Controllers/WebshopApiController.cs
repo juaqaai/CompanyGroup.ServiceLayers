@@ -15,8 +15,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Catalogue")]
-        public CompanyGroup.WebClient.Models.Catalogue Catalogue()
+        [ActionName("GetCatalogue")]
+        public CompanyGroup.WebClient.Models.Catalogue GetCatalogue()
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 

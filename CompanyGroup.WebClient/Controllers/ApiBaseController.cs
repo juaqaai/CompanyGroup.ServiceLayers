@@ -195,13 +195,13 @@ namespace CompanyGroup.WebClient.Controllers
         {
             try
             {
-                //System.Web.HttpContext.Current.Request.Cookies
+                //CookieHeaderValue cookieHeaderValue = this.Request.Headers.GetCookies(ApiBaseController.CookieName).FirstOrDefault();
 
-                CookieHeaderValue cookieHeaderValue = this.Request.Headers.GetCookies(ApiBaseController.CookieName).FirstOrDefault();
+                //if (cookieHeaderValue == null) { return new CompanyGroup.WebClient.Models.VisitorData(); }
 
-                if (cookieHeaderValue == null) { return new CompanyGroup.WebClient.Models.VisitorData(); }
+                //CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.JsonConverter.FromJSON<CompanyGroup.WebClient.Models.VisitorData>(cookieHeaderValue[ApiBaseController.CookieName].Value);
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.JsonConverter.FromJSON<CompanyGroup.WebClient.Models.VisitorData>(cookieHeaderValue[ApiBaseController.CookieName].Value);
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, ApiBaseController.CookieName);
 
                 if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
 
@@ -229,22 +229,34 @@ namespace CompanyGroup.WebClient.Controllers
 
             try
             {
-                //konverzió json string-be
-                string json = CompanyGroup.Helpers.JsonConverter.ToJSON<CompanyGroup.WebClient.Models.VisitorData>(visitorData);
+                #region "CookieHeaderValue"
+                ////konverzió json string-be
+                //string json = CompanyGroup.Helpers.JsonConverter.ToJSON<CompanyGroup.WebClient.Models.VisitorData>(visitorData);
 
-                CookieHeaderValue cookieHeaderValue = this.Request.Headers.GetCookies(ApiBaseController.CookieName).FirstOrDefault();
+                //CookieHeaderValue cookieHeaderValue = this.Request.Headers.GetCookies(ApiBaseController.CookieName).FirstOrDefault();
 
-                if (cookieHeaderValue != null)
-                {
-                    //süti törlése
-                    System.Web.HttpContext.Current.Response.Cookies.Remove(ApiBaseController.CookieName);
-                }
+                //if (cookieHeaderValue != null)
+                //{
+                //    //süti törlése
+                //    System.Web.HttpContext.Current.Response.Cookies.Remove(ApiBaseController.CookieName);
+                //}
 
-                CookieHeaderValue newCookieHeaderValue = new CookieHeaderValue(ApiBaseController.CookieName, json) { Expires = DateTime.Now.AddDays(30d), HttpOnly = false };
+                //CookieHeaderValue newCookieHeaderValue = new CookieHeaderValue(ApiBaseController.CookieName, json);
+                
+                //newCookieHeaderValue.Expires = DateTime.Now.AddDays(30d);
+                
+                //newCookieHeaderValue.HttpOnly = false;
 
-                HttpResponseMessage response = new HttpResponseMessage();                
+                //newCookieHeaderValue.Domain = Request.RequestUri.Host;
 
-                response.Headers.AddCookies(new CookieHeaderValue[] { newCookieHeaderValue });
+                //newCookieHeaderValue.Path = "/";
+
+                //HttpResponseMessage response = new HttpResponseMessage();                
+
+                //response.Headers.AddCookies(new CookieHeaderValue[] { newCookieHeaderValue });
+                #endregion
+
+                CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, ApiBaseController.CookieName, visitorData);
 
             }
             catch { }

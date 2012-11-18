@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Webshop";
 }
-	<div id="layout-content" class="group">
+@*	<div id="layout-content" class="group">*@
         @*cms Messages
 		<div id="messages">
 			Messages
@@ -11,9 +11,9 @@
 		<div id="before-content">
 			BeforeContent
 		</div>*@
-		<div id="preloader">
+@*		<div id="preloader">
 			loadnig...
-		</div>
+		</div>*@
 		<div id="content" class="group">
 			<div class="zone zone-content">
 
@@ -881,14 +881,14 @@
 		<div id="after-content">
 			AfterContent
 		</div>*@
-	</div>
+@*	</div>*@
     @*cms AsideSecond
     <aside id="aside-second" class="aside-second">
 		AsideSecond
 	</aside>*@
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/appconstants")');
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/webshop")');
 }
 @section ScriptOnReady {
     console.log('ScriptOnReady section');
@@ -896,7 +896,11 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
-    companyGroup.scripts.webshop.run('#/');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+
+    companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructireApi/")');
+
+    companyGroup.webshop.run('#/');
 
     $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
 
@@ -953,8 +957,8 @@
 			    }
 			});
 
-            $('.number').spin();
-            $('.cartnumber').spin();
+@*            $('.number').spin();
+            $('.cartnumber').spin();*@
 
             $("#form_filterbyprice").validate({
                 submitHandler: function () {
@@ -1073,7 +1077,7 @@
                 }
             });
 
-            CompanyGroupCms.Catalogue.InitAutoCompletionAllProduct();
+            companyGroup.autocomplete.InitAutoCompletionAllProduct();
 
-            CompanyGroupCms.Catalogue.InitAutoCompletionBaseProduct();
+            companyGroup.autocomplete.InitAutoCompletionBaseProduct();
 }

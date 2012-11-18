@@ -16,7 +16,7 @@ namespace CompanyGroup.Helpers
         /// <param name="request"></param>
         /// <param name="cookieName"></param>
         /// <returns></returns>
-        public static T ReadCookie<T>(HttpRequestBase request, string cookieName) where T : class
+        public static T ReadCookie<T>(HttpRequest request, string cookieName) where T : class
         {
             try
             {
@@ -27,6 +27,30 @@ namespace CompanyGroup.Helpers
                 return CompanyGroup.Helpers.JsonConverter.FromJSON<T>(cookie.Value);
             }
             catch { return default(T); }
+        }
+
+        public static void WriteCookie<T>(HttpResponse response, string cookieName, T value) where T : class
+        {
+            try
+            {
+                string json = CompanyGroup.Helpers.JsonConverter.ToJSON<T>(value);
+
+                if ((String.IsNullOrEmpty(json))) { return; }
+
+                HttpCookie cookie = response.Cookies.Get(cookieName);
+
+                if (cookie == null)
+                {
+                    response.Cookies.Add(new HttpCookie(cookieName, json) { Expires = DateTime.Now.AddDays(30d), HttpOnly = true });
+                }
+                else
+                {
+                    cookie.Value = json;
+
+                    response.Cookies.Set(cookie);
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -56,6 +80,8 @@ namespace CompanyGroup.Helpers
             }
             catch { }
         }
+
+
 
     }
 }

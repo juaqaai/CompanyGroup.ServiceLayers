@@ -149,7 +149,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("AddNew")]
-        public HttpResponseMessage AddNew()
+        public CompanyGroup.WebClient.Models.RegistrationData AddNew()
         {
             CompanyGroup.Dto.RegistrationModule.Registration response = null;
 
@@ -179,6 +179,7 @@ namespace CompanyGroup.WebClient.Controllers
             //létrehozott regisztrációs azonosító beírása sütibe
             visitorData.RegistrationId = response.RegistrationId;
 
+            //CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, ApiBaseController.CookieName, visitorData);
             this.WriteCookie(visitorData);
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
@@ -199,13 +200,13 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                       response.WebAdministrator, 
                                                                                                                       this.GetCountries());
 
-            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
+            //HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
 
-            string uri = String.Format("/api/GetRegistrationData/{0}", model.RegistrationId);
+            //string uri = String.Format("/api/GetRegistrationData/{0}", model.RegistrationId);
 
-            httpResponseMsg.Headers.Location = new Uri(Request.RequestUri, uri);
+            //httpResponseMsg.Headers.Location = new Uri(Request.RequestUri, uri);
 
-            return httpResponseMsg;
+            return model;
         }
 
         /// <summary>
