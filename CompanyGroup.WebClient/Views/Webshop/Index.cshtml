@@ -16,7 +16,6 @@
 		</div>*@
 		<div id="content" class="group">
 			<div class="zone zone-content">
-
                 <input type="hidden" id="hidden_cartId" value="" />
                 <div id="basket_open_button"></div>
                 <script id="shoppingCartSummaryTemplate" type="text/x-jquery-tmpl">
@@ -42,11 +41,11 @@
                         <table width="974" border="0" cellspacing="0" cellpadding="2">
                             <tr>
                                 <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.AddCart()">Új kosár</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/addshoppingcart" onclick="CompanyGroupCms.ShoppingCart.AddCart()">Új kosár</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.RemoveCart()">Aktív kosár törlése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/removeshoppingcart" onclick="CompanyGroupCms.ShoppingCart.RemoveCart()">Aktív kosár törlése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a id="basket_save" href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.ShowSaveCartPanel()">Aktív kosár mentése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a id="basket_save" href="#/showsavecartpanel" onclick="CompanyGroupCms.ShoppingCart.ShowSaveCartPanel()">Aktív kosár mentése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
                                 <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
                                 <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>
@@ -79,8 +78,7 @@
                         <div id="cus_basket"></div>
                         <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                         {{if Visitor.IsValidLogin}}
-                        @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/ShoppingCart/AddItem")), System.Web.Mvc.FormMethod.Post, new { id = "form_shoppingcart" }))
-                        {
+                        <form action="#/additemtoshoppingcart" method="post" id="form_shoppingcart">
                         <table width="974" border="0" cellspacing="1" cellpadding="3">
                             <thead>
                                 <tr>
@@ -105,7 +103,7 @@
                                     <td width="20%"><span>${item.ItemTotal}</span> </td>
                                     <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
                                     <!-- <td nowrap="nowrap"><a href="javascript:void(0)" data-bind="click: function() { $parent.shoppingCart.updateLine($data); }" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
-                                    <td nowrap="nowrap"><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.RemoveLine('${item.ProductId}')" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
+                                    <td nowrap="nowrap"><a href="#/removelinefromshoppingcart/:${item.ProductId}" onclick="CompanyGroupCms.ShoppingCart.RemoveLine('${item.ProductId}')" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
                                 </tr>
                                 {{/each}}
                                 <tr>
@@ -119,7 +117,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        }
+                        </form>
                         {{/if}}
                     </script>
 
@@ -142,8 +140,7 @@
                     </div>
 
                     <div id="cus_rendeles_feladas">
-                    @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/ShoppingCart/CreateOrder")), System.Web.Mvc.FormMethod.Post, new { id = "form_createorder" }))
-                    {
+                    <form action="#/createorder" method="post" id="form_createorder">
                         <table width="970" border="0" cellpadding="3" cellspacing="2">
                             <tr>
                                 <td nowrap="nowrap"><strong> Fizetési opciók</strong></td>
@@ -275,7 +272,7 @@
                                 </div><!-- Ha rendelési listájában, valamely termék mellett <img src="@Url.Content("~/media/images/basketicons/attention.png")" border="0"/ title="Kötelező érvényű megrendelés!" /> ikont lát, az a kötelező érvényű megrendelést jelöli. Ennek szabálya értelmében... blah... blah... blah... --></td>
                             </tr>
                         </table>
-                    }
+                    </form>
                 </div>
 
                 <div id="cus_ajanlat_vegfelhasznalo">
@@ -337,28 +334,25 @@
                 <tr>
                     <td width="350" align="left" id="leasingOptionsContainer"></td>
                     <td width="300" align="right">
-                        @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/Webshop/ShoppingCart")), System.Web.Mvc.FormMethod.Post, new { id="form_financeoffer" }))
-                        {
+                        <form action="#financeorder" method="post" id="form_financeoffer">
                             <div id="financeoffer_errors"></div>
-                
-                      <label for="txt_offername"><strong>bérbevevő neve</strong></label>
-                      @Html.TextBox("txt_offername", "", new {id="txt_offername", style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;"}) 
-                      <label class="error" for="txt_offername" generated="true" style="display:none; color:#900;">A név kitöltése kötelező</label><br/>
+                            <label for="txt_offername"><strong>bérbevevő neve</strong></label>
+                            @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                            <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label><br/>
+                            <label for="txt_offeraddress"><strong>bérbevevő címe</strong></label>
+                            @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                            <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label><br/>
 
-                      <label for="txt_offeraddress"><strong>bérbevevő címe</strong></label>
-                      @Html.TextBox("txt_offeraddress", "", new {id="txt_offeraddress", style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;"}) 
-                      <label class="error" for="txt_offeraddress" generated="true" style="display:none; color:#900;">A cím kitöltése kötelező</label><br/>
-
-                          <label for="txt_offerphone"><strong>bérbevevő telefon</strong></label>
-                          @Html.TextBox("txt_offerphone", "", new {id="txt_offerphone", style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;"}) 
-                          <label class="error" for="txt_offerphone" generated="true" style="display:none; color:#900;">A telefon kitöltése kötelező</label><br/>
+                            <label for="txt_offerphone"><strong>bérbevevő telefon</strong></label>
+                            @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                            <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label><br/>
 
                             <label for="txt_offerstatnumber"><strong>bérbevevő cégjegyzékszám</strong></label>          
-                            @Html.TextBox("txt_offerstatnumber", "", new {id="txt_offerstatnumber", style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;"})
-                            <label class="error" for="txt_offerstatnumber" generated="true" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label><br/>
+                            @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" })
+                            <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label><br/>
                             <br/>
                             <input type="submit" value="Ajánlatkérés" />
-                        }                
+                        </form>                
                     </td>
                 </tr>
                 </table>
@@ -374,15 +368,14 @@
                 {{/if}}
                 </script>
             </div>
-    </div>
+        </div>
 
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
                                 <!-- VisitorInfo.IsValidLogin -->
 					            <div id="cus_filter_price">
-                                    @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/Webshop/Catalogue")), System.Web.Mvc.FormMethod.Post, new { id = "form_filterbyprice" }))
-                                    {
+                                    <form action="#filterbyprice" method="post" id="form_filterbyprice">
 					                <div id="negyes_szuro">	
 						            <table cellpadding="1" cellspacing="1">
 						                <tr>
@@ -404,7 +397,7 @@
 						            <div id="cus_refresh_icon" onclick="$('#form_filterbyprice').submit()">
 							            Frissítés<!-- <img src="@Url.Content("~/Content/Media/images/refresh.png")" /> -->
 						            </div>
-                                    }
+                                    </form>
 					            </div>
                                 <!-- /VisitorInfo.IsValidLogin -->
 					            <div id="cus_filter_1">
@@ -412,9 +405,10 @@
 						            <br />
 						            <select id="manufacturerList" data-placeholder="Gyártók..." class="chosen" multiple style="width:270px;">
 							            <option value=""></option>
-							            @foreach (var manufacturer in @Model.Structures.Manufacturers) { 
+							            @foreach (var manufacturer in @Model.Structures.Manufacturers)
+                   { 
                                             <option value="@manufacturer.Id">@manufacturer.Name </option>
-                                            }
+                   }
 						            </select>
 					            </div>
 					            <div id="cus_filter_2">
@@ -422,9 +416,10 @@
 						            <br />
 						            <select id="category1List" data-placeholder="Jelleg - 1..." class="chosen" multiple style="width:270px;">
 							            <option value=""></option>
-							            @foreach (var category1 in @Model.Structures.FirstLevelCategories) { 
+							            @foreach (var category1 in @Model.Structures.FirstLevelCategories)
+                   { 
                                         <option value="@category1.Id">@category1.Name</option>
-                                    }
+                   }
 						            </select>
 					            </div>
 					            <div id="cus_filter_3">
@@ -432,9 +427,10 @@
 						            <br />
 						            <select id="category2List" data-placeholder="Jelleg - 2..." class="chosen" multiple style="width:270px;">
 							            <option value=""></option>
-							            @foreach (var category2 in @Model.Structures.SecondLevelCategories) { 
+							            @foreach (var category2 in @Model.Structures.SecondLevelCategories)
+                   { 
                                             <option value="@category2.Id">@category2.Name</option>
-                                                }
+                   }
 						            </select>
 					            </div>
 					            <div id="cus_filter_4">
@@ -458,15 +454,14 @@
                             </marquee>
                         </p>
                         <p id="bannerpelda" align="center">
-                            <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" border="0" />
+                            <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" alt="" border="0" />
                         </p>
 
                         <p id="bannerpelda" align="center">
-                            <img src="@Url.Content("~/Content/Media/images/mogyoro.jpg")" border="0" />
+                            <img src="@Url.Content("~/Content/Media/images/mogyoro.jpg")" alt="" border="0" />
                         </p>
 		            </div>
 	            </div>
-	
                 <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
@@ -582,11 +577,10 @@
 
                                 </td>
 					            <td align="center" width="100%" class="cus_list_order_panel_table">
-                                @using (Html.BeginFormAntiForgeryPost(Url.Action(Url.Content("~/Webshop/Catalogue")), System.Web.Mvc.FormMethod.Post, new { id = "form_filterbynameorpartnumber" }))
-                                {
+                                <form id="form_filterbynameorpartnumber" action="#/filterbynameorpartnumber" method="post">
                                     <label class="error" for="txt_filterbynameorpartnumber" generated="true" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                                     @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:205px; height:20px; margin-left:5px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;", onfocus = "if(this.value=='név vagy cikkszám szűrése')this.value=''", onblur = "if(this.value=='')this.value='név vagy cikkszám szűrése'" })
-                                }
+                                </form>
 					            </td>
                                 <td class="cus_list_order_panel_table">
                                 <div id="catalogueDownloadContainer"></div>
@@ -748,7 +742,7 @@
                                             </td>
 				                        </tr>
 				                </table>
-                            <form action="/Cms/Webshop/ShoppingCart/AddLine" method="post" name="form_addcart_line" onsubmit="return validateAddCartLine()"> 
+                            <form action="#/addlinetoshoppingcart" method="post" name="form_addlinetoshoppingcart" onsubmit="return validateAddCartLine()"> 
 			                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				                <tr>
 				                    <td nowrap="nowrap">

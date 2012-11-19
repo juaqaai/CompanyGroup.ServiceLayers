@@ -108,7 +108,7 @@ companyGroup.webshop = $.sammy(function () {
         loadCatalogue();
         context.title('Webshop - rendezés ár szerint csökkenőleg');
     });
-    //rendezés cikkszámta növekvően
+    //rendezés cikkszámra növekvően
     this.get('#/sequenceByPartNumberUp', function (context) {
         //console.log(self);
         catalogueRequest.Sequence = 2;
@@ -116,7 +116,7 @@ companyGroup.webshop = $.sammy(function () {
         loadCatalogue();
         context.title('Webshop - rendezés cikkszám szerint növekvőleg');
     });
-    //rendezés cikkszámta csökkenőleg
+    //rendezés cikkszámra csökkenőleg
     this.get('#/sequenceByPartNumberDown', function (context) {
         //console.log(self);
         catalogueRequest.Sequence = 3;
@@ -302,7 +302,6 @@ companyGroup.webshop = $.sammy(function () {
             }
         });
     });
-
     //struktúra betöltés
     var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {
         $.ajax({
