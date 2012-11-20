@@ -25,7 +25,7 @@
                             <td><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()"><img src="@Url.Content("~/Content/Media/images/basketbutton_01.png")" alt=""  /></a></td>
                             <td class="active_basket_middle_cell" nowrap="nowrap">
                             <a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()" class="btn_basket_slide">
-                                <span style="color: #000">Aktív kosár: </span><span style="color: #900">${CompanyGroupCms.Utils.FormatNumber(ActiveCart.SumTotal)} </span>
+                                <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span>
                                 <span id="shoppingCartSummaryCaption" style="color: #000">[ + Megnyitás ]</span></a>
                             </td>
                             <td><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()"><img src="@Url.Content("~/Content/Media/images/basketbutton_03.png")" alt="" /></a></td>
@@ -96,7 +96,7 @@
                                 <tr>
                                     <td width="20%"nowrap="nowrap">${item.ProductId}</td>
                                     <td width="20%"nowrap="nowrap">${item.PartNumber}</td>
-                                    <td width="20%" nowrap="nowrap">${CompanyGroupCms.Utils.FormatNumber(item.CustomerPrice)} </td>
+                                    <td width="20%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
                                     <td width="20%" nowrap="nowrap">
                                     <input name="txt_qty_${item.ProductId}" class="cartnumber" value="${item.Quantity}" onchange="CompanyGroupCms.ShoppingCart.UpdateLine('${item.ProductId}', $('input[name=txt_qty_${item.ProductId}]').val())" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                     db</td>
@@ -113,7 +113,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="8">
-                                    <strong>Fizetendő: <span style="color:#900; font-size:14px;">${CompanyGroupCms.Utils.FormatNumber(ActiveCart.SumTotal)} </span></strong></td>
+                                    <strong>Fizetendő: <span style="color:#900; font-size:14px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -188,7 +188,7 @@
                                                 <!-- {{/each}} -->
                                             </script>
                                             <div id="newsite_button">
-                                                <a id="new_site"  href="#add_new_site"><img src="@Url.Content("~/media/images/newsite.png")" border="0" title="Új telephely hozzáadása" alt="Új telephely hozzáadása"/></a>
+                                                <a id="new_site"  href="#add_new_site"><img src="@Url.Content("~/Content/Media/images/newsite.png")" border="0" title="Új telephely hozzáadása" alt="Új telephely hozzáadása"/></a>
                                             </div></td>
                                             <td align="right" valign="top">
                                             <div class="szi_text">
@@ -695,7 +695,7 @@
 				                            <td valign="top">
 				                                <div class="cus_termekkep">
                                                 {{if item.PrimaryPicture.RecId > 0}}
-				                                <a class="popupimg" href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowPicture('${item.ProductId}', '${item.DataAreaId}', '${item.ItemName}');" title="${item.ItemName}"><img src="${CompanyGroupCms.Constants.Instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" alt="${CompanyGroupCms.Constants.Instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" /></a>
+				                                <a class="popupimg" href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowPicture('${item.ProductId}', '${item.DataAreaId}', '${item.ItemName}');" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" /></a>
 				                                {{else}}
 				                                <img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="180" height="134" alt="" />
                                                 {{/if}}
@@ -747,7 +747,7 @@
 				                <tr>
 				                    <td nowrap="nowrap">
 				                        <div class="cus_prod_table_morelink">
-				                            <a href="${CompanyGroupCms.Constants.Instance().getProductDetailsUrl(item.ProductId)}" title="Részletes termékadatlap ${item.ItemName}" target="_blank">[+] Részletes adatlap</a>
+				                            <a href="${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}" title="Részletes termékadatlap ${item.ItemName}" target="_blank">[+] Részletes adatlap</a>
 				                        </div>
                                     </td>
                                     <td>
@@ -862,7 +862,7 @@
                             @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.BannerList.Items)
                             {
 					        <li>
-						        <a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/Webshop/Catalogue/PictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
+						        <a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
 					        </li>
                             }
 				        </ul>
@@ -883,6 +883,8 @@
 
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/webshop")');
+
+    head.js('@Scripts.Url("~/bundles/easypaginate")');
 }
 @section ScriptOnReady {
     console.log('ScriptOnReady section');
@@ -892,15 +894,28 @@
 
     companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
 
-    companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructireApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+
+    companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructureApi/")');
 
     companyGroup.webshop.run('#/');
 
-    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+  	$('#cus_header1').html(visitorInfoHtml);
+
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+  	$('#usermenuContainer').html(usermenuHtml);
+
+    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
+  	$('#quickmenuContainer').html(quickmenuHtml);
+
+@*    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
 
     $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
 
-    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");
+    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");*@
+
+
 
             $("#pagerTemplateTop").tmpl(model.Products).appendTo("#div_pager_top");
             $("#pagerTemplateBottom").tmpl(model.Products).appendTo("#div_pager_bottom");
@@ -925,36 +940,12 @@
             $("#leasingOptionsContainer").empty();
             $("#leasingOptionsTemplate").tmpl(model.LeasingOptions).appendTo("#leasingOptionsContainer");            
             
-			jQuery('.chosen').chosen();
-
-			jQuery('.chosen').unbind('change').bind('change', function () {
-			    if ($(this).attr('id') === 'manufacturerList') {
-                    var manufacturerIdList = $('#manufacturerList').val();
-			        CompanyGroupCms.CatalogueListRequest.ManufacturerIdList = (manufacturerIdList === null || manufacturerIdList === '') ? [] : manufacturerIdList;
-                    CompanyGroupCms.Catalogue.LoadStructure(false, true, true, true);
-			        CompanyGroupCms.Catalogue.LoadCatalogue();
-			    } else if ($(this).attr('id') === 'category1List') {
-                    var category1IdList = $('#category1List').val();
-			        CompanyGroupCms.CatalogueListRequest.Category1IdList = (category1IdList === null || category1IdList === '') ? [] : category1IdList;
-                    CompanyGroupCms.Catalogue.LoadStructure(true, false, true, true);
-			        CompanyGroupCms.Catalogue.LoadCatalogue();
-			    } else if ($(this).attr('id') === 'category2List') {
-                    var category2IdList = $('#category2List').val();
-			        CompanyGroupCms.CatalogueListRequest.Category2IdList = (category2IdList === null || category2IdList === '') ? [] : category2IdList;
-                    CompanyGroupCms.Catalogue.LoadStructure(true, true, false, true);
-			        CompanyGroupCms.Catalogue.LoadCatalogue();
-			    } else if ($(this).attr('id') === 'category3List') {
-                    var category3IdList = $('#category3List').val();
-			        CompanyGroupCms.CatalogueListRequest.Category3IdList = (category3IdList === null || category3IdList === '') ? [] : category3IdList;
-                    CompanyGroupCms.Catalogue.LoadStructure(true, true, true, false);
-			        CompanyGroupCms.Catalogue.LoadCatalogue();
-			    }
-			});
+            console.log('hello');
 
 @*            $('.number').spin();
             $('.cartnumber').spin();*@
 
-            $("#form_filterbyprice").validate({
+@*            $("#form_filterbyprice").validate({
                 submitHandler: function () {
                     CompanyGroupCms.CatalogueListRequest.PriceFilter = $('#txt_filterbyprice').val();
                     CompanyGroupCms.CatalogueListRequest.PriceFilterRelation = $('#select_filterbyprice').val();
@@ -1069,9 +1060,9 @@
                 messages: {
                     txt_filterbynameorpartnumber: "A mező kitöltése kötelező!"
                 }
-            });
+            });*@
 
-            companyGroup.autocomplete.InitAutoCompletionAllProduct();
+            //companyGroup.autocomplete.InitAutoCompletionAllProduct();
 
-            companyGroup.autocomplete.InitAutoCompletionBaseProduct();
+            //companyGroup.autocomplete.InitAutoCompletionBaseProduct();
 }

@@ -6,6 +6,46 @@ companyGroup.webshop = $.sammy(function () {
 
     this.get('#/', function (context) {
         //console.log(context);
+
+        jQuery('.chosen').chosen();
+
+        jQuery('.chosen').unbind('change').bind('change', function () {
+            if ($(this).attr('id') === 'manufacturerList') {
+                var manufacturerIdList = $('#manufacturerList').val();
+                catalogueRequest.ManufacturerIdList = (manufacturerIdList === null || manufacturerIdList === '') ? [] : manufacturerIdList;
+                loadStructure(false, true, true, true);
+                loadCatalogue();
+            } else if ($(this).attr('id') === 'category1List') {
+                var category1IdList = $('#category1List').val();
+                catalogueRequest.Category1IdList = (category1IdList === null || category1IdList === '') ? [] : category1IdList;
+                loadStructure(true, false, true, true);
+                loadCatalogue();
+            } else if ($(this).attr('id') === 'category2List') {
+                var category2IdList = $('#category2List').val();
+                catalogueRequest.Category2IdList = (category2IdList === null || category2IdList === '') ? [] : category2IdList;
+                loadStructure(true, true, false, true);
+                loadCatalogue();
+            } else if ($(this).attr('id') === 'category3List') {
+                var category3IdList = $('#category3List').val();
+                catalogueRequest.Category3IdList = (category3IdList === null || category3IdList === '') ? [] : category3IdList;
+                loadStructure(true, true, true, false);
+                loadCatalogue();
+            }
+        });
+
+        //alsó (ajánlott) termék lapozó 
+        $('#cus_recommended_prod_content').easyPaginate({
+            step: 4,
+            delay: 300,
+            numeric: true,
+            nextprev: false,
+            auto: false,
+            pause: 5000,
+            clickstop: true,
+            controls: 'pagination',
+            current: 'current'
+        });
+
         context.title('Webshop - Kezdőoldal');
 
     });
@@ -378,7 +418,7 @@ companyGroup.webshop = $.sammy(function () {
     //terméklista betöltés
     var loadCatalogue = function () {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: companyGroup.utils.instance().getWebshopApiUrl('GetCatalogue'),
             data: JSON.stringify(catalogueRequest),
             contentType: "application/json; charset=utf-8",
@@ -394,7 +434,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
                     $("#div_catalogue").empty();
                     $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
-                    $('.number').spin();
+                    //$('.number').spin();
                 }
                 else {
                     console.log('loadCatalogueList result failed');
@@ -452,7 +492,7 @@ companyGroup.autocomplete = (function () {
             source: function (request, response) {
                 $.ajax({
                     type: "GET",
-                    url: CompanyGroupCms.Constants.Instance().getCompletionListBaseProductServiceUrl(),
+                    url: companyGroup.utils.instance().getCompletionListBaseProductUrl(),
                     data: { Prefix: request.term },
                     contentType: "application/json; charset=utf-8",
                     timeout: 10000,
@@ -479,7 +519,7 @@ companyGroup.autocomplete = (function () {
             minLength: 2
         }).data("autocomplete")._renderItem = function (ul, item) {
             console.log(item);
-            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + CompanyGroupCms.Constants.Instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
+            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
             .append(inner_html)
@@ -491,7 +531,7 @@ companyGroup.autocomplete = (function () {
             source: function (request, response) {
                 $.ajax({
                     type: "GET",
-                    url: CompanyGroupCms.Constants.Instance().getCompletionListAllProductServiceUrl(),
+                    url: companyGroup.utils.instance().getCompletionListAllProductUrl(),
                     data: { Prefix: request.term },
                     contentType: "application/json; charset=utf-8",
                     timeout: 10000,
@@ -545,7 +585,7 @@ companyGroup.autocomplete = (function () {
         })
         .data("autocomplete")._renderItem = function (ul, item) {
             console.log(item);
-            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + CompanyGroupCms.Constants.Instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
+            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
             .append(inner_html)

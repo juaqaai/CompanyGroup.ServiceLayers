@@ -14,8 +14,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("PictureItem")]
-        public System.Web.Mvc.FileStreamResult PictureItem()
+        [ActionName("GetPictureItem")]
+        public HttpResponseMessage GetPictureItem()
         {
             string productId = CompanyGroup.Helpers.QueryStringParser.GetString("ProductId");
 
@@ -27,7 +27,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
 
-            return Picture(productId, recId, dataAreaId, maxWidth, maxHeight);
+            return GetPicture(productId, recId, dataAreaId, maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -40,12 +40,23 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="maxHeight"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Picture")]
-        public System.Web.Mvc.FileStreamResult Picture(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight)
+        [ActionName("GetPicture")]
+        public HttpResponseMessage GetPicture(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight)
         {
             byte[] picture = this.DownloadData(String.Format("Picture/GetItem/{0}/{1}/{2}/{3}/{4}", productId, recId, dataAreaId, maxWidth, maxHeight));
 
-            return new System.Web.Mvc.FileStreamResult(new System.IO.MemoryStream(picture), "image/jpeg");
+            if (picture == null)
+            {
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture not found"));
+            }
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new ByteArrayContent(picture);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+            return result;
         }
 
         /// <summary>

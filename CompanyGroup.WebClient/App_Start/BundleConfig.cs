@@ -51,6 +51,7 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/vegas").Include("~/Scripts/jquery.vegas.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/easypaginate").Include("~/Scripts/easypaginate.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 

@@ -74,16 +74,16 @@ companyGroup.utils = (function () {
                 _shoppingCartBaseApiUrl = url;
             },
             getProductDetailsUrl: function (productId) {
-                return _webshopBaseApiUrl + encodeURIComponent(productId) + '/Details';
+                return _webshopBaseApiUrl  + 'Details/?ProductId=' + encodeURIComponent(productId);
             },
             getThumbnailPictureUrl: function (productId, recId, dataAreaId) {
-                return _webshopBaseApiUrl + 'PictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=60&MaxHeight=60';
+                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=60&MaxHeight=60';
             },
             getPictureUrl: function (productId, recId, dataAreaId) {
-                return _webshopBaseApiUrl + 'PictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=180&MaxHeight=134'; //webshopBaseUrl + productId + '/' + recId + '/' + dataAreaId + '/94/69/Picture';
+                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=180&MaxHeight=134'; //webshopBaseUrl + productId + '/' + recId + '/' + dataAreaId + '/94/69/Picture';
             },
             getBigPictureUrl: function (productId, recId, dataAreaId) {
-                return _webshopBaseApiUrl + 'PictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=500&MaxHeight=500';
+                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=500&MaxHeight=500';
             },
             getRegistrationApiUrl: function (url) {
                 return _registrationBaseApiUrl + url;
@@ -96,6 +96,28 @@ companyGroup.utils = (function () {
             },
             setVisitorBaseApiUrl: function (url) {
                 _visitorBaseApiUrl = url;
+            }, 
+            validateNumber: function (value) {
+                return (/^[0-9]+$/.test(value));
+            }, 
+            formatNumber: function (str) {
+                if (!validateNumber(str)) {
+                    return str;
+                }
+                str += '';
+                x = str.split('.');
+                x1 = x[0];
+                x2 = x.length > 1 ? '.' + x[1] : '';
+                var rgx = /(\d+)(\d{3})/;
+                while (rgx.test(x1))
+                    x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+                return x1 + x2;
+            },
+            getCompletionListAllProductUrl: function () {
+                return _webshopBaseApiUrl + 'GetCompletionListAllProduct/';
+            },
+            getCompletionListBaseProductUrl: function () {
+                return _webshopBaseApiUrl + 'GetCompletionListBaseProduct/';
             }
         }
     }
@@ -114,3 +136,27 @@ companyGroup.utils = (function () {
 companyGroup.utils.instance().setPictureBaseUrl('/...../...../...');
 companyGroup.utils.instance().getPictureUrl('kep.png');
 */
+//CompanyGroupCms.Utils = (function () {
+//    //számformátum ellenőrzés
+//    var ;
+//    //szám formázása
+//    var formatNumber = function (str) {
+//        if (!validateNumber(str)) {
+//            return str;
+//        }
+//        str += '';
+//        x = str.split('.');
+//        x1 = x[0];
+//        x2 = x.length > 1 ? '.' + x[1] : '';
+//        var rgx = /(\d+)(\d{3})/;
+//        while (rgx.test(x1))
+//            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+//        return x1 + x2;
+//    };
+//    return {
+//        ValidateNumber: validateNumber,
+//        FormatNumber: formatNumber
+//    }
+
+//})();
+//CompanyGroupCms.Utils.FormatNumber('3434343434');

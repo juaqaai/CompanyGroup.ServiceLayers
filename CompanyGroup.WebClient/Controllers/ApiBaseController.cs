@@ -144,11 +144,15 @@ namespace CompanyGroup.WebClient.Controllers
 
                 client.BaseAddress = new Uri(ApiBaseController.ServiceBaseAddress);
 
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/jpeg"));
+    
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/jpg"));
+           
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/png"));
 
-                HttpResponseMessage response = client.GetAsync(requestUrl).Result;
+                //HttpResponseMessage response = client.GetAsync(requestUrl).Result;
 
-                byte[] result = response.Content.ReadAsByteArrayAsync().Result;
+                byte[] result = client.GetByteArrayAsync(requestUrl).Result;    //response.Content.ReadAsByteArrayAsync().Result;
 
                 return result;
             }

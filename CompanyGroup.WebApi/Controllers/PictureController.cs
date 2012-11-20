@@ -48,9 +48,17 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetItem")] ///{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}
         [HttpGet]
-        public Stream GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        public HttpResponseMessage GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
-            return this.service.GetItem(productId, recId, dataAreaId, maxWidth, maxHeight);
+            Stream stream = this.service.GetItem(productId, recId, dataAreaId, maxWidth, maxHeight);
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new System.Net.Http.StreamContent(stream);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            return result;
         }
     }
 }
