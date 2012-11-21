@@ -250,7 +250,7 @@
     <Compile Include="Models\Webshop\ManufacturerItem.cs" />
     <Compile Include="Models\Webshop\Manufacturers.cs" />
     <Compile Include="Models\Webshop\OrderFulFillment.cs" />
-    <Compile Include="Models\Webshop\Products.cs" />
+    <Compile Include="Models\Webshop\ProductCatalogue.cs" />
     <Compile Include="Models\Webshop\RemoveLine.cs" />
     <Compile Include="Models\Webshop\SaveCart.cs" />
     <Compile Include="Models\Webshop\SecondLevelCategories.cs" />

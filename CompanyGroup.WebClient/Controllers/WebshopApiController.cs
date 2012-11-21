@@ -139,13 +139,13 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns>terméklista objektum és a látogató objektum JSON formátumban</returns>
         [HttpPost]
         [ActionName("GetProducts")]
-        public CompanyGroup.WebClient.Models.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request) //CompanyGroup.Dto.ServiceRequest.CatalogueFilter
+        public CompanyGroup.WebClient.Models.ProductCatalogue GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request) //CompanyGroup.Dto.ServiceRequest.CatalogueFilter
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            request.VisitorId = visitorData.ObjectId;   //this.ReadObjectIdFromCookie();
+            request.VisitorId = visitor.Id;   //this.ReadObjectIdFromCookie();
 
             request.Currency = visitorData.Currency;    // this.ReadCurrencyFromCookie();
 
@@ -153,7 +153,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", request);
 
-            return new CompanyGroup.WebClient.Models.Products(products, visitor);
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor);
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ companyGroup.utils = (function () {
     var _shoppingCartBaseApiUrl = '';
     var _registrationBaseApiUrl = '';
     var _visitorBaseApiUrl = '';
+    var _downloadPriceListUrl = '';
 
     var _instance;
 
@@ -74,7 +75,7 @@ companyGroup.utils = (function () {
                 _shoppingCartBaseApiUrl = url;
             },
             getProductDetailsUrl: function (productId) {
-                return _webshopBaseApiUrl  + 'Details/?ProductId=' + encodeURIComponent(productId);
+                return _webshopBaseApiUrl + 'Details/?ProductId=' + encodeURIComponent(productId);
             },
             getThumbnailPictureUrl: function (productId, recId, dataAreaId) {
                 return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=60&MaxHeight=60';
@@ -96,10 +97,10 @@ companyGroup.utils = (function () {
             },
             setVisitorBaseApiUrl: function (url) {
                 _visitorBaseApiUrl = url;
-            }, 
+            },
             validateNumber: function (value) {
                 return (/^[0-9]+$/.test(value));
-            }, 
+            },
             formatNumber: function (str) {
                 if (!validateNumber(str)) {
                     return str;
@@ -118,6 +119,12 @@ companyGroup.utils = (function () {
             },
             getCompletionListBaseProductUrl: function () {
                 return _webshopBaseApiUrl + 'GetCompletionListBaseProduct/';
+            },
+            setDownloadPriceListUrl: function (url) {
+                _downloadPriceListUrl = url;
+            },
+            getDownloadPriceListUrl: function () {
+
             }
         }
     }

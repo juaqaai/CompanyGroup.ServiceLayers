@@ -459,6 +459,13 @@
 
         head.ready(function() {
             $.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
+
+                $('#preloader').ajaxStart(function () {
+                    $('#preloader').show();
+                }).ajaxStop(function () {
+                    $('#preloader').hide();
+                });
+
             @RenderSection("ScriptOnReady", false)
         }); 
 

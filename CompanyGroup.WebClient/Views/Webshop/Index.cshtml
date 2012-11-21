@@ -11,9 +11,9 @@
 		<div id="before-content">
 			BeforeContent
 		</div>*@
-@*		<div id="preloader">
+		<div id="preloader">
 			loadnig...
-		</div>*@
+		</div>
 		<div id="content" class="group">
 			<div class="zone zone-content">
                 <input type="hidden" id="hidden_cartId" value="" />
@@ -474,7 +474,7 @@
                                 </td>
 					            <td>
 					                <div id="cus_delbutton">
-						                <div id="cus_filterdelete_text">Szűrés és rendezés törlése</div><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ClearFilters()"><img src="@Url.Content("~/Content/Media/images/filterdelete.png")" border="0" usemap="list_clear_vert_hor" alt="" /></a>
+						                <div id="cus_filterdelete_text">Szűrés és rendezés törlése</div><a href="#/clearFilters"><img src="@Url.Content("~/Content/Media/images/filterdelete.png")" border="0" usemap="list_clear_vert_hor" alt="" /></a>
 					                </div>
                                 </td>
 					            <td>
@@ -490,16 +490,16 @@
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPriceUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPriceUp();">ÁR szerint növekvő</a></td>
+											            <td><a href="#/sequenceByPriceUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByPriceUp">ÁR szerint növekvő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPriceDown();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPriceDown();">ÁR szerint csökkenő</a></td>
+											            <td><a href="#/sequenceByPriceDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByPriceDown">ÁR szerint csökkenő</a></td>
 										            </tr>
 									            </table>
 								            </li>
@@ -507,32 +507,32 @@
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPartNumberUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPartNumberUp();">CIKKSZÁM szerint növekvő</a></td>
+											            <td><a href="#/sequenceByPartNumberUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByPartNumberUp">CIKKSZÁM szerint növekvő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPartNumberDown();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByPartNumberDown();">CIKKSZÁM szerint csökkenő</a></td>
+											            <td><a href="#/sequenceByPartNumberDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByPartNumberDown">CIKKSZÁM szerint csökkenő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByNameUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByNameUp();">NÉV szerint növekvő</a></td>
+											            <td><a href="#/sequenceByNameUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByNameUp">NÉV szerint növekvő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByNameDown();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByNameDown();">NÉV szerint csökkenő</a></td>
+											            <td><a href="#/sequenceByNameDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByNameDown">NÉV szerint csökkenő</a></td>
 										            </tr>
 									            </table>
 								            </li>
@@ -540,32 +540,32 @@
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByStockUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByStockUp();">MENNYISÉG szerint növekvő</a></td>
+											            <td><a href="#/sequenceByStockUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByStockUp">MENNYISÉG szerint növekvő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByStockDown();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByStockDown();">MENNYISÉG szerint csökkenő</a></td>
+											            <td><a href="#/sequenceByStockDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByStockDown">MENNYISÉG szerint csökkenő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByGarantyUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByGarantyUp();">GARANCIA IDŐ szerint növekvő</a></td>
+											            <td><a href="#/sequenceByGarantyUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByGarantyUp">GARANCIA IDŐ szerint növekvő</a></td>
 										            </tr>
 									            </table>
 								            </li>
 								            <li>
 									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 										            <tr>
-											            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByGarantyUp();"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.SequenceByGarantyUp();">GARANCIA IDŐ szerint csökkenő</a></td>
+											            <td><a href="#/sequenceByGarantyDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
+											            <td width="100%"><a href="#/sequenceByGarantyDown">GARANCIA IDŐ szerint csökkenő</a></td>
 										            </tr>
 									            </table>
 								            </li>
@@ -587,9 +587,9 @@
                                 <script id="catalogueDownloadTemplate" type="text/x-jquery-tmpl">
                                 {{if IsValidLogin}}
                                 <div id="cus_listdown_text">
-                                    <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.DownloadPriceList()" title="Szűrt lista mentése excel fájlba">Lista letöltése</a>
+                                    <a href="#/downloadPriceList" title="Szűrt lista mentése excel fájlba">Lista letöltése</a>
                                 </div>
-                                <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.DownloadPriceList()"><img src="@Url.Content("~/Content/Media/images/list_download.png")" border="0" hspace="1" title="Szűrt lista mentése excel fájlba" alt="Szűrt lista mentése excel fájlba" /></a>
+                                <a href="#/downloadPriceList"><img src="@Url.Content("~/Content/Media/images/list_download.png")" border="0" hspace="1" title="Szűrt lista mentése excel fájlba" alt="Szűrt lista mentése excel fájlba" /></a>
                                 {{/if}}
                                 </script>
                                 </td>
@@ -605,20 +605,20 @@
                             <td nowrap="nowrap" width="100%">Eredmény: <b>${ListCount}</b></td>
 					        <td>
                             {{if Pager.FirstEnabled}}
-                                <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FirstPage();">&lt;&lt;</a> 
+                                <a href="#/firstPage">&lt;&lt;</a> 
 					        {{else}} 
                                 <span style="color: #999;">&lt;&lt;</span> 
                             {{/if}}
                             </td>
 					        <td>
                             {{if Pager.PreviousEnabled}}
-                                <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.PreviousPage();">&lt;</a> 
+                                <a href="#/previousPage">&lt;</a> 
                             {{else}}
                                 <span style="color: #999;">&lt;</span>
                             {{/if}}
                             </td>
 					        <td align="center">
-                                <select id="select_pageindex_top" onchange="CompanyGroupCms.Catalogue.SelectedPageIndexChanged('top')">
+                                <select id="select_pageindex_top">
 				                {{each( i, item ) Pager.PageItemList}}
 				                {{if item.Selected }}
 				                <option value="${item.Index}" selected="selected">${item.Value}</option>
@@ -632,14 +632,14 @@
 					        <td align="center"><span id="spanTopLastPageIndex"><b>${Pager.LastPageIndex}</b></span></td>
 					        <td align="right">
                             {{if Pager.NextEnabled}}
-                            <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.NextPage();">&gt;</a> 
+                            <a href="#/nextPage">&gt;</a> 
                             {{else}}
                             <span>&gt;</span> 
                             {{/if}}
                             </td>
 					        <td align="right"> 
                             {{if Pager.LastEnabled}}
-                            <a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.LastPage();">&gt;&gt;</a> 
+                            <a href="#/lastPage">&gt;&gt;</a> 
                             {{else}}
                             <span>&gt;&gt;</span> 
                             {{/if}}
@@ -898,6 +898,8 @@
 
     companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructureApi/")');
 
+    companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
+
     companyGroup.webshop.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
@@ -939,8 +941,10 @@
                     
             $("#leasingOptionsContainer").empty();
             $("#leasingOptionsTemplate").tmpl(model.LeasingOptions).appendTo("#leasingOptionsContainer");            
-            
-            console.log('hello');
+
+            //$('body').trigger('selectedPageIndexChanged', {msg: 'hello world!'});
+
+
 
 @*            $('.number').spin();
             $('.cartnumber').spin();*@
