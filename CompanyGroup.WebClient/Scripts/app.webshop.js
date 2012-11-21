@@ -46,15 +46,6 @@ companyGroup.webshop = $.sammy(function () {
             }
         });
 
-        $("#select_pageindex_top").bind('change', function () {
-            //console.log('hello');
-            //$('body').trigger('selectedPageIndexChanged', { PageIndex: $("#select_pageindex_top").val() });
-            console.log('selectedPageIndexChanged: ' + $("#select_pageindex_top").val());
-            catalogueRequest.CurrentPageIndex = parseInt($("#select_pageindex_top").val());
-            loadCatalogue();
-            this.title('Webshop - kiválasztott sorszámú lapra ugrás');
-        });
-
         //alsó (ajánlott) termék lapozó 
         $('#cus_recommended_prod_content').easyPaginate({
             step: 4,
@@ -71,10 +62,30 @@ companyGroup.webshop = $.sammy(function () {
         context.title('Webshop - Kezdőoldal');
 
     });
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+
+        $("#select_pageindex_top").live('change', function () {
+            context.trigger('selectedPageIndexChanged', { PageIndex: parseInt($("#select_pageindex_top").val(), 0) });
+        });
+
+        $("#select_pageindex_bottom").live('change', function () {
+            context.trigger('selectedPageIndexChanged', { PageIndex: parseInt($("#select_pageindex_bottom").val(), 0) });
+        });
+
+        $("#select_visibleitemlist_top").live('change', function () {
+            context.trigger('visibleItemListChanged', { Orientation: 'top', Index: parseInt($("#select_visibleitemlist_top").val(), 0) });
+        });
+        $("#select_visibleitemlist_bottom").live('change', function () {
+            context.trigger('visibleItemListChanged', { Orientation: 'bottom', Index: parseInt($("#select_visibleitemlist_bottom").val(), 0) });
+        });
+    });
+
     //kiválasztott sorszámú lapra ugrás
-    this.bind('selectedPageIndexChanged', function (context) {
-        console.log('selectedPageIndexChanged: ' + this.params['PageIndex']);
-        catalogueRequest.CurrentPageIndex = parseInt(this.params['PageIndex']);
+    this.bind('selectedPageIndexChanged', function (e, data) {
+        console.log('selectedPageIndexChanged: ' + data.PageIndex);
+        catalogueRequest.CurrentPageIndex = parseInt(data.PageIndex, 0);
         loadCatalogue();
         this.title('Webshop - kiválasztott sorszámú lapra ugrás');
     });
@@ -92,7 +103,7 @@ companyGroup.webshop = $.sammy(function () {
     this.get('#/lastPage', function (context) {
         //console.log(context);
         var currentPageIndex = catalogueRequest.CurrentPageIndex;
-        var lastPageIndex = $("#spanTopLastPageIndex").text();
+        var lastPageIndex = parseInt($("#spanTopLastPageIndex").text(), 0);
         if (currentPageIndex < (lastPageIndex)) {
             catalogueRequest.CurrentPageIndex = lastPageIndex;
             loadCatalogue();
@@ -103,7 +114,7 @@ companyGroup.webshop = $.sammy(function () {
     this.get('#/nextPage', function (context) {
         //console.log(context);
         var currentPageIndex = catalogueRequest.CurrentPageIndex;
-        var lastPageIndex = $("#spanTopLastPageIndex").text();
+        var lastPageIndex = parseInt($("#spanTopLastPageIndex").text(), 0);
         if (currentPageIndex < (lastPageIndex)) {
             currentPageIndex = currentPageIndex + 1;
             catalogueRequest.CurrentPageIndex = currentPageIndex;
@@ -123,17 +134,17 @@ companyGroup.webshop = $.sammy(function () {
         }
     });
     //megjelenített elemek száma változás
-    this.get('#/visibleItemListChanged', function (context) {
+    this.bind('visibleItemListChanged', function (e, data) {
         //console.log(context);
         catalogueRequest.CurrentPageIndex = 1;
-        if (value === 'top') {
-            catalogueRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_top").val(), 0);
+        if (data.Orientation === 'top') {
+            catalogueRequest.ItemsOnPage = parseInt(data.Index, 0);
         }
         else {
-            catalogueRequest.ItemsOnPage = parseInt($("#select_visibleitemlist_bottom").val(), 0);
+            catalogueRequest.ItemsOnPage = parseInt(data.Index, 0);
         }
         loadCatalogue();
-        context.title('Webshop - megjelenített elemek száma változás');
+        this.title('Webshop - megjelenített elemek száma változás');
     });
     /*
     /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
@@ -321,7 +332,7 @@ companyGroup.webshop = $.sammy(function () {
     });
     this.get('#/downloadPriceList', function (context) {
         console.log('downloadPriceList');
-        window.location = companyGroup.utils.instance().getDownloadPriceListUrl() + '?' + $.param(catalogueRequest);    
+        window.location = companyGroup.utils.instance().getDownloadPriceListUrl() + '?' + $.param(catalogueRequest);
     });
     //nagyobb méretű termékkép
     this.get('#/showPicture/:productId/:dataAreaId/:productName', function (context) {
@@ -492,8 +503,8 @@ companyGroup.webshop = $.sammy(function () {
         NameOrPartNumberFilter: '',
         Sequence: 0,
         CurrentPageIndex: 1,
-        ItemsOnPage: 30, 
-        clear: function() {
+        ItemsOnPage: 30,
+        clear: function () {
             this.ManufacturerIdList = [];
             this.Category1IdList = [];
             this.Category2IdList = [];
@@ -510,7 +521,7 @@ companyGroup.webshop = $.sammy(function () {
             this.NameOrPartNumberFilter = '';
             this.Sequence = 0;
             this.CurrentPageIndex = 1;
-            this.ItemsOnPage = 30;       
+            this.ItemsOnPage = 30;
         }
     };
 });
