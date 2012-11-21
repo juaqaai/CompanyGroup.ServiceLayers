@@ -1,4 +1,17 @@
-﻿var companyGroup = companyGroup || {};
+﻿//https://github.com/brandonaaron/sammystodos
+/*
+        this.notFound = function(verb, path) {
+            this.runRoute('get', '#/404');
+        };
+        this.get('#/404', function() {
+            this.partial('templates/404.template', {}, function(html) {
+                $('#page').html(html);
+            });
+        });
+
+*/
+
+var companyGroup = companyGroup || {};
 
 companyGroup.webshop = $.sammy(function () {
 
