@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -49,18 +49,18 @@
                         <strong><span>{{RepresentativeName}}/span></strong> 
                         <a href="mailto:{{RepresentativeEmail}}">{{RepresentativeEmail}}</a>
                         <strong><span>{{RepresentativePhone}}</span></strong>
-                        <a id="anchor_signout" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.SignOut();"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
+                        <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
-                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés </strong></a>
+                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
                     {{/IsValidLogin}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
 					<td nowrap="nowrap">Nyelv&nbsp;</td>
 					<td nowrap="nowrap">
-                        <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeLanguage()"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{#LanguageIsEng}} HU {{/LanguageIsEng}} {{#LanguageIsHun}} EN {{/LanguageIsHun}}</span></a></strong>
+                        <strong><a href="#/changeLanguage"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{#LanguageIsEng}} HU {{/LanguageIsEng}} {{#LanguageIsHun}} EN {{/LanguageIsHun}}</span></a></strong>
                         {{#IsValidLogin}}
-                            Pénznem <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('HUF')">
+                            Pénznem <strong><a href="#/changeCurrency/HUF">
                             {{#CurrencyIsHuf}}
                             <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
                             {{/CurrencyIsHuf}}
@@ -68,14 +68,14 @@
                             <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             </a></strong>
-                            <strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('EUR')">
+                            <strong><a href="#/changeCurrency/EUR">
                             {{#CurrencyIsEur}}
                             <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px;">EUR</span>
                             {{/CurrencyIsEur}}
                             {{^CurrencyIsEur}}
                             <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span>
                             {{/CurrencyIsEur}}
-                            </a></strong><strong><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ChangeCurrency('USD')">
+                            </a></strong><strong><a href="#/changeCurrency/USD">
                             {{#CurrencyIsUsd}}
                             <span id="currency_usd" style="background: #900; padding: 2px;">USD</span>
                             {{/CurrencyIsUsd}}
@@ -105,49 +105,49 @@
 								<ul>
                                     {{#IsValidLogin}}
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByStock(true)">Készleten lévő termékek </a>
+										<a href="#/filterByStock/true">Készleten lévő termékek </a>
 									</li>
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByAction(true)"><strong>AKCIÓS TERMÉKEK</strong></a>
+										<a href="#/filterByAction/true"><strong>AKCIÓS TERMÉKEK</strong></a>
 									</li>
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByBargain(true)"><strong>BÖRZÉS TERMÉKEK</strong></a>
+										<a href="#/filterByBargain/true"><strong>BÖRZÉS TERMÉKEK</strong></a>
 									</li>
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByNew(true)"><strong>Új TERMÉKEK</strong></a>
+										<a href="#/filterByNew/true"><strong>Új TERMÉKEK</strong></a>
 									</li>
                                     {{/IsValidLogin}}
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByHrp()">HRP termékek +</a>
+										<a href="#/filterByHrp">HRP termékek +</a>
 										<ul>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryHrp('B001')">Asztali gépek</a>
+												<a href="#/filterByCategoryHrp/B001">Asztali gépek</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryHrp('B011')">Notebookok</a>
+												<a href="#/filterByCategoryHrp/B011">Notebookok</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryHrp('B008')">Monitorok</a>
+												<a href="#/filterByCategoryHrp/B008">Monitorok</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryHrp('B012')">Nyomtatók</a>
+												<a href="#/filterByCategoryHrp/B012">Nyomtatók</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryHrp('C267')">Kiegészítők</a>
+												<a href="#/filterByCategoryHrp/C267">Kiegészítők</a>
 											</li>
 										</ul>
 									</li>
 									<li>
-										<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByBsc()">BSC termékek +</a>
+										<a href="#/filterByBsc">BSC termékek +</a>
 										<ul>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryBsc('B019')">Szoftverek</a>
+												<a href="#/filterByCategoryBsc/B019">Szoftverek</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryBsc('C077')">Játékvezérlők</a>
+												<a href="#/filterByCategoryBsc/C077">Játékvezérlők</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.FilterByCategoryBsc('C267')">Kiegészítők</a>
+												<a href="#/filterByCategoryBsc/C267">Kiegészítők</a>
 											</li>
 										</ul>
 									</li>
@@ -185,12 +185,11 @@
 						<td width="100%" nowrap="nowrap">&nbsp;</td>
 						<td align="right" nowrap="nowrap"></td>
 						<td width="50%" align="right" nowrap="nowrap"><!-- *** gyorskereső ajánlóval *** -->
-                        @using (Html.BeginForm("Index", "Home", System.Web.Mvc.FormMethod.Post, new { id = "form_searchByTextFilter" }))
-                        {
-                            <label class="error" for="txt_globalsearch" generated="true" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                        <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
+                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
 						    <input type="text" class="ui-autocomplete-input" id="txt_globalsearch" size="19" onfocus="if(this.value=='Keresés a termékek között')this.value=''" onblur="if(this.value=='')this.value='Keresés a termékek között'"/>
                             @Html.AntiForgeryToken()
-                        }
+                        </form>
                         </td>
 					</tr>
 				</table>
@@ -202,10 +201,10 @@
 			    <div id="cus_ax_nav">
 				    <ul id="navmenu_o">
 					    <li>
-						    <a href="@Url.Content("~/Home/Index")">WEBÁRUHÁZ</a>
+						    <a href="@Url.Content("~/Webshop/Index")">WEBÁRUHÁZ</a>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Home/Newsletter")">AKCIÓK</a>
+						    <a href="@Url.Content("~/Company/Newsletter")">AKCIÓK</a>
 						    <ul>
 							    <li>
 								    <a href="#"><img src="@Url.Content("~/Content/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
@@ -213,16 +212,16 @@
 						    </ul>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Home/About")">CÉGINFORMÁCIÓ</a>
+						    <a href="@Url.Content("~/Company/Index")">CÉGINFORMÁCIÓ</a>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Home/Registration")">PARTNERRÉ VÁLÁS</a>
+						    <a href="@Url.Content("~/PartnerInfo/Registration")">PARTNERRÉ VÁLÁS</a>
 					    </li>
 					    <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">SZERVIZ</a>
 					    </li>
 					    <li>
-						    <a rel="nofollow" href="@Url.Content("~/Home/Carreer")">KARRIER</a>
+						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">KARRIER</a>
 					    </li>
 				    </ul>
 			    </div>
@@ -306,7 +305,7 @@
 			<!-- Kosár impor ablak -->
 			<div style="display: none;">
                 <div id="import_basket_list_win">
-				<form id="basketlist_import" name="basketlist_import" enctype="multipart/form-data" method="post" action="">
+				<form id="basketlist_import" name="basketlist_import" enctype="multipart/form-data" method="post" action="#/importShoppingCart">
 				  <strong>Lista fájl importálása kosárba</strong><br /><br />
 				  <table border="0" cellspacing="3" cellpadding="10">
 				    <tr>
@@ -329,42 +328,38 @@
 			<!-- új telephely hozzáadása ablak -->
 			<div style="display: none;">
                 <div id="add_new_site">
-				    <form id="form_add_site" enctype="multipart/form-data" method="post" >
+				    <form id="form_add_site" action="#/addSite" enctype="multipart/form-data" method="post" >
 				      <strong>Telephely hozzáadása</strong><br /><br />
                       <div id="add_site_errors"></div>
 				      <table border="0" cellspacing="3" cellpadding="10">
 				        <tr>
 				          <td>Irányítószám</td>
 				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_zipcode" />
-                          <label class="error" for="txt_site_irsz" generated="true" style="display:none; color:#900;">Az irányítószám megadása kötelező</label>
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az irányítószám megadása kötelező</label>
                           </td>
 				        </tr>
-				        
 				        <tr>
 				          <td>Ország</td>
 				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_country" />
-                          <label class="error" for="txt_site_irsz" generated="true" style="display:none; color:#900;">Az ország megadása kötelező</label>
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az ország megadása kötelező</label>
                           </td>
 				        </tr>
-				        
 				        <tr>
 				          <td>Város</td>
 				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_city" />
-                          <label class="error" for="txt_site_irsz" generated="true" style="display:none; color:#900;">A város megadása kötelező</label>
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">A város megadása kötelező</label>
                           </td>
 				        </tr>
-				        
 				        <tr>
 				          <td>Utca</td>
 				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_street" />
-                          <label class="error" for="txt_site_irsz" generated="true" style="display:none; color:#900;">Az utca megadása kötelező</label>
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az utca megadása kötelező</label>
                           </td>
 				        </tr>
-				        
 				        <tr>
 				          <td>Házszám</td>
 				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_house" />
-                          <label class="error" for="txt_site_irsz" generated="true" style="display:none; color:#900;">A házszám megadása kötelező</label>
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">A házszám megadása kötelező</label>
                           </td>
 				        </tr>
 				        <tr>
@@ -379,14 +374,14 @@
 			<!-- kosár mentése ablak -->
 			<div style="display: none;">
                 <div id="save_basket_win">
-				    <form id="form_savecart" enctype="multipart/form-data" method="post" action="/Cms/ShoppingCart/SaveCart">
+				    <form id="form_savecart" enctype="multipart/form-data" method="post" action="#/saveShoppingCart">
 				      <strong>Kosár mentése</strong><br /><br />
                       <div id="savecart_errors"></div>
 				      <table border="0" cellspacing="3" cellpadding="10">
 				        <tr>
 				          <td>Kosár elnevezése</td>
 				          <td><input type="text" size="32" name="txt_cartname" id="txt_cartname" />
-                          <label class="error" for="txt_cartname" generated="true" style="display:none; color:#900;">A kosárnév kitöltése kötelező</label>
+                          <label class="error" for="txt_cartname" style="display:none; color:#900;">A kosárnév kitöltése kötelező</label>
                           </td>
 				        </tr>
 				        <tr>
@@ -401,7 +396,7 @@
 			<!-- bejelentkezés ablak -->
 			<div style="display: none;">
 				<div id="div_login">
-                    <form action="/Cms/Company/Newsletter/Cms/Customer/SignIn" id="form_login" method="post">                    
+                    <form action="#/signIn" id="form_login" method="post">                    
                     <div id="login_errors"></div>
 					<table width="470" border="0" align="center" cellpadding="10" cellspacing="1" >
 						<tr>
@@ -409,17 +404,17 @@
 						</tr>
 						<tr>
 							<td>Felhasználónév</td>
-							<td><input id="txt_username" name="txt_username" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="text" value="" />
+							<td><input id="txt_username" name="txt_username" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="text" />
 							<br />
 							<br />
-							<label class="error" for="txt_username" generated="true" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></td>
+							<label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></td>
 						</tr>
 						<tr>
 							<td>Jelszó</td>
-							<td><input id="txt_password" name="txt_password" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="password" value="" />
+							<td><input id="txt_password" name="txt_password" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="password" />
 							<br />
 							<br />
-							<label class="error" for="txt_password" generated="true" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></td>
+							<label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -430,11 +425,11 @@
 					</table>
 					<table width="470" border="0" align="center" cellpadding="10" cellspacing="0" style="background:#333; color:#999; " >
 						<tr>
-							<td width="100%"><a href="#" style="color:#fff; text-decoration: none;">Elfelejtett jelszó</a></td>
-							<td align="right" nowrap="nowrap"> Még nem partnerünk? <a href="/Cms/PartnerInfo/Home/" style="color:#fff; text-decoration: none;">Regisztráljon!</a></td>
+							<td width="100%"><a href="#/forgetPassword" style="color:#fff; text-decoration: none;">Elfelejtett jelszó</a></td>
+							<td align="right" nowrap="nowrap"> Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#fff; text-decoration: none;">Regisztráljon!</a></td>
 						</tr>
-					</table>
-                    <input name="__RequestVerificationToken" type="hidden" value="riQNrpsfgqARUtCSi2drV3mgVLlP71GKJM4zNxqLOeg5hgrycjv9cQz7ycSORdp5R4Vjlb+p6t1cmKIrlT3vozXCr4RbdBhqJBIzWsFbEyJP0Kpei4ZT7d6C7y2/WBwkuD7FJKmMwB1SWyp6xEjbDQ==" /></form>				
+					</table>@Html.AntiForgeryToken()
+                    </form>				
                 </div>
 			</div>
     </div>
@@ -448,6 +443,7 @@
                 .js('@Scripts.Url("~/bundles/autocomplete")')
                 .js('@Scripts.Url("~/bundles/fileupload")')
                 .js('@Scripts.Url("~/bundles/floatingmessage")')
+                .js('@Scripts.Url("~/bundles/fancybox")')
                 .js('@Scripts.Url("~/bundles/json2")')
                 .js('@Scripts.Url("~/bundles/tmpl")')
                 .js('@Scripts.Url("~/bundles/vegas")')
@@ -458,13 +454,16 @@
         });
 
         head.ready(function() {
+
+            companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
+
             $.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
 
-                $('#preloader').ajaxStart(function () {
-                    $('#preloader').show();
-                }).ajaxStop(function () {
-                    $('#preloader').hide();
-                });
+            $('#preloader').ajaxStart(function () {
+                $('#preloader').show();
+            }).ajaxStop(function () {
+                $('#preloader').hide();
+            });
 
             @RenderSection("ScriptOnReady", false)
         }); 

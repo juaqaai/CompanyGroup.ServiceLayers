@@ -53,6 +53,8 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/easypaginate").Include("~/Scripts/easypaginate.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/fancybox").Include("~/Scripts/jquery.fancybox-1.3.4.pack.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));

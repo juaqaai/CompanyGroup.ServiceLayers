@@ -578,7 +578,7 @@
                                 </td>
 					            <td align="center" width="100%" class="cus_list_order_panel_table">
                                 <form id="form_filterbynameorpartnumber" action="#/filterbynameorpartnumber" method="post">
-                                    <label class="error" for="txt_filterbynameorpartnumber" generated="true" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                                    <label class="error" for="txt_filterbynameorpartnumber" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                                     @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:205px; height:20px; margin-left:5px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;", onfocus = "if(this.value=='név vagy cikkszám szűrése')this.value=''", onblur = "if(this.value=='')this.value='név vagy cikkszám szűrése'" })
                                 </form>
 					            </td>
@@ -916,8 +916,6 @@
     $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
 
     $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");*@
-
-
 
             $("#pagerTemplateTop").tmpl(model.Products).appendTo("#div_pager_top");
             $("#pagerTemplateBottom").tmpl(model.Products).appendTo("#div_pager_bottom");
