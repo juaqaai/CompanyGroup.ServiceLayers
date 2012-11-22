@@ -26,6 +26,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             result.PreviousEnabled = pager.PreviousEnabled;
 
+            CompanyGroup.Domain.WebshopModule.PageItem pageItem = pager.PageItemList.Find(x => x.Selected);
+
+            result.NextPageIndex = (pageItem != null) ? ( (pager.NextEnabled) ? pageItem.Index + 1 : pager.LastPageIndex ) : 1;
+
+            result.PreviousPageIndex = (pageItem != null) ? ( (pager.PreviousEnabled) ? pageItem.Index - 1 : 1) : 1;
+
             //elemek száma az oldalon
             result.VisibleItemList = new List<CompanyGroup.Dto.WebshopModule.VisibleItem>();
 

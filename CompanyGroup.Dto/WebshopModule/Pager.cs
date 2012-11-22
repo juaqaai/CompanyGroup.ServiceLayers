@@ -50,6 +50,18 @@ namespace CompanyGroup.Dto.WebshopModule
 
         [System.Runtime.Serialization.DataMember(Name = "VisibleItemList", Order = 7)]
         public List<VisibleItem> VisibleItemList { get; set; }
+
+        /// <summary>
+        /// előző oldalindex
+        /// </summary>
+        [System.Runtime.Serialization.DataMember(Name = "PreviousPageIndex", Order = 8)]
+        public int PreviousPageIndex { get; set; }
+
+        /// <summary>
+        /// következő oldalindex
+        /// </summary>
+        [System.Runtime.Serialization.DataMember(Name = "NextPageIndex", Order = 9)]
+        public int NextPageIndex { get; set; }
     }
 
     [Serializable]

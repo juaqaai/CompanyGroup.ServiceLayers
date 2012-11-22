@@ -612,7 +612,7 @@
                             </td>
 					        <td>
                             {{if Pager.PreviousEnabled}}
-                                <a href="#/previousPage">&lt;</a> 
+                                <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> 
                             {{else}}
                                 <span style="color: #999;">&lt;</span>
                             {{/if}}
@@ -632,7 +632,7 @@
 					        <td align="center"><span id="spanTopLastPageIndex"><b>${Pager.LastPageIndex}</b></span></td>
 					        <td align="right">
                             {{if Pager.NextEnabled}}
-                            <a href="#/nextPage">&gt;</a> 
+                            <a href="#/nextPage/${Pager.NextPageIndex}">&gt;</a> 
                             {{else}}
                             <span>&gt;</span> 
                             {{/if}}
@@ -808,7 +808,7 @@
                             </td>
 						    <td>
                             {{if Pager.PreviousEnabled}}
-                                <a href="#/previousPage">&lt;</a> 
+                                <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> 
                             {{else}}
                                 <span style="color: #999;">&lt;</span>
                             {{/if}}
@@ -828,7 +828,7 @@
 						    <td align="center"><span id="spanTopLastPageIndex"><b>${Pager.LastPageIndex}</b></span></td>
 						    <td align="right">
                             {{if Pager.NextEnabled}}
-                            <a href="#/nextPage">&gt;</a> 
+                            <a href="#/nextPage/${Pager.NextPageIndex}">&gt;</a> 
                             {{else}}
                             <span>&gt;</span> 
                             {{/if}}
@@ -842,7 +842,7 @@
                             </td>
                             <td nowrap="nowrap">&nbsp;&nbsp;Listaelemek száma egy oldalon&nbsp;&nbsp;</td>
                             <td align="right">
-                            <select id="select_visibleitemlist_bottom" onchange="CompanyGroupCms.Catalogue.VisibleItemListChanged('bottom')">
+                            <select id="select_visibleitemlist_bottom">
                             {{each( i, visibleitem ) Pager.VisibleItemList}}
                             {{if visibleitem.Selected }}
                                 <option value="${visibleitem.Value}" selected="selected">${visibleitem.Value}</option>

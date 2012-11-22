@@ -280,10 +280,6 @@ namespace CompanyGroup.WebClient.Controllers
             return new CompanyGroup.WebClient.Models.CompletionList(response);
         }
 
-
-
- 
-
         // GET api/webshop/5
         public string Get(int id)
         {

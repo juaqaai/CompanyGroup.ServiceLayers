@@ -69,11 +69,9 @@ companyGroup.webshop = $.sammy(function () {
         $("#select_pageindex_top").live('change', function () {
             context.trigger('selectedPageIndexChanged', { PageIndex: parseInt($("#select_pageindex_top").val(), 0) });
         });
-
         $("#select_pageindex_bottom").live('change', function () {
             context.trigger('selectedPageIndexChanged', { PageIndex: parseInt($("#select_pageindex_bottom").val(), 0) });
         });
-
         $("#select_visibleitemlist_top").live('change', function () {
             context.trigger('visibleItemListChanged', { Orientation: 'top', Index: parseInt($("#select_visibleitemlist_top").val(), 0) });
         });
@@ -111,8 +109,8 @@ companyGroup.webshop = $.sammy(function () {
         }
     });
     //ugrás a következő oldalra
-    this.get('#/nextPage', function (context) {
-        //console.log(context);
+    this.get('#/nextPage/:index', function (context) {
+        console.log(context.params['index']);
         var currentPageIndex = catalogueRequest.CurrentPageIndex;
         var lastPageIndex = parseInt($("#spanTopLastPageIndex").text(), 0);
         if (currentPageIndex < (lastPageIndex)) {
@@ -123,8 +121,8 @@ companyGroup.webshop = $.sammy(function () {
         }
     });
     //ugrás az előző oldalra
-    this.get('#/previousPage', function (context) {
-        //console.log(context);
+    this.get('#/previousPage/:index', function (context) {
+        console.log(context.params['index']);
         var currentPageIndex = catalogueRequest.CurrentPageIndex;
         if (currentPageIndex > 1) {
             currentPageIndex = currentPageIndex - 1;
