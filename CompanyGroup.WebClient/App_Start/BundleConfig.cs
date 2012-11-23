@@ -86,7 +86,6 @@ namespace CompanyGroup.WebClient
                         "~/Content/themes/custom/jquery-ui-1.8.17.custom.css",
                         "~/Content/themes/custom/chosen.css",
                         "~/Content/themes/custom/basketwiz.css",
-                        "~/Content/themes/custom/login.css",
                         "~/Content/themes/custom/jquery.autocomplete.css",
                         "~/Content/themes/custom/jquery.fileupload-ui.css",
                         "~/Content/themes/base/jquery.ui.core.css",

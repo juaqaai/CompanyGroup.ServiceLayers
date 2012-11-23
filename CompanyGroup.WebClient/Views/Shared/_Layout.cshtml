@@ -52,7 +52,7 @@
                         <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
-                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin555" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
+                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin" class="various" href="http://www.adobe.com/jp/events/cs3_web_edition_tour/swfs/perform.swf"><strong>Bejelentkezés </strong></a>
                     {{/IsValidLogin}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
@@ -463,6 +463,16 @@
                 $('#preloader').show();
             }).ajaxStop(function () {
                 $('#preloader').hide();
+            });
+
+            $('#loginwin').fancybox({
+                autoDimensions: true,
+                /*width: '40%',
+                height: '60%',*/
+                autoScale: false,
+                transitionIn: 'fade',
+                transitionOut: 'fade',
+                type : 'iframe'
             });
 
             @RenderSection("ScriptOnReady", false)
