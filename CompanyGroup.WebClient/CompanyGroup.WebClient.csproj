@@ -279,6 +279,7 @@
     <Content Include="Content\HtmlTemplates\Registration\datarecording.html" />
     <Content Include="Content\HtmlTemplates\Registration\registrationdata.html" />
     <Content Include="Content\HtmlTemplates\Registration\webadministrator.html" />
+    <Content Include="Content\HtmlTemplates\test.html" />
     <Content Include="Content\themes\custom\hrp_bsc_html_css.css" />
     <Content Include="Content\themes\custom\images\1.jpg" />
     <Content Include="Content\themes\custom\images\13.png" />
@@ -373,6 +374,7 @@
     <Content Include="Content\themes\custom\images\sprite.png" />
     <Content Include="Content\themes\custom\images\u.png" />
     <Content Include="Content\themes\custom\images\usermenu.png" />
+    <Content Include="Content\themes\custom\jquery.fancybox.css" />
     <Content Include="Content\themes\custom\jquery.ui.accordion.css" />
     <Content Include="Content\themes\custom\jquery.ui.all.css" />
     <Content Include="Content\themes\custom\jquery.ui.autocomplete.css" />
@@ -1114,6 +1116,8 @@
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="Scripts\jquery.fancybox.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />

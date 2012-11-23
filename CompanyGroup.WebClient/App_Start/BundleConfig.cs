@@ -53,7 +53,7 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/easypaginate").Include("~/Scripts/easypaginate.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/fancybox").Include("~/Scripts/jquery.fancybox-1.3.4.pack.js"));
+            bundles.Add(new ScriptBundle("~/bundles/fancybox").Include("~/Scripts/jquery.fancybox.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 
@@ -86,6 +86,7 @@ namespace CompanyGroup.WebClient
                         "~/Content/themes/custom/jquery-ui-1.8.17.custom.css",
                         "~/Content/themes/custom/chosen.css",
                         "~/Content/themes/custom/basketwiz.css",
+                        "~/Content/themes/custom/jquery.fancybox.css",
                         "~/Content/themes/custom/jquery.autocomplete.css",
                         "~/Content/themes/custom/jquery.fileupload-ui.css",
                         "~/Content/themes/base/jquery.ui.core.css",
