@@ -80,8 +80,7 @@ companyGroup.webshop = $.sammy(function () {
             context.trigger('visibleItemListChanged', { Orientation: 'bottom', Index: parseInt($("#select_visibleitemlist_bottom").val(), 0) });
         });
     });
-
-
+    //kilépés
     this.get('#/signOut', function (context) {
         $.ajax({
             type: "POST",
@@ -134,7 +133,7 @@ companyGroup.webshop = $.sammy(function () {
             }
         });
     });
-
+    //bejelentkezés
     this.post('#/signIn', function (context) {
         var data = {
             UserName: userName,
@@ -196,7 +195,7 @@ companyGroup.webshop = $.sammy(function () {
         });
 
     });
-
+    //bejelentkezés panel megmutatása
     this.get('#/showSignInPanel', function (context) {
         $.fancybox({
             href: '#div_login',
@@ -206,26 +205,114 @@ companyGroup.webshop = $.sammy(function () {
             transitionOut: 'fade'
         });
     });
-
-    this.get('#/changeLanguage', function (context) {
-
+    //nyelv megváltoztatása
+    this.get('#/changeLanguage/:language', function (context) {
+        var data = {
+            Language: (context.params['language'] === '' || context.params['language'] === 'HU') ? 'EN' : 'HU'
+        };
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getCustomerApiUrl('ChangeLanguage'),
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                console.log('ChangeLanguage');
+                $("#inverse_language_id").html(result.Language);
+            },
+            error: function () {
+                console.log('ChangeLanguage call failed');
+            }
+        });
     });
-
-
+    //pénznem meváltoztatása
     this.get('#/changeCurrency/:currency', function (context) {
-
-    });
-
-    this.get('#/changeCurrency/:currency', function (context) {
-
+        var data = {
+            Currency: context.params['currency']
+        };
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getCustomerApiUrl('ChangeCurrency'),
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                console.log('ChangeCurrency');
+                if (result.Currency === 'HUF') {
+                    $("#currency_huf").css('background-color', '#900');
+                    $("#currency_eur").css('background-color', '#666');
+                    $("#currency_usd").css('background-color', '#666');
+                    loadCatalogue();
+                }
+                else if (result.Currency === 'EUR') {
+                    $("#currency_huf").css('background-color', '#666');
+                    $("#currency_eur").css('background-color', '#900');
+                    $("#currency_usd").css('background-color', '#666');
+                    loadCatalogue();
+                }
+                else {
+                    $("#currency_huf").css('background-color', '#666');
+                    $("#currency_eur").css('background-color', '#666');
+                    $("#currency_usd").css('background-color', '#900');
+                    loadCatalogue();
+                }
+            },
+            error: function () {
+                console.log('ChangeCurrency call failed');
+            }
+        });
     });
 
     this.post('#/searchByTextFilter', function (context) {
-
+        console.log('searchByTextFilter');
+        catalogueRequest.TextFilter = context.params['txt_globalsearch'];
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
     });
 
     this.get('#/forgetPassword', function (context) {
+        var data = {
+            UserName: $('#txt_username').val(),
+            RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getCustomerApiUrl('ForgetPwd'),
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                if (result) {
+                    console.log(result);
+                    if (result.ForgetPassword.Succeeded) {
+                        $('#forgetPasswordSucceededResult').show();
+                        $('#forgetpassword_succeededmessage').html(result.ForgetPassword.Message);
+                        $('#forgetPasswordFailedResult').hide();
 
+                        $("#forgetPasswordContainer").empty();
+                        $("#forgetPasswordTemplate").tmpl(result.Visitor).appendTo("#forgetPasswordContainer");
+                    }
+                    else {
+                        $('#forgetPasswordFailedResult').show();
+                        $('#forgetpassword_failedmessage').html(result.ForgetPassword.Message);
+                        $('#forgetPasswordSucceededResult').hide();
+                    }
+                }
+                else {
+                    console.log('ForgetPassword result failed');
+                }
+            },
+            error: function () {
+                console.log('ForgetPassword call failed');
+            }
+        });
     });
 
     this.post('#/saveShoppingCart', function (context) {

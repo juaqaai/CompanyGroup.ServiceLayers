@@ -33,9 +33,12 @@ namespace CompanyGroup.WebClient.Models
             this.BscAuthorized = visitor.BscAuthorized;
             this.HrpAuthorized = visitor.HrpAuthorized;
             this.ErrorMessage = String.Empty;
+            this.SelectedCurrency = visitor.Currency;
         }
 
         public string ErrorMessage { get; set; }
+
+        public string SelectedCurrency { get; set; }
 
         public bool CurrencyIsHuf { get { return this.Currency.Equals("HUF") || String.IsNullOrWhiteSpace(this.Currency); } }
 
