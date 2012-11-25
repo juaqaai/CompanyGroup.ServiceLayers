@@ -17,6 +17,16 @@ namespace CompanyGroup.Dto.WebshopModule
             this.DeliveryTerms = 0;
         }
 
+        public ShoppingCart(List<ShoppingCartItem> items, double sumTotal, string id, Shipping shipping, int paymentTerms, int deliveryTerms)
+        {
+            this.Items = items;
+            this.SumTotal = sumTotal;
+            this.Id = id;
+            this.Shipping = shipping;
+            this.PaymentTerms = paymentTerms;
+            this.DeliveryTerms = deliveryTerms;
+        }
+
         [System.Runtime.Serialization.DataMember(Name = "Items", Order = 1)]
         public List<ShoppingCartItem> Items { get; set; }
 

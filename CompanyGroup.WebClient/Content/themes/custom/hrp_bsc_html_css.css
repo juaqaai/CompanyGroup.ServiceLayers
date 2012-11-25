@@ -239,7 +239,7 @@ body {
 }
 
 #div_pager_bottom {
-
+    
     background: #DDD;
     color: #666;
     font-size: 11px;
@@ -710,6 +710,12 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     margin-left: 8px;
 }
 #cus_list_order_panel {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.cus_list_order_panel {
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;

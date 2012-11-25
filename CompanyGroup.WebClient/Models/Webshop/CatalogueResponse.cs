@@ -4,12 +4,11 @@ using System.Collections.Generic;
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// webshop lista view-hoz tartozó típus, webshop catalogue controller index action JSonResult-ban                  
+    /// bejelentkezés eredményére visszaadott objektumok csoportja
     /// </summary>
-    public class Catalogue
+    public class CatalogueResponse
     {
-        public Catalogue(CompanyGroup.Dto.WebshopModule.Structures structures, 
-                         CompanyGroup.Dto.WebshopModule.Products products,
+        public CatalogueResponse(CompanyGroup.Dto.WebshopModule.Products products,
                          CompanyGroup.WebClient.Models.Visitor visitor,
                          CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
                          List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems, 
@@ -17,11 +16,8 @@ namespace CompanyGroup.WebClient.Models
                          bool shoppingCartOpenStatus, 
                          bool catalogueOpenStatus, 
                          CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
-                         CompanyGroup.Dto.WebshopModule.BannerList bannerList, 
                          CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
         {
-            this.Structures = new Structures(structures);
-
             this.Products = products;   
 
             this.Visitor = visitor;
@@ -38,12 +34,8 @@ namespace CompanyGroup.WebClient.Models
 
             this.DeliveryAddresses = deliveryAddresses;
 
-            this.BannerList = bannerList;
-
             this.LeasingOptions = leasingOptions;
         }
-
-        public Structures Structures { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
 
@@ -60,8 +52,6 @@ namespace CompanyGroup.WebClient.Models
         public bool CatalogueOpenStatus { get; set; }
 
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses DeliveryAddresses { get; set; }
-
-        public CompanyGroup.Dto.WebshopModule.BannerList BannerList { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
     }

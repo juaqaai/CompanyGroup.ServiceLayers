@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
+    /// <summary>
+    /// ShoppingCart + LeasingOptions
+    /// </summary>
     [Serializable]
     [System.Runtime.Serialization.DataContract(Name = "ShoppingCartAndLeasingOptions", Namespace = "CompanyGroup.Dto.WebshopModule")]
     public class ShoppingCartAndLeasingOptions

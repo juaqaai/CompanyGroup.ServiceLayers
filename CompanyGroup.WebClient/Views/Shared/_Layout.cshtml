@@ -46,9 +46,9 @@
                         <span>Bejelentkezve:</span> 
                         <strong><span>{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
                         <span>Képviselő:</span>
-                        <strong><span>{{RepresentativeName}}/span></strong> 
-                        <a href="mailto:{{RepresentativeEmail}}">{{RepresentativeEmail}}</a>
-                        <strong><span>{{RepresentativePhone}}</span></strong>
+                        <strong><span>{{Representative.Name}}</span></strong> 
+                        <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>
+                        <strong><span>{{Representative.Phone}}</span></strong>
                         <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
@@ -442,7 +442,7 @@
             head.js('@Scripts.Url("~/bundles/jqueryui")')
                 .js('@Scripts.Url("~/bundles/jqueryval")')
                 .js('@Scripts.Url("~/bundles/chosen")')
-                .js('@Scripts.Url("~/bundles/autocomplete")')
+                //.js('@Scripts.Url("~/bundles/autocomplete")')
                 .js('@Scripts.Url("~/bundles/fileupload")')
                 .js('@Scripts.Url("~/bundles/floatingmessage")')
                 .js('@Scripts.Url("~/bundles/fancybox")')

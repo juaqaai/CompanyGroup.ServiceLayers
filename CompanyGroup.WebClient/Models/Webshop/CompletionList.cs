@@ -9,7 +9,7 @@ namespace CompanyGroup.WebClient.Models
     {
         public CompletionList(CompanyGroup.Dto.WebshopModule.CompletionList completionList)
         {
-            this.Items = completionList.Items;
+            this.Items = (completionList != null) ? completionList.Items : new List<CompanyGroup.Dto.WebshopModule.Completion>();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/chosen").Include("~/Scripts/chosen.js"));
             
-            bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include("~/Scripts/jquery.autocomplete.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include("~/Scripts/jquery.autocomplete.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include("~/Scripts/jquery.fileupload.js"));
 

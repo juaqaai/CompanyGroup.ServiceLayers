@@ -42,14 +42,14 @@
                         <table width="974" border="0" cellspacing="0" cellpadding="2">
                             <tr>
                                 <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/addshoppingcart">Új kosár</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/addShoppingCart">Új kosár</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/removeshoppingcart">Aktív kosár törlése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/removeShoppingCart">Aktív kosár törlése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a id="basket_save" href="#/showsavecartpanel">Aktív kosár mentése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a id="basket_save" href="#/showSaveCartPanel">Aktív kosár mentése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
                                 <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
-                                <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>
+                                <!-- <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>-->
                                 <td align="right">
                                 <select name="saved_shoppingcart_list" id="saved_shoppingcart_list">            
                                     <option style="font-weight: bold; margin-left:-3px; padding-bottom:2px; padding-top:2px; background: #7FAA13; color:#fff;" value="">Mentett / nyitott kosarak listája</option>
@@ -372,16 +372,15 @@
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
-                                <!-- VisitorInfo.IsValidLogin -->
 					            <div id="cus_filter_price">
-                                    <form action="#filterbyprice" method="post" id="form_filterbyprice">
+                                    <form action="#/filterbyprice" method="post" id="form_filterbyprice">
 					                <div id="negyes_szuro">	
 						            <table cellpadding="1" cellspacing="1">
 						                <tr>
-                                            <td>Készleten</td><td><input type="checkbox" id="chk_onstock" onchange="CompanyGroupCms.Catalogue.FilterByStock($(this).is(':checked'))" /></td>
-                                            <td>Akciós</td><td><input type="checkbox" id="chk_onaction" onchange="CompanyGroupCms.Catalogue.FilterByAction($(this).is(':checked'))" /></td> 
-                                            <td>Leértékelt</td><td><input type="checkbox" id="chk_bargain" onchange="CompanyGroupCms.Catalogue.FilterByBargain($(this).is(':checked'))" /></td> 
-                                            <td>Új</td><td><input type="checkbox" id="chk_new" onchange="CompanyGroupCms.Catalogue.FilterByNew($(this).is(':checked'))" /></td>                                   
+                                            <td>Készleten</td><td><input type="checkbox" id="chk_onstock" /></td>
+                                            <td>Akciós</td><td><input type="checkbox" id="chk_onaction" /></td> 
+                                            <td>Leértékelt</td><td><input type="checkbox" id="chk_bargain" /></td> 
+                                            <td>Új</td><td><input type="checkbox" id="chk_new" /></td>                                   
                                         </tr>
 						            </table>
 					                </div>	
@@ -393,12 +392,11 @@
 						            </select>
 						            <input name="txt_filterbyprice" type="text" id="txt_filterbyprice" size="9" style="margin-top:4px; padding:5px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 75px;"/>
 						            <!-- <input type="submit" name="button" id="button" value="Keres" /> -->
-						            <div id="cus_refresh_icon" onclick="$('#form_filterbyprice').submit()">
-							            Frissítés<!-- <img src="@Url.Content("~/Content/Media/images/refresh.png")" /> -->
+						            <div id="cus_refresh_icon">
+							            <input type="image" src="@Url.Content("~/Content/Media/images/refresh.png")" title="Frissítés" />Frissítés
 						            </div>
                                     </form>
 					            </div>
-                                <!-- /VisitorInfo.IsValidLogin -->
 					            <div id="cus_filter_1">
 						            Gyártók kiválasztása
 						            <br />
@@ -461,6 +459,7 @@
                         </p>
 		            </div>
 	            </div>
+
                 <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
@@ -657,7 +656,8 @@
 				        </tr>
 			        </table>
                     </script>
-                    <div id="listscroll">
+
+                    @*<div id="listscroll">*@
 		                <div id="cus_product_table">
 			            @* listaelemek lenyíló/bezáródó *@
 			            <div id="div_catalogue" class="wrapper">
@@ -741,7 +741,7 @@
                                             </td>
 				                        </tr>
 				                </table>
-                            <form action="#/addLineToShoppingCart" method="post"> 
+                            <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
 			                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				                <tr>
 				                    <td nowrap="nowrap">
@@ -789,11 +789,12 @@
                             </script>
                         @*termekelem vege*@
                         </div>
-                    </div>
-			        <br />@*alsó lapozó eleje*@
-			        <div id="div_pager_bottom">
+                    @*</div>*@
 
-			        </div>
+			        @*alsó lapozó*@
+                    <div class="cus_list_order_panel" style="float:left">
+			        <div id="div_pager_bottom"></div>
+                    </div>
                     <script id="pagerTemplateBottom" type="text/x-jquery-tmpl">
                         <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
 					    <tr>
@@ -853,8 +854,8 @@
 					    </tr>
 				    </table>
                     </script>            
-                    @*alsó lapozó vége*@
-			        @* ajánlott termékek blokk div *@
+
+			        @* ajánlott termékek*@
 			        <div id="cus_recommended_prod_container">
 				        <h4>Ajánlott termékeink</h4>
 				        <ul id="cus_recommended_prod_content">
@@ -866,7 +867,6 @@
                             }
 				        </ul>
 			        </div>
-			        @* ajánlott termékek blokk div vége *@
 	            </div>
             </div>
 		</div>
@@ -899,17 +899,17 @@
 
     companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
 
-    companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi")');
+    companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi/")');
 
     companyGroup.webshop.run('#/');
 
-    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model.Visitor);
   	$('#cus_header1').html(visitorInfoHtml);
 
-    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
   	$('#usermenuContainer').html(usermenuHtml);
 
-    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
+    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model.Visitor);
   	$('#quickmenuContainer').html(quickmenuHtml);
 
 @*

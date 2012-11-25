@@ -29,9 +29,9 @@ namespace CompanyGroup.WebApi
             );
 
             config.Routes.MapHttpRoute(
-                name: "ComplationApi",
+                name: "CompletionApi",
                 routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}/{completionType}",
-                defaults: new { dataAreaId = "hrp" }
+                defaults: new { controller = "Product", action = "GetCompletionList", dataAreaId = "hrp" }
             );
 
             config.Routes.MapHttpRoute(

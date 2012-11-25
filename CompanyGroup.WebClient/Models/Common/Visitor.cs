@@ -40,15 +40,15 @@ namespace CompanyGroup.WebClient.Models
 
         public string SelectedCurrency { get; set; }
 
-        public bool CurrencyIsHuf { get { return this.Currency.Equals("HUF") || String.IsNullOrWhiteSpace(this.Currency); } }
+        public bool CurrencyIsHuf { get { return this.Currency.ToUpper().Equals("HUF") || String.IsNullOrWhiteSpace(this.Currency); } }
 
-        public bool CurrencyIsEur { get { return this.Currency.Equals("EUR"); } }
+        public bool CurrencyIsEur { get { return this.Currency.ToUpper().Equals("EUR"); } }
 
-        public bool CurrencyIsUsd { get { return this.Currency.Equals("USD"); } }
+        public bool CurrencyIsUsd { get { return this.Currency.ToUpper().Equals("USD"); } }
 
-        public bool LanguageIsHun { get { return this.LanguageId.Equals("hun") || String.IsNullOrWhiteSpace(this.LanguageId); } }
+        public bool LanguageIsHun { get { return this.LanguageId.ToUpper().Equals("HU") || String.IsNullOrWhiteSpace(this.LanguageId); } }
 
-        public bool LanguageIsEng { get { return this.LanguageId.Equals("eng"); } }
+        public bool LanguageIsEng { get { return this.LanguageId.ToUpper().Equals("EN"); } }
 
         public bool PersonIdNotNullOrEmpty { get { return !String.IsNullOrWhiteSpace(this.PersonId); }  }
     }

@@ -103,7 +103,7 @@ companyGroup.utils = (function () {
                 return (/^[0-9]+$/.test(value));
             },
             formatNumber: function (str) {
-                if (!validateNumber(str)) {
+                if (!this.validateNumber(str)) {
                     return str;
                 }
                 str += '';

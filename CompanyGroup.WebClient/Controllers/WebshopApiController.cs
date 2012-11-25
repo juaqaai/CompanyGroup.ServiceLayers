@@ -280,25 +280,260 @@ namespace CompanyGroup.WebClient.Controllers
             return new CompanyGroup.WebClient.Models.CompletionList(response);
         }
 
-        // GET api/webshop/5
-        public string Get(int id)
+        /// <summary>
+        /// bejelentkezés
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("SignIn")]
+        public HttpResponseMessage SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
         {
-            return "value";
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "SignIn request can not be null!");
+
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Password), "A jelszó megadása kötelező!");
+
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.UserName), "A belépési név megadása kötelező!");
+
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                //előző belépés azonosítójának mentése
+                string permanentObjectId = visitorData.PermanentId;
+
+                CompanyGroup.Dto.ServiceRequest.SignIn singnInRequest = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
+                                                                                                        request.UserName,
+                                                                                                        request.Password,
+                                                                                                        System.Web.HttpContext.Current.Request.UserHostAddress);
+
+                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
+
+                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
+
+                //válaszüzenet összeállítása
+                CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo;
+
+                CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
+
+                bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
+
+                bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
+
+                HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+
+                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse;
+
+                CompanyGroup.Dto.WebshopModule.Products products;
+
+                //nem sikerült a belépés 
+                if (!visitor.LoggedIn)
+                {
+                    visitor.ErrorMessage = "A bejelentkezés nem sikerült!";
+
+                    cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo()
+                    {
+                        ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
+                        OpenedItems = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
+                        StoredItems = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(),
+                        ErrorMessage = "",
+                        LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions()
+                    };
+
+                    deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
+
+                    products = new CompanyGroup.Dto.WebshopModule.Products();
+                }
+                else    //sikerült a belépés, http cookie beállítás, ...
+                {
+                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.Id), "A bejelentkezés nem sikerült! (üres azonosító)");
+
+                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
+
+                    //kosár társítása
+                    CompanyGroup.Dto.ServiceRequest.AssociateCart associateRequest = new CompanyGroup.Dto.ServiceRequest.AssociateCart(visitor.Id, permanentObjectId) { Language = visitorData.Language };
+
+                    CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AssociateCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
+
+                    //aktív kosár beállítás
+                    cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo()
+                    {
+                        ActiveCart = associateCart.ActiveCart,
+                        OpenedItems = associateCart.OpenedItems,
+                        StoredItems = associateCart.StoredItems,
+                        LeasingOptions = associateCart.LeasingOptions,
+                        ErrorMessage = ""
+                    };
+
+                    //szállítási címek lekérdezése
+                    CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses deliveryAddressRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses(WebshopApiController.DataAreaId, visitor.Id);
+
+                    deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressRequest);
+
+                    //visitor adatok http sütibe írása     
+                    this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
+
+                    visitor.ErrorMessage = String.Empty;
+
+                    //katalógus lekérdezése
+                    CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+                    {
+                        ActionFilter = false,
+                        BargainFilter = false,
+                        Category1IdList = new List<string>(),
+                        Category2IdList = new List<string>(),
+                        Category3IdList = new List<string>(),
+                        Currency = visitorData.Currency,
+                        CurrentPageIndex = 1,
+                        HrpFilter = true,
+                        BscFilter = true,
+                        IsInNewsletterFilter = false,
+                        ItemsOnPage = 30,
+                        ManufacturerIdList = new List<string>(),
+                        NewFilter = false,
+                        Sequence = 0,
+                        StockFilter = false,
+                        TextFilter = String.Empty,
+                        PriceFilter = "0",
+                        PriceFilterRelation = "0",
+                        VisitorId = visitor.Id,
+                        NameOrPartNumberFilter = ""
+                    };
+
+                    products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+
+                    httpStatusCode = HttpStatusCode.Created;
+                }
+
+                catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
+                                                                                        visitor,
+                                                                                        cartInfo.ActiveCart,
+                                                                                        cartInfo.OpenedItems,
+                                                                                        cartInfo.StoredItems,
+                                                                                        shoppingCartOpenStatus,
+                                                                                        catalogueOpenStatus,
+                                                                                        deliveryAddresses,
+                                                                                        cartInfo.LeasingOptions);
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(httpStatusCode, catalogueResponse);
+
+                return httpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(new CompanyGroup.Dto.WebshopModule.Products(),
+                    new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = String.Format("A bejelentkezés nem sikerült! ({0} - {1})", ex.Message, ex.StackTrace) },
+                    new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
+                    new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
+                    new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(),
+                    false,
+                    false,
+                    new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
+                    new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.InternalServerError, new CompanyGroup.WebClient.Models.ApiMessage(String.Format("A bejelentkezés nem sikerült! ({0} - {1})", ex.Message, ex.StackTrace)));
+
+                throw new HttpResponseException(httpResponseMessage);
+            }
         }
 
-        // POST api/webshop
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [ActionName("SignOut")]
+        public HttpResponseMessage SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
         {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
+
+                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
+
+                visitorData.ObjectId = String.Empty;
+
+                this.WriteCookie(visitorData);
+
+                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
+
+                //katalógus lekérdezése
+                CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+                {
+                    ActionFilter = false,
+                    BargainFilter = false,
+                    Category1IdList = new List<string>(),
+                    Category2IdList = new List<string>(),
+                    Category3IdList = new List<string>(),
+                    Currency = visitorData.Currency,
+                    CurrentPageIndex = 1,
+                    HrpFilter = true,
+                    BscFilter = true,
+                    IsInNewsletterFilter = false,
+                    ItemsOnPage = 30,
+                    ManufacturerIdList = new List<string>(),
+                    NewFilter = false,
+                    Sequence = 0,
+                    StockFilter = false,
+                    TextFilter = String.Empty,
+                    PriceFilter = "0",
+                    PriceFilterRelation = "0",
+                    VisitorId = visitor.Id,
+                    NameOrPartNumberFilter = ""
+                };
+
+                CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+
+                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
+                                                                                                                                        new CompanyGroup.WebClient.Models.Visitor(),
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
+                                                                                                                                        new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
+                                                                                                                                        new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(),
+                                                                                                                                        false,
+                                                                                                                                        false,
+                                                                                                                                        new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(HttpStatusCode.OK, catalogueResponse);
+
+                return httpResponseMessage;
+
+            }
+            catch (Exception ex)
+            {
+                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(new CompanyGroup.Dto.WebshopModule.Products(),
+                                                                                                                                        new CompanyGroup.WebClient.Models.Visitor(){ ErrorMessage = String.Format("A kijelentkezés nem sikerült! ({0})", ex.Message) },
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
+                                                                                                                                        new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
+                                                                                                                                        new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(),
+                                                                                                                                        false,
+                                                                                                                                        false,
+                                                                                                                                        new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.InternalServerError, new CompanyGroup.WebClient.Models.ApiMessage(String.Format("A kijelentkezés nem sikerült! ({0} - {1})", ex.Message, ex.StackTrace)));
+
+                throw new HttpResponseException(httpResponseMessage);
+            }
         }
 
-        // PUT api/webshop/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// GET api/webshop/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // DELETE api/webshop/5
-        public void Delete(int id)
-        {
-        }
+        //// POST api/webshop
+        //public void Post([FromBody]string value)
+        //{
+        //}
+
+        //// PUT api/webshop/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
+
+        //// DELETE api/webshop/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
