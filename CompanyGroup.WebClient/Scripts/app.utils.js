@@ -15,6 +15,7 @@ companyGroup.utils = (function () {
     var _registrationBaseApiUrl = '';
     var _visitorBaseApiUrl = '';
     var _downloadPriceListUrl = '';
+    var _shoppingCartUrl = '';
 
     var _instance;
 
@@ -125,6 +126,12 @@ companyGroup.utils = (function () {
             },
             getDownloadPriceListUrl: function () {
 
+            },
+            setShoppingCartBaseApiUrl: function (url) {
+                _shoppingCartBaseApiUrl = url;
+            },
+            getShoppingCartApiUrl: function (url) {
+                return _shoppingCartBaseApiUrl + url;
             }
         }
     }

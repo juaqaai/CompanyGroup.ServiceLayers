@@ -39,7 +39,7 @@
 	</aside>*@
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/appconstants")');
+    head.js('@Scripts.Url("~/bundles/apputils")');
 }
 @section ScriptOnReady {
     console.log('ScriptOnReady section');
@@ -47,9 +47,12 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
-    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+  	$('#cus_header1').html(visitorInfoHtml);
 
-    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+  	$('#usermenuContainer').html(usermenuHtml);
 
-    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");
+    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
+  	$('#quickmenuContainer').html(quickmenuHtml);
 }

@@ -17,18 +17,19 @@
 		<div id="content" class="group">
 			<div class="zone zone-content">
                 <input type="hidden" id="hidden_cartId" value="" />
+                <input type="hidden" id="hidden_cartopen" value="" />
                 <div id="basket_open_button"></div>
                 <script id="shoppingCartSummaryTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
                     <table id="active_basket" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()"><img src="@Url.Content("~/Content/Media/images/basketbutton_01.png")" alt=""  /></a></td>
+                            <td><a href="#/saveShoppingCartOpenStatus"><img src="@Url.Content("~/Content/Media/images/basketbutton_01.png")" alt=""  /></a></td>
                             <td class="active_basket_middle_cell" nowrap="nowrap">
-                            <a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()" class="btn_basket_slide">
+                            <a href="#/saveShoppingCartOpenStatus" class="btn_basket_slide">
                                 <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span>
                                 <span id="shoppingCartSummaryCaption" style="color: #000">[ + Megnyitás ]</span></a>
                             </td>
-                            <td><a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.SaveShoppingCartOpenStatus()"><img src="@Url.Content("~/Content/Media/images/basketbutton_03.png")" alt="" /></a></td>
+                            <td><a href="#/saveShoppingCartOpenStatus"><img src="@Url.Content("~/Content/Media/images/basketbutton_03.png")" alt="" /></a></td>
                         </tr>
                     </table>
                     {{/if}}
@@ -41,16 +42,16 @@
                         <table width="974" border="0" cellspacing="0" cellpadding="2">
                             <tr>
                                 <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/addshoppingcart" onclick="CompanyGroupCms.ShoppingCart.AddCart()">Új kosár</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/addshoppingcart">Új kosár</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/removeshoppingcart" onclick="CompanyGroupCms.ShoppingCart.RemoveCart()">Aktív kosár törlése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a href="#/removeshoppingcart">Aktív kosár törlése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a id="basket_save" href="#/showsavecartpanel" onclick="CompanyGroupCms.ShoppingCart.ShowSaveCartPanel()">Aktív kosár mentése</a>&nbsp;</td>
+                                <td nowrap="nowrap"><a id="basket_save" href="#/showsavecartpanel">Aktív kosár mentése</a>&nbsp;</td>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
                                 <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
                                 <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>
                                 <td align="right">
-                                <select name="saved_shoppingcart_list" id="saved_shoppingcart_list" onchange="CompanyGroupCms.ShoppingCart.ActivateCart($('#saved_shoppingcart_list').val())">            
+                                <select name="saved_shoppingcart_list" id="saved_shoppingcart_list">            
                                     <option style="font-weight: bold; margin-left:-3px; padding-bottom:2px; padding-top:2px; background: #7FAA13; color:#fff;" value="">Mentett / nyitott kosarak listája</option>
                                     <optgroup label="Mentett kosarak">
                                         {{each( i, item ) StoredItems}}
@@ -78,7 +79,6 @@
                         <div id="cus_basket"></div>
                         <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                         {{if Visitor.IsValidLogin}}
-                        <form action="#/additemtoshoppingcart" method="post" id="form_shoppingcart">
                         <table width="974" border="0" cellspacing="1" cellpadding="3">
                             <thead>
                                 <tr>
@@ -98,12 +98,12 @@
                                     <td width="20%"nowrap="nowrap">${item.PartNumber}</td>
                                     <td width="20%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
                                     <td width="20%" nowrap="nowrap">
-                                    <input name="txt_qty_${item.ProductId}" class="cartnumber" value="${item.Quantity}" onchange="CompanyGroupCms.ShoppingCart.UpdateLine('${item.ProductId}', $('input[name=txt_qty_${item.ProductId}]').val())" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
+                                    <input class="cartnumber" value="${item.Quantity}" title="${item.ProductId}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                     db</td>
                                     <td width="20%"><span>${item.ItemTotal}</span> </td>
                                     <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
                                     <!-- <td nowrap="nowrap"><a href="javascript:void(0)" data-bind="click: function() { $parent.shoppingCart.updateLine($data); }" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
-                                    <td nowrap="nowrap"><a href="#/removelinefromshoppingcart/:${item.ProductId}" onclick="CompanyGroupCms.ShoppingCart.RemoveLine('${item.ProductId}')" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
+                                    <td nowrap="nowrap"><a href="#/removeLineFromShoppingCart/${item.ProductId}" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
                                 </tr>
                                 {{/each}}
                                 <tr>
@@ -117,7 +117,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        </form>
                         {{/if}}
                     </script>
 
@@ -140,7 +139,7 @@
                     </div>
 
                     <div id="cus_rendeles_feladas">
-                    <form action="#/createorder" method="post" id="form_createorder">
+                    <form action="#/createOrder" method="post" id="form_createorder">
                         <table width="970" border="0" cellpadding="3" cellspacing="2">
                             <tr>
                                 <td nowrap="nowrap"><strong> Fizetési opciók</strong></td>
@@ -334,7 +333,7 @@
                 <tr>
                     <td width="350" align="left" id="leasingOptionsContainer"></td>
                     <td width="300" align="right">
-                        <form action="#financeorder" method="post" id="form_financeoffer">
+                        <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
                             <div id="financeoffer_errors"></div>
                             <label for="txt_offername"><strong>bérbevevő neve</strong></label>
                             @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
@@ -579,7 +578,7 @@
 					            <td align="center" width="100%" class="cus_list_order_panel_table">
                                 <form id="form_filterbynameorpartnumber" action="#/filterbynameorpartnumber" method="post">
                                     <label class="error" for="txt_filterbynameorpartnumber" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-                                    @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:205px; height:20px; margin-left:5px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;", onfocus = "if(this.value=='név vagy cikkszám szűrése')this.value=''", onblur = "if(this.value=='')this.value='név vagy cikkszám szűrése'" })
+                                    @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:205px; height:20px; margin-left:5px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;" })
                                 </form>
 					            </td>
                                 <td class="cus_list_order_panel_table">
@@ -695,7 +694,7 @@
 				                            <td valign="top">
 				                                <div class="cus_termekkep">
                                                 {{if item.PrimaryPicture.RecId > 0}}
-				                                <a class="popupimg" href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowPicture('${item.ProductId}', '${item.DataAreaId}', '${item.ItemName}');" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" /></a>
+				                                <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" /></a>
 				                                {{else}}
 				                                <img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="180" height="134" alt="" />
                                                 {{/if}}
@@ -742,7 +741,7 @@
                                             </td>
 				                        </tr>
 				                </table>
-                            <form action="#/addlinetoshoppingcart" method="post" name="form_addlinetoshoppingcart" onsubmit="return validateAddCartLine()"> 
+                            <form action="#/addLineToShoppingCart" method="post"> 
 			                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				                <tr>
 				                    <td nowrap="nowrap">
@@ -769,15 +768,15 @@
                                     <td nowrap="nowrap">
                                         <div class="cus_prod_table_quantity">
                                         {{if Visitor.IsValidLogin}}
-                                        <input type="text" name="txt_quantity_${item.ProductId}" class="number" size="2" value="1" /><span> db</span>
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
                                         {{/if}}
                                         </div>
                                     </td>
                                     <td align="right" nowrap="nowrap">
                                         <div class="cus_prod_table_basket">
+                                        <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
                                         {{if Visitor.IsValidLogin}}
-                                        <a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.AddLine('${item.ProductId}', $('input[name=txt_quantity_${item.ProductId}]').val())">
-                                        <img class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" /></a>
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
                                         {{/if}}
                                         </div>
                                     </td>
@@ -900,6 +899,8 @@
 
     companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
 
+    companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi")');
+
     companyGroup.webshop.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
@@ -911,11 +912,12 @@
     var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
   	$('#quickmenuContainer').html(quickmenuHtml);
 
-@*    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
+@*
+//    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
 
-    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
+//    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
 
-    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");*@
+//    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");*@
 
             $("#pagerTemplateTop").tmpl(model.Products).appendTo("#div_pager_top");
             $("#pagerTemplateBottom").tmpl(model.Products).appendTo("#div_pager_bottom");

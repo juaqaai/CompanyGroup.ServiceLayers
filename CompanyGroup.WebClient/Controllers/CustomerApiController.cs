@@ -86,7 +86,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
 
-                HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
+                HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
                 //check status
                 if (!visitor.LoggedIn)
