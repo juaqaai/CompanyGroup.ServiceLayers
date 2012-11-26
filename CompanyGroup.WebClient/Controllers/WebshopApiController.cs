@@ -161,10 +161,10 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Detail")]
-        public CompanyGroup.WebClient.Models.CatalogueItem Detail()
+        [ActionName("Details")]
+        public CompanyGroup.WebClient.Models.CatalogueItem Details()
         {
-            return Details(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"));
+            return GetDetails(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"));
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Details")]
-        public CompanyGroup.WebClient.Models.CatalogueItem Details(string ProductId)
+        [ActionName("GetDetails")]
+        public CompanyGroup.WebClient.Models.CatalogueItem GetDetails(string ProductId)
         {
             if (String.IsNullOrWhiteSpace(ProductId)) { ProductId = "PGI7BK"; }
 
