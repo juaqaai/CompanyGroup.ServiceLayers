@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+<div id="cus_product_table">
+						<table width="100%" border="0" cellspacing="1" cellpadding="1">
+							<tr>
+								<td valign="top">
+								<div id="cus_termekkep">
+                                    @if (Model.Product.PrimaryPicture.RecId > 0)
+                                    {
+                                        <a class="popupimg" href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowPicture('@Model.Product.ProductId', '@Model.Product.DataAreaId', '@Model.Product.ItemName');" title="@Model.Product.ItemName">
+                                        <img src="@Url.Content("~/Webshop/Catalogue/PictureItem")@String.Format("/?ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=120", Model.Product.ProductId, Model.Product.PrimaryPicture.RecId, Model.Product.DataAreaId)" width="94" height="69" alt="CompanyGroupCms.Constants.Instance().getPictureUrl('@Model.Product.ProductId', '@Model.Product.PrimaryPicture.RecId', '@Model.Product.DataAreaId')" /></a>
+                                    }
+                                    else
+                                    { 
+                                        <img src="@Url.Content("~/Media/images/nopic.jpg")" width="94" height="69" alt="" />
+                                    }
+								</div></td>
+								<td valign="top" id="cus_prod_table_middle_cell"><span id="cus_prod_table_item_name">@Model.Product.ItemName</span><span id="cus_prod_table_item_code">| @Model.Product.ProductId</span>
+								<br />
+								<div id="cus_prod_table_desc_full">
+   
+                                    <span>Gyártó:</span> @Model.Product.Manufacturer.Name <br/>                                       
+                                    <span>Jelleg1:</span> @Model.Product.FirstLevelCategory.Name <br/>
+                                    <span>Jelleg2:</span> @Model.Product.SecondLevelCategory.Name <br/>
+                                    <span>Jelleg3:</span> @Model.Product.ThirdLevelCategory.Name <br/>
+                                    <span>Cikkszám:</span> @Model.Product.PartNumber <br/>
+                                    <span>Leírás:</span> @Model.Product.Description <br/> 
+									<hr />
+                                    <span>Termékmanager email:</span> <a href="mailto:@Model.Product.ProductManager.Email">@Model.Product.ProductManager.Email</a> <br/>
+                                    <span>Termékmanager telefon:</span> @Model.Product.ProductManager.Extension <br/>
+                                    <span>Termékmanager mobile:</span> @Model.Product.ProductManager.Mobile <br/>
+                                    <span>Termékmanager név:</span> @Model.Product.ProductManager.Name <br/>
+                                    <hr />
+                                    @if (Model.Visitor.IsValidLogin)
+                                    {
+                                        if (Model.Product.SecondHandList.Items.Count > 0) { <span>használt</span> <br/>  } <!-- ha a cikk van a hasznalt, borze... listaban -->  
+                                        if (Model.Product.IsInNewsletter) { <span>hírlevél akciós</span> <br/>  }    <!-- ha a cikk hírlevél akciós -->
+                                        <span>Garancia módja:</span> @Model.Product.GarantyMode <br/>
+                                        <span>Garancia ideje:</span> @Model.Product.GarantyTime <br/><br/>
+ 
+                                         if (Model.Product.EndOfSales) { <span>kifutó</span><br/>}     <!-- ha a cikk kifuto -->
+                                         if (Model.Product.New) { <span>Új</span><br/>}    <!-- ha a cikk uj -->
+                                         if (!Model.Product.IsInStock)
+                                         {
+                                            <span>Várható beérkezés dátuma:</span>  @String.Format("{0} ", Model.Product.ShippingDate) <br/>
+                                         }
+                                    } 
+   								</div></td>
+								<td valign="top" nowrap="nowrap">
+                                @if (Model.Visitor.IsValidLogin)
+                                { 
+								<table width="130" border="0" cellspacing="1" cellpadding="2">
+									<tr>
+										<td nowrap="nowrap" id="cus_prod_table_price">
+                                            <span>Ár:</span> <strong>@String.Format(System.Globalization.CultureInfo.CurrentUICulture, "{0 : C}", Model.Product.Price) @if(Model.Product.Currency.Equals("HUF")){ <span>Ft</span> } else { <span>€</span> }</strong></td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">
+                                        @if (Model.Product.IsInStock)
+                                        {
+                                            <span>Véső készlet:</span> @String.Format("{0} db ", Model.Product.InnerStock)<br />
+                                            <span>Huszti készlet:</span> @String.Format("{0} db ", Model.Product.OuterStock)<br />
+										    <span></span>
+                                        }
+                                        else { 
+                                               if(Model.Product.PurchaseInProgress){
+				                                    <span>Várható érkezés: @String.Format("{0} ", Model.Product.ShippingDate)</span>
+                                                }
+                                                else {
+				                                    <span>Rendelhető</span>
+                                                }                                        
+                                        }
+                                        </td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">&nbsp;</td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">&nbsp;</td>
+									</tr>
+								</table>
+                                if (Model.Product.SecondHandList.Items.Count > 0) {
+				                    <br /><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowSecondHandList('@Model.Product.ProductId', '@Model.Product.DataAreaId');" title="@Model.Product.ItemName">Használt: @Model.Product.SecondHandList.MinimumPrice Ft-tól </a>
+				                }
+                            }</td>
+							</tr>
+							<tr>
+								<td colspan="3" valign="top" id="cus_prod_table_more_full">
+                                @if (Model.Visitor.IsValidLogin)
+                                {
+								<table width="100%" border="0" cellspacing="1" cellpadding="5">
+									<tr>
+										<!-- <td nowrap="nowrap">
+										<div id="cus_prod_table_add_compare">
+											<input type="checkbox" name="checkbox2" id="checkbox2" />
+											Összehasonlító listához ad
+										</div></td> -->
+									<td nowrap="nowrap">
+                                    <div class="cus_prod_table_quantity">
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                    </div>
+                                    </td>
+                                    <td align="right" nowrap="nowrap">
+                                        <div class="cus_prod_table_basket">
+                                        <a href="javascript:void(0)" onclick="CompanyGroupCms.ShoppingCart.AddLine('@Model.Product.ProductId', $('input[name=txt_quantity]').val())">
+                                        <img class="basketicon" src="@Url.Content("~/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" /></a>
+                                        </div>
+                                    </td>
+									</tr>
+								</table>
+                                }</td>
+							</tr>
+						</table>
+						<!-- ************************************************************** tab panel ************************************************************* -->
+						<div id="wrapper">
+							<ul class="tabs">
+								<li>
+									<a href="#" class="defaulttab" rel="tabs1">Kellékanyagok</a>
+								</li>
+								<li>
+									<a href="#" rel="tabs2">Technikai adatok</a>
+								</li>
+								<li>
+									<a href="#" rel="tabs3">Legnépszerűbb párosítások</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="tabs1">
+                                @foreach (CompanyGroup.Dto.WebshopModule.CompatibleProduct product in Model.CompatibleProducts)
+                                {
+								<a href="@Url.Content(String.Format("~/Webshop/Catalogue/{0}/Details", product.ProductId))">- @product.ProductId @product.PartNumber @product.ItemName </a>
+								<br />
+                                    if (Model.Visitor.IsValidLogin)
+                                    {
+                                        <span>Ár</span>@product.Price <br /><br />
+                                        <span>Belső készlet:</span>@product.InnerStock<br />
+                                        <span>Külső készlet:</span>@product.OuterStock<br />
+                                    }
+                                }
+                                <br />
+							</div>
+							<div class="tab-content" id="tabs2">
+                                @foreach (CompanyGroup.Dto.WebshopModule.CompatibleProduct product in Model.ReverseCompatibleProducts)
+                                {
+								<a href="@Url.Content(String.Format("~/Webshop/Catalogue/{0}/Details", product.ProductId))">- @product.ProductId @product.PartNumber @product.ItemName </a>
+								<br />
+                                    if (Model.Visitor.IsValidLogin)
+                                    {
+                                        <span>Ár</span>@product.Price <br /><br />
+                                        <span>Belső készlet:</span>@product.InnerStock<br />
+                                        <span>Külső készlet:</span>@product.OuterStock<br />
+                                    }
+                                }
+                                <br />
+							</div>
+							<div class="tab-content" id="tabs3">
+								<a href="#">- LG 2340 Monitor</a>
+								<br />
+								<a href="#">- CANON 5030 tintasugaras nyomtató</a>
+							</div>
+						</div>
+						<!-- ******************************************************** recommended products panel ********************************************************* -->
+						<div id="cus_recommended_prod_container">
+				<h4>Ajánlott termékeink</h4>
+				<ul id="cus_recommended_prod_content">
+                    @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.BannerList.Items)
+                    {
+					<li>
+						<a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/Webshop/Catalogue/PictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
+					</li>
+                    }
+				</ul>
+			</div>
+						
+			@* ajánlott termékek blokk div vége *@
+		</div>
+</body>
+</html>
