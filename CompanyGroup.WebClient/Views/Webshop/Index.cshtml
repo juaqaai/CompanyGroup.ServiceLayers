@@ -37,103 +37,104 @@
            
                 <div id="basket_panel">
                     <div id="cus_basket_menu"></div>
-                        <script id="shoppingCartHeaderTemplate" type="text/x-jquery-tmpl">
-                        {{if Visitor.IsValidLogin}}
-                        <table width="974" border="0" cellspacing="0" cellpadding="2">
-                            <tr>
-                                <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/addShoppingCart">Új kosár</a>&nbsp;</td>
-                                <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a href="#/removeShoppingCart">Aktív kosár törlése</a>&nbsp;</td>
-                                <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></td>
-                                <td nowrap="nowrap"><a id="basket_save" href="#/showSaveCartPanel">Aktív kosár mentése</a>&nbsp;</td>
-                                <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
-                                <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
-                                <!-- <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>-->
-                                <td align="right">
-                                <select name="saved_shoppingcart_list" id="saved_shoppingcart_list">            
-                                    <option style="font-weight: bold; margin-left:-3px; padding-bottom:2px; padding-top:2px; background: #7FAA13; color:#fff;" value="">Mentett / nyitott kosarak listája</option>
-                                    <optgroup label="Mentett kosarak">
-                                        {{each( i, item ) StoredItems}}
-                                        {{if item.Active}}
-                                            <option class="saved_basket_list_icon" value="${item.Id}" selected="selected">${item.Name}</option>
-                                        {{else}}
-                                            <option class="saved_basket_list_icon" value="${item.Id}">${item.Name}</option>
-                                        {{/if}}
-                                        {{/each}}
-                                    </optgroup>
-                                    <optgroup label="Nyitott kosarak">
-                                        {{each( i, item ) OpenedItems}}
-                                        {{if item.Active}}
-                                            <option class="open_basket_list_icon" value="${item.Id}" selected="selected">${item.Name}</option>
-                                        {{else}}
-                                            <option class="open_basket_list_icon" value="${item.Id}">${item.Name}</option>
-                                        {{/if}}
-                                        {{/each}}
-                                    </optgroup>
-                                </select></td>
-                            </tr>
-                        </table>
-                        {{/if}}
-                        </script>
-                        <div id="cus_basket"></div>
-                        <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
-                        {{if Visitor.IsValidLogin}}
-                        <table width="974" border="0" cellspacing="1" cellpadding="3">
-                            <thead>
-                                <tr>
-                                    <td><strong>Termék neve</strong></td>
-                                    <td><strong>Azonosító</strong></td>
-                                    <td><strong>Egység ár</strong></td>
-                                    <td><strong>Mennyiség</strong></td>
-                                    <td><strong>Összesen</strong></td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{each( i, item ) ActiveCart.Items}}
-                                <tr>
-                                    <td width="20%"nowrap="nowrap">${item.ProductId}</td>
-                                    <td width="20%"nowrap="nowrap">${item.PartNumber}</td>
-                                    <td width="20%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
-                                    <td width="20%" nowrap="nowrap">
-                                    <input class="cartnumber" value="${item.Quantity}" title="${item.ProductId}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
-                                    db</td>
-                                    <td width="20%"><span>${item.ItemTotal}</span> </td>
-                                    <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
-                                    <!-- <td nowrap="nowrap"><a href="javascript:void(0)" data-bind="click: function() { $parent.shoppingCart.updateLine($data); }" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
-                                    <td nowrap="nowrap"><a href="#/removeLineFromShoppingCart/${item.ProductId}" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
-                                </tr>
-                                {{/each}}
-                                <tr>
-                                    <td colspan="8">
-                                    <hr / style="width: 99%; margin-left:0px">
-                                    <span></span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="8">
-                                    <strong>Fizetendő: <span style="color:#900; font-size:14px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        {{/if}}
+                    <script id="shoppingCartHeaderTemplate" type="text/x-jquery-tmpl">
+                    {{if Visitor.IsValidLogin}}
+                    <table width="974" border="0" cellspacing="0" cellpadding="2">
+                        <tr>
+                            <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></td>
+                            <td nowrap="nowrap"><a href="#/addShoppingCart">Új kosár</a>&nbsp;</td>
+                            <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></td>
+                            <td nowrap="nowrap"><a href="#/removeShoppingCart">Aktív kosár törlése</a>&nbsp;</td>
+                            <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></td>
+                            <td nowrap="nowrap"><a id="basket_save" href="#/showSaveCartPanel">Aktív kosár mentése</a>&nbsp;</td>
+                            <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
+                            <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
+                            <!-- <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>-->
+                            <td align="right">
+                            <select name="saved_shoppingcart_list" id="saved_shoppingcart_list">            
+                                <option style="font-weight: bold; margin-left:-3px; padding-bottom:2px; padding-top:2px; background: #7FAA13; color:#fff;" value="">Mentett / nyitott kosarak listája</option>
+                                <optgroup label="Mentett kosarak">
+                                    {{each( i, item ) StoredItems}}
+                                    {{if item.Active}}
+                                        <option class="saved_basket_list_icon" value="${item.Id}" selected="selected">${item.Name}</option>
+                                    {{else}}
+                                        <option class="saved_basket_list_icon" value="${item.Id}">${item.Name}</option>
+                                    {{/if}}
+                                    {{/each}}
+                                </optgroup>
+                                <optgroup label="Nyitott kosarak">
+                                    {{each( i, item ) OpenedItems}}
+                                    {{if item.Active}}
+                                        <option class="open_basket_list_icon" value="${item.Id}" selected="selected">${item.Name}</option>
+                                    {{else}}
+                                        <option class="open_basket_list_icon" value="${item.Id}">${item.Name}</option>
+                                    {{/if}}
+                                    {{/each}}
+                                </optgroup>
+                            </select></td>
+                        </tr>
+                    </table>
+                    {{/if}}
                     </script>
+                    <div id="cus_basket"></div>
+                    <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
+                    {{if Visitor.IsValidLogin}}
+                    <table width="974" border="0" cellspacing="1" cellpadding="3">
+                        <thead>
+                            <tr>
+                                <td><strong>Termék neve</strong></td>
+                                <td><strong>Azonosító</strong></td>
+                                <td><strong>Egység ár</strong></td>
+                                <td><strong>Mennyiség</strong></td>
+                                <td><strong>Összesen</strong></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{each( i, item ) ActiveCart.Items}}
+                            <tr>
+                                <td width="20%"nowrap="nowrap">${item.ProductId}</td>
+                                <td width="20%"nowrap="nowrap">${item.PartNumber}</td>
+                                <td width="20%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
+                                <td width="20%" nowrap="nowrap">
+                                <input class="cartnumber" value="${item.Quantity}" title="${item.ProductId}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
+                                db</td>
+                                <td width="20%"><span>${item.ItemTotal}</span> </td>
+                                <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
+                                <!-- <td nowrap="nowrap"><a href="javascript:void(0)" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
+                                <td nowrap="nowrap"><a href="#/removeLineFromShoppingCart/${item.ProductId}" title="Tétel törlése"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
+                            </tr>
+                            {{/each}}
+                            <tr>
+                                <td colspan="8">
+                                <hr / style="width: 99%; margin-left:0px">
+                                <span></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                <strong>Fizetendő: <span style="color:#900; font-size:14px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{/if}}
+                </script>
 
                     <div id="cus_checkout_menu">
                         <table width="974" border="0" cellpadding="3" cellspacing="1">
                             <tr>
                                 <td>
-                                <table width="974" border="0" cellspacing="1" cellpadding="0">
+                                    <table width="974" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
                                         <td nowrap="nowrap">&nbsp;<img src="@Url.Content("~/Content/Media/images/basketicons/chck.png")" alt="" />&nbsp;</td>
-                                        <td nowrap="nowrap"><span id="feladas_link"><strong>Rendelés feladása</strong></span>&nbsp;&nbsp;</td>
+                                        <td nowrap="nowrap"><a href="#/showCreateOrder"><strong>Rendelés feladása</strong></a>&nbsp;&nbsp;</td>
                                         <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                             <!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                                          <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td> -->
-                                        <td nowrap="nowrap" width="100%"><span id="ajanlat_finance_link"><strong>HRP Finance árajánlat készítése</strong></span>&nbsp;</td>
+                                        <td nowrap="nowrap" width="100%"><a href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése</strong></a>&nbsp;</td>
                                     </tr>
-                                </table></td>
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -146,18 +147,12 @@
                                 <td nowrap="nowrap"><strong>Szállítási opciók</strong></td>
                                 <td colspan="2" nowrap="nowrap"><strong>Szállítási adatok</strong></td>
                             </tr>
-                            <!--   <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            </tr> -->
                             <tr>
-                              <td valign="top"  style="width:160px; height:37px;"><div id="atutalas_off"></div>
+                              <td valign="top" style="width:160px; height:37px;"><div id="atutalas_off"></div>
                                 <div id="kos_gombok_fiz">
                                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
-                                      <td><input type="radio" name="radio_fizetesimod" id="radio_fizetesimod" value="1" /></td>
+                                      <td><input type="radio" name="radio_payment" value="1" /></td>
                                       <td>Átutalásos fizetés </td>
                                     </tr>
                                     <tr>
@@ -168,7 +163,7 @@
                                 </div></td>
                                 <td valign="top"  style="width:160px; height:37px;"><div id="raktari_off"></div>
                                 <div id="kos_gombok_szall">
-                                    <input type="radio" name="radio_szallitasimod" id="radio_szallitasimod" value="1" />
+                                    <input type="radio" name="radio_delivery" value="1" />
                                     Raktári átvétel </div></td>
                                 <td valign="top"  style="width:160px; height:37px;"><input type="button" name="nullazo" id="nullazo" value="Módosít" onclick="nullazo();" class="feladasopciok_nullaz" /></td>
                                 <td><!--<div id="cim_off"></div> <div id="kos_gombok_szalladat">Szállítási cím<br /><input type="checkbox" name="chk_cim" id="chk_cim" /> [Jóváhagyás]</div> --><div id="szallcimadat_off"></div>
@@ -187,7 +182,7 @@
                                                 <!-- {{/each}} -->
                                             </script>
                                             <div id="newsite_button">
-                                                <a id="new_site"  href="#add_new_site"><img src="@Url.Content("~/Content/Media/images/newsite.png")" border="0" title="Új telephely hozzáadása" alt="Új telephely hozzáadása"/></a>
+                                                <a id="new_site" href="#add_new_site"><img src="@Url.Content("~/Content/Media/images/newsite.png")" border="0" title="Új telephely hozzáadása" alt="Új telephely hozzáadása"/></a>
                                             </div></td>
                                             <td align="right" valign="top">
                                             <div class="szi_text">
@@ -204,7 +199,7 @@
                                 <div id="kos_gombok_fiz">
                                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
-                                      <td><input type="radio" name="radio_fizetesimod" id="radio_fizetesimod2" value="2" /></td>
+                                      <td><input type="radio" name="radio_payment" value="2" /></td>
                                       <td>Készpénzes fizetés </td>
                                     </tr>
                                     <tr>
@@ -215,7 +210,7 @@
                                 </div></td>
                                 <td valign="top"  style="width:160px; height:37px;"><div id="kiszallitas_off"></div>
                                 <div id="kos_gombok_szall">
-                                    <input type="radio" name="radio_szallitasimod" id="radio_szallitasimod2" value="2" />
+                                    <input type="radio" name="radio_delivery" value="2" />
                                   Kiszállítást kér </div></td>
                               <td valign="top"  style="width:160px; height:37px;">&nbsp;</td>
                               <td>&nbsp;</td>
@@ -225,7 +220,7 @@
                                 <div id="kos_gombok_fiz">
                                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
-                                      <td><input type="radio" name="radio_fizetesimod" id="radio_fizetesimod3" value="3" /></td>
+                                      <td><input type="radio" name="radio_payment" value="3" /></td>
                                       <td>Előreutalás </td>
                                     </tr>
                                   </table>
@@ -239,7 +234,7 @@
                                 <div id="kos_gombok_fiz">
                                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
-                                      <td><input type="radio" name="radio_fizetesimod" id="radio_fizetesimod4" value="4" /></td>
+                                      <td><input type="radio" name="radio_payment" value="4" /></td>
                                       <td>Utánvét </td>
                                     </tr>
                                   </table>
@@ -254,12 +249,12 @@
                                     <tr>
                                         <td valign="top"> Egyedi rendelés azonosító
                                         <br />
-                                        <input type="text" name="custom_number" id="custom_number" disabled="true"/>
+                                        <input type="text" name="custom_number" id="custom_number" disabled="disabled"/>
                                         <br />
                                         </td>
                                         <td width="100%" valign="top" style="padding-left:5px;"> Megjegyzés
                                         <br />
-                                        <input type="text" name="user_comment" id="user_comment" disabled="true" />
+                                        <input type="text" name="user_comment" id="user_comment" disabled="disabled" />
                                         </td>
                                     </tr>
                                 </table></td>
@@ -267,107 +262,108 @@
                             <tr>
                                 <td colspan="4">
                                 <div id="basket_buttons">
-                                    <input type="submit" name="feladas" id="feladas" value="Feladás"  class="feladasopciok_block" disabled="true" />
+                                    <input type="submit" name="feladas" id="feladas" value="Feladás"  class="feladasopciok_block" disabled="disabled" />
                                 </div><!-- Ha rendelési listájában, valamely termék mellett <img src="@Url.Content("~/media/images/basketicons/attention.png")" border="0"/ title="Kötelező érvényű megrendelés!" /> ikont lát, az a kötelező érvényű megrendelést jelöli. Ennek szabálya értelmében... blah... blah... blah... --></td>
                             </tr>
                         </table>
                     </form>
                 </div>
 
-                <div id="cus_ajanlat_vegfelhasznalo">
-                Végfelhasználói árajánlat készítése
-                <br />
-                <br />
-                <table border="0" cellspacing="3" cellpadding="2">
-                    <tr>
-                        <td>Cím mező megadása</td>
-                        <td>
-                        <input type="text" name="textfield" id="textfield" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Logo feltöltése</td>
-                        <td>
-                        <input type="file" name="fileField" id="fileField" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>Végfelhasználó adatai</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>Név</td>
-                        <td>
-                        <input type="text" name="textfield2" id="textfield2" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cím</td>
-                        <td>
-                        <input type="text" name="textfield3" id="textfield3" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Adószám</td>
-                        <td>
-                        <input type="text" name="textfield4" id="textfield4" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                </table>
-            </div>
-            <div id="cus_ajanlat_finance">
-                <strong>HRP Finance árajánlat készítése</strong><br/>
-                <table height="150" cellpadding="1" cellspacing="1">
-                <tr>
-                    <td width="350" align="left" id="leasingOptionsContainer"></td>
-                    <td width="300" align="right">
-                        <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
-                            <div id="financeoffer_errors"></div>
-                            <label for="txt_offername"><strong>bérbevevő neve</strong></label>
-                            @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
-                            <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label><br/>
-                            <label for="txt_offeraddress"><strong>bérbevevő címe</strong></label>
-                            @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
-                            <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label><br/>
+                    <div id="cus_ajanlat_vegfelhasznalo">
+                    Végfelhasználói árajánlat készítése
+                    <br />
+                    <br />
+                    <table border="0" cellspacing="3" cellpadding="2">
+                        <tr>
+                            <td>Cím mező megadása</td>
+                            <td>
+                            <input type="text" name="textfield" id="textfield" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Logo feltöltése</td>
+                            <td>
+                            <input type="file" name="fileField" id="fileField" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Végfelhasználó adatai</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Név</td>
+                            <td>
+                            <input type="text" name="textfield2" id="textfield2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cím</td>
+                            <td>
+                            <input type="text" name="textfield3" id="textfield3" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Adószám</td>
+                            <td>
+                            <input type="text" name="textfield4" id="textfield4" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                    <div id="cus_ajanlat_finance">
+                        <strong>HRP Finance árajánlat készítése</strong><br/>
+                        <table cellpadding="1" cellspacing="1" style="height:150px">
+                        <tr>
+                            <td width="350" align="left" id="leasingOptionsContainer"></td>
+                            <td width="300" align="right">
+                                <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
+                                    <div id="financeoffer_errors"></div>
+                                    <label for="txt_offername"><strong>bérbevevő neve</strong></label>
+                                    @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                                    <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label><br/>
+                                    <label for="txt_offeraddress"><strong>bérbevevő címe</strong></label>
+                                    @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                                    <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label><br/>
 
-                            <label for="txt_offerphone"><strong>bérbevevő telefon</strong></label>
-                            @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
-                            <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label><br/>
+                                    <label for="txt_offerphone"><strong>bérbevevő telefon</strong></label>
+                                    @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" }) 
+                                    <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label><br/>
 
-                            <label for="txt_offerstatnumber"><strong>bérbevevő cégjegyzékszám</strong></label>          
-                            @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" })
-                            <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label><br/>
-                            <br/>
-                            <input type="submit" value="Ajánlatkérés" />
-                        </form>                
-                    </td>
-                </tr>
-                </table>
-                <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
-                {{if Message.length > 0}}
-                    ${Message}
-                {{else}}
-                    <ul>
-                    {{each( i, item ) Items}} 
-                        <li><input type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;">futamidő: ${item.NumOfMonth} összeg: ${item.CalculatedValue}</li>
-                    {{/each}} 
-                    </ul>
-                {{/if}}
-                </script>
-            </div>
-        </div>
+                                    <label for="txt_offerstatnumber"><strong>bérbevevő cégjegyzékszám</strong></label>          
+                                    @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" })
+                                    <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label><br/>
+                                    <br/>
+                                    <input type="submit" value="Ajánlatkérés" />
+                                </form>                
+                            </td>
+                        </tr>
+                        </table>
+                        <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
+                        {{if Message.length > 0}}
+                            ${Message}
+                        {{else}}
+                            <ul>
+                            {{each( i, item ) Items}} 
+                                <li><input type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;">futamidő: ${item.NumOfMonth} összeg: ${item.CalculatedValue}</li>
+                            {{/each}} 
+                            </ul>
+                        {{/if}}
+                        </script>
+                    </div>
+                </div>
 
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
@@ -450,11 +446,11 @@
                                 Felhasználónak küldött értesítő üzenetek szövege, linkekkel, a kapcsolódó hivatkozáshoz...
                             </marquee>
                         </p>
-                        <p id="bannerpelda" align="center">
+                        <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" alt="" border="0" />
                         </p>
 
-                        <p id="bannerpelda" align="center">
+                        <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/mogyoro.jpg")" alt="" border="0" />
                         </p>
 		            </div>
@@ -659,20 +655,12 @@
                     </script>
 
                     @*<div id="listscroll">*@
-<<<<<<< HEAD
-		                <div id="cus_product_table">
-			            @*listaelem konténer*@
-			            <div id="div_catalogue" class="wrapper">
-                        </div>
-                        @*listaelemek template*@
-=======
 		            <div id="cus_product_table">
-			        @* listaelemek*@
-			        <div id="div_catalogue" class="wrapper">
+			            @* listaelemek*@
+			            <div id="div_catalogue" class="wrapper">
 
-                    </div>
-                    @*termekelem*@
->>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
+                        </div>
+                        @*termekelem*@
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
                         <div class="expand_heading">
@@ -796,21 +784,12 @@
 				        </div>
                         {{/each}}
                         </script>
-<<<<<<< HEAD
-                        </div>
-                    @*</div>*@
-
-			        @*alsó lapozó*@
-                    <div class="cus_list_order_panel" style="float:left">
-			            <div id="div_pager_bottom"></div>
-=======
                     </div>
                     @*</div>*@
 
 			        @*alsó lapozó*@
                     <div id="cus_list_order_panel2" class="cus_list_order_panel" style="float:left">
 			        <div id="div_pager_bottom"></div>
->>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
                     </div>
                     <script id="pagerTemplateBottom" type="text/x-jquery-tmpl">
                         <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
@@ -872,20 +851,9 @@
 				    </table>
                     </script>            
 
-<<<<<<< HEAD
-                    @* ajánlott termékek*@
-                    @{Html.RenderPartial("_BannerList", @Model.BannerList)};
-	            </div>
-
-                @*részletes adatlap*@
-                <div id="cus_details_right">
-
-					
-=======
                     @*részletes adatlap*@
                     <div id="cus_productdetails_table">
                     </div>
->>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
 
                     <script id="productDetailsTemplate" type="text/x-jquery-tmpl">
 
