@@ -252,6 +252,7 @@
     <Compile Include="Models\Webshop\Manufacturers.cs" />
     <Compile Include="Models\Webshop\OrderFulFillment.cs" />
     <Compile Include="Models\Webshop\ProductCatalogue.cs" />
+    <Compile Include="Models\Webshop\ProductCatalogueItem.cs" />
     <Compile Include="Models\Webshop\RemoveLine.cs" />
     <Compile Include="Models\Webshop\SaveCart.cs" />
     <Compile Include="Models\Webshop\SecondLevelCategories.cs" />
@@ -268,6 +269,7 @@
     <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword_failed.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\changepassword_succeeded.html" />
+    <Content Include="Content\HtmlTemplates\PartnerInfo\details.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_notallowed.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_succeeded.html" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\forgetpassword_failed.html" />
@@ -1216,6 +1218,7 @@
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\dashboard.cshtml" />
     <Content Include="Views\Registration\Index.cshtml" />
+    <Content Include="Views\Webshop\_ProductListBanner.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -161,10 +161,10 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Detail")]
-        public CompanyGroup.WebClient.Models.CatalogueItem Detail()
+        [ActionName("Details")]
+        public CompanyGroup.WebClient.Models.ProductCatalogueItem Details()
         {
-            return Details(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"));
+            return GetDetails(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"));
         }
 
         /// <summary>
@@ -172,16 +172,16 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("Details")]
-        public CompanyGroup.WebClient.Models.CatalogueItem Details(string ProductId)
+        [ActionName("GetDetails")]
+        public CompanyGroup.WebClient.Models.ProductCatalogueItem GetDetails(string productId)
         {
-            if (String.IsNullOrWhiteSpace(ProductId)) { ProductId = "PGI7BK"; }
+            if (String.IsNullOrWhiteSpace(productId)) { productId = "PGI7BK"; }
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             CompanyGroup.Dto.ServiceRequest.GetItemByProductId request = new CompanyGroup.Dto.ServiceRequest.GetItemByProductId()
             {
-                ProductId = ProductId,
+                ProductId = productId,
                 DataAreaId = ApiBaseController.DataAreaId,
                 VisitorId = visitorData.ObjectId,
                 Currency = visitorData.Currency
@@ -193,60 +193,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.ServiceRequest.GetBannerList bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerList()
-            {
-                BscFilter = true,
-                HrpFilter = true,
-                Category1IdList = new List<string>() { product.FirstLevelCategory.Id },
-                Category2IdList = new List<string>() { product.SecondLevelCategory.Id },
-                Category3IdList = new List<string>() { product.ThirdLevelCategory.Id },
-                Currency = visitorData.Currency,
-                VisitorId = visitor.Id
-            };
-
-            CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBannerList, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
-
-            //kosár lekérdezések     
-            bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
-
-            bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
-
-            CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
-
-            if (visitor.IsValidLogin && !String.IsNullOrEmpty(visitorData.CartId))
-            {
-                CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo(visitorData.CartId, visitor.Id);
-
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
-
-                cartInfo.ActiveCart = (shoppingCartInfo != null) ? shoppingCartInfo.ActiveCart : cartInfo.ActiveCart;
-                cartInfo.OpenedItems = (shoppingCartInfo != null) ? shoppingCartInfo.OpenedItems : cartInfo.OpenedItems;
-                cartInfo.StoredItems = (shoppingCartInfo != null) ? shoppingCartInfo.StoredItems : cartInfo.StoredItems;
-                cartInfo.LeasingOptions = (shoppingCartInfo != null) ? shoppingCartInfo.LeasingOptions : cartInfo.LeasingOptions;
-            }
-
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
-
-            if (visitor.IsValidLogin)
-            {
-                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses deliveryAddressesRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = WebshopApiController.DataAreaId, VisitorId = visitor.Id };
-
-                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressesRequest);
-            }
-            else
-            {
-                deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
-            }
-
-            //aktív kosár azonosítójának mentése http cookie-ba
-            if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
-            {
-                visitorData.CartId = cartInfo.ActiveCart.Id;
-
-                this.WriteCookie(visitorData);
-            }
-
-            return new CompanyGroup.WebClient.Models.CatalogueItem(product, compatibleProducts.Items, compatibleProducts.ReverseItems, visitor, bannerList, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, cartInfo.LeasingOptions);
+            return new CompanyGroup.WebClient.Models.ProductCatalogueItem(product, compatibleProducts.Items, compatibleProducts.ReverseItems, visitor);
         }
 
         /// <summary>

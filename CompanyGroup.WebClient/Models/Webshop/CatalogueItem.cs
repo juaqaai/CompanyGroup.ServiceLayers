@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// CatalogueItem model for product details view
+    /// CatalogueItem model termék adatlaphoz
     /// </summary>
     public class CatalogueItem
     {

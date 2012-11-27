@@ -4,7 +4,7 @@
     <title></title>
 </head>
 <body>
-<div id="cus_product_table">
+                    <div id="cus_productdetails_table">
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 							<tr>
 								<td valign="top">
@@ -164,18 +164,18 @@
 						</div>
 						<!-- ******************************************************** recommended products panel ********************************************************* -->
 						<div id="cus_recommended_prod_container">
-				<h4>Ajánlott termékeink</h4>
-				<ul id="cus_recommended_prod_content">
-                    @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.BannerList.Items)
-                    {
-					<li>
-						<a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/Webshop/Catalogue/PictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
-					</li>
-                    }
-				</ul>
-			</div>
+				        <h4>Ajánlott termékeink</h4>
+				        <ul id="cus_recommended_prod_content">
+                            @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.BannerList.Items)
+                            {
+					        <li>
+						        <a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/Webshop/Catalogue/PictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
+					        </li>
+                            }
+				        </ul>
+			            </div>
 						
-			@* ajánlott termékek blokk div vége *@
-		</div>
+			        @* ajánlott termékek blokk div vége *@
+		            </div>
 </body>
 </html>
