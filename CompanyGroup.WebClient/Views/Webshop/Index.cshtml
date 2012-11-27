@@ -659,11 +659,20 @@
                     </script>
 
                     @*<div id="listscroll">*@
+<<<<<<< HEAD
 		                <div id="cus_product_table">
 			            @*listaelem konténer*@
 			            <div id="div_catalogue" class="wrapper">
                         </div>
                         @*listaelemek template*@
+=======
+		            <div id="cus_product_table">
+			        @* listaelemek*@
+			        <div id="div_catalogue" class="wrapper">
+
+                    </div>
+                    @*termekelem*@
+>>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
                         <div class="expand_heading">
@@ -787,12 +796,21 @@
 				        </div>
                         {{/each}}
                         </script>
+<<<<<<< HEAD
                         </div>
                     @*</div>*@
 
 			        @*alsó lapozó*@
                     <div class="cus_list_order_panel" style="float:left">
 			            <div id="div_pager_bottom"></div>
+=======
+                    </div>
+                    @*</div>*@
+
+			        @*alsó lapozó*@
+                    <div id="cus_list_order_panel2" class="cus_list_order_panel" style="float:left">
+			        <div id="div_pager_bottom"></div>
+>>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
                     </div>
                     <script id="pagerTemplateBottom" type="text/x-jquery-tmpl">
                         <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
@@ -854,6 +872,7 @@
 				    </table>
                     </script>            
 
+<<<<<<< HEAD
                     @* ajánlott termékek*@
                     @{Html.RenderPartial("_BannerList", @Model.BannerList)};
 	            </div>
@@ -862,10 +881,160 @@
                 <div id="cus_details_right">
 
 					
+=======
+                    @*részletes adatlap*@
+                    <div id="cus_productdetails_table">
+                    </div>
+>>>>>>> a57916c365e13e85fdfda6dd2f25197955fe1002
 
+                    <script id="productDetailsTemplate" type="text/x-jquery-tmpl">
 
-                </div>
+						<table width="100%" border="0" cellspacing="1" cellpadding="1">
+							<tr>
+								<td valign="top">
+								<div id="cus_termekkep">
+                                    {{if Product.PrimaryPicture.RecId > 0}}
+                                        <a class="popupimg" href="#/showPicture/${Product.ProductId}/${Product.DataAreaId}/${Product.ItemName}" title="${Product.ItemName}">
+                                        <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, Product.PrimaryPicture.RecId, Product.DataAreaId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, Product.PrimaryPicture.RecId, Product.DataAreaId)" /></a>
+                                    {{else}}
+                                        <img src="@Url.Content("~/Media/images/nopic.jpg")" width="94" height="69" alt="" />
+                                    {{/if}}
+								</div></td>
+								<td valign="top" id="cus_prod_table_middle_cell"><span id="cus_prod_table_item_name">${Product.ItemName}</span><span id="cus_prod_table_item_code">| ${Product.ProductId}</span>
+								<br />
+								<div id="cus_prod_table_desc_full">
+   
+                                    <span>Gyártó:</span> ${Product.Manufacturer.Name} <br/>                                       
+                                    <span>Jelleg1:</span> ${Product.FirstLevelCategory.Name} <br/>
+                                    <span>Jelleg2:</span> ${Product.SecondLevelCategory.Name} <br/>
+                                    <span>Jelleg3:</span> ${Product.ThirdLevelCategory.Name} <br/>
+                                    <span>Cikkszám:</span> ${Product.PartNumber} <br/>
+                                    <span>Leírás:</span> ${Product.Description} <br/> 
+									<hr />
+                                    <hr />
+                                    {{if Visitor.IsValidLogin}}
+                                        {{if Product.SecondHandList.Items.Count > 0}} <span>használt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
+                                        {{if Product.IsInNewsletter}} <span>hírlevél akciós</span> <br/>  {{/if}}         <!-- ha a cikk hírlevél akciós -->
+                                        <span>Garancia módja:</span> ${Product.GarantyMode} <br/>
+                                        <span>Garancia ideje:</span> ${Product.GarantyTime} <br/><br/>
+ 
+                                         {{if Product.EndOfSales}} <span>kifutó</span><br/>  {{/if}}                        <!-- ha a cikk kifuto -->
+                                         {{if Product.New}} <span>Új</span><br/>   {{/if}}                                 <!-- ha a cikk uj -->
+                                         {{if !Model.Product.IsInStock}}
+                                            <span>Várható beérkezés dátuma:</span>  ${Product.ShippingDate} <br/>
+                                         {{/if}}
+                                    {{/if}} 
+   								</div></td>
+								<td valign="top" nowrap="nowrap">
+                                {{if Visitor.IsValidLogin}}
+								<table width="130" border="0" cellspacing="1" cellpadding="2">
+									<tr>
+										<td nowrap="nowrap" id="cus_prod_table_price">
+                                            <span>Ár:</span> <strong>${Product.Price} ${Product.Currency}</strong></td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">
+                                        {{if Product.IsInStock}}
+                                            <span>Véső készlet:</span> ${Product.InnerStock} db<br />
+                                            <span>Huszti készlet:</span> ${Product.OuterStock} db<br />
+										    <span></span>
+                                        {{else}} 
+                                               {{if Product.PurchaseInProgress}}
+				                                    <span>Várható érkezés: ${Product.ShippingDate}</span>
+                                                {{else}}
+				                                    <span>Rendelhető</span>
+                                                {{/if}}                                       
+                                        {{/if}}
+                                        </td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">&nbsp;</td>
+									</tr>
+									<tr>
+										<td nowrap="nowrap">&nbsp;</td>
+									</tr>
+								</table>
+                                {{/if}}
+                                {{if Product.SecondHandList.Items.Count > 0}}
+				                    <br /><a href="#/ShowSecondHandList/${Product.ProductId}/${Product.DataAreaId}" title="${Product.ItemName}">Használt: ${Product.SecondHandList.MinimumPrice} Ft-tól </a>
+                                {{/if}}
+                            </td>
+							</tr>
+							<tr>
+								<td colspan="3" valign="top" id="cus_prod_table_more_full">
+                                {{if Visitor.IsValidLogin}}
+                                <form action="#/addLineToShoppingCart/${item.ProductId}" method="post">
+								<table width="100%" border="0" cellspacing="1" cellpadding="5">
+									<tr>
+										<!-- <td nowrap="nowrap">
+										<div id="cus_prod_table_add_compare">
+											<input type="checkbox" name="checkbox2" id="checkbox2" />
+											Összehasonlító listához ad
+										</div></td> -->
+									<td nowrap="nowrap">
+                                    <div class="cus_prod_table_quantity">
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                    </div>
+                                    </td>
+                                    <td align="right" nowrap="nowrap">
+                                        <div class="cus_prod_table_basket">
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        </div>
+                                    </td>
+									</tr>
+								</table>
+                                </form>
+                                {{/if}}</td>
+							</tr>
+						</table>
+						@*tabok*@
+						<div id="wrapper">
+							<ul class="tabs">
+								<li>
+									<a href="#" class="defaulttab" rel="tabs1">Kellékanyagok</a>
+								</li>
+								<li>
+									<a href="#" rel="tabs2">Technikai adatok</a>
+								</li>
+								<li>
+									<a href="#" rel="tabs3">Legnépszerűbb párosítások</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="tabs1">
+                                {{each( i, item ) CompatibleProducts}}
+								<a href="#/details/${item.ProductId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
+								<br />
+                                    {{if Visitor.IsValidLogin}}
+                                        <span>Ár</span>${item.Price} <br /><br />
+                                        <span>Belső készlet:</span>${item.InnerStock}<br />
+                                        <span>Külső készlet:</span>${item.OuterStock}<br />
+                                    {{/if}}
+                                {{/each}}
+                                <br />
+							</div>
+							<div class="tab-content" id="tabs2">
+                                {{each( i, item ) ReverseCompatibleProducts}}
+								<a href="#/details/${item.ProductId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
+								<br />
+                                    {{if Visitor.IsValidLogin}}
+                                        <span>Ár</span>${item.Price} <br /><br />
+                                        <span>Belső készlet:</span>${item.InnerStock}<br />
+                                        <span>Külső készlet:</span>${item.OuterStock}<br />
+                                    {{/if}}
+                                {{/each}}
+                                <br />
+							</div>
+							<div class="tab-content" id="tabs3">
+								<a href="#">- LG 2340 Monitor</a>
+								<br />
+								<a href="#">- CANON 5030 tintasugaras nyomtató</a>
+							</div>
+						</div>			
+                    </script>
 
+			        @* ajánlott termékek*@
+                    @{Html.RenderPartial("_ProductListBanner", Model.BannerList);}
+	            </div>
             </div>
 		</div>
         @*cms AfterContent
