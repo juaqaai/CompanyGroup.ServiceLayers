@@ -1,0 +1,12 @@
+﻿@model CompanyGroup.Dto.WebshopModule.BannerList
+<div id="cus_recommended_prod_container">
+	<h4>Ajánlott termékeink</h4>
+	<ul id="cus_recommended_prod_content">
+        @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.Items)
+        {
+		<li>
+			<a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
+		</li>
+        }
+	</ul>
+</div>

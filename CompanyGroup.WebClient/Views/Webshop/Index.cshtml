@@ -660,11 +660,10 @@
 
                     @*<div id="listscroll">*@
 		                <div id="cus_product_table">
-			            @* listaelemek lenyíló/bezáródó *@
+			            @*listaelem konténer*@
 			            <div id="div_catalogue" class="wrapper">
-
                         </div>
-                        @*termekelem eleje*@
+                        @*listaelemek template*@
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
                         <div class="expand_heading">
@@ -788,7 +787,6 @@
 				        </div>
                         {{/each}}
                         </script>
-                        @*termekelem vege*@
                         </div>
                     @*</div>*@
 
@@ -856,18 +854,8 @@
 				    </table>
                     </script>            
 
-			        @* ajánlott termékek*@
-			        <div id="cus_recommended_prod_container">
-				        <h4>Ajánlott termékeink</h4>
-				        <ul id="cus_recommended_prod_content">
-                            @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.BannerList.Items)
-                            {
-					        <li>
-						        <a href="@Url.Content(String.Format("~/Webshop/Catalogue/Detail/?ProductId={0}", Url.Encode(banner.ProductId)))" target="_blank"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("ProductId={0}&RecId={1}&DataAreaId={2}&MaxWidth=120&MaxHeight=80", Url.Encode(banner.ProductId), banner.PrimaryPicture.RecId, banner.DataAreaId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
-					        </li>
-                            }
-				        </ul>
-			        </div>
+                    @* ajánlott termékek*@
+                    @{Html.RenderPartial("_BannerList", @Model.BannerList)};
 	            </div>
 
                 @*részletes adatlap*@
