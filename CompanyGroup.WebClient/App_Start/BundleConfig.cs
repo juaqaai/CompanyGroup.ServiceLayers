@@ -55,6 +55,8 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/fancybox").Include("~/Scripts/jquery.fancybox.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/smarttab").Include("~/Scripts/smarttab.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));
