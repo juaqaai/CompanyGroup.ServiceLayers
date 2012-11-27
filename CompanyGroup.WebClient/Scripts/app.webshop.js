@@ -222,6 +222,10 @@ companyGroup.webshop = $.sammy(function () {
         $("input[name='radio_delivery']").live('change', function () {
             context.trigger('changeDelivery', { Delivery: parseInt($(this).val(), 0) });
         });
+        $('.tabs a').live('click', function () {
+            context.trigger('changeDetailsTab', $(this));
+        });
+        switch_tabs($('.defaulttab'));
     });
     //szűrés készleten lévő termékekre
     this.bind('filterByStock', function (e, data) {
