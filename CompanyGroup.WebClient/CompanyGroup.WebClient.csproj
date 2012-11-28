@@ -1106,6 +1106,7 @@
     <Content Include="Content\Media\images\ujdonsag.png" />
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
+    <Content Include="Scripts\smarttab.js" />
     <Content Include="Scripts\app.partnerinfo.js" />
     <Content Include="Scripts\app.registration.js" />
     <Content Include="Scripts\app.utils.js" />
