@@ -216,20 +216,23 @@ companyGroup.webshop = $.sammy(function () {
         };
         //fizetési mód beállítás
         $("input[name='radio_payment']").live('change', function () {
-            context.trigger('changePayment', { Paymet: parseInt($(this).val(), 0) });
+            console.log($(this).val());
+            context.trigger('changePayment', { Payment: parseInt($(this).val(), 0) });
         });
         //szállítási mód beállítás
         $("input[name='radio_delivery']").live('change', function () {
+            console.log($(this).val());
             context.trigger('changeDelivery', { Delivery: parseInt($(this).val(), 0) });
         });
         //rendelés form alapértelmezettre állítása
         $("input[name='resetOrderForm']").live('click', function () {
+            console.log('resetOrderForm');
             context.trigger('resetOrderForm');
         });
         $('.tabs a').live('click', function () {
             context.trigger('changeDetailsTab', $(this));
         });
-        switch_tabs($('.defaulttab'));
+        //switch_tabs($('.defaulttab'));
         //Lenyíló menük delay beállítása
         $("#navmenu").mouseover(function () {
             $("ul#navmenu ul li").slideDown("slow");
@@ -251,13 +254,14 @@ companyGroup.webshop = $.sammy(function () {
             $(this).toggleClass("active");
             return false;
         });
-        //oldal tetejére ugrás
-        $('#top-link').live('click', function () {
-            context.trigger('scrollToTop');
-        });
+        //oldal tetejére ugrás link
         $('#top-link').topLink({
             min: 400,
             fadeSpeed: 500
+        });
+        //oldal tetejére ugrás
+        $('#top-link').live('click', function () {
+            context.trigger('scrollToTop');
         });
         //szállítási dátum, idő
         $("#naptar").datepicker({
@@ -312,57 +316,57 @@ companyGroup.webshop = $.sammy(function () {
     this.bind('changePayment', function (e, data) {
         //készpénzes fizetés
         if (data.Payment === 1) {
-            $('#raktari_off').hide();
-            $('#kiszallitas_off').show();
-            $('#cim_off').show();
-            $('#idopont_off').show();
-            $('#szallcimadat_off').show();
-            $('#atutalas_off').show();
-            $('#eloreutalas_off').show();
-            $('#utanvet_off').show();
+//            $('#raktari_off').hide();
+//            $('#kiszallitas_off').show();
+//            $('#cim_off').show();
+//            $('#idopont_off').show();
+//            $('#szallcimadat_off').show();
+//            $('#atutalas_off').show();
+//            $('#eloreutalas_off').show();
+//            $('#utanvet_off').show();
         }
         //átutalásos fizetés
         else if (data.Payment === 2) {
-            $('#raktari_off').hide();
-            $('#kiszallitas_off').hide();
-            $('#keszpenz_off').show();
-            $('#eloreutalas_off').show();
-            $('#utanvet_off').show();
+//            $('#raktari_off').hide();
+//            $('#kiszallitas_off').hide();
+//            $('#keszpenz_off').show();
+//            $('#eloreutalas_off').show();
+//            $('#utanvet_off').show();
         }
         //előre utalásos fizetés
         else if (data.Payment === 3) {
-            $('#raktari_off').hide();
-            $('#kiszallitas_off').hide();
-            $('#keszpenz_off').show();
-            $('#atutalas_off').show();
-            $('#utanvet_off').show();
+//            $('#raktari_off').hide();
+//            $('#kiszallitas_off').hide();
+//            $('#keszpenz_off').show();
+//            $('#atutalas_off').show();
+//            $('#utanvet_off').show();
         }
         //utánvét
         else if (data.Payment === 4) {
-            $('#raktari_off').show();
-            $('#kiszallitas_off').hide();
-            $('#keszpenz_off').show();
-            $('#eloreutalas_off').show();
-            $('#atutalas_off').show();
+//            $('#raktari_off').show();
+//            $('#kiszallitas_off').hide();
+//            $('#keszpenz_off').show();
+//            $('#eloreutalas_off').show();
+//            $('#atutalas_off').show();
         }
     });
     //szállítási mód beállítás
     this.bind('changeDelivery', function (e, data) {
         //raktári átvétel
         if (data.Delivery === 1) {
-            $("#feladas").removeClass("feladasopciok_block");
-            $("#feladas").addClass("feladasopciok_ok");
-            $('.feladasopciok_ok').removeAttr("disabled");
-            $('#szallcimadat_off').show();
-            $('#kiszallitas_off').show();
-            $('#custom_number').removeAttr("disabled");
-            $('#user_comment').removeAttr("disabled");
+//            $("#feladas").removeClass("feladasopciok_block");
+//            $("#feladas").addClass("feladasopciok_ok");
+//            $('.feladasopciok_ok').removeAttr("disabled");
+//            $('#szallcimadat_off').show();
+//            $('#kiszallitas_off').show();
+//            $('#custom_number').removeAttr("disabled");
+//            $('#user_comment').removeAttr("disabled");
         }
         //kiszállítást kér
         else {
-            $('#szallcimadat_off').hide();
-            $('#szallcimadat').show();
-            $('#raktari_off').show();
+//            $('#szallcimadat_off').hide();
+//            $('#szallcimadat').show();
+//            $('#raktari_off').show();
         }
     });
     //váltás tabfülre
@@ -371,24 +375,25 @@ companyGroup.webshop = $.sammy(function () {
     });
     //rendelés form alapértelmezettre állítása
     this.bind('resetOrderForm', function (e, data) {
-        $('#raktari_off').show();
-        $('#kiszallitas_off').show();
-        $('#cim_off').show();
-        $('#idopont_off').show();
-        $('#szallcimadat_off').show();
-        $('#keszpenz_off').hide();
-        $('#atutalas_off').hide();
-        $('#eloreutalas_off').hide();
-        $('#utanvet_off').hide();
-        $('.feladasopciok_ok').attr("disabled", "disabled");
-        $('#custom_number').attr("disabled", "disabled");
-        $('#user_comment').attr("disabled", "disabled");
-        $("#feladas").addClass("feladasopciok_block");
+//        $('#raktari_off').show();
+//        $('#kiszallitas_off').show();
+//        $('#cim_off').show();
+//        $('#idopont_off').show();
+//        $('#szallcimadat_off').show();
+//        $('#keszpenz_off').hide();
+//        $('#atutalas_off').hide();
+//        $('#eloreutalas_off').hide();
+//        $('#utanvet_off').hide();
+//        $('.feladasopciok_ok').attr("disabled", "disabled");
+//        $('#custom_number').attr("disabled", "disabled");
+//        $('#user_comment').attr("disabled", "disabled");
+//        $("#feladas").addClass("feladasopciok_block");
     });
     //oldal tetejére ugrás    
     this.bind('scrollToTop', function (e, data) {
         e.preventDefault();
-        $.scrollTo(0, 300);
+        console.log(e);
+        //e.scrollTo(0, 300);
     });
     //kilépés
     this.get('#/signOut', function (context) {
@@ -1376,6 +1381,7 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 $("#cus_productdetails_table").empty();
                 $("#productDetailsTemplate").tmpl(result).appendTo("#cus_productdetails_table");
+                switch_tabs($('.defaulttab'));
                 showProductList(false);
             },
             error: function () {

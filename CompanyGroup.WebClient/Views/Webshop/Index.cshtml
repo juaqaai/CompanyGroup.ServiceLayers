@@ -861,24 +861,26 @@
 							<tr>
 								<td valign="top">
 								<div id="cus_termekkep">
-                                    {{if Product.PrimaryPicture.RecId > 0}}
+                                    {{if Product.Pictures.Items.length > 0}}
+                                        {{each( i, item ) Product.Pictures.Items}}
                                         <a class="popupimg" href="#/showPicture/${Product.ProductId}/${Product.DataAreaId}/${Product.ItemName}" title="${Product.ItemName}">
-                                        <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, Product.PrimaryPicture.RecId, Product.DataAreaId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, Product.PrimaryPicture.RecId, Product.DataAreaId)" /></a>
+                                        <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)" /></a>
+                                        <br/>
+                                        {{/each}}
                                     {{else}}
-                                        <img src="@Url.Content("~/Media/images/nopic.jpg")" width="94" height="69" alt="" />
+                                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="94" height="69" alt="" />
                                     {{/if}}
 								</div></td>
-								<td valign="top" id="cus_prod_table_middle_cell"><span id="cus_prod_table_item_name">${Product.ItemName}</span><span id="cus_prod_table_item_code">| ${Product.ProductId}</span>
+								<td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code">| ${Product.ProductId}</span>
 								<br />
 								<div id="cus_prod_table_desc_full">
-   
                                     <span>Gyártó:</span> ${Product.Manufacturer.Name} <br/>                                       
                                     <span>Jelleg1:</span> ${Product.FirstLevelCategory.Name} <br/>
                                     <span>Jelleg2:</span> ${Product.SecondLevelCategory.Name} <br/>
                                     <span>Jelleg3:</span> ${Product.ThirdLevelCategory.Name} <br/>
                                     <span>Cikkszám:</span> ${Product.PartNumber} <br/>
                                     <span>Leírás:</span> ${Product.Description} <br/> 
-									<hr />
+									<br />
                                     <hr />
                                     {{if Visitor.IsValidLogin}}
                                         {{if Product.SecondHandList.Items.Count > 0}} <span>használt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
@@ -897,7 +899,7 @@
                                 {{if Visitor.IsValidLogin}}
 								<table width="130" border="0" cellspacing="1" cellpadding="2">
 									<tr>
-										<td nowrap="nowrap" id="cus_prod_table_price">
+										<td nowrap="nowrap" class="cus_prod_table_price">
                                             <span>Ár:</span> <strong>${Product.Price} ${Product.Currency}</strong></td>
 									</tr>
 									<tr>
