@@ -12,17 +12,17 @@ namespace CompanyGroup.WebApi.Controllers
         /// <summary>
         /// privát szerviz interfész referencia
         /// </summary>
-        private CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service;
+        private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service;
 
         /// <summary>
         /// konstruktor customer service interfésszel
         /// </summary>
         /// <param name="service"></param>
-        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service)
+        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service)
         {
             if (service == null)
             {
-                throw new ArgumentNullException("CustomerService");
+                throw new ArgumentNullException("InvoiceService");
             }
 
             this.service = service;        
@@ -37,7 +37,7 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetInvoiceInfo(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
         {
-            return service.GetInvoiceInfo(request);
+            return service.GetList(request);
         }
 
     }
