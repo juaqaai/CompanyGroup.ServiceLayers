@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.PartnerModule
 {
+    /// <summary>
+    /// számlaműveleteket végző interfész
+    /// </summary>
     public interface IInvoiceRepository
     {
         /// <summary>
@@ -21,7 +24,7 @@ namespace CompanyGroup.Domain.PartnerModule
         List<InvoiceInfo> GetList(string customerId, string dataAreaId);
 
         /// <summary>
-        /// számlalista kiolvasása
+        /// összes számlalista kiolvasása
         /// </summary>
         /// <returns></returns>
         List<InvoiceInfo> GetAll();
@@ -30,6 +33,17 @@ namespace CompanyGroup.Domain.PartnerModule
         /// számlalista hozzáadása  
         /// </summary>
         /// <param name="invoiceInfoList"></param>
-        void AddList(List<InvoiceInfo> invoiceInfoList);
+        void InsertList(List<InvoiceInfo> invoiceInfoList);
+
+        /// <summary>
+        /// összes számla eltávolítása a cache-ből
+        /// </summary>
+        void RemoveAllItemsFromCollection();
+
+        /// <summary>
+        /// kiüríti az elemeket a megadott kollekcióból
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        void RemoveItemsFromCollection(string dataAreaId);
     }
 }

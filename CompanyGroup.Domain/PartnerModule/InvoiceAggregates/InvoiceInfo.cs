@@ -13,8 +13,8 @@ namespace CompanyGroup.Domain.PartnerModule
         public InvoiceInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, Int64 invoiceAmount, Int64 invoiceCredit, string currencyCode, string invoiceId, string payment, InvoiceSalesType salesType, 
                            string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId, bool printed, string returnItemId)
         {
-            CustomerId = customerId;
-            DataAreaId = dataAreaId;
+            this.CustomerId = customerId;
+            this.DataAreaId = dataAreaId;
             this.SalesId = salesId;
             this.InvoiceDate = invoiceDate;
             this.DueDate = dueDate;
@@ -200,7 +200,7 @@ namespace CompanyGroup.Domain.PartnerModule
             {
                 if (invoiceInfo == null)
                 {
-                    invoiceInfo = new InvoiceInfo(x.SalesId,x.InvoiceDate,x.DueDate, x.InvoiceAmount, x.InvoiceCredit, x.CurrencyCode, x.InvoiceId, x.Payment, x.SalesType, 
+                    invoiceInfo = new InvoiceInfo(x.CustomerId, x.DataAreaId, x.SalesId,x.InvoiceDate,x.DueDate, x.InvoiceAmount, x.InvoiceCredit, x.CurrencyCode, x.InvoiceId, x.Payment, x.SalesType, 
                                                   x.CusomerRef, x.InvoicingName, x.InvoicingAddress, x.ContactPersonId, x.Printed, x.ReturnItemId);
                 }
 

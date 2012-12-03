@@ -20,13 +20,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository;
 
-        private CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository;
-
         /// <summary>
         /// konstruktor
         /// </summary>
         /// <param name="customerRepository"></param>
-        public CustomerService(CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository, CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository, CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
+        public CustomerService(CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository, CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
         {
             if (customerRepository == null)
             {
@@ -34,8 +32,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             }
 
             this.customerRepository = customerRepository;
-
-            this.invoiceRepository = invoiceRepository;
         }
 
         /// <summary>
@@ -191,74 +187,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             visitorRepository.DisableStatus(request.ObjectId, request.DataAreaId);
 
             return new CompanyGroup.Dto.ServiceResponse.Empty();
-        }
-
-        /// <summary>
-        /// vevőhöz tartozó számlák listája
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetInvoiceInfo(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
-        {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            try
-            {
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = new List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>();
-
-                //látogató azonosító alapján olvasása a cahce-ből, vagy a visitor repository-ból 
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-//                if (visitor.IsValidLogin)
-//                {
-
-                    //visitor.
-
-                    List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoiceInfos = invoiceRepository.GetInvoiceDetailedLineInfo(visitor.CompanyId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-
-                    List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> filteredInvoiceInfo;
-
-                    //lejárt, kifizetetlen
-                    if (CompanyGroup.Domain.PartnerModule.InvoicePaymentType.OverDue.Equals((CompanyGroup.Domain.PartnerModule.InvoicePaymentType) request.PaymentType))
-                    {
-                        //if (DateTime.Compare(t1, t2) >  0) Console.WriteLine("t1 > t2"); 
-                        //if (DateTime.Compare(t1, t2) == 0) Console.WriteLine("t1 == t2");
-                        //if (DateTime.Compare(t1, t2) < 0) Console.WriteLine("t1 < t2");
-
-                        filteredInvoiceInfo = invoiceInfos.Where(x => (DateTime.Compare(x.DueDate, DateTime.Today) < 0) && (x.InvoiceCredit > 0)).ToList();
-                    }
-                    //kifizetetlen
-                    else if (CompanyGroup.Domain.PartnerModule.InvoicePaymentType.Unpaid.Equals((CompanyGroup.Domain.PartnerModule.InvoicePaymentType) request.PaymentType))
-                    {
-                        filteredInvoiceInfo = invoiceInfos.Where(x => (x.InvoiceCredit > 0)).ToList();
-                    }
-                    //összes
-                    else
-                    {
-                        filteredInvoiceInfo = invoiceInfos;
-                    }
-
-                    //számla info aggregátum elkészítése
-                    IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>> groupedLineInfos = filteredInvoiceInfo.GroupBy(x => x.InvoiceId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
-
-                    List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
-
-                    foreach (var lineInfo in groupedLineInfos)
-                    {
-                        CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
-
-                        invoiceInfoList.Add(invoiceInfo);
-                    }
-
-                    result.AddRange(invoiceInfoList.ConvertAll(x => new InvoiceInfoToInvoiceInfo().Map(x)));
-//                }
-
-                return result;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
         }
 
     }

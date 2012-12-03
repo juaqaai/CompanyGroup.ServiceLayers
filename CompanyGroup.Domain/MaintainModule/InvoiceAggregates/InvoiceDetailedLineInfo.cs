@@ -9,11 +9,13 @@ namespace CompanyGroup.Domain.MaintainModule
     /// </summary>
     public class InvoiceDetailedLineInfo
     {
-        public InvoiceDetailedLineInfo(string salesId, DateTime invoiceDate, DateTime dueDate, Int64 invoiceAmount, Int64 invoiceCredit, string currencyCode, string invoiceId, 
+        public InvoiceDetailedLineInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, Int64 invoiceAmount, Int64 invoiceCredit, string currencyCode, string invoiceId, 
                                        string payment, int salesType, string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId,
                                        bool printed, string returnItemId, DateTime itemDate, int lineNum, string itemId, string name, int quantity, Int64 salesPrice, Int64 lineAmount,
                                        int quantityPhysical, int remain, int deliveryType, Int64 taxAmount, Int64 lineAmountMst, Int64 taxAmountMst, string detailCurrencyCode)
-        { 
+        {
+            this.CustomerId = customerId;
+            this.DataAreaId = dataAreaId;
             this.SalesId	= salesId;
             this.InvoiceDate = invoiceDate;
             this.DueDate = dueDate;
@@ -44,6 +46,10 @@ namespace CompanyGroup.Domain.MaintainModule
             this.TaxAmountMst = taxAmountMst;
             this.DetailCurrencyCode = detailCurrencyCode;
         }
+
+        public string CustomerId { set; get; }
+
+        public string DataAreaId { set; get; }
 
         public string SalesId { set; get; }
 

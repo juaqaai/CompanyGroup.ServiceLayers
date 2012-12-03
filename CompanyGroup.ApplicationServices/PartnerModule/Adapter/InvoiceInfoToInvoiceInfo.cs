@@ -21,8 +21,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            CurrencyCode = from.CurrencyCode,
                            CusomerRef = from.CusomerRef,
                            DueDate = String.Format("{0}.{1}.{2}", from.DueDate.Year, from.DueDate.Month, from.DueDate.Day),
-                           InvoiceAmount = String.Format(((Math.Round(from.InvoiceAmount) == from.InvoiceAmount) ? "{0:0}" : "{0:0.00}"), from.InvoiceAmount),
-                           InvoiceCredit = String.Format(((Math.Round(from.InvoiceCredit) == from.InvoiceCredit) ? "{0:0}" : "{0:0.00}"), from.InvoiceCredit),
+                           InvoiceAmount = String.Format("{0}", from.InvoiceAmount),
+                           InvoiceCredit = String.Format("{0}", from.InvoiceCredit),
                            InvoiceDate = String.Format("{0}.{1}.{2}", from.InvoiceDate.Year, from.InvoiceDate.Month, from.InvoiceDate.Day),
                            InvoiceId = from.InvoiceId,
                            InvoicingAddress = from.InvoicingAddress,
@@ -43,11 +43,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            DeliveryType = from.DeliveryType,
                            ItemDate = String.Format("{0}.{1}.{2}", from.ItemDate.Year, from.ItemDate.Month, from.ItemDate.Day),
                            ItemId = from.ItemId,
-                           LineAmount = String.Format(((Math.Round(from.LineAmount) == from.LineAmount) ? "{0:0}" : "{0:0.00}"), from.LineAmount),
+                           LineAmount = String.Format("{0}", from.LineAmount),
                            Name = from.Name,
                            Quantity = from.Quantity,
-                           SalesPrice = String.Format(((Math.Round(from.SalesPrice) == from.SalesPrice) ? "{0:0}" : "{0:0.00}"), from.SalesPrice),
-                           TaxAmount = String.Format(((Math.Round(from.TaxAmount) == from.TaxAmount) ? "{0:0}" : "{0:0.00}"), from.TaxAmount)
+                           SalesPrice = String.Format("{0}", from.SalesPrice),
+                           TaxAmount = String.Format("{0}", from.TaxAmount)
                        };
         }
     }
