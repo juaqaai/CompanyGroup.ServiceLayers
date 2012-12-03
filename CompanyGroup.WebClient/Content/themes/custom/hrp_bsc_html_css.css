@@ -31,15 +31,16 @@ body {
 }
 #cus_header1 {
     width: 100%;
-    height: 20px;
+    height: auto; /*autora állitottam, hogy ha hosszú a cégnév akkor vastagodik és sorba kerűlne. Bénán nézne ki ezért a betű méretből is vissza vettem 1-et. D.*/
     background: #24221F;
     /*-moz-opacity:.90;
      filter:alpha(opacity=90);
      opacity:.90;*/
     z-index: 1800;
     margin-top: -14px;
-    padding-top: 8px;
+    padding-top: 10px;
     position: fixed;
+	padding-bottom: 8px;
 }
 
 #akcio_badge {
@@ -55,12 +56,13 @@ body {
 }
 #cus_header1_table {
     font-family: Verdana, Geneva, sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     color: #FFF;
 }
 #cus_header1_table a {
     color: #FFF;
     text-decoration: none;
+	font-size: 10px;
 }
 #cus_header1_table a:hover {
 
@@ -157,7 +159,10 @@ body {
 	height:600px;
 	overflow: auto;
 }
-
+/*  position: absolute;
+  top: 0;
+  margin-top: 20px;
+  padding-top: 19px;*/
 #cus_catalogue_left {
     position: relative;
     float: left;
@@ -173,7 +178,7 @@ body {
     background: #fff;
     margin-right: 2px;
     margin-top: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 #cus_items_list_menu {
     background: #EFEFEF;
@@ -188,6 +193,10 @@ body {
     margin-top: 150px;
     float: left;
 }
+/*  left: 450px;
+  position: absolute;
+  margin-left: 35px;
+*/
 #cus_banner_table {
     background: #F0F0F0;
     width: 275px;
@@ -207,6 +216,10 @@ body {
 /*#container{
 	position:fixed;
 }*/
+#cus_banner_table.fixed {
+  position: fixed;
+  top: 45px;
+}
 #cus_banner_table hr {
     color: #f00;
     height: 1px;
@@ -347,17 +360,19 @@ body {
     width: 100px;
     height: auto;
 }
+/* kijavítottam a kép torzulást, leszdtem a körvonalat*/
 #cus_termekkep img {
-    width: 94px;
-    height: 69px;
-    border: #ccc solid 2px;
-    margin-bottom: 3px;
+	max-width: 94px;
+	max-height: 94px;
+	border: #ccc solid 0px;
+	margin-left: 25px;
+	margin-bottom: 3px;
 }
 #cus_termekkep img:hover {
-    width: 94px;
-    height: 69px;
-    border: #AAA solid 2px;
-    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
+	max-width: 94px;
+	max-height: 94px;
+	border: #AAA solid 1px;    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
+     -webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
      -moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.5);
      box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.5);*/
 }
@@ -368,16 +383,16 @@ body {
     height: auto;
 }
 .cus_termekkep img {
-    width: 94px;
-    height: 69px;
-    border: #ccc solid 2px;
-    margin-bottom: 3px;
+	max-width: 94px;
+	max-height: 94px;
+	border: #ccc solid 0px;
+	margin-bottom: 3px;
+	margin-left: 25px;
 }
 .cus_termekkep img:hover {
-    width: 94px;
-    height: 69px;
-    border: #AAA solid 2px;
-    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
+	max-width: 94px;
+	max-height: 94px;
+	border: #AAA solid 0px;    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
      -moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.5);
      box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.5);*/
 }
@@ -389,11 +404,11 @@ body {
     margin-top: 4px;
 }
 .expand_heading_table1 {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
     padding-right: 2px;
-    background: #F0F0F0;
+    background: #FFF;
     border-top: 2px solid #CDCDCD;
 }
 .expand_heading_table2 {
@@ -411,7 +426,7 @@ body {
 }
 .cus_prod_header_middle_cell {
     width: 100%;
-    padding-left: 0px;
+    padding-left: 5px;
     padding-right: 0px;
     font-size: 11px;
 }
@@ -453,30 +468,40 @@ body {
 .cus_prod_table_item_name {
     color: #333;
     font-weight: bold;
+	padding-right: 10px;
 }
 .cus_prod_table_item_code {
     color: #333;
 }
 .cus_prod_table_desc {
-	width: 380px;
+	width: 310px;
 	font-size: 11px;
 	font-family: Verdana, Geneva, sans-serif;
-	overflow: visible;
-	height: 40px;
-	text-align: justify;
+	overflow: hidden;
+	height: 54px;
+	text-align: left;
 	margin-top: 0px;
-	padding-right: 3px;
+	/* [disabled]padding-left: auto; */
 	cursor: pointer;
-	margin-bottom:7px;
+	margin-left:32px;
 }
 
 .cus_teteladatok {
     font-size: 11px;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-align: left
     margin-top: -2px;
 }
+.cus_teteladatok_2 {
+	font-size: 11px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-align: right;
+	margin-top:-5px;
+	padding-top: 0px;
+	padding-bottom: 4px;
+}
 #cus_prod_table_desc_full {
-    width: 380px;
+	width: 340px;
     font-size: 11px;
     font-family: Verdana, Geneva, sans-serif;
     text-align: justify;
@@ -489,6 +514,10 @@ body {
     padding-bottom:10px;
 }
 .cus_prod_table_morelink {
+    color: #FFF;
+	text-align: right;
+}
+.cus_prod_table_morelink_2 {
     color: #666;
 }
 .cus_prod_table_morelink a {
@@ -704,10 +733,10 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
 
 /************************************************ rendezés-szűrés menü ************************************************/
 
-#cus_order_text {
+/*#cus_order_text {
     margin-top: 8px;
     margin-left: 8px;
-}
+}*/
 #cus_list_order_panel {
     padding-left: 0px;
     padding-right: 0px;
@@ -1228,7 +1257,8 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     padding-top: 7px;
 }
 #basket_panel a {
-    color: #06F;
+    color: #FFF;
+	text-decoration:none;
 }
 #basket_panel table tr td {
     font-family: Verdana, Geneva, sans-serif;
@@ -1260,25 +1290,30 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     padding: 0;
     list-style-type: none;
 }
+#cus_recommended_prod_header {
+   border: 0px solid #ddd;
+    padding: 5px;
+    background: #FFF;
+}
 #cus_recommended_prod_content img {
-    border: 1px solid #ddd;
+    border: 0px solid #ddd;
     padding: 5px;
     background: #FFF;
 }
 #cus_recommended_prod_content li {
 	float: left;
-	width: 149px;
+	width: 100px;
 	height: 105px;
 	margin: 0 2px;
-	padding: 10px;
+	padding: 15px;
 	background-color: #FFF;
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 	text-align: center;
 }
 #cus_recommended_prod_content span {
-    float: left;
-    width: 149px;
+    float: center;
+    width: 100px;
     height: 30px;
     text-align: center;
     font-weight: bold;

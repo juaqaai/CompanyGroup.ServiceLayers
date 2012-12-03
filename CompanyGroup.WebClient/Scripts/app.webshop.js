@@ -282,6 +282,20 @@ companyGroup.webshop = $.sammy(function () {
             prevText: '<strong><|</strong>',
             nextText: '<strong>|></strong>'
         });
+        //jelleg szűrő fix pozíció beállítás
+        var msie6 = $.browser == 'msie' && $.browser.version < 7;
+        if (!msie6) {
+            var top = $('#cus_banner_table').offset().top - parseFloat($('#cus_banner_table').css('margin-top').replace(/auto/, 0));
+            $(window).scroll(function (event) {
+                var y = $(this).scrollTop();
+                if (y >= top) {
+                    $('#cus_banner_table').addClass('fixed');
+                } else {
+                    $('#cus_banner_table').removeClass('fixed');
+                }
+            });
+        }
+
     });
     //szűrés készleten lévő termékekre
     this.bind('filterByStock', function (e, data) {

@@ -54,21 +54,21 @@
     <Compile Include="Core\INoSqlEntity.cs" />
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
-    <Compile Include="MaintainModule\CompatibilityItem.cs" />
-    <Compile Include="MaintainModule\InventName.cs" />
-    <Compile Include="MaintainModule\Manufacturer.cs" />
-    <Compile Include="MaintainModule\PurchaseOrderLine.cs" />
-    <Compile Include="MaintainModule\SecondHand.cs" />
-    <Compile Include="MaintainModule\SecondLevelCategory.cs" />
-    <Compile Include="MaintainModule\Stock.cs" />
-    <Compile Include="MaintainModule\ThirdLevelCategory.cs" />
-    <Compile Include="MaintainModule\FirstLevelCategory.cs" />
-    <Compile Include="MaintainModule\Product.cs" />
-    <Compile Include="MaintainModule\Picture.cs" />
-    <Compile Include="MaintainModule\ProductDescription.cs" />
-    <Compile Include="MaintainModule\ProductManager.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\CompatibilityItem.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\InventName.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\Manufacturer.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\PurchaseOrderLine.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\SecondHand.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\SecondLevelCategory.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\Stock.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\ThirdLevelCategory.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\FirstLevelCategory.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\Product.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\Picture.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\ProductDescription.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\ProductManager.cs" />
     <Compile Include="Core\IRepository.cs" />
-    <Compile Include="MaintainModule\IProductRepository.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\IProductRepository.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePassword.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordCreate.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePasswordStatus.cs" />
@@ -84,9 +84,10 @@
     <Compile Include="PartnerModule\ContactPersonAggregates\IContactPersonRepository.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\Address.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\BankAccount.cs" />
-    <Compile Include="PartnerModule\InvoiceAggregates\InvoicePaymentType.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\IInvoiceRepository.cs" />
-    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoicePaymentType.cs" />
+    <Compile Include="MaintainModule\InvoiceAggregates\IInvoiceRepository.cs" />
+    <Compile Include="MaintainModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceLineInfo.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceSalesType.cs" />
@@ -204,24 +205,24 @@
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\LeasingOption.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\MinMaxLeasingValue.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\ExchangeRate.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\ProductManager.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\ProductDescription.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\FirstLevelCategory.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\SecondLevelCategory.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\ThirdLevelCategory.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\Manufacturer.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\Product.hbm.xml">
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\ProductManager.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\ProductDescription.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\FirstLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\ThirdLevelCategory.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\Manufacturer.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\Product.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MaintainModule\Picture.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\Stock.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\SecondHand.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\InventName.hbm.xml">
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\Picture.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\Stock.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondHand.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\InventName.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MaintainModule\CompatibilityItem.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\PurchaseOrderLine.hbm.xml" />
-    <Content Include="MaintainModule\NHibernate.txt" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\CompatibilityItem.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\PurchaseOrderLine.hbm.xml" />
+    <Content Include="MaintainModule\ProductAggregates\NHibernate.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\LoginInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.hbm.xml">
       <SubType>Designer</SubType>
@@ -230,7 +231,7 @@
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPersonList.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
-    <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.hbm.xml" />

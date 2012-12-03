@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MongoDB.Driver;
 
 namespace CompanyGroup.Data.PartnerModule
 {
-    public class InvoiceRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.PartnerModule.IInvoiceRepository
+    public class InvoiceRepository : CompanyGroup.Data.NoSql.Repository<CompanyGroup.Domain.PartnerModule.InvoiceInfo>, CompanyGroup.Domain.PartnerModule.IInvoiceRepository
     {
-        /// <summary>
-        /// vevőrendeléshez kapcsolódó műveletek 
-        /// </summary>
-        /// <param name="session"></param>
-        public InvoiceRepository(NHibernate.ISession session) : base(session) { }
+
+        public InvoiceRepository(CompanyGroup.Data.NoSql.ISettings settings) : base(settings) { }
+
+        private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("InvoiceCollectionName", "Invoice");
 
         /// <summary>
         /// részletes számla sorok listája
@@ -19,19 +19,34 @@ namespace CompanyGroup.Data.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> GetInvoiceDetailedLineInfo(string customerId, string dataAreaId)
+        public List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> GetList(string customerId, string dataAreaId)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_InvoiceList")
-                                            .SetString("CustomerId", customerId)
-                                            .SetString("DataAreaId", dataAreaId)
-                                            .SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo).GetConstructors()[0]));
+            try
+            {
+                this.ReConnect();
 
-            return query.List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>() as List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>;
+                MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
+
+                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", ConvertStringToBsonObjectId(id)),
+                                                                      MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(Convert.ToInt32(CompanyGroup.Domain.RegistrationModule.RegistrationStatus.Created))));
+
+                MongoCursor<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = collection.Find(query);
+
+                return invoiceInfoList;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                this.Disconnect();
+            }
+
         }
     }
 }
