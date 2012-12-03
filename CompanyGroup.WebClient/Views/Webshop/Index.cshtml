@@ -131,7 +131,7 @@
                                         <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                             <!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                                          <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td> -->
-                                        <td nowrap="nowrap" width="100%"><a href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése</strong></a>&nbsp;</td>
+                                        <td nowrap="nowrap" width="100%"><a style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése</strong></a>&nbsp;</td>
                                     </tr>
                                     </table>
                                 </td>
@@ -364,80 +364,79 @@
                         </script>
                     </div>
                 </div>
-
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
-					            <div id="cus_filter_price">
-                                    <form action="#/filterbyprice" method="post" id="form_filterbyprice">
-					                <div id="negyes_szuro">	
-						            <table cellpadding="1" cellspacing="1">
-						                <tr>
-                                            <td>Készleten</td><td><input type="checkbox" id="chk_onstock" /></td>
-                                            <td>Akciós</td><td><input type="checkbox" id="chk_onaction" /></td> 
-                                            <td>Leértékelt</td><td><input type="checkbox" id="chk_bargain" /></td> 
-                                            <td>Új</td><td><input type="checkbox" id="chk_new" /></td>                                   
-                                        </tr>
-						            </table>
-					                </div>	
-						            <span>Ár szerinti keresés</span>
-                                    <label class="error" for="txt_filterbyprice" generated="true" style="display:none; color:#900;">( ! )</label><br />
-						            <select name="select_filterbyprice" id="select_filterbyprice" style="margin-top:4px; padding:4px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 50px;">
-							            <option value="1">&gt;=</option>
-							            <option value="2">&lt;=</option>
-						            </select>
-						            <input name="txt_filterbyprice" type="text" id="txt_filterbyprice" size="9" style="margin-top:4px; padding:5px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 75px;"/>
-						            <!-- <input type="submit" name="button" id="button" value="Keres" /> -->
-						            <div id="cus_refresh_icon">
-							            <input type="image" src="@Url.Content("~/Content/Media/images/refresh.png")" title="Frissítés" />Frissítés
-						            </div>
-                                    </form>
-					            </div>
-					            <div id="cus_filter_1">
-						            Gyártók kiválasztása
-						            <br />
-						            <select id="manufacturerList" data-placeholder="Gyártók..." class="chosen" multiple style="width:270px;">
-							            <option value=""></option>
-							            @foreach (var manufacturer in @Model.Structures.Manufacturers)
-                   { 
-                                            <option value="@manufacturer.Id">@manufacturer.Name </option>
-                   }
-						            </select>
-					            </div>
-					            <div id="cus_filter_2">
-						            Jelleg 1 kiválasztása
-						            <br />
-						            <select id="category1List" data-placeholder="Jelleg - 1..." class="chosen" multiple style="width:270px;">
-							            <option value=""></option>
-							            @foreach (var category1 in @Model.Structures.FirstLevelCategories)
-                   { 
-                                        <option value="@category1.Id">@category1.Name</option>
-                   }
-						            </select>
-					            </div>
-					            <div id="cus_filter_3">
-						            Jelleg 2 kiválasztása
-						            <br />
-						            <select id="category2List" data-placeholder="Jelleg - 2..." class="chosen" multiple style="width:270px;">
-							            <option value=""></option>
-							            @foreach (var category2 in @Model.Structures.SecondLevelCategories)
-                   { 
-                                            <option value="@category2.Id">@category2.Name</option>
-                   }
-						            </select>
-					            </div>
-					            <div id="cus_filter_4">
-                                    Jelleg 3 kiválasztása
-						            <br />
-                                    <select id="category3List" data-placeholder="Jelleg - 3..." class="chosen" multiple style="width:270px;">
-							            <option value=""></option>
-                                        @foreach (var category3 in @Model.Structures.ThirdLevelCategories)
-                                        { 
-                                            <option value="@category3.Id">@category3.Name</option>
-                                        }
-						            </select>
-					            </div>
-				            </div>
+					        <div id="cus_filter_price">
+                                <form action="#/filterbyprice" method="post" id="form_filterbyprice">
+					            <div id="negyes_szuro">	
+						        <table cellpadding="1" cellspacing="1">
+						            <tr>
+                                        <td><input type="checkbox" id="chk_onstock"/></td><td> Készleten</td>
+                                        <td><input type="checkbox" id="chk_onaction"/></td><td>Akciós</td> 
+                                        <td><input type="checkbox" id="chk_bargain" /></td><td> Leértékelt</td> 
+                                        <td><input type="checkbox" id="chk_new" /></td><td> Új</td>                                   
+                                    </tr>
+						        </table>
+					            </div>	
+						        <span>Ár szerinti keresés</span>
+                                <label class="error" for="txt_filterbyprice" style="display:none; color:#900;">( ! )</label><br />
+						        <select name="select_filterbyprice" id="select_filterbyprice" style="margin-top:4px; padding:4px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 50px;">
+							        <option value="1">&gt;=</option>
+							        <option value="2">&lt;=</option>
+						        </select>
+						        <input name="txt_filterbyprice" type="text" id="txt_filterbyprice" size="9" style="margin-top:4px; padding:5px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 75px;"/>
+						        <!-- <input type="submit" name="button" id="button" value="Keres" /> -->
+						        <div id="cus_refresh_icon">
+							        <input type="image" src="@Url.Content("~/Content/Media/images/refresh.png")" title="Frissítés" />Frissítés
+						        </div>
+                                </form>
+					        </div>
+					        <div id="cus_filter_1">
+						        Gyártók kiválasztása
+						        <br />
+						        <select id="manufacturerList" data-placeholder="Gyártók..." class="chosen" multiple style="width:270px;">
+							        <option value=""></option>
+							        @foreach (var manufacturer in @Model.Structures.Manufacturers)
+                                    { 
+                                        <option value="@manufacturer.Id">@manufacturer.Name </option>
+                                    }
+						        </select>
+					        </div>
+					        <div id="cus_filter_2">
+						        Jelleg 1 kiválasztása
+						        <br />
+						        <select id="category1List" data-placeholder="Jelleg - 1..." class="chosen" multiple style="width:270px;">
+							        <option value=""></option>
+							        @foreach (var category1 in @Model.Structures.FirstLevelCategories)
+                                    { 
+                                    <option value="@category1.Id">@category1.Name</option>
+                                    }
+						        </select>
+					        </div>
+					        <div id="cus_filter_3">
+						        Jelleg 2 kiválasztása
+						        <br />
+						        <select id="category2List" data-placeholder="Jelleg - 2..." class="chosen" multiple style="width:270px;">
+							        <option value=""></option>
+							        @foreach (var category2 in @Model.Structures.SecondLevelCategories)
+                                    { 
+                                        <option value="@category2.Id">@category2.Name</option>
+                                    }
+						        </select>
+					        </div>
+					        <div id="cus_filter_4">
+                                Jelleg 3 kiválasztása
+						        <br />
+                                <select id="category3List" data-placeholder="Jelleg - 3..." class="chosen" multiple style="width:270px;">
+							        <option value=""></option>
+                                    @foreach (var category3 in @Model.Structures.ThirdLevelCategories)
+                                    { 
+                                        <option value="@category3.Id">@category3.Name</option>
+                                    }
+						        </select>
+					        </div>
+				        </div>
                         <p align="center">
                             <marquee class="html-marquee" direction="up" behavior="scroll" scrollamount="1"> 
                                 Felhasználónak küldött értesítő üzenetek szövege, <a href="#">linkekkel</a>, a kapcsolódó hivatkozáshoz...
@@ -449,7 +448,6 @@
                         <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" alt="" border="0" />
                         </p>
-
                         <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/mogyoro.jpg")" alt="" border="0" />
                         </p>
@@ -460,124 +458,57 @@
                 <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
-			            <table width="695" border="0" cellspacing="3" cellpadding="0">
+			            <table width="694" border="0" cellspacing="3" cellpadding="0">
 				            <tr>
-					            <td>
+					            <td width="5%">
 					                <div class="expand_all">
 						                <img style="cursor: pointer;" src="@Url.Content("~/Content/Media/images/plusicon_2.png")" title="Összes kinyitása / bezárása" alt="" />
 					                </div>
                                 </td>
-					            <td>
+					            <td width="9%">
 					                <div id="cus_delbutton">
 						                <div id="cus_filterdelete_text">Szűrés és rendezés törlése</div><a href="#/clearFilters"><img src="@Url.Content("~/Content/Media/images/filterdelete.png")" border="0" usemap="list_clear_vert_hor" alt="" /></a>
 					                </div>
                                 </td>
-					            <td>
+					            <td width="8%">
 					            <ul id="navmenu_order">
 						            <li>
-							            <div id="cus_order_text">
-								            Rendezés
-							            </div>
-                                        <div id="catalogueSequenceContainer"></div>
+                                        <div id="catalogueSequenceContainer">
+                                        </div>
                                         <script id="catalogueSequenceTemplate" type="text/x-jquery-tmpl">
-							            <ul>
-                                            {{if IsValidLogin}}
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByPriceUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByPriceUp">ÁR szerint növekvő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByPriceDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByPriceDown">ÁR szerint csökkenő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-                                            {{/if}}
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByPartNumberUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByPartNumberUp">CIKKSZÁM szerint növekvő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByPartNumberDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByPartNumberDown">CIKKSZÁM szerint csökkenő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByNameUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByNameUp">NÉV szerint növekvő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByNameDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByNameDown">NÉV szerint csökkenő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-                                            {{if IsValidLogin}}
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByStockUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByStockUp">MENNYISÉG szerint növekvő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByStockDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByStockDown">MENNYISÉG szerint csökkenő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByGarantyUp"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByGarantyUp">GARANCIA IDŐ szerint növekvő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-								            <li>
-									            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-										            <tr>
-											            <td><a href="#/sequenceByGarantyDown"><img src="@Url.Content("~/Content/Media/images/order_arrow.png")" border="0" alt="" /></a></td>
-											            <td width="100%"><a href="#/sequenceByGarantyDown">GARANCIA IDŐ szerint csökkenő</a></td>
-										            </tr>
-									            </table>
-								            </li>
-                                            {{/if}}
-							            </ul>
+                                        {{if IsValidLogin}}
+                                            <select name="catalogueSequence" style="padding:3px; width:190px; height:30px; margin-left:5px; margin-top:-1px;color: #666666; background:#f7f7f7; no-repeat; border:1px #bbb solid;; overflow:hidden; opacity:100; font: 10px; border-radius:2px; valign:center;">
+                                            <option value="">Rendezés</option>
+                                            <option value="6">Ár szerint növekvő</option>
+                                            <option value="7">Ár szerint csökkenő</a></option>
+                                            <option value="2">Cikkszám szerint növekvő</a></option>
+                                            <option value="3">Cikkszám szerint csökkenő</a></option>
+                                            <option value="4">Név szerint növekvő</a></option>
+                                            <option value="5">Név szerint csökkenő</a></option>
+                                            <option value="8">Mennyiség szerint növekvő</a></option>
+                                            <option value="9">Mennyiség szerint csökkenő</a></option>
+                                            </select>
+                                        {{else}}
+                                            <select name="catalogueSequence" style="padding:3px; width:190px; height:30px; margin-left:5px; margin-top:-1px;color: #666666; background:#f7f7f7; no-repeat; border:1px #bbb solid;; overflow:hidden; opacity:100; font: 10px; border-radius:2px; valign:center;">
+                                            <option value="">Rendezés</option>
+                                            <option value="2">Cikkszám szerint növekvő</option>
+                                            <option value="3">Cikkszám szerint csökkenő</option>
+                                            <option value="4">Név szerint növekvő</option>
+                                            <option value="5">Név szerint csökkenő</option>
+                                            </select>
+                                        {{/if}}
                                         </script>
 						            </li>
 					            </ul>
 
                                 </td>
-					            <td align="center" width="100%" class="cus_list_order_panel_table">
+					            <td width="66%" align="right" class="cus_list_order_panel_table">
                                 <form id="form_filterbynameorpartnumber" action="#/filterbynameorpartnumber" method="post">
                                     <label class="error" for="txt_filterbynameorpartnumber" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-                                    @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:205px; height:20px; margin-left:5px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;" })
+                                    @Html.TextBox("txt_filterbynameorpartnumber", "név vagy cikkszám szűrése", new { id = "txt_filterbynameorpartnumber", style = "padding:3px; width:130px; height:20px; margin-left:95px; margin-top:-1px; border:1px #bbb solid; border-radius:2px;" })
                                 </form>
 					            </td>
-                                <td class="cus_list_order_panel_table">
+                                <td width="12%" class="cus_list_order_panel_table">
                                 <div id="catalogueDownloadContainer"></div>
                                 <script id="catalogueDownloadTemplate" type="text/x-jquery-tmpl">
                                 {{if IsValidLogin}}
@@ -664,19 +595,28 @@
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
                         <div class="expand_heading">
-				            <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
+				            <table width="670" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                <tr>
 				                    <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
 				                    <td width="100%" valign="top" class="cus_prod_header_middle_cell">
 				                    <span class="cus_prod_table_item_number">${item.SequenceNumber}</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
                                     <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span>
+				                    <!--Az akció meg az ujdonság átraktam az ár mellé, mert csak expand módban látszanak, lent is meghagytam öket ( just in case) csak átlátszó png-t készítettem. Formázgattam a tételadatokat is meg a képek méretét D.--> 
 				                    </td>
 				                    <td align="right" valign="top" nowrap="nowrap">
                                         {{if Visitor.IsValidLogin}}
-				                        <table width="200" border="0" cellspacing="1" cellpadding="2">
-				                            <tr>
-				                                <td nowrap="nowrap" style="background:#3366CC; color:#fff; border:0px; text-align:right; font-size: 11px;">Ár: <strong>${item.Price}</strong>{{if Products.Currency == 'HUF'}} Ft {{else}} € {{/if}}</td>
-				                            </tr>
+                                        <table width="205" border="0" cellspacing="" cellpadding="5" style="background:#3366CC; color:#FFF; border:0px; font-size: 11px; text-align:right;">                                       
+	                                    <tr>
+                                            <td width="100">
+                                            {{if item.Discount}}<b>AKCIÓS!<b></br>{{/if}}
+									        {{if item.New}}<span style="background:#000 padding:2px; color:#00ff33; text-decoration:none;"><b>ÚJDONSÁG!<b></span>{{/if}}
+									        </td>
+				                            <td style="text-align:right">Ár: <b>${item.Price}</b>{{if Products.Currency == 'HUF'}} Ft {{else}} € {{/if}}
+										    {{if item.SecondHandList.Items.length > 0}}
+				                            <br /><a style=" color:#ffc000; font-size: 11px; text-decoration: none;"href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowSecondHandList('${item.ProductId}', '${item.DataAreaId}');" title="${item.itemName}">Használt: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b> </a>
+				                            {{/if}}
+                                            </td>
+    		                            </tr>
 				                        </table>
                                         {{/if}}
 				                    </td>
@@ -693,7 +633,7 @@
                                             {{if item.PrimaryPicture.RecId > 0}}
 				                            <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.ProductId, item.PrimaryPicture.RecId, item.DataAreaId)}" /></a>
 				                            {{else}}
-				                            <img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="180" height="134" alt="" />
+				                            <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                             {{/if}}
 				                            </div>
                                         </td>
@@ -705,81 +645,77 @@
 				                            <tr>
 				                                <td valign="top">
                                                 {{if Visitor.IsValidLogin}}
-                                                <div class="cus_teteladatok">
+				                                    <div class="cus_teteladatok_2">
                                                     {{if item.IsInStock}}
-				                                        Véső raktár: ${item.InnerStock}<br/> 
-				                                        Huszti raktár: ${item.OuterStock} 
+				                          	            Véső raktár:<span style="color:green"><b>${item.InnerStock} db</b></span><br/>
+				                                        Huszti raktár: <span style="color:green "><b>${item.OuterStock} db</b></span> 
                                                     {{else}}
                                                         {{if item.PurchaseInProgress}}
-				                                            <span>Várható érkezés: ${item.ShippingDate}</span>
+				                                            <span>Várható érkezés: <b>${item.ShippingDate}</b></span>
                                                         {{else}}
-				                                            <span>Rendelhető</span>
+				                                            <span><b>Rendelhető</b></span>
                                                         {{/if}}
                                                     {{/if}}
-                                                    {{if item.SecondHandList.Items.length > 0}}
-				                                    <br /><a href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowSecondHandList('${item.ProductId}', '${item.DataAreaId}');" title="${item.itemName}">Használt: ${item.SecondHandList.MinimumPrice} Ft-tól </a>
-				                                    {{/if}}
-				                                    <br /><span>Garancia módja:<br/> ${item.GarantyMode}</span>
-				                                    <br /><span>Garancia ideje: ${item.GarantyTime}</span>
-				                                    {{if item.IsInNewsletter}}
-				                                    <br/><span>hírlevél akció</span>
-				                                    {{/if}}
-				                                    {{if item.New}}
-				                                    <br/><span>új termék</span>
-				                                    {{/if}}
-				                                    {{if item.EndOfSales && Visitor.IsValidLogin}}
-				                                    <br/><span>Kifutó</span>
-				                                    {{/if}}
-				                                </div>
+                                                    </div>
+                                                    <div class="cus_teteladatok">
+				                                        <br /><span>Garancia módja:<b> ${item.GarantyMode}</b></span>
+				                                        <br /><span>Garancia ideje:<b> ${item.GarantyTime}</b></span>
+				                                        {{if item.IsInNewsletter}}
+				                                        <br/><span><b>Hírlevél akció</b></span>
+				                                        {{/if}}
+				                                        {{if item.EndOfSales && Visitor.IsValidLogin}}
+				                                        <br/><br/><span><b>Kifutó termék</b></span>
+				                                        {{/if}}
+				                                    </div>
                                                 {{/if}}
 				                                </td>
 				                            </tr>
 				                            </table>
                                         </td>
 				                    </tr>
-				            </table>
-                        <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
-			            <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-				            <tr>
-				                <td nowrap="nowrap">
-				                    <div class="cus_prod_table_morelink">
-				                        <a href="#/details/${item.ProductId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">[+] Részletes adatlap</a>
-				                    </div>
-                                </td>
-                                <td>
-                                {{if Visitor.IsValidLogin && item.Discount}}
-                                <div class="cus_prod_table_morelink" style="margin-left:15px;">
-                                    <img class="basketicon" src="@Url.Content("~/Content/Media/images/akcios.png")" border="0" align="absmiddle" />
-                                    <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
-                                </div>
-                                {{/if}}
-                                </td>
-                                <td width="100%">
-                                {{if Visitor.IsValidLogin && item.New}}
-                                <div class="cus_prod_table_morelink" style="margin-left:15px;">
-                                    <img class="basketicon" src="@Url.Content("~/Content/Media/images/ujdonsag.png")" border="0" align="absmiddle" />
-                                    <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
-                                </div>
-                                {{/if}}
-                                </td>
-                                <td nowrap="nowrap">
-                                    <div class="cus_prod_table_quantity">
-                                    {{if Visitor.IsValidLogin}}
-                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
-                                    {{/if}}
+				                </table>
+                                <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
+			                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
+				                <tr>
+				                    <td nowrap="nowrap">
+				                        <div class="cus_prod_table_morelink">
+				                            <a href="#/details/${item.ProductId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">[+] Részletes adatlap</a>
+				                        </div>
+                                    </td>
+                                    <td>
+                                    {{if Visitor.IsValidLogin && item.Discount}}
+                                    <div class="cus_prod_table_morelink" style="margin-left:15px;">
+                                        <img class="basketicon" src="@Url.Content("~/Content/Media/images/akcios.png")" border="0" align="absmiddle" />
+                                        <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
                                     </div>
-                                </td>
-                                <td align="right" nowrap="nowrap">
-                                    <div class="cus_prod_table_basket">
-                                    <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
-                                    {{if Visitor.IsValidLogin}}
-                                    <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
                                     {{/if}}
+                                    </td>
+                                    <td width="100%">
+                                    {{if Visitor.IsValidLogin && item.New}}
+                                    <div class="cus_prod_table_morelink" style="margin-left:15px;">
+                                        <img class="basketicon" src="@Url.Content("~/Content/Media/images/ujdonsag.png")" border="0" align="absmiddle" />
+                                        <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
-                        </form>
+                                    {{/if}}
+                                    </td>
+                                    <td nowrap="nowrap">
+                                        <div class="cus_prod_table_quantity">
+                                        {{if Visitor.IsValidLogin}}
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                        {{/if}}
+                                        </div>
+                                    </td>
+                                    <td align="right" nowrap="nowrap">
+                                        <div class="cus_prod_table_basket">
+                                        <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
+                                        {{if Visitor.IsValidLogin}}
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        {{/if}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                </table>
+                                </form>
 				            </div>
 				        </div>
                         {{/each}}
@@ -856,13 +792,12 @@
                     </div>
 
                     <script id="productDetailsTemplate" type="text/x-jquery-tmpl">
-
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 							<tr>
 								<td valign="top">
 								<div id="cus_termekkep">
                                     {{if Product.Pictures.Items.length > 0}}
-                                        {{each( i, item ) Product.Pictures.Items}}
+                                        {{each(i, item) Product.Pictures.Items}}
                                         <a class="popupimg" href="#/showPicture/${Product.ProductId}/${Product.DataAreaId}/${Product.ItemName}" title="${Product.ItemName}">
                                         <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)" /></a>
                                         <br/>
@@ -884,13 +819,13 @@
                                     <hr />
                                     {{if Visitor.IsValidLogin}}
                                         {{if Product.SecondHandList.Items.Count > 0}} <span>használt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
-                                        {{if Product.IsInNewsletter}} <span>hírlevél akciós</span> <br/>  {{/if}}         <!-- ha a cikk hírlevél akciós -->
+                                        {{if Product.IsInNewsletter}} <span>hírlevél akciós</span> <br/>  {{/if}}          <!-- ha a cikk hírlevél akciós -->
                                         <span>Garancia módja:</span> ${Product.GarantyMode} <br/>
                                         <span>Garancia ideje:</span> ${Product.GarantyTime} <br/><br/>
  
                                          {{if Product.EndOfSales}} <span>kifutó</span><br/>  {{/if}}                        <!-- ha a cikk kifuto -->
-                                         {{if Product.New}} <span>Új</span><br/>   {{/if}}                                 <!-- ha a cikk uj -->
-                                         {{if !Model.Product.IsInStock}}
+                                         {{if Product.New}} <span>Új</span><br/>   {{/if}}                                  <!-- ha a cikk uj -->
+                                         {{if !Product.IsInStock}}
                                             <span>Várható beérkezés dátuma:</span>  ${Product.ShippingDate} <br/>
                                          {{/if}}
                                     {{/if}} 
@@ -925,7 +860,7 @@
 									</tr>
 								</table>
                                 {{/if}}
-                                {{if Product.SecondHandList.Items.Count > 0}}
+                                {{if Product.SecondHandList.Items.length > 0}}
 				                    <br /><a href="#/ShowSecondHandList/${Product.ProductId}/${Product.DataAreaId}" title="${Product.ItemName}">Használt: ${Product.SecondHandList.MinimumPrice} Ft-tól </a>
                                 {{/if}}
                             </td>
@@ -933,7 +868,7 @@
 							<tr>
 								<td colspan="3" valign="top" id="cus_prod_table_more_full">
                                 {{if Visitor.IsValidLogin}}
-                                <form action="#/addLineToShoppingCart/${item.ProductId}" method="post">
+                                <form action="#/addLineToShoppingCart/${Product.ProductId}" method="post">
 								<table width="100%" border="0" cellspacing="1" cellpadding="5">
 									<tr>
 										<!-- <td nowrap="nowrap">
@@ -948,7 +883,7 @@
                                     </td>
                                     <td align="right" nowrap="nowrap">
                                         <div class="cus_prod_table_basket">
-                                        <input type="image" class="basketicon" src="@Url.Content("~/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
                                         </div>
                                     </td>
 									</tr>

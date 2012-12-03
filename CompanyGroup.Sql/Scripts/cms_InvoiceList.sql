@@ -8,9 +8,9 @@ GO
 
 DROP PROCEDURE [InternetUser].[cms_InvoiceList];
 GO
-CREATE PROCEDURE [InternetUser].[cms_InvoiceList]( @CustomerId NVARCHAR(10),			--vevokod
+CREATE PROCEDURE [InternetUser].[cms_InvoiceList]( @CustomerId NVARCHAR(10) = '',	--vevokod
 												   @DataAreaId NVARCHAR(3) = 'Hrp')	--vallalat kod
-											   --@bDebit BIT = 0,						--0: mind, <>0 kifizetetlen
+											   --@bDebit BIT = 0,					--0: mind, <>0 kifizetetlen
 											   --@bOverDue BIT = 0,					--0: mind, <>0 lejart 
 											   --@dtDateFrom DATETIME = NULL, 
 											   --@dtDateTo DATETIME = NULL )										
@@ -39,7 +39,6 @@ SET NOCOUNT ON
 --		   H.INVOICESTREET as sInvoiceStreet,  -- szla. utca
 --		   CONVERT( INT, H.PRINTED ) as bPrinted,  --
 --		   H.VISSZARUID as sVisszaruID, --
---
 --		   D.INVOICEDATE as dtItemDate,  -- datum
 --		   CONVERT( INT, D.LINENUM ) as iLineNum,
 --		   D.ITEMID as sItemID,  -- cikk
@@ -85,11 +84,13 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 		SET @dtDateTo = GETDATE();
 	END
 
-	SELECT H.SALESID as SalesId,  -- rendelesszam, azonosito
+	SELECT H.ORDERACCOUNT as CustomerId, 
+		   H.DataAreaId as DataAreaId,
+		   H.SALESID as SalesId,  -- rendelesszam, azonosito
 		   H.INVOICEDATE as InvoiceDate,  -- szamla datuma
 		   H.DUEDATE as DueDate,  -- esedekesseg
-		   CONVERT( INT, H.INVOICEAMOUNT ) as InvoiceAmount,  -- szamla vegosszege
-           CONVERT( INT, ISNULL( O.AMOUNTMST, 0 ) ) as InvoiceCredit,  -- szamla tartozas
+		   CONVERT( BIGINT, H.INVOICEAMOUNT ) as InvoiceAmount,  -- szamla vegosszege
+           CONVERT( BIGINT, ISNULL( O.AMOUNTMST, 0 ) ) as InvoiceCredit,  -- szamla tartozas
 		   H.CurrencyCode as CurrencyCode,  
 		   H.INVOICEID as InvoiceId,  -- szla. szama
 		   -- H.PAYMENT as Payment,  -- fizetesi feltetelek
@@ -103,19 +104,19 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 		   H.VISSZARUID as ReturnItemId, --
 
 		   D.INVOICEDATE as ItemDate,  -- datum
-		   CONVERT( INT, D.LINENUM ) as LineNum,
+		   CONVERT( INT, ISNULL(D.LINENUM, 0) ) as LineNum,
 		   D.ITEMID as ItemId,  -- cikk
 		   D.NAME as Name,  -- cikk neve
-		   CONVERT( INT, D.QTY ) as Quantity,  -- mennyiseg
-		   CONVERT( INT, D.SALESPRICE ) as SalesPrice,  -- egysegar
-		   CONVERT( INT, D.LINEAMOUNT ) as LineAmount,  -- osszeg
-		   CONVERT( INT, D.QTYPHYSICAL ) as QuantityPhysical,  -- mennyiseg
-		   CONVERT( INT, D.REMAIN ) as Remain,  -- fennmarado mennyiseg
+		   CONVERT( INT, ISNULL(D.QTY, 0) ) as Quantity,  -- mennyiseg
+		   CONVERT( BIGINT, ISNULL(D.SALESPRICE, 0) ) as SalesPrice,  -- egysegar
+		   CONVERT( BIGINT, ISNULL(D.LINEAMOUNT, 0) ) as LineAmount,  -- osszeg
+		   CONVERT( INT, ISNULL(D.QTYPHYSICAL, 0) ) as QuantityPhysical,  -- mennyiseg
+		   CONVERT( INT, ISNULL(D.REMAIN, 0) ) as Remain,  -- fennmarado mennyiseg
 
-		   CONVERT( INT, D.DELIVERYTYPE ) as DeliveryType, -- 
-		   CONVERT( INT, D.TAXAMOUNT ) as TaxAmount,  --
-		   CONVERT( INT, D.LINEAMOUNTMST ) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
-		   CONVERT( INT, D.TAXAMOUNTMST ) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   CONVERT( INT, ISNULL(D.DELIVERYTYPE, 0) ) as DeliveryType, -- 
+		   CONVERT( BIGINT, ISNULL(D.TAXAMOUNT, 0) ) as TaxAmount,  --
+		   CONVERT( BIGINT, ISNULL(D.LINEAMOUNTMST, 0) ) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   CONVERT( BIGINT, ISNULL(D.TAXAMOUNTMST, 0) ) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
 		   D.CurrencyCode as DetailCurrencyCode
 		   --D.SerialNum as SerialNumber, -- sorozatszam
 		   --CONVERT( INT, D.VisszaruQty ) as VisszaruQty
@@ -125,19 +126,19 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 	INNER JOIN axdb_20120614.dbo.PAYMTERM AS Pt ON H.Payment = Pt.PaymTermID AND Pt.DATAAREAID = 'mst'
 	LEFT JOIN axdb_20120614.dbo.custTrans as t on t.DATAAREAID = h.DATAAREAID and t.INVOICE = H.INVOICEID 
 	LEFT JOIN axdb_20120614.dbo.custTransOpen as o on o.DATAAREAID = t.DATAAREAID and o.RefRecId = t.RECID
-	WHERE H.ORDERACCOUNT = @CustomerId
+	WHERE H.ORDERACCOUNT = CASE WHEN @CustomerId = '' THEN H.ORDERACCOUNT ELSE @CustomerId END
 		  AND H.DATAAREAID = @DataAreaId 
-		  AND year(H.INVOICEDATE) >= 2008
+		  AND YEAR(H.INVOICEDATE) >= 2008
 		  -- AND o.RefRecId <> @iDebit 
 		  -- AND H.DUEDATE <= case when @bOverDue = 0 then H.DUEDATE else getdate() end
-		  AND H.INVOICEDATE BETWEEN @dtDateFrom AND @dtDateTo
-	ORDER BY H.INVOICEDATE desc, H.INVOICEID desc, D.LINENUM
+		  -- AND H.INVOICEDATE BETWEEN @dtDateFrom AND @dtDateTo
+	ORDER BY H.INVOICEDATE desc, H.INVOICEID desc, D.LINENUM;
 
 RETURN
 GO
 
 -- exec [InternetUser].[cms_InvoiceList] 'V000787', 'hrp';
-
--- select * from AxDb.dbo.WebManufacturer where CreatedBy <> 'JuAt' order by id asc
+-- exec [InternetUser].[cms_InvoiceList] '', 'hrp';
 
 -- select top 100 * from AxDb.dbo.CUSTINVOICEJOUR
+

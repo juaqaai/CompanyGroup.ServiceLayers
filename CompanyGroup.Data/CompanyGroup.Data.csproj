@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dynamics\Repository.cs" />
+    <Compile Include="MaintainModule\InvoiceRepository.cs" />
     <Compile Include="NoSql\MongoHelper.cs" />
     <Compile Include="NoSql\ISettings.cs" />
     <Compile Include="NoSql\Settings.cs" />

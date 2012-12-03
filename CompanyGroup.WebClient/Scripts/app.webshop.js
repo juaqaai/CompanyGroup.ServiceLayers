@@ -233,6 +233,9 @@ companyGroup.webshop = $.sammy(function () {
             context.trigger('changeDetailsTab', $(this));
         });
         //switch_tabs($('.defaulttab'));
+        $("select[name='catalogueSequence']").live('change', function () {
+            context.trigger('catalogueSequence', { Sequence: parseInt($(this).val(), 0) });
+        });
         //Lenyíló menük delay beállítása
         $("#navmenu").mouseover(function () {
             $("ul#navmenu ul li").slideDown("slow");
@@ -279,6 +282,20 @@ companyGroup.webshop = $.sammy(function () {
             prevText: '<strong><|</strong>',
             nextText: '<strong>|></strong>'
         });
+        //jelleg szűrő fix pozíció beállítás
+        var msie6 = $.browser == 'msie' && $.browser.version < 7;
+        if (!msie6) {
+            var top = $('#cus_banner_table').offset().top - parseFloat($('#cus_banner_table').css('margin-top').replace(/auto/, 0));
+            $(window).scroll(function (event) {
+                var y = $(this).scrollTop();
+                if (y >= top) {
+                    $('#cus_banner_table').addClass('fixed');
+                } else {
+                    $('#cus_banner_table').removeClass('fixed');
+                }
+            });
+        }
+
     });
     //szűrés készleten lévő termékekre
     this.bind('filterByStock', function (e, data) {
@@ -316,57 +333,57 @@ companyGroup.webshop = $.sammy(function () {
     this.bind('changePayment', function (e, data) {
         //készpénzes fizetés
         if (data.Payment === 1) {
-//            $('#raktari_off').hide();
-//            $('#kiszallitas_off').show();
-//            $('#cim_off').show();
-//            $('#idopont_off').show();
-//            $('#szallcimadat_off').show();
-//            $('#atutalas_off').show();
-//            $('#eloreutalas_off').show();
-//            $('#utanvet_off').show();
+            //            $('#raktari_off').hide();
+            //            $('#kiszallitas_off').show();
+            //            $('#cim_off').show();
+            //            $('#idopont_off').show();
+            //            $('#szallcimadat_off').show();
+            //            $('#atutalas_off').show();
+            //            $('#eloreutalas_off').show();
+            //            $('#utanvet_off').show();
         }
         //átutalásos fizetés
         else if (data.Payment === 2) {
-//            $('#raktari_off').hide();
-//            $('#kiszallitas_off').hide();
-//            $('#keszpenz_off').show();
-//            $('#eloreutalas_off').show();
-//            $('#utanvet_off').show();
+            //            $('#raktari_off').hide();
+            //            $('#kiszallitas_off').hide();
+            //            $('#keszpenz_off').show();
+            //            $('#eloreutalas_off').show();
+            //            $('#utanvet_off').show();
         }
         //előre utalásos fizetés
         else if (data.Payment === 3) {
-//            $('#raktari_off').hide();
-//            $('#kiszallitas_off').hide();
-//            $('#keszpenz_off').show();
-//            $('#atutalas_off').show();
-//            $('#utanvet_off').show();
+            //            $('#raktari_off').hide();
+            //            $('#kiszallitas_off').hide();
+            //            $('#keszpenz_off').show();
+            //            $('#atutalas_off').show();
+            //            $('#utanvet_off').show();
         }
         //utánvét
         else if (data.Payment === 4) {
-//            $('#raktari_off').show();
-//            $('#kiszallitas_off').hide();
-//            $('#keszpenz_off').show();
-//            $('#eloreutalas_off').show();
-//            $('#atutalas_off').show();
+            //            $('#raktari_off').show();
+            //            $('#kiszallitas_off').hide();
+            //            $('#keszpenz_off').show();
+            //            $('#eloreutalas_off').show();
+            //            $('#atutalas_off').show();
         }
     });
     //szállítási mód beállítás
     this.bind('changeDelivery', function (e, data) {
         //raktári átvétel
         if (data.Delivery === 1) {
-//            $("#feladas").removeClass("feladasopciok_block");
-//            $("#feladas").addClass("feladasopciok_ok");
-//            $('.feladasopciok_ok').removeAttr("disabled");
-//            $('#szallcimadat_off').show();
-//            $('#kiszallitas_off').show();
-//            $('#custom_number').removeAttr("disabled");
-//            $('#user_comment').removeAttr("disabled");
+            //            $("#feladas").removeClass("feladasopciok_block");
+            //            $("#feladas").addClass("feladasopciok_ok");
+            //            $('.feladasopciok_ok').removeAttr("disabled");
+            //            $('#szallcimadat_off').show();
+            //            $('#kiszallitas_off').show();
+            //            $('#custom_number').removeAttr("disabled");
+            //            $('#user_comment').removeAttr("disabled");
         }
         //kiszállítást kér
         else {
-//            $('#szallcimadat_off').hide();
-//            $('#szallcimadat').show();
-//            $('#raktari_off').show();
+            //            $('#szallcimadat_off').hide();
+            //            $('#szallcimadat').show();
+            //            $('#raktari_off').show();
         }
     });
     //váltás tabfülre
@@ -375,19 +392,19 @@ companyGroup.webshop = $.sammy(function () {
     });
     //rendelés form alapértelmezettre állítása
     this.bind('resetOrderForm', function (e, data) {
-//        $('#raktari_off').show();
-//        $('#kiszallitas_off').show();
-//        $('#cim_off').show();
-//        $('#idopont_off').show();
-//        $('#szallcimadat_off').show();
-//        $('#keszpenz_off').hide();
-//        $('#atutalas_off').hide();
-//        $('#eloreutalas_off').hide();
-//        $('#utanvet_off').hide();
-//        $('.feladasopciok_ok').attr("disabled", "disabled");
-//        $('#custom_number').attr("disabled", "disabled");
-//        $('#user_comment').attr("disabled", "disabled");
-//        $("#feladas").addClass("feladasopciok_block");
+        //        $('#raktari_off').show();
+        //        $('#kiszallitas_off').show();
+        //        $('#cim_off').show();
+        //        $('#idopont_off').show();
+        //        $('#szallcimadat_off').show();
+        //        $('#keszpenz_off').hide();
+        //        $('#atutalas_off').hide();
+        //        $('#eloreutalas_off').hide();
+        //        $('#utanvet_off').hide();
+        //        $('.feladasopciok_ok').attr("disabled", "disabled");
+        //        $('#custom_number').attr("disabled", "disabled");
+        //        $('#user_comment').attr("disabled", "disabled");
+        //        $("#feladas").addClass("feladasopciok_block");
     });
     //oldal tetejére ugrás    
     this.bind('scrollToTop', function (e, data) {
@@ -395,6 +412,155 @@ companyGroup.webshop = $.sammy(function () {
         console.log(e);
         //e.scrollTo(0, 300);
     });
+    //terméklista sorrend
+    this.bind('catalogueSequence', function (e, data) {
+        catalogueRequest.Sequence = data.Sequence;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        if (data.Sequence === 6) {
+            context.title('Webshop - rendezés ár szerint növekvőleg');
+        }
+        else if (data.Sequence === 7) {
+            context.title('Webshop - rendezés ár szerint csökkenőleg');
+        }
+        else if (data.Sequence === 2) {
+            context.title('Webshop - rendezés cikkszám szerint növekvőleg');
+        }
+        else if (data.Sequence === 3) {
+            context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
+        }
+        else if (data.Sequence === 4) {
+            context.title('Webshop - rendezés név szerint növekvőleg');
+        }
+        else if (data.Sequence === 5) {
+            context.title('Webshop - rendezés név szerint csökkenőleg');
+        }
+        else if (data.Sequence === 8) {
+            context.title('Webshop - rendezés készlet szerint növekvőleg');
+        }
+        else if (data.Sequence === 9) {
+            context.title('Webshop - rendezés készlet szerint csökkenőleg');
+        }
+        else if (data.Sequence === 12) {
+            context.title('Webshop - rendezés garancia szerint növekvőleg');
+        }
+        else if (data.Sequence === 13) {
+            context.title('Webshop - rendezés garancia szerint csökkenőleg');
+        }
+        showProductList(true);
+    });
+
+    /*
+    /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
+    /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
+    /// 2: azonosito növekvő, (cikkszám)
+    /// 3: azonosito csökkenő, (cikkszám)
+    /// 4  nev növekvő,
+    /// 5: nev csökkenő,
+    /// 6: ar növekvő,
+    /// 7: ar csökkenő, 
+    /// 8: belső készlet növekvően, 
+    /// 9: belső készlet csökkenően
+    /// 10: külső készlet növekvően
+    /// 11: külső készlet csökkenően
+    /// 12: garancia növekvően
+    /// 13: garancia csökkenő    
+    */
+    //rendezés árra növekvően
+    this.get('#/sequenceByPriceUp', function (context) {
+        catalogueRequest.Sequence = 6;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés ár szerint növekvőleg');
+        showProductList(true);
+    });
+    //rendezés árra csökkenően
+    this.get('#/sequenceByPriceDown', function (context) {
+        catalogueRequest.Sequence = 7;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés ár szerint csökkenőleg');
+        showProductList(true);
+    });
+    //rendezés cikkszámra növekvően
+    this.get('#/sequenceByPartNumberUp', function (context) {
+        //console.log(self);
+        catalogueRequest.Sequence = 2;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés cikkszám szerint növekvőleg');
+        showProductList(true);
+    });
+    //rendezés cikkszámra csökkenőleg
+    this.get('#/sequenceByPartNumberDown', function (context) {
+        //console.log(self);
+        catalogueRequest.Sequence = 3;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
+        showProductList(true);
+    });
+    //rendezés név szerint növekvőleg
+    this.get('#/sequenceByNameUp', function (context) {
+        //console.log(this);
+        catalogueRequest.Sequence = 4;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés név szerint növekvőleg');
+        showProductList(true);
+    });
+    //rendezés név szerint csökkenőleg
+    this.get('#/sequenceByNameDown', function (context) {
+        //console.log(this);
+        catalogueRequest.Sequence = 5;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés név szerint csökkenőleg');
+        showProductList(true);
+    });
+    //rendezés készletre növekvően
+    this.get('#/sequenceByStockUp', function (context) {
+        catalogueRequest.Sequence = 8;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés készlet szerint növekvőleg');
+        showProductList(true);
+    });
+    //rendezés készletre csökkenőleg
+    this.get('#/sequenceByStockDown', function (context) {
+        catalogueRequest.Sequence = 9;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés készlet szerint csökkenőleg');
+        showProductList(true);
+    });
+    //rendezés garanciaidőre növekvően
+    this.get('#/sequenceByGarantyUp', function (context) {
+        catalogueRequest.Sequence = 12;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés garancia szerint növekvőleg');
+        showProductList(true);
+    });
+    //rendezés garanciaidőre csökkenőleg
+    this.get('#/sequenceByGarantyDown', function (context) {
+        catalogueRequest.Sequence = 13;
+        catalogueRequest.CurrentPageIndex = 1;
+        loadCatalogue();
+        context.title('Webshop - rendezés garancia szerint csökkenőleg');
+        showProductList(true);
+    });
+    //szűrés a hrp termékekre
+    this.get('#/filterByHrp', function (context) {
+        catalogueRequest.clear();
+        catalogueRequest.HrpFilter = true;
+        catalogueRequest.BscFilter = false;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        context.title('Webshop - hardver termékek');
+        showProductList(true);
+    });
+
     //kilépés
     this.get('#/signOut', function (context) {
         $.ajax({
@@ -1193,116 +1359,6 @@ companyGroup.webshop = $.sammy(function () {
         }
         loadCatalogue();
         this.title('Webshop - megjelenített elemek száma változás');
-    });
-    /*
-    /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
-    /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
-    /// 2: azonosito növekvő, (cikkszám)
-    /// 3: azonosito csökkenő, (cikkszám)
-    /// 4 nev növekvő,
-    /// 5: nev csökkenő,
-    /// 6: ar növekvő,
-    /// 7: ar csökkenő, 
-    /// 8: belső készlet növekvően, 
-    /// 9: belső készlet csökkenően
-    /// 10: külső készlet növekvően
-    /// 11: külső készlet csökkenően
-    /// 12: garancia növekvően
-    /// 13: garancia csökkenő    
-    */
-    //rendezés árra növekvően
-    this.get('#/sequenceByPriceUp', function (context) {
-        catalogueRequest.Sequence = 6;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés ár szerint növekvőleg');
-        showProductList(true);
-    });
-    //rendezés árra csökkenően
-    this.get('#/sequenceByPriceDown', function (context) {
-        catalogueRequest.Sequence = 7;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés ár szerint csökkenőleg');
-        showProductList(true);
-    });
-    //rendezés cikkszámra növekvően
-    this.get('#/sequenceByPartNumberUp', function (context) {
-        //console.log(self);
-        catalogueRequest.Sequence = 2;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés cikkszám szerint növekvőleg');
-        showProductList(true);
-    });
-    //rendezés cikkszámra csökkenőleg
-    this.get('#/sequenceByPartNumberDown', function (context) {
-        //console.log(self);
-        catalogueRequest.Sequence = 3;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
-        showProductList(true);
-    });
-    //rendezés név szerint növekvőleg
-    this.get('#/sequenceByNameUp', function (context) {
-        //console.log(this);
-        catalogueRequest.Sequence = 4;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés név szerint növekvőleg');
-        showProductList(true);
-    });
-    //rendezés név szerint csökkenőleg
-    this.get('#/sequenceByNameDown', function (context) {
-        //console.log(this);
-        catalogueRequest.Sequence = 5;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés név szerint csökkenőleg');
-        showProductList(true);
-    });
-    //rendezés készletre növekvően
-    this.get('#/sequenceByStockUp', function (context) {
-        catalogueRequest.Sequence = 8;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés készlet szerint növekvőleg');
-        showProductList(true);
-    });
-    //rendezés készletre csökkenőleg
-    this.get('#/sequenceByStockDown', function (context) {
-        catalogueRequest.Sequence = 9;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés készlet szerint csökkenőleg');
-        showProductList(true);
-    });
-    //rendezés garanciaidőre növekvően
-    this.get('#/sequenceByGarantyUp', function (context) {
-        catalogueRequest.Sequence = 12;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés garancia szerint növekvőleg');
-        showProductList(true);
-    });
-    //rendezés garanciaidőre csökkenőleg
-    this.get('#/sequenceByGarantyDown', function (context) {
-        catalogueRequest.Sequence = 13;
-        catalogueRequest.CurrentPageIndex = 1;
-        loadCatalogue();
-        context.title('Webshop - rendezés garancia szerint csökkenőleg');
-        showProductList(true);
-    });
-    //szűrés a hrp termékekre
-    this.get('#/filterByHrp', function (context) {
-        catalogueRequest.clear();
-        catalogueRequest.HrpFilter = true;
-        catalogueRequest.BscFilter = false;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        context.title('Webshop - hardver termékek');
-        showProductList(true);
     });
     //szűrés a hrp hardvare termékekre
     this.get('#/filterByCategoryHrp/:category', function (context) {
