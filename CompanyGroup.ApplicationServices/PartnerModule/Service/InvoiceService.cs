@@ -7,11 +7,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
     /// <summary>
     /// számlák szerviz partner modul
     /// </summary>
-    public class InvoiceService : IInvoiceService
+    public class InvoiceService : ServiceBase, IInvoiceService
     {
         private CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository;
 
-        public InvoiceService(CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository)
+        public InvoiceService(CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository, 
+                              CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository,
+                              CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(financeRepository, visitorRepository)
         {
             if (invoiceRepository == null)
             {
@@ -43,13 +45,14 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string customerId, string dataAreaId)
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(customerId), "The customerId cannot be null!");
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), "The VisitorId cannot be null!");
 
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(dataAreaId), "The dataareaId cannot be null!");
+            //látogató kiolvasása
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = invoiceRepository.GetList(customerId, dataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CompanyId, visitor.DataAreaId);
 
             List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfoList.ConvertAll( x => new InvoiceInfoToInvoiceInfo().Map(x) );
 

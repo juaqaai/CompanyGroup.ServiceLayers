@@ -34,12 +34,32 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetInvoiceInfo")]
-        [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetInvoiceInfo(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
+        [HttpGet]
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string visitorId, string languageId, int paymentType)
         {
+            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new Dto.ServiceRequest.GetInvoiceInfo() { LanguageId = languageId, PaymentType = paymentType, VisitorId = visitorId };
+
             return service.GetList(request);
         }
 
+        /// <summary>
+        /// vevőhöz tartozó számlák listája
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("GetById")]
+        [HttpGet]
+        public CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId)
+        {
+            return service.GetById(invoiceId);
+        }
+
+        [ActionName("GetAll")]
+        [HttpGet]
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll()
+        {
+            return service.GetAll();
+        }
     }
 
 

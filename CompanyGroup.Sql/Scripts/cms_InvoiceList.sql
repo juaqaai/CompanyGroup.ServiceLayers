@@ -89,8 +89,8 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 		   H.SALESID as SalesId,  -- rendelesszam, azonosito
 		   H.INVOICEDATE as InvoiceDate,  -- szamla datuma
 		   H.DUEDATE as DueDate,  -- esedekesseg
-		   CONVERT( BIGINT, H.INVOICEAMOUNT ) as InvoiceAmount,  -- szamla vegosszege
-           CONVERT( BIGINT, ISNULL( O.AMOUNTMST, 0 ) ) as InvoiceCredit,  -- szamla tartozas
+		   CONVERT( decimal(20,2), H.INVOICEAMOUNT ) as InvoiceAmount,  -- szamla vegosszege
+           CONVERT( decimal(20,2), ISNULL( O.AMOUNTMST, 0 ) ) as InvoiceCredit,  -- szamla tartozas
 		   H.CurrencyCode as CurrencyCode,  
 		   H.INVOICEID as InvoiceId,  -- szla. szama
 		   -- H.PAYMENT as Payment,  -- fizetesi feltetelek
@@ -108,15 +108,15 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 		   D.ITEMID as ItemId,  -- cikk
 		   D.NAME as Name,  -- cikk neve
 		   CONVERT( INT, ISNULL(D.QTY, 0) ) as Quantity,  -- mennyiseg
-		   CONVERT( BIGINT, ISNULL(D.SALESPRICE, 0) ) as SalesPrice,  -- egysegar
-		   CONVERT( BIGINT, ISNULL(D.LINEAMOUNT, 0) ) as LineAmount,  -- osszeg
+		   CONVERT( decimal(20,2), ISNULL(D.SALESPRICE, 0) ) as SalesPrice,  -- egysegar
+		   CONVERT( decimal(20,2), ISNULL(D.LINEAMOUNT, 0) ) as LineAmount,  -- osszeg
 		   CONVERT( INT, ISNULL(D.QTYPHYSICAL, 0) ) as QuantityPhysical,  -- mennyiseg
 		   CONVERT( INT, ISNULL(D.REMAIN, 0) ) as Remain,  -- fennmarado mennyiseg
 
 		   CONVERT( INT, ISNULL(D.DELIVERYTYPE, 0) ) as DeliveryType, -- 
-		   CONVERT( BIGINT, ISNULL(D.TAXAMOUNT, 0) ) as TaxAmount,  --
-		   CONVERT( BIGINT, ISNULL(D.LINEAMOUNTMST, 0) ) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
-		   CONVERT( BIGINT, ISNULL(D.TAXAMOUNTMST, 0) ) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   CONVERT( decimal(20,2), ISNULL(D.TAXAMOUNT, 0) ) as TaxAmount,  --
+		   CONVERT( decimal(20,2), ISNULL(D.LINEAMOUNTMST, 0) ) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   CONVERT( decimal(20,2), ISNULL(D.TAXAMOUNTMST, 0) ) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
 		   D.CurrencyCode as DetailCurrencyCode
 		   --D.SerialNum as SerialNumber, -- sorozatszam
 		   --CONVERT( INT, D.VisszaruQty ) as VisszaruQty

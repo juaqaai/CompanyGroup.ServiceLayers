@@ -9,10 +9,10 @@ namespace CompanyGroup.Domain.MaintainModule
     /// </summary>
     public class InvoiceDetailedLineInfo
     {
-        public InvoiceDetailedLineInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, Int64 invoiceAmount, Int64 invoiceCredit, string currencyCode, string invoiceId, 
+        public InvoiceDetailedLineInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, decimal invoiceAmount, decimal invoiceCredit, string currencyCode, string invoiceId, 
                                        string payment, int salesType, string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId,
-                                       bool printed, string returnItemId, DateTime itemDate, int lineNum, string itemId, string name, int quantity, Int64 salesPrice, Int64 lineAmount,
-                                       int quantityPhysical, int remain, int deliveryType, Int64 taxAmount, Int64 lineAmountMst, Int64 taxAmountMst, string detailCurrencyCode)
+                                       bool printed, string returnItemId, DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
+                                       int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string detailCurrencyCode)
         {
             this.CustomerId = customerId;
             this.DataAreaId = dataAreaId;
@@ -57,9 +57,9 @@ namespace CompanyGroup.Domain.MaintainModule
 
         public DateTime DueDate { set; get; }
 
-        public Int64 InvoiceAmount { set; get; }
+        public decimal InvoiceAmount { set; get; }
 
-        public Int64 InvoiceCredit { set; get; }
+        public decimal InvoiceCredit { set; get; }
 
         public string CurrencyCode { get; set; }
 
@@ -91,9 +91,9 @@ namespace CompanyGroup.Domain.MaintainModule
                     
         public int Quantity	{ set; get; }
 
-        public Int64 SalesPrice { set; get; }
+        public decimal SalesPrice { set; get; }
 
-        public Int64 LineAmount { set; get; }	
+        public decimal LineAmount { set; get; }	
                         
         public int QuantityPhysical	{ set; get; }
 
@@ -101,11 +101,11 @@ namespace CompanyGroup.Domain.MaintainModule
 
         public int DeliveryType { set; get; }
 
-        public Int64 TaxAmount { set; get; }
+        public decimal TaxAmount { set; get; }
 
-        public Int64 LineAmountMst { set; get; }
+        public decimal LineAmountMst { set; get; }
 
-        public Int64 TaxAmountMst { set; get; }
+        public decimal TaxAmountMst { set; get; }
 
         public string DetailCurrencyCode { set; get; }
 

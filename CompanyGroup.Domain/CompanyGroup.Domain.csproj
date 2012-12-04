@@ -231,7 +231,9 @@
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPersonList.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.hbm.xml" />

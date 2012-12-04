@@ -17,7 +17,7 @@ namespace CompanyGroup.Data.MaintainModule
         public InvoiceRepository(NHibernate.ISession session) : base(session) { }
 
         /// <summary>
-        /// részletes számla sorok listája AX-ből
+        /// részletes számla sorok listája AX-ből vállalatonként
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>

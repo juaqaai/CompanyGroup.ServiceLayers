@@ -22,7 +22,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string customerId, string dataAreaId);
+        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request);
 
         /// <summary>
         /// összes számla kiolvasása

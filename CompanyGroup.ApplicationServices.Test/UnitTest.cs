@@ -430,8 +430,6 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Data.PartnerModule.InvoiceRepository invoiceRepository = new Data.PartnerModule.InvoiceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
-
             CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
@@ -439,7 +437,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
 
-            CompanyGroup.ApplicationServices.PartnerModule.CustomerService customerService = new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, invoiceRepository, visitorRepository);
+            CompanyGroup.ApplicationServices.PartnerModule.CustomerService customerService = new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, visitorRepository);
 
             CompanyGroup.Dto.PartnerModule.Visitor visitor = customerService.SignIn(request);
 
@@ -453,8 +451,6 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Data.PartnerModule.InvoiceRepository invoiceRepository = new Data.PartnerModule.InvoiceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
-
             CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
@@ -462,7 +458,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
 
-            CompanyGroup.ApplicationServices.PartnerModule.CustomerService customerService = new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, invoiceRepository, visitorRepository);
+            CompanyGroup.ApplicationServices.PartnerModule.CustomerService customerService = new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, visitorRepository);
 
             CompanyGroup.Dto.ServiceResponse.Empty response = customerService.SignOut(request);
 
@@ -707,7 +703,24 @@ namespace CompanyGroup.ApplicationServices.Test
 
         #endregion
 
+        [TestMethod]
+        public void InsertInvoices()
+        {
+            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
+                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
+                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
+                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "InvoiceList"));
 
+            CompanyGroup.Data.PartnerModule.InvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository(settings);
+
+            CompanyGroup.Data.MaintainModule.InvoiceRepository maintainRepository = new CompanyGroup.Data.MaintainModule.InvoiceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+
+            CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService service = new CompanyGroup.ApplicationServices.MaintainModule.InvoiceService(maintainRepository, repository);
+
+            bool result = service.FillCache(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+            Assert.IsTrue(result);
+        }
 
     }
 }

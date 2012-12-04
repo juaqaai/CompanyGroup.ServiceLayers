@@ -10,7 +10,7 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class InvoiceInfo : CompanyGroup.Domain.Core.NoSqlEntity
     {
-        public InvoiceInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, Int64 invoiceAmount, Int64 invoiceCredit, string currencyCode, string invoiceId, string payment, InvoiceSalesType salesType, 
+        public InvoiceInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, decimal invoiceAmount, decimal invoiceCredit, string currencyCode, string invoiceId, string payment, InvoiceSalesType salesType, 
                            string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId, bool printed, string returnItemId)
         {
             this.CustomerId = customerId;
@@ -71,7 +71,7 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonElement("InvoiceAmount", Order = 7)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        public Int64 InvoiceAmount { set; get; }
+        public decimal InvoiceAmount { set; get; }
 
         /// <summary>
         /// számlán lévő tartozás
@@ -79,7 +79,7 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonElement("InvoiceCredit", Order = 8)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        public Int64 InvoiceCredit { set; get; }
+        public decimal InvoiceCredit { set; get; }
 
         /// <summary>
         /// pénznem
@@ -175,7 +175,6 @@ namespace CompanyGroup.Domain.PartnerModule
         /// számla sorok 
         /// </summary>
         [MongoDB.Bson.Serialization.Attributes.BsonElement("InvoiceLineInfoArray", Order = 19)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public InvoiceLineInfo[] InvoiceLineInfoArray { set; get; }
 
         /// <summary>
@@ -196,6 +195,8 @@ namespace CompanyGroup.Domain.PartnerModule
         {
             InvoiceInfo invoiceInfo = null;
 
+            List<InvoiceLineInfo> invoiceLineInfoList = new List<InvoiceLineInfo>();
+
             lineInfos.ForEach(x =>
             {
                 if (invoiceInfo == null)
@@ -207,8 +208,13 @@ namespace CompanyGroup.Domain.PartnerModule
                 InvoiceLineInfo invoiceLineInfo = new InvoiceLineInfo(x.ItemDate, x.LineNum, x.ItemId, x.Name, x.Quantity, x.SalesPrice, x.LineAmount,
                                                                       x.QuantityPhysical, x.Remain, x.DeliveryType, x.TaxAmount, x.LineAmountMst, x.TaxAmountMst, x.DetailCurrencyCode);
 
-                invoiceInfo.AddLine(invoiceLineInfo);
+                invoiceLineInfoList.Add(invoiceLineInfo);
             });
+
+            if (invoiceInfo != null)
+            {
+                invoiceInfo.InvoiceLineInfoArray = invoiceLineInfoList.ToArray();
+            }
 
             return invoiceInfo;
         }

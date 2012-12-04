@@ -9,8 +9,8 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class InvoiceLineInfo
     {
-        public InvoiceLineInfo(DateTime itemDate, int lineNum, string itemId, string name, int quantity, Int64 salesPrice, Int64 lineAmount,
-                               int quantityPhysical, int remain, int deliveryType, Int64 taxAmount, Int64 lineAmountMst, Int64 taxAmountMst, string currencyCode)
+        public InvoiceLineInfo(DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
+                               int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode)
         {
             ItemDate = itemDate;
             LineNum = lineNum;
@@ -55,12 +55,12 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonElement("SalesPrice")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        public Int64 SalesPrice { set; get; }
+        public decimal SalesPrice { set; get; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("LineAmount")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        public Int64 LineAmount { set; get; }
+        public decimal LineAmount { set; get; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("QuantityPhysical")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
@@ -80,17 +80,17 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonElement("TaxAmount")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)] 
-        public Int64 TaxAmount { set; get; }
+        public decimal TaxAmount { set; get; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("LineAmountMst")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)] 
-        public Int64 LineAmountMst { set; get; }
+        public decimal LineAmountMst { set; get; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("TaxAmountMst")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        public Int64 TaxAmountMst { set; get; }
+        public decimal TaxAmountMst { set; get; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("CurrencyCode")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]

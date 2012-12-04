@@ -16,7 +16,7 @@ namespace CompanyGroup.Data.PartnerModule
         private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("InvoiceCollectionName", "InvoiceList");
 
         /// <summary>
-        /// számlalista kiolvasása vevőazonosító alapján
+        /// számlalista kiolvasása vevőazonosító és vállalatkód alapján
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
@@ -122,7 +122,7 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// számlalista beilesztése
+        /// számlalista beillesztése
         /// </summary>
         /// <param name="products"></param>
         public void InsertList(List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList)
