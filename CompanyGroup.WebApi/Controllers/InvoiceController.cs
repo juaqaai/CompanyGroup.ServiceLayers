@@ -10,55 +10,99 @@ namespace CompanyGroup.WebApi.Controllers
     public class InvoiceController : ApiController
     {
         /// <summary>
-        /// privát szerviz interfész referencia
+        /// privát partner szerviz interfész referencia
         /// </summary>
-        private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service;
+        private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService;
 
         /// <summary>
-        /// konstruktor customer service interfésszel
+        /// privát karbantartó szerviz interfész referencia
+        /// </summary>
+        private CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService maintainService;
+
+        /// <summary>
+        /// konstruktor service interfésszel
         /// </summary>
         /// <param name="service"></param>
-        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service)
+        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService, CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService maintainService)
         {
-            if (service == null)
+            if (partnerService == null)
             {
-                throw new ArgumentNullException("InvoiceService");
+                throw new ArgumentNullException("PartnerService");
             }
 
-            this.service = service;        
+            if (maintainService == null)
+            {
+                throw new ArgumentNullException("MaintainService");
+            }
+
+            this.partnerService = partnerService;
+
+            this.maintainService = maintainService;
         }
 
         /// <summary>
         /// vevőhöz tartozó számlák listája
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="visitorId"></param>
+        /// <param name="languageId"></param>
+        /// <param name="paymentType"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
         /// <returns></returns>
-        [ActionName("GetInvoiceInfo")]
+        [ActionName("GetList")]
         [HttpGet]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string visitorId, string languageId, int paymentType)
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string visitorId, string languageId, int paymentType, string fromDate, string toDate)
         {
-            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new Dto.ServiceRequest.GetInvoiceInfo() { LanguageId = languageId, PaymentType = paymentType, VisitorId = visitorId };
+            DateTime from; DateTime to;
 
-            return service.GetList(request);
+            if (!DateTime.TryParse(fromDate, out from))
+            {
+                from = DateTime.MinValue;
+            }
+
+            if (!DateTime.TryParse(toDate, out to))
+            {
+                to = DateTime.MaxValue;
+            }
+
+            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo(visitorId, languageId, paymentType, from, to);
+
+            return partnerService.GetList(request);
         }
 
         /// <summary>
-        /// vevőhöz tartozó számlák listája
+        /// számla kiolvasása azonosító alapján
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="invoiceId"></param>
         /// <returns></returns>
         [ActionName("GetById")]
         [HttpGet]
         public CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId)
         {
-            return service.GetById(invoiceId);
+            return partnerService.GetById(invoiceId);
         }
 
+        /// <summary>
+        /// összes számla kiolvasása (mindkét vállalatból)
+        /// </summary>
+        /// <returns></returns>
         [ActionName("GetAll")]
         [HttpGet]
         public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll()
         {
-            return service.GetAll();
+            return partnerService.GetAll();
+        }
+
+        /// <summary>
+        /// számla cache újratöltése
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        [ActionName("ReFillCache")]
+        [HttpGet]
+        public bool ReFillCache(string dataAreaId)
+        {
+            return maintainService.ReFillCache(dataAreaId);
         }
     }
 
