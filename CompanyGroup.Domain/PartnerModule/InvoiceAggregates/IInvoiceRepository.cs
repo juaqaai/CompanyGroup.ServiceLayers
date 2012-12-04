@@ -45,5 +45,10 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         /// <param name="dataAreaId"></param>
         void RemoveItemsFromCollection(string dataAreaId);
+
+        /// <summary>
+        /// kollekcióhoz tartozó indexek készítése  
+        /// </summary>
+        void CreateIndexes();
     }
 }

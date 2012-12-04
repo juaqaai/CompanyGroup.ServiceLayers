@@ -29,5 +29,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <returns></returns>
         List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll();
+
+        /// <summary>
+        /// indexek létrehozása
+        /// </summary>
+        void CreateIndexes();
     }
 }

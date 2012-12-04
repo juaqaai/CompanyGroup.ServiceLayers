@@ -72,5 +72,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
             return result;
         }
+
+        /// <summary>
+        /// indexek létrehozása
+        /// </summary>
+        public void CreateIndexes()
+        {
+            invoiceRepository.CreateIndexes();
+        }
     }
 }

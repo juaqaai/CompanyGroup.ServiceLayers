@@ -43,29 +43,23 @@ namespace CompanyGroup.WebApi.Controllers
         /// <summary>
         /// vevőhöz tartozó számlák listája
         /// </summary>
-        /// <param name="visitorId"></param>
-        /// <param name="languageId"></param>
-        /// <param name="paymentType"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetList")]
-        [HttpGet]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(string visitorId, string languageId, int paymentType, string fromDate, string toDate)
+        [HttpPost]
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
         {
-            DateTime from; DateTime to;
+            //DateTime from; DateTime to;
 
-            if (!DateTime.TryParse(fromDate, out from))
-            {
-                from = DateTime.MinValue;
-            }
+            //if (!DateTime.TryParse(request.FromDate, out from))
+            //{
+            //    from = DateTime.MinValue;
+            //}
 
-            if (!DateTime.TryParse(toDate, out to))
-            {
-                to = DateTime.MaxValue;
-            }
-
-            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo(visitorId, languageId, paymentType, from, to);
+            //if (!DateTime.TryParse(request.ToDate, out to))
+            //{
+            //    to = DateTime.MaxValue;
+            //}
 
             return partnerService.GetList(request);
         }

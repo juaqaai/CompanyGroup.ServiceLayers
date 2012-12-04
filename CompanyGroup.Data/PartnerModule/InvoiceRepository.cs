@@ -169,5 +169,27 @@ namespace CompanyGroup.Data.PartnerModule
                 Disconnect();
             }
         }
+
+        public override void CreateIndexes()
+        {
+            try
+            {
+                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection();
+
+                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Ascending("DataAreaId", "CustomerId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_DataAreaId_CustomerId"));
+                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Ascending("IvoiceId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_IvoiceId_Asc"));
+                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Descending("IvoiceId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_IvoiceId_Desc"));
+
+                return;
+            }
+            catch
+            {
+                return;
+            }
+            finally
+            {
+                Disconnect();
+            }
+        }
     }
 }

@@ -15,17 +15,17 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetInvoiceInfo")]
-        public CompanyGroup.WebClient.Models.InvoiceInfoList GetInvoiceInfo(int id)
+        [ActionName("GetList")]
+        public CompanyGroup.WebClient.Models.InvoiceInfoList GetList(int id)
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
-            if (!visitor.IsValidLogin)
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Unauthorized));
-            }
+            //if (!visitor.IsValidLogin)
+            //{
+            //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Unauthorized));
+            //}
 
             try
             {
@@ -36,7 +36,7 @@ namespace CompanyGroup.WebClient.Controllers
                     PaymentType = id
                 };
 
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetInvoiceInfo", req);
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetList", req);
 
                 List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
 

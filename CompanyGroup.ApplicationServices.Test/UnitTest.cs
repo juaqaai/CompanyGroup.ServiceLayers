@@ -722,5 +722,24 @@ namespace CompanyGroup.ApplicationServices.Test
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        public void CreateIndexes()
+        {
+            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
+                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
+                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
+                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "InvoiceList"));
+
+            CompanyGroup.Data.PartnerModule.InvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository(settings);
+
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
+
+            CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service = new CompanyGroup.ApplicationServices.PartnerModule.InvoiceService(repository, financeRepository, visitorRepository);
+
+            service.CreateIndexes();
+        }
+
     }
 }
