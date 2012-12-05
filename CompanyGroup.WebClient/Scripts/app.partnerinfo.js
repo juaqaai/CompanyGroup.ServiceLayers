@@ -1,14 +1,12 @@
 ﻿var companyGroup = companyGroup || {};
 
-companyGroup.partnerinfo = $.sammy('#main_content', function () {
+companyGroup.partnerinfo = $.sammy(function () {
 
-    this.use(Sammy.Mustache, 'html');
-    //this.use('Mustache', 'html');
+    //this.use(Sammy.Mustache, 'html');
 
     this.use(Sammy.Title);
-
+    //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
-
         var data = {
             OldPassword: context.params['txt_oldpassword'],
             NewPassword: context.params['txt_newpassword'],
@@ -45,21 +43,31 @@ companyGroup.partnerinfo = $.sammy('#main_content', function () {
                 console.log('changePassword call failed');
             }
         });
-
     });
-
+    //jelszócsere view
     this.get('#/changepassword', function (context) {
-
-        this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
-            .then(function (response) {
-                context.partial(viewPath('changepassword'), response);
-
-                context.title('Jelszó módosítás - ');
-            });
+        context.title('Jelszó módosítás - ');
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#changePasswordTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
+        });
     });
-
+    //elfelejtett jelszó kérés
     this.post('#/forgetpassword', function (context) {
-
         var data = {
             UserName: context.params['txt_username']
         };
@@ -92,76 +100,115 @@ companyGroup.partnerinfo = $.sammy('#main_content', function () {
             }
         });
     });
+    //elfelejtett jelszó view
     this.get('#/forgetpassword', function (context) {
-
-        this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
-        .then(function (response) {
-            context.partial(viewPath('forgetpassword'), response);
-
-            context.title('ELFELEJTETT JELSZÓ - ');
+        context.title('ELFELEJTETT JELSZÓ - ');
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#forgetPasswordTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
         });
     });
+    //jelszómódosítás csere visszavonása  
     this.get('#/undochangepassword:token', function (context) {
-
-        this.load('/CompanyGroup.WebClient/api/ContactPersonApi/UndoChagePassword' + context.params['token'])
-        .then(function (response) {
-            context.partial(viewPath('undochangepassword'), response);
-
-            context.title('Jelszó módosítás visszavonás - ');
+        context.title('Jelszó módosítás visszavonás - ');
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getContactPersonApiUrl('UndoChagePassword'),
+            data: {Token:context.params['token']},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#undoChangePasswordTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('UndoChagePassword call failed');
+            }
         });
     });
-//    this.get('#/order/:id', function (context) {
-
-//        this.load('/app/product/' + context.params['id'])
-//            .then(function (response) {
-
-//                var title = 'Place Your Order : ' + response.Name;
-
-//                context.title(title + ' - Sammy Fourth Coffee');
-
-//                var order = {
-//                    productId: response.Id,
-//                    productName: response.Name,
-//                    productPicture: response.Picture,
-//                    productPrice: response.Price,
-//                    quantity: 1,
-//                    amount: function () { return this.productPrice * this.quantity; }
-//                };
-
-//                context.partial(viewPath('order'), { title: title, order: order });
-//            });
-//    });
-
+    //számla info
     this.get('#/invoiceinfo/:paymenttype', function (context) {
-
-        this.load('/CompanyGroup.WebClient/api/InvoiceApi/GetInvoiceInfo/' + context.params['paymenttype'])
-            .then(function (response) {
-                context.partial(viewPath('invoiceinfo'), response);
-
-                context.title('Számla információ - ');
-            });
+        //context.params['paymenttype']
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
+        });
+        context.title('Számla információ - ');
     });
-
+    //megrendelés info
     this.get('#/salesorderinfo', function (context) {
-
-        this.load('/CompanyGroup.WebClient/api/SalesOrderApi/GetOrderInfo')
-            .then(function (response) {
-                context.partial(viewPath('salesorderinfo'), response);
-
-                context.title('Megrendelés információ - ');
-            });
-    });
-
-    this.get('#/', function (context) {
         //console.log(context);
-        this.title('Partnerinformáció - ');
-        this.load('/CompanyGroup.WebClient/api/VisitorApi/GetVisitorInfo')
-            .then(function (response) {
-                context.partial(viewPath('dashboard'), response);
-            });
+        $.ajax({
+            url: companyGroup.utils.instance().getSalesOrderApiUrl('GetOrderInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#salesorderTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
+        });
+        context.title('Megrendelés információ - ');
     });
-
-    function viewPath(name) {
-        return '/CompanyGroup.WebClient/Content/HtmlTemplates/PartnerInfo/' + name + '.html';
-    }
+    //kezdőállapot
+    this.get('#/', function (context) {
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_content').empty();
+                var html = Mustache.to_html($('#dashboardTemplate').html(), response);
+                $('#main_content').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
+        });
+        this.title('Partnerinformáció - dashboard');
+    });
 });
