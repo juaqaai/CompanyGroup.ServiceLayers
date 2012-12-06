@@ -11,7 +11,7 @@
         @Scripts.Render("~/bundles/modernizr")
         @RenderSection("ScriptsInHead", required: false)
     </head>
-    <body>
+    <body style="background:url(@Url.Content("~/Content/Media/images/big.jpg") top center no-repeat ">
     <!-- -->
     <a name="top" id="top"></a>
     <div class="aside-1" id="layout-wrapper">
@@ -103,22 +103,9 @@
 									Gyorsmenü
 								</div>
 								<ul>
-                                    {{#IsValidLogin}}
+
 									<li>
-										<a href="#/filterByStock/true">Készleten lévő termékek </a>
-									</li>
-									<li>
-										<a href="#/filterByAction/true"><strong>AKCIÓS TERMÉKEK</strong></a>
-									</li>
-									<li>
-										<a href="#/filterByBargain/true"><strong>BÖRZÉS TERMÉKEK</strong></a>
-									</li>
-									<li>
-										<a href="#/filterByNew/true"><strong>Új TERMÉKEK</strong></a>
-									</li>
-                                    {{/IsValidLogin}}
-									<li>
-										<a href="#/filterByHrp">HRP termékek +</a>
+										<a href="#/filterByHrp">HRP termékek</a>
 										<ul>
 											<li>
 												<a href="#/filterByCategoryHrp/B001">Asztali gépek</a>
@@ -138,7 +125,7 @@
 										</ul>
 									</li>
 									<li>
-										<a href="#/filterByBsc">BSC termékek +</a>
+										<a href="#/filterByBsc">BSC termékek</a>
 										<ul>
 											<li>
 												<a href="#/filterByCategoryBsc/B019">Szoftverek</a>
@@ -458,7 +445,7 @@
 
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
 
-            $.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
+            //$.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
 
             $('#preloader').ajaxStart(function () {
                 $('#preloader').show();

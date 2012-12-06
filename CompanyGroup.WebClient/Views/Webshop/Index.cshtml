@@ -367,17 +367,24 @@
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
+                        	<table cellpadding="1" cellspacing="1">
+						    <tr>
+                                <td><input type="checkbox" id="chk_filterByHrp" /></td><td>HRP termékek</td>
+                                <td><input type="checkbox" id="chk_filterByBsc" /></td><td>BSC termékek</td>
+                            </tr>
+                            </table>
 					        <div id="cus_filter_price">
                                 <form action="#/filterbyprice" method="post" id="form_filterbyprice">
 					            <div id="negyes_szuro">	
-						        <table cellpadding="1" cellspacing="1">
+
+						            <table cellpadding="1" cellspacing="1">
 						            <tr>
                                         <td><input type="checkbox" id="chk_onstock"/></td><td> Készleten</td>
                                         <td><input type="checkbox" id="chk_onaction"/></td><td>Akciós</td> 
                                         <td><input type="checkbox" id="chk_bargain" /></td><td> Leértékelt</td> 
                                         <td><input type="checkbox" id="chk_new" /></td><td> Új</td>                                   
                                     </tr>
-						        </table>
+						            </table>
 					            </div>	
 						        <span>Ár szerinti keresés</span>
                                 <label class="error" for="txt_filterbyprice" style="display:none; color:#900;">( ! )</label><br />
@@ -803,7 +810,7 @@
                                         <br/>
                                         {{/each}}
                                     {{else}}
-                                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="94" height="69" alt="" />
+                                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                     {{/if}}
 								</div></td>
 								<td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code">| ${Product.ProductId}</span>
@@ -860,8 +867,8 @@
 									</tr>
 								</table>
                                 {{/if}}
-                                {{if Product.SecondHandList.Items.length > 0}}
-				                    <br /><a href="#/ShowSecondHandList/${Product.ProductId}/${Product.DataAreaId}" title="${Product.ItemName}">Használt: ${Product.SecondHandList.MinimumPrice} Ft-tól </a>
+                                {{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}
+				                    <br />Használt: ${Product.SecondHandList.MinimumPrice} Ft-tól </a>
                                 {{/if}}
                             </td>
 							</tr>
@@ -891,12 +898,17 @@
                                 </form>
                                 {{/if}}</td>
 							</tr>
+                            <tr>
+                                <td></td>
+                                <td><a href="#/backtolist">&laquo; vissza a listára</a></td>
+                                <td></td>
+                            </tr>
 						</table>
 						@*tabok*@
 						<div id="wrapper">
 							<ul class="tabs">
 								<li>
-									<a href="#" class="defaulttab" rel="tabs1">Kellékanyagok</a>
+									<a href="#" {{if Product.SecondHandList.Items.length === 0}}class="defaulttab"{{/if}} rel="tabs1">Kellékanyagok</a>
 								</li>
 								<li>
 									<a href="#" rel="tabs2">Technikai adatok</a>
@@ -904,6 +916,11 @@
 								<li>
 									<a href="#" rel="tabs3">Legnépszerűbb párosítások</a>
 								</li>
+                                {{if Product.SecondHandList.Items.length > 0}}
+                                <li>
+									<a href="#" {{if Product.SecondHandList.Items.length > 0}}class="defaulttab"{{/if}} rel="tabs4">Használt</a>
+								</li>
+                                {{/if}}
 							</ul>
 							<div class="tab-content" id="tabs1">
                                 {{each( i, item ) CompatibleProducts}}
@@ -933,6 +950,32 @@
 								<a href="#">- LG 2340 Monitor</a>
 								<br />
 								<a href="#">- CANON 5030 tintasugaras nyomtató</a>
+							</div>
+                            <!--beraktam a 4tabot a használtnak 2 minta sort.-->
+							<div class="tab-content" id="tabs4">
+								<div>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="101"><strong>Készlet</strong></td>
+                                        <td width="293"><strong>Állapotleírás</strong></td>
+                                        <td width="240"><strong>Ár:</strong></td>
+                                        <td width="102"><strong>&nbsp;</strong></td>
+                                      </tr>
+                                      {{each( i, item ) Product.SecondHandList.Items}}
+                                      <tr>
+                                        <td width="101">${item.Quantity} db</td>
+                                        <td width="293">${item.StatusDescription}</td>
+                                        <td width="240"><strong>${item.Price} Ft</strong></td>
+                                        <td width="102">
+                                        <input type="hidden" value="${item.ConfigId}">
+                                        {{if Visitor.IsValidLogin}}
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" />db <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        {{/if}}
+                                        </td>
+                                      </tr>
+                                      {{/each}}
+                                     </table>
+								</div>
 							</div>
 						</div>			
                     </script>

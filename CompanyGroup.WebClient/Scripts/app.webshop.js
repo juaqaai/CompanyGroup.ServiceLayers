@@ -138,6 +138,12 @@ companyGroup.webshop = $.sammy(function () {
         $("#chk_new").live('change', function () {
             context.trigger('filterByNew', { Checked: $(this).is(':checked') });
         });
+        $("#chk_filterByHrp").live('change', function () {
+            context.trigger('filterByHrp', { Checked: $(this).is(':checked') });
+        });
+        $("#chk_filterByBsc").live('change', function () {
+            context.trigger('filterByBsc', { Checked: $(this).is(':checked') });
+        });
         //teljes termékadatbázis keresés
         $("#txt_globalsearch").autocomplete({
             source: function (request, response) {
@@ -329,6 +335,20 @@ companyGroup.webshop = $.sammy(function () {
         this.title('Webshop - szűrés új termékekre');
         showProductList(true);
     });
+    this.bind('filterByHrp', function (e, data) {
+        catalogueRequest.HrpFilter = data.Checked;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        this.title('Webshop - szűrés hardware termékekre');
+        showProductList(true);
+    });
+    this.bind('filterByBsc', function (e, data) {
+        catalogueRequest.BscFilter = data.Checked;
+        loadCatalogue();
+        loadStructure(true, true, true, true);
+        this.title('Webshop - szűrés szoftver termékekre');
+        showProductList(true);
+    });
     //fizetési mód beállítás
     this.bind('changePayment', function (e, data) {
         //készpénzes fizetés
@@ -449,7 +469,11 @@ companyGroup.webshop = $.sammy(function () {
         }
         showProductList(true);
     });
-
+    //vissza a terméklistára
+    this.get('#/backtolist', function (context) {
+        showProductList(true);
+        context.title('Webshop - terméklista');
+    });
     /*
     /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
     /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
@@ -551,16 +575,15 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     //szűrés a hrp termékekre
-    this.get('#/filterByHrp', function (context) {
-        catalogueRequest.clear();
-        catalogueRequest.HrpFilter = true;
-        catalogueRequest.BscFilter = false;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        context.title('Webshop - hardver termékek');
-        showProductList(true);
-    });
-
+//    this.get('#/filterByHrp', function (context) {
+//        catalogueRequest.clear();
+//        catalogueRequest.HrpFilter = true;
+//        catalogueRequest.BscFilter = false;
+//        loadCatalogue();
+//        loadStructure(true, true, true, true);
+//        context.title('Webshop - hardver termékek');
+//        showProductList(true);
+//    });
     //kilépés
     this.get('#/signOut', function (context) {
         $.ajax({
@@ -1372,15 +1395,15 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     //szűrés a bsc termékekre
-    this.get('#/filterByBsc', function (context) {
-        catalogueRequest.clear();
-        catalogueRequest.HrpFilter = false;
-        catalogueRequest.BscFilter = true;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        context.title('Webshop - szoftver termékek');
-        showProductList(true);
-    });
+//    this.get('#/filterByBsc', function (context) {
+//        catalogueRequest.clear();
+//        catalogueRequest.HrpFilter = false;
+//        catalogueRequest.BscFilter = true;
+//        loadCatalogue();
+//        loadStructure(true, true, true, true);
+//        context.title('Webshop - szoftver termékek');
+//        showProductList(true);
+//    });
     //szűrés a bsc szoftvertermékeire
     this.get('#/filterByCategoryBsc/:category', function (context) {
         catalogueRequest.clear();
@@ -1437,6 +1460,7 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 $("#cus_productdetails_table").empty();
                 $("#productDetailsTemplate").tmpl(result).appendTo("#cus_productdetails_table");
+
                 switch_tabs($('.defaulttab'));
                 showProductList(false);
             },

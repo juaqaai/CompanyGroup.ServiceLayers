@@ -10,6 +10,7 @@ body {
     margin-top: 10px;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;
+	background:url(../../Media/images/background-dots.png) repeat;
 }
 
 #tooltip { position:absolute; border:1px solid #333; background:#f7f5d1; padding:2px 5px; color:#333; display:none; }   
@@ -69,20 +70,20 @@ body {
 }
 #cus_header2 {
     width: 100%;
-    height: 70px;
-    background: #fff;
-    margin-top: 17px;
+    height: 100px;
+    background: #084385;
+    margin-top: 16px;
     /*background-image: url('images/filter_panel_bg.png');*/
-    -moz-opacity: .60;
-    filter: alpha(opacity=60);
-    opacity: .60;
+    -moz-opacity: .90;
+    filter: alpha(opacity=90);
+    opacity: .90;
 }
 #cus_logo_and_pages_menu {
     position: absolute;
     width: 1000px;
     z-index: 900;
-    margin-top: -135px;
-    padding-top: 9px;
+    margin-top: -155px;
+    padding-top: 6px;
 }
 #cus_ax_nav {
 
@@ -106,6 +107,7 @@ body {
     box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
 }
 #cus_header_navigation_b {
+    position:fixed
     width: 998px;
     height: 44px;
     background: #FFF;
@@ -114,7 +116,7 @@ body {
     padding-bottom: 0px;
     padding-left: 1px;
     padding-right: 1px;
-    border-bottom: 3px solid #000;
+    /*border-bottom: 3px solid #000;*/
 }
 #cus_header_navigation_b_table {
     font-family: Verdana, Geneva, sans-serif;
@@ -159,10 +161,7 @@ body {
 	height:600px;
 	overflow: auto;
 }
-/*  position: absolute;
-  top: 0;
-  margin-top: 20px;
-  padding-top: 19px;*/
+
 #cus_catalogue_left {
     position: relative;
     float: left;
@@ -193,12 +192,8 @@ body {
     margin-top: 150px;
     float: left;
 }
-/*  left: 450px;
-  position: absolute;
-  margin-left: 35px;
-*/
 #cus_banner_table {
-    background: #F0F0F0;
+    background: #FFFFFF;
     width: 275px;
     height: auto;
     border-top:2px #333 solid;
@@ -372,7 +367,7 @@ body {
 	max-width: 94px;
 	max-height: 94px;
 	border: #AAA solid 1px;    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
-     -webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
+
      -moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.5);
      box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.5);*/
 }
@@ -567,8 +562,8 @@ body {
     z-index: 0;
 }
 .vegas-overlay {
-    background: transparent url('images/filter_panel_bg.png');
-    opacity: 0.2;
+    background: transparent url('../../Media/images/background-dots.png');
+    opacity: 0.5;
     z-index: -1;
 }
 .vegas-background {
@@ -733,10 +728,10 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
 
 /************************************************ rendezés-szűrés menü ************************************************/
 
-/*#cus_order_text {
+#cus_order_text {
     margin-top: 8px;
     margin-left: 8px;
-}*/
+}
 #cus_list_order_panel {
     padding-left: 0px;
     padding-right: 0px;
@@ -942,18 +937,18 @@ ul#navmenu_o ul li {
 }
 /* Root Menu */
 ul#navmenu_o a {
-    border-bottom: 3px solid #000;
+    /*border-bottom: 3px solid #000;*/
     padding: 0 6px;
     float: none !important; /*For Opera*/
     float: left; /*For IE*/
     display: block;
     background: #fff;
     color: #333;
-    font: normal 9px  /22px Verdana, Geneva, sans-serif;
+    font: normal 12px  /22px Calibri, Geneva, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
-    margin-right: 5px;
+    margin-right: 3px;
 }
 /* Root Menu Hover Persistence */
 ul#navmenu_o a:hover, ul#navmenu_o li:hover a, ul#navmenu_o li.iehover a {
