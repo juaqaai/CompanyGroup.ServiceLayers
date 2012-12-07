@@ -21,7 +21,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return View();
+            return View(visitor);
         }
 
         /// <summary>
@@ -61,7 +61,13 @@ namespace CompanyGroup.WebClient.Controllers
         {
             ViewBag.Message = "Carreer view.";
 
-            return View();
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CompanyController.CookieName);
+
+            if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return View(visitor);
         }
 
     }
