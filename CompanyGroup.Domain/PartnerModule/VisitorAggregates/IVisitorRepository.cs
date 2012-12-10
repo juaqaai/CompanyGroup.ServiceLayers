@@ -12,5 +12,9 @@ namespace CompanyGroup.Domain.PartnerModule
         void DisableStatus(string id, string dataAreaId);
 
         void Disconnect();
+
+        CompanyGroup.Domain.PartnerModule.Visitor ChangeLanguage(string id, string language);
+
+        CompanyGroup.Domain.PartnerModule.Visitor ChangeCurrency(string id, string currency);
     }
 }

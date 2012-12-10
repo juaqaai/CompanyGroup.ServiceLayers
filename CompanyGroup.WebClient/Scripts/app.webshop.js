@@ -17,6 +17,10 @@ companyGroup.webshop = $.sammy(function () {
 
     this.use(Sammy.Title);
 
+    this.use(companyGroupHelpers);
+
+    this.setTitle('Webshop -');
+
     this.get('#/', function (context) {
         //console.log(context);
         context.title('Webshop - Kezdőoldal');
@@ -575,15 +579,15 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     //szűrés a hrp termékekre
-//    this.get('#/filterByHrp', function (context) {
-//        catalogueRequest.clear();
-//        catalogueRequest.HrpFilter = true;
-//        catalogueRequest.BscFilter = false;
-//        loadCatalogue();
-//        loadStructure(true, true, true, true);
-//        context.title('Webshop - hardver termékek');
-//        showProductList(true);
-//    });
+    //    this.get('#/filterByHrp', function (context) {
+    //        catalogueRequest.clear();
+    //        catalogueRequest.HrpFilter = true;
+    //        catalogueRequest.BscFilter = false;
+    //        loadCatalogue();
+    //        loadStructure(true, true, true, true);
+    //        context.title('Webshop - hardver termékek');
+    //        showProductList(true);
+    //    });
     //kilépés
     this.get('#/signOut', function (context) {
         $.ajax({
@@ -639,17 +643,18 @@ companyGroup.webshop = $.sammy(function () {
     });
     //belépési adatok ellenörzése
     this.before({ only: { verb: 'post', path: '#/signin'} }, function (e) {
-        var error_msg = '';
+        //        var error_msg = '';
 
-        if ($("#txt_username").val() === '') {
-            error_msg += 'A bejelentkezési név kitöltése kötelező! <br/>';
-        }
-        if ($("#txt_password").val() === '') {
-            error_msg += 'A jelszó kitöltése kötelező!';
-        }
-        $("#login_errors").html(error_msg);
+        //        if ($("#txt_username").val() === '') {
+        //            error_msg += 'A bejelentkezési név kitöltése kötelező! <br/>';
+        //        }
+        //        if ($("#txt_password").val() === '') {
+        //            error_msg += 'A jelszó kitöltése kötelező!';
+        //        }
+        //        $("#login_errors").html(error_msg);
 
-        return (error_msg === '');
+        //        return (error_msg === '');
+        return this.beforeSignIn();
     });
     //bejelentkezés (Visitor + Products objektummal tér vissza)
     this.post('#/signin', function (context) {
@@ -725,36 +730,38 @@ companyGroup.webshop = $.sammy(function () {
     });
     //bejelentkezés panel megmutatása
     this.get('#/showSignInPanel', function (context) {
-        $.fancybox({
-            href: '#div_login',
-            autoDimensions: true,
-            autoScale: false,
-            transitionIn: 'fade',
-            transitionOut: 'fade',
-            beforeClose: function () { console.log('signin panel closed'); }
-        });
+        //        $.fancybox({
+        //            href: '#div_login',
+        //            autoDimensions: true,
+        //            autoScale: false,
+        //            transitionIn: 'fade',
+        //            transitionOut: 'fade',
+        //            beforeClose: function () { console.log('signin panel closed'); }
+        //        });
+        this.showSignInPanel();
     });
     //nyelv megváltoztatása
     this.get('#/changeLanguage/:language', function (context) {
-        var data = {
-            Language: (context.params['language'] === '' || context.params['language'] === 'HU') ? 'EN' : 'HU'
-        };
-        $.ajax({
-            type: "POST",
-            url: companyGroup.utils.instance().getCustomerApiUrl('ChangeLanguage'),
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            processData: true,
-            success: function (result) {
-                console.log('ChangeLanguage');
-                $("#inverse_language_id").html(result.Language);
-            },
-            error: function () {
-                console.log('ChangeLanguage call failed');
-            }
-        });
+        this.changeLanguage(context.params['language']);
+        //        var data = {
+        //            Language: (context.params['language'] === '' || context.params['language'] === 'HU') ? 'EN' : 'HU'
+        //        };
+        //        $.ajax({
+        //            type: "POST",
+        //            url: companyGroup.utils.instance().getCustomerApiUrl('ChangeLanguage'),
+        //            data: JSON.stringify(data),
+        //            contentType: "application/json; charset=utf-8",
+        //            timeout: 10000,
+        //            dataType: "json",
+        //            processData: true,
+        //            success: function (result) {
+        //                console.log('ChangeLanguage');
+        //                $("#inverse_language_id").html(result.Language);
+        //            },
+        //            error: function () {
+        //                console.log('ChangeLanguage call failed');
+        //            }
+        //        });
     });
     //pénznem meváltoztatása
     this.get('#/changeCurrency/:currency', function (context) {
@@ -770,25 +777,9 @@ companyGroup.webshop = $.sammy(function () {
             dataType: "json",
             processData: true,
             success: function (result) {
-                console.log('ChangeCurrency');
-                if (result.Currency === 'HUF') {
-                    $("#currency_huf").css('background-color', '#900');
-                    $("#currency_eur").css('background-color', '#666');
-                    $("#currency_usd").css('background-color', '#666');
-                    loadCatalogue();
-                }
-                else if (result.Currency === 'EUR') {
-                    $("#currency_huf").css('background-color', '#666');
-                    $("#currency_eur").css('background-color', '#900');
-                    $("#currency_usd").css('background-color', '#666');
-                    loadCatalogue();
-                }
-                else {
-                    $("#currency_huf").css('background-color', '#666');
-                    $("#currency_eur").css('background-color', '#666');
-                    $("#currency_usd").css('background-color', '#900');
-                    loadCatalogue();
-                }
+                var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+                $('#cus_header1').html(visitorInfoHtml);
+                loadCatalogue();
             },
             error: function () {
                 console.log('ChangeCurrency call failed');
@@ -1395,15 +1386,15 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     //szűrés a bsc termékekre
-//    this.get('#/filterByBsc', function (context) {
-//        catalogueRequest.clear();
-//        catalogueRequest.HrpFilter = false;
-//        catalogueRequest.BscFilter = true;
-//        loadCatalogue();
-//        loadStructure(true, true, true, true);
-//        context.title('Webshop - szoftver termékek');
-//        showProductList(true);
-//    });
+    //    this.get('#/filterByBsc', function (context) {
+    //        catalogueRequest.clear();
+    //        catalogueRequest.HrpFilter = false;
+    //        catalogueRequest.BscFilter = true;
+    //        loadCatalogue();
+    //        loadStructure(true, true, true, true);
+    //        context.title('Webshop - szoftver termékek');
+    //        showProductList(true);
+    //    });
     //szűrés a bsc szoftvertermékeire
     this.get('#/filterByCategoryBsc/:category', function (context) {
         catalogueRequest.clear();

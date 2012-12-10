@@ -18,8 +18,6 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
             CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository = new Data.PartnerModule.InvoiceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
-
             CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
                                                                                                CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
@@ -29,7 +27,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
 
 
-            return new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, invoiceRepository, visitorRepository);
+            return new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, visitorRepository);
         }
 
         [TestMethod]

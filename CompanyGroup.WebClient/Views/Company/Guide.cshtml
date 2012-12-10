@@ -1,6 +1,6 @@
 ﻿@model CompanyGroup.WebClient.Models.Visitor
 @{
-    ViewBag.Title = "Céginformáció";
+    ViewBag.Title = "Útmutató";
 }
 
 @*	<aside id="aside-first" class="aside-first group">
@@ -10,36 +10,42 @@
                 <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
             </article>
         </div>
-	</aside>
-	<div id="layout-content" class="group">*@
-        @*cms Messages
-		<div id="messages">
-			Messages
-		</div>*@
-        @*cms BeforeContent
-		<div id="before-content">
-			BeforeContent
-		</div>*@
-		<div id="preloader">
-			loadnig...
-		</div>
-		<div id="content" class="group">
-			<div class="zone zone-content">
-                        Company content            
-            </div>
-		</div>
-        @*cms AfterContent
-		<div id="after-content">
-			AfterContent
-		</div>
-	</div>*@
-    @*cms AsideSecond
-    <aside id="aside-second" class="aside-second">
-		AsideSecond
 	</aside>*@
+@*	<div id="layout-content" class="group">*@
+
+    <div id="content" class="group">
+		<div id="main_content" class="zone zone-content">
+
+            <div id="termOfUse">
+                FELHASZNÁLÁSI FELTÉTELEK
+            </div>
+        
+            <div id="dataProtection">
+                ADATVÉDELEM
+            </div>
+
+            <div id="deliveryAndPaymentOptions">
+                SZÁLLÍTÁSI ÉS FIZETÉSI FELTÉTELEK
+            </div>
+
+            <div id="returnItemConditions">
+                VISSZÁRU FELTÉTELEK
+            </div>
+
+            <div id="garantyValidation">
+                GARANCIA ÉRVÉNYESÍTÉSE
+            </div>
+
+            <div id="shoppingInTheWebshop">
+                VÁSÁRLÁS A WEBÁRUHÁZBAN
+            </div>
+        </div>
+	</div>
+
+	@*	</div>*@
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/company")');
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/guide")');
 
 }
 @section ScriptOnReady {
@@ -48,7 +54,7 @@
     var model = @(Html.Raw(Json.Encode(Model)));
     console.log(model);
 
-    companyGroup.company.run('#/');
+    companyGroup.guide.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
   	$('#cus_header1').html(visitorInfoHtml);
@@ -58,4 +64,6 @@
 
     var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
   	$('#quickmenuContainer').html(quickmenuHtml);
+
+
 }

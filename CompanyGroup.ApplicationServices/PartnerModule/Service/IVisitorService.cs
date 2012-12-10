@@ -34,5 +34,19 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request);
+
+        /// <summary>
+        /// valutanem csere
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request);
+
+        /// <summary>
+        /// nyelvválasztás csere
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request);
     }
 }

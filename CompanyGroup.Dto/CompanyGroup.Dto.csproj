@@ -70,7 +70,9 @@
     <Compile Include="ServiceRequest\AddNewRegistration.cs" />
     <Compile Include="ServiceRequest\AssociateCart.cs" />
     <Compile Include="ServiceRequest\AddContactPerson.cs" />
+    <Compile Include="ServiceRequest\ChangeCurrency.cs" />
     <Compile Include="ServiceRequest\ChangePassword.cs" />
+    <Compile Include="ServiceRequest\ChangeLanguage.cs" />
     <Compile Include="ServiceRequest\ForgetPassword.cs" />
     <Compile Include="ServiceRequest\GetContactPersonById.cs" />
     <Compile Include="ServiceRequest\UndoChangePassword.cs" />

@@ -75,7 +75,7 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// bejelentkezett státusz állpot törlése 
+        /// bejelentkezett státusz állapot törlése 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dataAreaId"></param>
@@ -91,6 +91,66 @@ namespace CompanyGroup.Data.PartnerModule
                                                                                                 MongoDB.Driver.Builders.Query.EQ("DataAreaId", dataAreaId));
 
                 collection.Update(query, MongoDB.Driver.Builders.Update.Set("Status", LoginStatus.Passive));
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                this.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// nyelv csere
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.Visitor ChangeLanguage(string id, string language)
+        {
+            try
+            {
+                this.ReConnect();
+
+                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.Visitor> collection = this.GetCollection(VisitorRepository.CollectionName);
+
+                MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(id)));
+
+                var result = collection.Update(query, MongoDB.Driver.Builders.Update.Set("LanguageId", MongoDB.Bson.BsonString.Create(language)));
+
+                return MongoDB.Bson.Serialization.BsonSerializer.Deserialize<CompanyGroup.Domain.PartnerModule.Visitor>(result.Response);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                this.Disconnect();
+            }        
+        }
+
+        /// <summary>
+        /// valutanem csere
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.Visitor ChangeCurrency(string id, string currency)
+        {
+            try
+            {
+                this.ReConnect();
+
+                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.Visitor> collection = this.GetCollection(VisitorRepository.CollectionName);
+
+                MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(id)));
+
+                var result = collection.Update(query, MongoDB.Driver.Builders.Update.Set("Currency", MongoDB.Bson.BsonString.Create(currency)));
+
+                return MongoDB.Bson.Serialization.BsonSerializer.Deserialize<CompanyGroup.Domain.PartnerModule.Visitor>(result.Response);
             }
             catch (Exception ex)
             {

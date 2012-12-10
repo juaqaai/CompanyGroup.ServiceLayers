@@ -30,8 +30,6 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         public ActionResult Newsletter()
         {
-            ViewBag.Message = "Newsletter view.";
-
             CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, BaseController.CookieName);
 
             if (visitorData == null)
@@ -59,8 +57,21 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         public ActionResult Carreer()
         {
-            ViewBag.Message = "Carreer view.";
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CompanyController.CookieName);
 
+            if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
+
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return View(visitor);
+        }
+
+        /// <summary>
+        /// Guide view kezdőérték beállításokkal
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Guide()
+        {
             CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CompanyController.CookieName);
 
             if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }

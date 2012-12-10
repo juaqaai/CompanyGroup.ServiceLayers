@@ -1,6 +1,6 @@
 ﻿@model CompanyGroup.WebClient.Models.Visitor
 @{
-    ViewBag.Title = "Carreer";
+    ViewBag.Title = "Karrier";
 }
 	<aside id="aside-first" class="aside-first group">
 		<div class="zone zone-aside-first">
@@ -24,7 +24,7 @@
 		</div>
 		<div id="content" class="group">
 			<div class="zone zone-content">
-                        Main content            
+                        Carreer content            
             </div>
 		</div>
         @*cms AfterContent
@@ -38,13 +38,16 @@
 	</aside>*@
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/apputils")');
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');
 }
 @section ScriptOnReady {
     console.log('ScriptOnReady section');
 
     var model = @(Html.Raw(Json.Encode(Model)));
+    
     console.log(model);
+
+    companyGroup.carreer.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
   	$('#cus_header1').html(visitorInfoHtml);

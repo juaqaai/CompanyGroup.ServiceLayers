@@ -200,6 +200,8 @@
     <Compile Include="Models\Common\Visitor.cs" />
     <Compile Include="Models\Common\VisitorData.cs" />
     <Compile Include="Models\Common\VisitorRequest.cs" />
+    <Compile Include="Models\Company\ChangeLanguageRequest.cs" />
+    <Compile Include="Models\Company\ChangeCurrencyRequest.cs" />
     <Compile Include="Models\Company\NewsletterCollection.cs" />
     <Compile Include="Models\PartnerInfo\AddressZipCodes.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordRequest.cs" />
@@ -1106,6 +1108,11 @@
     <Content Include="Content\Media\images\ujdonsag.png" />
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
+    <Content Include="Scripts\app.company.js" />
+    <Content Include="Scripts\app.helpers.js" />
+    <Content Include="Scripts\app.guide.js" />
+    <Content Include="Scripts\app.carreer.js" />
+    <Content Include="Scripts\app.newsletter.js" />
     <Content Include="Scripts\smarttab.js" />
     <Content Include="Scripts\app.partnerinfo.js" />
     <Content Include="Scripts\app.registration.js" />
@@ -1222,6 +1229,7 @@
     <Content Include="Content\HtmlTemplates\PartnerInfo\dashboard.cshtml" />
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Webshop\_ProductListBanner.cshtml" />
+    <Content Include="Views\Company\Guide.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

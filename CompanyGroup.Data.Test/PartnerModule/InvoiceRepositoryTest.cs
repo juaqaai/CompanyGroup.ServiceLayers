@@ -62,9 +62,14 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetOrderDetailedLineInfoTest()
         {
-            CompanyGroup.Domain.PartnerModule.IInvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
+                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
+                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
+                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "Visitor"));
 
-            List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoices = repository.GetInvoiceDetailedLineInfo("V001446", "hrp");
+            CompanyGroup.Domain.MaintainModule.IInvoiceRepository repository = new CompanyGroup.Data.MaintainModule.InvoiceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+
+            List<CompanyGroup.Domain.MaintainModule.InvoiceDetailedLineInfo> invoices = repository.GetInvoiceDetailedLineInfo("hrp");
 
             Assert.IsTrue(invoices.Count > 0);
         }

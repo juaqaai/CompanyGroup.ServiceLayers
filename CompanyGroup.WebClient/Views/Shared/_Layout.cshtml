@@ -58,7 +58,7 @@
 					<td nowrap="nowrap">&nbsp;</td>
 					<td nowrap="nowrap">Nyelv&nbsp;</td>
 					<td nowrap="nowrap">
-                        <strong><a href="#/changeLanguage/{{LanguageId}}"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{#LanguageIsEng}} HU {{/LanguageIsEng}} {{#LanguageIsHun}} EN {{/LanguageIsHun}}</span></a></strong>
+                        <strong><a href="#/changeLanguage/{{InverseLanguageId}}"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{InverseLanguageId}}</span></a></strong>
                         {{#IsValidLogin}}
                             Pénznem <strong><a href="#/changeCurrency/HUF">
                             {{#CurrencyIsHuf}}
@@ -202,7 +202,7 @@
 						    <a href="@Url.Content("~/Company/Index")">CÉGINFORMÁCIÓ</a>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/PartnerInfo/Registration")">PARTNERRÉ VÁLÁS</a>
+						    <a href="@Url.Content("~/Registration/Index")">PARTNERRÉ VÁLÁS</a>
 					    </li>
 					    <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">SZERVIZ</a>
@@ -236,13 +236,18 @@
 					<table id="cus_copyright" border="0" cellpadding="0" cellspacing="0" width="990" align="center">
 						<tbody>
 							<tr>
-								<td class="cus_copyright_table_small_text" colspan="2" align="center"><a href="#">felhaszn&aacute;l&aacute;si felt&eacute;telek</a> &bull; <a href="#">adatv&eacute;delmi nyilatkozat</a> &bull; <a href="#">sz&aacute;ll&iacute;t&aacute;si &eacute;s fizet&eacute;si felt&eacute;telek</a> &bull; <a href="#">vissz&aacute;ru felt&eacute;telek</a> &bull; <a href="#">garancia &eacute;rv&eacute;nyes&iacute;t&eacute;se</a> &bull; <a href="#">v&aacute;s&aacute;rl&aacute;s a web&aacute;ruh&aacute;zban</a>
+								<td class="cus_copyright_table_small_text" colspan="2" align="center"><a href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
 								<hr />
 								</td>
 							</tr>
 							<tr>
 								<td>k&eacute;p helye</td>
-								<td class="cus_copyright_table_small_text" align="center">Az &aacute;rak az &Aacute;F&Aacute;-t nem tartalmazz&aacute;k &eacute;s a mindenkori doll&aacute;r, illetve euro &aacute;rfolyam f&uuml;ggv&eacute;ny&eacute;ben v&aacute;ltozhatnak. Az akci&oacute;k a felt&uuml;ntetett időpontig, illetve visszavon&aacute;sig &eacute;rv&eacute;nyesek. Az &aacute;rv&aacute;ltoztat&aacute;s jog&aacute;t fenntartjuk. Az oldal tartalm&aacute;nak felhaszn&aacute;l&aacute;s&aacute;hoz, m&aacute;sol&aacute;s&aacute;hoz az oldal tulajdonos&aacute;nak enged&eacute;lye sz&uuml;ks&eacute;ges. &copy;2002-2011 HRP Hungary Kft. Minden jog fenntartva.</td>
+								<td class="cus_copyright_table_small_text" align="center">Az &aacute;rak az &Aacute;F&Aacute;-t nem tartalmazz&aacute;k &eacute;s a mindenkori doll&aacute;r, illetve euro &aacute;rfolyam f&uuml;ggv&eacute;ny&eacute;ben v&aacute;ltozhatnak. Az akci&oacute;k a felt&uuml;ntetett időpontig, illetve visszavon&aacute;sig &eacute;rv&eacute;nyesek. Az &aacute;rv&aacute;ltoztat&aacute;s jog&aacute;t fenntartjuk. Az oldal tartalm&aacute;nak felhaszn&aacute;l&aacute;s&aacute;hoz, m&aacute;sol&aacute;s&aacute;hoz az oldal tulajdonos&aacute;nak enged&eacute;lye sz&uuml;ks&eacute;ges. &copy;2002-2012 HRP Hungary Kft. Minden jog fenntartva.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -444,6 +449,7 @@
         head.ready(function() {
 
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
+            companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 
             //$.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
 
@@ -452,16 +458,6 @@
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
-
-//            $('#loginwin').fancybox({
-//                autoDimensions: true,
-//                /*width: '40%',
-//                height: '60%',*/
-//                autoScale: false,
-//                transitionIn: 'fade',
-//                transitionOut: 'fade',
-//                type : 'iframe'
-//            });
 
             @RenderSection("ScriptOnReady", false)
         }); 

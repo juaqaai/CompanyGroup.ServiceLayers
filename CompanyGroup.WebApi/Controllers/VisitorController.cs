@@ -47,5 +47,28 @@ namespace CompanyGroup.WebApi.Controllers
             return service.GetRoles(request);
         }
 
+        /// <summary>
+        /// valutanem csere 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("ChangeCurrency")]
+        [HttpPost]
+        public CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        {
+            return service.ChangeCurrency(request);
+        }
+
+        /// <summary>
+        /// nyelvválasztás csere
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("ChangeLanguage")]
+        [HttpPost]
+        public CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        {
+            return service.ChangeLanguage(request);
+        }
     }
 }

@@ -59,6 +59,8 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/smarttab").Include("~/Scripts/smarttab.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/helpers").Include("~/Scripts/app.helpers.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/apputils").Include("~/Scripts/app.utils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/partnerinfo").Include("~/Scripts/app.partnerinfo.js"));
@@ -66,6 +68,14 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/webshop").Include("~/Scripts/app.webshop.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/registration").Include("~/Scripts/app.registration.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/company").Include("~/Scripts/app.company.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/guide").Include("~/Scripts/app.guide.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/carreer").Include("~/Scripts/app.carreer.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/newsletter").Include("~/Scripts/app.newsletter.js"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 

@@ -52,5 +52,37 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return visitor.Roles;
         }
 
+        /// <summary>
+        /// valutanem csere
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        {
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Currency), "Currency cannot be null, or empty!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.ChangeCurrency(request.VisitorId, request.Currency);
+
+            return new VisitorToVisitor().Map(visitor);
+        }
+
+        /// <summary>
+        /// nyelvválasztás csere
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        {
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Language), "Language cannot be null, or empty!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.ChangeLanguage(request.VisitorId, request.Language);
+
+            return new VisitorToVisitor().Map(visitor);
+        }
     }
 }

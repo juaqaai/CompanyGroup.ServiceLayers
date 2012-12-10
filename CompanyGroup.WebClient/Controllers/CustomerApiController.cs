@@ -161,50 +161,5 @@ namespace CompanyGroup.WebClient.Controllers
             }
         }
 
-        /// <summary>
-        /// beállítja a http süti Currency mező értékét.
-        /// /// </summary>
-        /// <returns></returns>
-        [ActionName("ChangeCurrency")]
-        [HttpPut]
-        public void ChangeCurrency(string currency)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                visitorData.Currency = String.IsNullOrEmpty(currency) ? ApiBaseController.DefaultCurrency : currency;
-
-                this.WriteCookie(visitorData);
-            }
-            catch
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-            }
-        }
-
-        /// <summary>
-        /// beállítja a http süti Language mező értékét.
-        /// </summary>
-        /// <param name="language"></param>
-        /// <returns></returns>
-        [ActionName("ChangeLanguage")]
-        [HttpPut]
-        public void ChangeLanguage(string language)
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-                visitorData.Language = String.IsNullOrEmpty(language) ? ApiBaseController.LanguageHungarian : language;
-
-                this.WriteCookie(visitorData);
-            }
-            catch
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-            }
-        }
-
     }
 }
