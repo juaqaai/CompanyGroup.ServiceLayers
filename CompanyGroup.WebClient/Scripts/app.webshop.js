@@ -23,7 +23,7 @@ companyGroup.webshop = $.sammy(function () {
 
     this.get('#/', function (context) {
         //console.log(context);
-        context.title('Webshop - Kezdőoldal');
+        context.title('kezdőoldal');
     });
     //események
     this.bind('run', function (e, data) {
@@ -312,7 +312,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.StockFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés készleten lévő termékekre');
+        this.title('szűrés készleten lévő termékekre');
         showProductList(true);
     });
     //szűrés akciós termékekre
@@ -320,7 +320,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.ActionFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés akciós termékekre');
+        this.title('szűrés akciós termékekre');
         showProductList(true);
     });
     //szűrés használt termékekre
@@ -328,7 +328,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.BargainFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés használt termékekre');
+        this.title('szűrés használt termékekre');
         showProductList(true);
     });
     //szűrés új termékekre
@@ -336,21 +336,21 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.NewFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés új termékekre');
+        this.title('szűrés új termékekre');
         showProductList(true);
     });
     this.bind('filterByHrp', function (e, data) {
         catalogueRequest.HrpFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés hardware termékekre');
+        this.title('szűrés hardware termékekre');
         showProductList(true);
     });
     this.bind('filterByBsc', function (e, data) {
         catalogueRequest.BscFilter = data.Checked;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        this.title('Webshop - szűrés szoftver termékekre');
+        this.title('szűrés szoftver termékekre');
         showProductList(true);
     });
     //fizetési mód beállítás
@@ -442,41 +442,41 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
         if (data.Sequence === 6) {
-            context.title('Webshop - rendezés ár szerint növekvőleg');
+            context.title('rendezés ár szerint növekvőleg');
         }
         else if (data.Sequence === 7) {
-            context.title('Webshop - rendezés ár szerint csökkenőleg');
+            context.title('rendezés ár szerint csökkenőleg');
         }
         else if (data.Sequence === 2) {
-            context.title('Webshop - rendezés cikkszám szerint növekvőleg');
+            context.title('rendezés cikkszám szerint növekvőleg');
         }
         else if (data.Sequence === 3) {
-            context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
+            context.title('rendezés cikkszám szerint csökkenőleg');
         }
         else if (data.Sequence === 4) {
-            context.title('Webshop - rendezés név szerint növekvőleg');
+            context.title('rendezés név szerint növekvőleg');
         }
         else if (data.Sequence === 5) {
-            context.title('Webshop - rendezés név szerint csökkenőleg');
+            context.title('rendezés név szerint csökkenőleg');
         }
         else if (data.Sequence === 8) {
-            context.title('Webshop - rendezés készlet szerint növekvőleg');
+            context.title('rendezés készlet szerint növekvőleg');
         }
         else if (data.Sequence === 9) {
-            context.title('Webshop - rendezés készlet szerint csökkenőleg');
+            context.title('rendezés készlet szerint csökkenőleg');
         }
         else if (data.Sequence === 12) {
-            context.title('Webshop - rendezés garancia szerint növekvőleg');
+            context.title('rendezés garancia szerint növekvőleg');
         }
         else if (data.Sequence === 13) {
-            context.title('Webshop - rendezés garancia szerint csökkenőleg');
+            context.title('rendezés garancia szerint csökkenőleg');
         }
         showProductList(true);
     });
     //vissza a terméklistára
     this.get('#/backtolist', function (context) {
         showProductList(true);
-        context.title('Webshop - terméklista');
+        context.title('terméklista');
     });
     /*
     /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
@@ -499,7 +499,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 6;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés ár szerint növekvőleg');
+        context.title('rendezés ár szerint növekvőleg');
         showProductList(true);
     });
     //rendezés árra csökkenően
@@ -507,7 +507,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 7;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés ár szerint csökkenőleg');
+        context.title('rendezés ár szerint csökkenőleg');
         showProductList(true);
     });
     //rendezés cikkszámra növekvően
@@ -516,7 +516,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 2;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés cikkszám szerint növekvőleg');
+        context.title('rendezés cikkszám szerint növekvőleg');
         showProductList(true);
     });
     //rendezés cikkszámra csökkenőleg
@@ -525,7 +525,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 3;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés cikkszám szerint csökkenőleg');
+        context.title('rendezés cikkszám szerint csökkenőleg');
         showProductList(true);
     });
     //rendezés név szerint növekvőleg
@@ -534,7 +534,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 4;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés név szerint növekvőleg');
+        context.title('rendezés név szerint növekvőleg');
         showProductList(true);
     });
     //rendezés név szerint csökkenőleg
@@ -543,7 +543,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 5;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés név szerint csökkenőleg');
+        context.title('rendezés név szerint csökkenőleg');
         showProductList(true);
     });
     //rendezés készletre növekvően
@@ -551,7 +551,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 8;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés készlet szerint növekvőleg');
+        context.title('rendezés készlet szerint növekvőleg');
         showProductList(true);
     });
     //rendezés készletre csökkenőleg
@@ -559,7 +559,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 9;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés készlet szerint csökkenőleg');
+        context.title('rendezés készlet szerint csökkenőleg');
         showProductList(true);
     });
     //rendezés garanciaidőre növekvően
@@ -567,7 +567,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 12;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés garancia szerint növekvőleg');
+        context.title('rendezés garancia szerint növekvőleg');
         showProductList(true);
     });
     //rendezés garanciaidőre csökkenőleg
@@ -575,7 +575,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.Sequence = 13;
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
-        context.title('Webshop - rendezés garancia szerint csökkenőleg');
+        context.title('rendezés garancia szerint csökkenőleg');
         showProductList(true);
     });
     //szűrés a hrp termékekre
@@ -585,7 +585,7 @@ companyGroup.webshop = $.sammy(function () {
     //        catalogueRequest.BscFilter = false;
     //        loadCatalogue();
     //        loadStructure(true, true, true, true);
-    //        context.title('Webshop - hardver termékek');
+    //        context.title('hardver termékek');
     //        showProductList(true);
     //    });
     //kilépés
@@ -1315,7 +1315,7 @@ companyGroup.webshop = $.sammy(function () {
         //console.log('selectedPageIndexChanged: ' + data.PageIndex);
         catalogueRequest.CurrentPageIndex = parseInt(data.PageIndex, 0);
         loadCatalogue();
-        this.title('Webshop - kiválasztott sorszámú lapra ugrás');
+        this.title('kiválasztott sorszámú lapra ugrás');
     });
     //ugrás az első oldalra
     this.get('#/firstpage', function (context) {
@@ -1324,7 +1324,7 @@ companyGroup.webshop = $.sammy(function () {
         if (currentPageIndex > 1) {
             catalogueRequest.CurrentPageIndex = 1;
             loadCatalogue();
-            context.title('Webshop - Első oldal');
+            context.title('Első oldal');
         }
     });
     //ugrás az utolsó oldalra
@@ -1335,7 +1335,7 @@ companyGroup.webshop = $.sammy(function () {
         if (currentPageIndex < (lastPageIndex)) {
             catalogueRequest.CurrentPageIndex = lastPageIndex;
             loadCatalogue();
-            context.title('Webshop - Utolsó oldal');
+            context.title('Utolsó oldal');
         }
     });
     //ugrás a következő oldalra
@@ -1347,7 +1347,7 @@ companyGroup.webshop = $.sammy(function () {
             currentPageIndex = currentPageIndex + 1;
             catalogueRequest.CurrentPageIndex = currentPageIndex;
             loadCatalogue();
-            context.title('Webshop - Következő oldal');
+            context.title('Következő oldal');
         }
     });
     //ugrás az előző oldalra
@@ -1358,7 +1358,7 @@ companyGroup.webshop = $.sammy(function () {
             currentPageIndex = currentPageIndex - 1;
             catalogueRequest.CurrentPageIndex = currentPageIndex;
             loadCatalogue();
-            context.title('Webshop - Előző oldal');
+            context.title('Előző oldal');
         }
     });
     //megjelenített elemek száma változás
@@ -1372,7 +1372,7 @@ companyGroup.webshop = $.sammy(function () {
             catalogueRequest.ItemsOnPage = parseInt(data.Index, 0);
         }
         loadCatalogue();
-        this.title('Webshop - megjelenített elemek száma változás');
+        this.title('megjelenített elemek száma változás');
     });
     //szűrés a hrp hardvare termékekre
     this.get('#/filterByCategoryHrp/:category', function (context) {
@@ -1382,7 +1382,7 @@ companyGroup.webshop = $.sammy(function () {
         loadStructure(true, true, true, true);
         $('#category1List').val(context.params['category']);
         $("#category1List").trigger("liszt:updated");
-        context.title('Webshop - hardver termékek');
+        context.title('hardver termékek');
         showProductList(true);
     });
     //szűrés a bsc termékekre
@@ -1392,7 +1392,7 @@ companyGroup.webshop = $.sammy(function () {
     //        catalogueRequest.BscFilter = true;
     //        loadCatalogue();
     //        loadStructure(true, true, true, true);
-    //        context.title('Webshop - szoftver termékek');
+    //        context.title('szoftver termékek');
     //        showProductList(true);
     //    });
     //szűrés a bsc szoftvertermékeire
@@ -1403,7 +1403,7 @@ companyGroup.webshop = $.sammy(function () {
         loadStructure(true, true, true, true);
         $('#category1List').val(context.params['category']);
         $("#category1List").trigger("liszt:updated");
-        context.title('Webshop - szoftver termékek');
+        context.title('szoftver termékek');
         showProductList(true);
     });
     //szűrőfeltételek törlése
@@ -1419,13 +1419,13 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.clear();
         loadCatalogue();
         loadStructure(true, true, true, true);
-        context.title('Webshop - szűrőfeltételek törlése');
+        context.title('szűrőfeltételek törlése');
         showProductList(true);
     });
     //használtcikk lista
     this.get('#/showSecondHandList/:productId/:dataAreaId', function (context) {
         alert('Ide jön a ' + productId + '-hoz kapcsolt használtcikk lista,');
-        context.title('Webshop - leértékelt lista');
+        context.title('leértékelt lista');
         showProductList(true);
     });
     //keresés a termékek között
@@ -1434,7 +1434,7 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
         loadStructure(true, true, true, true);
-        context.title('Webshop - keresés');
+        context.title('keresés');
         showProductList(true);
     });
     //termék adatlap
@@ -1460,21 +1460,21 @@ companyGroup.webshop = $.sammy(function () {
             }
         });
 
-        context.title('Webshop - ' + productId + ' adatlap');
+        context.title(productId + ' adatlap');
     });
     //rendelés feladás
     this.get('#/showCreateOrder', function (context) {
         $("#cus_rendeles_feladas").slideToggle();
         $("#cus_ajanlat_vegfelhasznalo").hide();
         $("#cus_ajanlat_finance").hide();
-        context.title('Webshop - rendelés feladás');
+        context.title('rendelés feladás');
     });
     //finanszírozási ajánlat
     this.get('#/showCreateFinanceOffer', function (context) {
         $("#cus_ajanlat_finance").slideToggle();
         $("#cus_ajanlat_vegfelhasznalo").hide();
         $("#cus_rendeles_feladas").hide();
-        context.title('Webshop - finanszírozási ajánlat');
+        context.title('finanszírozási ajánlat');
     });
     //árlista letöltés
     this.get('#/downloadPriceList', function (context) {

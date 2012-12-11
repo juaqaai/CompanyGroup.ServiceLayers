@@ -185,11 +185,13 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.WebshopModule.PriceList priceList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetPriceList, CompanyGroup.Dto.WebshopModule.PriceList>("Product", "GetPriceList", request);
 
-            System.Data.DataSet ds = CreateDataSet(priceList);
+            //System.Data.DataSet ds = CreateDataSet(priceList);
 
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            byte[] arr = GenerateExcelPriceList(priceList);
 
-            ExcelLibrary.DataSetHelper.CreateWorkbook(ms, ds);
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(arr);
+
+            //ExcelLibrary.DataSetHelper.CreateWorkbook(ms, ds);
 
             string fileDownloadName = "pricelist.xls";
 
@@ -204,6 +206,215 @@ namespace CompanyGroup.WebClient.Controllers
             return new System.Web.Mvc.EmptyResult();
             //return File(ms, "application/vnd.ms-excel", fileDownloadName);
         }
+
+        #region "Epplus"
+
+        private static byte[] GenerateExcelPriceList(CompanyGroup.Dto.WebshopModule.PriceList priceList)
+        {
+            using (OfficeOpenXml.ExcelPackage p = new OfficeOpenXml.ExcelPackage())
+            {
+                //munkafüzet tulajdonságainak beállítása
+                SetWorkbookProperties(p);
+                
+                //alapértelmezett munkalap hozzáadása
+                OfficeOpenXml.ExcelWorksheet ws = CreateSheet(p, "Terméklista");
+
+                System.Data.DataTable dt = CreateDataTable(priceList); 
+
+                //Merging cells and create a center heading for out table
+                ws.Cells[1, 1].Value = "Sample DataTable Export";
+                ws.Cells[1, 1, 1, dt.Columns.Count].Merge = true;
+                ws.Cells[1, 1, 1, dt.Columns.Count].Style.Font.Bold = true;
+                ws.Cells[1, 1, 1, dt.Columns.Count].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                int rowIndex = 2;
+
+                CreateHeader(ws, ref rowIndex, dt);
+                CreateData(ws, ref rowIndex, dt);
+                CreateFooter(ws, ref rowIndex, dt);
+
+                //AddComment(ws, 5, 10, "Zeeshan Umar's Comments", "Zeeshan Umar");
+
+                //string path = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Application.StartupPath)), "Zeeshan Umar.jpg");
+                //AddImage(ws, 10, 0, path);
+
+                //AddCustomShape(ws, 10, 7, eShapeStyle.Ellipse, "Text inside Ellipse.");
+
+                //Generate A File with Random name
+                //Byte[] bin = 
+                
+                return p.GetAsByteArray();
+                
+                //string file = Guid.NewGuid().ToString() + ".xlsx";
+                //System.IO.File.WriteAllBytes(file, bin);
+
+                //These lines will open it in Excel
+                //ProcessStartInfo pi = new ProcessStartInfo(file);
+                //Process.Start(pi);
+            }
+        }
+
+        /// <summary>
+        /// első munkalap elkészítése
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="sheetName"></param>
+        /// <returns></returns>
+        private static OfficeOpenXml.ExcelWorksheet CreateSheet(OfficeOpenXml.ExcelPackage p, string sheetName)
+        {
+            p.Workbook.Worksheets.Add(sheetName);
+            OfficeOpenXml.ExcelWorksheet ws = p.Workbook.Worksheets[1];
+            ws.Name = sheetName; 
+            ws.Cells.Style.Font.Size = 11; 
+            ws.Cells.Style.Font.Name = "Calibri"; 
+            return ws;
+        }
+
+        /// <summary>
+        /// excel munkafüzet jellemzők beállítása
+        /// </summary>
+        /// <param name="p">The p.</param>
+        /// <returns></returns>
+        private static void SetWorkbookProperties(OfficeOpenXml.ExcelPackage p)
+        {
+            p.Workbook.Properties.Author = "HRP Hungary Kft.";
+            p.Workbook.Properties.Title = "HRP - BSC árlista";
+        }
+
+        private static void CreateHeader(OfficeOpenXml.ExcelWorksheet ws, ref int rowIndex, System.Data.DataTable dt)
+        {
+            int colIndex = 1;
+            foreach (System.Data.DataColumn dc in dt.Columns) //Creating Headings
+            {
+                var cell = ws.Cells[rowIndex, colIndex];
+
+                //Setting the background color of header cells to Gray
+                var fill = cell.Style.Fill;
+                fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                fill.BackgroundColor.SetColor(System.Drawing.Color.Gray);
+
+                //Setting Top/left,right/bottom borders.
+                var border = cell.Style.Border;
+                border.Bottom.Style = border.Top.Style = border.Left.Style = border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                //Setting Value in cell
+                cell.Value = "Heading " + dc.ColumnName;
+
+                colIndex++;
+            }
+        }
+
+        private static void CreateData(OfficeOpenXml.ExcelWorksheet ws, ref int rowIndex, System.Data.DataTable dt)
+        {
+            int colIndex = 0;
+
+            foreach (System.Data.DataRow dr in dt.Rows) 
+            {
+                colIndex = 1;
+                rowIndex++;
+
+                foreach (System.Data.DataColumn dc in dt.Columns)
+                {
+                    var cell = ws.Cells[rowIndex, colIndex];
+
+                    //cella értékének beállítása
+                    cell.Value = Convert.ToInt32(dr[dc.ColumnName]);
+
+                    //cella border beállítása
+                    var border = cell.Style.Border;
+                    border.Left.Style = border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    colIndex++;
+                }
+            }
+        }
+
+        private static void CreateFooter(OfficeOpenXml.ExcelWorksheet ws, ref int rowIndex, System.Data.DataTable dt)
+        {
+            int colIndex = 0;
+            foreach (System.Data.DataColumn dc in dt.Columns) //Creating Formula in footers
+            {
+                colIndex++;
+                var cell = ws.Cells[rowIndex, colIndex];
+
+                //Setting Sum Formula
+                cell.Formula = "Sum(" + ws.Cells[3, colIndex].Address + ":" + ws.Cells[rowIndex - 1, colIndex].Address + ")";
+
+                //Setting Background fill color to Gray
+                cell.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Gray);
+            }
+        }
+
+        /// <summary>
+        /// árlista datatable-ba történő konvertálása
+        /// </summary>
+        /// <param name="priceList"></param>
+        /// <returns></returns>
+        private static System.Data.DataTable CreateDataTable(CompanyGroup.Dto.WebshopModule.PriceList priceList)
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            dt.Columns.Add("CannotCancel", typeof(bool));
+            dt.Columns.Add("Currency", typeof(string));
+            dt.Columns.Add("DataAreaId", typeof(string));
+            dt.Columns.Add("Description", typeof(string));
+            dt.Columns.Add("EndOfSales", typeof(bool));
+            dt.Columns.Add("FirstLevelCategoryId", typeof(string));
+            dt.Columns.Add("FirstLevelCategoryName", typeof(string));
+            dt.Columns.Add("GarantyMode", typeof(string));
+            dt.Columns.Add("GarantyTime", typeof(string));
+            dt.Columns.Add("InnerStock", typeof(int));
+            dt.Columns.Add("ItemName", typeof(string));
+            dt.Columns.Add("ManufacturerId", typeof(string));
+            dt.Columns.Add("ManufacturerName", typeof(string));
+            dt.Columns.Add("New", typeof(bool));
+            dt.Columns.Add("OuterStock", typeof(int));
+            dt.Columns.Add("PartNumber", typeof(string));
+            dt.Columns.Add("Price", typeof(int));
+            dt.Columns.Add("ProductId", typeof(string));
+            dt.Columns.Add("PurchaseInProgress", typeof(bool));
+            dt.Columns.Add("SecondLevelCategoryId", typeof(string));
+            dt.Columns.Add("SecondLevelCategoryName", typeof(string));
+            dt.Columns.Add("ShippingDate", typeof(DateTime));
+            dt.Columns.Add("ThirdLevelCategoryId", typeof(string));
+            dt.Columns.Add("ThirdLevelCategoryName", typeof(string));
+
+            foreach (CompanyGroup.Dto.WebshopModule.PriceListItem item in priceList.Items)
+            {
+                System.Data.DataRow row = dt.NewRow();
+
+                row["CannotCancel"] = item.CannotCancel;
+                row["Currency"] = item.Currency;
+                row["DataAreaId"] = item.DataAreaId;
+                row["Description"] = item.Description;
+                row["EndOfSales"] = item.EndOfSales;
+                row["FirstLevelCategoryId"] = item.FirstLevelCategory.Id;
+                row["FirstLevelCategoryName"] = item.FirstLevelCategory.Name;
+                row["GarantyMode"] = item.GarantyMode;
+                row["GarantyTime"] = item.GarantyTime;
+                row["InnerStock"] = item.InnerStock;
+                row["ItemName"] = item.ItemName;
+                row["ManufacturerId"] = item.Manufacturer.Id;
+                row["ManufacturerName"] = item.Manufacturer.Name;
+                row["New"] = item.New;
+                row["OuterStock"] = item.OuterStock;
+                row["PartNumber"] = item.PartNumber;
+                row["Price"] = item.Price;
+                row["ProductId"] = item.ProductId;
+                row["PurchaseInProgress"] = item.PurchaseInProgress;
+                row["SecondLevelCategoryId"] = item.SecondLevelCategory.Id;
+                row["SecondLevelCategoryName"] = item.SecondLevelCategory.Name;
+                row["ShippingDate"] = item.ShippingDate;
+                row["ThirdLevelCategoryId"] = item.ThirdLevelCategory.Id;
+                row["ThirdLevelCategoryName"] = item.ThirdLevelCategory.Name;
+
+                dt.Rows.Add(row);
+            }
+
+            return dt;
+        }
+
+        #endregion
 
         private System.Data.DataSet CreateDataSet(CompanyGroup.Dto.WebshopModule.PriceList from)
         {
