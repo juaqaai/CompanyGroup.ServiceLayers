@@ -9,6 +9,10 @@
 
         @Scripts.Render("~/bundles/head")
         @Scripts.Render("~/bundles/modernizr")
+
+		@Scripts.Render("~/bundles/Cufon")
+		@Scripts.Render("~/bundles/Segoe")
+
         @RenderSection("ScriptsInHead", required: false)
     </head>
     <body style="background:url(@Url.Content("~/Content/Media/images/big.jpg") top center no-repeat ">
@@ -89,59 +93,13 @@
 			</table>
         </script>
 
-		<!-- </div>  -->
+		</div><!--   -->
         <div id="cus_header2"></div>
 		<div id="cus_content_container">
 			<div id="cus_header_navigation_b">
 				<table width="100%" border="0" cellspacing="1" cellpadding="5">
 					<tr id="cus_header_navigation_b_table">
-						<td nowrap="nowrap" id="quickmenuContainer"></td>
-                        <script id="quickmenuTemplate" type="text/html">
-						<ul id="navmenu">
-							<li>
-								<div id="cus_speedmenu_text">
-									Gyorsmenü
-								</div>
-								<ul>
-
-									<li>
-										<a href="#/filterByHrp">HRP termékek</a>
-										<ul>
-											<li>
-												<a href="#/filterByCategoryHrp/B001">Asztali gépek</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryHrp/B011">Notebookok</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryHrp/B008">Monitorok</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryHrp/B012">Nyomtatók</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryHrp/C267">Kiegészítők</a>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<a href="#/filterByBsc">BSC termékek</a>
-										<ul>
-											<li>
-												<a href="#/filterByCategoryBsc/B019">Szoftverek</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryBsc/C077">Játékvezérlők</a>
-											</li>
-											<li>
-												<a href="#/filterByCategoryBsc/C267">Kiegészítők</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-                        </script>
+						<td nowrap="nowrap"></td>
 						<td nowrap="nowrap" id="usermenuContainer">
 						</td>
                         <script id="usermenuTemplate" type="text/html">
@@ -174,7 +132,7 @@
 						<td width="50%" align="right" nowrap="nowrap"><!-- *** gyorskereső ajánlóval *** -->
                         <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-						    <input type="text" class="ui-autocomplete-input" id="txt_globalsearch" size="19" onfocus="if(this.value=='Keresés a termékek között')this.value=''" onblur="if(this.value=='')this.value='Keresés a termékek között'"/>
+						    <input type="text" class="ui-autocomplete-input" id="txt_globalsearch" value="keresés a termékek között" size="19"/>
                             @Html.AntiForgeryToken()
                         </form>
                         </td>
@@ -188,10 +146,10 @@
 			    <div id="cus_ax_nav">
 				    <ul id="navmenu_o">
 					    <li>
-						    <a href="@Url.Content("~/Webshop/Index")">WEBÁRUHÁZ</a>
+						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Company/Newsletter")">AKCIÓK</a>
+						    <a href="@Url.Content("~/Company/Newsletter")">Akciók</a>
 						    <ul>
 							    <li>
 								    <a href="#"><img src="@Url.Content("~/Content/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
@@ -199,16 +157,16 @@
 						    </ul>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Company/Index")">CÉGINFORMÁCIÓ</a>
+						    <a href="@Url.Content("~/Company/Index")">Céginformáció</a>
 					    </li>
 					    <li>
-						    <a href="@Url.Content("~/Registration/Index")">PARTNERRÉ VÁLÁS</a>
+						    <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>
 					    </li>
 					    <li>
-						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">SZERVIZ</a>
+						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
 					    <li>
-						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">KARRIER</a>
+						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
 				    </ul>
 			    </div>
@@ -441,7 +399,8 @@
                 .js('@Scripts.Url("~/bundles/mustache")')
                 .js('@Scripts.Url("~/bundles/amplify")')
                 .js('@Scripts.Url("~/bundles/smarttab")')
-                .js('@Scripts.Url("~/bundles/scrollto")');               
+                .js('@Scripts.Url("~/bundles/scrollto")');
+				              
 
             @RenderSection("ScriptFiles", false)
         });
@@ -458,6 +417,8 @@
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
+            
+            Cufon.replace('h1,h2,h3,span,p');
 
             @RenderSection("ScriptOnReady", false)
         }); 

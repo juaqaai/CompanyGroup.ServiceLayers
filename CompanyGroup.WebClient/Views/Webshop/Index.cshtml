@@ -367,12 +367,14 @@
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
+                            <div id="kettes_szuro">
                         	<table cellpadding="1" cellspacing="1">
 						    <tr>
                                 <td><input type="checkbox" id="chk_filterByHrp" /></td><td>HRP termékek</td>
                                 <td><input type="checkbox" id="chk_filterByBsc" /></td><td>BSC termékek</td>
                             </tr>
                             </table>
+                            </div>
 					        <div id="cus_filter_price">
                                 <form action="#/filterbyprice" method="post" id="form_filterbyprice">
 					            <div id="negyes_szuro">	
@@ -395,7 +397,7 @@
 						        <input name="txt_filterbyprice" type="text" id="txt_filterbyprice" size="9" style="margin-top:4px; padding:5px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 75px;"/>
 						        <!-- <input type="submit" name="button" id="button" value="Keres" /> -->
 						        <div id="cus_refresh_icon">
-							        <input type="image" src="@Url.Content("~/Content/Media/images/refresh.png")" title="Frissítés" />Frissítés
+						            <div id="cus_filterdelete_text">Frissités</div><input type="image" src="@Url.Content("~/Content/Media/images/refresh.png")" title="Frissítés" />
 						        </div>
                                 </form>
 					        </div>
@@ -445,12 +447,12 @@
 					        </div>
 				        </div>
                         <p align="center">
-                            <marquee class="html-marquee" direction="up" behavior="scroll" scrollamount="1"> 
+                            <!--marquee class="html-marquee" direction="up" behavior="scroll" scrollamount="1"> 
                                 Felhasználónak küldött értesítő üzenetek szövege, <a href="#">linkekkel</a>, a kapcsolódó hivatkozáshoz...
                                 <br />
                                 <br />
                                 Felhasználónak küldött értesítő üzenetek szövege, linkekkel, a kapcsolódó hivatkozáshoz...
-                            </marquee>
+                            </marquee-->
                         </p>
                         <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" alt="" border="0" />
@@ -612,7 +614,7 @@
 				                    </td>
 				                    <td align="right" valign="top" nowrap="nowrap">
                                         {{if Visitor.IsValidLogin}}
-                                        <table width="205" border="0" cellspacing="" cellpadding="5" style="background:#3366CC; color:#FFF; border:0px; font-size: 11px; text-align:right;">                                       
+                                        <table width="205" border="0" cellspacing="" cellpadding="5" style="color:#084385; border:0px; font-size: 18px; text-align:right;">                                       
 	                                    <tr>
                                             <td width="100">
                                             {{if item.Discount}}<b>AKCIÓS!<b></br>{{/if}}
@@ -620,7 +622,7 @@
 									        </td>
 				                            <td style="text-align:right">Ár: <b>${item.Price}</b>{{if Products.Currency == 'HUF'}} Ft {{else}} € {{/if}}
 										    {{if item.SecondHandList.Items.length > 0}}
-				                            <br /><a style=" color:#ffc000; font-size: 11px; text-decoration: none;"href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowSecondHandList('${item.ProductId}', '${item.DataAreaId}');" title="${item.itemName}">Használt: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b> </a>
+				                            <br /><a style=" color:#ffc000; font-size: 18px; text-decoration: none;"href="javascript:void(0)" onclick="CompanyGroupCms.Catalogue.ShowSecondHandList('${item.ProductId}', '${item.DataAreaId}');" title="${item.itemName}">Használt: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b> </a>
 				                            {{/if}}
                                             </td>
     		                            </tr>
@@ -799,7 +801,12 @@
                     </div>
 
                     <script id="productDetailsTemplate" type="text/x-jquery-tmpl">
-						<table width="100%" border="0" cellspacing="1" cellpadding="1">
+					<table width="100%" border="0">
+                    <tr>
+                        <td><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code"> <br>  ${Product.ProductId}</span></td>
+                      </tr>
+                    </table>
+					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 							<tr>
 								<td valign="top">
 								<div id="cus_termekkep">
@@ -810,30 +817,29 @@
                                         <br/>
                                         {{/each}}
                                     {{else}}
-                                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
+                                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="100" height="94" alt="" />
                                     {{/if}}
 								</div></td>
-								<td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code">| ${Product.ProductId}</span>
-								<br />
+								<td valign="top" id="cus_prod_table_middle_cell">
+			
 								<div id="cus_prod_table_desc_full">
-                                    <span>Gyártó:</span> ${Product.Manufacturer.Name} <br/>                                       
-                                    <span>Jelleg1:</span> ${Product.FirstLevelCategory.Name} <br/>
-                                    <span>Jelleg2:</span> ${Product.SecondLevelCategory.Name} <br/>
-                                    <span>Jelleg3:</span> ${Product.ThirdLevelCategory.Name} <br/>
-                                    <span>Cikkszám:</span> ${Product.PartNumber} <br/>
-                                    <span>Leírás:</span> ${Product.Description} <br/> 
+                                    <span>Gyártó:</span><strong> ${Product.Manufacturer.Name} </strong><br/><br/>
+									<span>Jelleg1:</span><strong> ${Product.FirstLevelCategory.Name} </strong><br/>
+                                    <span>Jelleg2:</span><strong> ${Product.SecondLevelCategory.Name} </strong><br/>
+                                    <span>Jelleg3:</span><strong> ${Product.ThirdLevelCategory.Name} </strong><br/><br/>
+                                    <span><strong>Cikkszám:</strong></span> ${Product.PartNumber}<br/><br/>
+                                    <span><strong>Leírás:</strong></span><br>${Product.Description}<br/> 
 									<br />
-                                    <hr />
                                     {{if Visitor.IsValidLogin}}
                                         {{if Product.SecondHandList.Items.Count > 0}} <span>használt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
                                         {{if Product.IsInNewsletter}} <span>hírlevél akciós</span> <br/>  {{/if}}          <!-- ha a cikk hírlevél akciós -->
-                                        <span>Garancia módja:</span> ${Product.GarantyMode} <br/>
-                                        <span>Garancia ideje:</span> ${Product.GarantyTime} <br/><br/>
+                                        <span>Garancia módja:</span><strong> ${Product.GarantyMode} </strong><br/>
+                                        <span>Garancia ideje:</span><strong> ${Product.GarantyTime} </strong><br/>
  
-                                         {{if Product.EndOfSales}} <span>kifutó</span><br/>  {{/if}}                        <!-- ha a cikk kifuto -->
-                                         {{if Product.New}} <span>Új</span><br/>   {{/if}}                                  <!-- ha a cikk uj -->
+                                         {{if Product.EndOfSales}} <span><strong>Kifutó termék</strong></span><br/>  {{/if}}                        <!-- ha a cikk kifuto -->
+                                         {{if Product.New}} <span><strong>Új</strong></span><br/>   {{/if}}                                  <!-- ha a cikk uj -->
                                          {{if !Product.IsInStock}}
-                                            <span>Várható beérkezés dátuma:</span>  ${Product.ShippingDate} <br/>
+                                            <span>Várható beérkezés dátuma:</span><strong>  ${Product.ShippingDate} </strong><br/>
                                          {{/if}}
                                     {{/if}} 
    								</div></td>
@@ -846,30 +852,35 @@
 									</tr>
 									<tr>
 										<td nowrap="nowrap">
-                                        {{if Product.IsInStock}}
-                                            <span>Véső készlet:</span> ${Product.InnerStock} db<br />
-                                            <span>Huszti készlet:</span> ${Product.OuterStock} db<br />
+                                            <p>{{if Product.IsInStock}} <span>Véső készlet:</span><strong> ${Product.InnerStock} db</strong><br />
+                                            <span>Huszti készlet:</span><strong> ${Product.OuterStock} db</strong><br />
 										    <span></span>
                                         {{else}} 
                                                {{if Product.PurchaseInProgress}}
-				                                    <span>Várható érkezés: ${Product.ShippingDate}</span>
+				                                    <span>Várható érkezés:<strong> ${Product.ShippingDate}</strong></span>
                                                 {{else}}
-				                                    <span>Rendelhető</span>
+				                                    <span><strong>Rendelhető</strong></span>
                                                 {{/if}}                                       
-                                        {{/if}}
-                                        </td>
+                                        {{/if}}</p></td>
+									</tr>
+									<tr>
+										<td width="200px"><div class="cus_prod_table_quantity">
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                        <span class="cus_prod_table_basket">
+                                        <input type="image" class="basketicon" src="@Url.Content("~/content/media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        </span></div> <div class="cus_prod_table_basket"></div></td>
 									</tr>
 									<tr>
 										<td nowrap="nowrap">&nbsp;</td>
 									</tr>
 									<tr>
-										<td nowrap="nowrap">&nbsp;</td>
-									</tr>
+										<td nowrap="nowrap">
+											{{if Product.Discount}}<b>AKCIÓS!<b></br>{{/if}}
+									        {{if Product.New}}<span style="background:#000 padding:2px; color:#00ff33; text-decoration:none;"><b>ÚJDONSÁG!<b></span>{{/if}}										
+										</td>
+									</tr>									
 								</table>
-                                {{/if}}
-                                {{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}
-				                    <br />Használt: ${Product.SecondHandList.MinimumPrice} Ft-tól </a>
-                                {{/if}}
+                               {{/if}}<!-- {{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br />Használt:<strong> ${Product.SecondHandList.MinimumPrice} Ft-tól </strong></a>{{/if}}-->
                             </td>
 							</tr>
 							<tr>
@@ -1023,16 +1034,6 @@
 
     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
   	$('#usermenuContainer').html(usermenuHtml);
-
-    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model.Visitor);
-  	$('#quickmenuContainer').html(quickmenuHtml);
-
-@*
-//    $("#visitorInfoTemplate").tmpl(model.Visitor).appendTo("#cus_header1");
-
-//    $("#usermenuTemplate").tmpl(model.Visitor).appendTo("#usermenuContainer");
-
-//    $("#quickmenuTemplate").tmpl(model.Visitor).appendTo("#quickmenuContainer");*@
 
             $("#pagerTemplateTop").tmpl(model.Products).appendTo("#div_pager_top");
             $("#pagerTemplateBottom").tmpl(model.Products).appendTo("#div_pager_bottom");

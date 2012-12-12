@@ -144,9 +144,21 @@ namespace CompanyGroup.WebClient.Controllers
             return View();
         }
 
+        /*
+             public HttpResponseMessage Post(string version, string environment, string filetype)
+            {
+                var path = @"C:\Temp\test.exe";
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new FileStream(path, FileMode.Open);
+                result.Content = new StreamContent(stream);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                return result;
+            }
+         */
+
         [HttpGet]
         [ActionName("DownloadPriceList")]
-        public System.Web.Mvc.ActionResult DownloadPriceList() //CompanyGroup.Dto.ServiceRequest.CatalogueFilter
+        public FileStreamResult DownloadPriceList() //System.Net.Http.HttpResponseMessage System.Web.Mvc.ActionResult  CompanyGroup.Dto.ServiceRequest.GetPriceList request
         {
             /*
 +		Request.QueryString	{ManufacturerIdList%5b%5d=A004&ActionFilter=false&BargainFilter=false&NewFilter=false&StockFilter=false&TextFilter=&HrpFilter=true&BscFilter=true&PriceFilter=0&PriceFilterRelation=0&NameOrPartNumberFilter=&Sequence=0&CurrentPageIndex=1&ItemsOnPage=30&Clear=undefined}	System.Collections.Specialized.NameValueCollection {System.Web.HttpValueCollection}
@@ -180,6 +192,7 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitorData.ObjectId
             };
 
+            request.VisitorId = visitorData.ObjectId;
 
             request.NameOrPartNumberFilter = request.NameOrPartNumberFilter ?? String.Empty;
 
@@ -193,18 +206,33 @@ namespace CompanyGroup.WebClient.Controllers
 
             //ExcelLibrary.DataSetHelper.CreateWorkbook(ms, ds);
 
-            string fileDownloadName = "pricelist.xls";
+            string fileDownloadName = "pricelist.xlsx";
 
-            Response.Clear();
-            Response.ContentType = "application/vnd.ms-excel";
-            Response.AddHeader("content-disposition", String.Format("attachment;filename={0}", fileDownloadName));
+            System.Net.Http.HttpResponseMessage result = new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
-            ms.WriteTo(Response.OutputStream);
-            Response.Flush();
-            Response.End();
+            result.Content = new System.Net.Http.StreamContent(ms);
 
-            return new System.Web.Mvc.EmptyResult();
-            //return File(ms, "application/vnd.ms-excel", fileDownloadName);
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.ms-excel");
+
+            //result.Content.Headers.Add("content-disposition", String.Format("attachment;filename={0}", fileDownloadName));
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+
+            result.Content.Headers.ContentDisposition.FileName = fileDownloadName;
+
+            //return result;
+
+            //Response.Clear();
+            //Response.ContentType = "application/vnd.ms-excel";
+            //Response.AddHeader("content-disposition", String.Format("attachment;filename={0}", fileDownloadName));
+
+            //ms.WriteTo(Response.OutputStream);
+            //Response.Flush();
+            //Response.End();
+
+            //return new System.Web.Mvc.EmptyResult();
+            return File(ms, "application/octet-stream", fileDownloadName);
         }
 
         #region "Epplus"
@@ -318,7 +346,7 @@ namespace CompanyGroup.WebClient.Controllers
                     var cell = ws.Cells[rowIndex, colIndex];
 
                     //cella értékének beállítása
-                    cell.Value = Convert.ToInt32(dr[dc.ColumnName]);
+                    cell.Value = Convert.ToString(dr[dc.ColumnName]);
 
                     //cella border beállítása
                     var border = cell.Style.Border;

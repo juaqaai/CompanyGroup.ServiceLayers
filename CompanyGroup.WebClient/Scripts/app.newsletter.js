@@ -44,10 +44,6 @@ companyGroup.newsletter = $.sammy(function () {
             var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
             $('#usermenuContainer').html(usermenuHtml);
 
-            $("#quickmenuContainer").empty();
-            var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), result.Visitor);
-            $('#quickmenuContainer').html(quickmenuHtml);
-
             context.redirect('#/authenticated');
         });
 
@@ -57,8 +53,6 @@ companyGroup.newsletter = $.sammy(function () {
         this.signOut(companyGroup.utils.instance().getCustomerApiUrl('SignOut'), function (result) {
             $("#cus_header1").empty();
             $("#visitorInfoTemplate").tmpl(result.Visitor).appendTo("#cus_header1");
-            $("#quickmenuContainer").empty();
-            $("#quickmenuTemplate").tmpl(result.Visitor).appendTo("#quickmenuContainer");
             $("#usermenuContainer").empty();
             $("#usermenuTemplate").tmpl(result.Visitor).appendTo("#usermenuContainer");
         });

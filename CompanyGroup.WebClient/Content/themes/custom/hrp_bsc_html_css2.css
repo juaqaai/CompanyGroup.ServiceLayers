@@ -8,11 +8,9 @@ body {
     margin-right: 0px;
     margin-bottom: 0px;
     margin-top: 10px;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 14px;
-	background: url(../../Media/images/skin_nov15.jpg) no-repeat fixed center top rgb(255, 255, 255);
-	
-	
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+	background:url(../../Media/images/background-dots.png) repeat;
 }
 
 #tooltip { position:absolute; border:1px solid #333; background:#f7f5d1; padding:2px 5px; color:#333; display:none; }   
@@ -71,18 +69,18 @@ body {
 
 }
 #cus_header2 {
-	width: 1002px;
-	height: 116px;
-	background: #084385;
-	margin:0px auto;
-	/*-moz-opacity: .90;
-	filter: alpha(opacity=90);
-	position:inherit;
-	opacity: .90;*/
+    width: 100%;
+    height: 100px;
+    background: #084385;
+    margin-top: 16px;
+    /*background-image: url('images/filter_panel_bg.png');*/
+    -moz-opacity: .90;
+    filter: alpha(opacity=90);
+    opacity: .90;
 }
 #cus_logo_and_pages_menu {
     position: absolute;
-    width: 980px;
+    width: 1000px;
     z-index: 900;
     margin-top: -155px;
     padding-top: 6px;
@@ -92,7 +90,7 @@ body {
     width: auto;
     height: auto;
     padding: 0px;
-    font-family: Calibri, Geneva, sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
     font-size: 10px;
     z-index: 10000;
     position: absolute;
@@ -104,27 +102,25 @@ body {
 
     width: 1000px;
     margin: 0px auto;
-    /*box-shadow: 0px 0px 10px #888888;
-	border-radius: 15px 15px 15px 15px;*/
-	
+    -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
+    box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
 }
 #cus_header_navigation_b {
     position:fixed
     width: 998px;
     height: 44px;
-    background-color:white;
+    background: #FFF;
     margin-top: 15px;
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 1px;
     padding-right: 1px;
-    border: 0px solid #000;
-    
-
+    /*border-bottom: 3px solid #000;*/
 }
 #cus_header_navigation_b_table {
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     color: #666;
 }
 #srchfield {
@@ -151,9 +147,9 @@ body {
     position: absolute;
     width: 1000px;
     margin-top: 15px;
-    /*-webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);
-    -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);
-    box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);*/
+    -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
+    box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.5);
     border-bottom: 5px #fff solid;
     padding-bottom: 30px;
     background: #fff;
@@ -200,17 +196,17 @@ body {
     background: #FFFFFF;
     width: 275px;
     height: auto;
-    border-top:0px #333 solid;
+    border-top:2px #333 solid;
     margin-top: -11px;
     margin-left: -5px;
     padding-right: 3px;
     padding-top:3px;
     float: left;
     position: relative;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
     font-weight: bold;
-    color: #333333;
+    color: #666;
 }
 /*#container{
 	position:fixed;
@@ -231,7 +227,7 @@ body {
 
     background: #DDD;
     color: #666;
-    font-size: 14px;
+    font-size: 11px;
     width: 695px;
     margin-left: 0px;
     margin-top:5px;
@@ -242,7 +238,7 @@ body {
 
     background: #DDD;
     color: #666;
-    font-size: 14px;
+    font-size: 11px;
     width: 695px;
     margin-left: 0px;
     margin-top:5px;
@@ -253,7 +249,7 @@ body {
     
     background: #DDD;
     color: #666;
-    font-size: 14px;
+    font-size: 11px;
     width: 695px;
     margin-left: 0px;
     margin-top:5px;
@@ -262,8 +258,8 @@ body {
 
 #div_pager table {
     width: auto;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
     color: #666;
 }
 #div_pager_top a {
@@ -285,10 +281,10 @@ body {
     margin-top: 3px;
 }
 #div_login {
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 #div_login table tr td {
-    font-size: 14px;
+    font-size: 11px;
 }
 #login_errors {
     text-align: left;
@@ -345,13 +341,13 @@ body {
 
 #cus_product_table, #cus_productdetails_table {
     margin-left: 0px;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 5px;
     float: left;
     width: 680px;
     background: #fff;
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
 }
 
 #cus_termekkep {
@@ -361,18 +357,16 @@ body {
 }
 /* kijavítottam a kép torzulást, leszdtem a körvonalat*/
 #cus_termekkep img {
-	max-width: 100px;
-	max-height: 100px;
+	max-width: 94px;
+	max-height: 94px;
 	border: #ccc solid 0px;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-bottom: 5px;
+	margin-left: 25px;
+	margin-bottom: 3px;
 }
 #cus_termekkep img:hover {
-	max-width: 100px;
-	max-height: 100px;
-	border: #AAA solid 0px;    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
+	max-width: 94px;
+	max-height: 94px;
+	border: #AAA solid 1px;    /*-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.5);
 
      -moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.5);
      box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.5);*/
@@ -429,10 +423,10 @@ body {
     width: 100%;
     padding-left: 5px;
     padding-right: 0px;
-    font-size: 14px;
+    font-size: 11px;
 }
 .cus_prod_table_price {
-    font-size: 24px;
+    font-size: 11px;
 }
 .cus_prod_table_price table tr td {
     color: #fff;
@@ -476,8 +470,8 @@ body {
 }
 .cus_prod_table_desc {
 	width: 310px;
-	font-size: 14px;
-	font-family: Calibri, Geneva, sans-serif;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
 	overflow: hidden;
 	height: 54px;
 	text-align: left;
@@ -488,30 +482,26 @@ body {
 }
 
 .cus_teteladatok {
-    font-size: 14px;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	text-align: left
     margin-top: -2px;
 }
 .cus_teteladatok_2 {
-	font-size: 14px;
-	font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	text-align: right;
 	margin-top:-5px;
 	padding-top: 0px;
 	padding-bottom: 4px;
 }
 #cus_prod_table_desc_full {
-	width: 350px;
-    font-size: 14px;
-    font-family: Calibri, Geneva, sans-serif;
-    text-align: left;
-    margin-top: 10px;
-	margin-bottom:20px;
-    padding-left: 20px;
-	/*border-right-width:1px;
-  	border-right-style:solid;
-  	border-right-color:#999999;*/
+	width: 340px;
+    font-size: 11px;
+    font-family: Verdana, Geneva, sans-serif;
+    text-align: justify;
+    margin-top: 0px;
+    padding-right: 3px;
 }
 .cus_prod_table_desc:active {
     height: auto;
@@ -546,7 +536,7 @@ body {
 }
 #cus_prod_table_quantity input {
     width: 25px;
-    font-size: 14px;
+    font-size: 11px;
     color: #333;
 }
 
@@ -600,8 +590,8 @@ ul#navmenu {
     list-style: none;
     z-index: 1300;
     background: url('../../Media/images/speedmenu_bg.png');
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     cursor: pointer;
 }
 ul#navmenu li {
@@ -656,7 +646,7 @@ ul#navmenu a {
     display: block;
     background: #EEE;
     color: #666;
-    font: normal 10px  /22px Calibri, Arial, Helvetica, sans-serif;
+    font: normal 10px  /22px Verdana, Arial, Helvetica, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
@@ -717,7 +707,7 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     margin-top: 8px;
     margin-left: 30px;
     position: absolute;
-    font-size: 14px;
+    font-size: 11px;
     color:#666;
 }
 
@@ -727,7 +717,7 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     margin-top: 8px;
     margin-left: 10px;
     position: absolute;
-    font-size: 14px;
+    font-size: 11px;
     color:#666;
 }
 
@@ -755,8 +745,8 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     padding-top: 0px;
 }
 .cus_list_order_panel_table {
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     color: #666;
 }
 .cus_list_order_panel_table input {
@@ -764,7 +754,7 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     width: 275px;
     border-radius: 2px;
     border: solid 1px #ccc;
-    font-size: 14px;
+    font-size: 11px;
     color: #666;
 }
 /* Root = Horizontal, Secondary = Vertical */
@@ -780,8 +770,8 @@ ul#navmenu_order {
     list-style: none;
     z-index: -1;
     background: url('../../Media/images/ordermenu_bg.png');
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     cursor: pointer;
     color: #666;
 }
@@ -837,7 +827,7 @@ ul#navmenu_order a {
     display: block;
     background: #EEE;
     color: #666;
-    font: normal 10px  /22px Calibri, Arial, Helvetica, sans-serif;
+    font: normal 10px  /22px Verdana, Arial, Helvetica, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
@@ -954,7 +944,7 @@ ul#navmenu_o a {
     display: block;
     background: #fff;
     color: #333;
-    font: normal 14px  /22px Calibri, Geneva, sans-serif;
+    font: normal 12px  /22px Calibri, Geneva, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
@@ -1041,8 +1031,8 @@ ul#usermenu {
     list-style: none;
     z-index: 1390;
     background: url('../../Media/images/usermenu.png');
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     cursor: pointer;
 }
 ul#usermenu li {
@@ -1097,7 +1087,7 @@ ul#usermenu a {
     display: block;
     background: #EEE;
     color: #666;
-    font: normal 10px  /22px Calibri, Arial, Helvetica, sans-serif;
+    font: normal 10px  /22px Verdana, Arial, Helvetica, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
@@ -1157,12 +1147,12 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
 
 #cus_copyright {
     background: #CCC;
-    padding: 14px;
+    padding: 10px;
     height: 140px;
 }
 .cus_copyright_table_small_text {
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 10px;
     color: #666;
 }
 .cus_copyright_table_small_text a {
@@ -1187,8 +1177,8 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     height: auto;
     position: fixed;
     z-index: 1100;
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     padding-top: 5px;
     padding-bottom: 10px;
     -moz-opacity: .95;
@@ -1206,12 +1196,12 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
 }
 #cus_bottom_list_table {
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     margin-right: 5px;
     border-right: 1px #ccc solid;
 }
@@ -1224,8 +1214,8 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     height: 25px;
     position: fixed;
     z-index: 1300;
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     padding-top: 5px;
     border-top: #FFF 1px dotted;
     cursor: pointer;
@@ -1266,8 +1256,8 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
 	text-decoration:none;
 }
 #basket_panel table tr td {
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
 }
 .btn_basket_slide {
     text-align: right;
@@ -1278,7 +1268,7 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     /*overflow:auto;*/
     display: block;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 11px;
     color: #fff;
     text-decoration: none;
     padding: 0px;
@@ -1374,7 +1364,7 @@ ul.tabs li a {
     display: block;
     float: left;
     padding: 5px;
-    font-size: 14px;
+    font-size: 10px;
     background: #3366FF;
     color: #fff;
     text-decoration: none;
@@ -1383,7 +1373,7 @@ ul.tabs li a:hover {
     display: block;
     float: left;
     padding: 5px;
-    font-size: 14px;
+    font-size: 10px;
     background: #333;
     color: #fff;
     text-decoration: none;
@@ -1697,7 +1687,7 @@ ul.tabs li a:hover {
     width:246px;
     background-color:#FEF6D8;
     padding:2px;
-    font-family:Calibri;
+    font-family:Verdana;
     font-size:11px;
     font-weight:normal;
     color:#333;
@@ -1711,7 +1701,7 @@ ul.tabs li a:hover {
     margin:0;
     padding:0;     
     left:1%;     
-    font: normal 12px Calibri, Arial, Helvetica, sans-serif; 
+    font: normal 12px Verdana, Arial, Helvetica, sans-serif; 
     color:              #5A5655;
     background-color:   #F8F8F8;
     border:             0px solid #CCC;
@@ -1727,7 +1717,7 @@ ul.tabs li a:hover {
     border-left-width: 0 !important;
     width:740px;
     height:500px;
-    font: normal 12px Calibri, Arial, Helvetica, sans-serif; 
+    font: normal 12px Verdana, Arial, Helvetica, sans-serif; 
     color:              #5A5655;   
     background-color:   #F8F8F8;
     text-align:left;
@@ -1781,11 +1771,11 @@ ul.tabs li a:hover {
 }
 .stContainer ul li a h2 { 
   display:block;
-  font: bold 18px Calibri, Arial, Helvetica, sans-serif;
+  font: bold 18px Verdana, Arial, Helvetica, sans-serif;
   float:left;
 }
 .stContainer ul li a small { 
-  font: normal 12px Calibri, Arial, Helvetica, sans-serif;
+  font: normal 12px Verdana, Arial, Helvetica, sans-serif;
   float:left;
 }
 .stContainer ul li a:hover {   
@@ -1820,7 +1810,7 @@ ul.tabs li a:hover {
 	margin-left: 15px;
 	margin-top: 0px;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 11px;
 	color:#666;
 }
 #dashboardtext a {
@@ -1846,20 +1836,13 @@ ul.tabs li a:hover {
 	font-size:9px;
 }
 
-#kettes_szuro {
-	width:272px;
-	padding:3px;
-	margin-bottom:15px;
-	background:#888888;
-	color:#fff;
-}
 #negyes_szuro {
 	width:272px;
 	padding:3px;
 	margin-bottom:15px;
-	margin-top:-20px;
+	margin-top:-8px;
 	margin-left:-5px;
-	background:#888888;
+	background:#333;
 	color:#fff;
 }
 
@@ -1952,8 +1935,8 @@ ul.tabs li a:hover {
 	background-position: center top;
 }
 #loginform table {
-	font-family: Calibri, Geneva, sans-serif;
-	font-size: 14px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
 	color: #333;
 	background-repeat: no-repeat;
 }	

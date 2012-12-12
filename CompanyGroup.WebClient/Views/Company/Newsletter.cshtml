@@ -55,9 +55,6 @@
     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
   	$('#usermenuContainer').html(usermenuHtml);
 
-    var quickmenuHtml = Mustache.to_html($('#quickmenuTemplate').html(), model);
-  	$('#quickmenuContainer').html(quickmenuHtml);
-
     $("#div_newsletter_container").empty();
     $("#newsletter_template").tmpl(model).appendTo("#div_newsletter_container");
 }

@@ -16,7 +16,6 @@ namespace CompanyGroup.WebClient
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate.js"));
 
-
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/modernizr-*"));
@@ -76,6 +75,10 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/carreer").Include("~/Scripts/app.carreer.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/newsletter").Include("~/Scripts/app.newsletter.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Cufon").Include("~/Scripts/cufon-yui.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Segoe").Include("~/Scripts/Segoe_Pro_Display_400-Segoe_Pro_Display_Semibold_600-Segoe_Pro_Light_italic_300-Segoe_Pro_Semibold_italic_600.font.js"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 

@@ -125,7 +125,7 @@ companyGroup.utils = (function () {
                 _downloadPriceListUrl = url;
             },
             getDownloadPriceListUrl: function () {
-
+                return _downloadPriceListUrl;
             },
             setShoppingCartBaseApiUrl: function (url) {
                 _shoppingCartBaseApiUrl = url;
