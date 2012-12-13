@@ -19,6 +19,8 @@ namespace CompanyGroup.Domain.MaintainModule
 
         List<CompanyGroup.Domain.MaintainModule.Product> GetProductList(string dataAreaId);
 
+        List<CompanyGroup.Domain.MaintainModule.Product> GetSecondHandProductList(string dataAreaId);
+
         List<CompanyGroup.Domain.MaintainModule.Picture> GetPictureList(string dataAreaId);
 
         List<CompanyGroup.Domain.MaintainModule.Stock> GetStockList(string dataAreaId);

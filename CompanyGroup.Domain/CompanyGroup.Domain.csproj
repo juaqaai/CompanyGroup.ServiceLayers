@@ -222,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MaintainModule\ProductAggregates\CompatibilityItem.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\PurchaseOrderLine.hbm.xml" />
+    <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondHandProduct.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="MaintainModule\ProductAggregates\NHibernate.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\LoginInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.hbm.xml">

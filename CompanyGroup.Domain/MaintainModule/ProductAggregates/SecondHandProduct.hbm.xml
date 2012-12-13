@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.cms_SecondHandProductList" callable="true">
+    <return-scalar column="ProductId" type="System.String"/>
+    <return-scalar column="AxStructCode" type="System.String"/>
+    <return-scalar column="ManufacturerId" type="System.String"/>
+    <return-scalar column="Category1Id" type="System.String"/>
+    <return-scalar column="Category2Id" type="System.String"/>
+    <return-scalar column="Category3Id" type="System.String"/>
+    <return-scalar column="StandardConfigId" type="System.String"/>
+    <return-scalar column="PartNumber" type="System.String"/>
+    <return-scalar column="ItemName" type="System.String"/>
+    <return-scalar column="GarantyTime" type="System.String"/>
+    <return-scalar column="GarantyMode" type="System.String"/>
+    <return-scalar column="ItemState" type="System.Int32"/>
+    <return-scalar column="Discount" type="System.Boolean"/>
+    <return-scalar column="New" type="System.Boolean"/>
+    <return-scalar column="AverageInventory" type="System.Int32"/>
+    <return-scalar column="ProductManagerId" type="System.String"/>
+    <return-scalar column="Price1" type="System.Int32"/>
+    <return-scalar column="Price2" type="System.Int32"/>
+    <return-scalar column="Price3" type="System.Int32"/>
+    <return-scalar column="Price4" type="System.Int32"/>
+    <return-scalar column="Price5" type="System.Int32"/>
+    <return-scalar column="Currency" type="System.String"/>
+    <return-scalar column="CreatedDate" type="System.DateTime"/>
+    <return-scalar column="CreatedTime" type="System.Int32"/>
+    <return-scalar column="ModifiedDate" type="System.DateTime"/>
+    <return-scalar column="ModifiedTime" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.cms_SecondHandProductList :DataAreaId
+  </sql-query>
+</hibernate-mapping>

@@ -119,8 +119,20 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
                 //angol termékmevek lekérdezés
                 List<CompanyGroup.Domain.MaintainModule.InventName> inventNames = productMaintainRepository.GetInventNameEnglishList(dataAreaId);
 
+                //használt cikkek lekérdezés
+                List<CompanyGroup.Domain.MaintainModule.Product> secondHandProducts = productMaintainRepository.GetSecondHandProductList(dataAreaId);
+
                 //cikkek lekérdezés
                 List<CompanyGroup.Domain.MaintainModule.Product> products = productMaintainRepository.GetProductList(dataAreaId);
+
+                //szűrés azokra a termékekre, melyek szerepelnek a leértékelt listában
+                List<CompanyGroup.Domain.MaintainModule.Product> filteredSecondHandProducts = secondHandProducts.Where(x => secondHands.Any(y => y.ProductId == x.ProductId)).ToList();
+
+                //termékek eltávolítása a leértékelt listából, melyek azonosítója már szerepel a terméklistában
+                filteredSecondHandProducts.RemoveAll(z => !(products.Any(p => p.ProductId == z.ProductId)));
+
+                //leértékelt lista terméklistához történő hozzáadása        
+                products.AddRange(filteredSecondHandProducts);
 
                 products.ForEach(delegate(Product item)
                 {

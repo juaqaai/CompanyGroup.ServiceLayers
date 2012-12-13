@@ -99,6 +99,18 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
+        /// használt terméklista lekérdezése
+        /// </summary>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.MaintainModule.Product> GetSecondHandProductList(string dataAreaId)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_SecondHandProductList").SetString("DataAreaId", dataAreaId).SetResultTransformer(
+                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.MaintainModule.Product).GetConstructors()[0]));
+
+            return query.List<CompanyGroup.Domain.MaintainModule.Product>() as List<CompanyGroup.Domain.MaintainModule.Product>;
+        }
+
+        /// <summary>
         /// webre kitehető termékekhez tartozó képek lista lekérdezése
         /// </summary>
         /// <returns></returns>
