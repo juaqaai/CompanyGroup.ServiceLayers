@@ -49,6 +49,14 @@ namespace CompanyGroup.Domain.WebshopModule
                          ref long count);
 
         /// <summary>
+        /// terméklista lekérdezés
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.ProductList GetProductList(string dataAreaId, int sequence);
+
+        /// <summary>
         /// termékstruktúra lekérdezés
         /// </summary>
         /// <param name="dataAreaId"></param>

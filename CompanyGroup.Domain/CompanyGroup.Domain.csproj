@@ -140,6 +140,7 @@
     <Compile Include="WebshopModule\NewsletterAggregates\INewsletterRepository.cs" />
     <Compile Include="WebshopModule\NewsletterAggregates\Newsletter.cs" />
     <Compile Include="WebshopModule\NewsletterAggregates\NewsletterCollection.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\Catalogue.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Completion.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CompletionType.cs" />
     <Compile Include="WebshopModule\ProductAggregates\DataAreaId.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="WebshopModule\ProductAggregates\Prices.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ProductManager.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Factory.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\ProductList.cs" />
     <Compile Include="WebshopModule\ProductAggregates\SecondHand.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Sequence.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Stock.cs" />

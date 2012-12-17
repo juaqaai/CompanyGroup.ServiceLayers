@@ -77,7 +77,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        //public CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
             long count = 0;
 
