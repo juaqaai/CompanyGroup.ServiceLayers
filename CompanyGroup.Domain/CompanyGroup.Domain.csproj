@@ -66,7 +66,6 @@
     <Compile Include="MaintainModule\ProductAggregates\Product.cs" />
     <Compile Include="MaintainModule\ProductAggregates\Picture.cs" />
     <Compile Include="MaintainModule\ProductAggregates\ProductDescription.cs" />
-    <Compile Include="MaintainModule\ProductAggregates\ProductManager.cs" />
     <Compile Include="Core\IRepository.cs" />
     <Compile Include="MaintainModule\ProductAggregates\IProductRepository.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ChangePassword.cs" />
@@ -205,7 +204,6 @@
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\LeasingOption.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\MinMaxLeasingValue.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\ExchangeRate.hbm.xml" />
-    <EmbeddedResource Include="MaintainModule\ProductAggregates\ProductManager.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\ProductDescription.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\FirstLevelCategory.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondLevelCategory.hbm.xml" />

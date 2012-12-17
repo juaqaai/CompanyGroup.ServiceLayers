@@ -41,6 +41,7 @@
 		<div id="cus_bottom_panel_on"></div>*@
 		<!-- *** alsó felnyíló panel div vége *** -->
 		<div id="cus_header1"></div>
+        <div id="cus_background"></div>
 
         <script id="visitorInfoTemplate" type="text/html">
 			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -97,11 +98,9 @@
         <div id="cus_header2"></div>
 		<div id="cus_content_container">
 			<div id="cus_header_navigation_b">
-				<table width="100%" border="0" cellspacing="1" cellpadding="5">
+				<table border="0" cellspacing="0" cellpadding="4">
 					<tr id="cus_header_navigation_b_table">
-						<td nowrap="nowrap"></td>
-						<td nowrap="nowrap" id="usermenuContainer">
-						</td>
+						<td id="usermenuContainer">
                         <script id="usermenuTemplate" type="text/html">
                         {{#IsValidLogin}}
                         <ul id="usermenu">
@@ -127,21 +126,23 @@
 						</ul>
                         {{/IsValidLogin}}
                         </script>
-						<td width="100%" nowrap="nowrap">&nbsp;</td>
-						<td align="right" nowrap="nowrap"></td>
-						<td width="50%" align="right" nowrap="nowrap"><!-- *** gyorskereső ajánlóval *** -->
-                        <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
-                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-						    <input type="text" class="ui-autocomplete-input" id="txt_globalsearch" value="keresés a termékek között" size="19"/>
-                            @Html.AntiForgeryToken()
-                        </form>
-                        </td>
+						</td>
+						<td >
+<form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
+<div class="inputwrapper">
+<label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+<input style="border: 0px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="50"/>
+<img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onclick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer; ">@Html.AntiForgeryToken()
+</div>
+</form>
+						</td>
+						<td></td>
 					</tr>
 				</table>
 			</div>
 			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
 		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
-        	    <a href="#top" id="top-link">Top of Page</a>
+        	    <a title="$.scrollTo( '#top', 800, {easing:'elasout'} );" href="#top" id="top-link">Top of Page</a>
 			    <!-- menü -->
 			    <div id="cus_ax_nav">
 				    <ul id="navmenu_o">
@@ -204,7 +205,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>k&eacute;p helye</td>
+								<td width="160px" ><img src="@Url.Content("~/Content/Media/images/iso.jpg")" alt="iso" height="60" width="160"/></td>
 								<td class="cus_copyright_table_small_text" align="center">Az &aacute;rak az &Aacute;F&Aacute;-t nem tartalmazz&aacute;k &eacute;s a mindenkori doll&aacute;r, illetve euro &aacute;rfolyam f&uuml;ggv&eacute;ny&eacute;ben v&aacute;ltozhatnak. Az akci&oacute;k a felt&uuml;ntetett időpontig, illetve visszavon&aacute;sig &eacute;rv&eacute;nyesek. Az &aacute;rv&aacute;ltoztat&aacute;s jog&aacute;t fenntartjuk. Az oldal tartalm&aacute;nak felhaszn&aacute;l&aacute;s&aacute;hoz, m&aacute;sol&aacute;s&aacute;hoz az oldal tulajdonos&aacute;nak enged&eacute;lye sz&uuml;ks&eacute;ges. &copy;2002-2012 HRP Hungary Kft. Minden jog fenntartva.</td>
 							</tr>
 						</tbody>
@@ -418,7 +419,9 @@
                 $('#preloader').hide();
             });
             
-            Cufon.replace('h1,h2,h3,span,p');
+            Cufon.replace('li,ul,h1,h2,h3,h4,span,p');
+			
+
 
             @RenderSection("ScriptOnReady", false)
         }); 

@@ -43,7 +43,7 @@ namespace CompanyGroup.WebClient.Controllers
                 NameOrPartNumberFilter = ""
             };
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetAll", allStructure);
+            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Product", "GetStructure", allStructure);
 
             //katalógus lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
@@ -144,18 +144,10 @@ namespace CompanyGroup.WebClient.Controllers
             return View();
         }
 
-        /*
-             public HttpResponseMessage Post(string version, string environment, string filetype)
-            {
-                var path = @"C:\Temp\test.exe";
-                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-                var stream = new FileStream(path, FileMode.Open);
-                result.Content = new StreamContent(stream);
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                return result;
-            }
-         */
-
+        /// <summary>
+        /// árlista letöltése
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ActionName("DownloadPriceList")]
         public FileStreamResult DownloadPriceList() //System.Net.Http.HttpResponseMessage System.Web.Mvc.ActionResult  CompanyGroup.Dto.ServiceRequest.GetPriceList request
@@ -382,7 +374,6 @@ namespace CompanyGroup.WebClient.Controllers
         {
             System.Data.DataTable dt = new System.Data.DataTable();
 
-            dt.Columns.Add("CannotCancel", typeof(bool));
             dt.Columns.Add("Currency", typeof(string));
             dt.Columns.Add("DataAreaId", typeof(string));
             dt.Columns.Add("Description", typeof(string));
@@ -411,7 +402,6 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 System.Data.DataRow row = dt.NewRow();
 
-                row["CannotCancel"] = item.CannotCancel;
                 row["Currency"] = item.Currency;
                 row["DataAreaId"] = item.DataAreaId;
                 row["Description"] = item.Description;
@@ -448,7 +438,6 @@ namespace CompanyGroup.WebClient.Controllers
         {
             System.Data.DataTable dt = new System.Data.DataTable();
 
-            dt.Columns.Add("CannotCancel", typeof(bool));
             dt.Columns.Add("Currency", typeof(string));
             dt.Columns.Add("DataAreaId", typeof(string));
             dt.Columns.Add("Description", typeof(string));
@@ -477,7 +466,6 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 System.Data.DataRow row = dt.NewRow();
 
-                row["CannotCancel"] = item.CannotCancel;
                 row["Currency"] = item.Currency;
                 row["DataAreaId"] = item.DataAreaId;
                 row["Description"] = item.Description;

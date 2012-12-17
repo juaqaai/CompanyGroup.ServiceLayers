@@ -8,8 +8,10 @@ namespace CompanyGroup.Data.WebshopModule
     /// <summary>
     /// termékstruktúra repository
     /// </summary>
-    public class StructureRepository : CompanyGroup.Data.NoSql.Repository<MongoDB.Bson.BsonDocument>, CompanyGroup.Domain.WebshopModule.IStructureRepository
+    public class StructureRepository : CompanyGroup.Data.NoSql.Repository<CompanyGroup.Domain.WebshopModule.Product>, CompanyGroup.Domain.WebshopModule.IStructureRepository
     {
+        private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("StructureCollectionName", "ProductList");
+
         /// <summary>
         /// termékstruktúra repository konstruktor
         /// </summary>
@@ -19,11 +21,6 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// termékstruktúra lekérdezés
         /// </summary>
-        /// <example>
-        /// var query = Query.And(
-        /// Query.EQ("author", "Kurt Vonnegut"),
-        /// Query.EQ("title", "Cats Craddle") );
-        /// </example>
         /// <param name="dataAreaId"></param>
         /// <param name="actionFilter"></param>
         /// <param name="bargainFilter"></param>
@@ -62,40 +59,41 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                           nameOrPartNumberFilter, 
                                                                                           dataAreaId);
 
-                string[] sortFields = new string[] { "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryName", "Structure.Category2.CategoryName", "Structure.Category3.CategoryName" };
+                //string[] sortFields = new string[] { "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryName", "Structure.Category2.CategoryName", "Structure.Category3.CategoryName" };
 
-                string[] fields = new string[] { "Structure.Manufacturer.ManufacturerId", "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryId", "Structure.Category1.CategoryName", "Structure.Category2.CategoryId", "Structure.Category2.CategoryName", "Structure.Category3.CategoryId", "Structure.Category3.CategoryName" };
+                //string[] fields = new string[] { "Structure.Manufacturer.ManufacturerId", "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryId", "Structure.Category1.CategoryName", "Structure.Category2.CategoryId", "Structure.Category2.CategoryName", "Structure.Category3.CategoryId", "Structure.Category3.CategoryName" };
 
-                MongoDB.Driver.MongoCollection<MongoDB.Bson.BsonDocument> catalogue = this.GetCollection();
+                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> catalogue = this.GetCollection(StructureRepository.CollectionName);
 
                 //IEqualityComparer<Shared.Web.NoSql.Entities.CatalogueItem> catalogueComparer = new CatalogueComparer();
 
-                MongoDB.Driver.MongoCursor<MongoDB.Bson.BsonDocument> filteredList = catalogue.Find(query); //.SetSortOrder(sortFields).SetFields(fields);
+                MongoDB.Driver.MongoCursor<CompanyGroup.Domain.WebshopModule.Product> filteredList = catalogue.Find(query); //.SetSortOrder(sortFields).SetFields(fields);MongoDB.Bson.BsonDocument
 
                 CompanyGroup.Domain.WebshopModule.Structures resultList = new CompanyGroup.Domain.WebshopModule.Structures();
 
-                foreach (MongoDB.Bson.BsonDocument item in filteredList)
+                foreach (CompanyGroup.Domain.WebshopModule.Product item in filteredList)
                 {
-                    resultList.Add(
-                           CompanyGroup.Domain.WebshopModule.Factory.CreateStructure(ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerId"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerName"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryId"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryName"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryId"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryName"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryId"]),
-                                                                                     ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryName"]))
-                    );
+                    resultList.Add(item.Structure);
+                           //CompanyGroup.Domain.WebshopModule.Factory.CreateStructure(ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerId"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerName"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryId"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryName"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryId"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryName"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryId"]),
+                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryName"]))
+                    //);
                 }
                 return resultList;
             }
-            catch
+            catch(Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.Structures();
+                throw ex;
+                //return new CompanyGroup.Domain.WebshopModule.Structures();
             }
             finally
             {
-                Disconnect();
+                this.Disconnect();
             }
         }
 

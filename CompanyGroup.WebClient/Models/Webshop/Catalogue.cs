@@ -20,7 +20,7 @@ namespace CompanyGroup.WebClient.Models
                          CompanyGroup.Dto.WebshopModule.BannerList bannerList, 
                          CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
         {
-            this.Structures = new Structures(structures);
+            this.Structures = new CompanyGroup.WebClient.Models.Structures(structures);
 
             this.Products = products;   
 
@@ -43,7 +43,7 @@ namespace CompanyGroup.WebClient.Models
             this.LeasingOptions = leasingOptions;
         }
 
-        public Structures Structures { get; set; }
+        public CompanyGroup.WebClient.Models.Structures Structures { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
 

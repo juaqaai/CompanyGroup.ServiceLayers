@@ -70,10 +70,10 @@ namespace CompanyGroup.Data.NoSql
                 throw new ArgumentNullException("settings");
             }
 
-            if (!this.connected)
-            {
+            //if (!this.connected)
+            //{
                 this.Connect(this.settings);
-            }
+            //}
         }
 
         /// <summary>
@@ -246,6 +246,9 @@ namespace CompanyGroup.Data.NoSql
 
         /// <summary>
         /// lekérdezés paraméterek felépítése
+        /// vállalatkód üres, ha hrp és bsc is,
+        /// ItemState értéke 0, vagy 1, illetve használt készlet esetén bármi
+        /// 
         /// </summary>
         /// <param name="manufacturerIdList"></param>
         /// <param name="category1IdList"></param>
@@ -276,64 +279,61 @@ namespace CompanyGroup.Data.NoSql
                                                                                string nameOrPartNumberFilter, 
                                                                                string dataAreaId)
         {
-            bool isCommonCompany = (dataAreaId == "");
 
-            MongoDB.Driver.IMongoQuery queryComplete = isCommonCompany ? MongoDB.Driver.Builders.Query.NE("DataAreaId", CompanyGroup.Domain.Core.Constants.DataAreaIdSerbia) : MongoDB.Driver.Builders.Query.EQ("DataAreaId", dataAreaId);
+            
 
-            queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.LT("ItemState", 2));
+            //{ "$or" : [{ "DataAreaId" : { "$ne" : "ser" }, "ItemState" : { "$lt" : 2 } }, { "DataAreaId" : { "$ne" : "ser" }, "$where" : { "$code" : "this.SecondHandList.length > 0" } }] }
+            //query = { "DataAreaId" : { "$ne" : "ser" }, "$or" : [{ "ItemState" : { "$lt" : 2 } }, { "$where" : { "$code" : "SecondHandList.length > 0" } }] }
+            /*
+             var query = Query.And(
+        Query.EQ("Key.A", 1),
+        Query.EQ("Key.B", 3),
+        Query.In("Key.C", 77, 78)
+    ); 
+             */
+            MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.LT("ItemState", 2), MongoDB.Driver.Builders.Query.Where("this.SecondHandList.length > 0"));
+
+            if (!String.IsNullOrEmpty(dataAreaId))
+            {
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.EQ("DataAreaId", dataAreaId));            
+            }
 
             if (manufacturerIdList.Count > 0)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.In("Structure.Manufacturer.ManufacturerId", MongoDB.Bson.BsonArray.Create(manufacturerIdList)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.In("Structure.Manufacturer.ManufacturerId", MongoDB.Bson.BsonArray.Create(manufacturerIdList)));
             }
             if (category1IdList.Count > 0)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.In("Structure.Category1.CategoryId", MongoDB.Bson.BsonArray.Create(category1IdList)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.In("Structure.Category1.CategoryId", MongoDB.Bson.BsonArray.Create(category1IdList)));
             }
             if (category2IdList.Count > 0)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.In("Structure.Category2.CategoryId", MongoDB.Bson.BsonArray.Create(category2IdList)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.In("Structure.Category2.CategoryId", MongoDB.Bson.BsonArray.Create(category2IdList)));
             }
             if (category3IdList.Count > 0)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.In("Structure.Category3.CategoryId", MongoDB.Bson.BsonArray.Create(category3IdList)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.In("Structure.Category3.CategoryId", MongoDB.Bson.BsonArray.Create(category3IdList)));
             }
             if (actionFilter)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.EQ("Discount", actionFilter));
-            }
-            if (bargainFilter)
-            {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.Where("this.SecondHandList.length > 0"));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.EQ("Discount", actionFilter));
             }
             if (isInNewsletterFilter)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.EQ("IsInNewsletter", isInNewsletterFilter));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.EQ("IsInNewsletter", isInNewsletterFilter));
             }
             if (newFilter)
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.EQ("New", newFilter));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.EQ("New", newFilter));
             }
             if (stockFilter)
             {
-                if (isCommonCompany)
-                {
-                    queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete,
+                query = MongoDB.Driver.Builders.Query.And(query,
 
-                        MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.GT("Stock.Inner", 0),
-                                                         MongoDB.Driver.Builders.Query.GT("Stock.Outer", 0))
-                        );
-                }
-                else
-                {
-                    queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete,
-
-                        MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.GT("Stock.Serbian", 0),
-                                                         MongoDB.Driver.Builders.Query.GT("Stock.Inner", 0),
-                                                         MongoDB.Driver.Builders.Query.GT("Stock.Outer", 0))
-                        );
-                }
-            }
+                    MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.GT("Stock.Inner", 0),
+                                                     MongoDB.Driver.Builders.Query.GT("Stock.Outer", 0))
+                    );
+             }
 
             if (!String.IsNullOrEmpty(textFilter))
             {
@@ -341,7 +341,7 @@ namespace CompanyGroup.Data.NoSql
 
                 MongoDB.Bson.BsonRegularExpression regex = MongoDB.Bson.BsonRegularExpression.Create(new System.Text.RegularExpressions.Regex(textFilter, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
 
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete,
+                query = MongoDB.Driver.Builders.Query.And(query,
 
                     MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.Matches("ProductName", regex),
                                                      MongoDB.Driver.Builders.Query.Matches("ProductNameEnglish", regex),
@@ -354,7 +354,7 @@ namespace CompanyGroup.Data.NoSql
             {
                 MongoDB.Bson.BsonRegularExpression regex = new MongoDB.Bson.BsonRegularExpression(String.Format(".*{0}.*", nameOrPartNumberFilter), "i");
 
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete,
+                query = MongoDB.Driver.Builders.Query.And(query,
 
                     MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.Matches("ProductName", regex),
                                                      MongoDB.Driver.Builders.Query.Matches("ProductNameEnglish", regex),
@@ -365,14 +365,21 @@ namespace CompanyGroup.Data.NoSql
 
             if (priceFilterRelation.Equals(1))
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.GTE("Prices.Price2", MongoDB.Bson.BsonInt32.Create(priceFilter)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.GTE("Prices.Price2", MongoDB.Bson.BsonInt32.Create(priceFilter)));
             }
             else if (priceFilterRelation.Equals(2))
             {
-                queryComplete = MongoDB.Driver.Builders.Query.And(queryComplete, MongoDB.Driver.Builders.Query.LTE("Prices.Price2", MongoDB.Bson.BsonInt32.Create(priceFilter)));
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.LTE("Prices.Price2", MongoDB.Bson.BsonInt32.Create(priceFilter)));
+            }
+            if (bargainFilter)
+            {
+                query = MongoDB.Driver.Builders.Query.LT("ItemState", 3);
+
+                query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.Where("this.SecondHandList.length > 0"));
             }
 
-            return queryComplete == null ? MongoDB.Driver.Builders.Query.Null : queryComplete;
+            //query = { "DataAreaId" : { "$ne" : "ser" }, "$or" : [{ "ItemState" : { "$lt" : 2 } }, { "$where" : { "$code" : "this.SecondHandList.length > 0" } }] }
+            return query;
         }
 
         /// <summary>

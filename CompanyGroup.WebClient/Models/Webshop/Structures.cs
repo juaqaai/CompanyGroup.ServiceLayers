@@ -11,32 +11,32 @@ namespace CompanyGroup.WebClient.Models
     {
         public Structures()
         {
-            Manufacturers = new Manufacturers();
+            this.Manufacturers = new Manufacturers();
 
-            FirstLevelCategories = new FirstLevelCategories();
+            this.FirstLevelCategories = new FirstLevelCategories();
 
-            SecondLevelCategories = new SecondLevelCategories();
+            this.SecondLevelCategories = new SecondLevelCategories();
 
-            ThirdLevelCategories = new ThirdLevelCategories();
+            this.ThirdLevelCategories = new ThirdLevelCategories();
         }
 
         public Structures(CompanyGroup.Dto.WebshopModule.Structures structures)
         {
-            Manufacturers = new Manufacturers();
+            this.Manufacturers = new Manufacturers();
 
-            FirstLevelCategories = new FirstLevelCategories();
+            this.FirstLevelCategories = new FirstLevelCategories();
 
-            SecondLevelCategories = new SecondLevelCategories();
+            this.SecondLevelCategories = new SecondLevelCategories();
 
-            ThirdLevelCategories = new ThirdLevelCategories();
+            this.ThirdLevelCategories = new ThirdLevelCategories();
 
-            structures.FirstLevelCategories.ForEach(x => FirstLevelCategories.Add(new StructureItem() { Id = x.Id, Name = x.Name }));
+            this.FirstLevelCategories.AddRange(structures.FirstLevelCategories.ConvertAll(x => new StructureItem(x.Id, x.Name)));
 
-            structures.Manufacturers.ForEach(x => Manufacturers.Add(new ManufacturerItem() { Id = x.Id, Name = x.Name }));
+            this.Manufacturers.AddRange(structures.Manufacturers.ConvertAll(x => new ManufacturerItem(x.Id, x.Name)));
 
-            structures.SecondLevelCategories.ForEach(x => SecondLevelCategories.Add(new StructureItem() { Id = x.Id, Name = x.Name }));
+            this.SecondLevelCategories.AddRange(structures.SecondLevelCategories.ConvertAll(x => new StructureItem(x.Id, x.Name)));
 
-            structures.ThirdLevelCategories.ForEach(x => ThirdLevelCategories.Add(new StructureItem() { Id = x.Id, Name = x.Name }));
+            this.ThirdLevelCategories.AddRange(structures.ThirdLevelCategories.ConvertAll(x => new StructureItem(x.Id, x.Name)));
         }
 
         public Manufacturers Manufacturers { get; set; }

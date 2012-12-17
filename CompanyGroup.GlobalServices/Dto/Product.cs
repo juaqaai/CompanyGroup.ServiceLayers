@@ -52,8 +52,8 @@ namespace CompanyGroup.GlobalServices.Dto
         [System.Runtime.Serialization.DataMember(Name = "IsInNewsletter", Order = 18)]
         public bool IsInNewsletter { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 21)]
-        public bool CannotCancel { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 21)]
+        //public bool CannotCancel { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 23)]
         public Pictures Pictures { get; set; }

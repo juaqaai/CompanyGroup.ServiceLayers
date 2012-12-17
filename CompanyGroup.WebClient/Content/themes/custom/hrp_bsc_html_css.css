@@ -14,6 +14,15 @@ body {
 	
 	
 }
+ a.tooltip {outline:none; }
+ a.tooltip strong {line-height:30px;}
+ a.tooltip:hover {text-decoration:none;}
+ a.tooltip span { z-index:10; display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:240px; line-height:16px; color:#FFF; }
+ a.tooltip:hover span{ display:inline; position:absolute; color:#009cff; border:1px solid #FFF; background:#009cff;}
+ .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;} 
+ /*CSS3 extras*/
+ a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #000; -webkit-box-shadow: 5px 5px 8px #000; box-shadow: 5px 5px 8px #000; }
+
 
 #tooltip { position:absolute; border:1px solid #333; background:#f7f5d1; padding:2px 5px; color:#333; display:none; }   
 #preview { position:absolute; border:1px solid #ccc; background:#333; padding:5px; display:none; color:#fff; }
@@ -45,6 +54,31 @@ body {
     position: fixed;
 	padding-bottom: 8px;
 }
+#cus_background {
+    position: fixed;
+	width: 100%;
+    height: 100%;
+    background: url(../../Media/images/background-dots.png) repeat;
+	z-index: -1;
+	-moz-opacity:.20;
+    filter:alpha(opacity=20);
+    opacity:.20;
+
+}
+
+.inputwrapper{
+	
+	background: url(../../Media/images/bg_searchinput_empty.jpg) no-repeat;
+	width: 372px;
+	display: inline-block;
+	vertical-align: middle;
+	padding: 7px 3px 4px 3px;
+	border-radius:3px;
+		-webkit-box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+	
+}
 
 #akcio_badge {
     position:absolute;
@@ -58,8 +92,8 @@ body {
     /*background: #4B5F6D;*/
 }
 #cus_header1_table {
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 10px;
+    
+    font-size: 14px;
     color: #FFF;
 }
 #cus_header1_table a {
@@ -71,20 +105,22 @@ body {
 
 }
 #cus_header2 {
-	width: 1002px;
-	height: 116px;
+	width: 1000px;
+	height: 150px;
 	background: #084385;
+	background :url(../../Media/images/header.jpg) no-repeat fixed center top rgb(8, 67, 133);
 	margin:0px auto;
-	/*-moz-opacity: .90;
+	-moz-opacity: .90;
 	filter: alpha(opacity=90);
 	position:inherit;
 	opacity: .90;*/
 }
 #cus_logo_and_pages_menu {
     position: absolute;
-    width: 980px;
+    width: 960px;
     z-index: 900;
     margin-top: -155px;
+	margin-left: 20px;
     padding-top: 6px;
 }
 #cus_ax_nav {
@@ -92,7 +128,7 @@ body {
     width: auto;
     height: auto;
     padding: 0px;
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 10px;
     z-index: 10000;
     position: absolute;
@@ -110,20 +146,17 @@ body {
 }
 #cus_header_navigation_b {
     position:fixed
-    width: 998px;
+	width: 1000px;
     height: 44px;
-    background-color:white;
-    margin-top: 15px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 1px;
-    padding-right: 1px;
-    border: 0px solid #000;
+    background :url(../../Media/images/cus_header_line2.jpg);
+    margin-top: 0px;
+	border: 0px solid #000;
+	box-shadow: 0px 0px 10px #888888;
+	/*border-radius: 10px 10px 10px 10px;*/
     
-
 }
 #cus_header_navigation_b_table {
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     color: #666;
 }
@@ -180,7 +213,7 @@ body {
     width: 700px;
     background: #fff;
     margin-right: 2px;
-    margin-top: 0px;
+    margin-top: -2px;
     margin-bottom: 2px;
 }
 #cus_items_list_menu {
@@ -207,7 +240,7 @@ body {
     padding-top:3px;
     float: left;
     position: relative;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    
     font-size: 14px;
     font-weight: bold;
     color: #333333;
@@ -262,7 +295,7 @@ body {
 
 #div_pager table {
     width: auto;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    
     font-size: 14px;
     color: #666;
 }
@@ -285,7 +318,7 @@ body {
     margin-top: 3px;
 }
 #div_login {
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    
 }
 #div_login table tr td {
     font-size: 14px;
@@ -350,7 +383,7 @@ body {
     float: left;
     width: 680px;
     background: #fff;
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
 }
 
@@ -477,7 +510,7 @@ body {
 .cus_prod_table_desc {
 	width: 310px;
 	font-size: 14px;
-	font-family: Calibri, Geneva, sans-serif;
+	
 	overflow: hidden;
 	height: 54px;
 	text-align: left;
@@ -489,13 +522,13 @@ body {
 
 .cus_teteladatok {
     font-size: 14px;
-    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    
 	text-align: left
     margin-top: -2px;
 }
 .cus_teteladatok_2 {
 	font-size: 14px;
-	font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+	
 	text-align: right;
 	margin-top:-5px;
 	padding-top: 0px;
@@ -504,7 +537,7 @@ body {
 #cus_prod_table_desc_full {
 	width: 350px;
     font-size: 14px;
-    font-family: Calibri, Geneva, sans-serif;
+    
     text-align: left;
     margin-top: 10px;
 	margin-bottom:20px;
@@ -600,7 +633,7 @@ ul#navmenu {
     list-style: none;
     z-index: 1300;
     background: url('../../Media/images/speedmenu_bg.png');
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     cursor: pointer;
 }
@@ -755,7 +788,7 @@ ul#navmenu li:hover ul, ul#navmenu ul li:hover ul, ul#navmenu ul ul li:hover ul,
     padding-top: 0px;
 }
 .cus_list_order_panel_table {
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     color: #666;
 }
@@ -780,7 +813,7 @@ ul#navmenu_order {
     list-style: none;
     z-index: -1;
     background: url('../../Media/images/ordermenu_bg.png');
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     cursor: pointer;
     color: #666;
@@ -896,7 +929,7 @@ ul#navmenu_order li:hover ul, ul#navmenu_order ul li:hover ul, ul#navmenu_order 
 /* Root = Horizontal, Secondary = Vertical */
 ul#navmenu_o {
     margin-left: 0px;
-    margin-top: 3px;
+    margin-top: 0px;
     margin-bottom: 0px;
     border: 0 none;
     padding: 0;
@@ -948,13 +981,13 @@ ul#navmenu_o ul li {
 /* Root Menu */
 ul#navmenu_o a {
     /*border-bottom: 3px solid #000;*/
-    padding: 0 6px;
+    padding:2px 4px;
     float: none !important; /*For Opera*/
     float: left; /*For IE*/
     display: block;
-    background: #fff;
-    color: #333;
-    font: normal 14px  /22px Calibri, Geneva, sans-serif;
+    /*background: #fff;*/
+    color: #FFF;
+    font: normal 16px  /22px Calibri, Geneva, sans-serif;
     text-decoration: none;
     height: auto !important;
     height: 1%; /*For IE*/
@@ -962,9 +995,15 @@ ul#navmenu_o a {
 }
 /* Root Menu Hover Persistence */
 ul#navmenu_o a:hover, ul#navmenu_o li:hover a, ul#navmenu_o li.iehover a {
-    background: #000;
-    color: #FFF;
-    border-bottom: 3px solid #fff;
+    background: #ffb400;
+    color: #000;
+	padding:2px  4px;
+	 display: block;
+	border-radius: 10px 10px 10px 10px;
+	 -webkit-box-shadow: 0px 5px 15px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 0px 5px 15px rgba(50, 50, 50, 0.5);
+    box-shadow: 0px 5px 15px rgba(50, 50, 50, 0.5);
+    
 }
 /* 2nd Menu */
 ul#navmenu_o li:hover li a, ul#navmenu_o li.iehover li a {
@@ -1041,8 +1080,11 @@ ul#usermenu {
     list-style: none;
     z-index: 1390;
     background: url('../../Media/images/usermenu.png');
-    font-family: Calibri, Geneva, sans-serif;
-    font-size: 14px;
+	-webkit-box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 4px 5px rgba(50, 50, 50, 0.5);
+	border-radius:3px;
+	font-size: 14px;
     cursor: pointer;
 }
 ul#usermenu li {
@@ -1156,14 +1198,16 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
 /************************************************ lábléc copyright ***********************************************/
 
 #cus_copyright {
-    background: #CCC;
-    padding: 14px;
+    width:1000px;
+	background: #CCC;
+    padding: 20px;
     height: 140px;
+	z-index:2000;
 }
 .cus_copyright_table_small_text {
-    font-family: Calibri, Geneva, sans-serif;
     font-size: 14px;
     color: #666;
+	padding-left:10px;
 }
 .cus_copyright_table_small_text a {
     color: #333;
@@ -1187,7 +1231,7 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     height: auto;
     position: fixed;
     z-index: 1100;
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     padding-top: 5px;
     padding-bottom: 10px;
@@ -1206,11 +1250,11 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
 }
 #cus_bottom_list_table {
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     margin-right: 5px;
     border-right: 1px #ccc solid;
@@ -1224,7 +1268,7 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     height: 25px;
     position: fixed;
     z-index: 1300;
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
     padding-top: 5px;
     border-top: #FFF 1px dotted;
@@ -1238,7 +1282,8 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
 /***************************** felső kosár panel *****************************/
 
 #active_basket {
-    margin-top: 3px;
+    margin-top: 8px;
+	padding-left:190px;
     cursor:pointer;
 }
 .active_basket_middle_cell {
@@ -1251,7 +1296,7 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
 #basket_panel {
     border-bottom: 3px #000 solid;
     background: #DEDEDE;
-    margin-top: 3px;
+    margin-top: 0px;
     margin-bottom:10px;
     /*background-image:url(images/filter_panel_bg.png);*/
     /*	-moz-opacity:1;
@@ -1259,14 +1304,14 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
      opacity:1;*/
     height: auto;
     display: none;
-    padding-top: 7px;
+    padding-top: 6px;
 }
 #basket_panel a {
     color: #FFF;
 	text-decoration:none;
 }
 #basket_panel table tr td {
-    font-family: Calibri, Geneva, sans-serif;
+    
     font-size: 14px;
 }
 .btn_basket_slide {
@@ -1952,7 +1997,7 @@ ul.tabs li a:hover {
 	background-position: center top;
 }
 #loginform table {
-	font-family: Calibri, Geneva, sans-serif;
+	
 	font-size: 14px;
 	color: #333;
 	background-repeat: no-repeat;

@@ -153,10 +153,10 @@ companyGroup.webshop = $.sammy(function () {
             context.trigger('filterByNew', { Checked: $(this).is(':checked') });
         });
         $("#chk_filterByHrp").live('change', function () {
-            context.trigger('filterByHrp', { Checked: $(this).is(':checked') });
+            context.trigger('filterByHrp', { HrpChecked: $(this).is(':checked'), BscChecked: $('#chk_filterByBsc').is(':checked') });
         });
         $("#chk_filterByBsc").live('change', function () {
-            context.trigger('filterByBsc', { Checked: $(this).is(':checked') });
+            context.trigger('filterByBsc', { HrpChecked: $('#chk_filterByHrp').is(':checked'), BscChecked: $(this).is(':checked') });
         });
         //teljes termékadatbázis keresés
         $("#txt_globalsearch").autocomplete({
@@ -350,18 +350,26 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     this.bind('filterByHrp', function (e, data) {
-        catalogueRequest.HrpFilter = data.Checked;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        this.title('szűrés hardware termékekre');
-        showProductList(true);
+        if (data.HrpChecked || data.BscChecked) {
+            catalogueRequest.HrpFilter = data.HrpChecked;
+            loadCatalogue();
+            loadStructure(true, true, true, true);
+            this.title('szűrés hardware termékekre');
+            showProductList(true);
+        } else {
+            alert('HRP, vagy BSC beállítás kötelező');
+        }
     });
     this.bind('filterByBsc', function (e, data) {
-        catalogueRequest.BscFilter = data.Checked;
-        loadCatalogue();
-        loadStructure(true, true, true, true);
-        this.title('szűrés szoftver termékekre');
-        showProductList(true);
+        if (data.HrpChecked || data.BscChecked) {
+            catalogueRequest.BscFilter = data.BscChecked;
+            loadCatalogue();
+            loadStructure(true, true, true, true);
+            this.title('szűrés szoftver termékekre');
+            showProductList(true);
+        } else {
+            alert('HRP, vagy BSC beállítás kötelező');
+        }
     });
     //fizetési mód beállítás
     this.bind('changePayment', function (e, data) {
@@ -1487,33 +1495,33 @@ companyGroup.webshop = $.sammy(function () {
     this.get('#/downloadPriceList', function (context) {
         console.log('downloadPriceList');
         window.location = companyGroup.utils.instance().getDownloadPriceListUrl() + '?' + $.param(catalogueRequest);
-//        $.ajax({
-//            type: "GET",
-//            url: companyGroup.utils.instance().getDownloadPriceListUrl(),
-//            data: catalogueRequest,
-//            contentType: "application/json; charset=utf-8",
-//            timeout: 10000,
-//            dataType: "json",
-//            processData: true,
-//            success: function (result) {
-//                if (result) {
-//                    //console.log(result);
-////                    $("#div_pager_top").empty();
-////                    $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
-////                    $("#div_pager_bottom").empty();
-////                    $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
-////                    $("#div_catalogue").empty();
-////                    $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
-//                    //$('.number').spin();
-//                }
-//                else {
-//                    console.log('downloadPriceList result failed');
-//                }
-//            },
-//            error: function () {
-//                console.log('downloadPriceList call failed');
-//            }
-//        });
+        //        $.ajax({
+        //            type: "GET",
+        //            url: companyGroup.utils.instance().getDownloadPriceListUrl(),
+        //            data: catalogueRequest,
+        //            contentType: "application/json; charset=utf-8",
+        //            timeout: 10000,
+        //            dataType: "json",
+        //            processData: true,
+        //            success: function (result) {
+        //                if (result) {
+        //                    //console.log(result);
+        ////                    $("#div_pager_top").empty();
+        ////                    $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
+        ////                    $("#div_pager_bottom").empty();
+        ////                    $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
+        ////                    $("#div_catalogue").empty();
+        ////                    $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
+        //                    //$('.number').spin();
+        //                }
+        //                else {
+        //                    console.log('downloadPriceList result failed');
+        //                }
+        //            },
+        //            error: function () {
+        //                console.log('downloadPriceList call failed');
+        //            }
+        //        });
     });
     //nagyobb méretű termékkép
     this.get('#/showPicture/:productId/:dataAreaId/:productName', function (context) {

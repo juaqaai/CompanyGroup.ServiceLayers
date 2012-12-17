@@ -16,6 +16,8 @@ namespace CompanyGroup.Domain.WebshopModule
         public static CompanyGroup.Domain.WebshopModule.Product CreateProduct(CompanyGroup.Domain.MaintainModule.Product innerProduct)
         {
             CompanyGroup.Domain.WebshopModule.Product product = new CompanyGroup.Domain.WebshopModule.Product();
+            //kereskedelmi készletről nem vásárolható meg
+            product.Available = innerProduct.ItemState < 2;
             product.AverageInventory = innerProduct.AverageInventory;
             //product.CannotCancel
             product.CreatedDate = innerProduct.CreatedDate;
@@ -40,7 +42,7 @@ namespace CompanyGroup.Domain.WebshopModule
             product.Prices = CreatePrices(innerProduct);
             //product.PrimaryPicture
             product.ProductId = innerProduct.ProductId;
-            product.ProductManager = CreateProductManager(innerProduct);
+            //product.ProductManager = CreateProductManager(innerProduct);
             product.ProductName = innerProduct.ItemName;
             product.ProductNameEnglish = innerProduct.ItemNameEnglish;
             product.SecondHandList = CreateSecondHandList(innerProduct.SecondHandList);
@@ -189,7 +191,6 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             return new CompanyGroup.Domain.WebshopModule.Stock()
             {
-                Serbian = innerProduct.SerbianStock,
                 Inner = innerProduct.InnerStock,
                 Outer = innerProduct.OuterStock
             };
@@ -228,17 +229,17 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="innerProduct"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.PartnerModule.ProductManager CreateProductManager(CompanyGroup.Domain.MaintainModule.Product innerProduct)
-        {
-            return new CompanyGroup.Domain.PartnerModule.ProductManager()
-            {
-                EmployeeId = innerProduct.ProductManager.EmployeeId,
-                Name = innerProduct.ProductManager.Name,
-                Email = innerProduct.ProductManager.Email,
-                Extension = innerProduct.ProductManager.Extension,
-                Mobile = innerProduct.ProductManager.Mobile
-            };        
-        }
+        //public static CompanyGroup.Domain.PartnerModule.ProductManager CreateProductManager(CompanyGroup.Domain.MaintainModule.Product innerProduct)
+        //{
+        //    return new CompanyGroup.Domain.PartnerModule.ProductManager()
+        //    {
+        //        EmployeeId = innerProduct.ProductManager.EmployeeId,
+        //        Name = innerProduct.ProductManager.Name,
+        //        Email = innerProduct.ProductManager.Email,
+        //        Extension = innerProduct.ProductManager.Extension,
+        //        Mobile = innerProduct.ProductManager.Mobile
+        //    };        
+        //}
 
         /// <summary>
         /// termék képeinek létrehozása
@@ -301,7 +302,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         public static CompanyGroup.Domain.WebshopModule.SecondHand CreateSecondHand(CompanyGroup.Domain.MaintainModule.SecondHand secondHand)
         {
-            return new CompanyGroup.Domain.WebshopModule.SecondHand() { ConfigId = secondHand.ConfigId, InventLocationId = secondHand.InventLocationId, Price = secondHand.Price, Quantity = secondHand.Quantity, StatusDescription = secondHand.StatusDescription };
+            return new CompanyGroup.Domain.WebshopModule.SecondHand(secondHand.ConfigId, secondHand.InventLocationId, secondHand.Quantity, secondHand.Price, secondHand.StatusDescription);
         }
 
         /// <summary>

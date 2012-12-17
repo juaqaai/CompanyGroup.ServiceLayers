@@ -22,6 +22,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
 
+        /// <summary>
+        /// struktúrák lekérdezése  
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request);
+
         //[OperationContract(Action = "GetBannerList")]
         //[WebInvoke(Method = "POST",
         //    //UriTemplate = "/GetAll",

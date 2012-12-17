@@ -384,6 +384,11 @@ namespace CompanyGroup.WebClient.Controllers
             }
         }
 
+        /// <summary>
+        /// kijelentkezés
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("SignOut")]
         public HttpResponseMessage SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)

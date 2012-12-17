@@ -29,7 +29,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             try
             {
                 CompanyGroup.Dto.WebshopModule.PriceListItem to = new CompanyGroup.Dto.WebshopModule.PriceListItem();
-                to.CannotCancel = from.CannotCancel;
                 to.Currency = from.Prices.Currency;
                 to.DataAreaId = from.DataAreaId;
                 to.Description = from.Description;

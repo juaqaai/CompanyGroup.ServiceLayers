@@ -21,7 +21,6 @@ namespace CompanyGroup.GlobalServices.Adapter
 
                 return new CompanyGroup.GlobalServices.Dto.Product()
                            {
-                               CannotCancel = product.CannotCancel,
                                DataAreaId = product.DataAreaId,
                                Description = product.Description,
                                EndOfSales = product.EndOfSales,

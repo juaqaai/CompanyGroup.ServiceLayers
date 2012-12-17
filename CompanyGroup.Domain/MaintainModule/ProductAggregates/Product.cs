@@ -14,8 +14,7 @@ namespace CompanyGroup.Domain.MaintainModule
             string category1Id, string category2Id, string category3Id, 
             string standardConfigId, string partNumber, string itemName, 
             string garantyTime, string garantyMode, int itemState, bool discount, bool newItem,
-            int averageInventory, string productManagerId,
-            int price1, int price2, int price3, int price4, int price5, string currency,
+            int averageInventory, int price1, int price2, int price3, int price4, int price5, string currency,
             DateTime createdDate, int createdTime, DateTime modifiedDate, int modifiedTime, string dataAreaId)
         { 
             this.Id = MongoDB.Bson.ObjectId.Empty;
@@ -36,7 +35,7 @@ namespace CompanyGroup.Domain.MaintainModule
             this.CannotCancel = false;
             this.AverageInventory = averageInventory;
             this.Pictures = new List<CompanyGroup.Domain.MaintainModule.Picture>();
-            this.ProductManager = new CompanyGroup.Domain.MaintainModule.ProductManager(productManagerId, "", "", "", "");
+//            this.ProductManager = new CompanyGroup.Domain.MaintainModule.ProductManager(productManagerId, "", "", "", "");
             this.SecondHandList = new List<CompanyGroup.Domain.MaintainModule.SecondHand>();
             this.Price1 = price1;
             this.Price2 = price2;
@@ -162,11 +161,6 @@ namespace CompanyGroup.Domain.MaintainModule
         public int OuterStock { get; set; }
 
         /// <summary>
-        /// szerb raktár készlete
-        /// </summary>
-        public int SerbianStock { get; set; }
-
-        /// <summary>
         /// egyes, azaz a legjobb ár
         /// </summary>
         public int Price1 { get; set; }
@@ -254,7 +248,7 @@ namespace CompanyGroup.Domain.MaintainModule
         /// <summary>
         /// beépülő objektum, a cikkhez tartozó képviselő adatait tartalmazza
         /// </summary>
-        public CompanyGroup.Domain.MaintainModule.ProductManager ProductManager { get; set; }
+        //public CompanyGroup.Domain.MaintainModule.ProductManager ProductManager { get; set; }
 
         /// <summary>
         /// használt készlet lista

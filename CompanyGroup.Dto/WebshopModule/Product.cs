@@ -4,104 +4,109 @@ using System.Collections.Generic;
 namespace CompanyGroup.Dto.WebshopModule
 {
 
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "Product", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    //[Serializable]
+    //[System.Runtime.Serialization.DataContract(Name = "Product", Namespace = "CompanyGroup.Dto.WebshopModule")]
     public class Product
     {
-        [System.Runtime.Serialization.DataMember(Name = "Manufacturer", Order = 1)]
+        //[System.Runtime.Serialization.DataMember(Name = "Manufacturer", Order = 1)]
         public Manufacturer Manufacturer { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "FirstLevelCategory", Order = 2)]
+        //[System.Runtime.Serialization.DataMember(Name = "FirstLevelCategory", Order = 2)]
         public Category FirstLevelCategory { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "SecondLevelCategory", Order = 3)]
+        //[System.Runtime.Serialization.DataMember(Name = "SecondLevelCategory", Order = 3)]
         public Category SecondLevelCategory { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ThirdLevelCategory", Order = 4)]
+        //[System.Runtime.Serialization.DataMember(Name = "ThirdLevelCategory", Order = 4)]
         public Category ThirdLevelCategory { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ProductId", Order = 5)]
+        //[System.Runtime.Serialization.DataMember(Name = "ProductId", Order = 5)]
         public string ProductId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PartNumber", Order = 6)]
+        //[System.Runtime.Serialization.DataMember(Name = "PartNumber", Order = 6)]
         public string PartNumber { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ItemName", Order = 7)]
+        //[System.Runtime.Serialization.DataMember(Name = "ItemName", Order = 7)]
         public string ItemName { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ItemNameEnglish", Order = 8)]
+        //[System.Runtime.Serialization.DataMember(Name = "ItemNameEnglish", Order = 8)]
         public string ItemNameEnglish { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "InnerStock", Order = 9)]
+        //[System.Runtime.Serialization.DataMember(Name = "InnerStock", Order = 9)]
         public int InnerStock { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "OuterStock", Order = 10)]
+        //[System.Runtime.Serialization.DataMember(Name = "OuterStock", Order = 10)]
         public int OuterStock { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Price", Order = 11)]
+        //[System.Runtime.Serialization.DataMember(Name = "Price", Order = 11)]
         public string Price { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Currency", Order = 12)]
+        //[System.Runtime.Serialization.DataMember(Name = "Currency", Order = 12)]
         public string Currency { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "GarantyTime", Order = 13)]
+        //[System.Runtime.Serialization.DataMember(Name = "GarantyTime", Order = 13)]
         public string GarantyTime { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "GarantyMode", Order = 14)]
+        //[System.Runtime.Serialization.DataMember(Name = "GarantyMode", Order = 14)]
         public string GarantyMode { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ShippingDate", Order = 15)]
+        //[System.Runtime.Serialization.DataMember(Name = "ShippingDate", Order = 15)]
         public string ShippingDate { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "EndOfSales", Order = 16)]
+        //[System.Runtime.Serialization.DataMember(Name = "EndOfSales", Order = 16)]
         public bool EndOfSales { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "New", Order = 17)]
+        //[System.Runtime.Serialization.DataMember(Name = "New", Order = 17)]
         public bool New { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Discount", Order = 18)]
+        //[System.Runtime.Serialization.DataMember(Name = "Discount", Order = 18)]
         public bool Discount { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "IsInNewsletter", Order = 19)]
+        //[System.Runtime.Serialization.DataMember(Name = "IsInNewsletter", Order = 19)]
         public bool IsInNewsletter { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "IsInCart", Order = 20)]
+        //[System.Runtime.Serialization.DataMember(Name = "IsInCart", Order = 20)]
         public bool IsInCart { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Comparable", Order = 21)]
+        //[System.Runtime.Serialization.DataMember(Name = "Comparable", Order = 21)]
         public bool Comparable { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 22)]
-        public bool CannotCancel { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 22)]
+        //public bool CannotCancel { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 23)]
+        //[System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 23)]
         public Picture PrimaryPicture { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 24)]
+        //[System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 24)]
         public Pictures Pictures { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Description", Order = 25)]
+        //[System.Runtime.Serialization.DataMember(Name = "Description", Order = 25)]
         public string Description { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "DescriptionEnglish", Order = 26)]
+        //[System.Runtime.Serialization.DataMember(Name = "DescriptionEnglish", Order = 26)]
         public string DescriptionEnglish { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ProductManager", Order = 27)]
-        public CompanyGroup.Dto.PartnerModule.ProductManager ProductManager { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "ProductManager", Order = 27)]
+        //public CompanyGroup.Dto.PartnerModule.ProductManager ProductManager { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 28)]
+        //[System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 28)]
         public string DataAreaId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "IsInStock", Order = 29)]
+        //[System.Runtime.Serialization.DataMember(Name = "IsInStock", Order = 29)]
         public bool IsInStock { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "SequenceNumber", Order = 30)]
-        public int SequenceNumber { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "SequenceNumber", Order = 30)]
+        //public int SequenceNumber { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PurchaseInProgress", Order = 31)]
+        //[System.Runtime.Serialization.DataMember(Name = "PurchaseInProgress", Order = 31)]
         public bool PurchaseInProgress { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "SecondHandList", Order = 32)]
+        //[System.Runtime.Serialization.DataMember(Name = "SecondHandList", Order = 32)]
         public SecondHandList SecondHandList { get; set; }
+
+        /// <summary>
+        /// elérhető-e a termék kereskedelmi raktáron (ha kifutott, de van még eladható használt akkor FALSE)
+        /// </summary>
+        public bool Available { get; set; }
     }
 }

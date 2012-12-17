@@ -147,7 +147,7 @@ GO
 -- exec InternetUser.cms_SignIn 'elektroplaza', '58915891', 'bsc';
 -- exec InternetUser.cms_SignIn 'joci', 'joci', 'hrp';
 -- exec InternetUser.cms_SignIn 'plorinczy', 'pikolo', 'hrp';
-
+-- select * from axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = 'ipon' )
 -- select * from AxDb.dbo.EmplTable
 
 DROP FUNCTION InternetUser.CalculatePartnerModel

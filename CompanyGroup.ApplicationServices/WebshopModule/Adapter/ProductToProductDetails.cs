@@ -21,7 +21,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 return new CompanyGroup.Dto.WebshopModule.ProductDetails()
                            {
-                               CannotCancel = product.CannotCancel,
                                Comparable = product.Comparable, 
                                Currency = product.Prices.Currency,
                                DataAreaId = product.DataAreaId, // CompanyGroup.Domain.Core.Adapter.ConvertDataAreaIdEnumToString(
@@ -45,11 +44,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                PrimaryPicture = new PictureToPicture().Map(product.PrimaryPicture),  
                                Price = String.Format( "{0}", product.CustomerPrice),
                                ProductId = product.ProductId,
-                               ProductManager = new ProductManagerToProductManager().Map(product.ProductManager),   
                                PurchaseInProgress = product.PurchaseInProgress(), 
                                SecondLevelCategory = new CategoryToCategory().Map(product.Structure.Category2),
                                SecondHandList = new SecondHandToSecondHand().Map(product.SecondHandList),
-                               SequenceNumber = product.SequenceNumber, 
                                ShippingDate = product.ShippingDate,
                                ThirdLevelCategory = new CategoryToCategory().Map(product.Structure.Category3),
                                CompatibilityList = compatibilityList.ToArray(), 

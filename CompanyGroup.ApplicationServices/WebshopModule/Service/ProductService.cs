@@ -22,6 +22,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private static readonly int ProductComplationLimit = Helpers.ConfigSettingsParser.GetInt("ProductComplationLimit", 15);
 
+        private const string CACHEKEY_STRUCTURE = "structure";
+
+        private const double CACHE_EXPIRATION_STRUCTURE = 24d;
+
+        private static readonly bool StructureCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("StructureCacheEnabled", true);
+
         private CompanyGroup.Domain.WebshopModule.IProductRepository productRepository;
 
         private CompanyGroup.Domain.MaintainModule.IProductRepository maintainProductRepository;
@@ -192,6 +198,80 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             results.Currency = request.Currency;
 
             return results;
+        }
+
+        /// <summary>
+        /// struktúrák lekérdezése
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
+        {
+            string dataAreaId = String.Empty;
+
+            string dataAreaIdCacheKey = String.Empty;
+
+            if (request.HrpFilter && !request.BscFilter)
+            {
+                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+
+                dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+            }
+            else if (request.BscFilter && !request.HrpFilter)
+            {
+                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+
+                dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+            }
+            else
+            {
+                dataAreaIdCacheKey = "all";
+            }
+
+            //szűrés ár értékre
+            int priceFilterRelation = 0;
+
+            int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
+
+            CompanyGroup.Domain.WebshopModule.Structures structures = null;
+
+            string cacheKey = String.Empty;
+
+            //cache kiolvasás
+            if (ProductService.StructureCacheEnabled)
+            {
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_STRUCTURE, dataAreaIdCacheKey);
+
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.IsInNewsletterFilter, cacheKey, "IsInNewsletterFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.NewFilter, cacheKey, "NewFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.StockFilter, cacheKey, "StockFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilter), cacheKey, request.PriceFilter);
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilterRelation), cacheKey, request.PriceFilterRelation);
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.NameOrPartNumberFilter), cacheKey, request.NameOrPartNumberFilter);
+
+                structures = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey);
+            }
+
+            //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
+            if (structures == null)
+            {
+                structures = productRepository.GetStructure(dataAreaId, request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
+                                                            request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation,
+                                                            request.NameOrPartNumberFilter);
+
+                //cache-be mentés
+                if (ProductService.StructureCacheEnabled)
+                {
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey, structures, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_STRUCTURE)));
+                }
+            }
+
+            CompanyGroup.Dto.WebshopModule.Structures result = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
+
+            return result;
         }
 
         /// <summary>

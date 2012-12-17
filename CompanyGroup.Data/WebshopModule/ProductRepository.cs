@@ -99,15 +99,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.Products resultList = new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(currentPageIndex, count, itemsOnPage));
 
-                int sequenceNumber = 1;
-
                 foreach (CompanyGroup.Domain.WebshopModule.Product product in filteredList)
                 {
-                    product.SequenceNumber = sequenceNumber;
-
                     resultList.Add(product);
-
-                    sequenceNumber++;
                 }
 
                 //var prm = System.Linq.Expressions.Expression.Parameter(typeof(CompanyGroup.Domain.WebshopModule.Product), "root");
@@ -125,7 +119,92 @@ namespace CompanyGroup.Data.WebshopModule
             }
             finally
             {
-                Disconnect();
+                this.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// termékstruktúra lekérdezés
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="actionFilter"></param>
+        /// <param name="bargainFilter"></param>
+        /// <param name="isInNewsletterFilter"></param>
+        /// <param name="newFilter"></param>
+        /// <param name="stockFilter"></param>
+        /// <param name="textFilter"></param>
+        /// <param name="priceFilter"></param>
+        /// <param name="priceFilterRelation"></param>
+        /// <param name="nameOrPartNumberFilter"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.WebshopModule.Structures GetStructure(string dataAreaId,
+                                                                    bool actionFilter,
+                                                                    bool bargainFilter,
+                                                                    bool isInNewsletterFilter,
+                                                                    bool newFilter,
+                                                                    bool stockFilter,
+                                                                    string textFilter,
+                                                                    string priceFilter,
+                                                                    int priceFilterRelation,
+                                                                    string nameOrPartNumberFilter)
+        {
+            try
+            {
+                this.ReConnect();
+
+                MongoDB.Driver.IMongoQuery query = this.ConstructQueryDocument(new List<string>(), new List<string>(), new List<string>(), new List<string>(),
+                                                                                          actionFilter,
+                                                                                          bargainFilter,
+                                                                                          isInNewsletterFilter,
+                                                                                          newFilter,
+                                                                                          stockFilter,
+                                                                                          textFilter,
+                                                                                          priceFilter,
+                                                                                          priceFilterRelation,
+                                                                                          nameOrPartNumberFilter,
+                                                                                          dataAreaId);
+
+                //string[] sortFields = new string[] { "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryName", "Structure.Category2.CategoryName", "Structure.Category3.CategoryName" };
+
+                //string[] fields = new string[] { "Structure.Manufacturer.ManufacturerId", "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryId", "Structure.Category1.CategoryName", "Structure.Category2.CategoryId", "Structure.Category2.CategoryName", "Structure.Category3.CategoryId", "Structure.Category3.CategoryName" };
+
+                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> catalogue = this.GetCollection(ProductRepository.CollectionName);
+
+                //IEqualityComparer<Shared.Web.NoSql.Entities.CatalogueItem> catalogueComparer = new CatalogueComparer();
+
+                MongoDB.Driver.MongoCursor<CompanyGroup.Domain.WebshopModule.Product> filteredList = catalogue.Find(query); //.SetSortOrder(sortFields).SetFields(fields);MongoDB.Bson.BsonDocument
+
+                List<CompanyGroup.Domain.WebshopModule.Product> resultList = new List<CompanyGroup.Domain.WebshopModule.Product>();
+
+                foreach (CompanyGroup.Domain.WebshopModule.Product item in filteredList)
+                {
+                    resultList.Add(item);
+                    //CompanyGroup.Domain.WebshopModule.Factory.CreateStructure(ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerId"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerName"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryId"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryName"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryId"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryName"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryId"]),
+                    //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryName"]))
+                    //);
+                }
+                CompanyGroup.Domain.WebshopModule.Structures structures = new CompanyGroup.Domain.WebshopModule.Structures();
+                
+                List<CompanyGroup.Domain.WebshopModule.Structure> structureList = resultList.ConvertAll( x => new CompanyGroup.Domain.WebshopModule.Structure(){ Manufacturer = x.Structure.Manufacturer, Category1 = x.Structure.Category1, Category2 = x.Structure.Category2, Category3 = x.Structure.Category3 });
+
+                structures.AddRange(structureList);
+
+                return structures;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return new CompanyGroup.Domain.WebshopModule.Structures();
+            }
+            finally
+            {
+                this.Disconnect();
             }
         }
 
@@ -220,15 +299,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.Products resultList = new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(0, 0, limit));
 
-                int sequenceNumber = 1;
-
                 foreach (CompanyGroup.Domain.WebshopModule.Product product in filteredList)
                 {
-                    product.SequenceNumber = sequenceNumber;
-
                     resultList.Add(product);
-
-                    sequenceNumber++;
                 }
                 return resultList;
             }

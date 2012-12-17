@@ -16,7 +16,6 @@
     <return-scalar column="Discount" type="System.Boolean"/>
     <return-scalar column="New" type="System.Boolean"/>
     <return-scalar column="AverageInventory" type="System.Int32"/>
-    <return-scalar column="ProductManagerId" type="System.String"/>
     <return-scalar column="Price1" type="System.Int32"/>
     <return-scalar column="Price2" type="System.Int32"/>
     <return-scalar column="Price3" type="System.Int32"/>

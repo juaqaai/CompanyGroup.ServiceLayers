@@ -13,8 +13,6 @@ namespace CompanyGroup.Domain.MaintainModule
 
         List<CompanyGroup.Domain.MaintainModule.ThirdLevelCategory> GetThirdLevelCategoryList(string dataAreaId);
 
-        List<CompanyGroup.Domain.MaintainModule.ProductManager> GetProductManagerList(string dataAreaId);
-
         List<CompanyGroup.Domain.MaintainModule.ProductDescription> GetProductDescriptionList(string dataAreaId);
 
         List<CompanyGroup.Domain.MaintainModule.Product> GetProductList(string dataAreaId);

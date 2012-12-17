@@ -137,7 +137,6 @@
     <Compile Include="WebshopModule\Adapter\GarantyToGaranty.cs" />
     <Compile Include="WebshopModule\Adapter\ManufacturerToManufacturer.cs" />
     <Compile Include="WebshopModule\Adapter\PagerToPager.cs" />
-    <Compile Include="WebshopModule\Adapter\ProductManagerToProductManager.cs" />
     <Compile Include="WebshopModule\Adapter\PicturesToPictures.cs" />
     <Compile Include="WebshopModule\Adapter\PictureToPicture.cs" />
     <Compile Include="WebshopModule\Adapter\ProductsToProducts.cs" />

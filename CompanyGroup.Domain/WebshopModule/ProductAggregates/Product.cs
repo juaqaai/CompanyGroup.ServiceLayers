@@ -17,8 +17,8 @@ namespace CompanyGroup.Domain.WebshopModule
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string ProductId { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        public int SequenceNumber { get; set; }
+        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        //public int SequenceNumber { get; set; }
 
         [MongoDB.Bson.Serialization.Attributes.BsonElement("ProductName", Order = 3)]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
@@ -104,7 +104,7 @@ namespace CompanyGroup.Domain.WebshopModule
                     //ha nincsen egyetlen elem sem, akkor új kép objektumot kell visszaadni
                     if (picture == null)
                     {
-                        return new Picture();
+                        return Factory.CreatePicture("", false, 0);
                     }
                 }
                 return picture;
@@ -149,14 +149,7 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             get
             {
-                if (this.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc) || this.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp))
-                {
-                    return (this.Stock.Inner + this.Stock.Outer > 0);
-                }
-                else
-                {
-                    return (this.Stock.Inner + this.Stock.Outer + this.Stock.Serbian > 0);
-                }
+                return (this.Stock.Inner + this.Stock.Outer > 0);
             }
         }
 
@@ -236,42 +229,42 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// nem lemonható termék megrendelés esetén
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CannotCancel", Order = 18)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public bool CannotCancel { get; set; }
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("CannotCancel", Order = 18)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //public bool CannotCancel { get; set; }
 
         /// <summary>
         /// adatbázis bejegyzés keletkezésének dátuma
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedDate", Order = 19)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedDate", Order = 18)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// adatbázis bejegyzés keletkezésének ideje
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedTime", Order = 20)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedTime", Order = 19)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public int CreatedTime { get; set; }
 
         /// <summary>
         /// adatbázis bejegyzés módosításának dátuma
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ModifiedDate", Order = 21)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("ModifiedDate", Order = 20)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime ModifiedDate { get; set; }
 
         /// <summary>
         /// adatbázis bejegyzés módosításának ideje
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ModifiedTime", Order = 22)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("ModifiedTime", Order = 21)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public int ModifiedTime { get; set; }
 
         /// <summary>
         /// vállalatkód, hrp (0) - bsc (1) - ser (2)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("DataAreaId", Order = 23)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("DataAreaId", Order = 22)]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string DataAreaId { get; set; }
@@ -279,16 +272,16 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// garancia dátuma, ideje és módja
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Garanty", Order = 24)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("Garanty", Order = 23)]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Garanty Garanty { get; set; }
 
         /// <summary>
         /// cikk termékmenedzser
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ProductManager", Order = 25)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public CompanyGroup.Domain.PartnerModule.ProductManager ProductManager { get; set; }
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ProductManager", Order = 25)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //public CompanyGroup.Domain.PartnerModule.ProductManager ProductManager { get; set; }
 
         /// <summary>
         /// használt cikk (állapottól függ, több is lehet)
@@ -305,8 +298,14 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// használt cikkek
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("SecondHandList", Order = 26)]
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("SecondHandList", Order = 24)]
         public CompanyGroup.Domain.WebshopModule.SecondHand[] SecondHandArray { get; set; }
+
+        /// <summary>
+        /// elérhető-e a termék kereskedelmi raktáron (ha kifutott, de van még eladható használt akkor FALSE)
+        /// </summary>
+        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        public bool Available { get; set; }
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>
@@ -335,6 +334,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             IsInNewsletter = false;
         }
+
     }
 
     /// <summary>

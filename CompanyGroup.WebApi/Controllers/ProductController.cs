@@ -46,6 +46,18 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
+        /// struktúrák lekérdezése
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("GetStructure")]
+        [HttpPost]
+        public CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
+        {
+            return service.GetStructure(request);
+        }
+
+        /// <summary>
         /// banner lista a termeklista bannerhez
         /// 1. repository-tól elkéri az akciós, készleten lévő, képpel rendelkező legfeljebb 150 elemet tartalmazó terméklistát.
         /// 2. ha a hívóparaméter tartalmaz jelleg1, jelleg2, jelleg3 paramétert, akkor a paraméterek szerint szűri a listát, majd a találati eredményből visszaadja az első 50 elemet

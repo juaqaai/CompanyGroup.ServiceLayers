@@ -21,7 +21,7 @@
                 <div id="basket_open_button"></div>
                 <script id="shoppingCartSummaryTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
-                    <table id="active_basket" border="0" cellpadding="0" cellspacing="0">
+                    <table align="right" id="active_basket" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td><a href="#/saveShoppingCartOpenStatus"><img src="@Url.Content("~/Content/Media/images/basketbutton_01.png")" alt=""  /></a></td>
                             <td class="active_basket_middle_cell" nowrap="nowrap">
@@ -153,7 +153,7 @@
                                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                                     <tr>
                                       <td><input type="radio" name="radio_payment" value="1" /></td>
-                                      <td>Átutalásos fizetés </td>
+                                      <td>Átutalásos fizetés <a class="tooltip" href="#"><img src="~/Content/Media/images/help_less.gif" alt="Help" height="12" width="12" style="margin_bottom:-3;"/><span class="custom help"><em>Fejléc</em>HO..HO..HO... Boldog Karácsonyt!</span></a></td>
                                     </tr>
                                     <tr>
                                       <td>&nbsp;</td>
@@ -164,7 +164,7 @@
                                 <td valign="top"  style="width:160px; height:37px;"><div id="raktari_off"></div>
                                 <div id="kos_gombok_szall">
                                     <input type="radio" name="radio_delivery" value="1" />
-                                    Raktári átvétel </div></td>
+                                    Raktári átvétel <a class="tooltip" href="#"></a></div></td>
                                 <td valign="top"  style="width:160px; height:37px;"><input type="button" name="resetOrderForm" id="resetOrderForm" value="Módosít" class="feladasopciok_nullaz" /></td>
                                 <td><!--<div id="cim_off"></div> <div id="kos_gombok_szalladat">Szállítási cím<br /><input type="checkbox" name="chk_cim" id="chk_cim" /> [Jóváhagyás]</div> --><div id="szallcimadat_off"></div>
                                 <div id="szallcimadat">
@@ -370,8 +370,8 @@
                             <div id="kettes_szuro">
                         	<table cellpadding="1" cellspacing="1">
 						    <tr>
-                                <td><input type="checkbox" id="chk_filterByHrp" /></td><td>HRP termékek</td>
-                                <td><input type="checkbox" id="chk_filterByBsc" /></td><td>BSC termékek</td>
+                                <td><input type="checkbox" id="chk_filterByHrp" checked="checked" /></td><td>HRP termékek</td>
+                                <td><input type="checkbox" id="chk_filterByBsc" checked="checked" /></td><td>BSC termékek</td>
                             </tr>
                             </table>
                             </div>
@@ -456,9 +456,6 @@
                         </p>
                         <p class="bannerpelda" align="center">
                             <img src="@Url.Content("~/Content/Media/images/camp-fair.jpg")" alt="" border="0" />
-                        </p>
-                        <p class="bannerpelda" align="center">
-                            <img src="@Url.Content("~/Content/Media/images/mogyoro.jpg")" alt="" border="0" />
                         </p>
 		            </div>
 	            </div>
@@ -603,12 +600,13 @@
                         @*termekelem*@
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
-                       <div class="expand_heading">
+                        {{if !item.Available}}
+                        <div class="expand_heading">
 				            <table width="670" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                <tr>
 				                    <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
 				                    <td width="100%" valign="top" class="cus_prod_header_middle_cell">
-				                    <span class="cus_prod_table_item_number">${item.SequenceNumber}</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
+				                    <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
                                     <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span>
 				                    <!--Az akció meg az ujdonság átraktam az ár mellé, mert csak expand módban látszanak, lent is meghagytam öket ( just in case) csak átlátszó png-t készítettem. Formázgattam a tételadatokat is meg a képek méretét D.--> 
 				                    </td>
@@ -627,34 +625,31 @@
                                             </td>
                                             <td>
                                             <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
-			                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-                                <tr>
-<td height="24" nowrap="nowrap">
-                                        <div class="cus_prod_table_quantity">
+			                                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
+                                            <tr>
+                                                <td height="24" nowrap="nowrap">
+                                                <div class="cus_prod_table_quantity">
+                                                <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" nowrap="nowrap">
+                                                    <div class="cus_prod_table_basket">
+                                                    <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
                                         
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                                    <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
                                         
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td align="right" nowrap="nowrap">
-                                        <div class="cus_prod_table_basket">
-                                        <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
-                                        
-                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
-                                        
-                                        </div>
-                                    </td>
-                                </tr>
-                                </table>
-                                </form>
-                                </td>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </table>
+                                            </form>
+                                            </td>
     		                            </tr>
 				                        </table>
-                                        
                                         {{/if}}
-				                    </td>
+				                    </td>                                        
 				                </tr>
 				            </table>
 				        </div>
@@ -679,7 +674,6 @@
 				                            <table width="200" border="0" cellspacing="1" cellpadding="2">
 				                            <tr>
 				                                <td valign="top">
-
                                                 {{if Visitor.IsValidLogin}}
 				                                    <div class="cus_teteladatok_2">
                                                     {{if item.IsInStock}}
@@ -754,6 +748,7 @@
                                 </form>
 				            </div>
 				        </div>
+                        {{/if}}
                         {{/each}}
                         </script>
                     </div>
@@ -826,9 +821,9 @@
                     </script>            
 					<div id="használt_termék">
                     @*használt_elem*@
-                        <script id="productTemplate" type="text/x-jquery-tmpl">
+                        <script id="secondHandTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
-                    <div class="expand_heading">
+                            <div class="expand_heading">
 				            <table width="670" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                <tr>
 				                    <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
@@ -848,11 +843,9 @@
                                             <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
 			                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
                                 <tr>
-<td height="24" nowrap="nowrap">
+                                    <td height="24" nowrap="nowrap">
                                         <div class="cus_prod_table_quantity">
-                                        
                                         <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
-                                        
                                         </div>
                                     </td>
                                     </tr>
@@ -972,9 +965,9 @@
                     </div>
 
                     <script id="productDetailsTemplate" type="text/x-jquery-tmpl">
-					<table width="100%" border="0">
+					<table style="padding:8px; font-size: 18px;" width="100%" border="0">
                     <tr>
-                        <td><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code"> <br>  ${Product.ProductId}</span></td>
+                        <td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code"> <br>  ${Product.ProductId}</span></td>
                       </tr>
                     </table>
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">

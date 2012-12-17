@@ -18,7 +18,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// konstruktor terméklista cache karbantartó interfészt megvalósító példánnyal
         /// </summary>
         /// <param name="service"></param>
-        MaintainController(CompanyGroup.ApplicationServices.MaintainModule.IProductService service)
+        public MaintainController(CompanyGroup.ApplicationServices.MaintainModule.IProductService service)
         {
             this.service = service;
         }
@@ -26,11 +26,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <summary>
         /// terméklista cache újra töltése
         /// </summary>
-        [ActionName("FillProductCache/{dataAreaId}")]
+        [ActionName("FillProductCache")]
         [HttpGet]
-        public bool FillProductCache(string dataAreaId)
+        public bool FillProductCache(string id)
         {
-            return service.FillProductCache(dataAreaId);
+            return service.FillProductCache(id);
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("RefillProductCache")]
         [HttpGet]
-        public bool RefillProductCache(string dataAreaId)
+        public bool RefillProductCache(string id)
         {
-            return service.RefillProductCache(dataAreaId);
+            return service.RefillProductCache(id);
         }
     }
 }

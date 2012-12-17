@@ -143,17 +143,17 @@ namespace CompanyGroup.Data.Test.MaintainModule
         /// <summary>
         ///A test for GetProductManagerList
         ///</summary>
-        [TestMethod()]
-        public void GetProductManagerList()
-        {
-            CompanyGroup.Domain.MaintainModule.IProductRepository repository = new CompanyGroup.Data.MaintainModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+        //[TestMethod()]
+        //public void GetProductManagerList()
+        //{
+        //    CompanyGroup.Domain.MaintainModule.IProductRepository repository = new CompanyGroup.Data.MaintainModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            List<CompanyGroup.Domain.MaintainModule.ProductManager> productManagers = repository.GetProductManagerList("hrp");
+        //    List<CompanyGroup.Domain.MaintainModule.ProductManager> productManagers = repository.GetProductManagerList("hrp");
 
-            Assert.IsNotNull(productManagers);
+        //    Assert.IsNotNull(productManagers);
 
-            Assert.IsTrue(productManagers.Count > 0);
-        }
+        //    Assert.IsTrue(productManagers.Count > 0);
+        //}
 
         /// <summary>
         ///A test for ProductList
@@ -244,8 +244,6 @@ namespace CompanyGroup.Data.Test.MaintainModule
 
             List<CompanyGroup.Domain.MaintainModule.ProductDescription> productDescriptions = repository.GetProductDescriptionList(dataAreaId);
 
-            List<CompanyGroup.Domain.MaintainModule.ProductManager> productManagers = repository.GetProductManagerList(dataAreaId);
-
             List<CompanyGroup.Domain.MaintainModule.Picture> pictures = repository.GetPictureList(dataAreaId);
 
             List<CompanyGroup.Domain.MaintainModule.Stock> stocks = repository.GetStockList(dataAreaId);
@@ -283,8 +281,6 @@ namespace CompanyGroup.Data.Test.MaintainModule
 
                 item.ShippingDate = DateTime.MinValue;
 
-                item.ProductManager = GetProductManager(productManagers, item.ProductManager.EmployeeId);
-
                 ProductDescription descHun = GetProductDescription(productDescriptions, item.ProductId, "hun");
 
                 ProductDescription descEng = GetProductDescription(productDescriptions, item.ProductId, "eng");
@@ -298,8 +294,6 @@ namespace CompanyGroup.Data.Test.MaintainModule
 
                 item.InnerStock = GetStock(dataAreaId, dataAreaId == Domain.Core.Constants.DataAreaIdHrp ? Domain.Core.Constants.InnerStockHrp : Domain.Core.Constants.InnerStockBsc, item.ProductId, stocks);
                 item.OuterStock = GetStock(dataAreaId, dataAreaId == Domain.Core.Constants.DataAreaIdHrp ? Domain.Core.Constants.OuterStockHrp : Domain.Core.Constants.OuterStockBsc, item.ProductId, stocks);
-                //"2100""HASZNALT"
-                item.SerbianStock = GetStock(Domain.Core.Constants.DataAreaIdSerbia, Domain.Core.Constants.StockSerbia, item.ProductId, stocks);
 
                 item.SecondHandList = GetSecondHandList(secondHandList, item.ProductId);
                 
@@ -385,12 +379,12 @@ namespace CompanyGroup.Data.Test.MaintainModule
             return description != null ? description : new ProductDescription("", "", "");
         }
 
-        private ProductManager GetProductManager(List<CompanyGroup.Domain.MaintainModule.ProductManager> managers, string key)
-        {
-            ProductManager manager = managers.FirstOrDefault(m => m.EmployeeId.ToLower() == key.ToLower());
+        //private ProductManager GetProductManager(List<CompanyGroup.Domain.MaintainModule.ProductManager> managers, string key)
+        //{
+        //    ProductManager manager = managers.FirstOrDefault(m => m.EmployeeId.ToLower() == key.ToLower());
 
-            return manager != null ? manager : new ProductManager("", "", "", "", "");
-        }
+        //    return manager != null ? manager : new ProductManager("", "", "", "", "");
+        //}
 
         private List<Picture> GetPictures(List<CompanyGroup.Domain.MaintainModule.Picture> pictures, string key)
         {

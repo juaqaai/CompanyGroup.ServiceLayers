@@ -102,7 +102,7 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
                 List<CompanyGroup.Domain.MaintainModule.ProductDescription> productDescriptions = productMaintainRepository.GetProductDescriptionList(dataAreaId);
 
                 //termékmanager lekérdezés
-                List<CompanyGroup.Domain.MaintainModule.ProductManager> productManagers = productMaintainRepository.GetProductManagerList(dataAreaId);
+                //List<CompanyGroup.Domain.MaintainModule.ProductManager> productManagers = productMaintainRepository.GetProductManagerList(dataAreaId);
 
                 //képek lekérdezés
                 List<CompanyGroup.Domain.MaintainModule.Picture> pictures = productMaintainRepository.GetPictureList(dataAreaId);
@@ -125,19 +125,11 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
                 //cikkek lekérdezés
                 List<CompanyGroup.Domain.MaintainModule.Product> products = productMaintainRepository.GetProductList(dataAreaId);
 
-                //szűrés azokra a termékekre, melyek szerepelnek a leértékelt listában
-                List<CompanyGroup.Domain.MaintainModule.Product> filteredSecondHandProducts = secondHandProducts.Where(x => secondHands.Any(y => y.ProductId == x.ProductId)).ToList();
-
-                //termékek eltávolítása a leértékelt listából, melyek azonosítója már szerepel a terméklistában
-                filteredSecondHandProducts.RemoveAll(z => !(products.Any(p => p.ProductId == z.ProductId)));
-
                 //leértékelt lista terméklistához történő hozzáadása        
-                products.AddRange(filteredSecondHandProducts);
+                products.AddRange(secondHandProducts);
 
                 products.ForEach(delegate(Product item)
                 {
-                    string langId = item.DataAreaId.ToLower() == Domain.Core.Constants.DataAreaIdHrp || item.DataAreaId.ToLower() == Domain.Core.Constants.DataAreaIdBsc ? Domain.Core.Constants.DataAreaIdHun : Domain.Core.Constants.DataAreaIdSerbia;
-
                     FirstLevelCategory firstLevelCategory = GetFirstLevelCategory(firstLevelCategories, item.Category1Id);
                     item.Category1Name = firstLevelCategory.Category1Name;
                     item.Category1NameEnglish = firstLevelCategory.Category1NameEnglish;
@@ -153,13 +145,12 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
                     Manufacturer manufacturer = GetManufacturer(manufacturers, item.ManufacturerId);
                     item.ManufacturerName = manufacturer.ManufacturerName;
                     item.ManufacturerNameEnglish = manufacturer.ManufacturerNameEnglish;
-                    item.ProductManager = GetProductManager(productManagers, item.ProductManager.EmployeeId);
 
                     item.ItemNameEnglish = GetInventNameEnglish(inventNames, item.ProductId);
 
                     item.ShippingDate = GetShippingDate(purchaseOrderLines, item.ProductId);
 
-                    item.ProductManager = GetProductManager(productManagers, item.ProductManager.EmployeeId);
+                    //item.ProductManager = GetProductManager(productManagers, item.ProductManager.EmployeeId);
 
                     ProductDescription descHun = GetProductDescription(productDescriptions, item.ProductId, Domain.Core.Constants.LanguageHungarian);
 
@@ -173,7 +164,6 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
 
                     item.InnerStock = GetStock(dataAreaId, dataAreaId == Domain.Core.Constants.DataAreaIdHrp ? Domain.Core.Constants.InnerStockHrp : Domain.Core.Constants.InnerStockBsc, item.ProductId, stocks);
                     item.OuterStock = GetStock(dataAreaId, dataAreaId == Domain.Core.Constants.DataAreaIdHrp ? Domain.Core.Constants.OuterStockHrp : Domain.Core.Constants.OuterStockBsc, item.ProductId, stocks);
-                    item.SerbianStock = GetStock(Domain.Core.Constants.DataAreaIdSerbia, Domain.Core.Constants.StockSerbia, item.ProductId, stocks);
 
                     item.SecondHandList = GetSecondHands(secondHands, item.ProductId);
 
@@ -239,12 +229,12 @@ namespace CompanyGroup.ApplicationServices.MaintainModule
             return description != null ? description : new ProductDescription("", "", "");
         }
 
-        private ProductManager GetProductManager(List<CompanyGroup.Domain.MaintainModule.ProductManager> managers, string key)
-        {
-            ProductManager manager = managers.FirstOrDefault(m => m.EmployeeId.ToLower() == key.ToLower());
+        //private ProductManager GetProductManager(List<CompanyGroup.Domain.MaintainModule.ProductManager> managers, string key)
+        //{
+        //    ProductManager manager = managers.FirstOrDefault(m => m.EmployeeId.ToLower() == key.ToLower());
 
-            return manager != null ? manager : new ProductManager("", "", "", "", "");
-        }
+        //    return manager != null ? manager : new ProductManager("", "", "", "", "");
+        //}
 
         private List<Picture> GetPictures(List<CompanyGroup.Domain.MaintainModule.Picture> pictures, string key)
         {

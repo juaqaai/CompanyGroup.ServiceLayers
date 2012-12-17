@@ -56,8 +56,8 @@ namespace CompanyGroup.Dto.WebshopModule
         [System.Runtime.Serialization.DataMember(Name = "New", Order = 16)]
         public bool New { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 17)]
-        public bool CannotCancel { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 17)]
+        //public bool CannotCancel { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "Description", Order = 18)]
         public string Description { get; set; }

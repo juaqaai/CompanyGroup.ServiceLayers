@@ -68,8 +68,8 @@ namespace CompanyGroup.Dto.WebshopModule
         [System.Runtime.Serialization.DataMember(Name = "Comparable", Order = 20)]
         public bool Comparable { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 21)]
-        public bool CannotCancel { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 21)]
+        //public bool CannotCancel { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 22)]
         public Picture PrimaryPicture { get; set; }
@@ -83,8 +83,8 @@ namespace CompanyGroup.Dto.WebshopModule
         [System.Runtime.Serialization.DataMember(Name = "DescriptionEnglish", Order = 25)]
         public string DescriptionEnglish { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ProductManager", Order = 26)]
-        public CompanyGroup.Dto.PartnerModule.ProductManager ProductManager { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "ProductManager", Order = 26)]
+        //public CompanyGroup.Dto.PartnerModule.ProductManager ProductManager { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 27)]
         public string DataAreaId { get; set; }
@@ -92,8 +92,8 @@ namespace CompanyGroup.Dto.WebshopModule
         [System.Runtime.Serialization.DataMember(Name = "IsInStock", Order = 28)]
         public bool IsInStock { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "SequenceNumber", Order = 29)]
-        public int SequenceNumber { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "SequenceNumber", Order = 29)]
+        //public int SequenceNumber { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "PurchaseInProgress", Order = 30)]
         public bool PurchaseInProgress { get; set; }

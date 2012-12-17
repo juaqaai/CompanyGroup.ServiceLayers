@@ -27,7 +27,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető jelleg1 lista lekérdezése
+        /// jelleg1 lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.FirstLevelCategory> GetFirstLevelCategoryList(string dataAreaId)
@@ -39,7 +39,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető jelleg2 lista lekérdezése
+        /// jelleg2 lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.SecondLevelCategory> GetSecondLevelCategoryList(string dataAreaId)
@@ -51,7 +51,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető jelleg3 lista lekérdezése
+        /// jelleg3 lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.ThirdLevelCategory> GetThirdLevelCategoryList(string dataAreaId)
@@ -66,13 +66,13 @@ namespace CompanyGroup.Data.MaintainModule
         /// termékmanager lista lekérdezése
         /// </summary>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.MaintainModule.ProductManager> GetProductManagerList(string dataAreaId)
-        {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_EmployeeList").SetString("DataAreaId", dataAreaId).SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.MaintainModule.ProductManager).GetConstructors()[0]));
+        //public List<CompanyGroup.Domain.MaintainModule.ProductManager> GetProductManagerList(string dataAreaId)
+        //{
+        //    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_EmployeeList").SetString("DataAreaId", dataAreaId).SetResultTransformer(
+        //                                    new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.MaintainModule.ProductManager).GetConstructors()[0]));
 
-            return query.List<CompanyGroup.Domain.MaintainModule.ProductManager>() as List<CompanyGroup.Domain.MaintainModule.ProductManager>;
-        }
+        //    return query.List<CompanyGroup.Domain.MaintainModule.ProductManager>() as List<CompanyGroup.Domain.MaintainModule.ProductManager>;
+        //}
 
         /// <summary>
         /// termékleírások lista lekérdezése
@@ -87,7 +87,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető terméklista lekérdezése
+        /// terméklista lekérdezése (a használt készleten lévő termékek kiszűrése megtörténik)
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.Product> GetProductList(string dataAreaId)
@@ -111,7 +111,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető termékekhez tartozó képek lista lekérdezése
+        /// termékekhez tartozó képek lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.Picture> GetPictureList(string dataAreaId)
@@ -123,7 +123,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető termékekhez tartozó készlet lista lekérdezése
+        /// termékekhez tartozó készlet lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.Stock> GetStockList(string dataAreaId)
@@ -136,7 +136,7 @@ namespace CompanyGroup.Data.MaintainModule
         }
 
         /// <summary>
-        /// webre kitehető termékekhez tartozó leértékelt - használt - lista lekérdezése
+        /// termékekhez tartozó leértékelt - használt - lista lekérdezése
         /// </summary>
         /// <returns></returns>
         public List<CompanyGroup.Domain.MaintainModule.SecondHand> GetSecondHandList(string dataAreaId)

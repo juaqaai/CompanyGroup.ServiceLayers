@@ -12,7 +12,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.Stock Map(CompanyGroup.Domain.WebshopModule.Stock from)
         {
-            return new CompanyGroup.Dto.WebshopModule.Stock() { Inner = from.Inner, Outer = from.Outer, Serbian = from.Serbian };
+            return new CompanyGroup.Dto.WebshopModule.Stock() { Inner = from.Inner, Outer = from.Outer };
         }
     }
 }
