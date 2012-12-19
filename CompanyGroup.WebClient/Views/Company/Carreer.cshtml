@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Karrier";
 }
-	<aside id="aside-first" class="aside-first group">
+@*<aside id="aside-first" class="aside-first group">
 		<div class="zone zone-aside-first">
             <article class="widget-html-widget widget">
-                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
-                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/images/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/umages/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
             </article>
         </div>
-	</aside>
-	<div id="layout-content" class="group">
+	</aside>*@
+@*	<div  id="layout-content" class="group">*@
         @*cms Messages
 		<div id="messages">
 			Messages
@@ -22,20 +22,146 @@
 		<div id="preloader">
 			loadnig...
 		</div>
-		<div id="content" class="group">
-			<div class="zone zone-content">
-                        Carreer content            
-            </div>
-		</div>
-        @*cms AfterContent
-		<div id="after-content">
-			AfterContent
-		</div>*@
+    <div id="content" class="group">
+		<div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content"><div >
+            <h2 class="focim"><strong>Aktuális álláslehetőségek:</strong></h2>
+            <br />            
+			<table width="500" border="0" cellspacing="1" cellpadding="1" style="margin-left: 100px;">
+              <tr>
+                <td width="290"><strong>Munkakör megnevezése</strong></td>
+                <td width="210"><strong>Jelentkezési határidő:</strong></td>
+              </tr>
+            </table>
+            <span id="UpdatePanelJobInfo">
+ <table width="500" border="0" cellspacing="1" cellpadding="1" style="margin-left: 100px;">
+                          <tr>
+                            <td width="290"><a <a class="anchorLink" id="lvJobInfo_ctrl0_lnkBtnName" href="#hrp" style="color:#FF0000; text-decoration:underline;">Termékmenedzser</a></td>
+                            <td width="210"><span id="lvJobInfo_ctrl0_spnDateTo">12/31/2012 12</span></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"></td>
+                          </tr>
+                          <tr>
+                            <td width="290"><strong></strong></td>
+                            @*<td width="210"><a href="applyform.aspx?id=1" id="lvJobInfo_ctrl0_hypLnkApplyForm" style="color:#FF0000; text-decoration:underline;">Jelentkezési lap &raquo;</a></td>*@
+                          </tr>                      
+                        </table>
+                    
+                        <table width="500" border="0" cellspacing="1" cellpadding="1" style="margin-left: 100px;">
+                          <tr>
+                            <td width="290"><a id="lvJobInfo_ctrl1_lnkBtnName" href="javascript:__doPostBack('lvJobInfo$ctrl1$lnkBtnName','')" style="color:#FF0000; text-decoration:underline;">Kereskedő</a></td>
+                            <td width="210"><span id="lvJobInfo_ctrl1_spnDateTo">12/31/2012 12</span></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"></td>
+                          </tr>
+                          <tr>
+                            <td width="290"><strong></strong></td>
+                            @*<td width="210"><a href="applyform.aspx?id=2" id="lvJobInfo_ctrl1_hypLnkApplyForm" style="color:#FF0000; text-decoration:underline;">Jelentkezési lap &raquo;</a></td>*@
+                          </tr>                      
+                        </table> 
+						</br>                       
+<h2 id="hrp">Jelentkezési lap</h2>
+<p>Örülünk, hogy úgy döntött megtisztel minket bizalmával és jelentkezik cégünkhöz. Kérem, töltse ki az alábbi jelentkezési lap mezőit, majd küldje el részünkre.<br />
+<strong>Figyelem: a csillaggal megjelölt mezők kitöltése kötelező, ezek hiányában nem fogadhatjuk el jelentkezését!</strong></p>
+<p>A HRP Hungary Kft. garantálja, hogy az Ön adatainak biztonságos tárolása érdekében minden tőle telhetőt megtesz. Az adatkezelési folyamatokat a személyes adatok védelméről szóló, 1992. évi LXIII. törvény által biztosított jogi szabályozás keretei között végezzük. Személyes adatait nem hozzuk nyilvánosságra, és nem továbbítjuk illetéktelen személyeknek. Személyes adatainak védelmét azok anonimizálásával biztosítjuk. Ha ezzel kapcsolatosan bővebb felvilágosításra kíváncsi, kérjük olvassa el adatvédelmi nyilatkozatunkat.</p>
+<form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
+  <p> <strong>Pozíció </strong><br />
+    <select name="position" class="regfields" id="position">
+    </select>
+    <br />
+    <br />
+    <strong>Személyi adatok</strong><br />
+  </p>
+  <table border="0" cellpadding="2" cellspacing="1">
+    <tr>
+      <td nowrap="nowrap">*Vezetéknév</td>
+      <td align="right" nowrap="nowrap"><label for="textfield"></label>
+      <input name="textfield" type="text" class="regfields" id="textfield" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Keresztnév</td>
+      <td align="right" nowrap="nowrap"><input name="textfield2" type="text" class="regfields" id="textfield2" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Születési hely</td>
+      <td align="right" nowrap="nowrap"><input name="textfield3" type="text" class="regfields" id="textfield3" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Születési idő</td>
+      <td align="right" nowrap="nowrap"><input name="textfield4" type="text" class="regfields" id="textfield4" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Állandó lakcím</td>
+      <td align="right" nowrap="nowrap"><input name="textfield5" type="text" class="regfields" id="textfield5" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">Ideiglenes lakcím</td>
+      <td align="right" nowrap="nowrap"><input name="textfield6" type="text" class="regfields" id="textfield6" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Telefon</td>
+      <td align="right" nowrap="nowrap"><input name="textfield7" type="text" class="regfields" id="textfield7" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">*Email</td>
+      <td align="right" nowrap="nowrap"><input name="textfield8" type="text" class="regfields" id="textfield8" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td align="right" nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><strong>Egyéb</strong></td>
+      <td align="right" nowrap="nowrap"><label for="textarea"></label>
+      <textarea name="textarea" cols="45" rows="5" class="regfields" id="textarea"></textarea></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><strong>Önéletrajz csatolása</strong></td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" nowrap="nowrap">Figyelem! Csak &quot;doc&quot;, &quot;rtf&quot;, illetve &quot;pdf&quot; kiterjesztésű fájlokat  fogadunk el!</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap" bgcolor="#FFFFCC">*File kiválasztása</td>
+      <td nowrap="nowrap" bgcolor="#FFFFCC"><label for="fileField"></label>
+      <input type="file" name="fileField" id="fileField" /> <input type="submit" name="button" id="button" value="Feltöltés" /></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" nowrap="nowrap"><strong>Kijelentem, hogy a kérdőívet a legjobb tudomásom szerint töltöttem ki.</strong></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" nowrap="nowrap"><input type="checkbox" name="checkbox" id="checkbox" />
+        <label for="checkbox"></label>
+      Hozzájárulok hogy a HRP Hungary Kft a referenciáimat leellenőrizze. </td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">&nbsp;</td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap">2012.10.10.</td>
+      <td nowrap="nowrap">&nbsp;</td>
+    </tr>
+  </table>
+  <p>&nbsp; </p>
+</form>
+<p>&nbsp;</p>
+        </div>
 	</div>
-    @*cms AsideSecond
-    <aside id="aside-second" class="aside-second">
-		AsideSecond
-	</aside>*@
 
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');

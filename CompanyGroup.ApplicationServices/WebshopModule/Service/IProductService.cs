@@ -20,7 +20,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
+        CompanyGroup.Dto.WebshopModule.Catalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
 
         /// <summary>
         /// struktúrák lekérdezése  

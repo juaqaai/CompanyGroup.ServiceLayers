@@ -117,6 +117,7 @@
     <Compile Include="ServiceResponse\UpdateRegistrationData.cs" />
     <Compile Include="ServiceResponse\UpdateDataRecording.cs" />
     <Compile Include="ServiceResponse\PostRegistration.cs" />
+    <Compile Include="WebshopModule\Catalogue.cs" />
     <Compile Include="WebshopModule\Completion.cs" />
     <Compile Include="WebshopModule\BannerProduct.cs" />
     <Compile Include="WebshopModule\FinanceOffer.cs" />

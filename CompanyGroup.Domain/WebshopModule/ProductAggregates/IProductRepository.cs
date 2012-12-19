@@ -51,10 +51,8 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// terméklista lekérdezés
         /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <param name="sequence"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.ProductList GetProductList(string dataAreaId, int sequence);
+        CompanyGroup.Domain.WebshopModule.ProductList GetProductList();
 
         /// <summary>
         /// termékstruktúra lekérdezés

@@ -15,8 +15,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetCatalogue")]
-        public CompanyGroup.WebClient.Models.Catalogue GetCatalogue()
+        [ActionName("GetInitialCatalogue")]
+        public CompanyGroup.WebClient.Models.Catalogue GetInitialCatalogue()
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -25,26 +25,26 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllStructure allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
-            {
-                ActionFilter = false,
-                BargainFilter = false,
-                Category1IdList = new List<string>(),
-                Category2IdList = new List<string>(),
-                Category3IdList = new List<string>(),
-                HrpFilter = true,
-                BscFilter = true,
-                IsInNewsletterFilter = false,
-                ManufacturerIdList = new List<string>(),
-                NewFilter = false,
-                StockFilter = false,
-                TextFilter = String.Empty,
-                PriceFilter = "0",
-                PriceFilterRelation = "0",
-                NameOrPartNumberFilter = ""
-            };
+            //CompanyGroup.Dto.ServiceRequest.GetAllStructure allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
+            //{
+            //    ActionFilter = false,
+            //    BargainFilter = false,
+            //    Category1IdList = new List<string>(),
+            //    Category2IdList = new List<string>(),
+            //    Category3IdList = new List<string>(),
+            //    HrpFilter = true,
+            //    BscFilter = true,
+            //    IsInNewsletterFilter = false,
+            //    ManufacturerIdList = new List<string>(),
+            //    NewFilter = false,
+            //    StockFilter = false,
+            //    TextFilter = String.Empty,
+            //    PriceFilter = "0",
+            //    PriceFilterRelation = "0",
+            //    NameOrPartNumberFilter = ""
+            //};
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetAll", allStructure);
+            //CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetAll", allStructure);
 
             //katalógus lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
@@ -71,7 +71,7 @@ namespace CompanyGroup.WebClient.Controllers
                 NameOrPartNumberFilter = ""
             };
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", allProduct);
 
             //banner lista lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetBannerList bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerList()
@@ -119,7 +119,7 @@ namespace CompanyGroup.WebClient.Controllers
                 deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
             }
 
-            CompanyGroup.WebClient.Models.Catalogue catalogue = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(catalogue.Structures, catalogue.Products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
@@ -129,7 +129,7 @@ namespace CompanyGroup.WebClient.Controllers
                 this.WriteCookie(visitorData);
             }
 
-            return catalogue;
+            return model;
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns>terméklista objektum és a látogató objektum JSON formátumban</returns>
         [HttpPost]
-        [ActionName("GetProducts")]
-        public CompanyGroup.WebClient.Models.ProductCatalogue GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request) //CompanyGroup.Dto.ServiceRequest.CatalogueFilter
+        [ActionName("GetCatalogue")]
+        public CompanyGroup.WebClient.Models.ProductCatalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request) //CompanyGroup.Dto.ServiceRequest.CatalogueFilter
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -151,9 +151,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             request.NameOrPartNumberFilter = request.NameOrPartNumberFilter ?? String.Empty;
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", request);
+            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", request);
 
-            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor);
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(catalogue.Products, catalogue.Structures, visitor);
         }
 
         /// <summary>

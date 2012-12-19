@@ -126,31 +126,22 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// terméklista lekérdezés
         /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <param name="sequence"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.ProductList GetProductList(string dataAreaId, int sequence)
+        public CompanyGroup.Domain.WebshopModule.ProductList GetProductList()
         {
             try
             {
                 this.ReConnect();
 
-                CompanyGroup.Domain.Utils.Check.Require((dataAreaId != null), "The dataAreaId parameter cannot be null!");
-
                 MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.LT("ItemState", 2), MongoDB.Driver.Builders.Query.Where("this.SecondHandList.length > 0"));
-
-                if (!String.IsNullOrEmpty(dataAreaId))
-                {
-                    query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.EQ("DataAreaId", dataAreaId));
-                }
 
                 MongoCollection<CompanyGroup.Domain.WebshopModule.Product> products = this.GetCollection(ProductRepository.CollectionName);
 
-                MongoCursor<CompanyGroup.Domain.WebshopModule.Product> filteredList = products.Find(query).SetSortOrder(GetSortOrderFieldName(sequence));
+                MongoCursor<CompanyGroup.Domain.WebshopModule.Product> productList = products.FindAll(); //Find(query);
 
                 CompanyGroup.Domain.WebshopModule.ProductList resultList = new CompanyGroup.Domain.WebshopModule.ProductList();
 
-                foreach (CompanyGroup.Domain.WebshopModule.Product product in filteredList)
+                foreach (CompanyGroup.Domain.WebshopModule.Product product in productList)
                 {
                     resultList.Add(product);
                 }

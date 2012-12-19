@@ -57,7 +57,7 @@ SET NOCOUNT ON
 					CONVERT( bit, AKCIOS ) as Discount, 
 					CASE WHEN DATEADD( day, 30, Invent.CREATEDDATE ) >=  GETDATE() THEN CONVERT( bit, 1 ) ELSE CONVERT( bit, 0 ) END as New, 
 					Invent.AtlagosKeszletkor_Szamitott as AverageInventory,
-				    Invent.TERMEKMENEDZSERID as ProductManagerId,
+				    --Invent.TERMEKMENEDZSERID as ProductManagerId,
 					CONVERT( INT, Invent.AMOUNT1 ) as Price1,
 					CONVERT( INT, Invent.AMOUNT2 ) as Price2,
 					CONVERT( INT, Invent.AMOUNT3 ) as Price3,

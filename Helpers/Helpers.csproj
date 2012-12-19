@@ -63,6 +63,7 @@
     <Compile Include="JsonConverter.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="NameValueParser.cs" />
+    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryStringParser.cs" />
     <Compile Include="Sorter.cs" />

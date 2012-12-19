@@ -24,26 +24,26 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllStructure allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
-            {
-                ActionFilter = false,
-                BargainFilter = false,
-                Category1IdList = new List<string>(),
-                Category2IdList = new List<string>(),
-                Category3IdList = new List<string>(),
-                HrpFilter = true,
-                BscFilter = true,
-                IsInNewsletterFilter = false,
-                ManufacturerIdList = new List<string>(),
-                NewFilter = false,
-                StockFilter = false,
-                TextFilter = String.Empty,
-                PriceFilter = "0",
-                PriceFilterRelation = "0",
-                NameOrPartNumberFilter = ""
-            };
+            //CompanyGroup.Dto.ServiceRequest.GetAllStructure allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
+            //{
+            //    ActionFilter = false,
+            //    BargainFilter = false,
+            //    Category1IdList = new List<string>(),
+            //    Category2IdList = new List<string>(),
+            //    Category3IdList = new List<string>(),
+            //    HrpFilter = true,
+            //    BscFilter = true,
+            //    IsInNewsletterFilter = false,
+            //    ManufacturerIdList = new List<string>(),
+            //    NewFilter = false,
+            //    StockFilter = false,
+            //    TextFilter = String.Empty,
+            //    PriceFilter = "0",
+            //    PriceFilterRelation = "0",
+            //    NameOrPartNumberFilter = ""
+            //};
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Product", "GetStructure", allStructure);
+            //CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Product", "GetStructure", allStructure);
 
             //katalógus lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
@@ -70,7 +70,7 @@ namespace CompanyGroup.WebClient.Controllers
                 NameOrPartNumberFilter = ""
             };
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", allProduct);
 
             //banner lista lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetBannerList bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerList()
@@ -118,7 +118,7 @@ namespace CompanyGroup.WebClient.Controllers
                 deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
             }
 
-            CompanyGroup.WebClient.Models.Catalogue catalogue = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(catalogue.Structures, catalogue.Products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
@@ -130,7 +130,7 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.Helpers.CookieHelper.WriteCookie(this.Response, CookieName, json);
             }
 
-            return View(catalogue);
+            return View(model);
         }
 
         /// <summary>

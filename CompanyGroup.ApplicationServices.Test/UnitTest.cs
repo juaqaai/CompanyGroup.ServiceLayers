@@ -202,11 +202,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository).GetAll(request);
+            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository).GetCatalogue(request);
 
-            Assert.IsNotNull(products);
+            Assert.IsNotNull(catalogue);
 
-            Assert.IsTrue(products.Items.Count > 0);
+            Assert.IsTrue(catalogue.Products.Items.Count > 0);
         }
 
         [TestMethod]

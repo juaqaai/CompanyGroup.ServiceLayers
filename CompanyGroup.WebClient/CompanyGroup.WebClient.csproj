@@ -1233,6 +1233,8 @@
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Webshop\_ProductListBanner.cshtml" />
     <Content Include="Views\Company\Guide.cshtml" />
+    <Content Include="Views\Company\Contact.cshtml" />
+    <Content Include="Views\Company\WasteManagement.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

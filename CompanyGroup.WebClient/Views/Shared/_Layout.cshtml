@@ -128,13 +128,13 @@
                         </script>
 						</td>
 						<td >
-<form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
-<div class="inputwrapper">
-<label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-<input style="border: 0px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="50"/>
-<img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onclick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer; ">@Html.AntiForgeryToken()
-</div>
-</form>
+                            <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
+                            <div class="inputwrapper">
+                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                            <input style="border: 0px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="50"/>
+                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onclick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
+                            </div>
+                            </form>
 						</td>
 						<td></td>
 					</tr>
@@ -142,23 +142,26 @@
 			</div>
 			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
 		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
-        	    <a title="$.scrollTo( '#top', 800, {easing:'elasout'} );" href="#top" id="top-link">Top of Page</a>
+        	    <a title="$.scrollTo( '#top', 800, {easing:'elasout'} );" id="top-link">Top of Page</a>
 			    <!-- menü -->
 			    <div id="cus_ax_nav">
 				    <ul id="navmenu_o">
 					    <li>
 						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
-					    <li>
+			    <li>
 						    <a href="@Url.Content("~/Company/Newsletter")">Akciók</a>
-						    <ul>
-							    <li>
-								    <a href="#"><img src="@Url.Content("~/Content/Media/images/menubanner.png")" width="144px" border="0" vspace="4" alt="" /></a>
-							    </li>
-						    </ul>
-					    </li>
+						 </li>
 					    <li>
 						    <a href="@Url.Content("~/Company/Index")">Céginformáció</a>
+							<ul>
+							    <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Contact")">Elérhetőségünk</a> 
+							    </li>
+								<li>
+								   <a href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
+							    </li>
+						    </ul>
 					    </li>
 					    <li>
 						    <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>
@@ -419,7 +422,7 @@
                 $('#preloader').hide();
             });
             
-            Cufon.replace('li,ul,h1,h2,h3,h4,span,p');
+            @*Cufon.replace('p');*@
 			
 
 

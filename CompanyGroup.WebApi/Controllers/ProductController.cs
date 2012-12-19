@@ -31,11 +31,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// [GET("contactRange/{id:range(1,3)}")]
         /// [GET(@"text/{e:regex(^[A-Z][a-z][0-9]$)}")]
         /// [RoutePrefix("items", TranslationKey = "itemsKey")]
-        [ActionName("GetAll")]
+        [ActionName("GetCatalogue")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Products GetAll(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        public CompanyGroup.Dto.WebshopModule.Catalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
-            CompanyGroup.Dto.WebshopModule.Products response = this.service.GetAll(request);
+            CompanyGroup.Dto.WebshopModule.Catalogue response = this.service.GetCatalogue(request);
 
             if (response == null)
             {

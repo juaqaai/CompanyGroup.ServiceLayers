@@ -1,0 +1,88 @@
+﻿@model CompanyGroup.WebClient.Models.Visitor
+@{
+    ViewBag.Title = "Contact";
+}
+
+@*	<aside id="aside-first" class="aside-first group">
+		<div class="zone zone-aside-first">
+            <article class="widget-html-widget widget">
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
+            </article>
+        </div>
+	</aside>*@
+@*	<div  id="layout-content" class="group">*@
+
+    <div id="content" class="group">
+		<div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content"> <div >
+                           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="34%"><h2 class="focim">Elérhetőségünk</h2>
+                      <p> <strong>HRP Hungary Kft.</strong><br />
+                        1133 Budapest Véső u. 7.<br />
+  <br />
+                        Adószám: 10490811-2-44<br />
+                        Cégjegyzékszám: Cg.01-09-073874<br />
+                        Bankszámlaszám: 10300002-20107680-00003285<br />
+  <br />
+                        Telefon: + 36 (1) 452 4600<br />
+                        Fax: + 36 (1) 350 1351<br />
+                        E-mail: <a href="mailto:info@hrp.hu">info@hrp.hu</a><br />
+  <br />
+  <strong>Nyitvatartás:</strong><br />
+  <span id="ucFooter_upFooter"><strong> H-CS: 8-18h, P: 8-17h</strong></span><br />
+                      </p>
+                    <p> <strong>Véső utca megközelíthetősége:</strong> </p></td>
+                    <td width="66%" valign="bottom">&nbsp;</td>
+                    <td width="66%" valign="bottom"><p><strong>Huszti úti raktárbázisunk megközelíthetősége</strong></p>
+                      <p>1033 Budapest, Huszti út 34.</p></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><!--<a href="http://utcakereso.hu/bp.13.Véső_u." target="_blank"><img src="../images/map.gif" width="450" height="308" style="border:0"/></a>--><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.hu/maps?f=q&amp;source=s_q&amp;hl=hu&amp;geocode=&amp;q=V%C3%A9s%C5%91+utca+7&amp;aq=&amp;sll=47.553744,19.040337&amp;sspn=0.006937,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=1133+Budapest,+XIII.+ker%C3%BClet,+V%C3%A9s%C5%91+utca+7&amp;t=m&amp;z=14&amp;ll=47.528814,19.063461&amp;output=embed"></iframe><br /><small><a href="https://maps.google.hu/maps?f=q&amp;source=embed&amp;hl=hu&amp;geocode=&amp;q=V%C3%A9s%C5%91+utca+7&amp;aq=&amp;sll=47.553744,19.040337&amp;sspn=0.006937,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=1133+Budapest,+XIII.+ker%C3%BClet,+V%C3%A9s%C5%91+utca+7&amp;t=m&amp;z=14&amp;ll=47.528814,19.063461" style="color:#0000FF;text-align:left">Saját mentett helyek</a> nagyobb térképen való megjelenítése</small></td>
+
+
+                    <td valign="top">&nbsp;</td>
+                    <td valign="top"><!--<img src="../images/webmap.jpg" width="450" height="308" style="border:0"/>--><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.hu/maps/ms?msa=0&amp;msid=202184711635057069596.0004c8f2f37683c196e45&amp;ie=UTF8&amp;ll=47.553744,19.040337&amp;spn=0,0&amp;t=m&amp;output=embed"></iframe><br /><small><a href="https://maps.google.hu/maps/ms?msa=0&amp;msid=202184711635057069596.0004c8f2f37683c196e45&amp;ie=UTF8&amp;ll=47.553744,19.040337&amp;spn=0,0&amp;t=m&amp;source=embed" style="color:#0000FF;text-align:left">Saját mentett helyek</a> nagyobb térképen való megjelenítése</small></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>A fenti térképre klikkelve az <a href="http://utcakereso.hu/bp.13.Véső_u." target="_blank">utcakereso.hu</a> oldalon megtekintheti a részletes térképet.</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+            
+
+        </div>
+	</div>
+
+	@*	</div>*@
+
+@section ScriptFiles {
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/guide")');
+
+}
+@section ScriptOnReady {
+    console.log('ScriptOnReady section');
+
+    var model = @(Html.Raw(Json.Encode(Model)));
+    console.log(model);
+
+    companyGroup.guide.run('#/');
+
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+  	$('#cus_header1').html(visitorInfoHtml);
+
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+  	$('#usermenuContainer').html(usermenuHtml);
+
+}
