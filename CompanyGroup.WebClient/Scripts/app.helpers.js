@@ -41,12 +41,12 @@
                     dataType: "json",
                     processData: true,
                     success: function (result) {
-                        if (result.Visitor.IsValidLogin) {
+                        if (result.IsValidLogin) {
                             if (callback)
                                 callback(result);
                         }
                         else {
-                            $("#login_errors").html(result.Visitor.ErrorMessage);
+                            $("#login_errors").html(result.ErrorMessage);
                             $("#login_errors").show();
                         }
                     },
@@ -65,7 +65,7 @@
                     dataType: "json",
                     processData: true,
                     success: function (result) {
-                        if (!result.Visitor.IsValidLogin) {
+                        if (!result.IsValidLogin) {
                             if (callback)
                                 callback(result);
                         }

@@ -37,11 +37,11 @@ companyGroup.company = $.sammy(function () {
             $.fancybox.close();
 
             $("#cus_header1").empty();
-            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
             $('#cus_header1').html(visitorInfoHtml);
 
             $("#usermenuContainer").empty();
-            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
             $('#usermenuContainer').html(usermenuHtml);
 
             context.redirect('#/authenticated');
@@ -52,9 +52,11 @@ companyGroup.company = $.sammy(function () {
     this.get('#/signOut', function (context) {
         this.signOut(companyGroup.utils.instance().getCustomerApiUrl('SignOut'), function (result) {
             $("#cus_header1").empty();
-            $("#visitorInfoTemplate").tmpl(result.Visitor).appendTo("#cus_header1");
             $("#usermenuContainer").empty();
-            $("#usermenuTemplate").tmpl(result.Visitor).appendTo("#usermenuContainer");
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+            $('#cus_header1').html(visitorInfoHtml);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
+            $('#usermenuContainer').html(usermenuHtml);
         });
     });
 

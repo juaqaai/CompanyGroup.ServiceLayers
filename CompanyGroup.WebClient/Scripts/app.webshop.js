@@ -693,6 +693,8 @@ companyGroup.webshop = $.sammy(function () {
                 if (result.Visitor.IsValidLogin) {
                     $.fancybox.close();
 
+                    console.log(result);
+
                     $("#cus_header1").empty();
                     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
                     $('#cus_header1').html(visitorInfoHtml);

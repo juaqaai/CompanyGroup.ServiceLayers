@@ -94,13 +94,15 @@
 			</table>
         </script>
 
-		</div><!--   -->
+		</div>
         <div id="cus_header2"></div>
 		<div id="cus_content_container">
 			<div id="cus_header_navigation_b">
 				<table border="0" cellspacing="0" cellpadding="4">
 					<tr id="cus_header_navigation_b_table">
 						<td id="usermenuContainer">
+                        
+						</td>
                         <script id="usermenuTemplate" type="text/html">
                         {{#IsValidLogin}}
                         <ul id="usermenu">
@@ -126,7 +128,6 @@
 						</ul>
                         {{/IsValidLogin}}
                         </script>
-						</td>
 						<td >
                             <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
@@ -142,8 +143,7 @@
 			</div>
 			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
 		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
-        	    <a title="$.scrollTo( '#top', 800, {easing:'elasout'} );" id="top-link">Top of Page</a>
-			    <!-- menü -->
+        	    <a title="" id="top-link">Top of Page</a>
 			    <div id="cus_ax_nav">
 				    <ul id="navmenu_o">
 					    <li>
@@ -174,7 +174,6 @@
 					    </li>
 				    </ul>
 			    </div>
-			<!-- menü -->
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
 			<div id="cus_catalogue_container">
@@ -387,8 +386,6 @@
                 </div>
 			</div>
     </div>
-
-    <!-- -->
     <script type="text/javascript">
         head.js('@Scripts.Url("~/bundles/jquery")', function() {
             head.js('@Scripts.Url("~/bundles/jqueryui")')
@@ -421,10 +418,6 @@
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
-            
-            @*Cufon.replace('p');*@
-			
-
 
             @RenderSection("ScriptOnReady", false)
         }); 

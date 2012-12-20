@@ -52,9 +52,12 @@ companyGroup.carreer = $.sammy(function () {
     this.get('#/signOut', function (context) {
         this.signOut(companyGroup.utils.instance().getCustomerApiUrl('SignOut'), function (result) {
             $("#cus_header1").empty();
-            $("#visitorInfoTemplate").tmpl(result.Visitor).appendTo("#cus_header1");
             $("#usermenuContainer").empty();
-            $("#usermenuTemplate").tmpl(result.Visitor).appendTo("#usermenuContainer");
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model.Visitor);
+            $('#cus_header1').html(visitorInfoHtml);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
+            $('#usermenuContainer').html(usermenuHtml);
+
         });
     });
 });
