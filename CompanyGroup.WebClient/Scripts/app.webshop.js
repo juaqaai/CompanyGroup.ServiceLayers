@@ -486,6 +486,12 @@ companyGroup.webshop = $.sammy(function () {
         else if (data.Sequence === 13) {
             context.title('rendezés garancia szerint csökkenőleg');
         }
+		else if (data.Sequence === 14) {
+            context.title('rendezés leértékelt szerint');
+        }
+		else if (data.Sequence === 15) {
+            context.title('rendezés újdonság szerint');
+        }
         showProductList(true);
     });
     this.get('#/expandall', function (context) {

@@ -203,12 +203,8 @@
                                                                                                       <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a> &bull; 
                                                                                                       <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a> &bull; 
                                                                                                       <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
-								<hr />
 								</td>
-							</tr>
-							<tr>
-								<td width="160px" ><img src="@Url.Content("~/Content/Media/images/iso.jpg")" alt="iso" height="60" width="160"/></td>
-								<td class="cus_copyright_table_small_text" align="center">Az &aacute;rak az &Aacute;F&Aacute;-t nem tartalmazz&aacute;k &eacute;s a mindenkori doll&aacute;r, illetve euro &aacute;rfolyam f&uuml;ggv&eacute;ny&eacute;ben v&aacute;ltozhatnak. Az akci&oacute;k a felt&uuml;ntetett időpontig, illetve visszavon&aacute;sig &eacute;rv&eacute;nyesek. Az &aacute;rv&aacute;ltoztat&aacute;s jog&aacute;t fenntartjuk. Az oldal tartalm&aacute;nak felhaszn&aacute;l&aacute;s&aacute;hoz, m&aacute;sol&aacute;s&aacute;hoz az oldal tulajdonos&aacute;nak enged&eacute;lye sz&uuml;ks&eacute;ges. &copy;2002-2012 HRP Hungary Kft. Minden jog fenntartva.</td>
+
 							</tr>
 						</tbody>
 					</table>
@@ -349,43 +345,33 @@
 			<!-- bejelentkezés ablak -->
 			<div style="display: none;">
 				<div id="div_login">
-                    <form action="#/signin" id="form_login" method="post">                    
-                    <div id="login_errors"></div>
-					<table width="470" border="0" align="center" cellpadding="10" cellspacing="1" >
-						<tr>
-							<td colspan="2" nowrap="nowrap"><h3>Bejelentkezés regisztrált partnereink részére</h3></td>
-						</tr>
-						<tr>
-							<td>Felhasználónév</td>
-							<td><input id="txt_username" name="txt_username" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="text" />
-							<br />
-							<br />
-							<label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></td>
-						</tr>
-						<tr>
-							<td>Jelszó</td>
-							<td><input id="txt_password" name="txt_password" style="padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" type="password" />
-							<br />
-							<br />
-							<label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-							<input type="submit" value="Belépés" style="border-radius: 5px;" />
-							</td>
-						</tr>
-					</table>
-					<table width="470" border="0" align="center" cellpadding="10" cellspacing="0" style="background:#333; color:#999; " >
-						<tr>
-							<td width="100%"><a href="#/forgetPassword" style="color:#fff; text-decoration: none;">Elfelejtett jelszó</a></td>
-							<td align="right" nowrap="nowrap"> Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#fff; text-decoration: none;">Regisztráljon!</a></td>
-						</tr>
-					</table>@Html.AntiForgeryToken()
-                    </form>				
+                    <form action="#/signin" id="form_login" method="post"> 
+                        <H2>Bejelentkezés</H2>
+                        <br />
+                        Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni. :)
+                        <br />
+                        <br />
+
+                        <div id="login-box-name" style="margin-top:20px;"><strong>Felhasználónév:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_username" class="form-login" title="Username" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></div>
+
+                        <div id="login-box-name"><strong>Jelszó:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></div>
+                        <p><br />
+                          <span class="login-box-options">
+                          <input type="checkbox" name="1" value="1">
+                            Emlékezzen rám
+                          <a href="#/forgetPassword" style="margin-left:30px;">Elfelejtett jelszó?</a></span>
+                          <br />
+                          <br />
+                          <button type="submit"><!--img src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
+                        <br />
+                        <p>Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#084385; text-decoration: none;"><strong>Regisztráljon!</strong></a></p>
+                        <div id="login_errors"></div>
+                        @Html.AntiForgeryToken() 
+                        </form>	
                 </div>
-			</div>
-    </div>
+
+            </div>
+
     <script type="text/javascript">
         head.js('@Scripts.Url("~/bundles/jquery")', function() {
             head.js('@Scripts.Url("~/bundles/jqueryui")')
@@ -419,6 +405,7 @@
                 $('#preloader').hide();
             });
 
+            @*Cufon.replace('p');*@
             @RenderSection("ScriptOnReady", false)
         }); 
 

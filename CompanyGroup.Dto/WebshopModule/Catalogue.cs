@@ -8,13 +8,15 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class Catalogue
     {
-        public Catalogue() { }
+        public Catalogue() : this(new CompanyGroup.Dto.WebshopModule.Products(), new CompanyGroup.Dto.WebshopModule.Structures(), new List<CompanyGroup.Dto.WebshopModule.BannerProduct>()) { }
 
-        public Catalogue(CompanyGroup.Dto.WebshopModule.Products products, CompanyGroup.Dto.WebshopModule.Structures structures)
+        public Catalogue(CompanyGroup.Dto.WebshopModule.Products products, CompanyGroup.Dto.WebshopModule.Structures structures, List<CompanyGroup.Dto.WebshopModule.BannerProduct> bannerProducts)
         {
-            Products = products;
+            this.Products = products;
 
-            Structures = structures;
+            this.Structures = structures;
+
+            this.BannerProducts = bannerProducts;
         }
 
         /// <summary>
@@ -26,5 +28,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// struktúrák
         /// </summary>
         public CompanyGroup.Dto.WebshopModule.Structures Structures { get; set; }
+
+        /// <summary>
+        /// termék bannerek
+        /// </summary>
+        public List<CompanyGroup.Dto.WebshopModule.BannerProduct> BannerProducts { get; set; }
     }
 }

@@ -271,7 +271,8 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse;
 
-                CompanyGroup.Dto.WebshopModule.Products products;
+                //CompanyGroup.Dto.WebshopModule.Products products;
+                CompanyGroup.Dto.WebshopModule.Catalogue catalogue;
 
                 //nem sikerült a belépés 
                 if (!visitor.LoggedIn)
@@ -289,7 +290,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                     deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
 
-                    products = new CompanyGroup.Dto.WebshopModule.Products();
+                    catalogue = new CompanyGroup.Dto.WebshopModule.Catalogue();
                 }
                 else    //sikerült a belépés, http cookie beállítás, ...
                 {
@@ -347,12 +348,13 @@ namespace CompanyGroup.WebClient.Controllers
                         NameOrPartNumberFilter = ""
                     };
 
-                    products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+                    catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", allProduct);
+                    //products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
 
                     httpStatusCode = HttpStatusCode.Created;
                 }
 
-                catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
+                catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(catalogue.Products,
                                                                                         visitor,
                                                                                         cartInfo.ActiveCart,
                                                                                         cartInfo.OpenedItems,
@@ -432,9 +434,10 @@ namespace CompanyGroup.WebClient.Controllers
                     NameOrPartNumberFilter = ""
                 };
 
-                CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
+                CompanyGroup.Dto.WebshopModule.Catalogue catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", allProduct);
+                //CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
 
-                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
+                CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(catalogue.Products,
                                                                                                                                         new CompanyGroup.WebClient.Models.Visitor(),
                                                                                                                                         new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
                                                                                                                                         new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),

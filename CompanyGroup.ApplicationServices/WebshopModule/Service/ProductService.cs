@@ -145,11 +145,28 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
             }
 
-            //var predicate = ConstructPredicate(request);
-
             IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableList = productList.AsQueryable().Where(ConstructPredicate(request));
 
+            IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableBannerProductList = productList.AsQueryable().Where(ConstructBannerListPredicate(request)).OrderByDescending( x => x.AverageInventory);
+
             List<CompanyGroup.Domain.WebshopModule.Product> filteredList = filteredQueryableList.ToList();
+
+            List<CompanyGroup.Domain.WebshopModule.Product> filteredBannerProductList = filteredQueryableBannerProductList.ToList();
+
+            List<CompanyGroup.Dto.WebshopModule.BannerProduct> bannerProducts = new List<CompanyGroup.Dto.WebshopModule.BannerProduct>();
+
+            bannerProducts.AddRange(filteredBannerProductList.ConvertAll( x => {
+            
+                return new CompanyGroup.Dto.WebshopModule.BannerProduct() { Currency = "", 
+                                                                            DataAreaId = x.DataAreaId, 
+                                                                            ItemName = x.ProductName, 
+                                                                            ItemNameEnglish = x.ProductNameEnglish, 
+                                                                            PartNumber = x.PartNumber, 
+                                                                            Price = String.Format( "{0}", x.Prices.Price2), 
+                                                                            PrimaryPicture = new PictureToPicture().Map(x.PrimaryPicture), 
+                                                                            ProductId = x.ProductId };
+            
+            }));
 
             //ha nincs bejelentkezve, akkor a VisitorId üres
             CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
@@ -175,7 +192,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 });
             }
 
-            IQueryable<CompanyGroup.Domain.WebshopModule.Product> orderedList = filteredQueryableList.OrderBy(x => x.ProductName).Skip((request.CurrentPageIndex - 1) * request.ItemsOnPage).Take(request.ItemsOnPage);
+            IQueryable<CompanyGroup.Domain.WebshopModule.Product> orderedList = filteredQueryableList.OrderByDescending(x => x.AverageInventory).Skip((request.CurrentPageIndex - 1) * request.ItemsOnPage).Take(request.ItemsOnPage);
 
             CompanyGroup.Domain.WebshopModule.Products products = new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(request.CurrentPageIndex, filteredList.Count(), request.ItemsOnPage));
 
@@ -197,7 +214,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             CompanyGroup.Dto.WebshopModule.Structures s = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
 
-            return new CompanyGroup.Dto.WebshopModule.Catalogue(p, s);
+            return new CompanyGroup.Dto.WebshopModule.Catalogue(p, s, bannerProducts);
         }
 
         private static string ConstructDataAreaId(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
@@ -334,7 +351,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             //query = { "DataAreaId" : { "$ne" : "ser" }, "$or" : [{ "ItemState" : { "$lt" : 2 } }, { "$where" : { "$code" : "this.SecondHandList.length > 0" } }] }
 
-            return predicate.And(defaultPredicate); ;
+            return predicate.And(defaultPredicate);
+        }
+
+        private static System.Linq.Expressions.Expression<Func<CompanyGroup.Domain.WebshopModule.Product, bool>> ConstructBannerListPredicate(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        {
+            System.Linq.Expressions.Expression<Func<CompanyGroup.Domain.WebshopModule.Product, bool>> defaultPredicate = CompanyGroup.Helpers.PredicateBuilder.False<CompanyGroup.Domain.WebshopModule.Product>();
+
+            System.Linq.Expressions.Expression<Func<CompanyGroup.Domain.WebshopModule.Product, bool>> predicate = CompanyGroup.Helpers.PredicateBuilder.True<CompanyGroup.Domain.WebshopModule.Product>();
+
+            defaultPredicate = defaultPredicate.Or(p => p.ItemState.Equals(ItemState.Active));
+
+            defaultPredicate = defaultPredicate.Or(p => p.ItemState.Equals(ItemState.EndOfSales));
+
+            defaultPredicate = defaultPredicate.Or(p => p.SecondHandList.Count > 0);
+
+            string dataAreaId = ConstructDataAreaId(request);
+
+            if (!String.IsNullOrEmpty(dataAreaId))
+            {
+                predicate = predicate.And(p => p.DataAreaId.Equals(dataAreaId));
+            }
+
+            predicate = predicate.And(p => p.Stock.Inner > 0);
+            predicate = predicate.Or(p => p.Stock.Outer > 0);
+
+            predicate = predicate.And(p => p.Discount.Equals(request.ActionFilter));
+
+            predicate = predicate.And(p => p.Pictures.Count > 0);
+
+            return predicate.And(defaultPredicate);       
         }
 
         /// <summary>
