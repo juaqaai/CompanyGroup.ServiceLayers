@@ -10,10 +10,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- kosar fej
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_ShoppingCart') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_ShoppingCart;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.ShoppingCart') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.ShoppingCart;
 GO
-CREATE TABLE InternetUser.cms_ShoppingCart
+CREATE TABLE InternetUser.ShoppingCart
 (
 	Id						BIGINT IDENTITY PRIMARY KEY,				-- egyedi azonosito
 	VisitorId				BIGINT,										-- login azonosito
@@ -33,10 +33,10 @@ CREATE TABLE InternetUser.cms_ShoppingCart
 GO
 
 -- kosar tetel
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_ShoppingCartLine') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_ShoppingCartLine;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.ShoppingCartLine') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.ShoppingCartLine;
 GO
-CREATE TABLE InternetUser.cms_ShoppingCartLine
+CREATE TABLE InternetUser.ShoppingCartLine
 (
 	Id				INT IDENTITY  PRIMARY KEY,					-- egyedi azonosito
 	CartId			BIGINT,										-- kosar fej azonosito
@@ -50,12 +50,12 @@ GO
 
 /*
 bejelentkezesek naplozasa
-select * from InternetUser.cms_Visitor
+select * from InternetUser.Visitor
 */
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_Visitor') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_Visitor;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Visitor') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Visitor;
 GO
-CREATE TABLE InternetUser.cms_Visitor
+CREATE TABLE InternetUser.Visitor
 (
 	Id							BIGINT IDENTITY PRIMARY KEY,					-- egyedi azonosito
 	ObjectId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
@@ -72,8 +72,7 @@ CREATE TABLE InternetUser.cms_Visitor
 	PaymTermId					NVARCHAR(10) NOT NULL DEFAULT '', 
 	Currency					NVARCHAR(10) NOT NULL		DEFAULT '', 
 	LanguageId					NVARCHAR(10) NOT NULL DEFAULT '', 
-	PriceGroup					INT NOT NULL DEFAULT 0,
-	CustomerPriceGroupId		INT NOT NULL DEFAULT 0,
+	PriceGroupId				INT NOT NULL DEFAULT 0,
 	RepresentativeId			INT NOT NULL DEFAULT 0,
 	DataAreaId					NVARCHAR(3) NOT NULL DEFAULT '',				-- vallalatkod hrp; bsc; srv
 	LoginMode					INT NOT NULL DEFAULT 0,							-- bejelentkezes modja =1: ceges; =2: szemelyes; =3: alkalmazott
@@ -85,25 +84,26 @@ CREATE TABLE InternetUser.cms_Visitor
 GO
 
 -- árcsoportok
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_CustomerPriceGroup') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_CustomerPriceGroup;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CustomerPriceGroup') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.CustomerPriceGroup;
 GO
-CREATE TABLE InternetUser.cms_CustomerPriceGroup
+CREATE TABLE InternetUser.CustomerPriceGroup
 (
-	Id INT IDENTITY PRIMARY KEY,
-	ManufacturerId NVARCHAR(4) NOT NULL DEFAULT '',
-	Category1Id NVARCHAR(4) NOT NULL DEFAULT '', 
-	Category2Id NVARCHAR(4) NOT NULL DEFAULT '', 
-	Category3Id NVARCHAR(4) NOT NULL DEFAULT '',
-	PriceGroupId NVARCHAR(4) NOT NULL DEFAULT '',
-	[Order] INT NOT NULL DEFAULT 1
+	Id				INT IDENTITY PRIMARY KEY,
+	VisitorId		BIGINT,										-- login azonosito
+	ManufacturerId  NVARCHAR(4) NOT NULL DEFAULT '',
+	Category1Id		NVARCHAR(4) NOT NULL DEFAULT '', 
+	Category2Id		NVARCHAR(4) NOT NULL DEFAULT '', 
+	Category3Id		NVARCHAR(4) NOT NULL DEFAULT '',
+	PriceGroupId	NVARCHAR(4) NOT NULL DEFAULT '',
+	[Order]			INT NOT NULL DEFAULT 1
 )
 GO
 -- 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_Representative') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_Representative;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Representative') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Representative;
 GO
-CREATE TABLE InternetUser.cms_Representative
+CREATE TABLE InternetUser.Representative
 (
 	Id INT IDENTITY PRIMARY KEY,		
 	RepresentativeId NVARCHAR(10) NOT NULL DEFAULT '',
@@ -115,56 +115,59 @@ CREATE TABLE InternetUser.cms_Representative
 GO
 
 -- termekkatalogus tabla
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_Catalogue') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_Catalogue;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Catalogue') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Catalogue;
 GO
-CREATE TABLE InternetUser.cms_Catalogue
+CREATE TABLE InternetUser.Catalogue
 (
-	Id INT IDENTITY NOT NULL,				-- termékjellemzõ lap azonosító 
-	ProductId nvarchar(20) not null default '',			-- axapta inventory termekazonosito ITEMID
-	AxStructCode nvarchar(16) not null default '', 
-	DataAreaId nvarchar(3) not null default '',			-- hrp / bsc / srv
-	Name nvarchar(80) not null default '',					-- axapta inventory itemname
-	PartNumber nvarchar(20) not null default '',			-- axapta gyartoicikkszamok gyartoicikkszam dbo.GYARTOICIKKSZAMOK.GYARTOICIKKSZAM
-	ManufacturerId nvarchar(4) not null default '',		-- axapta updStruktura gyarto id
-	ManufacturerName nvarchar(64) not null default '',		-- axapta updStruktura gyarto nev dbo.UPDSTRUKTURA.GYARTO
-	sCategory1ID nvarchar(4) not null default '',			-- axapta updStruktura jelleg1 id	
-	sCategory1Name nvarchar(64) not null default '', 		-- axapta updStruktura jelleg1 nev dbo.UPDSTRUKTURA.JELLEG1
-	sCategory2ID nvarchar(4) not null default '',			-- axapta updStruktura jelleg2 id
-	sCategory2Name nvarchar(64) not null default '', 		-- axapta updStruktura jelleg2 nev dbo.UPDSTRUKTURA.JELLEG2
-	sCategory3ID nvarchar(4) not null default '',			-- axapta updStruktura jelleg3 id
-	sCategory3Name nvarchar(64) not null default '', 		-- axapta updStruktura jelleg3 nev dbo.UPDSTRUKTURA.JELLEG3
-	iInnerStock int not null default 0,
-	iOuterStock int not null default 0,
-	iPrice1 int not null default 0,							-- axapta inventory amount1
-	iPrice2 int not null default 0,							-- axapta inventory amount2
-	iPrice3 int not null default 0,							-- axapta inventory amount3
-	iPrice4 int not null default 0,							-- axapta inventory amount4
-	iPrice5 int not null default 0,							-- axapta inventory amount5
-	iPrice6 int not null default 0,							-- axapta inventory amount6
-	sGaranty nvarchar(32) not null default '',				-- axapta inventory garancia
-	sGarantyMode nvarchar(32) not null default '',			-- axapta inventory garancia
-	bAction bit not null default 0,							-- axapta inventory Akcios
-	bBargain bit not null default 0,						-- axapta inventory Leertekelt
-	bTop10 bit not null default 0,							-- axapta inventory HetiTop10
-	bFocusWeek bit not null default 0,						-- axapta inventory Fokuszhet
-	bNew bit not null default 0,
-	iItemState int not null default 0,						-- axapta ItemState mezo 0 : aktiv, 1 : kifuto, 2 : passziv	
-	sDescription nvarchar(1024) not null default '',		-- axapta inventtxt txt dbo.INVENTTXT.TXT
-	bPictureExist bit not null default 0,
-	sEmployeeID nvarchar(16) not null default '',			-- termekhez kapcsolt termekmanager
-	dtCreated SmallDateTime not null default GetDate(),		-- amikor a rekord letrejott
-	dtStockUpdated SmallDateTime not null default GetDate(),-- amikor a keszlet mennyiseg frissitesre kerult
-	dtPriceUpdated SmallDateTime not null default GetDate(),-- amikor a hat ar frissitesre kerult
-	bValid bit not null default 1
+	Id						int identity not null,				
+	ProductId				nvarchar(20) not null default '',			
+	AxStructCode			nvarchar(16) not null default '', 
+	DataAreaId				nvarchar(3) not null default '',		-- hrp / bsc / srv
+	StandardConfigId		nvarchar(20) not null default '', 
+	Name					nvarchar(80) not null default '',					
+	EnglishName				nvarchar(80) not null default '',
+	PartNumber				nvarchar(20) not null default '',		-- dbo.GYARTOICIKKSZAMOK.GYARTOICIKKSZAM
+	ManufacturerId			nvarchar(4) not null default '',		-- updStruktura gyarto id
+	ManufacturerName		nvarchar(64) not null default '',		-- updStruktura gyarto nev 
+	ManufacturerEnglishName nvarchar(64) not null default '',		-- updStruktura gyarto nev 
+	Category1Id				nvarchar(4) not null default '',		-- updStruktura jelleg1 id	
+	Category1Name			nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category1EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category2Id				nvarchar(4) not null default '',		-- updStruktura jelleg2 id
+	Category2Name			nvarchar(64) not null default '', 		-- updStruktura jelleg2 nev 
+	Category2EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category3Id				nvarchar(4) not null default '',		-- updStruktura jelleg3 id
+	Category3Name			nvarchar(64) not null default '', 		-- updStruktura jelleg3 nev 
+	Category3EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	InnerStock				int not null default 0,
+	OuterStock				int not null default 0,
+	AverageInventory		int not null default 0,
+	Price1					int not null default 0,					-- axapta inventory amount1
+	Price2					int not null default 0,					-- axapta inventory amount2
+	Price3					int not null default 0,					-- axapta inventory amount3
+	Price4					int not null default 0,					-- axapta inventory amount4
+	Price5					int not null default 0,					-- axapta inventory amount5
+	Garanty					nvarchar(32) not null default '',		-- axapta inventory garancia
+	GarantyMode				nvarchar(32) not null default '',		-- axapta inventory garancia
+	Discount				bit not null default 0,					-- axapta inventory Akcios
+	New						bit not null default 0,
+	ItemState				int not null default 0,					-- axapta ItemState mezo 0 : aktiv, 1 : kifuto, 2 : passziv	
+	[Description]			nvarchar(max) not null default '',		-- axapta inventtxt txt dbo.INVENTTXT.TXT
+	EnglishDescription		nvarchar(max) not null default '',
+	ProductManagerId		nvarchar(16) not null default '',		-- termekhez kapcsolt termekmanager
+	ShippingDate			SmallDateTime not null default GetDate(),
+	CreatedDate				SmallDateTime not null default GetDate(),		
+	Updated					SmallDateTime not null default GetDate(),
+	Valid					bit not null default 1
 )
 GO
 
--- termekkatalogus tabla
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_CatalogueRequestLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_CatalogueRequestLog;
+-- termekkatalogus log tabla
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CatalogueRequestLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.CatalogueRequestLog;
 GO
-CREATE TABLE InternetUser.cms_CatalogueRequestLog
+CREATE TABLE InternetUser.CatalogueRequestLog
 (
 	Id				 BIGINT IDENTITY NOT NULL PRIMARY KEY,
 	VisitorId		 INT NOT NULL DEFAULT 0,					-- belépés azonosító 
@@ -173,24 +176,96 @@ CREATE TABLE InternetUser.cms_CatalogueRequestLog
 	Category1Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
 	Category2Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
 	Category3Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
-	Action			 BIT NOT NULL DEFAULT 0,						
+	Discount		 BIT NOT NULL DEFAULT 0,						
 	Bargain			 BIT NOT NULL DEFAULT 0,						
 	New				 BIT NOT NULL DEFAULT 0,
 	IsInStock		 BIT NOT NULL DEFAULT 0,
+	IsInSecondHand	 BIT NOT NULL DEFAULT 0,
+	IsInNewsletter	 BIT NOT NULL DEFAULT 0,
+	HrpFilter		 BIT NOT NULL DEFAULT 0,
+	BscFilter		 BIT NOT NULL DEFAULT 0,
+	PriceFilter		 INT NOT NULL DEFAULT 0, 
+	PriceFilterRelation INT NOT NULL DEFAULT 0, 
 	FindText		 NVARCHAR(64) NOT NULL DEFAULT '', 
 	CurrentPageIndex INT NOT NULL DEFAULT 0, 
 	ItemsOnPage		 INT NOT NULL DEFAULT 0, 
-	Sequence		 INT NOT NULL DEFAULT 0
+	Sequence		 INT NOT NULL DEFAULT 0, 
+	Currency		 NVARCHAR(10) NOT NULL DEFAULT '',
+	CreatedDate	DATETIME NOT NULL DEFAULT GETDATE()	
 )
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.cms_CatalogueDetailsLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
-	DROP TABLE InternetUser.cms_CatalogueDetailsLog;
 GO
-CREATE TABLE InternetUser.cms_CatalogueDetailsLog
+
+-- árlista letöltés log tabla
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.PriceListRequestLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.PriceListRequestLog;
+GO
+CREATE TABLE InternetUser.PriceListRequestLog
+(
+	Id				 BIGINT IDENTITY NOT NULL PRIMARY KEY,
+	VisitorId		 INT NOT NULL DEFAULT 0,					-- belépés azonosító 
+	DataAreaId		 NVARCHAR(4) NOT NULL DEFAULT '',			
+	ManufacturerId	 NVARCHAR(4) NOT NULL DEFAULT '',		
+	Category1Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
+	Category2Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
+	Category3Id		 NVARCHAR(4) NOT NULL DEFAULT '',		
+	Discount		 BIT NOT NULL DEFAULT 0,						
+	Bargain			 BIT NOT NULL DEFAULT 0,						
+	New				 BIT NOT NULL DEFAULT 0,
+	IsInStock		 BIT NOT NULL DEFAULT 0,
+	IsInSecondHand	 BIT NOT NULL DEFAULT 0,
+	IsInNewsletter	 BIT NOT NULL DEFAULT 0,
+	HrpFilter		 BIT NOT NULL DEFAULT 0,
+	BscFilter		 BIT NOT NULL DEFAULT 0,
+	PriceFilter		 INT NOT NULL DEFAULT 0, 
+	PriceFilterRelation INT NOT NULL DEFAULT 0, 
+	FindText		 NVARCHAR(64) NOT NULL DEFAULT '', 
+	CurrentPageIndex INT NOT NULL DEFAULT 0, 
+	ItemsOnPage		 INT NOT NULL DEFAULT 0, 
+	Sequence		 INT NOT NULL DEFAULT 0, 
+	Currency		 NVARCHAR(10) NOT NULL DEFAULT '',
+	CreatedDate	DATETIME NOT NULL DEFAULT GETDATE()	
+)
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CatalogueDetailsLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.CatalogueDetailsLog;
+GO
+CREATE TABLE InternetUser.CatalogueDetailsLog
 (
 	Id			BIGINT IDENTITY NOT NULL PRIMARY KEY,
 	VisitorId	INT NOT NULL DEFAULT 0,					-- belépés azonosító 
 	DataAreaId	NVARCHAR(4) NOT NULL DEFAULT '',		-- vállalat azonosító
 	ProductId	NVARCHAR(20) NOT NULL DEFAULT '',			
 	CreatedDate	DATETIME NOT NULL DEFAULT GETDATE()		
+)
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.SecondHand') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.SecondHand;
+GO
+CREATE TABLE InternetUser.SecondHand
+(
+	Id					INT IDENTITY NOT NULL PRIMARY KEY,
+	DataAreaId			NVARCHAR(4) NOT NULL DEFAULT '',		-- vállalat azonosító
+	ProductId			NVARCHAR(20) NOT NULL DEFAULT '',		
+	ConfigId			NVARCHAR(20) NOT NULL DEFAULT '',	
+	InventLocationId	NVARCHAR(20) NOT NULL DEFAULT '',
+	Quantity			INT NOT NULL DEFAULT 0, 
+	Price				INT NOT NULL DEFAULT 0, 				
+	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
+	Valid				BIT NOT NULL DEFAULT 1	
+)
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Picture') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Picture;
+GO
+CREATE TABLE InternetUser.Picture
+(
+	Id					INT IDENTITY NOT NULL PRIMARY KEY,
+	RecId				INT NOT NULL DEFAULT 0,					-- rekord azonosító 
+	ProductId			NVARCHAR(20) NOT NULL DEFAULT '',		
+	[FileName]			NVARCHAR(20) NOT NULL DEFAULT '',	 
+	[Primary]			BIT NOT NULL DEFAULT 0, 				
+	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
+	Valid				BIT NOT NULL DEFAULT 1	
 )
