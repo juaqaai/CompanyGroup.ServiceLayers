@@ -5,15 +5,44 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- használt cikkek lista
-DROP PROCEDURE [InternetUser].[CatalogueInsert];
+DROP PROCEDURE [InternetUser].[SecondHandCatalogueInsert];
 GO
-CREATE PROCEDURE [InternetUser].[CatalogueInsert] 
+CREATE PROCEDURE [InternetUser].[SecondHandCatalogueInsert] 
 AS
 SET NOCOUNT ON
-
-	TRUNCATE TABLE InternetUser.Catalogue;
-
-	WITH EnglishProductName_CTE(ProductId, ProductName)
+	;
+	-- XX konfiguráción HASZNALT, vagy 2100 raktárban lévõ termékek
+	WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
+	AS (
+		SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
+		FROM axdb_20120614.dbo.ConfigTable as cfg 
+		INNER JOIN axdb_20120614.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+														cfg.dataAreaId = idim.dataAreaId AND 
+														cfg.ConfigId like 'xx%' AND 
+														idim.InventLocationId IN ('HASZNALT', '2100')
+		WHERE cfg.dataareaid IN ('bsc', 'hrp')
+	), 
+	-- készletek, árral, konfigurációnként és cikkenként, elérhetõ mennyiségre aggregálva
+	SecondHandStock_CTE(ConfigId, InventLocationId, ProductId, Quantity, Price, StatusDescription, DataAreaId) AS
+	(
+		SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
+		FROM XXConfig_CTE as c 
+		INNER JOIN axdb_20120614.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
+		INNER JOIN axdb_20120614.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+		WHERE ins.Closed = 0 
+		GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
+	),
+	Description_CTE(ProductId, Txt, LanguageId)
+	AS (
+		SELECT ItemId, 
+			   Txt, 
+			   CASE LanguageId WHEN 'HU' THEN 'hun' 
+			   WHEN 'en-gb' THEN 'eng'
+			   ELSE '' END	 	 
+		FROM axdb_20120614.dbo.INVENTTXT
+		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
+	), 
+	EnglishProductName_CTE(ProductId, ProductName)
 	AS (
 	SELECT inventlng.ITEMID,
 		   inventlng.MEGJELENITESINEV 
@@ -58,62 +87,7 @@ SET NOCOUNT ON
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
 		FROM axdb_20120614.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN axdb_20120614.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
-		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' ), 
-	Stock_CTE ( StandardConfigId, ProductId, Quantity, InventLocationId, DataAreaId )
-	AS (
-			SELECT invent.StandardConfigId, invent.ItemId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ), 
-				   ind.InventLocationId, invent.DataAreaId
-			FROM axdb_20120614.dbo.InventTable as invent
-			INNER JOIN axdb_20120614.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
-															ind.dataAreaId = invent.DataAreaId and 
-															ind.InventLocationId in ( '1000', '7000', '2100', 'BELSO', 'KULSO', 'HASZNALT' ) 
-			INNER JOIN axdb_20120614.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
-															ins.inventDimId = ind.inventDimId and 
-															ins.ItemId = invent.ItemId and 
-															ins.Closed = 0
-			WHERE invent.WEBARUHAZ = 1 AND 
-				  invent.ITEMSTATE in ( 0, 1 ) AND 
-				  invent.DataAreaID IN ('bsc', 'hrp')
-			GROUP BY invent.StandardConfigId, invent.ItemId, ind.InventLocationId, invent.DataAreaId ),
-	PurchaseOrderLine_CTE (ProductId, PurchQty, DeliveryDate, ConfirmedDlv, QtyOrdered, RemainInventPhysical, RemainPurchPhysical, DataAreaId)
-	AS (
-		SELECT  
-		--Purch.BrEngedelyezes,			-- Engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
-		Purch.ItemId, 
-		CONVERT(INT, Purch.PurchQty) as PurchQty,					-- mennyiség
-		Purch.DeliveryDate,				-- kért szállítási idõpont
-		Purch.ConfirmedDlv,				-- visszaigazolva
-		--Purch.PurchStatus,				-- sor állpota (1:nyitott rendelés, 2:fogadott, 3:szamlazva, 4:ervenytelenitve)
-		CONVERT(INT, Purch.QtyOrdered) as QtyOrdered,				-- mennyiség
-		CONVERT(INT, Purch.RemainInventPhysical) as RemainInventPhysical,		-- fennmaradó szállítása
-		CONVERT(INT, Purch.RemainPurchPhysical) as RemainPurchPhysical,		-- fennmaradó szállítása
-		--( SELECT SUM(Qty) FROM Axdb.dbo.InventTrans WHERE InventTransId = Purch.InventTransId AND StatusReceipt = 5 ) as Ordered,	-- rendelt
-		Purch.DataAreaId
-		FROM axdb_20120614.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
-		INNER JOIN axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
-		WHERE Purch.ConfirmedDlv > '1900-01-01' AND 
-			Purch.BrEngedelyezes = 2 AND			-- engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
-			Purch.PURCHASETYPE = 3 AND	
-			Purch.PurchStatus IN (1, 2) AND	
-			CONVERT(INT, Purch.RemainPurchPhysical) > 0 AND
-			Invent.DataAreaId IN ('bsc', 'hrp') AND 
-			Invent.WEBARUHAZ = 1 AND 
-			Invent.ITEMSTATE IN ( 0, 1 ) AND 
-			Invent.AMOUNT1 > 0 AND
-			Invent.AMOUNT2 > 0 AND
-			Invent.AMOUNT3 > 0 AND
-			Invent.AMOUNT4 > 0 AND
-			Invent.AMOUNT5 > 0 ), 
-	Description_CTE(ProductId, Txt, LanguageId)
-	AS (
-		SELECT ItemId, 
-			   Txt, 
-			   CASE LanguageId WHEN 'HU' THEN 'hun' 
-			   WHEN 'en-gb' THEN 'eng'
-			   ELSE '' END	 	 
-		FROM axdb_20120614.dbo.INVENTTXT
-		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
-	)
+		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' )
 
 	INSERT INTO InternetUser.Catalogue
 	SELECT DISTINCT Invent.ItemId, 
@@ -135,8 +109,8 @@ SET NOCOUNT ON
 					JELLEG3ID, 
 					ISNULL(Category3.CategoryName, ''),  
 					ISNULL(Category3.CategoryNameEnglish, ''), 
-					ISNULL(StockInner.Quantity, 0), 
-					ISNULL(StockOuter.Quantity, 0),
+					0, 
+					0,
 					Invent.AtlagosKeszletkor_Szamitott, 
 					CONVERT( INT, Invent.AMOUNT1 ),
 					CONVERT( INT, Invent.AMOUNT2 ),
@@ -151,25 +125,22 @@ SET NOCOUNT ON
 					ISNULL(HunDescription.Txt, '' ), 
 					ISNULL(EnglishDescription.Txt, '' ),				
 				    Invent.TERMEKMENEDZSERID,
-					ISNULL(PurchaseOrderLine.DeliveryDate, CONVERT(datetime, 0)),
+					CONVERT(datetime, 0),
 			        GetDate(),		-- Invent.CREATEDTIME
 				    GetDate(), -- Invent.ModifiedTime
-					CONVERT(BIT, 1), 
+					CONVERT(BIT, 0), 
 					0, 
-					CONVERT(BIT, 0),
-					CONVERT(BIT, 1)			
+					CONVERT(BIT, 1),
+					CONVERT(BIT, 1)
 	FROM axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
+	INNER JOIN SecondHandStock_CTE as SecondHandStock ON SecondHandStock.ProductId = Invent.ItemId AND 
+														 SecondHandStock.DataAreaId = Invent.DataAreaId 
 	LEFT OUTER JOIN EnglishProductName_CTE as EnglishProductName ON EnglishProductName.ProductId = Invent.ItemId
 	LEFT OUTER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID
 	LEFT OUTER JOIN Category1_CTE as Category1 ON Category1.CategoryId = Invent.JELLEG1ID
 	LEFT OUTER JOIN Category2_CTE as Category2 ON Category2.CategoryId = Invent.JELLEG2ID
 	LEFT OUTER JOIN Category3_CTE as Category3 ON Category3.CategoryId = Invent.JELLEG3ID
-	LEFT OUTER JOIN Stock_CTE as StockInner ON StockInner.ProductId = Invent.ItemId AND 
-										  StockInner.DataAreaId = Invent.DataAreaId AND 
-										  StockInner.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'BELSO' ELSE '1000' END
-	LEFT OUTER JOIN Stock_CTE as StockOuter ON StockOuter.ProductId = Invent.ItemId AND 
-										  StockOuter.DataAreaId = Invent.DataAreaId AND 
-										  StockOuter.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'KULSO' ELSE '7000' END
+
     LEFT OUTER JOIN axdb_20120614.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND 
 																gt.DATAAREAID = Invent.DATAAREAID
 	LEFT OUTER JOIN axdb_20120614.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
@@ -177,26 +148,13 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN Description_CTE as HunDescription ON HunDescription.ProductId = Invent.ItemId AND 
 														 HunDescription.LanguageId = 'hun'
 	LEFT OUTER JOIN Description_CTE as EnglishDescription ON EnglishDescription.ProductId = Invent.ItemId AND 
-															 EnglishDescription.LanguageId = 'eng'	
-	LEFT OUTER JOIN PurchaseOrderLine_CTE as PurchaseOrderLine ON PurchaseOrderLine.ProductId = Invent.ItemId							 
+															 EnglishDescription.LanguageId = 'eng'
+	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = SecondHandStock.ProductId AND 
+														   Catalogue.DataAreaId = SecondHandStock.DataAreaId														 	
 
-	WHERE Invent.DataAreaId IN ('bsc', 'hrp') AND 
-		  Invent.WEBARUHAZ = 1 AND 
-		  Invent.ITEMSTATE IN ( 0, 1 ) AND 
-		  --1 = CASE WHEN Invent.ItemState = 1 AND ( @InnerStock + @OuterStock ) > 0 THEN 1 ELSE 0 END AND
-		  Invent.AMOUNT1 > 0 AND
-		  Invent.AMOUNT2 > 0 AND
-		  Invent.AMOUNT3 > 0 AND
-		  Invent.AMOUNT4 > 0 AND
-		  Invent.AMOUNT5 > 0 
-	ORDER BY CONVERT( bit, AKCIOS ) DESC, Invent.AtlagosKeszletkor_Szamitott DESC, JELLEG1ID, JELLEG2ID, JELLEG3ID, Invent.ItemId;
+	WHERE SecondHandStock.Quantity > 0 AND SecondHandStock.Price > 0 AND Catalogue.ProductId IS NULL;
 
 RETURN
 
--- EXEC [InternetUser].[CatalogueInsert];
--- select * from InternetUser.Catalogue;
-
--- 1. CatalogueInsert
--- 2. SecondHandCatalogueInsert
--- 3. SecondHandInsert
--- 4. PictureInsert
+-- EXEC [InternetUser].[SecondHandCatalogueInsert];
+-- select * from InternetUser.Catalogue where Available = 0

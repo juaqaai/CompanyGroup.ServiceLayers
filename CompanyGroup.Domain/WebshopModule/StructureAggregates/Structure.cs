@@ -58,6 +58,9 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class Structures : List<Structure>
     {
-
+        public Structures(List<Structure> structures)
+        {
+            this.AddRange(structures);
+        }
     }
 }

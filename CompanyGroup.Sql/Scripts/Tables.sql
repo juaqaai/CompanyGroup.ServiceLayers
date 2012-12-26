@@ -159,6 +159,9 @@ CREATE TABLE InternetUser.Catalogue
 	ShippingDate			SmallDateTime not null default GetDate(),
 	CreatedDate				SmallDateTime not null default GetDate(),		
 	Updated					SmallDateTime not null default GetDate(),
+	Available				bit not null default 1,					-- kereskedelmi forgalomban elerheto-e a termek
+	PictureId				int not null default 0,
+	SecondHand				bit not null default 0,					-- elerheto-e a termek hasznalt konfig-on,
 	Valid					bit not null default 1
 )
 GO
@@ -250,7 +253,8 @@ CREATE TABLE InternetUser.SecondHand
 	ConfigId			NVARCHAR(20) NOT NULL DEFAULT '',	
 	InventLocationId	NVARCHAR(20) NOT NULL DEFAULT '',
 	Quantity			INT NOT NULL DEFAULT 0, 
-	Price				INT NOT NULL DEFAULT 0, 				
+	Price				INT NOT NULL DEFAULT 0,
+	StatusDescription 	NVARCHAR(1024) NOT NULL DEFAULT '',			
 	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
 	Valid				BIT NOT NULL DEFAULT 1	
 )
@@ -262,9 +266,9 @@ GO
 CREATE TABLE InternetUser.Picture
 (
 	Id					INT IDENTITY NOT NULL PRIMARY KEY,
-	RecId				INT NOT NULL DEFAULT 0,					-- rekord azonosító 
+	RecId				BIGINT NOT NULL DEFAULT 0,					-- rekord azonosító 
 	ProductId			NVARCHAR(20) NOT NULL DEFAULT '',		
-	[FileName]			NVARCHAR(20) NOT NULL DEFAULT '',	 
+	[FileName]			NVARCHAR(256) NOT NULL DEFAULT '',	 
 	[Primary]			BIT NOT NULL DEFAULT 0, 				
 	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
 	Valid				BIT NOT NULL DEFAULT 1	

@@ -27,7 +27,7 @@ SET NOCOUNT ON
 		SELECT Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 				Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
 				InnerStock, OuterStock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
-				Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Valid
+				Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
 		FROM InternetUser.Catalogue
 		WHERE ManufacturerId = CASE WHEN @ManufacturerId <> '' THEN @ManufacturerId ELSE ManufacturerId END AND 
 			Category1Id = CASE WHEN @Category1Id <> '' THEN @Category1Id ELSE Category1Id END AND 
@@ -83,4 +83,4 @@ SET NOCOUNT ON
 			
 RETURN
 
--- EXEC InternetUser.CatalogueSelect @Stock = 1, @Sequence = 7;
+-- EXEC InternetUser.CatalogueSelect @Stock = 1, @Sequence = 3;

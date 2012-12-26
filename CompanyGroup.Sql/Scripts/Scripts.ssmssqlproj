@@ -241,6 +241,30 @@
           <AssociatedConnUserName />
           <FullPath>DispoStatus.sql</FullPath>
         </FileNode>
+        <FileNode Name="PictureInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>PictureInsert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SecondHandCatalogueInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SecondHandCatalogueInsert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SecondHandInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SecondHandInsert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="StructureSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>StructureSelect.sql</FullPath>
+        </FileNode>
         <FileNode Name="Tables.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>

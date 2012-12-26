@@ -8,7 +8,7 @@ namespace CompanyGroup.Data.WebshopModule
     /// <summary>
     /// termékstruktúra repository
     /// </summary>
-    public class StructureRepository : CompanyGroup.Data.NoSql.Repository<CompanyGroup.Domain.WebshopModule.Product>, CompanyGroup.Domain.WebshopModule.IStructureRepository
+    public class StructureRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IStructureRepository
     {
         private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("StructureCollectionName", "ProductList");
 
@@ -16,14 +16,14 @@ namespace CompanyGroup.Data.WebshopModule
         /// termékstruktúra repository konstruktor
         /// </summary>
         /// <param name="settings"></param>
-        public StructureRepository(CompanyGroup.Data.NoSql.ISettings settings) : base(settings) {  }
+        public StructureRepository(NHibernate.ISession session) : base(session) { }
 
         /// <summary>
         /// termékstruktúra lekérdezés
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <param name="actionFilter"></param>
-        /// <param name="bargainFilter"></param>
+        /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
         /// <param name="newFilter"></param>
         /// <param name="stockFilter"></param>
@@ -32,68 +32,51 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="priceFilterRelation"></param>
         /// <param name="nameOrPartNumberFilter"></param>
         /// <returns></returns>
+        /// <remarks>
+        ///  [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hrp',
+        ///     @ManufacturerId nvarchar (4) = '',	
+        ///     @Category1Id nvarchar (4) = '',       
+        ///     @Category2Id nvarchar (4) = '',       
+        ///     @Category3Id nvarchar (4) = '',       
+        ///     @Discount bit = 0,      
+        ///     @SecondHand bit = 0,     
+        ///     @New bit = 0,         
+        ///     @Stock bit = 0,     
+        ///     @FindText nvarchar(64) = ''
+        /// </remarks>
         public CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
-                                                                    bool actionFilter,
-                                                                    bool bargainFilter,
+                                                                    bool discountFilter,
+                                                                    bool secondHandFilter,
                                                                     bool isInNewsletterFilter,  
                                                                     bool newFilter,
                                                                     bool stockFilter,
                                                                     string textFilter, 
                                                                     string priceFilter, 
-                                                                    int priceFilterRelation,
-                                                                    string nameOrPartNumberFilter)
+                                                                    int priceFilterRelation)
         {
             try
             {
-                this.ReConnect();
 
-                MongoDB.Driver.IMongoQuery query = this.ConstructQueryDocument(new List<string>(), new List<string>(), new List<string>(), new List<string>(),
-                                                                                          actionFilter,
-                                                                                          bargainFilter,
-                                                                                          isInNewsletterFilter, 
-                                                                                          newFilter,
-                                                                                          stockFilter,
-                                                                                          textFilter,
-                                                                                          priceFilter, 
-                                                                                          priceFilterRelation, 
-                                                                                          nameOrPartNumberFilter, 
-                                                                                          dataAreaId);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.StructureSelect")
+                                                                            .SetString("DataAreaId", dataAreaId)
+                                                                            .SetBoolean("Discount", discountFilter)
+                                                                            .SetBoolean("New", newFilter)
+                                                                            .SetBoolean("Stock", stockFilter)
+                                                                            .SetString("FindText", textFilter)
+                                                                            .SetBoolean("SecondHand", secondHandFilter)
+                                                                            .SetResultTransformer(
+                                                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Structure).GetConstructors()[0]));
 
-                //string[] sortFields = new string[] { "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryName", "Structure.Category2.CategoryName", "Structure.Category3.CategoryName" };
+                List<CompanyGroup.Domain.WebshopModule.Structure> structures = query.List<CompanyGroup.Domain.WebshopModule.Structure>() as List<CompanyGroup.Domain.WebshopModule.Structure>;
 
-                //string[] fields = new string[] { "Structure.Manufacturer.ManufacturerId", "Structure.Manufacturer.ManufacturerName", "Structure.Category1.CategoryId", "Structure.Category1.CategoryName", "Structure.Category2.CategoryId", "Structure.Category2.CategoryName", "Structure.Category3.CategoryId", "Structure.Category3.CategoryName" };
+                CompanyGroup.Domain.WebshopModule.Structures resultList = new CompanyGroup.Domain.WebshopModule.Structures(structures);
 
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> catalogue = this.GetCollection(StructureRepository.CollectionName);
-
-                //IEqualityComparer<Shared.Web.NoSql.Entities.CatalogueItem> catalogueComparer = new CatalogueComparer();
-
-                MongoDB.Driver.MongoCursor<CompanyGroup.Domain.WebshopModule.Product> filteredList = catalogue.Find(query); //.SetSortOrder(sortFields).SetFields(fields);MongoDB.Bson.BsonDocument
-
-                CompanyGroup.Domain.WebshopModule.Structures resultList = new CompanyGroup.Domain.WebshopModule.Structures();
-
-                foreach (CompanyGroup.Domain.WebshopModule.Product item in filteredList)
-                {
-                    resultList.Add(item.Structure);
-                           //CompanyGroup.Domain.WebshopModule.Factory.CreateStructure(ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerId"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Manufacturer"].AsBsonDocument["ManufacturerName"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryId"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category1"].AsBsonDocument["CategoryName"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryId"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category2"].AsBsonDocument["CategoryName"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryId"]),
-                           //                                                          ConvertBsonToString(item["Structure"].AsBsonDocument["Category3"].AsBsonDocument["CategoryName"]))
-                    //);
-                }
                 return resultList;
             }
             catch(Exception ex)
             {
                 throw ex;
                 //return new CompanyGroup.Domain.WebshopModule.Structures();
-            }
-            finally
-            {
-                this.Disconnect();
             }
         }
 
