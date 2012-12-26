@@ -10,8 +10,6 @@ namespace CompanyGroup.Data.WebshopModule
     /// </summary>
     public class StructureRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IStructureRepository
     {
-        private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("StructureCollectionName", "ProductList");
-
         /// <summary>
         /// termékstruktúra repository konstruktor
         /// </summary>
@@ -58,14 +56,14 @@ namespace CompanyGroup.Data.WebshopModule
             {
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.StructureSelect")
-                                                                            .SetString("DataAreaId", dataAreaId)
-                                                                            .SetBoolean("Discount", discountFilter)
-                                                                            .SetBoolean("New", newFilter)
-                                                                            .SetBoolean("Stock", stockFilter)
-                                                                            .SetString("FindText", textFilter)
-                                                                            .SetBoolean("SecondHand", secondHandFilter)
-                                                                            .SetResultTransformer(
-                                                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Structure).GetConstructors()[0]));
+                                                .SetString("DataAreaId", dataAreaId)
+                                                .SetBoolean("Discount", discountFilter)
+                                                .SetBoolean("New", newFilter)
+                                                .SetBoolean("Stock", stockFilter)
+                                                .SetString("FindText", textFilter)
+                                                .SetBoolean("SecondHand", secondHandFilter)
+                                                .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Structure).GetConstructors()[0]));
 
                 List<CompanyGroup.Domain.WebshopModule.Structure> structures = query.List<CompanyGroup.Domain.WebshopModule.Structure>() as List<CompanyGroup.Domain.WebshopModule.Structure>;
 
