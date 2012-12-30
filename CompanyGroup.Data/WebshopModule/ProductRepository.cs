@@ -15,26 +15,26 @@ namespace CompanyGroup.Data.WebshopModule
         /// terméklista beilesztése
         /// </summary>
         /// <param name="products"></param>
-        public void InsertList(List<CompanyGroup.Domain.WebshopModule.Product> products)
-        {
-            try
-            {
-                this.ReConnect();
+        //public void InsertList(List<CompanyGroup.Domain.WebshopModule.Product> products)
+        //{
+        //    try
+        //    {
+        //        this.ReConnect();
 
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> collection = this.GetCollection(ProductRepository.CollectionName);
+        //        MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> collection = this.GetCollection(ProductRepository.CollectionName);
 
-                collection.InsertBatch(products);
+        //        collection.InsertBatch(products);
 
-                return;
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
+        //        return;
+        //    }
+        //    catch
+        //    {
+        //    }
+        //    finally
+        //    {
+        //        Disconnect();
+        //    }
+        //}
 
         /// <summary>
         /// terméklista lekérdezése
@@ -598,34 +598,34 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
-        public void UpdateProductPictures(CompanyGroup.Domain.MaintainModule.Picture picture)
-        {
-            try
-            {
-                this.ReConnect();
+        //public void UpdateProductPictures(CompanyGroup.Domain.MaintainModule.Picture picture)
+        //{
+        //    try
+        //    {
+        //        this.ReConnect();
 
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> collection = this.GetCollection(ProductRepository.CollectionName);
+        //        MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.Product> collection = this.GetCollection(ProductRepository.CollectionName);
 
-                MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("ProductId", picture.ItemId),
-                                                                                     MongoDB.Driver.Builders.Query.EQ("DataAreaId", picture.DataAreaId));
+        //        MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("ProductId", picture.ItemId),
+        //                                                                             MongoDB.Driver.Builders.Query.EQ("DataAreaId", picture.DataAreaId));
 
-                MongoCursor<CompanyGroup.Domain.WebshopModule.Product> products = collection.Find(query);
+        //        MongoCursor<CompanyGroup.Domain.WebshopModule.Product> products = collection.Find(query);
 
-                foreach (CompanyGroup.Domain.WebshopModule.Product product in products)
-                { 
-                    //collection.Update(MongoDB.Driver.Builders.Query.EQ("Id", product.Id), MongoDB.Driver.Builders.Update.Pull("Pictures", MongoDB.Driver.Builders.Query.EQ("FileName", MongoDB.Bson.BsonValue.Create(picture.FileName))));
+        //        foreach (CompanyGroup.Domain.WebshopModule.Product product in products)
+        //        { 
+        //            //collection.Update(MongoDB.Driver.Builders.Query.EQ("Id", product.Id), MongoDB.Driver.Builders.Update.Pull("Pictures", MongoDB.Driver.Builders.Query.EQ("FileName", MongoDB.Bson.BsonValue.Create(picture.FileName))));
 
-                    collection.Update(MongoDB.Driver.Builders.Query.EQ("_id", product.Id), MongoDB.Driver.Builders.Update.PushWrapped("Pictures", product.Pictures));
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Disconnect();
-            }            
-        }
+        //            collection.Update(MongoDB.Driver.Builders.Query.EQ("_id", product.Id), MongoDB.Driver.Builders.Update.PushWrapped("Pictures", product.Pictures));
+        //        }
+        //    }
+        //    catch
+        //    {
+        //    }
+        //    finally
+        //    {
+        //        Disconnect();
+        //    }            
+        //}
 
     }
 

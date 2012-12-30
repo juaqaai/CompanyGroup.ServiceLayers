@@ -10,6 +10,26 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class Structure : CompanyGroup.Domain.Core.ValueObject<Structure>, IValidatableObject
     {
+        public Structure(string manufacturerId, string manufacturerName, string manufacturerEnglishName,
+                         string category1Id, string category1Name, string category1EnglishName,
+                         string category2Id, string category2Name, string category2EnglishName,
+                         string category3Id, string category3Name, string category3EnglishName)
+        {
+            this.Manufacturer = new Manufacturer(manufacturerId, manufacturerName, manufacturerEnglishName);
+
+            this.Category1 = new Category(category1Id, category1Name, category1EnglishName);
+
+            this.Category2 = new Category(category2Id, category2Name, category2EnglishName);
+
+            this.Category3 = new Category(category3Id, category3Name, category3EnglishName);
+        }
+
+        public Structure() : this(String.Empty, String.Empty, String.Empty,
+                                  String.Empty, String.Empty, String.Empty,
+                                  String.Empty, String.Empty, String.Empty,
+                                  String.Empty, String.Empty, String.Empty)
+        { }
+
         [MongoDB.Bson.Serialization.Attributes.BsonElement("Manufacturer", Order = 1)]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]

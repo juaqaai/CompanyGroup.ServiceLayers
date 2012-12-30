@@ -8,6 +8,17 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class Category : CompanyGroup.Domain.Core.ValueObject<Category>
     {
+        public Category(string categoryId, string categoryName, string categoryEnglishName)
+        {
+            this.CategoryId = categoryId;
+
+            this.CategoryName = categoryName;
+
+            this.CategoryEnglishName = categoryEnglishName;
+        }
+
+        public Category() : this(String.Empty, String.Empty, String.Empty) { }
+
         [MongoDB.Bson.Serialization.Attributes.BsonElement("CategoryId", Order = 1)]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]

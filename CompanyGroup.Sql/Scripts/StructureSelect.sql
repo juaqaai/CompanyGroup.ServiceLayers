@@ -8,16 +8,14 @@ GO
 DROP PROCEDURE [InternetUser].[StructureSelect];
 GO
 CREATE PROCEDURE [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hrp',
-												   @ManufacturerId nvarchar (4) = '',	
- 												   @Category1Id nvarchar (4) = '',       
- 												   @Category2Id nvarchar (4) = '',       
-												   @Category3Id nvarchar (4) = '',       
+												   @StructureXml nvarchar (4000) = '',	
 												   @Discount bit = 0,      
 												   @SecondHand bit = 0,     
 												   @New bit = 0,         
 												   @Stock bit = 0,     
-												   @Sequence int = 2,	
-												   @FindText nvarchar(64) = ''
+												   @FindText nvarchar(64) = '', 
+												   @PriceFilter nvarchar(16) = '',
+												   @PriceFilterRelation INT = 0
 )
 AS
 SET NOCOUNT ON

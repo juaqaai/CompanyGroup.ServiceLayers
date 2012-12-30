@@ -5,7 +5,7 @@ namespace CompanyGroup.Domain.WebshopModule
 {
     public interface IProductRepository : CompanyGroup.Domain.Core.IRepository<CompanyGroup.Domain.WebshopModule.Product>
     {
-        void InsertList(List<CompanyGroup.Domain.WebshopModule.Product> items);
+        //void InsertList(List<CompanyGroup.Domain.WebshopModule.Product> items);
 
         /// <summary>
         /// terméklista lekérdezés paraméterek alapján
@@ -137,7 +137,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.Product GetItem(string objectId);
+        //CompanyGroup.Domain.WebshopModule.Product GetItem(string objectId);
 
         /// <summary>
         /// termékelem lekérdezés termékazonosító és vállalatkód alapján
@@ -147,6 +147,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Product GetItem(string productId, string dataAreaId);
 
-        void CreateIndexes();
+        //void CreateIndexes();
     }
 }

@@ -8,6 +8,17 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class Manufacturer : CompanyGroup.Domain.Core.ValueObject<Manufacturer>
     {
+        public Manufacturer(string manufacturerId, string manufacturerName, string manufacturerEnglishName)
+        {
+            this.ManufacturerId = manufacturerId;
+
+            this.ManufacturerName = manufacturerName;
+
+            this.ManufacturerEnglishName = manufacturerEnglishName;
+        }
+        
+        public Manufacturer() : this(String.Empty, String.Empty, String.Empty) { }
+
         [MongoDB.Bson.Serialization.Attributes.BsonElement("ManufacturerId", Order = 1)]
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]

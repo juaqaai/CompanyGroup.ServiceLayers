@@ -18,9 +18,10 @@ namespace CompanyGroup.Data.WebshopModule
 
         /// <summary>
         /// termékstruktúra lekérdezés
+        /// a gyártó és termékjelleg szűrőfeltételek csak a szeriz rétegig mennek, mert a több gyártó, több jelleg szűrés sql-ben problémás
         /// </summary>
         /// <param name="dataAreaId"></param>
-        /// <param name="actionFilter"></param>
+        /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
         /// <param name="newFilter"></param>
@@ -28,19 +29,16 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
-        /// <param name="nameOrPartNumberFilter"></param>
         /// <returns></returns>
         /// <remarks>
         ///  [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hrp',
-        ///     @ManufacturerId nvarchar (4) = '',	
-        ///     @Category1Id nvarchar (4) = '',       
-        ///     @Category2Id nvarchar (4) = '',       
-        ///     @Category3Id nvarchar (4) = '',       
-        ///     @Discount bit = 0,      
-        ///     @SecondHand bit = 0,     
-        ///     @New bit = 0,         
-        ///     @Stock bit = 0,     
-        ///     @FindText nvarchar(64) = ''
+		///									   @Discount bit = 0,      
+		///									   @SecondHand bit = 0,     
+		///									   @New bit = 0,         
+		///									   @Stock bit = 0,     
+		///									   @FindText nvarchar(64) = '', 
+		///									   @PriceFilter nvarchar(16) = '',
+		///									   @PriceFilterRelation INT = 0
         /// </remarks>
         public CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
                                                                     bool discountFilter,
@@ -58,10 +56,12 @@ namespace CompanyGroup.Data.WebshopModule
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.StructureSelect")
                                                 .SetString("DataAreaId", dataAreaId)
                                                 .SetBoolean("Discount", discountFilter)
+                                                .SetBoolean("SecondHand", secondHandFilter)
                                                 .SetBoolean("New", newFilter)
                                                 .SetBoolean("Stock", stockFilter)
                                                 .SetString("FindText", textFilter)
-                                                .SetBoolean("SecondHand", secondHandFilter)
+                                                .SetString("PriceFilter", priceFilter)
+                                                .SetInt32("PriceFilterRelation", priceFilterRelation)
                                                 .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Structure).GetConstructors()[0]));
 
@@ -74,10 +74,7 @@ namespace CompanyGroup.Data.WebshopModule
             catch(Exception ex)
             {
                 throw ex;
-                //return new CompanyGroup.Domain.WebshopModule.Structures();
             }
         }
-
-
     }
 }
