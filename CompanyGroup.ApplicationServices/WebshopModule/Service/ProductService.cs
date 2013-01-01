@@ -557,6 +557,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
+
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = String.Empty;
 
@@ -577,11 +579,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId,
-                                                                                                   request.ManufacturerIdList,
-                                                                                                   request.Category1IdList,
-                                                                                                   request.Category2IdList,
-                                                                                                   request.Category3IdList,
+
+
+            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId, structureXml.SerializeToXml(),
                                                                                                    request.ActionFilter,
                                                                                                    request.BargainFilter,
                                                                                                    request.IsInNewsletterFilter,
@@ -652,55 +652,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //}
 
         /// <summary>
-        /// objectId egyedi kulccsal rendelkező termékelem lekérdezése
-        /// </summary>
-        /// <param name="objectId"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId)
-        {
-            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(objectId);
-
-            if (product == null) { return new CompanyGroup.Dto.WebshopModule.Product(); }
-
-            //ha nincs bejelentkezve, akkor a VisitorId üres
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(visitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(visitorId);
-
-            if (visitor.IsValidLogin)
-            {
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollectionByVisitor(visitorId);
-
-                CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
-
-                product.CustomerPrice = visitor.CalculateCustomerPrice(product.Prices.Price1, 
-                                                                       product.Prices.Price2, 
-                                                                       product.Prices.Price3, 
-                                                                       product.Prices.Price4, 
-                                                                       product.Prices.Price5, 
-                                                                       product.Structure.Manufacturer.ManufacturerId, 
-                                                                       product.Structure.Category1.CategoryId, 
-                                                                       product.Structure.Category2.CategoryId, 
-                                                                       product.Structure.Category3.CategoryId);
-                //product.CustomerPrice = this.ChangePrice(price, request.Currency);
-
-                product.IsInNewsletter = false;
-
-                product.IsInCart = shoppingCartCollection.IsInCart(product.ProductId);
-            }
-            else
-            {
-                product.CustomerPrice = 0;
-
-                product.IsInNewsletter = false;
-
-                product.IsInCart = false;
-            }
-
-            CompanyGroup.Dto.WebshopModule.Product result = new ProductToProduct().Map(product);
-
-            return result;
-        }
-
-        /// <summary>
         /// productId és dataAreaId összetett kulccsal rendelkező termékelem lekérdezése
         /// </summary>
         /// <param name="objectId"></param>
@@ -757,16 +708,24 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="prefix"></param>
         /// <param name="completionType">0: nincs megadva, 1: termékazonosító-cikkszám, 2: minden</param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(string dataAreaId, string prefix, string completionType) //CompanyGroup.Dto.ServiceRequest.ProductListComplation request
+        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request) //
         {
             if (String.IsNullOrWhiteSpace(dataAreaId) || String.IsNullOrWhiteSpace(prefix))
             {
                 return new Dto.WebshopModule.CompletionList();
             }
 
-            CompanyGroup.Domain.WebshopModule.CompletionType completion = (CompanyGroup.Domain.WebshopModule.CompletionType) Enum.Parse(typeof(CompanyGroup.Domain.WebshopModule.CompletionType), completionType);
-
-            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(dataAreaId, prefix, ProductComplationLimit, completion);
+            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(prefix, dataAreaId, structureXml.SerializeToXml(),
+                                                                                                   request.ActionFilter,
+                                                                                                   request.BargainFilter,
+                                                                                                   request.IsInNewsletterFilter,
+                                                                                                   request.NewFilter,
+                                                                                                   request.StockFilter,
+                                                                                                   request.TextFilter,
+                                                                                                   request.PriceFilter,
+                                                                                                   priceFilterRelation,
+                                                                                                   request.NameOrPartNumberFilter,
+                                                                                                   request.Sequence);
 
             return new CompletionToCompletion().Map(result);
         }
@@ -790,7 +749,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> result = new List<CompanyGroup.Dto.WebshopModule.CompatibleProduct>();
 
-            List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> compatibilityItems = maintainProductRepository.GetCompatibilityItemList(productId, dataAreaId, false);
+            List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, false);
 
             compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
 
@@ -801,7 +760,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> result = new List<CompanyGroup.Dto.WebshopModule.CompatibleProduct>();
 
-            List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> compatibilityItems = maintainProductRepository.GetCompatibilityItemList(productId, dataAreaId, true);
+            List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, true);
 
             compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
 

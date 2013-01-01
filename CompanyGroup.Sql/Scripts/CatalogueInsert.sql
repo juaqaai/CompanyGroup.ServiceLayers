@@ -150,7 +150,7 @@ SET NOCOUNT ON
 					Invent.ItemState,	-- 0 : aktiv, 1 : kifuto, 2 : passziv	
 					ISNULL(HunDescription.Txt, '' ), 
 					ISNULL(EnglishDescription.Txt, '' ),				
-				    Invent.TERMEKMENEDZSERID,
+				    0,
 					ISNULL(PurchaseOrderLine.DeliveryDate, CONVERT(datetime, 0)),
 			        GetDate(),		-- Invent.CREATEDTIME
 				    GetDate(), -- Invent.ModifiedTime

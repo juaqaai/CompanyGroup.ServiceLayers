@@ -145,6 +145,5 @@ namespace CompanyGroup.Domain.Core
         {
             return !(left == right);
         }
-
     }
 }

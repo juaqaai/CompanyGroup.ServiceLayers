@@ -9,6 +9,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// termékstruktúra lekérdezés
         /// </summary>
         /// <param name="dataAreaId"></param>
+        /// <param name="structureXml"></param>
         /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
@@ -19,13 +20,14 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
-                                                            bool discountFilter,
-                                                            bool secondHandFilter,
-                                                            bool isInNewsletterFilter, 
-                                                            bool newFilter,
-                                                            bool stockFilter,
-                                                            string textFilter,
-                                                            string priceFilter,
-                                                            int priceFilterRelation);
+                                                             string structureXml, 
+                                                             bool discountFilter,
+                                                             bool secondHandFilter,
+                                                             bool isInNewsletterFilter, 
+                                                             bool newFilter,
+                                                             bool stockFilter,
+                                                             string textFilter,
+                                                             string priceFilter,
+                                                             int priceFilterRelation);
     }
 }

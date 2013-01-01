@@ -10,7 +10,7 @@ namespace CompanyGroup.Data.Test
     /// UnitTest1
     /// </summary>
     [TestClass]
-    public class StructureRepository
+    public class StructureRepository : RepositoryBase
     {
         public StructureRepository()
         {
@@ -63,14 +63,13 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetStructure()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),  
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"), 
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
+            CompanyGroup.Domain.WebshopModule.IStructureRepository repository = new CompanyGroup.Data.WebshopModule.StructureRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.WebshopModule.IStructureRepository repository = new CompanyGroup.Data.WebshopModule.StructureRepository(settings);
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>() { "A169" }, new List<string>(), new List<string>(), new List<string>());
 
-            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", false, false, false, false, false, "", "0", 0, "");
+            string xml = structureXml.SerializeToXml();
+
+            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", xml, false, false, false, false, false, "", "", 0);
 
             Assert.IsTrue(structures.Count > 0);            
         }

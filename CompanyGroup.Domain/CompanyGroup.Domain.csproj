@@ -54,7 +54,7 @@
     <Compile Include="Core\INoSqlEntity.cs" />
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
-    <Compile Include="MaintainModule\ProductAggregates\CompatibilityItem.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\CompatibilityItem.cs" />
     <Compile Include="MaintainModule\ProductAggregates\InventName.cs" />
     <Compile Include="MaintainModule\ProductAggregates\Manufacturer.cs" />
     <Compile Include="MaintainModule\ProductAggregates\PurchaseOrderLine.cs" />
@@ -140,6 +140,7 @@
     <Compile Include="WebshopModule\NewsletterAggregates\INewsletterRepository.cs" />
     <Compile Include="WebshopModule\NewsletterAggregates\Newsletter.cs" />
     <Compile Include="WebshopModule\NewsletterAggregates\NewsletterCollection.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\BannerProduct.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Catalogue.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Completion.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CompletionType.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="WebshopModule\ProductAggregates\LangId.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Pager.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Picture.cs" />
-    <Compile Include="WebshopModule\ProductAggregates\PriceList.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\PriceListItem.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Prices.cs" />
     <Compile Include="PartnerModule\ContactPersonAggregates\ProductManager.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Factory.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="PartnerModule\ProfileAggregates\History.cs" />
     <Compile Include="PartnerModule\ProfileAggregates\Profile.cs" />
     <Compile Include="PartnerModule\ProfileAggregates\RequestParameter.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\StructureXml.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\CartStatus.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\CartItemStatus.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\DeliveryTerms.cs" />
@@ -198,6 +200,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueItem.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\PriceListItem.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\BannerProduct.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\Completion.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\Product.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\StructureAggregates\Structure.hbm.xml" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -221,7 +228,7 @@
     <EmbeddedResource Include="MaintainModule\ProductAggregates\InventName.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MaintainModule\ProductAggregates\CompatibilityItem.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\CompatibilityItem.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\PurchaseOrderLine.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondHandProduct.hbm.xml">
       <SubType>Designer</SubType>

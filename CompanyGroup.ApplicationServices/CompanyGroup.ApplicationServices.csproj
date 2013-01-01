@@ -97,8 +97,6 @@
     <Compile Include="InstanceProviders\UnityInstanceProviderServiceBehavior.cs" />
     <Compile Include="InstanceProviders\UnityServiceHost.cs" />
     <Compile Include="InstanceProviders\UnityServiceHostFactory.cs" />
-    <Compile Include="MaintainModule\Service\IProductService.cs" />
-    <Compile Include="MaintainModule\Service\ProductService.cs" />
     <Compile Include="PartnerModule\Adapter\AddressZipCodeToAddressZipCode.cs" />
     <Compile Include="PartnerModule\Adapter\ContactPersonToContactPerson.cs" />
     <Compile Include="PartnerModule\Adapter\BankAccountToBankAccount.cs" />

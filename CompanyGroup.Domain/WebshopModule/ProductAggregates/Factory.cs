@@ -13,46 +13,46 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="innerProduct"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.WebshopModule.Product CreateProduct(CompanyGroup.Domain.MaintainModule.Product innerProduct)
-        {
-            CompanyGroup.Domain.WebshopModule.Product product = new CompanyGroup.Domain.WebshopModule.Product();
-            //kereskedelmi készletről nem vásárolható meg
-            product.Available = innerProduct.ItemState < 2;
-            product.AverageInventory = innerProduct.AverageInventory;
-            //product.CannotCancel
-            product.CreatedDate = innerProduct.CreatedDate;
-            product.CreatedTime = innerProduct.CreatedTime;
-            //product.Comparable
-            //product.CustomerPrice
-            product.DataAreaId = innerProduct.DataAreaId;
-            product.Description = innerProduct.Description;
-            product.DescriptionEnglish = innerProduct.DescriptionEnglish;
-            product.Discount = innerProduct.Discount;
-            product.Garanty = CreateGaranty(innerProduct);
-            product.Id = MongoDB.Bson.ObjectId.Empty;
-            //product.IsInCart
-            //product.IsInNewsletter
-            //product.IsInStock
-            product.ItemState = CompanyGroup.Domain.Core.Adapter.ConvertItemStateIntToEnum(innerProduct.ItemState);
-            product.ModifiedDate = innerProduct.ModifiedDate;
-            product.ModifiedTime = innerProduct.ModifiedTime;
-            product.New = innerProduct.New; 
-            product.PartNumber = innerProduct.PartNumber;
-            product.Pictures = CreatePictures(innerProduct);
-            product.Prices = CreatePrices(innerProduct);
-            //product.PrimaryPicture
-            product.ProductId = innerProduct.ProductId;
-            //product.ProductManager = CreateProductManager(innerProduct);
-            product.ProductName = innerProduct.ItemName;
-            product.ProductNameEnglish = innerProduct.ItemNameEnglish;
-            product.SecondHandList = CreateSecondHandList(innerProduct.SecondHandList);
-            //product.SequenceNumber
-            product.ShippingDate = innerProduct.ShippingDate;
-            product.StandardConfigId = innerProduct.StandardConfigId;
-            product.Stock = CreateStock(innerProduct);
-            product.Structure = CreateStructure(innerProduct);
-            return product;
-        }
+        //public static CompanyGroup.Domain.WebshopModule.Product CreateProduct(CompanyGroup.Domain.MaintainModule.Product innerProduct)
+        //{
+        //    CompanyGroup.Domain.WebshopModule.Product product = new CompanyGroup.Domain.WebshopModule.Product();
+        //    //kereskedelmi készletről nem vásárolható meg
+        //    product.Available = innerProduct.ItemState < 2;
+        //    product.AverageInventory = innerProduct.AverageInventory;
+        //    //product.CannotCancel
+        //    product.CreatedDate = innerProduct.CreatedDate;
+        //    product.CreatedTime = innerProduct.CreatedTime;
+        //    //product.Comparable
+        //    //product.CustomerPrice
+        //    product.DataAreaId = innerProduct.DataAreaId;
+        //    product.Description = innerProduct.Description;
+        //    product.DescriptionEnglish = innerProduct.DescriptionEnglish;
+        //    product.Discount = innerProduct.Discount;
+        //    product.Garanty = CreateGaranty(innerProduct);
+        //    product.Id = MongoDB.Bson.ObjectId.Empty;
+        //    //product.IsInCart
+        //    //product.IsInNewsletter
+        //    //product.IsInStock
+        //    product.ItemState = CompanyGroup.Domain.Core.Adapter.ConvertItemStateIntToEnum(innerProduct.ItemState);
+        //    product.ModifiedDate = innerProduct.ModifiedDate;
+        //    product.ModifiedTime = innerProduct.ModifiedTime;
+        //    product.New = innerProduct.New; 
+        //    product.PartNumber = innerProduct.PartNumber;
+        //    product.Pictures = CreatePictures(innerProduct);
+        //    product.Prices = CreatePrices(innerProduct);
+        //    //product.PrimaryPicture
+        //    product.ProductId = innerProduct.ProductId;
+        //    //product.ProductManager = CreateProductManager(innerProduct);
+        //    product.ProductName = innerProduct.ItemName;
+        //    product.ProductNameEnglish = innerProduct.ItemNameEnglish;
+        //    product.SecondHandList = CreateSecondHandList(innerProduct.SecondHandList);
+        //    //product.SequenceNumber
+        //    product.ShippingDate = innerProduct.ShippingDate;
+        //    product.StandardConfigId = innerProduct.StandardConfigId;
+        //    product.Stock = CreateStock(innerProduct);
+        //    product.Structure = CreateStructure(innerProduct);
+        //    return product;
+        //}
 
         /// <summary>
         /// struktúra létrehozása
