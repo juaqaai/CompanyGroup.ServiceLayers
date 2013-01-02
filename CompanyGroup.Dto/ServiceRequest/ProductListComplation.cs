@@ -5,6 +5,8 @@ namespace CompanyGroup.Dto.ServiceRequest
 {
     public class ProductListComplation
     {
+        public string Prefix { get; set; }
+
         public List<string> ManufacturerIdList { get; set; }
 
         public List<string> Category1IdList { get; set; }
@@ -13,9 +15,9 @@ namespace CompanyGroup.Dto.ServiceRequest
 
         public List<string> Category3IdList { get; set; }
 
-        public bool ActionFilter { get; set; }
+        public bool DiscountFilter { get; set; }
 
-        public bool BargainFilter { get; set; }
+        public bool SecondhandFilter { get; set; }
 
         public bool HrpFilter { get; set; }
 
@@ -32,14 +34,6 @@ namespace CompanyGroup.Dto.ServiceRequest
         public string PriceFilter { get; set; }
 
         public string PriceFilterRelation { get; set; }
-
-        public string NameOrPartNumberFilter { get; set; }
-
-        public int Sequence { get; set; }
-
-        public string VisitorId { get; set; }
-
-        public string Currency { get; set; }
 
         /// <summary>
         /// konstruktorban listák létrehozása - nullreference exception 

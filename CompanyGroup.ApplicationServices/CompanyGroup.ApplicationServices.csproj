@@ -122,8 +122,8 @@
     <Compile Include="WebshopModule\Adapter\FinanceOfferToFinanceOffer.cs" />
     <Compile Include="WebshopModule\Adapter\ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions.cs" />
     <Compile Include="WebshopModule\Adapter\LeasingOptionsToLeasingOptions.cs" />
-    <Compile Include="WebshopModule\Adapter\ProductToBannerProduct.cs" />
-    <Compile Include="WebshopModule\Adapter\ProductsToBannerList.cs" />
+    <Compile Include="WebshopModule\Adapter\BannerProductToBannerProduct.cs" />
+    <Compile Include="WebshopModule\Adapter\BannerProductListToBannerList.cs" />
     <Compile Include="WebshopModule\Adapter\ProductToCompatibleProduct.cs" />
     <Compile Include="WebshopModule\Adapter\ProductToProductDetails.cs" />
     <Compile Include="WebshopModule\Adapter\PriceListToPriceList.cs" />

@@ -27,7 +27,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 DataAreaId = from.DataAreaId, 
                 ProductId = from.ProductId, 
                 ProductName = from.ProductName, 
-                RecId = from.RecId
+                RecId = from.PictureId
             };
         }
 

@@ -28,9 +28,9 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [ActionName("GetAll")]
+        [ActionName("GetStructures")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
+        public CompanyGroup.Dto.WebshopModule.Structures GetStructures(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
         {
             return this.service.GetAll(request);
         }

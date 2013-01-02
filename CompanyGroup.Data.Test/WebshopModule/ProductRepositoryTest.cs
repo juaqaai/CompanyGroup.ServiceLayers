@@ -72,7 +72,9 @@ namespace CompanyGroup.Data.Test
 
             CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", xml, false, false, false, false, false, 0, "", "", 1, 1, 30, ref count);
 
-            Assert.IsTrue(products.Count > 0);            
+            Assert.IsTrue(products.Count > 0);
+
+            Assert.IsNotNull(count);
         }
 
         [TestMethod]

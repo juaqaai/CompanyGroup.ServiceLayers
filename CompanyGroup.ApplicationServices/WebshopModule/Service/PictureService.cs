@@ -37,7 +37,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
-                List<CompanyGroup.Domain.WebshopModule.Picture> pictureList = pictureRepository.GetListByProduct(request.ProductId, request.DataAreaId);
+                List<CompanyGroup.Domain.WebshopModule.Picture> pictureList = pictureRepository.GetListByProduct(request.ProductId);
 
                 if (pictureList.Count == 0) { return new CompanyGroup.Dto.WebshopModule.Pictures(); }
 
@@ -55,15 +55,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="recId"></param>
-        /// <param name="dataAreaId"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Stream GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        public Stream GetItem(string productId, string recId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
             try
             {
-                List<CompanyGroup.Domain.WebshopModule.Picture> pictures = pictureRepository.GetListByProduct(productId, dataAreaId);
+                List<CompanyGroup.Domain.WebshopModule.Picture> pictures = pictureRepository.GetListByProduct(productId);
 
                 if (pictures.Count == 0) { return null; }
 

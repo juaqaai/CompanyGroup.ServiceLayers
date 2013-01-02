@@ -33,8 +33,6 @@ namespace CompanyGroup.Dto.ServiceRequest
 
         public string PriceFilterRelation { get; set; }
 
-        public string NameOrPartNumberFilter { get; set; }
-
         public GetAllStructure()
         {
             this.ManufacturerIdList = new List<string>();

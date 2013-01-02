@@ -105,7 +105,6 @@ namespace CompanyGroup.Domain.WebshopModule
                                                                 string textFilter,
                                                                 string priceFilter,
                                                                 int priceFilterRelation,
-                                                                string nameOrPartNumberFilter,
                                                                 int sequence);
 
         /// <summary>

@@ -9,6 +9,21 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class Picture
     {
+        public Picture(int id, string fileName, bool primary, long recId)
+        {
+            this.Id = id;
+
+            this.FileName = fileName;
+
+            this.Primary = primary;
+
+            this.RecId = recId;
+        }
+
+        public Picture() : this(0, String.Empty, false, 0) {}
+
+        public int Id { get; set; }
+
         public string FileName { get; set; }
 
         public byte[] RawContent { get; set; }

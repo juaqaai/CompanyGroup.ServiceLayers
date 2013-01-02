@@ -20,14 +20,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Catalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
-
-        /// <summary>
-        /// struktúrák lekérdezése  
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request);
+        CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
 
         //[OperationContract(Action = "GetBannerList")]
         //[WebInvoke(Method = "POST",
@@ -61,7 +54,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId);
+        //CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId);
 
         /// <summary>
         /// productId és dataAreaId összetett kulccsal rendelkező termékelem lekérdezése
@@ -89,6 +82,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         //[WebInvoke(Method = "GET", UriTemplate = "/GetCompletionList/{DataAreaId}/{Prefix}/{CompletionType}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(string dataAreaId, string prefix, string completionType);
+        CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request);
     }
 }

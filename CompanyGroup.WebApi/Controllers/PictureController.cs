@@ -46,11 +46,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [ActionName("GetItem")] ///{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}
+        [ActionName("GetItem")] ///{ProductId}/{RecId}/{Width}/{Height}
         [HttpGet]
-        public HttpResponseMessage GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        public HttpResponseMessage GetItem(string productId, string recId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
-            Stream stream = this.service.GetItem(productId, recId, dataAreaId, maxWidth, maxHeight);
+            Stream stream = this.service.GetItem(productId, recId, maxWidth, maxHeight);
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 

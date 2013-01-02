@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\ProductListCount.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\PriceListItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\BannerProduct.hbm.xml" />
@@ -222,7 +223,7 @@
     <EmbeddedResource Include="MaintainModule\ProductAggregates\Product.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MaintainModule\ProductAggregates\Picture.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\Picture.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\Stock.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\SecondHand.hbm.xml" />
     <EmbeddedResource Include="MaintainModule\ProductAggregates\InventName.hbm.xml">

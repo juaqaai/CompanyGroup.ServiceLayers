@@ -51,6 +51,17 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require((itemsOnPage > 0), "The itemsOnPage parameter must be a positive number!");
 
+                count = Session.GetNamedQuery("InternetUser.ProductListCount")
+                                               .SetString("DataAreaId", dataAreaId)
+                                               .SetString("StructureXml", structureXml)
+                                               .SetBoolean("Discount", discountFilter)
+                                               .SetBoolean("SecondHand", secondHandFilter)
+                                               .SetBoolean("New", newFilter)
+                                               .SetBoolean("Stock", stockFilter)
+                                               .SetString("FindText", textFilter)
+                                               .SetString("PriceFilter", priceFilter)
+                                               .SetInt32("PriceFilterRelation", priceFilterRelation).UniqueResult<int>();
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueSelect")
                                                 .SetString("DataAreaId", dataAreaId)
                                                 .SetString("StructureXml", structureXml)
@@ -188,7 +199,6 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
-        /// <param name="nameOrPartNumberFilter"></param>
         /// <param name="sequence"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.PriceList GetPriceList(string dataAreaId,
@@ -201,7 +211,6 @@ namespace CompanyGroup.Data.WebshopModule
                                                                         string textFilter,
                                                                         string priceFilter,
                                                                         int priceFilterRelation,
-                                                                        string nameOrPartNumberFilter,
                                                                         int sequence)
         { 
             try
@@ -393,14 +402,14 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="dataAreaId"></param>
         /// <param name="part"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part)
+        public List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part)
         {
             NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CompatibilityList").SetString("DataAreaId", dataAreaId)
                                                                                                  .SetString("ProductId", productId)
                                                                                                  .SetBoolean("Part", part).SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.MaintainModule.CompatibilityItem).GetConstructors()[0]));
+                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CompatibilityItem).GetConstructors()[0]));
 
-            return query.List<CompanyGroup.Domain.MaintainModule.CompatibilityItem>() as List<CompanyGroup.Domain.MaintainModule.CompatibilityItem>;
+            return query.List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>() as List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>;
         }
     }
 

@@ -24,29 +24,28 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése
-            //CompanyGroup.Dto.ServiceRequest.GetAllStructure allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
-            //{
-            //    ActionFilter = false,
-            //    BargainFilter = false,
-            //    Category1IdList = new List<string>(),
-            //    Category2IdList = new List<string>(),
-            //    Category3IdList = new List<string>(),
-            //    HrpFilter = true,
-            //    BscFilter = true,
-            //    IsInNewsletterFilter = false,
-            //    ManufacturerIdList = new List<string>(),
-            //    NewFilter = false,
-            //    StockFilter = false,
-            //    TextFilter = String.Empty,
-            //    PriceFilter = "0",
-            //    PriceFilterRelation = "0",
-            //    NameOrPartNumberFilter = ""
-            //};
+            CompanyGroup.Dto.ServiceRequest.GetAllStructure structuresRequest = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
+            {
+                ActionFilter = false,
+                BargainFilter = false,
+                Category1IdList = new List<string>(),
+                Category2IdList = new List<string>(),
+                Category3IdList = new List<string>(),
+                HrpFilter = true,
+                BscFilter = true,
+                IsInNewsletterFilter = false,
+                ManufacturerIdList = new List<string>(),
+                NewFilter = false,
+                StockFilter = false,
+                TextFilter = String.Empty,
+                PriceFilter = "0",
+                PriceFilterRelation = "0"
+            };
 
-            //CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Product", "GetStructure", allStructure);
+            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", structuresRequest);
 
             //katalógus lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllProduct allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+            CompanyGroup.Dto.ServiceRequest.GetAllProduct productsRequest = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
             {
                 ActionFilter = false,
                 BargainFilter = false,
@@ -66,11 +65,10 @@ namespace CompanyGroup.WebClient.Controllers
                 TextFilter = String.Empty,
                 PriceFilter = "0",
                 PriceFilterRelation = "0",
-                VisitorId = visitor.Id,
-                NameOrPartNumberFilter = ""
+                VisitorId = visitor.Id
             };
 
-            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Catalogue>("Product", "GetCatalogue", allProduct);
+            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", productsRequest);
 
             //banner lista lekérdezése
             CompanyGroup.Dto.ServiceRequest.GetBannerList bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerList()
@@ -118,7 +116,7 @@ namespace CompanyGroup.WebClient.Controllers
                 deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
             }
 
-            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(catalogue.Structures, catalogue.Products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
@@ -174,7 +172,6 @@ namespace CompanyGroup.WebClient.Controllers
                 HrpFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("HrpFilter", true),
                 IsInNewsletterFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("IsInNewsletterFilter", false),
                 ManufacturerIdList = ConvertDelimitedStringToList(CompanyGroup.Helpers.QueryStringParser.GetString("ManufacturerIdList[]", "")),
-                NameOrPartNumberFilter = CompanyGroup.Helpers.QueryStringParser.GetString("NameOrPartNumberFilter", ""),
                 NewFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("NewFilter", false),
                 PriceFilter = CompanyGroup.Helpers.QueryStringParser.GetString("PriceFilter", ""),
                 PriceFilterRelation = CompanyGroup.Helpers.QueryStringParser.GetString("PriceFilterRelation", ""),
@@ -185,8 +182,6 @@ namespace CompanyGroup.WebClient.Controllers
             };
 
             request.VisitorId = visitorData.ObjectId;
-
-            request.NameOrPartNumberFilter = request.NameOrPartNumberFilter ?? String.Empty;
 
             CompanyGroup.Dto.WebshopModule.PriceList priceList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetPriceList, CompanyGroup.Dto.WebshopModule.PriceList>("Product", "GetPriceList", request);
 
