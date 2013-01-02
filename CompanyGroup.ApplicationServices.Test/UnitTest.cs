@@ -121,12 +121,7 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.ServiceRequest.GetAllStructure request = new CompanyGroup.Dto.ServiceRequest.GetAllStructure() { ActionFilter = false, BargainFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false,  ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
 
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),  
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
-
-            CompanyGroup.Data.WebshopModule.StructureRepository structureRepository = new CompanyGroup.Data.WebshopModule.StructureRepository(settings);
+            CompanyGroup.Data.WebshopModule.StructureRepository structureRepository = new CompanyGroup.Data.WebshopModule.StructureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Dto.WebshopModule.Structures structures = new CompanyGroup.ApplicationServices.WebshopModule.StructureService(structureRepository).GetAll(request);
 
@@ -192,9 +187,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-
-            CompanyGroup.Data.MaintainModule.ProductRepository maintainProductRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -202,11 +195,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Dto.WebshopModule.Catalogue catalogue = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository).GetCatalogue(request);
+            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetProducts(request);
 
-            Assert.IsNotNull(catalogue);
+            Assert.IsNotNull(products);
 
-            Assert.IsTrue(catalogue.Products.Items.Count > 0);
+            Assert.IsTrue(products.Items.Count > 0);
         }
 
         [TestMethod]
@@ -252,9 +245,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-
-            CompanyGroup.Data.MaintainModule.ProductRepository maintainProductRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -262,34 +253,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository).GetPriceList(request);
+            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetPriceList(request);
 
             Assert.IsNotNull(priceList);
 
             Assert.IsTrue(priceList.Items.Count > 0);
-        }
-
-        [TestMethod]
-        public void GetItemByObjectId()
-        {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
-
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-
-            CompanyGroup.Data.MaintainModule.ProductRepository maintainProductRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
-
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
-
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
-
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
-
-            CompanyGroup.Dto.WebshopModule.Product product = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository).GetItemByObjectId("4f1c0d9e6ee012194cb14c09", "");
-
-            Assert.IsNotNull(product);
         }
 
         [TestMethod]
@@ -312,9 +280,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-
-            CompanyGroup.Data.MaintainModule.ProductRepository maintainProductRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -322,48 +288,42 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, maintainProductRepository, shoppingCartRepository, financeRepository, visitorRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository);
                 
             CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.ServiceRequest.GetItemByProductId() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
 
             Assert.IsNotNull(product);
         }
 
-        [TestMethod]
-        public void RefillProductCache()
-        {
+        //[TestMethod]
+        //public void RefillProductCache()
+        //{
 
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
+        //    CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
+        //                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
+        //                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
+        //                                                                                      CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+        //    CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
 
-            CompanyGroup.Data.MaintainModule.ProductRepository productMaintainRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+        //    CompanyGroup.Data.MaintainModule.ProductRepository productMaintainRepository = new CompanyGroup.Data.MaintainModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.ApplicationServices.MaintainModule.IProductService service = new CompanyGroup.ApplicationServices.MaintainModule.ProductService(productMaintainRepository, productWebshopRepository);
+        //    CompanyGroup.ApplicationServices.MaintainModule.IProductService service = new CompanyGroup.ApplicationServices.MaintainModule.ProductService(productMaintainRepository, productWebshopRepository);
 
-            service.FillProductCache(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);   //CompanyGroup.Domain.Core.Constants.DataAreaIdHrp
-        }
+        //    service.FillProductCache(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);   //CompanyGroup.Domain.Core.Constants.DataAreaIdHrp
+        //}
 
-        [TestMethod]
-        public void GetComplationList()
-        {
+        //[TestMethod]
+        //public void GetComplationList()
+        //{
+        //    CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
+        //    CompanyGroup.Domain.WebshopModule.CompletionList result = productWebshopRepository.GetComplationList("dell", "hrp", 20, Domain.WebshopModule.CompletionType.Full);
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+        //    Assert.IsNotNull(result);
 
-            CompanyGroup.Domain.WebshopModule.CompletionList result = productWebshopRepository.GetComplationList("hrp", "dell", 20, Domain.WebshopModule.CompletionType.Full);
-
-            Assert.IsNotNull(result);
-
-            Assert.IsTrue(result.Count > 0);
-        }
+        //    Assert.IsTrue(result.Count > 0);
+        //}
 
         #endregion
 
@@ -383,9 +343,9 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
 
-            CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
-            System.IO.Stream stream = new CompanyGroup.ApplicationServices.WebshopModule.PictureService(pictureRepository).GetItem("5637193425", request.ProductId, request.DataAreaId, "180", "180");
+            System.IO.Stream stream = new CompanyGroup.ApplicationServices.WebshopModule.PictureService(pictureRepository).GetItem("5637193425", request.ProductId, "180", "180");
 
             Assert.IsNotNull(stream);
 
@@ -402,13 +362,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             request.RootElement = "Item";
 
-            request.Resource = "GetItem/{RecId}/{ProductId}/{DataAreaId}";
+            request.Resource = "GetItem/{RecId}/{ProductId}";
 
             request.AddParameter("RecId", 5637193425, RestSharp.ParameterType.UrlSegment);
 
             request.AddParameter("ProductId", "PFI702GY", RestSharp.ParameterType.UrlSegment);
-
-            request.AddParameter("DataAreaId", "ser", RestSharp.ParameterType.UrlSegment);
 
             //request.AddBody(requestBody);
 
@@ -477,7 +435,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -509,7 +467,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -541,7 +499,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
@@ -582,7 +540,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
 
@@ -611,7 +569,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
@@ -642,7 +600,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
@@ -676,7 +634,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(settings);
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
