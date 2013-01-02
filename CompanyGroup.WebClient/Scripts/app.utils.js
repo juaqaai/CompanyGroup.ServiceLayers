@@ -78,14 +78,14 @@ companyGroup.utils = (function () {
             getProductDetailsUrl: function (productId) {
                 return _webshopBaseApiUrl + 'Details/?ProductId=' + encodeURIComponent(productId);
             },
-            getThumbnailPictureUrl: function (productId, recId, dataAreaId) {
-                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=60&MaxHeight=60';
+            getThumbnailPictureUrl: function (pictureId) {
+                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=60&MaxHeight=60';
             },
-            getPictureUrl: function (productId, recId, dataAreaId) {
-                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=180&MaxHeight=134'; //webshopBaseUrl + productId + '/' + recId + '/' + dataAreaId + '/94/69/Picture';
+            getPictureUrl: function (pictureId) {
+                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=180&MaxHeight=134'; 
             },
-            getBigPictureUrl: function (productId, recId, dataAreaId) {
-                return _pictureBaseApiUrl + 'GetPictureItem/?ProductId=' + encodeURIComponent(productId) + '&RecId=' + recId + '&DataAreaId=' + dataAreaId + '&MaxWidth=500&MaxHeight=500';
+            getBigPictureUrl: function (pictureId) {
+                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=500&MaxHeight=500';
             },
             getRegistrationApiUrl: function (url) {
                 return _registrationBaseApiUrl + url;

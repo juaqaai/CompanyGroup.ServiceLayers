@@ -75,10 +75,10 @@ namespace CompanyGroup.Dto.WebshopModule
         //public bool CannotCancel { get; set; }
 
         //[System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 23)]
-        public Picture PrimaryPicture { get; set; }
+        public int PictureId { get; set; }
 
         //[System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 24)]
-        public Pictures Pictures { get; set; }
+        //public Pictures Pictures { get; set; }
 
         //[System.Runtime.Serialization.DataMember(Name = "Description", Order = 25)]
         public string Description { get; set; }

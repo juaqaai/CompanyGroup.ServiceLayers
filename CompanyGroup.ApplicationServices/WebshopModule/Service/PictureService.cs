@@ -90,6 +90,34 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             catch { return null; }
         }
 
+        /// <summary>
+        /// képtartalom képazonosító alapján
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public Stream GetItemById(int pictureId, string maxWidth, string maxHeight) 
+        {
+            try
+            {
+                CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetItemById(pictureId);
+
+                if (picture == null) { return null; }
+
+                FileStream fileStream = ReadFileContent(picture);
+
+                int w = 0;
+                int h = 0;
+
+                if (!Int32.TryParse(maxWidth, out w)) { w = 0; }
+                if (!Int32.TryParse(maxHeight, out h)) { h = 0; }
+
+                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(fileStream, w, h, "image/jpeg");
+            }
+            catch { return null; }
+        }
+
         private FileStream ReadFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
         {
             FileStream fileStream = null;

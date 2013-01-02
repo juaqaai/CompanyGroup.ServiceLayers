@@ -32,5 +32,14 @@ namespace CompanyGroup.Dto.WebshopModule
 
         [System.Runtime.Serialization.DataMember(Name = "StatusDescription", Order = 5)]
         public string StatusDescription { get; set; }
+
+        [System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 6)]
+        public string DataAreaId { get; set; }
+
+        [System.Runtime.Serialization.DataMember(Name = "Id", Order = 7)]
+        public int Id { get; set; }
+
+        [System.Runtime.Serialization.DataMember(Name = "ProductId", Order = 8)]
+        public string ProductId { get; set; }
     }
 }

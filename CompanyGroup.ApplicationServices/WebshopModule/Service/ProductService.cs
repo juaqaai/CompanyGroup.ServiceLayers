@@ -17,7 +17,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     {
         private const string CACHEKEY_PRODUCT = "product";
 
+        private const string CACHEKEY_SECONDHAND = "secondhand";
+
         private const double CACHE_EXPIRATION_PRODUCTS = 1d;
+
+        private const double CACHE_EXPIRATION_SECONDHAND = 1d;
 
         private static readonly bool CatalogueCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("CatalogueCacheEnabled", false);
 
@@ -30,8 +34,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         private static readonly bool StructureCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("StructureCacheEnabled", true);
 
         private CompanyGroup.Domain.WebshopModule.IProductRepository productRepository;
-
-        private CompanyGroup.Domain.MaintainModule.IProductRepository maintainProductRepository;
 
         private CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository;
 
@@ -105,7 +107,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             if (ProductService.CatalogueCacheEnabled)
             {
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_PRODUCT, dataAreaIdCacheKey);
-
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
                 //request.Category1IdList.ForEach(x => cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(x), cacheKey, x));
@@ -131,6 +132,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             if (products == null)
             {
                 products = productRepository.GetList(dataAreaId, structureXml.SerializeToXml(), request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter, request.NewFilter, request.StockFilter, request.Sequence, request.TextFilter, request.PriceFilter, priceFilterRelation, request.CurrentPageIndex, request.ItemsOnPage, ref count);
+
+                products.ForEach(x =>
+                {
+                    x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+                });
 
                 if (ProductService.CatalogueCacheEnabled)
                 {
@@ -361,9 +367,33 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             predicate = predicate.And(p => p.Discount.Equals(request.ActionFilter));
 
-            predicate = predicate.And(p => p.Pictures.Count > 0);
+            predicate = predicate.And(p => p.PictureId > 0);
 
             return predicate.And(defaultPredicate);       
+        }
+
+        private CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList(string productId)
+        {
+            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
+
+            if (secondHandList == null)
+            {
+                secondHandList = productRepository.GetSecondHandList();
+
+                if (ProductService.CatalogueCacheEnabled)
+                {
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                }
+            }
+
+            if (secondHandList == null)
+            {
+                return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
+            }
+
+            IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+            return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
         }
 
         /// <summary>

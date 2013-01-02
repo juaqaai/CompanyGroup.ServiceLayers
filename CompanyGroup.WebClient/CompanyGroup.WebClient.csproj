@@ -1160,6 +1160,7 @@
     <Content Include="Scripts\sammy.title-0.7.2.min.js" />
     <Content Include="Scripts\sammy.title-latest.min.js" />
     <Content Include="Content\HtmlTemplates\PartnerInfo\dashboard.html" />
+    <Content Include="Scripts\toastr.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

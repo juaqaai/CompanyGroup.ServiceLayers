@@ -23,7 +23,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                ItemName = from.ItemName,
                                ItemNameEnglish = from.ItemNameEnglish,
                                PartNumber = from.PartNumber,
-                               PrimaryPicture = new PictureToPicture().Map(from.Picture),  
+                               PictureId = from.Picture.Id, //new PictureToPicture().Map(from.Picture),  
                                Price = String.Format( "{0}", from.CustomerPrice),
                                ProductId = from.ProductId,
                                DataAreaId = from.DataAreaId, 

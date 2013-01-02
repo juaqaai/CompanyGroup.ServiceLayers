@@ -35,6 +35,12 @@ namespace CompanyGroup.WebApi
             //);
 
             config.Routes.MapHttpRoute(
+                name: "PictureItemApi",
+                routeTemplate: "api/{controller}/{action}/{pictureId}/{maxWidth}/{maxHeight}",
+                defaults: new { }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "PictureApi",
                 routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{maxWidth}/{maxHeight}",
                 defaults: new { dataAreaId = "hrp" }

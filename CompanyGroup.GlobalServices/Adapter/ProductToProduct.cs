@@ -33,7 +33,7 @@ namespace CompanyGroup.GlobalServices.Adapter
                                Manufacturer = new ManufacturerToManufacturer().Map(product.Manufacturer),
                                New = product.New,
                                PartNumber = product.PartNumber,
-                               Pictures = new PicturesToPictures().Map(product.Pictures),
+                               Pictures = new PicturesToPictures().Map(new CompanyGroup.Dto.WebshopModule.Pictures()),
                                Price = decimal.TryParse(product.Price, out price) ? price : 0,
                                ProductId = product.ProductId,
                                PurchaseInProgress = product.PurchaseInProgress,

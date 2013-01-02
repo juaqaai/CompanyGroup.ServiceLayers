@@ -60,5 +60,27 @@ namespace CompanyGroup.WebApi.Controllers
 
             return result;
         }
+
+        [ActionName("GetItemById")] 
+        [HttpGet]
+        public HttpResponseMessage GetItemById(string pictureId, string maxWidth, string maxHeight) 
+        {
+            int id = 0;
+
+            if (!Int32.TryParse(pictureId, out id))
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            Stream stream = this.service.GetItemById(id, maxWidth, maxHeight);
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new System.Net.Http.StreamContent(stream);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            return result;
+        }
     }
 }

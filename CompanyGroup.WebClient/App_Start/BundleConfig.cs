@@ -13,8 +13,10 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.unobtrusive*"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -37,9 +39,9 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/amplify").Include("~/Scripts/amplify.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/chosen").Include("~/Scripts/chosen.js"));
-            
+
             //bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include("~/Scripts/jquery.autocomplete.js"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include("~/Scripts/jquery.fileupload.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/floatingmessage").Include("~/Scripts/jquery.floatingmessage.js"));
@@ -97,7 +99,7 @@ namespace CompanyGroup.WebClient
             //            "~/Content/themes/base/jquery.ui.theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                       // "http://fonts.googleapis.com/css?family=Lobster&subset=latin",
+                // "http://fonts.googleapis.com/css?family=Lobster&subset=latin",
                         "~/Content/themes/custom/site.css",
                         "~/Content/themes/custom/hrp_bsc_html_css.css",
                         "~/Content/themes/custom/jquery-ui-1.8.17.custom.css",
@@ -117,7 +119,8 @@ namespace CompanyGroup.WebClient
                         "~/Content/themes/base/jquery.ui.tabs.css",
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                        "~/Content/themes/base/jquery.ui.theme.css",
+                        "~/Content/themes/base/toartr.css"));
         }
     }
 }

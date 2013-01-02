@@ -9,13 +9,13 @@
 
         @Scripts.Render("~/bundles/head")
         @Scripts.Render("~/bundles/modernizr")
-
+		
 		@Scripts.Render("~/bundles/Cufon")
 		@Scripts.Render("~/bundles/Segoe")
 
         @RenderSection("ScriptsInHead", required: false)
     </head>
-    <body style="background:url(@Url.Content("~/Content/Media/images/big.jpg") top center no-repeat ">
+    <body>
     <!-- -->
     <a name="top" id="top"></a>
     <div class="aside-1" id="layout-wrapper">
@@ -131,13 +131,19 @@
 						<td >
                             <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
+							<select data-placeholder="Choose a Country..." class="chzn-select" style="width:auto;" tabindex="2">
+  							<option value="#">Név vagy cikkszám</option>
+ 							 <option value="#">Laptop</option>
+							 <option value="#">Tablet</option>
+							 <option value="#">Monitor</option>
+							 <option value="#">Nyomtató</option>
+							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-                            <input style="border: 0px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="50"/>
-                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onclick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
+                            <input style="border: 0px; margin-left:3px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
+                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onClick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
                             </div>
                             </form>
 						</td>
-						<td></td>
 					</tr>
 				</table>
 			</div>
@@ -145,7 +151,7 @@
 		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
         	    <a title="" id="top-link">Top of Page</a>
 			    <div id="cus_ax_nav">
-				    <ul id="navmenu_o">
+				    <ul id="menu-bar">
 					    <li>
 						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
@@ -348,7 +354,7 @@
                     <form action="#/signin" id="form_login" method="post"> 
                         <H2>Bejelentkezés</H2>
                         <br />
-                        Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni. :)
+                        Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni.
                         <br />
                         <br />
 
@@ -386,7 +392,8 @@
                 .js('@Scripts.Url("~/bundles/mustache")')
                 .js('@Scripts.Url("~/bundles/amplify")')
                 .js('@Scripts.Url("~/bundles/smarttab")')
-                .js('@Scripts.Url("~/bundles/scrollto")');
+                .js('@Scripts.Url("~/bundles/scrollto")')
+				.js('@Scripts.Url("~/bundles/toastr")');
 				              
 
             @RenderSection("ScriptFiles", false)
@@ -404,6 +411,8 @@
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
+			 $(".chzn-select").chosen();
+			 $(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
 
             @*Cufon.replace('p');*@
             @RenderSection("ScriptOnReady", false)

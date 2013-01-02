@@ -18,6 +18,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //[WebInvoke(Method = "GET", UriTemplate = "/GetItem/{ProductId}/{RecId}/{Width}/{Height}", ResponseFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare)]
         System.IO.Stream GetItem(string productId, string recId, string width, string height); //CompanyGroup.Dto.ServiceRequest.PictureFilter request
 
+        System.IO.Stream GetItemById(int pictureId, string maxWidth, string maxHeight);
+
         //[OperationContract(Action = "GetItem")]
         //[WebInvoke(Method = "POST",
         //    //UriTemplate = "/GetListByProduct",

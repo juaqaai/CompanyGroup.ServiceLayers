@@ -27,8 +27,8 @@ namespace CompanyGroup.Dto.WebshopModule
         [System.Runtime.Serialization.DataMember(Name = "Currency", Order = 6)]
         public string Currency { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 7)]
-        public Picture PrimaryPicture { get; set; }
+        [System.Runtime.Serialization.DataMember(Name = "PictureId", Order = 7)]
+        public int PictureId { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 8)]
         public string DataAreaId { get; set; }

@@ -200,6 +200,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\SecondHand.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\PictureItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\ProductListCount.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\PriceListItem.hbm.xml" />

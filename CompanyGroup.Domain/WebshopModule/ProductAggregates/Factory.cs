@@ -282,14 +282,14 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="innerProduct"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.WebshopModule.SecondHandList CreateSecondHandList(List<CompanyGroup.Domain.MaintainModule.SecondHand> from)
-        {
-            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = new CompanyGroup.Domain.WebshopModule.SecondHandList();
+        //public static CompanyGroup.Domain.WebshopModule.SecondHandList CreateSecondHandList(List<CompanyGroup.Domain.MaintainModule.SecondHand> from)
+        //{
+        //    CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = new CompanyGroup.Domain.WebshopModule.SecondHandList();
 
-            secondHandList.AddRange(from.ConvertAll(x => CreateSecondHand(x)));
+        //    secondHandList.AddRange(from.ConvertAll(x => CreateSecondHand(x)));
 
-            return secondHandList;
-        }
+        //    return secondHandList;
+        //}
 
         /// <summary>
         /// leértékelt cikk létrehozása
@@ -300,10 +300,10 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="quantity"></param>
         /// <param name="statusDescription"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.WebshopModule.SecondHand CreateSecondHand(CompanyGroup.Domain.MaintainModule.SecondHand secondHand)
-        {
-            return new CompanyGroup.Domain.WebshopModule.SecondHand(secondHand.ConfigId, secondHand.InventLocationId, secondHand.Quantity, secondHand.Price, secondHand.StatusDescription);
-        }
+        //public static CompanyGroup.Domain.WebshopModule.SecondHand CreateSecondHand(CompanyGroup.Domain.MaintainModule.SecondHand secondHand)
+        //{
+        //    return new CompanyGroup.Domain.WebshopModule.SecondHand(secondHand.ConfigId, secondHand.InventLocationId, secondHand.Quantity, secondHand.Price, secondHand.StatusDescription);
+        //}
 
         /// <summary>
         /// felhasználói kosár létrehozása

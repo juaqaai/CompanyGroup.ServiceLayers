@@ -124,5 +124,11 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part);
 
+        /// <summary>
+        /// leértékelt lista
+        /// </summary>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList();
+
     }
 }

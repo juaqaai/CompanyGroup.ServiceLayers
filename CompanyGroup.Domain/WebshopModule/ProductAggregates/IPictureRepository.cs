@@ -11,5 +11,12 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="productId"></param>
         /// <returns></returns>
         List<CompanyGroup.Domain.WebshopModule.Picture> GetListByProduct(string productId);
+
+        /// <summary>
+        /// kép azonosító szerint
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.Picture GetItemById(int pictureId);
     }
 }

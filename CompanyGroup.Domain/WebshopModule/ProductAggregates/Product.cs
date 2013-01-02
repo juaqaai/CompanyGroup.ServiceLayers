@@ -20,7 +20,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// InnerStock	OuterStock	AverageInventory	Price1	Price2	Price3	Price4	Price5	Garanty	GarantyMode	Discount	New	ItemState	Description	EnglishDescription	ProductManagerId	
         /// ShippingDate	CreatedDate	Updated	Available	PictureId	SecondHand	Valid
         /// </summary> 
-        /// 
         public Product(int id, string productId, string axStructCode, string dataAreaId, string standardConfigId, string name, string englishName, string partNumber, 	
                        string manufacturerId, string manufacturerName, string manufacturerEnglishName, 
                        string category1Id, string category1Name, string category1EnglishName, 
@@ -248,40 +247,40 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// azért van, hogy listában lehessen elkérni a képeket
         /// </summary>
-        public List<Picture> Pictures 
-        { 
-            get { return this.PictureArray.ToList(); }
-            set { this.PictureArray = value.ToArray(); } 
-        }
+        //public List<Picture> Pictures 
+        //{ 
+        //    get { return this.PictureArray.ToList(); }
+        //    set { this.PictureArray = value.ToArray(); } 
+        //}
 
         /// <summary>
         /// képek tárolása tömbben
         /// </summary>
-        public Picture[] PictureArray { get; set; }
+        //public Picture[] PictureArray { get; set; }
 
         /// <summary>
         /// elsődleges kép, kalkulált érték
         /// </summary>
-        public Picture PrimaryPicture
-        { 
-            get  
-            {
-                CompanyGroup.Domain.WebshopModule.Picture picture = this.Pictures.Find(x => x.Primary);
+        //public Picture PrimaryPicture
+        //{ 
+        //    get  
+        //    {
+        //        CompanyGroup.Domain.WebshopModule.Picture picture = this.Pictures.Find(x => x.Primary);
 
-                // ha nincs elsődleges beállítás, akkor az első elemet kell visszaadni
-                if (picture == null)
-                {
-                    picture = this.Pictures.FirstOrDefault();
+        //        // ha nincs elsődleges beállítás, akkor az első elemet kell visszaadni
+        //        if (picture == null)
+        //        {
+        //            picture = this.Pictures.FirstOrDefault();
 
-                    //ha nincsen egyetlen elem sem, akkor új kép objektumot kell visszaadni
-                    if (picture == null)
-                    {
-                        return Factory.CreatePicture("", false, 0);
-                    }
-                }
-                return picture;
-            }
-        }
+        //            //ha nincsen egyetlen elem sem, akkor új kép objektumot kell visszaadni
+        //            if (picture == null)
+        //            {
+        //                return Factory.CreatePicture("", false, 0);
+        //            }
+        //        }
+        //        return picture;
+        //    }
+        //}
 
         /// <summary>
         /// van-e készleten a cikk, kalkulált érték
@@ -448,8 +447,5 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             this.Pager = pager;
         }
-
     }
-
-
 }

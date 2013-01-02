@@ -1,0 +1,105 @@
+﻿.toast-title {
+	font-weight: bold;
+}
+.toast-message {
+    word-wrap: break-word;
+}
+
+.toast-message a,
+.toast-message label{
+	color: #FFF;
+}
+.toast-message a:hover {
+	color: #CCC;
+	text-decoration: none;
+}
+
+.toast-top-left {
+	top: 12px;
+	left: 12px;
+}
+
+.toast-bottom-right {
+	right: 12px;
+	bottom: 12px;
+}
+
+.toast-bottom-left {
+	left: 12px;
+	bottom: 12px;
+}
+
+#toast-container  {
+	position: fixed;
+	z-index: 9999;
+}
+
+#toast-container > div {
+	background-position: 15px center;
+	background-repeat: no-repeat;
+	-moz-border-radius: 3px 3px 3px 3px; 
+	-webkit-border-radius: 3px 3px 3px 3px; 
+	border-radius: 3px 3px 3px 3px;
+	-moz-box-shadow: 0 0 12px #999999; 
+	-webkit-box-shadow: 0 0 12px #999999; 
+	-o-box-shadow: 0 0 12px #999999; 
+	box-shadow: 0 0 12px #999999;
+	color: #FFFFFF;
+	margin: 0 0 6px;
+	filter: alpha(opacity=80);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	opacity: 0.8;
+	padding: 15px 15px 15px 50px;
+	width: 300px;
+}
+
+.toast {
+	background-color: #030303;
+}
+
+.toast-success{
+	background-color: #51A351;
+}
+
+.toast-error{
+	background-color: #BD362F;
+}
+
+.toast-info{
+	background-color: #2F96B4;
+}
+
+.toast-warning{
+	background-color: #F89406;
+}
+.toast-top-right {
+	top: 12px;
+	right: 12px;
+}
+
+#toast-container > :hover {
+	-moz-box-shadow: 0 0 12px #000000; 
+	-webkit-box-shadow: 0 0 12px #000000; 
+	-o-box-shadow: 0 0 12px #000000; 
+	box-shadow: 0 0 12px #000000;
+	filter: alpha(opacity=100);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	opacity: 1;
+	cursor: pointer;
+}
+
+#toast-container > .toast-info {
+	background-image: url("../../Media/images/toastr/info.png") !important;
+}
+
+#toast-container > .toast-error {
+	background-image: url("../../Media/images/toastr/error.png") !important;
+}
+
+#toast-container > .toast-success {
+	background-image: url("../../Media/images/toastr/success.png") !important;
+}
+
+#toast-container > .toast-warning {
+	background-image: url("../../Media/images/toast/warning.png") !important;
+}

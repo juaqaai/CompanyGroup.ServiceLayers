@@ -244,6 +244,30 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
+        /// leértékelt lista
+        /// </summary>
+        /// <returns></returns>
+        public CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList()
+        {
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SecondHandSelect")
+                                                                .SetResultTransformer(
+                                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.SecondHand).GetConstructors()[0]));
+
+                List<CompanyGroup.Domain.WebshopModule.SecondHand> secondHandList = query.List<CompanyGroup.Domain.WebshopModule.SecondHand>() as List<CompanyGroup.Domain.WebshopModule.SecondHand>;
+
+                CompanyGroup.Domain.WebshopModule.SecondHandList resultList = new CompanyGroup.Domain.WebshopModule.SecondHandList(secondHandList);
+
+                return resultList;
+            }
+            catch
+            {
+                return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
+            }
+        }
+
+        /// <summary>
         /// katalógus elemeket tartalmazó lista sorrendezése
         /// 0: átlagos életkor csökkenő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg,
         /// 1: átlagos életkor növekvő, akciós csökkenő, gyártó növekvő, termékazonosító szerint növekvőleg, 
