@@ -3,27 +3,50 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.WebshopModule
 {
+    /// <summary>
+    /// Autosuggesting funkcióhoz tartozó termék eredménylista eleme
+    /// </summary>
     public class Completion
     {
-        public Completion(string productId, string productName, string dataAreaId, long recId)
+        /// <summary>
+        /// Id	ProductId	DataAreaId	Name	EnglishName	PictureId
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="productName"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="recId"></param>
+        public Completion(int id, string productId, string dataAreaId, string productName, string productNameEnglish, int pictureId)
         {
+            this.Id = id;
+
             this.ProductId = productId;
-            this.ProductName = productName;
+
             this.DataAreaId = dataAreaId;
-            this.RecId = recId;
+
+            this.ProductName = productName;
+
+            this.ProductNameEnglish = productNameEnglish;
+
+            this.PictureId = pictureId;
         }
+
+        public int Id { get; set; }
 
         public string ProductId { get; set; }
 
         public string ProductName { get; set; }
 
+        public string ProductNameEnglish{ get; set; }
+
         public string DataAreaId { get; set; }
 
-        public long RecId { get; set; }
+        public int PictureId { get; set; }
     }
 
+    /// <summary>
+    /// Autosuggesting funkcióhoz tartozó termék eredménylista
+    /// </summary>
     public class CompletionList : List<Completion>
     { 
-    
     }
 }

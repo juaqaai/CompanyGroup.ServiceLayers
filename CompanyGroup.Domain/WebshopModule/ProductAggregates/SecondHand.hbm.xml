@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.SecondHandSelect" callable="true">
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="ProductId" type="System.String"/>    
+    <return-scalar column="ConfigId" type="System.String"/>
+    <return-scalar column="InventLocationId" type="System.String"/>
+    <return-scalar column="Quantity" type="System.Int32"/>
+    <return-scalar column="Price" type="System.Int32"/>
+    <return-scalar column="StatusDescription" type="System.String"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.SecondHandSelect 
+  </sql-query>
+</hibernate-mapping>

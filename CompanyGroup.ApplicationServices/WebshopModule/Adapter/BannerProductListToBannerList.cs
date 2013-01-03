@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    public class ProductsToBannerList
+    public class BannerProductListToBannerList
     {
         /// <summary>
         /// domain terméklista -> DTO terméklista
         /// </summary>
         /// <param name="products"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.BannerList Map(List<CompanyGroup.Domain.WebshopModule.Product> products)
+        public CompanyGroup.Dto.WebshopModule.BannerList Map(List<CompanyGroup.Domain.WebshopModule.BannerProduct> from)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 result.Items = new List<CompanyGroup.Dto.WebshopModule.BannerProduct>();
 
-                result.Items.AddRange(products.ConvertAll(x => new ProductToBannerProduct().Map(x)));
+                result.Items.AddRange(from.ConvertAll(x => new BannerProductToBannerProduct().Map(x)));
 
                 return result;
             }

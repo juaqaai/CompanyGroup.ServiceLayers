@@ -39,6 +39,16 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
         {
+            request.ManufacturerIdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
+
             string dataAreaId = String.Empty;
 
             string dataAreaIdCacheKey = String.Empty;
@@ -82,7 +92,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilter), cacheKey, request.PriceFilter);
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilterRelation), cacheKey, request.PriceFilterRelation);
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.NameOrPartNumberFilter), cacheKey, request.NameOrPartNumberFilter);
 
                 structures = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey);
             }
@@ -90,9 +99,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
             if (structures == null)
             {
-                structures = structureRepository.GetList(dataAreaId, request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
-                                                         request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation,
-                                                         request.NameOrPartNumberFilter);
+                structures = structureRepository.GetList(dataAreaId, structureXml.SerializeToXml(), request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
+                                                         request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation);
 
                 //cache-be mentés
                 if (StructureService.StructureCacheEnabled)

@@ -46,11 +46,38 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [ActionName("GetItem")] ///{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}
+        [ActionName("GetItem")] ///{ProductId}/{RecId}/{Width}/{Height}
         [HttpGet]
-        public HttpResponseMessage GetItem(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        public HttpResponseMessage GetItem(string productId, string recId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
-            Stream stream = this.service.GetItem(productId, recId, dataAreaId, maxWidth, maxHeight);
+            Stream stream = this.service.GetItem(productId, recId, maxWidth, maxHeight);
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new System.Net.Http.StreamContent(stream);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            return result;
+        }
+
+        [ActionName("GetItemById")] 
+        [HttpGet]
+        public HttpResponseMessage GetItemById(string pictureId, string maxWidth, string maxHeight) 
+        {
+            int id = 0;
+
+            if (!Int32.TryParse(pictureId, out id))
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            Stream stream = this.service.GetItemById(id, maxWidth, maxHeight);
+
+            if (stream == null)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 

@@ -54,7 +54,6 @@ namespace CompanyGroup.ApplicationServices.InstanceProviders
             //-> Unit of Work and repositories
             //_currentContainer.RegisterType<IMainBCUnitOfWork, MainBCUnitOfWork>(new PerResolveLifetimeManager());
 
-            _currentContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IProductRepository, CompanyGroup.Data.MaintainModule.ProductRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ISalesOrderRepository, CompanyGroup.Data.PartnerModule.SalesOrderRepository>();
             _currentContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IVisitorRepository, CompanyGroup.Data.PartnerModule.VisitorRepository>();
@@ -81,7 +80,6 @@ namespace CompanyGroup.ApplicationServices.InstanceProviders
 
             //-> Application services
             _currentContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IProductService, CompanyGroup.ApplicationServices.WebshopModule.ProductService>();
-            _currentContainer.RegisterType<CompanyGroup.ApplicationServices.MaintainModule.IProductService, CompanyGroup.ApplicationServices.MaintainModule.ProductService>();
             _currentContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IPictureService, CompanyGroup.ApplicationServices.WebshopModule.PictureService>();
             _currentContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IStructureService, CompanyGroup.ApplicationServices.WebshopModule.StructureService>();
             _currentContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IVisitorService, CompanyGroup.ApplicationServices.PartnerModule.VisitorService>();

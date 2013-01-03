@@ -97,8 +97,6 @@
     <Compile Include="InstanceProviders\UnityInstanceProviderServiceBehavior.cs" />
     <Compile Include="InstanceProviders\UnityServiceHost.cs" />
     <Compile Include="InstanceProviders\UnityServiceHostFactory.cs" />
-    <Compile Include="MaintainModule\Service\IProductService.cs" />
-    <Compile Include="MaintainModule\Service\ProductService.cs" />
     <Compile Include="PartnerModule\Adapter\AddressZipCodeToAddressZipCode.cs" />
     <Compile Include="PartnerModule\Adapter\ContactPersonToContactPerson.cs" />
     <Compile Include="PartnerModule\Adapter\BankAccountToBankAccount.cs" />
@@ -124,8 +122,8 @@
     <Compile Include="WebshopModule\Adapter\FinanceOfferToFinanceOffer.cs" />
     <Compile Include="WebshopModule\Adapter\ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions.cs" />
     <Compile Include="WebshopModule\Adapter\LeasingOptionsToLeasingOptions.cs" />
-    <Compile Include="WebshopModule\Adapter\ProductToBannerProduct.cs" />
-    <Compile Include="WebshopModule\Adapter\ProductsToBannerList.cs" />
+    <Compile Include="WebshopModule\Adapter\BannerProductToBannerProduct.cs" />
+    <Compile Include="WebshopModule\Adapter\BannerProductListToBannerList.cs" />
     <Compile Include="WebshopModule\Adapter\ProductToCompatibleProduct.cs" />
     <Compile Include="WebshopModule\Adapter\ProductToProductDetails.cs" />
     <Compile Include="WebshopModule\Adapter\PriceListToPriceList.cs" />

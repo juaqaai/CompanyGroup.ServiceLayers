@@ -71,11 +71,11 @@ namespace CompanyGroup.Dto.WebshopModule
         //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 21)]
         //public bool CannotCancel { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 22)]
-        public Picture PrimaryPicture { get; set; }
+        [System.Runtime.Serialization.DataMember(Name = "PictureId", Order = 22)]
+        public int PictureId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 23)]
-        public Pictures Pictures { get; set; }
+        //[System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 23)]
+        //public Pictures Pictures { get; set; }
 
         [System.Runtime.Serialization.DataMember(Name = "Description", Order = 24)]
         public string Description { get; set; }

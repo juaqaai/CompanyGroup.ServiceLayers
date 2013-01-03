@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompanyGroup.Domain.MaintainModule
+namespace CompanyGroup.Domain.WebshopModule
 {
     public class CompatibilityItem
     {

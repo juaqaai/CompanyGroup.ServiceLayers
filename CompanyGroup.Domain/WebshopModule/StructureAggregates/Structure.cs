@@ -30,24 +30,12 @@ namespace CompanyGroup.Domain.WebshopModule
                                   String.Empty, String.Empty, String.Empty)
         { }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Manufacturer", Order = 1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Manufacturer Manufacturer { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Category1", Order = 2)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Category Category1 { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Category2", Order = 3)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Category Category2 { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Category3", Order = 4)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Category Category3 { get; set; }
 
         #region IValidatableObject Members

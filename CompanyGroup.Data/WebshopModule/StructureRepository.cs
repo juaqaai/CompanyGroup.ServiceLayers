@@ -18,7 +18,6 @@ namespace CompanyGroup.Data.WebshopModule
 
         /// <summary>
         /// termékstruktúra lekérdezés
-        /// a gyártó és termékjelleg szűrőfeltételek csak a szeriz rétegig mennek, mert a több gyártó, több jelleg szűrés sql-ben problémás
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <param name="discountFilter"></param>
@@ -32,15 +31,17 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         /// <remarks>
         ///  [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hrp',
-		///									   @Discount bit = 0,      
-		///									   @SecondHand bit = 0,     
-		///									   @New bit = 0,         
-		///									   @Stock bit = 0,     
-		///									   @FindText nvarchar(64) = '', 
-		///									   @PriceFilter nvarchar(16) = '',
-		///									   @PriceFilterRelation INT = 0
+		///										   @StructureXml nvarchar (4000) = '',	
+		///										   @Discount bit = 0,      
+		///										   @SecondHand bit = 0,     
+		///										   @New bit = 0,         
+		///										   @Stock bit = 0,     
+		///										   @FindText nvarchar(64) = '', 
+		///										   @PriceFilter nvarchar(16) = '',
+		///										   @PriceFilterRelation INT = 0)
         /// </remarks>
         public CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
+                                                                    string structureXml, 
                                                                     bool discountFilter,
                                                                     bool secondHandFilter,
                                                                     bool isInNewsletterFilter,  
@@ -55,6 +56,7 @@ namespace CompanyGroup.Data.WebshopModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.StructureSelect")
                                                 .SetString("DataAreaId", dataAreaId)
+                                                .SetString("StructureXml", structureXml)
                                                 .SetBoolean("Discount", discountFilter)
                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                 .SetBoolean("New", newFilter)

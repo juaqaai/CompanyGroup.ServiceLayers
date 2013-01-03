@@ -113,5 +113,7 @@ namespace CompanyGroup.ApplicationServices
             catch { return new List<CompanyGroup.Domain.WebshopModule.ExchangeRate>(); }
         }
 
+
+
     }
 }

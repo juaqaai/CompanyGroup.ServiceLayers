@@ -10,7 +10,7 @@ namespace CompanyGroup.Data.Test
     /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class ProductRepository
+    public class ProductRepository : RepositoryBase
     {
         public ProductRepository()
         {
@@ -59,35 +59,30 @@ namespace CompanyGroup.Data.Test
         //
         #endregion
 
-
         [TestMethod]
         public void GetList()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),  
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017), 
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
-
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
             long count = 0;
 
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", new List<string>(), new List<string>(), new List<string>(), new List<string>(), false, false, false, false, false, "", "100000", 1, "", 0, 0, 30, ref count);
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>(), new List<string>() { "B004" }, new List<string>(), new List<string>());
 
-            Assert.IsTrue(products.Count > 0);            
+            string xml = structureXml.SerializeToXml();
+
+            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", xml, false, false, false, false, false, 0, "", "", 1, 1, 30, ref count);
+
+            Assert.IsTrue(products.Count > 0);
+
+            Assert.IsNotNull(count);
         }
 
         [TestMethod]
         public void GetItem()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-
-            CompanyGroup.Domain.WebshopModule.Product product = repository.GetItem("01279001", "hrp");
+            CompanyGroup.Domain.WebshopModule.Product product = repository.GetItem("WX950BTHDTRU", "hrp");
 
             Assert.IsTrue(product != null);
         }
@@ -95,29 +90,16 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetBannerList()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),  
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017), 
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>(), new List<string>(), new List<string>(), new List<string>());
 
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetBannerList("hrp", 30);
+            string xml = structureXml.SerializeToXml();
+
+            CompanyGroup.Domain.WebshopModule.BannerProducts products = repository.GetBannerList("hrp", xml);
 
             Assert.IsNotNull(products);
         }
 
-        [TestMethod]
-        public void CreateIndexes()
-        {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ProductList"));
-
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(settings);
-            
-            repository.CreateIndexes();
-        }
     }
 }

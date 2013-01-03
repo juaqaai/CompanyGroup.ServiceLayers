@@ -6,18 +6,17 @@ namespace CompanyGroup.Domain.WebshopModule
     public interface IPictureRepository
     {
         /// <summary>
-        /// képek lista termékazonosító és vállalatkód szerint 
+        /// képek lista termékazonosító szerint 
         /// </summary>
         /// <param name="productId"></param>
-        /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.WebshopModule.Picture> GetListByProduct(string productId, string dataAreaId);
+        List<CompanyGroup.Domain.WebshopModule.Picture> GetListByProduct(string productId);
 
         /// <summary>
-        /// képek lista elsődleges kulcs szerint
+        /// kép azonosító szerint
         /// </summary>
-        /// <param name="objectId"></param>
+        /// <param name="pictureId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.WebshopModule.Picture> GetListByKey(string objectId);
+        CompanyGroup.Domain.WebshopModule.Picture GetItemById(int pictureId);
     }
 }

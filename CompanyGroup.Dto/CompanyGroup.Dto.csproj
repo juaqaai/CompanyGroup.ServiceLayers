@@ -75,6 +75,7 @@
     <Compile Include="ServiceRequest\ChangeLanguage.cs" />
     <Compile Include="ServiceRequest\ForgetPassword.cs" />
     <Compile Include="ServiceRequest\GetContactPersonById.cs" />
+    <Compile Include="ServiceRequest\ProductListComplation.cs" />
     <Compile Include="ServiceRequest\UndoChangePassword.cs" />
     <Compile Include="ServiceRequest\GetNewsletterCollection.cs" />
     <Compile Include="ServiceRequest\GetInvoiceInfo.cs" />

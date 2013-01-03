@@ -155,7 +155,7 @@ CREATE TABLE InternetUser.Catalogue
 	ItemState				int not null default 0,					-- axapta ItemState mezo 0 : aktiv, 1 : kifuto, 2 : passziv	
 	[Description]			nvarchar(max) not null default '',		-- axapta inventtxt txt dbo.INVENTTXT.TXT
 	EnglishDescription		nvarchar(max) not null default '',
-	ProductManagerId		nvarchar(16) not null default '',		-- termekhez kapcsolt termekmanager
+	ProductManagerId		int not null default 0,					-- termekhez kapcsolt termekmanager
 	ShippingDate			SmallDateTime not null default GetDate(),
 	CreatedDate				SmallDateTime not null default GetDate(),		
 	Updated					SmallDateTime not null default GetDate(),

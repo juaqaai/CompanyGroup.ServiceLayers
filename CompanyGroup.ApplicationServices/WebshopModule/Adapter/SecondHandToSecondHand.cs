@@ -32,7 +32,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 InventLocationId = from.InventLocationId, 
                 Price = from.Price, 
                 Quantity = from.Quantity, 
-                StatusDescription = from.StatusDescription
+                StatusDescription = from.StatusDescription, 
+                DataAreaId = from.DataAreaId,
+                Id = from.Id,
+                ProductId = from.ProductId
             };
         }
 

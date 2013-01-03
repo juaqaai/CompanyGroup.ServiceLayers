@@ -33,8 +33,6 @@ namespace CompanyGroup.Dto.ServiceRequest
 
         public string PriceFilterRelation { get; set; }
 
-        public string NameOrPartNumberFilter { get; set; }
-
         public int Sequence { get; set; }
 
         public string VisitorId { get; set; }

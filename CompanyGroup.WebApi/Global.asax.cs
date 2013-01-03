@@ -37,7 +37,6 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.CustomerController>();
             //unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.FinanceController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.InvoiceController>();
-            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.MaintainController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.NewsletterController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.PictureController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ProductController>();
@@ -46,8 +45,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ShoppingCartController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.StructureController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.VisitorController>();
-
-            unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IProductRepository, CompanyGroup.Data.MaintainModule.ProductRepository>();   
+  
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ISalesOrderRepository, CompanyGroup.Data.PartnerModule.SalesOrderRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IVisitorRepository, CompanyGroup.Data.PartnerModule.VisitorRepository>();
@@ -66,7 +64,6 @@ namespace CompanyGroup.WebApi
 
             //-> Application services
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IProductService, CompanyGroup.ApplicationServices.WebshopModule.ProductService>();
-            unityContainer.RegisterType<CompanyGroup.ApplicationServices.MaintainModule.IProductService, CompanyGroup.ApplicationServices.MaintainModule.ProductService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IPictureService, CompanyGroup.ApplicationServices.WebshopModule.PictureService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IStructureService, CompanyGroup.ApplicationServices.WebshopModule.StructureService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IVisitorService, CompanyGroup.ApplicationServices.PartnerModule.VisitorService>();
@@ -80,9 +77,11 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService, CompanyGroup.ApplicationServices.MaintainModule.InvoiceService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService, CompanyGroup.ApplicationServices.PartnerModule.InvoiceService>();
 
-            unityContainer.RegisterInstance<CompanyGroup.Data.NoSql.ISettings>(CompanyGroup.Data.NoSql.SettingsFactory.Create(), new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterInstance<CompanyGroup.Data.NoSql.ISettings>(CompanyGroup.Data.NoSql.SettingsFactory.Create(), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<CompanyGroup.Data.NoSql.ISettings>(new InjectionFactory(c => CompanyGroup.Data.NoSql.SettingsFactory.Create()));
 
-            unityContainer.RegisterInstance<NHibernate.ISession>(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession(), new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<NHibernate.ISession, >();
+            unityContainer.RegisterType<NHibernate.ISession>(new InjectionFactory(c => CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession()));
 
             httpConfiguration.DependencyResolver = new CompanyGroup.WebApi.Ioc.Container(unityContainer);
         }

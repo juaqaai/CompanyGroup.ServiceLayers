@@ -27,7 +27,7 @@ namespace CompanyGroup.Domain.MaintainModule
 
         List<CompanyGroup.Domain.MaintainModule.InventName> GetInventNameEnglishList(string dataAreaId);
 
-        List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part);
+        
 
         List<CompanyGroup.Domain.MaintainModule.PurchaseOrderLine> GetPurchaseOrderLineList(string dataAreaId);
     }

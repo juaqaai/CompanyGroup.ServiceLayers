@@ -22,21 +22,27 @@ namespace CompanyGroup.WebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-                name: "MaintainApi",
-                routeTemplate: "api/{controller}/{action}/{dataAreaId}",
-                defaults: new { dataAreaId = "hrp" }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "MaintainApi",
+            //    routeTemplate: "api/{controller}/{action}/{dataAreaId}",
+            //    defaults: new { dataAreaId = "hrp" }
+            //);
+
+            //config.Routes.MapHttpRoute(
+            //    name: "CompletionApi",
+            //    routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}/{completionType}",
+            //    defaults: new { controller = "Product", action = "GetCompletionList", dataAreaId = "hrp" }
+            //);
 
             config.Routes.MapHttpRoute(
-                name: "CompletionApi",
-                routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}/{completionType}",
-                defaults: new { controller = "Product", action = "GetCompletionList", dataAreaId = "hrp" }
+                name: "PictureItemApi",
+                routeTemplate: "api/{controller}/{action}/{pictureId}/{maxWidth}/{maxHeight}",
+                defaults: new { }
             );
 
             config.Routes.MapHttpRoute(
                 name: "PictureApi",
-                routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{dataAreaId}/{maxWidth}/{maxHeight}",
+                routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{maxWidth}/{maxHeight}",
                 defaults: new { dataAreaId = "hrp" }
             );
         }

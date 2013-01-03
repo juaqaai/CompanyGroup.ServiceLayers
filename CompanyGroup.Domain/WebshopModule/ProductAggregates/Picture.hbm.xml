@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.PictureSelect" callable="true">
+    <query-param name="ProductId" type="System.String"/>    
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="FileName" type="System.String"/>    
+    <return-scalar column="Primary" type="System.Boolean"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    exec InternetUser.PictureSelect @ProductId=:ProductId
+  </sql-query>
+</hibernate-mapping>

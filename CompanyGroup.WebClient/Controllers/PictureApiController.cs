@@ -17,17 +17,13 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("GetPictureItem")]
         public HttpResponseMessage GetPictureItem()
         {
-            string productId = CompanyGroup.Helpers.QueryStringParser.GetString("ProductId");
-
-            string recId = CompanyGroup.Helpers.QueryStringParser.GetString("RecId");
-
-            string dataAreaId = CompanyGroup.Helpers.QueryStringParser.GetString("DataAreaId");
+            string pictureId = CompanyGroup.Helpers.QueryStringParser.GetString("PictureId");
 
             string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
 
             string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
 
-            return GetPicture(productId, recId, dataAreaId, maxWidth, maxHeight);
+            return GetPictureItemById(pictureId, maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -44,6 +40,33 @@ namespace CompanyGroup.WebClient.Controllers
         public HttpResponseMessage GetPicture(string productId, string recId, string dataAreaId, string maxWidth, string maxHeight)
         {
             byte[] picture = this.DownloadData(String.Format("Picture/GetItem/{0}/{1}/{2}/{3}/{4}", productId, recId, dataAreaId, maxWidth, maxHeight));
+
+            if (picture == null)
+            {
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture not found"));
+            }
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new ByteArrayContent(picture);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+            return result;
+        }
+
+        /// <summary>
+        /// kép lekérdezése stream-be
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ActionName("GetPictureItemById")]
+        public HttpResponseMessage GetPictureItemById(string pictureId, string maxWidth, string maxHeight)
+        {
+            byte[] picture = this.DownloadData(String.Format("Picture/GetItemById/{0}/{1}/{2}", pictureId, maxWidth, maxHeight));
 
             if (picture == null)
             {

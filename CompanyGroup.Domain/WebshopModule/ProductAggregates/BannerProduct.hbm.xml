@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.CatalogueBannerSelect" callable="true">
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="StructureXml" type="System.String"/>  
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="ProductId" type="System.String"/>
+    <return-scalar column="PartNumber" type="System.String"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="EnglishName" type="System.String"/>
+    <return-scalar column="ManufacturerId" type="System.String"/>
+    <return-scalar column="ManufacturerName" type="System.String"/>
+    <return-scalar column="ManufacturerEnglishName" type="System.String"/>
+    <return-scalar column="Category1Id" type="System.String"/>
+    <return-scalar column="Category1Name" type="System.String"/>
+    <return-scalar column="Category1EnglishName" type="System.String"/>
+    <return-scalar column="Category2Id" type="System.String"/>
+    <return-scalar column="Category2Name" type="System.String"/>
+    <return-scalar column="Category2EnglishName" type="System.String"/>
+    <return-scalar column="Category3Id" type="System.String"/>
+    <return-scalar column="Category3Name" type="System.String"/>
+    <return-scalar column="Category3EnglishName" type="System.String"/>    
+    <return-scalar column="InnerStock" type="System.Int32"/>
+    <return-scalar column="OuterStock" type="System.Int32"/>
+    <return-scalar column="Price1" type="System.Int32"/>
+    <return-scalar column="Price2" type="System.Int32"/>
+    <return-scalar column="Price3" type="System.Int32"/>
+    <return-scalar column="Price4" type="System.Int32"/>
+    <return-scalar column="Price5" type="System.Int32"/>
+    <return-scalar column="PictureId" type="System.Int32"/>
+    <return-scalar column="FileName" type="System.String"/>
+    <return-scalar column="Primary" type="System.Boolean"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    exec InternetUser.CatalogueBannerSelect @DataAreaId=:DataAreaId, @StructureXml=:StructureXml
+  </sql-query>
+</hibernate-mapping>

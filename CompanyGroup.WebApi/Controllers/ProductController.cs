@@ -31,11 +31,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// [GET("contactRange/{id:range(1,3)}")]
         /// [GET(@"text/{e:regex(^[A-Z][a-z][0-9]$)}")]
         /// [RoutePrefix("items", TranslationKey = "itemsKey")]
-        [ActionName("GetCatalogue")]
+        [ActionName("GetProducts")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Catalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        public CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
-            CompanyGroup.Dto.WebshopModule.Catalogue response = this.service.GetCatalogue(request);
+            CompanyGroup.Dto.WebshopModule.Products response = this.service.GetProducts(request);
 
             if (response == null)
             {
@@ -46,24 +46,7 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// struktúrák lekérdezése
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("GetStructure")]
-        [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
-        {
-            return service.GetStructure(request);
-        }
-
-        /// <summary>
         /// banner lista a termeklista bannerhez
-        /// 1. repository-tól elkéri az akciós, készleten lévő, képpel rendelkező legfeljebb 150 elemet tartalmazó terméklistát.
-        /// 2. ha a hívóparaméter tartalmaz jelleg1, jelleg2, jelleg3 paramétert, akkor a paraméterek szerint szűri a listát, majd a találati eredményből visszaadja az első 50 elemet
-        /// 3. ha a lekérdezésnek nincs eredménye, akkor az 1. pont szerinti lekérdezés eredményéből visszaadja az első 50 elemet
-        /// 
-        /// ha bejelentkezett felhasználó kérte le a listát, akkor az eredményhalmazban az ár is kitöltésre kerül, egyébként az ár értéke nulla.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -87,18 +70,6 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// objectId egyedi kulccsal rendelkező termékelem lekérdezése
-        /// </summary>
-        /// <param name="objectId"></param>
-        /// <returns></returns>
-        [ActionName("GetItemByObjectId")]   //{objectId}/{visitorId}
-        [HttpGet]
-        public CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId)
-        {
-            return this.service.GetItemByObjectId(objectId, visitorId);
-        }
-
-        /// <summary>
         /// productId és dataAreaId összetett kulccsal rendelkező termékelem lekérdezése
         /// </summary>
         /// <param name="objectId"></param>
@@ -113,15 +84,13 @@ namespace CompanyGroup.WebApi.Controllers
         /// <summary>
         /// terméknév kiegészítő lista
         /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <param name="prefix"></param>
-        /// <param name="completionType">0: nincs megadva, 1: termékazonosító-cikkszám, 2: minden</param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetCompletionList")]
-        [HttpGet]
-        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(string dataAreaId, string prefix, string completionType) //CompanyGroup.Dto.ServiceRequest.ProductListComplation request
+        [HttpPost]
+        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request) 
         {
-            return this.service.GetCompletionList(dataAreaId, prefix, completionType);
+            return this.service.GetCompletionList(request);
         }
 
         /// <summary>

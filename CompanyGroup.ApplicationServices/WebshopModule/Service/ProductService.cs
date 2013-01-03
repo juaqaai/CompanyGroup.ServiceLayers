@@ -17,7 +17,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     {
         private const string CACHEKEY_PRODUCT = "product";
 
+        private const string CACHEKEY_SECONDHAND = "secondhand";
+
         private const double CACHE_EXPIRATION_PRODUCTS = 1d;
+
+        private const double CACHE_EXPIRATION_SECONDHAND = 1d;
 
         private static readonly bool CatalogueCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("CatalogueCacheEnabled", false);
 
@@ -31,8 +35,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private CompanyGroup.Domain.WebshopModule.IProductRepository productRepository;
 
-        private CompanyGroup.Domain.MaintainModule.IProductRepository maintainProductRepository;
-
         private CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository;
 
         //private CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository;
@@ -41,12 +43,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// konstruktor repository interfész paraméterrel
         /// </summary>
         /// <param name="productRepository"></param>
-        /// <param name="maintainProductRepository"></param>
         /// <param name="shoppingCartRepository"></param>
         /// <param name="financeRepository"></param>
         /// <param name="visitorRepository"></param>
         public ProductService(CompanyGroup.Domain.WebshopModule.IProductRepository productRepository,
-                              CompanyGroup.Domain.MaintainModule.IProductRepository maintainProductRepository,
                               CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository,
                               CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository,
                               CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(financeRepository, visitorRepository)
@@ -61,14 +61,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw new ArgumentNullException("ShoppingCartRepository");
             }
 
-            if (maintainProductRepository == null)
-            {
-                throw new ArgumentNullException("MaintainProductRepository");
-            }
-
             this.productRepository = productRepository;
-
-            this.maintainProductRepository = maintainProductRepository;
 
             this.shoppingCartRepository = shoppingCartRepository;
         }
@@ -78,7 +71,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Catalogue GetCatalogue(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        public CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
             long count = 0;
 
@@ -89,6 +82,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
 
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = ConstructDataAreaId(request);
@@ -104,7 +99,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.ProductList productList = null;
+            CompanyGroup.Domain.WebshopModule.Products products = null;
 
             string cacheKey = String.Empty;
 
@@ -112,7 +107,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             if (ProductService.CatalogueCacheEnabled)
             {
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_PRODUCT, dataAreaIdCacheKey);
-
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
                 //request.Category1IdList.ForEach(x => cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(x), cacheKey, x));
@@ -132,41 +126,46 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
                 //cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.VisitorId), cacheKey, request.VisitorId);
 
-                productList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.ProductList>(CACHEKEY_PRODUCT);
+                products = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Products>(CACHEKEY_PRODUCT);
             }
 
-            if (productList == null)
+            if (products == null)
             {
-                productList = productRepository.GetProductList();
+                products = productRepository.GetList(dataAreaId, structureXml.SerializeToXml(), request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter, request.NewFilter, request.StockFilter, request.Sequence, request.TextFilter, request.PriceFilter, priceFilterRelation, request.CurrentPageIndex, request.ItemsOnPage, ref count);
+
+                products.ForEach(x =>
+                {
+                    x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+                });
 
                 if (ProductService.CatalogueCacheEnabled)
                 {
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.ProductList>(cacheKey, productList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_PRODUCTS)));
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.Products>(cacheKey, products, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_PRODUCTS)));
                 }
             }
 
-            IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableList = productList.AsQueryable().Where(ConstructPredicate(request));
+            //IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableList = productList.AsQueryable().Where(ConstructPredicate(request));
 
-            IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableBannerProductList = productList.AsQueryable().Where(ConstructBannerListPredicate(request)).OrderByDescending( x => x.AverageInventory);
+            //IQueryable<CompanyGroup.Domain.WebshopModule.Product> filteredQueryableBannerProductList = productList.AsQueryable().Where(ConstructBannerListPredicate(request)).OrderByDescending( x => x.AverageInventory);
 
-            List<CompanyGroup.Domain.WebshopModule.Product> filteredList = filteredQueryableList.ToList();
+            //List<CompanyGroup.Domain.WebshopModule.Product> filteredList = filteredQueryableList.ToList();
 
-            List<CompanyGroup.Domain.WebshopModule.Product> filteredBannerProductList = filteredQueryableBannerProductList.ToList();
+            //List<CompanyGroup.Domain.WebshopModule.Product> filteredBannerProductList = filteredQueryableBannerProductList.ToList();
 
-            List<CompanyGroup.Dto.WebshopModule.BannerProduct> bannerProducts = new List<CompanyGroup.Dto.WebshopModule.BannerProduct>();
+            //List<CompanyGroup.Dto.WebshopModule.BannerProduct> bannerProducts = new List<CompanyGroup.Dto.WebshopModule.BannerProduct>();
 
-            bannerProducts.AddRange(filteredBannerProductList.ConvertAll( x => {
+            //bannerProducts.AddRange(filteredBannerProductList.ConvertAll( x => {
             
-                return new CompanyGroup.Dto.WebshopModule.BannerProduct() { Currency = "", 
-                                                                            DataAreaId = x.DataAreaId, 
-                                                                            ItemName = x.ProductName, 
-                                                                            ItemNameEnglish = x.ProductNameEnglish, 
-                                                                            PartNumber = x.PartNumber, 
-                                                                            Price = String.Format( "{0}", x.Prices.Price2), 
-                                                                            PrimaryPicture = new PictureToPicture().Map(x.PrimaryPicture), 
-                                                                            ProductId = x.ProductId };
+            //    return new CompanyGroup.Dto.WebshopModule.BannerProduct() { Currency = "", 
+            //                                                                DataAreaId = x.DataAreaId, 
+            //                                                                ItemName = x.ProductName, 
+            //                                                                ItemNameEnglish = x.ProductNameEnglish, 
+            //                                                                PartNumber = x.PartNumber, 
+            //                                                                Price = String.Format( "{0}", x.Prices.Price2), 
+            //                                                                PrimaryPicture = new PictureToPicture().Map(x.PrimaryPicture), 
+            //                                                                ProductId = x.ProductId };
             
-            }));
+            //}));
 
             //ha nincs bejelentkezve, akkor a VisitorId üres
             CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
@@ -179,7 +178,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 
-                filteredList.ForEach(x =>
+                products.ForEach(x =>
                 {
                     decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
 
@@ -192,29 +191,29 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 });
             }
 
-            IQueryable<CompanyGroup.Domain.WebshopModule.Product> orderedList = filteredQueryableList.OrderByDescending(x => x.AverageInventory).Skip((request.CurrentPageIndex - 1) * request.ItemsOnPage).Take(request.ItemsOnPage);
+            //IQueryable<CompanyGroup.Domain.WebshopModule.Product> orderedList = filteredQueryableList.OrderByDescending(x => x.AverageInventory).Skip((request.CurrentPageIndex - 1) * request.ItemsOnPage).Take(request.ItemsOnPage);
 
-            CompanyGroup.Domain.WebshopModule.Products products = new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(request.CurrentPageIndex, filteredList.Count(), request.ItemsOnPage));
+            //CompanyGroup.Domain.WebshopModule.Products products = new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(request.CurrentPageIndex, filteredList.Count(), request.ItemsOnPage));
 
-            products.AddRange(orderedList);
+            //products.AddRange(orderedList);
 
-            products.ListCount = filteredList.Count();
+            products.ListCount = count;
 
-            CompanyGroup.Dto.WebshopModule.Products p = new ProductsToProducts().Map(products);
+            CompanyGroup.Dto.WebshopModule.Products response = new ProductsToProducts().Map(products);
 
-            p.Pager = new PagerToPager().Map(products.Pager, request.ItemsOnPage);
+            response.Pager = new PagerToPager().Map(products.Pager, request.ItemsOnPage);
 
-            p.Currency = request.Currency;
+            response.Currency = request.Currency;
 
-            CompanyGroup.Domain.WebshopModule.Structures structures = new CompanyGroup.Domain.WebshopModule.Structures();
 
-            List<CompanyGroup.Domain.WebshopModule.Structure> structureList = filteredList.ConvertAll(x => new CompanyGroup.Domain.WebshopModule.Structure() { Manufacturer = x.Structure.Manufacturer, Category1 = x.Structure.Category1, Category2 = x.Structure.Category2, Category3 = x.Structure.Category3 });
+            //CompanyGroup.Domain.WebshopModule.Structures structures = new CompanyGroup.Domain.WebshopModule.Structures();
 
-            structures.AddRange(structureList);
+            //List<CompanyGroup.Domain.WebshopModule.Structure> structureList = filteredList.ConvertAll(x => new CompanyGroup.Domain.WebshopModule.Structure() { Manufacturer = x.Structure.Manufacturer, Category1 = x.Structure.Category1, Category2 = x.Structure.Category2, Category3 = x.Structure.Category3 });
 
-            CompanyGroup.Dto.WebshopModule.Structures s = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
+            //structures.AddRange(structureList);
 
-            return new CompanyGroup.Dto.WebshopModule.Catalogue(p, s, bannerProducts);
+            //CompanyGroup.Dto.WebshopModule.Structures s = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
+            return response;
         }
 
         private static string ConstructDataAreaId(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
@@ -315,16 +314,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //                                                 MongoDB.Driver.Builders.Query.Matches("Description", regex), MongoDB.Driver.Builders.Query.Matches("DescriptionEnglish", regex)) );
             }
 
-            if (!String.IsNullOrEmpty(request.NameOrPartNumberFilter))
-            {
-                predicate = predicate.And(p => request.NameOrPartNumberFilter.Contains(p.ProductName));
-
-                //MongoDB.Bson.BsonRegularExpression regex = new MongoDB.Bson.BsonRegularExpression(String.Format(".*{0}.*", nameOrPartNumberFilter), "i");
-
-                //query = MongoDB.Driver.Builders.Query.And(query, MongoDB.Driver.Builders.Query.Or(MongoDB.Driver.Builders.Query.Matches("ProductName", regex), MongoDB.Driver.Builders.Query.Matches("ProductNameEnglish", regex),
-                //                                                 MongoDB.Driver.Builders.Query.Matches("PartNumber", regex), MongoDB.Driver.Builders.Query.Matches("ProductId", regex)) );
-            }
-
             if (request.PriceFilterRelation.Equals(1))
             {
                 int price;
@@ -378,9 +367,33 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             predicate = predicate.And(p => p.Discount.Equals(request.ActionFilter));
 
-            predicate = predicate.And(p => p.Pictures.Count > 0);
+            predicate = predicate.And(p => p.PictureId > 0);
 
             return predicate.And(defaultPredicate);       
+        }
+
+        private CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList(string productId)
+        {
+            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
+
+            if (secondHandList == null)
+            {
+                secondHandList = productRepository.GetSecondHandList();
+
+                if (ProductService.CatalogueCacheEnabled)
+                {
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                }
+            }
+
+            if (secondHandList == null)
+            {
+                return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
+            }
+
+            IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+            return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
         }
 
         /// <summary>
@@ -388,78 +401,78 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
-        {
-            string dataAreaId = String.Empty;
+        //public CompanyGroup.Dto.WebshopModule.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
+        //{
+        //    string dataAreaId = String.Empty;
 
-            string dataAreaIdCacheKey = String.Empty;
+        //    string dataAreaIdCacheKey = String.Empty;
 
-            if (request.HrpFilter && !request.BscFilter)
-            {
-                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+        //    if (request.HrpFilter && !request.BscFilter)
+        //    {
+        //        dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
 
-                dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
-            }
-            else if (request.BscFilter && !request.HrpFilter)
-            {
-                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+        //        dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+        //    }
+        //    else if (request.BscFilter && !request.HrpFilter)
+        //    {
+        //        dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
 
-                dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
-            }
-            else
-            {
-                dataAreaIdCacheKey = "all";
-            }
+        //        dataAreaIdCacheKey = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+        //    }
+        //    else
+        //    {
+        //        dataAreaIdCacheKey = "all";
+        //    }
 
-            //szűrés ár értékre
-            int priceFilterRelation = 0;
+        //    //szűrés ár értékre
+        //    int priceFilterRelation = 0;
 
-            int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
+        //    int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.Structures structures = null;
+        //    CompanyGroup.Domain.WebshopModule.Structures structures = null;
 
-            string cacheKey = String.Empty;
+        //    string cacheKey = String.Empty;
 
-            //cache kiolvasás
-            if (ProductService.StructureCacheEnabled)
-            {
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_STRUCTURE, dataAreaIdCacheKey);
+        //    //cache kiolvasás
+        //    if (ProductService.StructureCacheEnabled)
+        //    {
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_STRUCTURE, dataAreaIdCacheKey);
 
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.IsInNewsletterFilter, cacheKey, "IsInNewsletterFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.NewFilter, cacheKey, "NewFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.StockFilter, cacheKey, "StockFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilter), cacheKey, request.PriceFilter);
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilterRelation), cacheKey, request.PriceFilterRelation);
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.NameOrPartNumberFilter), cacheKey, request.NameOrPartNumberFilter);
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.IsInNewsletterFilter, cacheKey, "IsInNewsletterFilter");
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.NewFilter, cacheKey, "NewFilter");
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.StockFilter, cacheKey, "StockFilter");
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilter), cacheKey, request.PriceFilter);
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.PriceFilterRelation), cacheKey, request.PriceFilterRelation);
+        //        cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.NameOrPartNumberFilter), cacheKey, request.NameOrPartNumberFilter);
 
-                structures = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey);
-            }
+        //        structures = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey);
+        //    }
 
-            //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
-            if (structures == null)
-            {
-                structures = productRepository.GetStructure(dataAreaId, request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
-                                                            request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation,
-                                                            request.NameOrPartNumberFilter);
+        //    //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
+        //    if (structures == null)
+        //    {
+        //        structures = productRepository.GetStructure(dataAreaId, request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
+        //                                                    request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation,
+        //                                                    request.NameOrPartNumberFilter);
 
-                //cache-be mentés
-                if (ProductService.StructureCacheEnabled)
-                {
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey, structures, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_STRUCTURE)));
-                }
-            }
+        //        //cache-be mentés
+        //        if (ProductService.StructureCacheEnabled)
+        //        {
+        //            CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.Structures>(cacheKey, structures, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_STRUCTURE)));
+        //        }
+        //    }
 
-            CompanyGroup.Dto.WebshopModule.Structures result = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
+        //    CompanyGroup.Dto.WebshopModule.Structures result = new StructuresToStructures().Map(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList, structures);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// banner lista a termeklista bannerhez
-        /// 1. repository-tól elkéri az akciós, készleten lévő, képpel rendelkező legfeljebb 150 elemet tartalmazó terméklistát.
+        /// 1. repository-tól elkéri az akciós, készleten lévő, képpel rendelkező legfeljebb 50 elemet tartalmazó terméklistát.
         /// 2. ha a hívóparaméter tartalmaz jelleg1, jelleg2, jelleg3 paramétert, akkor a paraméterek szerint szűri a listát, majd a találati eredményből visszaadja az első 50 elemet
         /// 3. ha a lekérdezésnek nincs eredménye, akkor az 1. pont szerinti lekérdezés eredményéből visszaadja az első 50 elemet
         /// 
@@ -469,15 +482,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request)
         {
-            int responseItemCount = 50;
-
-            CompanyGroup.Dto.WebshopModule.BannerList result = new CompanyGroup.Dto.WebshopModule.BannerList();
-
             request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(new List<string>(), request.Category1IdList, request.Category2IdList, request.Category3IdList);
 
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = String.Empty;
@@ -495,49 +506,22 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
             }
 
-            CompanyGroup.Domain.WebshopModule.Products products = productRepository.GetBannerList(dataAreaId, 300);
-
-            List<CompanyGroup.Domain.WebshopModule.Product> filteredProducts = new List<CompanyGroup.Domain.WebshopModule.Product>();
-
-            if (request.Category1IdList.Count > 0)
-            {
-                filteredProducts.AddRange(products.Where(x => request.Category1IdList.Contains(x.Structure.Category1.CategoryId)).Take(responseItemCount).ToList());
-            }
-
-            if (request.Category2IdList.Count > 0)
-            {
-                filteredProducts.AddRange(products.Where(x => request.Category2IdList.Contains(x.Structure.Category2.CategoryId)).Take(responseItemCount).ToList());
-            }
-
-            if (request.Category3IdList.Count > 0)
-            {
-                filteredProducts.AddRange(products.Where(x => request.Category3IdList.Contains(x.Structure.Category3.CategoryId)).Take(responseItemCount).ToList());
-            }
-
-            if (filteredProducts.Count.Equals(0))
-            {
-                filteredProducts.AddRange(products.Take(responseItemCount));
-            }
+            CompanyGroup.Domain.WebshopModule.BannerProducts bannerProducts = productRepository.GetBannerList(dataAreaId, structureXml.SerializeToXml());
 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
 
+            //ár kalkulálás
             if (visitor.IsValidLogin)
             {
-
-                filteredProducts.ForEach(x =>
+                bannerProducts.ForEach(x =>
                 {
                     decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
 
                     x.CustomerPrice = this.ChangePrice(price, request.Currency);
-
-                    x.IsInNewsletter = false;
-
-                    x.IsInCart = false;
-
                 });
             }
 
-            CompanyGroup.Dto.WebshopModule.BannerList results = new ProductsToBannerList().Map(filteredProducts);
+            CompanyGroup.Dto.WebshopModule.BannerList results = new BannerProductListToBannerList().Map(bannerProducts);
 
             return results;
         }
@@ -557,6 +541,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
+
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = String.Empty;
 
@@ -577,11 +563,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId,
-                                                                                                   request.ManufacturerIdList,
-                                                                                                   request.Category1IdList,
-                                                                                                   request.Category2IdList,
-                                                                                                   request.Category3IdList,
+            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId, 
+                                                                                                   structureXml.SerializeToXml(),
                                                                                                    request.ActionFilter,
                                                                                                    request.BargainFilter,
                                                                                                    request.IsInNewsletterFilter,
@@ -590,7 +573,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                                    request.TextFilter,
                                                                                                    request.PriceFilter,
                                                                                                    priceFilterRelation,
-                                                                                                   request.NameOrPartNumberFilter,
                                                                                                    request.Sequence);
 
             //ha nincs bejelentkezve, akkor a VisitorId üres
@@ -652,55 +634,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //}
 
         /// <summary>
-        /// objectId egyedi kulccsal rendelkező termékelem lekérdezése
-        /// </summary>
-        /// <param name="objectId"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId)
-        {
-            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(objectId);
-
-            if (product == null) { return new CompanyGroup.Dto.WebshopModule.Product(); }
-
-            //ha nincs bejelentkezve, akkor a VisitorId üres
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(visitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(visitorId);
-
-            if (visitor.IsValidLogin)
-            {
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollectionByVisitor(visitorId);
-
-                CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
-
-                product.CustomerPrice = visitor.CalculateCustomerPrice(product.Prices.Price1, 
-                                                                       product.Prices.Price2, 
-                                                                       product.Prices.Price3, 
-                                                                       product.Prices.Price4, 
-                                                                       product.Prices.Price5, 
-                                                                       product.Structure.Manufacturer.ManufacturerId, 
-                                                                       product.Structure.Category1.CategoryId, 
-                                                                       product.Structure.Category2.CategoryId, 
-                                                                       product.Structure.Category3.CategoryId);
-                //product.CustomerPrice = this.ChangePrice(price, request.Currency);
-
-                product.IsInNewsletter = false;
-
-                product.IsInCart = shoppingCartCollection.IsInCart(product.ProductId);
-            }
-            else
-            {
-                product.CustomerPrice = 0;
-
-                product.IsInNewsletter = false;
-
-                product.IsInCart = false;
-            }
-
-            CompanyGroup.Dto.WebshopModule.Product result = new ProductToProduct().Map(product);
-
-            return result;
-        }
-
-        /// <summary>
         /// productId és dataAreaId összetett kulccsal rendelkező termékelem lekérdezése
         /// </summary>
         /// <param name="objectId"></param>
@@ -757,16 +690,54 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="prefix"></param>
         /// <param name="completionType">0: nincs megadva, 1: termékazonosító-cikkszám, 2: minden</param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(string dataAreaId, string prefix, string completionType) //CompanyGroup.Dto.ServiceRequest.ProductListComplation request
+        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request) 
         {
-            if (String.IsNullOrWhiteSpace(dataAreaId) || String.IsNullOrWhiteSpace(prefix))
+            if (String.IsNullOrWhiteSpace(request.Prefix))
             {
                 return new Dto.WebshopModule.CompletionList();
             }
 
-            CompanyGroup.Domain.WebshopModule.CompletionType completion = (CompanyGroup.Domain.WebshopModule.CompletionType) Enum.Parse(typeof(CompanyGroup.Domain.WebshopModule.CompletionType), completionType);
+            //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
+            string dataAreaId = String.Empty;
 
-            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(dataAreaId, prefix, ProductComplationLimit, completion);
+            if (request.HrpFilter && request.BscFilter)
+            {
+                dataAreaId = String.Empty;
+            }
+            else if (request.HrpFilter && !request.BscFilter)
+            {
+                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+            }
+            else if (request.BscFilter && !request.HrpFilter)
+            {
+                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+            }
+
+            request.ManufacturerIdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
+
+            int priceFilterRelation = 0;
+
+            int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
+
+            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(request.Prefix, 
+                                                                                                          dataAreaId, 
+                                                                                                          structureXml.SerializeToXml(),
+                                                                                                          request.DiscountFilter,
+                                                                                                          request.SecondhandFilter,
+                                                                                                          request.IsInNewsletterFilter,
+                                                                                                          request.NewFilter,
+                                                                                                          request.StockFilter,
+                                                                                                          request.TextFilter,
+                                                                                                          request.PriceFilter,
+                                                                                                          priceFilterRelation);
 
             return new CompletionToCompletion().Map(result);
         }
@@ -790,7 +761,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> result = new List<CompanyGroup.Dto.WebshopModule.CompatibleProduct>();
 
-            List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> compatibilityItems = maintainProductRepository.GetCompatibilityItemList(productId, dataAreaId, false);
+            List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, false);
 
             compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
 
@@ -801,7 +772,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> result = new List<CompanyGroup.Dto.WebshopModule.CompatibleProduct>();
 
-            List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> compatibilityItems = maintainProductRepository.GetCompatibilityItemList(productId, dataAreaId, true);
+            List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, true);
 
             compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
 

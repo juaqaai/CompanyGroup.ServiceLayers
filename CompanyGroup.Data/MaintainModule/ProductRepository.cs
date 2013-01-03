@@ -160,25 +160,6 @@ namespace CompanyGroup.Data.MaintainModule
             return query.List<CompanyGroup.Domain.MaintainModule.InventName>() as List<CompanyGroup.Domain.MaintainModule.InventName>;
         }
 
-        /// <summary>
-        /// InternetUser.cms_CompatibilityList( @DataAreaId nvarchar (3), 
-		///									    @ProductId nvarchar (20), 
-		///									    @Part BIT = 0	0 = a termekazonositohoz tartozo alkatreszeket keressuk
-		///													    1 = a termekazonositohoz mint alkatreszhez tartozo termekeket keressuk )
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="dataAreaId"></param>
-        /// <param name="part"></param>
-        /// <returns></returns>
-        public List<CompanyGroup.Domain.MaintainModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part)
-        {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CompatibilityList").SetString("DataAreaId", dataAreaId)
-                                                                                                 .SetString("ProductId", productId)
-                                                                                                 .SetBoolean("Part", part).SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.MaintainModule.CompatibilityItem).GetConstructors()[0]));
-
-            return query.List<CompanyGroup.Domain.MaintainModule.CompatibilityItem>() as List<CompanyGroup.Domain.MaintainModule.CompatibilityItem>;
-        }
 
         /// <summary>
         /// beszerzési rendelés sorok kiolvasása

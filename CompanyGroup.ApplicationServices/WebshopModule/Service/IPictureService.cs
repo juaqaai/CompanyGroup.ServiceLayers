@@ -15,8 +15,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        //[WebInvoke(Method = "GET", UriTemplate = "/GetItem/{ProductId}/{RecId}/{DataAreaId}/{Width}/{Height}", ResponseFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare)]
-        System.IO.Stream GetItem(string productId, string recId, string dataAreaId, string width, string height); //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        //[WebInvoke(Method = "GET", UriTemplate = "/GetItem/{ProductId}/{RecId}/{Width}/{Height}", ResponseFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare)]
+        System.IO.Stream GetItem(string productId, string recId, string width, string height); //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+
+        System.IO.Stream GetItemById(int pictureId, string maxWidth, string maxHeight);
 
         //[OperationContract(Action = "GetItem")]
         //[WebInvoke(Method = "POST",

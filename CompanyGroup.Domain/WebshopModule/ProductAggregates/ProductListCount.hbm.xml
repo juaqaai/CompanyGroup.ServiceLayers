@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.ProductListCount" callable="true">
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="StructureXml" type="System.String"/>
+    <query-param name="Discount" type="System.Boolean"/>
+    <query-param name="SecondHand" type="System.Boolean"/>
+    <query-param name="New" type="System.Boolean"/>
+    <query-param name="Stock" type="System.Boolean"/>
+    <query-param name="FindText" type="System.String"/>
+    <query-param name="PriceFilter" type="System.String"/>
+    <query-param name="PriceFilterRelation" type="System.Int32"/>
+    <return-scalar column="ListCount" type="System.Int32"/>
+    exec InternetUser.ProductListCount @DataAreaId=:DataAreaId, @StructureXml=:StructureXml, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation
+  </sql-query>
+</hibernate-mapping>
