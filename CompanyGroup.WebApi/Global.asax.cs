@@ -77,10 +77,11 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService, CompanyGroup.ApplicationServices.MaintainModule.InvoiceService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService, CompanyGroup.ApplicationServices.PartnerModule.InvoiceService>();
 
-            unityContainer.RegisterInstance<CompanyGroup.Data.NoSql.ISettings>(CompanyGroup.Data.NoSql.SettingsFactory.Create(), new HierarchicalLifetimeManager());
+            //unityContainer.RegisterInstance<CompanyGroup.Data.NoSql.ISettings>(CompanyGroup.Data.NoSql.SettingsFactory.Create(), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<CompanyGroup.Data.NoSql.ISettings>(new InjectionFactory(c => CompanyGroup.Data.NoSql.SettingsFactory.Create()));
 
             //unityContainer.RegisterType<NHibernate.ISession, >();
-            unityContainer.RegisterType<NHibernate.ISession>(new InjectionFactory(c => CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession()), new HierarchicalLifetimeManager());
+            unityContainer.RegisterType<NHibernate.ISession>(new InjectionFactory(c => CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession()));
 
             httpConfiguration.DependencyResolver = new CompanyGroup.WebApi.Ioc.Container(unityContainer);
         }
