@@ -1732,7 +1732,6 @@ companyGroup.webshop = $.sammy(function () {
         BscFilter: true,
         PriceFilter: '0',
         PriceFilterRelation: '0',
-        NameOrPartNumberFilter: '',
         Sequence: 0,
         CurrentPageIndex: 1,
         ItemsOnPage: 30,
@@ -1750,7 +1749,6 @@ companyGroup.webshop = $.sammy(function () {
             this.BscFilter = true;
             this.PriceFilter = '0';
             this.PriceFilterRelation = '0';
-            this.NameOrPartNumberFilter = '';
             this.Sequence = 0;
             this.CurrentPageIndex = 1;
             this.ItemsOnPage = 30;

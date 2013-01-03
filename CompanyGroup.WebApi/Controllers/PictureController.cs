@@ -74,6 +74,11 @@ namespace CompanyGroup.WebApi.Controllers
 
             Stream stream = this.service.GetItemById(id, maxWidth, maxHeight);
 
+            if (stream == null)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 
             result.Content = new System.Net.Http.StreamContent(stream);

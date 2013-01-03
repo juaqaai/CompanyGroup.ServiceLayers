@@ -47,7 +47,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(new List<string>(), request.Category1IdList, request.Category2IdList, request.Category3IdList);
+            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
 
             string dataAreaId = String.Empty;
 

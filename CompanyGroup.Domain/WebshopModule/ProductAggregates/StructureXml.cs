@@ -81,7 +81,6 @@ namespace CompanyGroup.Domain.WebshopModule
             });
             sb.Append("</Category2>");
 
-
             sb.Append("<Category3>");
             this.Category3IdList.ForEach(x =>
             {

@@ -18,7 +18,7 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("GetStructure")]
         public CompanyGroup.WebClient.Models.Structures GetStructure(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
         {
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Product", "GetStructure", request);
+            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", request);
 
             CompanyGroup.WebClient.Models.Structures response = new CompanyGroup.WebClient.Models.Structures(structures);
 

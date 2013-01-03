@@ -72,7 +72,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 //System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.ContentType = "image/jpeg";
 
-                FileStream fileStream = ReadFileContent(picture);
+                byte[] buffer = ReadFileContent(picture);
                 //string path = Path.Combine(CompanyGroup.Helpers.ConfigSettingsParser.GetString("PicturePhysicalPath", @"\\axos3\ProductPictures"), picture.FileName);
 
                 int w = 0;
@@ -85,7 +85,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 // PictureService.ResizeImage(imgToResize, new System.Drawing.Size(w, h)); //ResizeImage(fileStream, w, h);
 
-                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(fileStream, w, h, "image/jpeg");
+                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(new MemoryStream(buffer), w, h, "image/jpeg");
             }
             catch { return null; }
         }
@@ -105,7 +105,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (picture == null) { return null; }
 
-                FileStream fileStream = ReadFileContent(picture);
+                byte[] buffer = ReadFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -113,124 +113,141 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 if (!Int32.TryParse(maxWidth, out w)) { w = 0; }
                 if (!Int32.TryParse(maxHeight, out h)) { h = 0; }
 
-                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(fileStream, w, h, "image/jpeg");
+                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(new MemoryStream(buffer), w, h, "image/jpeg");
             }
             catch { return null; }
         }
 
-        private FileStream ReadFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
+        private byte[] ReadFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
         {
+            byte[] buffer;
+
             FileStream fileStream = null;
+
             try
             {
                 string path = Path.Combine(CompanyGroup.Helpers.ConfigSettingsParser.GetString("PicturePhysicalPath", @"\\axos3\ProductPictures"), picture.FileName);
 
-                fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-                return fileStream;
+                int length = (int) fileStream.Length;  // get file length
+
+                buffer = new byte[length];            // create buffer
+
+                int count;                            // actual number of bytes read
+
+                int sum = 0;                          // total number of bytes read
+
+                // read until Read method returns 0 (end of the stream has been reached)
+                while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
+                {
+                    sum += count;  // sum is a buffer offset for next reading
+                }
+
+                return buffer;
             }
-            catch 
+            catch
             {
                 if (fileStream != null)
                 {
                     fileStream.Close();
                 }
-                return null; 
+                return null;
             }
             finally
             {
                 if (fileStream != null)
                 {
-                    //fileStream.Close();
+                    fileStream.Close();
                 }
             }
         }
 
-        private Stream ResizeImage(FileStream fileStream, int width, int height)
-        {
-            if (fileStream == null) { return null; }
+        //private Stream ResizeImage(FileStream fileStream, int width, int height)
+        //{
+        //    if (fileStream == null) { return null; }
 
-            if (width == 0) { width = 200; }
+        //    if (width == 0) { width = 200; }
 
-            if (height == 0) { width = 200; }
+        //    if (height == 0) { width = 200; }
 
-            string settingsForImages = String.Format("maxwidth={0}&maxheight={1}", width, height);   //"width={0}&height={1}&format=jpg&crop=auto" ,    maxwidth=100;maxheight=100
+        //    string settingsForImages = String.Format("maxwidth={0}&maxheight={1}", width, height);   //"width={0}&height={1}&format=jpg&crop=auto" ,    maxwidth=100;maxheight=100
 
-            ImageResizer.ResizeSettings resizeSettings = new ImageResizer.ResizeSettings(settingsForImages);
+        //    ImageResizer.ResizeSettings resizeSettings = new ImageResizer.ResizeSettings(settingsForImages);
 
-            //using (MemoryStream ms = new MemoryStream()) 
-            //{
-            MemoryStream ms = new MemoryStream();
+        //    //using (MemoryStream ms = new MemoryStream()) 
+        //    //{
+        //    MemoryStream ms = new MemoryStream();
 
-                ImageResizer.ImageBuilder.Current.Build(fileStream, ms, resizeSettings);
+        //        ImageResizer.ImageBuilder.Current.Build(fileStream, ms, resizeSettings);
 
-                return (Stream) ms;
-            //}
-        }
+        //        return (Stream) ms;
+        //    //}
+        //}
 
-        private static Stream ResizeImage(System.Drawing.Image imgToResize, System.Drawing.Size size)
-        {
-            int sourceWidth = imgToResize.Width;
-            int sourceHeight = imgToResize.Height;
+        //private static Stream ResizeImage(System.Drawing.Image imgToResize, System.Drawing.Size size)
+        //{
+        //    int sourceWidth = imgToResize.Width;
+        //    int sourceHeight = imgToResize.Height;
 
-            float nPercent = 0;
-            float nPercentW = 0;
-            float nPercentH = 0;
+        //    float nPercent = 0;
+        //    float nPercentW = 0;
+        //    float nPercentH = 0;
 
-            nPercentW = ((float)size.Width / (float)sourceWidth);
-            nPercentH = ((float)size.Height / (float)sourceHeight);
+        //    nPercentW = ((float)size.Width / (float)sourceWidth);
+        //    nPercentH = ((float)size.Height / (float)sourceHeight);
 
-            if (nPercentH < nPercentW)
-                nPercent = nPercentH;
-            else
-                nPercent = nPercentW;
+        //    if (nPercentH < nPercentW)
+        //        nPercent = nPercentH;
+        //    else
+        //        nPercent = nPercentW;
 
-            int destWidth = (int)(sourceWidth * nPercent);
-            int destHeight = (int)(sourceHeight * nPercent);
+        //    int destWidth = (int)(sourceWidth * nPercent);
+        //    int destHeight = (int)(sourceHeight * nPercent);
 
-            System.Drawing.Bitmap b = new System.Drawing.Bitmap(destWidth, destHeight);
+        //    System.Drawing.Bitmap b = new System.Drawing.Bitmap(destWidth, destHeight);
 
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage((System.Drawing.Image)b);
+        //    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage((System.Drawing.Image)b);
 
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+        //    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-            g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
+        //    g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
 
-            g.Dispose();
+        //    g.Dispose();
 
-            return SaveBitmapToStream(b, "image/jpeg", 100L);
-        }
+        //    return SaveBitmapToStream(b, "image/jpeg", 100L);
+        //}
 
-        private static System.Drawing.Imaging.ImageCodecInfo GetEncoderInfo(string mimeType)
-        {
-            System.Drawing.Imaging.ImageCodecInfo info = null;
+        //private static System.Drawing.Imaging.ImageCodecInfo GetEncoderInfo(string mimeType)
+        //{
+        //    System.Drawing.Imaging.ImageCodecInfo info = null;
 
-            string s = !String.IsNullOrEmpty(mimeType) ? mimeType : "image/jpeg";
+        //    string s = !String.IsNullOrEmpty(mimeType) ? mimeType : "image/jpeg";
 
-            var encoders = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
-            for (int j = 0; (j < encoders.Length); ++j)
-            {
-                if (encoders[j].MimeType.Equals(s))
-                {
-                    info = encoders[j];
-                }
-            }
-            return info;
-        }
+        //    var encoders = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+        //    for (int j = 0; (j < encoders.Length); ++j)
+        //    {
+        //        if (encoders[j].MimeType.Equals(s))
+        //        {
+        //            info = encoders[j];
+        //        }
+        //    }
+        //    return info;
+        //}
 
-        private static Stream SaveBitmapToStream(System.Drawing.Bitmap bmp, string mimeType, long quality)
-        {
-            System.Drawing.Imaging.EncoderParameters eps = new System.Drawing.Imaging.EncoderParameters(1);
+        //private static Stream SaveBitmapToStream(System.Drawing.Bitmap bmp, string mimeType, long quality)
+        //{
+        //    System.Drawing.Imaging.EncoderParameters eps = new System.Drawing.Imaging.EncoderParameters(1);
 
-            eps.Param[0] = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+        //    eps.Param[0] = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
 
-            System.Drawing.Imaging.ImageCodecInfo ici = GetEncoderInfo(mimeType);    //"image/jpeg"
+        //    System.Drawing.Imaging.ImageCodecInfo ici = GetEncoderInfo(mimeType);    //"image/jpeg"
 
-            MemoryStream ms = new MemoryStream();
+        //    MemoryStream ms = new MemoryStream();
 
-            bmp.Save(ms, ici, eps);
+        //    bmp.Save(ms, ici, eps);
 
-            return ms;
-        }
+        //    return ms;
+        //}
     }
 }
