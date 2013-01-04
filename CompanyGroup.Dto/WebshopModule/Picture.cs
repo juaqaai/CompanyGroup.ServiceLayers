@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "Pictures", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// Kép DTO lista
+    /// </summary>
     public class Pictures
     {
-        [System.Runtime.Serialization.DataMember(Name = "Items", Order = 1)]
         public List<Picture> Items { get; set; }
     }
 
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "Picture", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// Kép DTO
+    /// </summary>
     public class Picture
     {
-        [System.Runtime.Serialization.DataMember(Name = "FileName", Order = 1)]
         public string FileName { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Primary", Order = 2)]
         public bool Primary { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "RecId", Order = 3)]
         public long RecId { get; set; }
+
+        public int Id { get; set; }
     }
 }

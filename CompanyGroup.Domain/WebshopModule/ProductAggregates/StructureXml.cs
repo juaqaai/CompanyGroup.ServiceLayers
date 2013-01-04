@@ -36,19 +36,7 @@ namespace CompanyGroup.Domain.WebshopModule
         public List<string> Category3IdList { get; set; }
 
         /// <summary>
-        /// <Structure>
-        /// <Manufacturer>
-        ///    <Id>A142</Id>
-        ///    <Id>A169</Id>
-        /// </Manufacturer>
-        /// <Category1>
-        ///    <Id>B004</Id>
-        /// </Category1>
-        /// <Category2>
-        /// </Category2>
-        /// <Category3>
-        /// </Category3>
-        /// </Structure>
+        /// xml sorosítás
         /// </summary>
         /// <param name="writer"></param>
         public string SerializeToXml()
@@ -61,27 +49,24 @@ namespace CompanyGroup.Domain.WebshopModule
                 sb.Append(x);
                 sb.Append("</Id>");
             });
-            sb.Append("</Manufacturer>");
+            sb.Append("</Manufacturer><Category1>");
 
-            sb.Append("<Category1>");
             this.Category1IdList.ForEach(x =>
             {
                 sb.Append("<Id>");
                 sb.Append(x);
                 sb.Append("</Id>");
             });
-            sb.Append("</Category1>");
+            sb.Append("</Category1><Category2>");
 
-            sb.Append("<Category2>");
             this.Category2IdList.ForEach(x =>
             {
                 sb.Append("<Id>");
                 sb.Append(x);
                 sb.Append("</Id>");
             });
-            sb.Append("</Category2>");
+            sb.Append("</Category2><Category3>");
 
-            sb.Append("<Category3>");
             this.Category3IdList.ForEach(x =>
             {
                 sb.Append("<Id>");

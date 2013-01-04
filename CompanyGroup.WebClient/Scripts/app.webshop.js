@@ -1564,7 +1564,7 @@ companyGroup.webshop = $.sammy(function () {
                 if (result.Items.length > 0) {
                     $.each(result.Items, function (i, pic) {
                         var item = new Object();
-                        item.href = companyGroup.utils.instance().getBigPictureUrl(pic.PictureId);
+                        item.href = companyGroup.utils.instance().getBigPictureUrl(pic.Id);
                         item.title = data.ProductId;
                         arr_pics.push(item);
                         $.fancybox(

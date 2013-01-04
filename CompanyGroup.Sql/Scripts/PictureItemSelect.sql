@@ -14,5 +14,5 @@ SET NOCOUNT ON
 	FROM InternetUser.Picture WHERE Id = @PictureId;
 RETURN
 
--- EXEC [InternetUser].[PictureItemSelect] 11;
+-- EXEC [InternetUser].[PictureItemSelect] 40;
 -- select * from InternetUser.Picture

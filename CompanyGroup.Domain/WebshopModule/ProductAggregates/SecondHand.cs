@@ -9,8 +9,6 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class SecondHand
     {
-        public SecondHand() : this( 0, "", "", "", 0, 0, "", "" ) { }
-
         public SecondHand(int id, string productId, string configId, string inventLocationId, int quantity, int price, string statusDescription, string dataAreaId)
         {
             this.Id = id;
@@ -29,6 +27,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.DataAreaId = dataAreaId;
         }
+
+        public SecondHand() : this(0, "", "", "", 0, 0, "", "") { }
 
         public int Id { get; set; }
 

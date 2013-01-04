@@ -29,17 +29,6 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
-        /// <remarks>
-        ///  [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hrp',
-		///										   @StructureXml nvarchar (4000) = '',	
-		///										   @Discount bit = 0,      
-		///										   @SecondHand bit = 0,     
-		///										   @New bit = 0,         
-		///										   @Stock bit = 0,     
-		///										   @FindText nvarchar(64) = '', 
-		///										   @PriceFilter nvarchar(16) = '',
-		///										   @PriceFilterRelation INT = 0)
-        /// </remarks>
         public CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
                                                                     string structureXml, 
                                                                     bool discountFilter,
