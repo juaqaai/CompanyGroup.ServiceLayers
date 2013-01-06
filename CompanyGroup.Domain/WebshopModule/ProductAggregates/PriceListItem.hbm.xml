@@ -2,7 +2,10 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <sql-query name="InternetUser.PricelistSelect" callable="true">
     <query-param name="DataAreaId" type="System.String"/>
-    <query-param name="StructureXml" type="System.String"/>  
+    <query-param name="Manufacturers" type="System.String"/>
+    <query-param name="Category1" type="System.String"/>
+    <query-param name="Category2" type="System.String"/>
+    <query-param name="Category3" type="System.String"/> 
     <query-param name="Discount" type="System.Boolean"/>    
     <query-param name="SecondHand" type="System.Boolean"/>
     <query-param name="New" type="System.Boolean"/>
@@ -54,6 +57,6 @@
     <return-scalar column="PictureId" type="System.Int32"/>
     <return-scalar column="SecondHand" type="System.Boolean"/>
     <return-scalar column="Valid" type="System.Boolean"/>
-    exec InternetUser.PricelistSelect @DataAreaId=:DataAreaId, @StructureXml=:StructureXml, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @Sequence=:Sequence, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation
+    exec InternetUser.PricelistSelect @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @Sequence=:Sequence, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation
   </sql-query>
 </hibernate-mapping>

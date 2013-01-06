@@ -83,8 +83,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
-
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = ConstructDataAreaId(request);
 
@@ -131,7 +129,23 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             if (products == null)
             {
-                products = productRepository.GetList(dataAreaId, structureXml.SerializeToXml(), request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter, request.NewFilter, request.StockFilter, request.Sequence, request.TextFilter, request.PriceFilter, priceFilterRelation, request.CurrentPageIndex, request.ItemsOnPage, ref count);
+                products = productRepository.GetList(dataAreaId, 
+                                                     ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
+                                                     ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                     ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                     ConvertData.ConvertStringListToDelimitedString(request.Category3IdList), 
+                                                     request.ActionFilter, 
+                                                     request.BargainFilter, 
+                                                     request.IsInNewsletterFilter, 
+                                                     request.NewFilter, 
+                                                     request.StockFilter, 
+                                                     request.Sequence, 
+                                                     request.TextFilter, 
+                                                     request.PriceFilter, 
+                                                     priceFilterRelation, 
+                                                     request.CurrentPageIndex, 
+                                                     request.ItemsOnPage, 
+                                                     ref count);
 
                 products.ForEach(x =>
                 {
@@ -482,48 +496,54 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request)
         {
-            request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
-
-            request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
-
-            request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
-
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(new List<string>(), request.Category1IdList, request.Category2IdList, request.Category3IdList);
-
-            //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
-            string dataAreaId = String.Empty;
-
-            if (request.HrpFilter && request.BscFilter)
+            try
             {
-                dataAreaId = String.Empty;
-            }
-            else if (request.HrpFilter && !request.BscFilter)
-            {
-                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
-            }
-            else if (request.BscFilter && !request.HrpFilter)
-            {
-                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
-            }
+                request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            CompanyGroup.Domain.WebshopModule.BannerProducts bannerProducts = productRepository.GetBannerList(dataAreaId, structureXml.SerializeToXml());
+                request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
+                request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            //ár kalkulálás
-            if (visitor.IsValidLogin)
-            {
-                bannerProducts.ForEach(x =>
+                //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
+                string dataAreaId = String.Empty;
+
+                if (request.HrpFilter && request.BscFilter)
                 {
-                    decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
+                    dataAreaId = String.Empty;
+                }
+                else if (request.HrpFilter && !request.BscFilter)
+                {
+                    dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+                }
+                else if (request.BscFilter && !request.HrpFilter)
+                {
+                    dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
+                }
 
-                    x.CustomerPrice = this.ChangePrice(price, request.Currency);
-                });
+                CompanyGroup.Domain.WebshopModule.BannerProducts bannerProducts = productRepository.GetBannerList(dataAreaId,
+                                                                                                                  String.Empty,
+                                                                                                                  ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                                                                                  ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                                                                                  ConvertData.ConvertStringListToDelimitedString(request.Category3IdList));
+
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
+
+                //ár kalkulálás
+                if (visitor.IsValidLogin)
+                {
+                    bannerProducts.ForEach(x =>
+                    {
+                        decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
+
+                        x.CustomerPrice = this.ChangePrice(price, request.Currency);
+                    });
+                }
+
+                CompanyGroup.Dto.WebshopModule.BannerList results = new BannerProductListToBannerList().Map(bannerProducts);
+
+                return results;
             }
-
-            CompanyGroup.Dto.WebshopModule.BannerList results = new BannerProductListToBannerList().Map(bannerProducts);
-
-            return results;
+            catch { return new CompanyGroup.Dto.WebshopModule.BannerList(); }
         }
 
         /// <summary>
@@ -540,8 +560,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
-
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
 
             //vállalat akkor üres, ha a bsc, illetve a hrp is be van kapcsolva  
             string dataAreaId = String.Empty;
@@ -563,8 +581,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId, 
-                                                                                                   structureXml.SerializeToXml(),
+            CompanyGroup.Domain.WebshopModule.PriceList priceList = productRepository.GetPriceList(dataAreaId,
+                                                                                                   ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
+                                                                                                   ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                                                                   ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                                                                   ConvertData.ConvertStringListToDelimitedString(request.Category3IdList),
                                                                                                    request.ActionFilter,
                                                                                                    request.BargainFilter,
                                                                                                    request.IsInNewsletterFilter,
@@ -721,15 +742,16 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
-
             int priceFilterRelation = 0;
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
             CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(request.Prefix, 
                                                                                                           dataAreaId, 
-                                                                                                          structureXml.SerializeToXml(),
+                                                                                                          ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
+                                                                                                          ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                                                                          ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                                                                          ConvertData.ConvertStringListToDelimitedString(request.Category3IdList),
                                                                                                           request.DiscountFilter,
                                                                                                           request.SecondhandFilter,
                                                                                                           request.IsInNewsletterFilter,

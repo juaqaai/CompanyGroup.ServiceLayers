@@ -1,25 +1,30 @@
 USE [WebDb_Test]
 GO
+
+/****** Object:  StoredProcedure [InternetUser].[ProductListCount]    Script Date: 2013.01.06. 20:25:27 ******/
+DROP PROCEDURE [InternetUser].[ProductListCount]
+GO
+
+/****** Object:  StoredProcedure [InternetUser].[ProductListCount]    Script Date: 2013.01.06. 20:25:27 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
--- árlista
-DROP PROCEDURE [InternetUser].[PricelistSelect];
-GO
-CREATE PROCEDURE [InternetUser].[PricelistSelect] (@DataAreaId nvarchar(4) = 'hrp',
+
+CREATE PROCEDURE [InternetUser].[ProductListCount] (@DataAreaId nvarchar(4) = 'hrp',
 												   @Manufacturers nvarchar (250) = '',
 												   @Category1 nvarchar (250) = '',
 												   @Category2 nvarchar (250) = '',
-												   @Category3 nvarchar (250) = '',       
+												   @Category3 nvarchar (250) = '',	      
 												   @Discount bit = 0,      
 												   @SecondHand bit = 0,     
 												   @New bit = 0,         
-												   @Stock bit = 0,     
-												   @Sequence int = 0,	
+												   @Stock bit = 0,     	
 												   @FindText nvarchar(64) = '', 
 												   @PriceFilter nvarchar(16) = '',
-												   @PriceFilterRelation INT = 0)
+												   @PriceFilterRelation INT = 0
+)
 AS
 SET NOCOUNT ON
 
@@ -66,10 +71,7 @@ SET NOCOUNT ON
 		WHERE C3j > 0
 	)
 
-	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
-			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
-			InnerStock, OuterStock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
-			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
+	SELECT COUNT(*) as ListCount
 	FROM InternetUser.Catalogue as Catalogue
 	WHERE (Catalogue.ManufacturerId IN (SELECT SUBSTRING(@Manufacturers, Mi, COALESCE(NULLIF(Mj, 0), LEN(@Manufacturers) + 1) - Mi) FROM Manufacturers_CTE) OR (@Manufacturers = '')) AND
 		  (Catalogue.Category1Id IN (SELECT SUBSTRING(@Category1, C1i, COALESCE(NULLIF(C1j, 0), LEN(@Category1) + 1) - C1i) FROM Category1_CTE) OR (@Category1 = '')) AND
@@ -90,42 +92,13 @@ SET NOCOUNT ON
 	Category1Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category1Name END OR
 	Category2Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category2Name END OR 
 	Category3Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category3Name END
-	)
-	ORDER BY 
-	CASE WHEN @Sequence =  0 THEN --átlagos életkor csökkenõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
-		AverageInventory + Discount END DESC,
-	CASE WHEN @Sequence =  1 THEN -- átlagos életkor növekvõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
-		AverageInventory + Discount END ASC, 
-	CASE WHEN @Sequence =  2 THEN -- azonosito novekvo
-		ProductId END ASC,
-	CASE WHEN @Sequence = 3 THEN -- azonosito csokkeno 
-		ProductId END DESC, 
-	CASE WHEN @Sequence = 4 THEN  -- nev szerint novekvo
-		Name END DESC,
-	CASE WHEN @Sequence = 5 THEN  -- nev szerint csokkeno
-		Name END ASC, 
-	CASE WHEN @Sequence = 6 THEN  
-		Price5 END ASC,
-	CASE WHEN @Sequence = 7 THEN  
-		Price5 END DESC, 
-	CASE WHEN @Sequence = 8 THEN   
-		InnerStock END ASC, 
-	CASE WHEN @Sequence = 9 THEN    
-		InnerStock END DESC, 
-	CASE WHEN @Sequence = 10 THEN 
-		OuterStock END ASC, 
-	CASE WHEN @Sequence = 11 THEN 
-		OuterStock END DESC, 
-	CASE WHEN @Sequence = 12 THEN  
-		Garanty END ASC, 
-	CASE WHEN @Sequence = 13 THEN  
-		Garanty END DESC;
+	);
 			
 RETURN
 
--- EXEC InternetUser.PricelistSelect @Stock = 1, @Sequence = 3;
+-- EXEC InternetUser.[ProductListCount] @Stock = 1;
 /*
-EXEC InternetUser.PricelistSelect  @StructureXml = '
+EXEC InternetUser.[ProductListCount]  @StructureXml = '
 <Structure>
 <Manufacturer>
     <Id>A142</Id>
@@ -141,3 +114,6 @@ EXEC InternetUser.PricelistSelect  @StructureXml = '
 </Structure>'
 
 */
+GO
+
+

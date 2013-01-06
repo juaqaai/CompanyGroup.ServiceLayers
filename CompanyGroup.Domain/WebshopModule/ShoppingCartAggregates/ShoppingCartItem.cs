@@ -8,7 +8,7 @@ namespace CompanyGroup.Domain.WebshopModule
     /// <summary>
     /// bevásárló kosár elem
     /// </summary>
-    public class ShoppingCartItem : CompanyGroup.Domain.Core.NoSqlEntity, IValidatableObject
+    public class ShoppingCartItem : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
         /// <summary>
         /// konstruktor, üres kosár elem létrehozása (SetProduct értékadások előkészítése)

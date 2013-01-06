@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="ShoppingCart" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="VisitorId" />
+    <property name="CompanyId" />
+    <property name="PersonId" />
+    <property name="Name" />
+    <property name="PaymentTerms" />
+    <property name="DeliveryTerms" />
+    <property name="Shipping" />
+    <property name="Active" />
+    <property name="Status" />
+    <property name="DataAreaId" />
+    <property name="CreatedDate" />
+    <property name="ModifiedDate" />
+    <bag name="ShoppingCartItem">
+      <!-- specify relationship to the new entity -->
+      <key column="CartId" />
+      <one-to-many class="ShoppingCartItem" />
+    </bag>    
+  </class>
+</hibernate-mapping>

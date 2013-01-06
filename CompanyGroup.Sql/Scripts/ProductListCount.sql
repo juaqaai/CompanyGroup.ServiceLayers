@@ -1,12 +1,17 @@
 USE [WebDb_Test]
 GO
+
+/****** Object:  StoredProcedure [InternetUser].[ProductListCount]    Script Date: 2013.01.06. 20:25:27 ******/
+DROP PROCEDURE [InternetUser].[ProductListCount]
+GO
+
+/****** Object:  StoredProcedure [InternetUser].[ProductListCount]    Script Date: 2013.01.06. 20:25:27 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
--- cikkek lista
-DROP PROCEDURE [InternetUser].[ProductListCount];
-GO
+
 CREATE PROCEDURE [InternetUser].[ProductListCount] (@DataAreaId nvarchar(4) = 'hrp',
 												   @StructureXml nvarchar (4000) = '',	       
 												   @Discount bit = 0,      
@@ -86,3 +91,6 @@ EXEC InternetUser.[ProductListCount]  @StructureXml = '
 </Structure>'
 
 */
+GO
+
+

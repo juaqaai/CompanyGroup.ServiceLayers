@@ -14,7 +14,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// lapozható terméklista lekérdezése
         /// </summary>
         /// <param name="dataAreaId"></param>
-        /// <param name="structureXml"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
         /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
@@ -29,7 +32,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="count"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.Products GetList(string dataAreaId,
-                                                                  string structureXml,
+                                                                  string manufacturers,
+                                                                  string category1,
+                                                                  string category2,
+                                                                  string category3,
                                                                   bool discountFilter,
                                                                   bool secondHandFilter,
                                                                   bool isInNewsletterFilter,
@@ -53,7 +59,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 count = Session.GetNamedQuery("InternetUser.ProductListCount")
                                                .SetString("DataAreaId", dataAreaId)
-                                               .SetString("StructureXml", structureXml)
+                                                .SetString("Manufacturers", manufacturers)
+                                                .SetString("Category1", category1)
+                                                .SetString("Category2", category2)
+                                                .SetString("Category3", category3)
                                                .SetBoolean("Discount", discountFilter)
                                                .SetBoolean("SecondHand", secondHandFilter)
                                                .SetBoolean("New", newFilter)
@@ -64,7 +73,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueSelect")
                                                 .SetString("DataAreaId", dataAreaId)
-                                                .SetString("StructureXml", structureXml)
+                                                .SetString("Manufacturers", manufacturers)
+                                                .SetString("Category1", category1)
+                                                .SetString("Category2", category2)
+                                                .SetString("Category3", category3)
                                                 .SetBoolean("Discount", discountFilter)
                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                 .SetBoolean("New", newFilter)
@@ -97,20 +109,25 @@ namespace CompanyGroup.Data.WebshopModule
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="dataAreaId"></param>
-        /// <param name="structureXml"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
         /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
         /// <param name="newFilter"></param>
         /// <param name="stockFilter"></param>
-        /// <param name="sequence"></param>
         /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.CompletionList GetComplationList(string prefix, 
-                                                                                  string dataAreaId, 
-                                                                                  string structureXml,
+                                                                                  string dataAreaId,
+                                                                                  string manufacturers,
+                                                                                  string category1,
+                                                                                  string category2,
+                                                                                  string category3,
                                                                                   bool discountFilter,
                                                                                   bool secondHandFilter,
                                                                                   bool isInNewsletterFilter,
@@ -129,7 +146,10 @@ namespace CompanyGroup.Data.WebshopModule
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueCompletionSelect")
                                                                 .SetString("Prefix", prefix)
                                                                 .SetString("DataAreaId", dataAreaId)
-                                                                .SetString("StructureXml", structureXml)
+                                                                .SetString("Manufacturers", manufacturers)
+                                                                .SetString("Category1", category1)
+                                                                .SetString("Category2", category2)
+                                                                .SetString("Category3", category3)
                                                                 .SetBoolean("Discount", discountFilter)
                                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                                 .SetBoolean("New", newFilter)
@@ -158,9 +178,16 @@ namespace CompanyGroup.Data.WebshopModule
         /// termék banner lista lekérdezése
         /// </summary>
         /// <param name="dataAreaId"></param>
-        /// <param name="structureXml"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.BannerProducts GetBannerList(string dataAreaId, string structureXml)
+        public CompanyGroup.Domain.WebshopModule.BannerProducts GetBannerList(string dataAreaId, 
+                                                                              string manufacturers,
+                                                                              string category1,
+                                                                              string category2,
+                                                                              string category3)
         {
             try
             {
@@ -168,7 +195,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueBannerSelect")
                                                                 .SetString("DataAreaId", dataAreaId)
-                                                                .SetString("StructureXml", structureXml)
+                                                                .SetString("Manufacturers", manufacturers)
+                                                                .SetString("Category1", category1)
+                                                                .SetString("Category2", category2)
+                                                                .SetString("Category3", category3)
                                                                 .SetResultTransformer(
                                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.BannerProduct).GetConstructors()[0]));
 
@@ -190,7 +220,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// árlista lekérdezés
         /// </summary>
         /// <param name="dataAreaId"></param>
-        /// <param name="structureXml"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
         /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
@@ -202,7 +235,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="sequence"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.PriceList GetPriceList(string dataAreaId,
-                                                                        string structureXml,
+                                                                        string manufacturers,
+                                                                        string category1,
+                                                                        string category2,
+                                                                        string category3,
                                                                         bool discountFilter,
                                                                         bool secondHandFilter,
                                                                         bool isInNewsletterFilter,
@@ -219,7 +255,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.PricelistSelect")
                                                 .SetString("DataAreaId", dataAreaId)
-                                                .SetString("StructureXml", structureXml)
+                                                .SetString("Manufacturers", manufacturers)
+                                                .SetString("Category1", category1)
+                                                .SetString("Category2", category2)
+                                                .SetString("Category3", category3)
                                                 .SetBoolean("Discount", discountFilter)
                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                 .SetBoolean("New", newFilter)

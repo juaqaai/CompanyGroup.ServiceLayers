@@ -162,7 +162,6 @@
     <Compile Include="PartnerModule\ProfileAggregates\History.cs" />
     <Compile Include="PartnerModule\ProfileAggregates\Profile.cs" />
     <Compile Include="PartnerModule\ProfileAggregates\RequestParameter.cs" />
-    <Compile Include="WebshopModule\ProductAggregates\StructureXml.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\CartStatus.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\CartItemStatus.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\DeliveryTerms.cs" />
@@ -200,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="WebshopModule\ShoppingCartAggregates\ShoppingCartSelect.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ShoppingCartAggregates\ShoppingCart.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ShoppingCartAggregates\ShoppingCartItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\SecondHand.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\PictureItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\ProductListCount.hbm.xml" />

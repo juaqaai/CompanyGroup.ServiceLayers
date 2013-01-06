@@ -17,9 +17,13 @@ namespace CompanyGroup.Data.WebshopModule
         public StructureRepository(NHibernate.ISession session) : base(session) { }
 
         /// <summary>
-        /// termékstruktúra lekérdezés
+        /// termékstruktúra lekérdezés 
         /// </summary>
         /// <param name="dataAreaId"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
         /// <param name="discountFilter"></param>
         /// <param name="secondHandFilter"></param>
         /// <param name="isInNewsletterFilter"></param>
@@ -30,7 +34,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.Structures GetList(string dataAreaId,
-                                                                    string structureXml, 
+                                                                    string manufacturers,
+                                                                    string category1,
+                                                                    string category2,
+                                                                    string category3,
                                                                     bool discountFilter,
                                                                     bool secondHandFilter,
                                                                     bool isInNewsletterFilter,  
@@ -45,7 +52,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.StructureSelect")
                                                 .SetString("DataAreaId", dataAreaId)
-                                                .SetString("StructureXml", structureXml)
+                                                .SetString("Manufacturers", manufacturers)
+                                                .SetString("Category1", category1)
+                                                .SetString("Category2", category2)
+                                                .SetString("Category3", category3)
                                                 .SetBoolean("Discount", discountFilter)
                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                 .SetBoolean("New", newFilter)

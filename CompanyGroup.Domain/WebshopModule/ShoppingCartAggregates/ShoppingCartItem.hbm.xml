@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="ShoppingCartItem" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="CartId" />
+    <property name="ProductId" />
+    <property name="ProductName" />
+    <property name="ProductNameEnglish" />
+    <property name="PartNumber" />
+    <property name="ConfigId" />
+    <property name="CustomerPrice" />
+    <property name="ItemState" />
+    <property name="Quantity" />
+    <property name="DataAreaId" />
+    <property name="Status" />
+    <property name="CreatedDate" />
+    <property name="ModifiedDate" />
+  </class>
+</hibernate-mapping>

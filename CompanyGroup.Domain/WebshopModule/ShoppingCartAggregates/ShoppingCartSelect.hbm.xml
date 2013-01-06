@@ -28,3 +28,11 @@
     exec InternetUser.StructureSelect @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation
   </sql-query>
 </hibernate-mapping>
+
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="ShoppingCartSelect">
+    <return alias="U" class="User"></return>  <!-- alias is from the one used in the select query -->
+    <return-join alias="A" property="U.Attributes"></return-join>  <!-- alias is from the one used in the select query -->
+    exec spGetRelatedUsers :UserName, :NumberOfRecords
+  </sql-query>
+</hibernate-mapping>

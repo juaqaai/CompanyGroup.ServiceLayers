@@ -2,7 +2,10 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <sql-query name="InternetUser.CatalogueBannerSelect" callable="true">
     <query-param name="DataAreaId" type="System.String"/>
-    <query-param name="StructureXml" type="System.String"/>  
+    <query-param name="Manufacturers" type="System.String"/>
+    <query-param name="Category1" type="System.String"/>
+    <query-param name="Category2" type="System.String"/>
+    <query-param name="Category3" type="System.String"/> 
     <return-scalar column="Id" type="System.Int32"/>
     <return-scalar column="ProductId" type="System.String"/>
     <return-scalar column="PartNumber" type="System.String"/>
@@ -32,6 +35,6 @@
     <return-scalar column="FileName" type="System.String"/>
     <return-scalar column="Primary" type="System.Boolean"/>
     <return-scalar column="RecId" type="System.Int64"/>
-    exec InternetUser.CatalogueBannerSelect @DataAreaId=:DataAreaId, @StructureXml=:StructureXml
+    exec InternetUser.CatalogueBannerSelect @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3
   </sql-query>
 </hibernate-mapping>

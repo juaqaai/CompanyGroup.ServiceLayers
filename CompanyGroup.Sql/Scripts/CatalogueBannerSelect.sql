@@ -8,36 +8,58 @@ GO
 DROP PROCEDURE [InternetUser].[CatalogueBannerSelect];
 GO
 CREATE PROCEDURE [InternetUser].[CatalogueBannerSelect] (@DataAreaId nvarchar(4) = 'hrp',
-														 @StructureXml nvarchar (4000) = '' 
+												   @Manufacturers nvarchar (250) = '',
+												   @Category1 nvarchar (250) = '',
+												   @Category2 nvarchar (250) = '',
+												   @Category3 nvarchar (250) = ''
 )
 AS
 SET NOCOUNT ON
 
-	DECLARE @Xml Xml = CONVERT(Xml, @StructureXml);
-
 	SET ROWCOUNT 50;
 
-	WITH Manufacturers_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Manufacturer.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Manufacturer/Id') as Manufacturer(Id)
-	),
-	Category1_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Category1.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Category1/Id') as Category1(Id)
-	),
-	Category2_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Category2.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Category2/Id') as Category2(Id)
-	),
-	Category3_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Category3.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Category3/Id') as Category3(Id)
-	)
+	DECLARE @Separator varchar(1) = ',';
 
+	WITH Manufacturers_CTE (Mi, Mj)
+	AS (
+		SELECT CONVERT(INT, 0), CHARINDEX( @Separator, @Manufacturers)
+		UNION ALL
+		SELECT CONVERT(INT, Mj) + 1, CHARINDEX(@Separator, @Manufacturers, CONVERT(INT, Mj) + 1)
+		FROM Manufacturers_CTE
+		WHERE Mj > 0
+		--SELECT CONVERT(nvarchar(4), Manufacturer.Id.query('./text()'))
+		--FROM @Xml.nodes('/Structure/Manufacturer/Id') as Manufacturer(Id)
+	),
+	Category1_CTE(C1i, C1j)
+	AS(
+		--SELECT CONVERT(nvarchar(4), Category1.Id.query('./text()'))
+		--FROM @Xml.nodes('/Structure/Category1/Id') as Category1(Id)
+		SELECT CONVERT(INT, 0), CHARINDEX( @Separator, @Category1)
+		UNION ALL
+		SELECT CONVERT(INT, C1j) + 1, CHARINDEX(@Separator, @Category1, CONVERT(INT, C1j) + 1)
+		FROM Category1_CTE
+		WHERE C1j > 0
+	),
+	Category2_CTE(C2i, C2j)
+	AS(
+		--SELECT CONVERT(nvarchar(4), Category2.Id.query('./text()'))
+		--FROM @Xml.nodes('/Structure/Category2/Id') as Category2(Id)
+		SELECT CONVERT(INT, 0), CHARINDEX( @Separator, @Category2)
+		UNION ALL
+		SELECT CONVERT(INT, C2j) + 1, CHARINDEX(@Separator, @Category2, CONVERT(INT, C2j) + 1)
+		FROM Category2_CTE
+		WHERE C2j > 0
+	),
+	Category3_CTE(C3i, C3j)
+	AS(
+		--SELECT CONVERT(nvarchar(4), Category3.Id.query('./text()'))
+		--FROM @Xml.nodes('/Structure/Category3/Id') as Category3(Id)
+		SELECT CONVERT(INT, 0), CHARINDEX( @Separator, @Category3)
+		UNION ALL
+		SELECT CONVERT(INT, C3j) + 1, CHARINDEX(@Separator, @Category3, CONVERT(INT, C3j) + 1)
+		FROM Category3_CTE
+		WHERE C3j > 0
+	)
 	SELECT Catalogue.Id, Catalogue.ProductId, PartNumber, DataAreaId, Name,	EnglishName, 
 		   ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 		   Category1Id, Category1Name, Category1EnglishName, 
@@ -48,10 +70,10 @@ SET NOCOUNT ON
 		   PictureId, Picture.[FileName], Picture.[Primary], Picture.RecId
 	FROM InternetUser.Catalogue as Catalogue
 	INNER JOIN InternetUser.Picture as Picture ON Picture.Id = Catalogue.PictureId
-	WHERE 1 = CASE WHEN (EXISTS (SELECT * FROM Manufacturers_CTE WHERE Catalogue.ManufacturerId IN (Manufacturers_CTE.Id))) OR ((SELECT COUNT(*) FROM Manufacturers_CTE) = 0) THEN 1 ELSE 0 END AND
-		1 = CASE WHEN (EXISTS (SELECT * FROM Category1_CTE WHERE Catalogue.Category1Id IN (Category1_CTE.Id))) OR ((SELECT COUNT(*) FROM Category1_CTE) = 0) THEN 1 ELSE 0 END AND
-		1 = CASE WHEN (EXISTS (SELECT * FROM Category2_CTE WHERE Catalogue.Category2Id IN (Category2_CTE.Id))) OR ((SELECT COUNT(*) FROM Category2_CTE) = 0) THEN 1 ELSE 0 END AND
-		1 = CASE WHEN (EXISTS (SELECT * FROM Category3_CTE WHERE Catalogue.Category3Id IN (Category3_CTE.Id))) OR ((SELECT COUNT(*) FROM Category3_CTE) = 0) THEN 1 ELSE 0 END AND 
+	WHERE (Catalogue.ManufacturerId IN (SELECT SUBSTRING(@Manufacturers, Mi, COALESCE(NULLIF(Mj, 0), LEN(@Manufacturers) + 1) - Mi) FROM Manufacturers_CTE) OR (@Manufacturers = '')) AND
+		  (Catalogue.Category1Id IN (SELECT SUBSTRING(@Category1, C1i, COALESCE(NULLIF(C1j, 0), LEN(@Category1) + 1) - C1i) FROM Category1_CTE) OR (@Category1 = '')) AND
+	      (Catalogue.Category2Id IN (SELECT SUBSTRING(@Category2, C2i, COALESCE(NULLIF(C2j, 0), LEN(@Category2) + 1) - C2i) FROM Category2_CTE) OR (@Category2 = '')) AND
+		  (Catalogue.Category3Id IN (SELECT SUBSTRING(@Category3, C3i, COALESCE(NULLIF(C3j, 0), LEN(@Category3) + 1) - C3i) FROM Category3_CTE) OR (@Category3 = '')) AND
 		Catalogue.Valid = 1 AND
 		1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
 		DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 

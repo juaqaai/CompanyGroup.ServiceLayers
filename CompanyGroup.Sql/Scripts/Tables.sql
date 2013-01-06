@@ -15,20 +15,22 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Shop
 GO
 CREATE TABLE InternetUser.ShoppingCart
 (
-	Id						BIGINT IDENTITY PRIMARY KEY,				-- egyedi azonosito
-	VisitorId				BIGINT,										-- login azonosito
-	Name					NVARCHAR(32) NOT NULL DEFAULT '',			-- kosar neve
-	PaymentTerms			INT NOT NULL DEFAULT 0,						-- fizetesi opciok
-	DeliveryTerms			INT NOT NULL DEFAULT 0,						-- szallitasi opciok
-	DeliveryDateRequested	DATETIME NOT NULL DEFAULT GETDATE(), 
+	Id						INT IDENTITY PRIMARY KEY,						-- egyedi azonosito
+	VisitorId				NVARCHAR(64) NOT NULL DEFAULT '',				-- login azonosito, CompanyId, PersonId
+	Name					NVARCHAR(32) NOT NULL DEFAULT '',				-- kosar neve
+	PaymentTerms			INT NOT NULL DEFAULT 0,							-- fizetesi opciok: KP, ÁTUT, Elõre ut., Utánvét (Cash = 1, Transfer = 2, ForwardTransfer = 3, CashOnDelivery = 4)
+	DeliveryTerms			INT NOT NULL DEFAULT 0,							-- szallitasi opciok: szállítás, vagy raktárból (Delivery = 1, Warehouse = 2)
+	DeliveryDateRequested	DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), -- szállítási dátum, ha 1900.01.01, akkor nem állítottak be kiszállítási dátumot
 	DeliveryZipCode			NVARCHAR(4) NOT NULL DEFAULT '',
 	DeliveryCity			NVARCHAR(32) NOT NULL DEFAULT '',
 	DeliveryCountry			NVARCHAR(32) NOT NULL DEFAULT '',
 	DeliveryStreet			NVARCHAR(64) NOT NULL DEFAULT '',
 	DeliveryAddrRecId		BIGINT NOT NULL DEFAULT '',
-	InvoiceAttached			BIT NOT NULL DEFAULT 0,
-	CreatedDate				DATETIME NOT NULL DEFAULT GETDATE(),		-- datum, ido
-	[Status]				INT NOT NULL DEFAULT 1
+	InvoiceAttached			BIT NOT NULL DEFAULT 0,							-- lett-e számla csatolva
+	Active					BIT NOT NULL DEFAULT 0,							-- aktív-e a kosár (egyszerre csak egy kosár lehet aktív)
+	Currency				NVARCHAR(10) NOT NULL DEFAULT '',				-- rendelés feladáshoz tartozó pénznem
+	CreatedDate				DATETIME NOT NULL DEFAULT GETDATE(),			-- datum, ido
+	[Status]				INT NOT NULL DEFAULT 1							-- kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
 )
 GO
 
@@ -39,12 +41,29 @@ GO
 CREATE TABLE InternetUser.ShoppingCartLine
 (
 	Id				INT IDENTITY  PRIMARY KEY,					-- egyedi azonosito
-	CartId			BIGINT,										-- kosar fej azonosito
-	ProductId		NVARCHAR(20) NOT NULL DEFAULT '',			-- termek azonosito
+	CartId			INT NOT NULL DEFAULT 0,						-- kosar fej azonosito
+	ProductId		NVARCHAR(20) NOT NULL DEFAULT '',			-- termek azonosito	(ProductName, ProductNameEnglish, PartNumber, ConfigId, CustomerPrice, ItemState - cikk státusza (aktív, passzív, kifutó), )
 	Quantity		INT NOT NULL DEFAULT 1,						-- mennyiseg
-	DataAreaId		NVARCHAR(3) NOT NULL DEFAULT '',			-- hrp; bsc; srv
+	DataAreaId		NVARCHAR(3) NOT NULL DEFAULT '',			-- hrp; bsc; ahonnan a termék származik
+	[Status]		INT  NOT NULL DEFAULT 0, 					-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
 	CreatedDate		DATETIME NOT NULL DEFAULT GETDATE(),		-- datum, ido
-	Valid			BIT NOT NULL DEFAULT 1						-- ervenyesseg
+)
+GO
+
+-- Finance ajánlatkérés
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.FinanceOffer') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.FinanceOffer;
+GO
+CREATE TABLE InternetUser.FinanceOffer
+(
+	Id				INT IDENTITY  PRIMARY KEY,					-- egyedi azonosito
+	CartId			INT NOT NULL DEFAULT 0,						-- kosar fej azonosito
+    PersonName		NVARCHAR(100) NOT NULL DEFAULT '',			-- bérbevevõ név
+    [Address]		NVARCHAR(100) NOT NULL DEFAULT '',			-- bérbevevõ cím
+    Phone			NVARCHAR(50) NOT NULL DEFAULT '',			-- bérbevevõ telefon
+    StatNumber		NVARCHAR(50) NOT NULL DEFAULT '',			-- bérbevevõ cégjegyzékszám
+    NumOfMonth		Int NOT NULL DEFAULT 0,						-- futamidõ
+	CreatedDate		DATETIME NOT NULL DEFAULT GETDATE(),		-- datum, ido
 )
 GO
 
@@ -57,8 +76,7 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Visi
 GO
 CREATE TABLE InternetUser.Visitor
 (
-	Id							BIGINT IDENTITY PRIMARY KEY,					-- egyedi azonosito
-	ObjectId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+	Id							UNIQUEIDENTIFIER PRIMARY KEY,					-- egyedi GUID azonosito
 	LoginIP						NVARCHAR (32) NOT NULL DEFAULT '' ,				-- ip cim
 	RecId						BIGINT NOT NULL DEFAULT 0 ,						-- WebShopUserInfo.RecId bigint mezo (idegen kulcs)
 	CustomerId					NVARCHAR(32) NOT NULL DEFAULT '', 

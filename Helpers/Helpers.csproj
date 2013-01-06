@@ -34,6 +34,7 @@
     <Reference Include="Microsoft.Dynamics.BusinessConnectorNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\binaries\Microsoft.Dynamics.BusinessConnectorNet.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

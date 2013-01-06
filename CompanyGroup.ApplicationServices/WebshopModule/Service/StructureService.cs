@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using CompanyGroup.Helpers;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
@@ -46,8 +47,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             request.Category2IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
-
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new CompanyGroup.Domain.WebshopModule.StructureXml(request.ManufacturerIdList, request.Category1IdList, request.Category2IdList, request.Category3IdList);
 
             string dataAreaId = String.Empty;
 
@@ -99,8 +98,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
             if (structures == null)
             {
-                structures = structureRepository.GetList(dataAreaId, structureXml.SerializeToXml(), request.ActionFilter, request.BargainFilter, request.IsInNewsletterFilter,
-                                                         request.NewFilter, request.StockFilter, request.TextFilter, request.PriceFilter, priceFilterRelation);
+                structures = structureRepository.GetList(dataAreaId, 
+                                                         ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category3IdList), 
+                                                         request.ActionFilter, 
+                                                         request.BargainFilter, 
+                                                         request.IsInNewsletterFilter,
+                                                         request.NewFilter, 
+                                                         request.StockFilter, 
+                                                         request.TextFilter, 
+                                                         request.PriceFilter, 
+                                                         priceFilterRelation);
 
                 //cache-be mentés
                 if (StructureService.StructureCacheEnabled)

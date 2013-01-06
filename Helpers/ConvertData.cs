@@ -120,5 +120,43 @@ namespace CompanyGroup.Helpers
             return ConvertIntToString(iParam, String.Empty);
         }
 
+        /// <summary>
+        /// string listát szeparált sztring listába konvertál
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static string ConvertStringListToDelimitedString(System.Collections.Generic.List<string> list)
+        {
+            return ConvertStringListToDelimitedString(list, ",");
+        }
+
+        /// <summary>
+        /// string listát szeparált sztring listába konvertál
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static string ConvertStringListToDelimitedString(System.Collections.Generic.List<string> list, string separator)
+        {
+            if (list.Count.Equals(0)) { return String.Empty; }
+
+            System.Text.StringBuilder result = new System.Text.StringBuilder();
+
+            int index = 0;
+
+            list.ForEach(x => {
+
+                result.Append(x);
+
+                index++;
+
+                if (index < list.Count)
+                {
+                    result.Append(separator);
+                }
+            });
+
+            return result.ToString();
+        }
     }
 }
