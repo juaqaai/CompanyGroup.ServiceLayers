@@ -271,11 +271,29 @@
           <AssociatedConnUserName />
           <FullPath>PictureInsert.sql</FullPath>
         </FileNode>
+        <FileNode Name="PictureItemSelect.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>PictureItemSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="PictureSelect.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>PictureSelect.sql</FullPath>
+        </FileNode>
         <FileNode Name="PriceListSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>PriceListSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ProductListCount.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ProductListCount.sql</FullPath>
         </FileNode>
         <FileNode Name="SecondHandCatalogueInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -295,6 +313,12 @@
           <AssociatedConnUserName />
           <FullPath>SecondHandSelect.sql</FullPath>
         </FileNode>
+        <FileNode Name="ShoppingCartSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>ShoppingCartSelect.sql</FullPath>
+        </FileNode>
         <FileNode Name="StructureSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
@@ -302,8 +326,8 @@
           <FullPath>StructureSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="Tables.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Tables.sql</FullPath>
         </FileNode>

@@ -9,7 +9,7 @@ namespace CompanyGroup.Domain.WebshopModule
     /// bevásárló kosár
     /// regisztrált felhasználónként egy lehet aktív, de kosár számosságára tekintve nincs megkötés. (Felső limit 10 db)
     /// </summary>
-    public class ShoppingCart : CompanyGroup.Domain.Core.NoSqlEntity, IValidatableObject
+    public class ShoppingCart : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
 
         /// <summary>
@@ -52,94 +52,101 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.Status = CartStatus.Created;
 
-            this.FinanceOffer = new CompanyGroup.Domain.WebshopModule.FinanceOffer() 
-                                    { 
-                                        Address = String.Empty, 
-                                        NumOfMonth = 0, 
-                                        PersonName = String.Empty, 
-                                        Phone = String.Empty, 
-                                        StatNumber = String.Empty 
-                                    };
+            //this.FinanceOffer = new CompanyGroup.Domain.WebshopModule.FinanceOffer() 
+            //                        { 
+            //                            Address = String.Empty, 
+            //                            NumOfMonth = 0, 
+            //                            PersonName = String.Empty, 
+            //                            Phone = String.Empty, 
+            //                            StatNumber = String.Empty 
+            //                        };
         }
+
+        public ShoppingCart() : this("", "", "", "", false)
+        { 
+            
+        }
+
+        public int Id { get; set; }
 
         /// <summary>
         /// elemek a kosárban
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Items", Order = 1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Items", Order = 1)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public List<ShoppingCartItem> Items { get; set; }
 
         /// <summary>
         /// látogató azonosító, egyedi, bejelentkezéshez kötött
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("VisitorId", Order = 2)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("VisitorId", Order = 2)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string VisitorId { get; set; }
 
         /// <summary>
         /// vevő vállalat azonosítója
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyId", Order = 3)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyId", Order = 3)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string CompanyId { get; set; }
 
         /// <summary>
         /// vevő személy azonosítója
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PersonId", Order = 4)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("PersonId", Order = 4)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string PersonId { get; set; }
 
         /// <summary>
         /// kosár neve
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Name", Order = 5)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Name", Order = 5)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string Name { get; set; }
 
         /// <summary>
         /// KP, ÁTUT, Előre ut., Utánvét (Cash = 1, Transfer = 2, ForwardTransfer = 3, CashOnDelivery = 4)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PaymentTerms", Order = 6)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("PaymentTerms", Order = 6)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public PaymentTerms PaymentTerms { get; set; }
 
         /// <summary>
         /// szállítás, vagy raktárból (Delivery = 1, Warehouse = 2)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("DeliveryTerms", Order = 7)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("DeliveryTerms", Order = 7)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DeliveryTerms DeliveryTerms { get; set; }
 
         /// <summary>
         /// kiszállítási információk (időpont, cím)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Shipping", Order = 8)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Shipping", Order = 8)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Shipping Shipping { get; set; }
 
         /// <summary>
         /// aktív-e a kosár, vagy nem (kollekción belül egy lehet aktív)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Active", Order = 9)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Active", Order = 9)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public bool Active { get; set; }
 
         /// <summary>
         /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 10)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 10)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public CartStatus Status { get; set; }
 
         /// <summary>
         /// finanszírozási ajánlat adatait összefogó osztály
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("FinanceOffer", Order = 11)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public CompanyGroup.Domain.WebshopModule.FinanceOffer FinanceOffer { get; set; }
+        //[MongoDB.Bson.Serialization.Attributes.BsonElement("FinanceOffer", Order = 11)]
+        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        //public CompanyGroup.Domain.WebshopModule.FinanceOffer FinanceOffer { get; set; }
 
         ///// <summary>
         ///// kosár elem hozzáadása
@@ -197,7 +204,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// kosárban lévő elemek összesen értéke 
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public double SumTotal
         {
             get 
@@ -213,7 +220,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// aktív elemek száma a kosárban
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public int ActiveItemCount
         {
             get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count(); }
@@ -222,7 +229,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// üres-e a kosár?
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool IsEmpty
         {
             get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count() == 0; }
@@ -249,6 +256,54 @@ namespace CompanyGroup.Domain.WebshopModule
             }
 
             return this.Items.Exists(x => x.ProductId.Equals(productId));
+        }
+
+        /// <summary>
+        /// entitás tranziens vizsgálat
+        /// </summary>
+        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
+        public override bool IsTransient()
+        {
+            return this.Id == 0;
+        }
+
+
+        /// <summary>
+        /// override-olt egyenlőség vizsgálat
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is ShoppingCartItem))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            ShoppingCartItem item = (ShoppingCartItem)obj;
+
+            if (item.IsTransient() || this.IsTransient())
+            {
+                return false;
+            }
+            else
+            {
+                return item.Id == this.Id;
+            }
+        }
+
+        /// <summary>
+        /// hash code előállítás
+        /// </summary>
+        /// <returns></returns>
+        public override int GetRequestedHashCode()
+        {
+            return this.Id.GetHashCode() ^ 31;
         }
 
         /// <summary>

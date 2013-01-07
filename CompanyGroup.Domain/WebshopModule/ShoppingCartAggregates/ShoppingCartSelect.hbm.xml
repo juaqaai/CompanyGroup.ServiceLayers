@@ -1,38 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.StructureSelect" callable="true">
-    <query-param name="DataAreaId" type="System.String"/>
-    <query-param name="Manufacturers" type="System.String"/>
-    <query-param name="Category1" type="System.String"/>
-    <query-param name="Category2" type="System.String"/>
-    <query-param name="Category3" type="System.String"/>
-    <query-param name="Discount" type="System.Boolean"/>    
-    <query-param name="SecondHand" type="System.Boolean"/>
-    <query-param name="New" type="System.Boolean"/>
-    <query-param name="Stock" type="System.Boolean"/>
-    <query-param name="FindText" type="System.String"/>
-    <query-param name="PriceFilter" type="System.String"/>
-    <query-param name="PriceFilterRelation" type="System.Int32"/>
-    <return-scalar column="ManufacturerId" type="System.String"/>
-    <return-scalar column="ManufacturerName" type="System.String"/>
-    <return-scalar column="ManufacturerEnglishName" type="System.String"/>
-    <return-scalar column="Category1Id" type="System.String"/>
-    <return-scalar column="Category1Name" type="System.String"/>
-    <return-scalar column="Category1EnglishName" type="System.String"/>
-    <return-scalar column="Category2Id" type="System.String"/>
-    <return-scalar column="Category2Name" type="System.String"/>
-    <return-scalar column="Category2EnglishName" type="System.String"/>
-    <return-scalar column="Category3Id" type="System.String"/>
-    <return-scalar column="Category3Name" type="System.String"/>
-    <return-scalar column="Category3EnglishName" type="System.String"/>
-    exec InternetUser.StructureSelect @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.GetCart" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <return class="ShoppingCart"/>
+    exec InternetUser.GetCart @Id=:Id
+  </sql-query>
+  <sql-query name="InternetUser.GetCartCollection" callable="true">
+    <query-param name="VisitorId" type="System.String"/>
+    <return class="ShoppingCart"/>
+    exec InternetUser.GetCartCollection @VisitorId=:VisitorId
   </sql-query>
 </hibernate-mapping>
 
-<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+<!--<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <sql-query name="ShoppingCartSelect">
-    <return alias="U" class="User"></return>  <!-- alias is from the one used in the select query -->
-    <return-join alias="A" property="U.Attributes"></return-join>  <!-- alias is from the one used in the select query -->
+    <return alias="U" class="User"></return>  --><!-- alias is from the one used in the select query --><!--
+    <return-join alias="A" property="U.Attributes"></return-join>  --><!-- alias is from the one used in the select query --><!--
     exec spGetRelatedUsers :UserName, :NumberOfRecords
   </sql-query>
-</hibernate-mapping>
+</hibernate-mapping>-->
