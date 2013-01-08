@@ -188,7 +188,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             if (visitor.IsValidLogin)
             {
 
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 
@@ -670,7 +670,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             if (visitor.IsValidLogin)
             {
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 
@@ -809,7 +809,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             if (visitor.IsValidLogin)
             {
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollectionByVisitor(visitorId);
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollection(visitorId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 

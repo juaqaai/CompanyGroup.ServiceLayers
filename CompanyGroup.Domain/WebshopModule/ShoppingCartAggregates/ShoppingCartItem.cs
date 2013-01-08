@@ -58,6 +58,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
         public int Id { get; set; }
 
+        public int CartId { get; set; }
+
         /// <summary>
         /// termékazonosító
         /// </summary>

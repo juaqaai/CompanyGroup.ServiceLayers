@@ -1,17 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.GetCart" callable="true">
+  <!--<sql-query name="InternetUser.GetCart" callable="true">
     <query-param name="Id" type="System.Int32"/>
-    <return class="ShoppingCart"/>
+    <return class="ShoppingCart"></return>
     exec InternetUser.GetCart @Id=:Id
-  </sql-query>
-  <sql-query name="InternetUser.GetCartCollection" callable="true">
+  </sql-query>-->
+  <!--<sql-query name="InternetUser.GetCartCollection" callable="true">
     <query-param name="VisitorId" type="System.String"/>
-    <return class="ShoppingCart"/>
+    <return class="ShoppingCart"></return>
     exec InternetUser.GetCartCollection @VisitorId=:VisitorId
+  </sql-query>-->
+  <sql-query name="InternetUser.GetShoppingCartItem" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <return class="ShoppingCartItem"></return>
+    SELECT * FROM InternetUser.ShoppingCartLine WHERE Id=:Id
   </sql-query>
 </hibernate-mapping>
-
 <!--<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <sql-query name="ShoppingCartSelect">
     <return alias="U" class="User"></return>  --><!-- alias is from the one used in the select query --><!--

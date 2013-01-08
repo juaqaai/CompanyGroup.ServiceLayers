@@ -79,7 +79,7 @@ namespace CompanyGroup.Data.Test
 
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartRepository target = new ShoppingCartRepository(settings); 
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
 
             ShoppingCart shoppingCart = new ShoppingCart("4f666a456ee01212480d7eb6", "", "", "", false); 
 
@@ -109,7 +109,7 @@ namespace CompanyGroup.Data.Test
 
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartRepository target = new ShoppingCartRepository(settings);
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
             Product product = productRepository.GetItem("AMVS238H", "hrp");
 
@@ -117,11 +117,7 @@ namespace CompanyGroup.Data.Test
 
             shoppingCartItem.SetProduct(product);
 
-            MongoDB.Bson.ObjectId objectId;
-
-            MongoDB.Bson.ObjectId.TryParse("4f7629136ee01212fca04f2c", out objectId);
-
-            shoppingCartItem.Id = objectId;
+            shoppingCartItem.Id = 1;
 
             target.AddLine(shoppingCartItem);
         }
@@ -132,15 +128,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void GetItemByKeyTest()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartRepository target = new ShoppingCartRepository(settings);
-            string id = "4f7629136ee01212fca04f2c"; 
-
-            ShoppingCart cart = target.GetCartByKey(id);
+            ShoppingCart cart = target.GetCart(1);
 
             Assert.IsNotNull(cart);
         }
@@ -156,11 +146,11 @@ namespace CompanyGroup.Data.Test
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
 
-            ShoppingCartRepository target = new ShoppingCartRepository(settings);
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
             string visitorId = "4f666a456ee01212480d7eb6";
 
-            List<ShoppingCart> carts = target.GetCartCollectionByVisitor(visitorId);
+            List<ShoppingCart> carts = target.GetCartCollection(visitorId);
 
             Assert.IsFalse(carts.Count == 0);
         }
@@ -169,12 +159,25 @@ namespace CompanyGroup.Data.Test
         ///A test for Remove
         ///</summary>
         [TestMethod()]
+        public void GetShoppingCartItemTest()
+        {
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+
+            ShoppingCartItem shoppingCartItem = repository.GetShoppingCartItem();
+
+            Assert.IsNotNull(shoppingCartItem);
+        }
+
+        /// <summary>
+        ///A test for Remove
+        ///</summary>
+        [TestMethod()]
         public void RemoveTest()
         {
-            ISettings settings = null; // TODO: Initialize to an appropriate value
-            ShoppingCartRepository target = new ShoppingCartRepository(settings); // TODO: Initialize to an appropriate value
-            MongoDB.Bson.ObjectId id = MongoDB.Bson.ObjectId.Empty; // TODO: Initialize to an appropriate value
-            target.Remove(id);
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); // TODO: Initialize to an appropriate value
+
+            target.Remove(1);
+
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
@@ -184,11 +187,10 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void RemoveLineTest()
         {
-            ISettings settings = null; // TODO: Initialize to an appropriate value
-            ShoppingCartRepository target = new ShoppingCartRepository(settings); // TODO: Initialize to an appropriate value
-            MongoDB.Bson.ObjectId cartId = MongoDB.Bson.ObjectId.Empty; // TODO: Initialize to an appropriate value
-            string productId = string.Empty; // TODO: Initialize to an appropriate value
-            target.RemoveLine(cartId, productId);
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); // TODO: Initialize to an appropriate value
+
+            target.RemoveLine(1);
+
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
@@ -198,20 +200,12 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void UpdateItemQuantityTest()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
 
-            ShoppingCartRepository target = new ShoppingCartRepository(settings);
-
-            string cartId = "4f7629136ee01212fca04f2c";
-
-            string productId = "AMVS238H"; 
+            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
             int quantity = 4; 
 
-            target.UpdateLineQuantity(cartId, productId, quantity);
+            target.UpdateLineQuantity(1, quantity);
         }
     }
 }

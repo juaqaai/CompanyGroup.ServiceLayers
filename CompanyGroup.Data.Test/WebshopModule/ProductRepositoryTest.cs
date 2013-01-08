@@ -66,11 +66,9 @@ namespace CompanyGroup.Data.Test
 
             long count = 0;
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>(), new List<string>() { "B004" }, new List<string>(), new List<string>());
+            string categories = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "B004" });
 
-            string xml = structureXml.SerializeToXml();
-
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", xml, false, false, false, false, false, 0, "", "", 1, 1, 30, ref count);
+            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, ref count);
 
             Assert.IsTrue(products.Count > 0);
 
@@ -92,11 +90,7 @@ namespace CompanyGroup.Data.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>(), new List<string>(), new List<string>(), new List<string>());
-
-            string xml = structureXml.SerializeToXml();
-
-            CompanyGroup.Domain.WebshopModule.BannerProducts products = repository.GetBannerList("hrp", xml);
+            CompanyGroup.Domain.WebshopModule.BannerProducts products = repository.GetBannerList("hrp", "", "", "", "");
 
             Assert.IsNotNull(products);
         }

@@ -16,7 +16,6 @@
     <property name="DataAreaId" />
     <property name="CreatedDate" />
     <property name="ModifiedDate" />
-    
     <component name="Shipping" class="Shipping">
       <property name="DateRequested" />
       <property name="ZipCode" />
@@ -26,7 +25,6 @@
       <property name="AddrRecId" />
       <property name="InvoiceAttached" />
     </component>
-    
     <bag name="ShoppingCartItem">
       <!-- specify relationship to the new entity -->
       <key column="CartId" />

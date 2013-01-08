@@ -77,6 +77,15 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
+        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartItem()
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartItem").SetInt32("Id", 0);
+
+            CompanyGroup.Domain.WebshopModule.ShoppingCartItem result = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
+
+            return result;
+        }
+
         /// <summary>
         /// kosár hozzáadása kollekcióhoz
         /// </summary>
@@ -85,9 +94,9 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                collection.Insert(shoppingCart);
+                //collection.Insert(shoppingCart);
 
                 return;
             }
@@ -107,13 +116,13 @@ namespace CompanyGroup.Data.WebshopModule
             CompanyGroup.Domain.Utils.Check.Require(!id.Equals(MongoDB.Bson.ObjectId.Empty), "The id parameter cannot be null!");
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", id);
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", id);
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Deleted).Set("Active", false);
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Deleted).Set("Active", false);
 
-                collection.Update(query, update);
+                //collection.Update(query, update);
 
                 return;
             }
@@ -131,21 +140,21 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(cartId));
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(cartId));
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.WaitingForAutoPost))
-                    .Set("PaymentTerms", MongoDB.Bson.BsonInt32.Create(paymentTerms))
-                    .Set("DeliveryTerms", MongoDB.Bson.BsonInt32.Create(deliveryTerms))
-                    .Set("Shipping.AddrRecId", MongoDB.Bson.BsonInt64.Create(shipping.AddrRecId))
-                    .Set("Shipping.City", MongoDB.Bson.BsonString.Create(shipping.City))
-                    .Set("Shipping.DateRequested", MongoDB.Bson.BsonDateTime.Create(shipping.DateRequested))
-                    .Set("Shipping.InvoiceAttached", MongoDB.Bson.BsonBoolean.Create(shipping.InvoiceAttached))
-                    .Set("Shipping.Street", MongoDB.Bson.BsonString.Create(shipping.Street))
-                    .Set("Shipping.ZipCode", MongoDB.Bson.BsonString.Create(shipping.ZipCode));
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.WaitingForAutoPost))
+                //    .Set("PaymentTerms", MongoDB.Bson.BsonInt32.Create(paymentTerms))
+                //    .Set("DeliveryTerms", MongoDB.Bson.BsonInt32.Create(deliveryTerms))
+                //    .Set("Shipping.AddrRecId", MongoDB.Bson.BsonInt64.Create(shipping.AddrRecId))
+                //    .Set("Shipping.City", MongoDB.Bson.BsonString.Create(shipping.City))
+                //    .Set("Shipping.DateRequested", MongoDB.Bson.BsonDateTime.Create(shipping.DateRequested))
+                //    .Set("Shipping.InvoiceAttached", MongoDB.Bson.BsonBoolean.Create(shipping.InvoiceAttached))
+                //    .Set("Shipping.Street", MongoDB.Bson.BsonString.Create(shipping.Street))
+                //    .Set("Shipping.ZipCode", MongoDB.Bson.BsonString.Create(shipping.ZipCode));
 
-                collection.Update(query, update);
+                //collection.Update(query, update);
 
                 return;
             }
@@ -160,30 +169,30 @@ namespace CompanyGroup.Data.WebshopModule
         /// </summary>
         /// <param name="cartId"></param>
         /// <param name="financeOffer"></param>
-        public void PostFinanceOffer(string cartId, CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer)
-        {
-            try
-            {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+        //public void PostFinanceOffer(int id, CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer)
+        //{
+        //    try
+        //    {
+        //        MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(cartId));
+        //        IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(cartId));
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.FinanceOfferPosted))
-                    .Set("FinanceOffer.Address", MongoDB.Bson.BsonString.Create(financeOffer.Address))
-                    .Set("FinanceOffer.NumOfMonth", MongoDB.Bson.BsonInt32.Create(financeOffer.NumOfMonth))
-                    .Set("FinanceOffer.PersonName", MongoDB.Bson.BsonString.Create(financeOffer.PersonName))
-                    .Set("FinanceOffer.Phone", MongoDB.Bson.BsonString.Create(financeOffer.Phone))
-                    .Set("FinanceOffer.StatNumber", MongoDB.Bson.BsonString.Create(financeOffer.StatNumber));
+        //        IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.FinanceOfferPosted))
+        //            .Set("FinanceOffer.Address", MongoDB.Bson.BsonString.Create(financeOffer.Address))
+        //            .Set("FinanceOffer.NumOfMonth", MongoDB.Bson.BsonInt32.Create(financeOffer.NumOfMonth))
+        //            .Set("FinanceOffer.PersonName", MongoDB.Bson.BsonString.Create(financeOffer.PersonName))
+        //            .Set("FinanceOffer.Phone", MongoDB.Bson.BsonString.Create(financeOffer.Phone))
+        //            .Set("FinanceOffer.StatNumber", MongoDB.Bson.BsonString.Create(financeOffer.StatNumber));
 
-                collection.Update(query, update);
+        //        collection.Update(query, update);
 
-                return;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
+        //        return;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw (ex);
+        //    }
+        //}
 
         /// <summary>
         /// kosár letárolása későbbi felhasználásra
@@ -195,13 +204,13 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Stored).Set("Name", name);
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Stored).Set("Name", name);
 
-                collection.Update(query, update);
+                //collection.Update(query, update);
 
                 return;
             }
@@ -221,13 +230,13 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Active", active);
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Active", active);
 
-                collection.Update(query, update);
+                //collection.Update(query, update);
             }
             catch (Exception ex)
             {
@@ -245,12 +254,13 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
-                                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
+                //                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
 
-                return collection.Count(query) > 0;
+                //return collection.Count(query) > 0;
+                return false;
             }
             catch (Exception ex)
             {
@@ -267,14 +277,14 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+            //    MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
-                                                                      MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.Stored)));
+            //    IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
+            //                                                          MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.Stored)));
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("VisitorId", visitorId);
+            //    IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("VisitorId", visitorId);
 
-                collection.Update(query, update);
+            //    collection.Update(query, update);
             }
             catch (Exception ex)
             {
@@ -308,15 +318,14 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
-                                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
+                //                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Quantity", quantity);
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Quantity", quantity);
 
-                //MongoCursor<CompanyGroup.Domain.WebshopModule.ShoppingCart> cart = 
-                collection.Update(query, update);
+                //collection.Update(query, update);
 
                 //collection.Update(MongoDB.Driver.Builders.Query.EQ("Id", product.Id), MongoDB.Driver.Builders.Update.Pull("Pictures", MongoDB.Driver.Builders.Query.EQ("FileName", MongoDB.Bson.BsonValue.Create(picture.FileName))));
             }
@@ -335,11 +344,11 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", item.Id);
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", item.Id);
 
-                collection.Update(query, MongoDB.Driver.Builders.Update.PushWrapped("Items", item));
+                //collection.Update(query, MongoDB.Driver.Builders.Update.PushWrapped("Items", item));
             }
             catch (Exception ex)
             {
@@ -355,14 +364,14 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
-                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
+                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
+                //                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
 
-                IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Status", CartItemStatus.Deleted);
+                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Status", CartItemStatus.Deleted);
 
-                collection.Update(query, update);
+                //collection.Update(query, update);
             }
             catch (Exception ex)
             {

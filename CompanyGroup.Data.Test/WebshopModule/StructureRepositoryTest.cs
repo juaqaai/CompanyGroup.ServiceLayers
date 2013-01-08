@@ -65,11 +65,9 @@ namespace CompanyGroup.Data.Test
         {
             CompanyGroup.Domain.WebshopModule.IStructureRepository repository = new CompanyGroup.Data.WebshopModule.StructureRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.WebshopModule.StructureXml structureXml = new Domain.WebshopModule.StructureXml(new List<string>() { "A169" }, new List<string>(), new List<string>(), new List<string>());
+            string manufacturers = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "A169" });
 
-            string xml = structureXml.SerializeToXml();
-
-            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", xml, false, false, false, false, false, "", "", 0);
+            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", manufacturers, "", "", "", false, false, false, false, false, "", "", 0);
 
             Assert.IsTrue(structures.Count > 0);            
         }

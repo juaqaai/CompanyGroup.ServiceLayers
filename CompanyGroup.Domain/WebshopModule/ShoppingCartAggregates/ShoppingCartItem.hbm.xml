@@ -17,5 +17,5 @@
     <property name="Status" />
     <property name="CreatedDate" />
     <property name="ModifiedDate" />
-  </class>
+  </class> 
 </hibernate-mapping>

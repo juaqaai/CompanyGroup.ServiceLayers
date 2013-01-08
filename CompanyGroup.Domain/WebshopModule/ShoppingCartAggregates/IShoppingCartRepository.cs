@@ -56,33 +56,11 @@ namespace CompanyGroup.Domain.WebshopModule
         void Store(int id, string name);
 
         /// <summary>
-        /// kosár mentése
-        /// </summary>
-        /// <param name="id"></param> 
-        /// <param name="name"></param>
-        void Store(int id, string name);
-
-        /// <summary>
         /// kosár aktív / inaktív beállítása
         /// </summary>
         /// <param name="id"></param>
         /// <param name="active"></param>
         void SetActive(int id, bool active);
-
-        /// <summary>
-        /// kosár aktív / inaktív beállítása
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="active"></param>
-        void SetActive(int id, bool active);
-
-        /// <summary>
-        /// létezik-e az adott termék a kosárban?
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        bool ExistsProductInCart(int id, string productId);
 
         /// <summary>
         /// létezik-e az adott termék a kosárban?
@@ -100,27 +78,11 @@ namespace CompanyGroup.Domain.WebshopModule
         void AssociateCart(int id, string visitorId);
 
         /// <summary>
-        /// visitorId hozzárendelése a kosárhoz 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="visitorId"></param>
-        void AssociateCart(int id, string visitorId);
-
-        /// <summary>
         /// kosár elem mennyiség módosítása
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="productId"></param>
         /// <param name="quantity"></param>
-        void UpdateLineQuantity(int id, string productId, int quantity);
-
-        /// <summary>
-        /// kosár elem mennyiség módosítása
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="productId"></param>
-        /// <param name="quantity"></param>
-        void UpdateLineQuantity(int id, string productId, int quantity);
+        void UpdateLineQuantity(int id, int quantity);
 
         /// <summary>
         /// kosár elem hozzáadás
@@ -132,20 +94,12 @@ namespace CompanyGroup.Domain.WebshopModule
         ///  kosár elem eltávolítás
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="productId"></param>
-        void RemoveLine(int id, string productId);
-
-        /// <summary>
-        ///  kosár elem eltávolítás
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="productId"></param>
-        void RemoveLine(int id, string productId);
+        void RemoveLine(int id);
 
         /// <summary>
         /// finanszírozási ajánlat elküldés
         /// </summary>
         /// <param name="id"></param>
-        void PostFinanceOffer(int id, CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer);
+        //void PostFinanceOffer(int id, CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer);
     }
 }
