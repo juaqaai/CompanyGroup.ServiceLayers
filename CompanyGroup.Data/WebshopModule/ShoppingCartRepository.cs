@@ -77,9 +77,9 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
-        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartItem()
+        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartItem(int id)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartItem").SetInt32("Id", 0);
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartItem").SetInt32("Id", id);
 
             CompanyGroup.Domain.WebshopModule.ShoppingCartItem result = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
 

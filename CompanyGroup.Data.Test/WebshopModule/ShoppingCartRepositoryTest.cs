@@ -163,7 +163,7 @@ namespace CompanyGroup.Data.Test
         {
             ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartItem shoppingCartItem = repository.GetShoppingCartItem();
+            ShoppingCartItem shoppingCartItem = repository.GetShoppingCartItem(1);
 
             Assert.IsNotNull(shoppingCartItem);
         }

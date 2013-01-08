@@ -134,6 +134,7 @@ CREATE TABLE InternetUser.Representative
 GO
 
 -- termekkatalogus tabla
+/*
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Catalogue') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Catalogue;
 GO
@@ -184,7 +185,7 @@ CREATE TABLE InternetUser.Catalogue
 	Valid					bit not null default 1
 )
 GO
-
+*/
 -- termekkatalogus log tabla
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CatalogueRequestLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.CatalogueRequestLog;

@@ -13,7 +13,7 @@
   <sql-query name="InternetUser.GetShoppingCartItem" callable="true">
     <query-param name="Id" type="System.Int32"/>
     <return class="ShoppingCartItem"></return>
-    SELECT * FROM InternetUser.ShoppingCartLine WHERE Id=:Id
+    SELECT Id, CartId, ProductId, ProductName, ProductNameEnglish, PartNumber, ConfigId, CustomerPrice, ItemState, Quantity, DataAreaId, Status, CreatedDate, ModifiedDate FROM InternetUser.ShoppingCartLine WHERE Id=:Id
   </sql-query>
 </hibernate-mapping>
 <!--<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
