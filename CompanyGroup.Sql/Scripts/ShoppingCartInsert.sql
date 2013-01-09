@@ -19,16 +19,20 @@ CREATE PROCEDURE [InternetUser].[ShoppingCartInsert](@VisitorId	NVARCHAR(64) = '
 													 @DeliveryAddrRecId	BIGINT = 0,
 													 @InvoiceAttached BIT = 0,				-- lett-e számla csatolva
 													 @Active BIT = 0,						-- aktív-e a kosár (egyszerre csak egy kosár lehet aktív)
-													 @Currency NVARCHAR(10) = '',			-- rendelés feladáshoz tartozó pénznem 
-													 @CartId INT = -1 OUT)			
+													 @Currency NVARCHAR(10) = ''			-- rendelés feladáshoz tartozó pénznem 
+													 )			
 AS
 SET NOCOUNT ON
+	DECLARE @CartId INT = -1;
+
 	INSERT INTO InternetUser.ShoppingCart (VisitorId, Name, PaymentTerms, 
 										   DeliveryTerms, DeliveryDateRequested, DeliveryZipCode, DeliveryCity, DeliveryCountry, DeliveryStreet, DeliveryAddrRecId, 
 										   InvoiceAttached, Active, Currency, CreatedDate, Status) VALUES (@VisitorId, @Name, @PaymentTerms, 
 										   @DeliveryTerms, @DeliveryDateRequested, @DeliveryZipCode, @DeliveryCity, @DeliveryCountry, @DeliveryStreet, @DeliveryAddrRecId, 
 										   @InvoiceAttached, @Active, @Currency, GetDate(), 1);
 	SET @CartId = @@IDENTITY;
+
+	SELECT @CartId as CartId;
 
 RETURN
 
@@ -60,14 +64,17 @@ CREATE PROCEDURE [InternetUser].[ShoppingCartLineInsert]( @CartId INT = 0,						
 														  @Quantity INT = 1,					-- mennyiseg
 														  @Price INT = 1,						-- ár
 														  @DataAreaId NVARCHAR(3) = '',			-- hrp; bsc; ahonnan a termék származik
-														  @Status INT = 0, 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
-														  @LineId INT = -1 OUT)			
+														  @Status INT = 0 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
+														  )			
 AS
 SET NOCOUNT ON
-	DECLARE @CreatedDate DateTime = GetDate();
+	DECLARE @CreatedDate DateTime = GetDate(), @LineId INT = -1 ;
+
 	INSERT INTO InternetUser.ShoppingCartLine (CartId, ProductId, Quantity, Price, DataAreaId, Status, CreatedDate) VALUES 
 											  (@CartId, @ProductId, @Quantity, @Price, @DataAreaId, @Status, @CreatedDate);
 	SET @LineId = @@IDENTITY;
+
+	SELECT @LineId as LineId;
 
 RETURN
 /*

@@ -43,7 +43,6 @@ SET NOCOUNT ON
 		Line.CreatedDate, 
 		Catalogue.InnerStock as [Inner], 
 		Catalogue.OuterStock as [Outer]
-
 	FROM InternetUser.ShoppingCart as Cart
 	INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
 	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId

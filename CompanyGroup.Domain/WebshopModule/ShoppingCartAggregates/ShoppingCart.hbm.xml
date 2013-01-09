@@ -24,15 +24,60 @@
     <property name="Status" />
     <property name="CreatedDate" />
     <bag name="Items">
-      <!-- specify relationship to the new entity -->
       <key column="Id" />
       <one-to-many class="ShoppingCartItem" />
     </bag>    
   </class>
   <sql-query name="InternetUser.GetShoppingCart">
     <query-param name="CartId" type="System.Int32"/>
-    <return alias="Cart" class="ShoppingCart"></return>  <!-- the type that will be mapped onto -->
+    <return alias="Cart" class="ShoppingCart"></return>  
     <return-join alias="Line" property="Cart.Items"></return-join>
-    exec InternetUser.GetShoppingCart :CartId <!-- stored proc name and its parameters -->
+    exec InternetUser.GetShoppingCart :CartId 
   </sql-query>
+  <sql-query name="InternetUser.GetShoppingCartCollection">
+    <query-param name="VisitorId" type="System.String"/>
+    <return alias="Cart" class="ShoppingCart"></return>
+    <return-join alias="Line" property="Cart.Items"></return-join>
+    exec InternetUser.GetShoppingCartCollection @VisitorId=:VisitorId
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartInsert">
+    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="Name" type="System.String"/>
+    <query-param name="PaymentTerms" type="System.Int32"/>
+    <query-param name="DeliveryTerms" type="System.Int32"/>
+    <query-param name="DeliveryDateRequested" type="System.DateTime"/>
+    <query-param name="DeliveryZipCode" type="System.String"/>
+    <query-param name="DeliveryCity" type="System.String"/>
+    <query-param name="DeliveryCountry" type="System.String"/>
+    <query-param name="DeliveryStreet" type="System.String"/>
+    <query-param name="DeliveryAddrRecId" type="System.Int64"/>
+    <query-param name="InvoiceAttached" type="System.Boolean"/>
+    <query-param name="Active" type="System.Boolean"/>
+    <query-param name="Currency" type="System.String"/>
+    <return-scalar column="CartId" type="System.Int32"/>
+    exec InternetUser.ShoppingCartInsert @VisitorId=:VisitorId, @Name=:Name, @PaymentTerms=:PaymentTerms, @DeliveryTerms=:DeliveryTerms, @DeliveryDateRequested=:DeliveryDateRequested, @DeliveryZipCode=:DeliveryZipCode, @DeliveryCity=:DeliveryCity, @DeliveryCountry=:DeliveryCountry, @DeliveryStreet=:DeliveryStreet, @DeliveryAddrRecId=:DeliveryAddrRecId, @InvoiceAttached=:InvoiceAttached, @Active=:Active, @Currency=:Currency
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartUpdate">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="Name" type="System.String"/>
+    <query-param name="PaymentTerms" type="System.Int32"/>
+    <query-param name="DeliveryTerms" type="System.Int32"/>
+    <query-param name="DeliveryDateRequested" type="System.DateTime"/>
+    <query-param name="DeliveryZipCode" type="System.String"/>
+    <query-param name="DeliveryCity" type="System.String"/>
+    <query-param name="DeliveryCountry" type="System.String"/>
+    <query-param name="DeliveryStreet" type="System.String"/>
+    <query-param name="DeliveryAddrRecId" type="System.Int64"/>
+    <query-param name="InvoiceAttached" type="System.Boolean"/>
+    <query-param name="Active" type="System.Boolean"/>
+    <query-param name="Currency" type="System.String"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartUpdate @CartId=:CartId, @Name=:Name, @PaymentTerms=:PaymentTerms, @DeliveryTerms=:DeliveryTerms, @DeliveryDateRequested=:DeliveryDateRequested, @DeliveryZipCode=:DeliveryZipCode, @DeliveryCity=:DeliveryCity, @DeliveryCountry=:DeliveryCountry, @DeliveryStreet=:DeliveryStreet, @DeliveryAddrRecId=:DeliveryAddrRecId, @InvoiceAttached=:InvoiceAttached, @Active=:Active, @Currency=:Currency
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartSetStatus">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartSetStatus @CartId=:CartId, @Status=:Status
+  </sql-query>    
 </hibernate-mapping>

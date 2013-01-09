@@ -23,7 +23,30 @@
   </class>
   <sql-query name="InternetUser.GetShoppingCartLine">
     <query-param name="LineId" type="System.Int32"/>
-    <return class="ShoppingCartItem"></return>  <!-- the type that will be mapped onto -->
-    exec InternetUser.GetShoppingCartLine :LineId <!-- stored proc name and its parameters -->
+    <return class="ShoppingCartItem"></return>  
+    exec InternetUser.GetShoppingCartLine :LineId 
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartLineInsert">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="Quantity" type="System.Int32"/>
+    <query-param name="Price" type="System.Int32"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="CartId" type="System.Int32"/>
+    exec InternetUser.ShoppingCartLineInsert @CartId=:CartId, @ProductId=:ProductId, @Quantity=:Quantity, @Price=:Price, @DataAreaId=:DataAreaId, @Status=:Status
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartLineUpdate">
+    <query-param name="LineId" type="System.Int32"/>
+    <query-param name="Quantity" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartLineUpdate @LineId=:LineId, @Quantity=:Quantity, @Status=:Status
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartSetLineStatus">
+    <query-param name="LineId" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartSetLineStatus @LineId=:LineId, @Status=:Status
   </sql-query>  
 </hibernate-mapping>
