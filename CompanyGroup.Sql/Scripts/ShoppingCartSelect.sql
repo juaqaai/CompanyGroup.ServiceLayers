@@ -54,9 +54,9 @@ RETURN
 GO
 -- EXEC [InternetUser].[GetShoppingCart] 1;
 
-DROP PROCEDURE [InternetUser].[GetCartCollection];
+DROP PROCEDURE [InternetUser].[GetShoppingCartCollection];
 GO
-CREATE PROCEDURE [InternetUser].[GetCartCollection] (@VisitorId NVARCHAR(20) = '') 
+CREATE PROCEDURE [InternetUser].[GetShoppingCartCollection] (@VisitorId NVARCHAR(20) = '') 
 AS
 SET NOCOUNT ON
 	SELECT Cart.Id, 
@@ -99,7 +99,7 @@ SET NOCOUNT ON
 
 RETURN
 GO
--- EXEC [InternetUser].[GetCartCollection] 'teszt';
+-- EXEC [InternetUser].[GetShoppingCartCollection] 'teszt';
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
 GO
