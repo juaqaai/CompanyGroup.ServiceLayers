@@ -5,78 +5,127 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- kosár elem 
-DROP PROCEDURE [InternetUser].[GetCart];
+DROP PROCEDURE [InternetUser].[GetShoppingCart];
 GO
-CREATE PROCEDURE [InternetUser].[GetCart] (@Id INT = 0) 
+CREATE PROCEDURE [InternetUser].[GetShoppingCart] (@CartId INT = 0) 
 AS
 SET NOCOUNT ON
-SELECT 
+	SELECT Cart.Id, 
+		Cart.VisitorId,
+		'' as CompanyId,
+		'' as PersonId,
+		Cart.Name, 
+		Cart.PaymentTerms,
+		Cart.DeliveryTerms,
+		Cart.DeliveryDateRequested as DateRequested,
+		Cart.DeliveryZipCode as ZipCode,
+		Cart.DeliveryCity as City,
+		Cart.DeliveryCountry as Country,
+		Cart.DeliveryStreet as Street, 
+		Cart.DeliveryAddrRecId as AddrRecId,
+		Cart.InvoiceAttached,
+		Cart.Active, 
+		Cart.Currency,
+		Cart.[Status],
+		Cart.CreatedDate,
+		Line.Id as LineId, 
+		Line.ProductId, 
+		Line.CartId,
+		Catalogue.Name as ProductName,
+		Catalogue.EnglishName as ProductNameEnglish,
+		Catalogue.PartNumber,
+		Catalogue.StandardConfigId as ConfigId,
+		Line.Price as CustomerPrice,
+		Catalogue.ItemState,
+		Line.DataAreaId,
+		Line.Quantity,
+		Line.Status, 
+		Line.CreatedDate, 
+		Catalogue.InnerStock as [Inner], 
+		Catalogue.OuterStock as [Outer]
 
-      Cart.DeliveryDateRequested as DateRequested,
-      Cart.DeliveryZipCode as ZipCode,
-      Cart.DeliveryCity as City,
-      Cart.DeliveryCountry as Country,
-      Cart.DeliveryStreet as Street, 
-      Cart.DeliveryAddrRecId as AddrRecId,
-      Cart.InvoiceAttached as InvoiceAttached,
-
-    Line.CartId,
-    Line.ProductId,
-    Catalogue.Name,
-    Catalogue.EnglishName,
-    Catalogue.PartNumber,
-    Catalogue.StandardConfigId,
-    Line.Price,
-    Catalogue.ItemState,
-    Line.Quantity,
-    Line.DataAreaId,
-    Line.Status,
-    Line.CreatedDate
-FROM InternetUser.ShoppingCart as Cart
-INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
-INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
-WHERE Cart.Status IN (1, 2) AND 
-	  Line.Status IN (1, 2) AND 
-	  Cart.Id = @Id;
-
+	FROM InternetUser.ShoppingCart as Cart
+	INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
+	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	WHERE Cart.Status IN (1, 2) AND 
+		  Line.Status IN (1, 2) AND 
+		  Cart.Id = @CartId;
 RETURN
-
--- EXEC [InternetUser].[GetCart] 1;
+GO
+-- EXEC [InternetUser].[GetShoppingCart] 1;
 
 DROP PROCEDURE [InternetUser].[GetCartCollection];
 GO
 CREATE PROCEDURE [InternetUser].[GetCartCollection] (@VisitorId NVARCHAR(20) = '') 
 AS
 SET NOCOUNT ON
-SELECT 
-
-      Cart.DeliveryDateRequested as DateRequested,
-      Cart.DeliveryZipCode as ZipCode,
-      Cart.DeliveryCity as City,
-      Cart.DeliveryCountry as Country,
-      Cart.DeliveryStreet as Street, 
-      Cart.DeliveryAddrRecId as AddrRecId,
-      Cart.InvoiceAttached as InvoiceAttached,
-
-    Line.CartId,
-    Line.ProductId,
-    Catalogue.Name,
-    Catalogue.EnglishName,
-    Catalogue.PartNumber,
-    Catalogue.StandardConfigId,
-    Line.Price,
-    Catalogue.ItemState,
-    Line.Quantity,
-    Line.DataAreaId,
-    Line.Status,
-    Line.CreatedDate
-FROM InternetUser.ShoppingCart as Cart
-INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
-INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
-WHERE Cart.Status IN (1, 2) AND 
-	  Line.Status IN (1, 2) AND 
-	  Cart.VisitorId = @VisitorId;
+	SELECT Cart.Id, 
+		Cart.VisitorId,
+		'' as CompanyId,
+		'' as PersonId,
+		Cart.Name, 
+		Cart.PaymentTerms,
+		Cart.DeliveryDateRequested as DateRequested,
+		Cart.DeliveryZipCode as ZipCode,
+		Cart.DeliveryCity as City,
+		Cart.DeliveryCountry as Country,
+		Cart.DeliveryStreet as Street, 
+		Cart.DeliveryAddrRecId as AddrRecId,
+		Cart.InvoiceAttached,
+		Cart.Active, 
+		Cart.Currency,
+		Cart.[Status],
+		Line.Id as LineId,
+		Line.CartId, 
+		Line.ProductId,
+		Catalogue.Name as ProductName,
+		Catalogue.EnglishName as ProductNameEnglish,
+		Catalogue.PartNumber,
+		Catalogue.StandardConfigId as ConfigId,
+		Line.Price as CustomerPrice,
+		Catalogue.ItemState,
+		Line.DataAreaId,
+		Line.Quantity,
+		Line.Status, 
+		Line.CreatedDate, 
+		Catalogue.InnerStock as [Inner], 
+		Catalogue.OuterStock as [Outer]
+	FROM InternetUser.ShoppingCart as Cart
+	INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
+	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	WHERE Cart.Status IN (1, 2) AND 
+		  Line.Status IN (1, 2) AND 
+		  Cart.VisitorId = @VisitorId;
 
 RETURN
+GO
+-- EXEC [InternetUser].[GetCartCollection] 'teszt';
 
--- EXEC [InternetUser].[GetCartCollection] '';
+DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
+GO
+CREATE PROCEDURE [InternetUser].[GetShoppingCartLine] (@LineId INT = 0) 
+AS
+SET NOCOUNT ON
+	SELECT Line.Id as LineId,
+		Line.CartId,
+		Line.ProductId,
+		Catalogue.Name as ProductName,
+		Catalogue.EnglishName as ProductNameEnglish,
+		Catalogue.PartNumber,
+		Catalogue.StandardConfigId as ConfigId,
+		Line.Price as CustomerPrice,
+		Catalogue.ItemState,
+		Line.DataAreaId,
+		Line.Quantity,
+		Line.Status, 
+		Line.CreatedDate, 
+		Catalogue.InnerStock as [Inner], 
+		Catalogue.OuterStock as [Outer]
+	FROM InternetUser.ShoppingCartLine as Line
+	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	WHERE Line.Status IN (1, 2) AND 
+		  Line.Id = @LineId;
+RETURN
+GO
+
+-- EXEC [InternetUser].[GetShoppingCartLine] 1

@@ -10,7 +10,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.ShoppingCart GetCart(int id);
+        CompanyGroup.Domain.WebshopModule.ShoppingCart GetShoppingCart(int cartId);
 
         /// <summary>
         /// kosár hozzáadása kollekcióhoz

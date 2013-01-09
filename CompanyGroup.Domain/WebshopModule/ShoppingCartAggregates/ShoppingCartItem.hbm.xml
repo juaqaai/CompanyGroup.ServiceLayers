@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
   <class name="ShoppingCartItem" lazy="false">
-    <id name="Id">
+    <id name="LineId">
       <generator class="identity" />
     </id>
     <property name="CartId" />
@@ -12,10 +12,18 @@
     <property name="ConfigId" />
     <property name="CustomerPrice" />
     <property name="ItemState" />
+    <property name="DataAreaId" />    
     <property name="Quantity" />
-    <property name="DataAreaId" />
     <property name="Status" />
     <property name="CreatedDate" />
-    <property name="ModifiedDate" />
-  </class> 
+    <component name="Stock" class="Stock">
+      <property name="Inner" />
+      <property name="Outer" />
+    </component>    
+  </class>
+  <sql-query name="InternetUser.GetShoppingCartLine">
+    <query-param name="LineId" type="System.Int32"/>
+    <return class="ShoppingCartItem"></return>  <!-- the type that will be mapped onto -->
+    exec InternetUser.GetShoppingCartLine :LineId <!-- stored proc name and its parameters -->
+  </sql-query>  
 </hibernate-mapping>

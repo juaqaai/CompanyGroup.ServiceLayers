@@ -28,13 +28,13 @@ namespace CompanyGroup.Data.WebshopModule
         /// </summary>
         /// <param name="cartId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.ShoppingCart GetCart(int id)
+        public CompanyGroup.Domain.WebshopModule.ShoppingCart GetShoppingCart(int cartId)
         {
             try
             {
-                CompanyGroup.Domain.Utils.Check.Require((id > 0), "The cartId parameter must be greather than zero!");
+                CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The cartId parameter must be greather than zero!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetCart").SetInt32("Id", id);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCart").SetInt32("CartId", cartId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCart>();
 
@@ -77,9 +77,9 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
-        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartItem(int id)
+        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartLine(int lineId)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartItem").SetInt32("Id", id);
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartLine").SetInt32("LineId", lineId);
 
             CompanyGroup.Domain.WebshopModule.ShoppingCartItem result = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
 

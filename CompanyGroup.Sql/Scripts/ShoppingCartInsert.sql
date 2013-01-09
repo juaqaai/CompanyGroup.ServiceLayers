@@ -51,7 +51,7 @@ EXEC [InternetUser].[ShoppingCartInsert] 'teszt',
 SELECT @CartId as CartId;
 select * from InternetUser.ShoppingCart;  
 */
-
+GO
 -- kosár fej hozzaadas 
 DROP PROCEDURE [InternetUser].[ShoppingCartLineInsert];
 GO
@@ -73,9 +73,10 @@ RETURN
 /*
 DECLARE @LineId INT;
 
-EXEC [InternetUser].[ShoppingCartLineInsert] 1, 'Product1', 1, 10000, 'hrp', 1, @LineId;
+EXEC [InternetUser].[ShoppingCartLineInsert] 1, 'CR180', 1, 660700, 'hrp', 1, @LineId OUT;
 
 SELECT  @LineId as LineId;
 select * from InternetUser.ShoppingCartLine
 
+select * from InternetUser.Catalogue
 */

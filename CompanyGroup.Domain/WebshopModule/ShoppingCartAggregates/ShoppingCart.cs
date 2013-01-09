@@ -74,7 +74,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("Items", Order = 1)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public List<ShoppingCartItem> Items { get; set; }
+        public IList<ShoppingCartItem> Items { get; set; }
 
         /// <summary>
         /// látogató azonosító, egyedi, bejelentkezéshez kötött
@@ -134,12 +134,16 @@ namespace CompanyGroup.Domain.WebshopModule
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public bool Active { get; set; }
 
+        public string Currency { get; set; }
+
         /// <summary>
         /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 10)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public CartStatus Status { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// finanszírozási ajánlat adatait összefogó osztály
@@ -211,7 +215,7 @@ namespace CompanyGroup.Domain.WebshopModule
             { 
                 double total = 0;
 
-                this.Items.ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.ItemTotal : 0);
+                this.Items.ToList().ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.ItemTotal : 0);
 
                 return total;
             }
@@ -255,7 +259,7 @@ namespace CompanyGroup.Domain.WebshopModule
                 return false;
             }
 
-            return this.Items.Exists(x => x.ProductId.Equals(productId));
+            return this.Items.ToList().Exists(x => x.ProductId.Equals(productId));
         }
 
         /// <summary>
@@ -293,7 +297,7 @@ namespace CompanyGroup.Domain.WebshopModule
             }
             else
             {
-                return item.Id == this.Id;
+                return item.CartId == this.Id;
             }
         }
 

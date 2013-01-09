@@ -117,7 +117,7 @@ namespace CompanyGroup.Data.Test
 
             shoppingCartItem.SetProduct(product);
 
-            shoppingCartItem.Id = 1;
+            shoppingCartItem.CartId = 1;
 
             target.AddLine(shoppingCartItem);
         }
@@ -126,11 +126,11 @@ namespace CompanyGroup.Data.Test
         ///A test for GetItemByKey
         ///</summary>
         [TestMethod()]
-        public void GetItemByKeyTest()
+        public void GetShoppingCartTest()
         {
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCart cart = target.GetCart(1);
+            ShoppingCart cart = repository.GetShoppingCart(1);
 
             Assert.IsNotNull(cart);
         }
@@ -159,11 +159,11 @@ namespace CompanyGroup.Data.Test
         ///A test for Remove
         ///</summary>
         [TestMethod()]
-        public void GetShoppingCartItemTest()
+        public void GetShoppingCartLineTest()
         {
             ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartItem shoppingCartItem = repository.GetShoppingCartItem(1);
+            ShoppingCartItem shoppingCartItem = repository.GetShoppingCartLine(1);
 
             Assert.IsNotNull(shoppingCartItem);
         }

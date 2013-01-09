@@ -33,7 +33,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.CustomerPrice = 0;
 
-            this.Currency = String.Empty;
+            //this.Currency = String.Empty;
 
             //this.Pictures = new Pictures();
 
@@ -53,10 +53,10 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.CreatedDate = DateTime.Now;
 
-            this.ModifiedDate = DateTime.MinValue;
+            //this.ModifiedDate = DateTime.MinValue;
         }
 
-        public int Id { get; set; }
+        public int LineId { get; set; }
 
         public int CartId { get; set; }
 
@@ -120,7 +120,7 @@ namespace CompanyGroup.Domain.WebshopModule
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("Currency", Order = 9)]
         //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public string Currency { get; set; }
+        //public string Currency { get; set; }
 
         ///// <summary>
         ///// azért van, hogy listában lehessen elkérni a képeket
@@ -175,7 +175,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("Stock", Order = 12)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        //public Stock Stock { get; set; }
+        public Stock Stock { get; set; }
 
         /// <summary>
         /// cikk státusza (aktív, passzív, kifutó)
@@ -236,7 +236,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("ModifiedDate", Order = 20)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public DateTime ModifiedDate { get; set; }
+        //public DateTime ModifiedDate { get; set; }
 
         /// <summary>
         /// termék beállítása
@@ -274,7 +274,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.ConfigId = product.StandardConfigId;
 
-            this.Currency = product.Prices.Currency;
+            //this.Currency = product.Prices.Currency;
 
         }
 
@@ -338,7 +338,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
         public override bool IsTransient()
         {
-            return this.Id == 0;
+            return this.LineId == 0;
         }
 
 
@@ -367,7 +367,7 @@ namespace CompanyGroup.Domain.WebshopModule
             }
             else
             {
-                return item.Id == this.Id;
+                return item.LineId == this.LineId;
             }
         }
 
@@ -377,7 +377,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         public override int GetRequestedHashCode()
         {
-            return this.Id.GetHashCode() ^ 31;
+            return this.LineId.GetHashCode() ^ 31;
         }
     }
 }
