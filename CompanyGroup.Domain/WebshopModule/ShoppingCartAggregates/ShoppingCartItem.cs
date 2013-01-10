@@ -112,7 +112,7 @@ namespace CompanyGroup.Domain.WebshopModule
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("CustomerPrice", Order = 8)]
         //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public double CustomerPrice { get; set; }
+        public int CustomerPrice { get; set; }
 
         /// <summary>
         /// ár valutaneme
@@ -252,13 +252,13 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.PartNumber = product.PartNumber;
 
-            this.CustomerPrice = Convert.ToDouble(product.Prices.Price2);
+            this.CustomerPrice = Convert.ToInt32(product.CustomerPrice);
 
             //this.Pictures.AddRange(product.Pictures);
 
             //this.Flags = product.Flags;
 
-            //this.Stock = product.Stock;
+            this.Stock = product.Stock;
 
             this.ItemState = product.ItemState;
 

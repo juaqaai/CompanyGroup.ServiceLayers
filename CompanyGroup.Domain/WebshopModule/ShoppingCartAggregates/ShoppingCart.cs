@@ -20,8 +20,9 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="companyId"></param>
         /// <param name="personId"></param>
         /// <param name="name"></param>
+        /// <param name="currency"></param>
         /// <param name="active"></param>
-        public ShoppingCart(string visitorId, string companyId, string personId, string name, bool active)
+        public ShoppingCart(string visitorId, string companyId, string personId, string name, string currency, bool active)
         {
             this.Items = new List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
 
@@ -37,20 +38,31 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.DeliveryTerms = global::DeliveryTerms.None;
 
+            DateTime dateRequested;
+
+            if (!DateTime.TryParse("1900.01.01", out dateRequested))
+            {
+                dateRequested = DateTime.Now.AddDays(-7d);
+            }
+
             this.Shipping = new CompanyGroup.Domain.WebshopModule.Shipping() 
                                 { 
                                     AddrRecId = 0, 
                                     City = String.Empty, 
-                                    Country = String.Empty, 
-                                    DateRequested = DateTime.MinValue, 
+                                    Country = String.Empty,
+                                    DateRequested = dateRequested, 
                                     InvoiceAttached = false, 
                                     Street = String.Empty, 
                                     ZipCode = String.Empty 
                                 };
 
+            this.Currency = currency;
+
             this.Active = active;
 
             this.Status = CartStatus.Created;
+
+            this.InvoiceAttached = false;
 
             //this.FinanceOffer = new CompanyGroup.Domain.WebshopModule.FinanceOffer() 
             //                        { 
@@ -62,7 +74,7 @@ namespace CompanyGroup.Domain.WebshopModule
             //                        };
         }
 
-        public ShoppingCart() : this("", "", "", "", false)
+        public ShoppingCart() : this("", "", "", "", "", false)
         { 
             
         }
@@ -72,75 +84,55 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// elemek a kosárban
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Items", Order = 1)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public IList<ShoppingCartItem> Items { get; set; }
 
         /// <summary>
         /// látogató azonosító, egyedi, bejelentkezéshez kötött
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("VisitorId", Order = 2)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string VisitorId { get; set; }
 
         /// <summary>
         /// vevő vállalat azonosítója
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyId", Order = 3)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string CompanyId { get; set; }
 
         /// <summary>
         /// vevő személy azonosítója
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("PersonId", Order = 4)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string PersonId { get; set; }
 
         /// <summary>
         /// kosár neve
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Name", Order = 5)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string Name { get; set; }
 
         /// <summary>
         /// KP, ÁTUT, Előre ut., Utánvét (Cash = 1, Transfer = 2, ForwardTransfer = 3, CashOnDelivery = 4)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("PaymentTerms", Order = 6)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public PaymentTerms PaymentTerms { get; set; }
 
         /// <summary>
         /// szállítás, vagy raktárból (Delivery = 1, Warehouse = 2)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("DeliveryTerms", Order = 7)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DeliveryTerms DeliveryTerms { get; set; }
 
         /// <summary>
         /// kiszállítási információk (időpont, cím)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Shipping", Order = 8)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Shipping Shipping { get; set; }
 
         /// <summary>
         /// aktív-e a kosár, vagy nem (kollekción belül egy lehet aktív)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Active", Order = 9)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public bool Active { get; set; }
 
         public string Currency { get; set; }
 
+        public bool InvoiceAttached { get; set; }
+
         /// <summary>
         /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 10)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public CartStatus Status { get; set; }
 
         public DateTime CreatedDate { get; set; }

@@ -68,15 +68,14 @@ GO
 DROP PROCEDURE [InternetUser].[ShoppingCartLineUpdate];
 GO
 CREATE PROCEDURE [InternetUser].[ShoppingCartLineUpdate]( @LineId INT = 0,						-- kosar fej azonosito
-														  @Quantity INT = 1,					-- mennyiseg
-														  @Status INT = 0 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
+														  @Quantity INT = 1					-- mennyiseg
 )			
 AS
 SET NOCOUNT ON
 
 	DECLARE @Ret INT = 0 
 
-	UPDATE InternetUser.ShoppingCartLine SET Quantity = @Quantity, [Status] = @Status
+	UPDATE InternetUser.ShoppingCartLine SET Quantity = @Quantity
 	WHERE Id = @LineId;
 
 	SET @Ret = 1;
@@ -89,3 +88,70 @@ EXEC [InternetUser].[ShoppingCartLineUpdate] 1, 1, 1;
 
 select * from InternetUser.ShoppingCartLine
 */
+GO
+-- kosár "tárolt" flag beállítása
+DROP PROCEDURE [InternetUser].[ShoppingCartStore];
+GO
+CREATE PROCEDURE [InternetUser].[ShoppingCartStore]( @CartId INT = 0,						-- kosar fej azonosito
+													 @Name NVARCHAR(64) = '',				-- mennyiseg
+													 @Status INT = 2 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
+)			
+AS
+SET NOCOUNT ON
+
+	DECLARE @Ret INT = 0 
+
+	UPDATE InternetUser.ShoppingCart SET Name = @Name, [Status] = @Status
+	WHERE Id = @CartId;
+
+	UPDATE InternetUser.ShoppingCartLine SET [Status] = @Status
+	WHERE CartId = @CartId;
+
+	SET @Ret = 1;
+
+	SELECT @Ret as Ret;
+
+RETURN
+
+GO
+-- kosár "aktív" flag beállítása
+DROP PROCEDURE [InternetUser].[ShoppingCartActivate];
+GO
+CREATE PROCEDURE [InternetUser].[ShoppingCartActivate]( @CartId INT = 0,						-- kosar fej azonosito
+														@VisitorId NVARCHAR(64) = ''
+)			
+AS
+SET NOCOUNT ON
+
+	DECLARE @Ret INT = 0 
+
+	UPDATE InternetUser.ShoppingCart SET [Active] = 0 WHERE VisitorId = @VisitorId AND Id <> @CartId AND Status IN (1, 2);
+
+	UPDATE InternetUser.ShoppingCart SET [Active] = 1 WHERE Id = @CartId;
+
+
+	SET @Ret = 1;
+
+	SELECT @Ret as Ret;
+
+RETURN
+
+GO
+-- VisitorId beállítása
+DROP PROCEDURE [InternetUser].[ShoppingCartAssociate];
+GO
+CREATE PROCEDURE [InternetUser].[ShoppingCartAssociate]( @CartId INT = 0,						-- kosar fej azonosito
+														 @VisitorId NVARCHAR(64) = ''
+)			
+AS
+SET NOCOUNT ON
+
+	DECLARE @Ret INT = 0 
+
+	UPDATE InternetUser.ShoppingCart SET @VisitorId = @VisitorId WHERE Id = @CartId;
+
+	SET @Ret = 1;
+
+	SELECT @Ret as Ret;
+
+RETURN
