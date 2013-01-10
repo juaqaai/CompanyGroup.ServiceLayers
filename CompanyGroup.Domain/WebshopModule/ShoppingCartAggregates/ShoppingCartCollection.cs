@@ -63,7 +63,7 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             int index = this.Carts.FindIndex(x => x.Active);
 
-            return (index != -1) ? this.Carts[index] : new ShoppingCart("", "", "", "", false);
+            return (index != -1) ? this.Carts[index] : new ShoppingCart("", "", "", "", "", false);
         }
 
         /// <summary>

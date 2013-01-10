@@ -312,11 +312,12 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="companyId"></param>
         /// <param name="personId"></param>
         /// <param name="name"></param>
+        /// <param name="currency"></param>
         /// <param name="active"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.WebshopModule.ShoppingCart CreateShoppingCart(string visitorId, string companyId, string personId, string name, bool active)
+        public static CompanyGroup.Domain.WebshopModule.ShoppingCart CreateShoppingCart(string visitorId, string companyId, string personId, string name, string currency, bool active)
         {
-            return new CompanyGroup.Domain.WebshopModule.ShoppingCart(visitorId, companyId, personId, name, active);
+            return new CompanyGroup.Domain.WebshopModule.ShoppingCart(visitorId, companyId, personId, name, currency, active);
         }
     }
 }

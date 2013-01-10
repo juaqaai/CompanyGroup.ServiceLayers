@@ -72,28 +72,25 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddTest()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
-
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
+            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
 
-            ShoppingCart shoppingCart = new ShoppingCart("4f666a456ee01212480d7eb6", "", "", "", false); 
+            ShoppingCart shoppingCart = new ShoppingCart("4f666a456ee01212480d7eb6", "teszt2 company", "test2 person", "cart1", "HUF", false); 
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
 
-            Product product = productRepository.GetItem("AWLESSOPTMOUSEB", "hrp");
+            Product product = productRepository.GetItem("JD990A", "hrp");
 
             shoppingCartItem.SetProduct(product);
 
-            shoppingCart.Items.Add(shoppingCartItem);
+            int cartId = shoppingCartRepository.Add(shoppingCart);
 
-            target.Add(shoppingCart);   
+            shoppingCartItem.CartId = cartId;
 
-            Assert.IsTrue(!shoppingCart.IsEmpty, "ShoppingCart cannot be empty!");
+            shoppingCartRepository.AddLine(shoppingCartItem);
+
+            Assert.IsTrue(cartId > 0, "ShoppingCart cannot be empty!");
         }
 
         /// <summary>
@@ -102,14 +99,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddItemTest()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
-
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
 
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
             Product product = productRepository.GetItem("AMVS238H", "hrp");
 
@@ -119,7 +111,7 @@ namespace CompanyGroup.Data.Test
 
             shoppingCartItem.CartId = 1;
 
-            target.AddLine(shoppingCartItem);
+            shoppingCartRepository.AddLine(shoppingCartItem);
         }
 
         /// <summary>
@@ -141,16 +133,11 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void GetItemsByVisitorIdTest()
         {
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "axeps.hrp.hu"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                              CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "ShoppingCart"));
-
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
             string visitorId = "4f666a456ee01212480d7eb6";
 
-            List<ShoppingCart> carts = target.GetCartCollection(visitorId);
+            List<ShoppingCart> carts = repository.GetCartCollection(visitorId);
 
             Assert.IsFalse(carts.Count == 0);
         }
@@ -174,11 +161,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void RemoveTest()
         {
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); // TODO: Initialize to an appropriate value
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
 
-            target.Remove(1);
-
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            repository.Remove(3);
         }
 
         /// <summary>
@@ -187,11 +172,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void RemoveLineTest()
         {
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); // TODO: Initialize to an appropriate value
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
 
-            target.RemoveLine(1);
-
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            repository.RemoveLine(2);
         }
 
         /// <summary>
@@ -201,11 +184,11 @@ namespace CompanyGroup.Data.Test
         public void UpdateItemQuantityTest()
         {
 
-            ShoppingCartRepository target = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
 
-            int quantity = 4; 
+            int quantity = 4;
 
-            target.UpdateLineQuantity(1, quantity);
+            repository.UpdateLineQuantity(2, quantity);
         }
     }
 }

@@ -258,7 +258,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             //this.Flags = product.Flags;
 
-            //this.Stock = product.Stock;
+            this.Stock = product.Stock;
 
             this.ItemState = product.ItemState;
 
