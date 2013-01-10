@@ -21,6 +21,7 @@
     </component>    
     <property name="Active" />
     <property name="Currency" />
+    <property name="InvoiceAttached" />
     <property name="Status" />
     <property name="CreatedDate" />
     <bag name="Items">
@@ -79,5 +80,26 @@
     <query-param name="Status" type="System.Int32"/>
     <return-scalar column="Ret" type="System.Int32"/>
     exec InternetUser.ShoppingCartSetStatus @CartId=:CartId, @Status=:Status
-  </sql-query>    
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartStore">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="Name" type="System.String"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartStore @CartId=:CartId, @Name=:Name, @Status=:Status
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartActivate">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="VisitorId" type="System.String"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartActivate @CartId=:CartId, @VisitorId=:VisitorId
+  </sql-query>
+  <sql-query name="InternetUser.ShoppingCartAssociate">
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="VisitorId" type="System.String"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.ShoppingCartAssociate @CartId=:CartId, @VisitorId=:VisitorId
+  </sql-query>
 </hibernate-mapping>
+
+

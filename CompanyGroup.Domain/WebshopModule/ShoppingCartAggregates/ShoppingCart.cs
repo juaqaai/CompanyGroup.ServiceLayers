@@ -136,6 +136,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
         public string Currency { get; set; }
 
+        public bool InvoiceAttached { get; set; }
+
         /// <summary>
         /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>

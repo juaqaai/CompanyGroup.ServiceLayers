@@ -15,7 +15,7 @@ namespace CompanyGroup.Data.WebshopModule
     public class ShoppingCartRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IShoppingCartRepository
     {
         /// <summary>
-        /// konstruktor mongoDb beállításokkal
+        /// konstruktor
         /// </summary>
         /// <param name="settings"></param>
         public ShoppingCartRepository(NHibernate.ISession session) : base(session) { }
@@ -46,26 +46,22 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
-        public List<CompanyGroup.Domain.WebshopModule.ShoppingCart> GetCartCollection(string visitorId)
-        {
-            return GetCartCollection(visitorId, false);
-        }
-
         /// <summary>
         /// kosár lista kiolvasása visitorId alapján
         /// a tárolt és az új kosár elemek kerülnek az eredményhalmazba
         /// csak a létrehozott, vagy tárolt elemek lesznek a kosár elemek státuszai (Created és a Stored -re szűrés)
+        /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>
         /// <param name="visitorId"></param>
-        /// <param name="onlyStored"></param>
+        /// <param name="onlyCreatedOrStored"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.WebshopModule.ShoppingCart> GetCartCollection(string visitorId, bool onlyStored)
+        public List<CompanyGroup.Domain.WebshopModule.ShoppingCart> GetCartCollection(string visitorId)
         {
             try
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetCartCollection").SetString("VisitorId", visitorId).SetBoolean("OnlyStored", onlyStored);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetCartCollection").SetString("VisitorId", visitorId);
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> resultList = query.List<CompanyGroup.Domain.WebshopModule.ShoppingCart>() as List<CompanyGroup.Domain.WebshopModule.ShoppingCart>;
 
@@ -87,18 +83,30 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
-        /// kosár hozzáadása kollekcióhoz
+        /// kosár hozzáadása kollekcióhoz, új kosárazonosítóval tér vissza
         /// </summary>
-        /// <param name="shoppingCartCollection"></param>
-        public void Add(CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart)
+        /// <param name="shoppingCart"></param>
+        /// <returns></returns>
+        public int Add(CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartInsert").SetString("VisitorId", shoppingCart.VisitorId)
+                                                                                                  .SetString("Name", shoppingCart.Name)
+                                                                                                  .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
+                                                                                                  .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
+                                                                                                  .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
+                                                                                                  .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
+                                                                                                  .SetString("DeliveryCity", shoppingCart.Shipping.City)
+                                                                                                  .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
+                                                                                                  .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
+                                                                                                  .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
+                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.InvoiceAttached)
+                                                                                                  .SetBoolean("Active", shoppingCart.Active)
+                                                                                                  .SetString("Currency", shoppingCart.Currency);
+                int cartId = query.UniqueResult<int>();
 
-                //collection.Insert(shoppingCart);
-
-                return;
+                return cartId;
             }
             catch (Exception ex)
             {
@@ -107,22 +115,19 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
-        /// kosár eltávolítása kollekcióból
-        /// Az "Active" mező értékének "false"-ra állításával
+        /// kosár eltávolítása
+        /// Az "Active" mező értékének "false"-ra állításával, Státusz mező "Deleted"-re állításával
         /// </summary>
-        /// <param name="id"></param>
-        public void Remove(int id)
+        /// <param name="cartId"></param>
+        public void Remove(int cartId)
         {
-            CompanyGroup.Domain.Utils.Check.Require(!id.Equals(MongoDB.Bson.ObjectId.Empty), "The id parameter cannot be null!");
+            CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The id parameter cannot be null!");
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetStatus").SetInt32("CartId", cartId)
+                                                                                                     .SetEnum("Status", CartStatus.Deleted);
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", id);
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Deleted).Set("Active", false);
-
-                //collection.Update(query, update);
+                int ret = query.UniqueResult<int>();
 
                 return;
             }
@@ -136,25 +141,24 @@ namespace CompanyGroup.Data.WebshopModule
         /// kosár feladása, WaitingForAutoPost státusz beállítás történik
         /// </summary>
         /// <param name="cartId"></param>
-        public void Post(int id, PaymentTerms paymentTerms, DeliveryTerms deliveryTerms, CompanyGroup.Domain.WebshopModule.Shipping shipping)
+        public void Post(CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
-
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", this.ConvertStringToBsonObjectId(cartId));
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.WaitingForAutoPost))
-                //    .Set("PaymentTerms", MongoDB.Bson.BsonInt32.Create(paymentTerms))
-                //    .Set("DeliveryTerms", MongoDB.Bson.BsonInt32.Create(deliveryTerms))
-                //    .Set("Shipping.AddrRecId", MongoDB.Bson.BsonInt64.Create(shipping.AddrRecId))
-                //    .Set("Shipping.City", MongoDB.Bson.BsonString.Create(shipping.City))
-                //    .Set("Shipping.DateRequested", MongoDB.Bson.BsonDateTime.Create(shipping.DateRequested))
-                //    .Set("Shipping.InvoiceAttached", MongoDB.Bson.BsonBoolean.Create(shipping.InvoiceAttached))
-                //    .Set("Shipping.Street", MongoDB.Bson.BsonString.Create(shipping.Street))
-                //    .Set("Shipping.ZipCode", MongoDB.Bson.BsonString.Create(shipping.ZipCode));
-
-                //collection.Update(query, update);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("CartId", shoppingCart.Id)
+                                                                                                  .SetString("Name", shoppingCart.Name)
+                                                                                                  .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
+                                                                                                  .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
+                                                                                                  .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
+                                                                                                  .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
+                                                                                                  .SetString("DeliveryCity", shoppingCart.Shipping.City)
+                                                                                                  .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
+                                                                                                  .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
+                                                                                                  .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
+                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.InvoiceAttached)
+                                                                                                  .SetBoolean("Active", shoppingCart.Active)
+                                                                                                  .SetString("Currency", shoppingCart.Currency);
+                int ret = query.UniqueResult<int>();
 
                 return;
             }
@@ -195,22 +199,20 @@ namespace CompanyGroup.Data.WebshopModule
         //}
 
         /// <summary>
-        /// kosár letárolása későbbi felhasználásra
-        /// "Status" mező értékének "Stored"-re állítása, név értékének beállítása
+        /// kosár letárolása 
+        /// "Status" mező értékének "Stored"-re állítása, kosár név értékének beállítása
         /// </summary>
         /// <param name="cartId"></param>
         /// <param name="name"></param>
-        public void Store(int id, string name)
+        public void Store(int cartId, string name)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartStore").SetInt32("CartId", cartId)
+                                                                                                  .SetString("Name", name)
+                                                                                                  .SetEnum("Status", CartStatus.Stored);
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Status", CartStatus.Stored).Set("Name", name);
-
-                //collection.Update(query, update);
+                int ret = query.UniqueResult<int>();
 
                 return;
             }
@@ -221,46 +223,20 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
-        /// kosár aktív / inaktív beállítása
-        /// beállítja az "id" alapján az "Active" mező értékét "false"-ra, vagy "true"-ra.
+        /// kosár aktív beállítása
+        /// beállítja az "CartId" alapján az "Active" mező értékét "true"-ra.
+        /// beállítja az "VisitorId" alapján az "Active" mező értékét "false"-ra.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="active"></param>
-        public void SetActive(int id, bool active)
+        /// <param name="visitorId"></param>
+        public void SetActive(int cartId, string visitorId)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartActivate").SetInt32("CartId", cartId)
+                                                                                                    .SetString("VisitorId", visitorId);
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", cartId);
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Active", active);
-
-                //collection.Update(query, update);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
-
-        /// <summary>
-        /// létezik-e a productId-vel rendelkező termék a cartId azonosítójú kosárban?
-        /// </summary>
-        /// <param name="cartId"></param>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        public bool ExistsProductInCart(int id, string productId) 
-        {
-            try
-            {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
-
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
-                //                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
-
-                //return collection.Count(query) > 0;
-                return false;
+                int ret = query.UniqueResult<int>();
             }
             catch (Exception ex)
             {
@@ -271,20 +247,16 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// új visitorId beállítása a régi helyére
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cartId"></param>
         /// <param name="visitorId"></param>
-        public void AssociateCart(int id, string visitorId)
+        public void AssociateCart(int cartId, string visitorId)
         {
             try
             {
-            //    MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetInt32("CartId", cartId)
+                                                                                                     .SetString("VisitorId", visitorId);
 
-            //    IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", id),
-            //                                                          MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(CartStatus.Stored)));
-
-            //    IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("VisitorId", visitorId);
-
-            //    collection.Update(query, update);
+                int ret = query.UniqueResult<int>();
             }
             catch (Exception ex)
             {
@@ -294,40 +266,19 @@ namespace CompanyGroup.Data.WebshopModule
 
         #region "kosár tételhez kapcsolódó műveletek"
 
-        /*
-        _posts.Collection.Update(
-        Query.EQ("_id", post.PostId),
-        Update.Set("Title", post.Title)
-            .Set("Url", post.Url)
-            .Set("Summary", post.Summary)
-            .Set("Details", post.Details));  
-         * 
-        QueryComplete query = Query.EQ("companies._id", 
-            BsonValue.Create(new Guid("0AE91D6B-A8FA-4D0D-A94A-91D6AC9EE343")));
-        var update = Update.Set("companies.$.companynotes", "companynotes");
-        personCollection.Update(query, update, UpdateFlags.Multi, SafeMode.True);
-         * 
-        var update = MongoDB.Driver.Builders.Update.Set("companies.$.name", "GreenfinNewName");         
-         */
         /// <summary>
         /// kosár elem mennyiség frissítése
         /// </summary>
         /// <param name="id"></param>
         /// <param name="quantity"></param>
-        public void UpdateLineQuantity(int id, int quantity)
+        public void UpdateLineQuantity(int lineId, int quantity)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineUpdate").SetInt32("LineId", lineId)
+                                                                                                      .SetInt32("Quantity", quantity);
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
-                //                                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Quantity", quantity);
-
-                //collection.Update(query, update);
-
-                //collection.Update(MongoDB.Driver.Builders.Query.EQ("Id", product.Id), MongoDB.Driver.Builders.Update.Pull("Pictures", MongoDB.Driver.Builders.Query.EQ("FileName", MongoDB.Bson.BsonValue.Create(picture.FileName))));
+                int ret = query.UniqueResult<int>();
             }
             catch (Exception ex)
             {
@@ -337,18 +288,21 @@ namespace CompanyGroup.Data.WebshopModule
 
         /// <summary>
         /// kosár elem hozzáadás
-        ///     _posts.Collection.Update(Query.EQ("_id", postId), Update.PushWrapped("Comments", comment).Inc("TotalComments", 1))
         /// </summary>
         /// <param name="item"></param>
-        public void AddLine(CompanyGroup.Domain.WebshopModule.ShoppingCartItem item)
+        public int AddLine(CompanyGroup.Domain.WebshopModule.ShoppingCartItem item)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineInsert").SetInt32("CartId", item.CartId)
+                                                                                                      .SetString("ProductId", item.ProductId)
+                                                                                                      .SetInt32("Quantity", item.Quantity)
+                                                                                                      .SetInt32("Price", item.CustomerPrice)
+                                                                                                      .SetString("DataAreaId", item.DataAreaId)
+                                                                                                      .SetEnum("Status", item.Status);
+                int lineId = query.UniqueResult<int>();
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.EQ("_id", item.Id);
-
-                //collection.Update(query, MongoDB.Driver.Builders.Update.PushWrapped("Items", item));
+                return lineId;
             }
             catch (Exception ex)
             {
@@ -359,19 +313,15 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         ///  _posts.Collection.Update(Query.EQ("_id", postId), Update.Pull("Comments", Query.EQ("_id", commentId)).Inc("TotalComments", -1));
         /// </summary>
-        /// <param name="id"></param>
-        public void RemoveLine(int id)
+        /// <param name="lineId"></param>
+        public void RemoveLine(int lineId)
         {
             try
             {
-                //MongoDB.Driver.MongoCollection<CompanyGroup.Domain.WebshopModule.ShoppingCart> collection = this.GetCollection(ShoppingCartRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetLineStatus").SetInt32("LineId", lineId)
+                                                                                                         .SetEnum("Status", CartItemStatus.Deleted);
 
-                //IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", cartId),
-                //                                      MongoDB.Driver.Builders.Query.EQ("Items.ProductId", productId));
-
-                //IMongoUpdate update = MongoDB.Driver.Builders.Update.Set("Items.$.Status", CartItemStatus.Deleted);
-
-                //collection.Update(query, update);
+                int ret = query.UniqueResult<int>();
             }
             catch (Exception ex)
             {
