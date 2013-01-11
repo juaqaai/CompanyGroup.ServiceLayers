@@ -8,40 +8,33 @@ namespace CompanyGroup.Dto.ServiceRequest
     /// </summary>
     public class RemoveLine
     {
-        public RemoveLine() : this(String.Empty, String.Empty, String.Empty, String.Empty, String.Empty) { }
+        public RemoveLine() : this(0, 0, String.Empty, String.Empty) { }
 
-        public RemoveLine(string cartId, string productId, string language, string dataAreaId, string visitorId)
+        public RemoveLine(int cartId, int lineId, string language, string visitorId)
         {
-            CartId = cartId;
+            this.CartId = cartId;
 
-            ProductId = productId;
+            this.LineId = lineId;
 
-            Language = language;
+            this.Language = language;
 
-            DataAreaId = dataAreaId;
-
-            VisitorId = visitorId;
+            this.VisitorId = visitorId;
         }
 
         /// <summary>
-        /// termékazonosító
+        /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
-        /// termékazonosító
+        /// sor azonosító
         /// </summary>
-        public string ProductId { get; set; }
+        public int LineId { get; set; }
 
         /// <summary>
         /// beállított nyelv
         /// </summary>
         public string Language { get; set; }
-
-        /// <summary>
-        /// vállalat
-        /// </summary>
-        public string DataAreaId { get; set; }
 
         /// <summary>
         /// látogató azonosítója

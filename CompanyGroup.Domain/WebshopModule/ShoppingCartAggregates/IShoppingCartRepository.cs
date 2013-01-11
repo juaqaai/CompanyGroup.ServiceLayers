@@ -61,9 +61,9 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// visitorId hozzárendelése a kosárhoz 
         /// </summary>
-        /// <param name="cartId"></param>
+        /// <param name="permanentVisitorId"></param>
         /// <param name="visitorId"></param>
-        void AssociateCart(int cartId, string visitorId);
+        void AssociateCart(string permanentVisitorId, string visitorId);
 
         /// <summary>
         /// kosár elem mennyiség módosítása

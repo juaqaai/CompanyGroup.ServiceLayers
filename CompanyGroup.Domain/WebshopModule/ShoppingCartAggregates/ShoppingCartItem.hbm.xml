@@ -23,8 +23,8 @@
   </class>
   <sql-query name="InternetUser.GetShoppingCartLine">
     <query-param name="LineId" type="System.Int32"/>
-    <return class="ShoppingCartItem"></return>  
-    exec InternetUser.GetShoppingCartLine :LineId 
+    <return class="ShoppingCartItem"></return>
+    exec InternetUser.GetShoppingCartLine @LineId=:LineId
   </sql-query>
   <sql-query name="InternetUser.ShoppingCartLineInsert">
     <query-param name="CartId" type="System.Int32"/>

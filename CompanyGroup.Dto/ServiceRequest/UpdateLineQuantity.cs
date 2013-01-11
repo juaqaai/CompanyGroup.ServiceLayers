@@ -8,14 +8,13 @@ namespace CompanyGroup.Dto.ServiceRequest
     /// </summary>
     public class UpdateLineQuantity
     {
-        public UpdateLineQuantity() : this(String.Empty, String.Empty, String.Empty, String.Empty, 0, String.Empty) { }
+        public UpdateLineQuantity() : this(0, 0, String.Empty, String.Empty, 0, String.Empty) { }
 
-        public UpdateLineQuantity(string cartId, string productId, string language, string dataAreaId, int quantity, string visitorId)
+        public UpdateLineQuantity(int cartId, int lineId, string language, string dataAreaId, int quantity, string visitorId)
         { 
             CartId = cartId;
-            ProductId = productId;
+            LineId = lineId;
             Language = language;
-            DataAreaId = dataAreaId;
             Quantity = quantity;
             VisitorId = visitorId;
         }
@@ -23,22 +22,17 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
-        /// termékazonosító
+        /// sor azonosító
         /// </summary>
-        public string ProductId { get; set; }
+        public int LineId { get; set; }
 
         /// <summary>
         /// beállított nyelv
         /// </summary>
         public string Language { get; set; }
-
-        /// <summary>
-        /// vállalat
-        /// </summary>
-        public string DataAreaId { get; set; }
 
         /// <summary>
         /// mennyiség

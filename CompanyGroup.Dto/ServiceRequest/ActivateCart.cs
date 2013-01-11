@@ -5,9 +5,9 @@ namespace CompanyGroup.Dto.ServiceRequest
 {
     public class ActivateCart
     {
-        public ActivateCart() : this(String.Empty, String.Empty, String.Empty) { }
+        public ActivateCart() : this(0, String.Empty, String.Empty) { }
 
-        public ActivateCart(string cartId, string language, string visitorId)
+        public ActivateCart(int cartId, string language, string visitorId)
         { 
             CartId = cartId;
 
@@ -19,7 +19,7 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// beállított nyelv

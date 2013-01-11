@@ -8,9 +8,9 @@ namespace CompanyGroup.Dto.ServiceRequest
     /// </summary>
     public class RemoveCart
     {
-        public RemoveCart() : this("", "", "") { }
+        public RemoveCart() : this(0, "", "") { }
 
-        public RemoveCart(string cartId, string language, string visitorId)
+        public RemoveCart(int cartId, string language, string visitorId)
         {
             CartId = cartId;
 
@@ -22,7 +22,7 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// választott nyelv

@@ -5,9 +5,9 @@ namespace CompanyGroup.Dto.ServiceRequest
 {
     public class SaveCart
     {
-        public SaveCart() : this( "", "", "", "") { }
+        public SaveCart() : this( "", "", 0, "") { }
 
-        public SaveCart(string language, string visitorId, string cartId, string name)
+        public SaveCart(string language, string visitorId, int cartId, string name)
         {
             this.Language = language;
 
@@ -31,7 +31,7 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// kosár neve

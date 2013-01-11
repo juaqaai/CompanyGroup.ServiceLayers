@@ -140,7 +140,7 @@ GO
 -- VisitorId beállítása
 DROP PROCEDURE [InternetUser].[ShoppingCartAssociate];
 GO
-CREATE PROCEDURE [InternetUser].[ShoppingCartAssociate]( @CartId INT = 0,						-- kosar fej azonosito
+CREATE PROCEDURE [InternetUser].[ShoppingCartAssociate]( @PermanentVisitorId NVARCHAR(64) = '',
 														 @VisitorId NVARCHAR(64) = ''
 )			
 AS
@@ -148,7 +148,7 @@ SET NOCOUNT ON
 
 	DECLARE @Ret INT = 0 
 
-	UPDATE InternetUser.ShoppingCart SET @VisitorId = @VisitorId WHERE Id = @CartId;
+	UPDATE InternetUser.ShoppingCart SET VisitorId = @VisitorId WHERE VisitorId = @PermanentVisitorId;
 
 	SET @Ret = 1;
 

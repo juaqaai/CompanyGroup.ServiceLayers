@@ -8,9 +8,9 @@ namespace CompanyGroup.Dto.ServiceRequest
     /// </summary>
     public class AddLine
     {
-        public AddLine() : this(String.Empty, String.Empty, String.Empty, String.Empty, 0, String.Empty) { }
+        public AddLine() : this(0, String.Empty, String.Empty, String.Empty, 0, String.Empty) { }
 
-        public AddLine(string cartId, string productId, string language, string dataAreaId, int quantity, string visitorId)
+        public AddLine(int cartId, string productId, string language, string dataAreaId, int quantity, string visitorId)
         { 
             CartId = cartId;
             ProductId = productId;
@@ -23,7 +23,7 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// termékazonosító

@@ -249,11 +249,11 @@ namespace CompanyGroup.Data.WebshopModule
         /// </summary>
         /// <param name="cartId"></param>
         /// <param name="visitorId"></param>
-        public void AssociateCart(int cartId, string visitorId)
+        public void AssociateCart(string permanentVisitorId, string visitorId)
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetInt32("CartId", cartId)
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetString("PermanentVisitorId", permanentVisitorId)
                                                                                                      .SetString("VisitorId", visitorId);
 
                 int ret = query.UniqueResult<int>();

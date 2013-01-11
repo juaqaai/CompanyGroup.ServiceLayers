@@ -95,10 +95,10 @@
     exec InternetUser.ShoppingCartActivate @CartId=:CartId, @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.ShoppingCartAssociate">
-    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="PermanentVisitorId" type="System.String"/>
     <query-param name="VisitorId" type="System.String"/>
     <return-scalar column="Ret" type="System.Int32"/>
-    exec InternetUser.ShoppingCartAssociate @CartId=:CartId, @VisitorId=:VisitorId
+    exec InternetUser.ShoppingCartAssociate @PermanentVisitorId=:PermanentVisitorId, @VisitorId=:VisitorId
   </sql-query>
 </hibernate-mapping>
 

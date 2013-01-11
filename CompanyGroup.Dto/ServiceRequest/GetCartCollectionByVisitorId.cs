@@ -5,9 +5,9 @@ namespace CompanyGroup.Dto.ServiceRequest
 {
     public class GetShoppingCartInfo
     {
-        public GetShoppingCartInfo() : this("", "") { }
+        public GetShoppingCartInfo() : this(0, "") { }
 
-        public GetShoppingCartInfo(string cartId, string visitorId)
+        public GetShoppingCartInfo(int cartId, string visitorId)
         {
             this.CartId = cartId;
 
@@ -15,9 +15,9 @@ namespace CompanyGroup.Dto.ServiceRequest
         }
 
         /// <summary>
-        /// választott nyelv
+        /// kosar azonosítója
         /// </summary>
-        public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// látogató azonosítója
