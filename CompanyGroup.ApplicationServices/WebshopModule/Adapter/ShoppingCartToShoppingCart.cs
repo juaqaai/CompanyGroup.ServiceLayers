@@ -15,7 +15,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 return new CompanyGroup.Dto.WebshopModule.ShoppingCart()
                 {
-                    Items = from.Items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x)),
+                    Items = from.Items.ToList().ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency)),
                     SumTotal = from.SumTotal, 
                     Id = from.Id.ToString(), 
                     DeliveryTerms = Convert.ToInt32(from.DeliveryTerms),

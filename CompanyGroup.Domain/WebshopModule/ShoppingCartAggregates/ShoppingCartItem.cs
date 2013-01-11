@@ -33,11 +33,9 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.CustomerPrice = 0;
 
-            //this.Currency = String.Empty;
-
             //this.Pictures = new Pictures();
 
-            //this.Stock = new Stock() { Inner = 0, Outer = 0, Serbian = 0 };
+            this.Stock = new Stock(0, 0);
 
             this.ItemState = ItemState.Active;
 
@@ -56,92 +54,59 @@ namespace CompanyGroup.Domain.WebshopModule
             //this.ModifiedDate = DateTime.MinValue;
         }
 
+        /// <summary>
+        /// sor azonosító
+        /// </summary>
         public int LineId { get; set; }
 
+        /// <summary>
+        /// kosár azonosító
+        /// </summary>
         public int CartId { get; set; }
 
         /// <summary>
         /// termékazonosító
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ProductId", Order = 2)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string ProductId { get; set; }
 
         /// <summary>
         /// terméknév
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ProductName", Order = 3)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string ProductName { get; set; }
 
         /// <summary>
         /// terméknév angolul
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ProductNameEnglish", Order = 4)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string ProductNameEnglish { set; get; }
 
         /// <summary>
         /// cikkszám
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("PartNumber", Order = 5)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string PartNumber { get; set; }
 
         ///// <summary>
         ///// termékstruktúra
         ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Structure", Order = 6)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         //public Structure Structure { set; get; }
 
         /// <summary>
-        /// konfiguráció, ahonnan a termék származik
+        /// konfiguráció, ahonnan a termék származik (ALAP, XX)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ConfigId", Order = 7)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string ConfigId { set; get; }
 
         /// <summary>
-        /// vevő ára
+        /// vevő ára forintban
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("CustomerPrice", Order = 8)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public int CustomerPrice { get; set; }
 
         /// <summary>
         /// ár valutaneme
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Currency", Order = 9)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        //public string Currency { get; set; }
-
-        ///// <summary>
-        ///// azért van, hogy listában lehessen elkérni a képeket
-        ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        //public List<Picture> Pictures
-        //{
-        //    get { return this.PictureArray.ToList(); }
-        //    set { this.PictureArray = value.ToArray(); }
-        //}
-
-        ///// <summary>
-        ///// képek tárolása tömbben
-        ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Pictures", Order = 10)]
-        //public Picture[] PictureArray { get; set; }
+        ///public string Currency { get; set; }
 
         ///// <summary>
         ///// elsődleges kép, kalkulált érték
         ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         //public Picture PrimaryPicture
         //{
         //    get
@@ -166,69 +131,46 @@ namespace CompanyGroup.Domain.WebshopModule
         ///// <summary>
         ///// flag-ek
         ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Flags", Order = 11)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         //public Flags Flags { get; set; }
 
         /// <summary>
-        /// készlet - hrp, bsc, külső, belső, szerbiai
+        /// készlet - hrp, bsc, külső, belső
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Stock", Order = 12)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Stock Stock { get; set; }
 
         /// <summary>
         /// cikk státusza (aktív, passzív, kifutó)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ItemState", Order = 13)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public ItemState ItemState { get; set; }
 
         /// <summary>
         /// szállítás dátuma, ha nincs készleten és van rá beszerzési rendelés
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("ShippingDate", Order = 14)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        //public DateTime ShippingDate { get; set; }
+        ///public DateTime ShippingDate { get; set; }
 
         /// <summary>
-        /// vállalat
+        /// vállalat, ahová a termék tartozik
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("DataAreaId", Order = 15)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string DataAreaId { get; set; }
 
         /// <summary>
         /// garancia ideje és módja
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Garanty", Order = 16)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        //public Garanty Garanty { get; set; }
+        ///public Garanty Garanty { get; set; }
 
         /// <summary>
         /// mennyiség
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Quantity", Order = 17)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public int Quantity { get; set; }
 
         /// <summary>
         /// kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 18)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(false)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public CartItemStatus Status { get; set; }
 
         /// <summary>
         /// adatbázis bejegyzés keletkezésének dátuma
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedDate", Order = 19)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime CreatedDate { get; set; }
 
         /// <summary>
@@ -273,9 +215,6 @@ namespace CompanyGroup.Domain.WebshopModule
             //this.Structure = product.Structure;
 
             this.ConfigId = product.StandardConfigId;
-
-            //this.Currency = product.Prices.Currency;
-
         }
 
         ///// <summary>
@@ -290,27 +229,18 @@ namespace CompanyGroup.Domain.WebshopModule
         ///// <summary>
         ///// készleten van-e?
         ///// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        //public bool IsInStock
-        //{
-        //    get
-        //    {
-        //        if (this.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc) || this.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp))
-        //        {
-        //            return (this.Stock.Inner + this.Stock.Outer > 0);
-        //        }
-        //        else
-        //        {
-        //            return (this.Stock.Inner + this.Stock.Outer + this.Stock.Serbian > 0);
-        //        }
-        //    }
-        //}
+        public bool IsInStock
+        {
+            get
+            {
+                return (this.Stock.Inner + this.Stock.Outer > 0);
+            }
+        }
 
         /// <summary>
         /// cikk ára összesen (egységár * mennyiség)
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        public double ItemTotal 
+        public int ItemTotal 
         {
             get { return this.CustomerPrice * this.Quantity; }
         }
@@ -332,6 +262,8 @@ namespace CompanyGroup.Domain.WebshopModule
             return validationResults;
         }
 
+        #region "EntityBase"overrides"
+
         /// <summary>
         /// entitás tranziens vizsgálat
         /// </summary>
@@ -340,7 +272,6 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             return this.LineId == 0;
         }
-
 
         /// <summary>
         /// override-olt egyenlőség vizsgálat
@@ -379,5 +310,7 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             return this.LineId.GetHashCode() ^ 31;
         }
+
+        #endregion
     }
 }

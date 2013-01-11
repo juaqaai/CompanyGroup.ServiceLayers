@@ -47,7 +47,7 @@ namespace CompanyGroup.Dto.WebshopModule
         ///// készletek
         ///// </summary>
         //[System.Runtime.Serialization.DataMember(Name = "Stock", Order = 6)]
-        //public Stock Stock { get; set; }
+        public Stock Stock { get; set; }
 
         /// <summary>
         /// elem státusza

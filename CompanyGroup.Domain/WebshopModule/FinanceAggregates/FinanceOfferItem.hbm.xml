@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.FinanceOfferLineInsert">
+    <query-param name="OfferId" type="System.Int32"/>
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="Quantity" type="System.Int32"/>
+    <query-param name="Price" type="System.Int32"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="LineId" type="System.Int32"/>
+    exec InternetUser.FinanceOfferLineInsert @OfferId=:OfferId, @ProductId=:ProductId, @Quantity=:Quantity, @Price=:Price, @DataAreaId=:DataAreaId, @Status=:Status
+  </sql-query>
+  <sql-query name="InternetUser.FinanceOfferLineUpdate">
+    <query-param name="LineId" type="System.Int32"/>
+    <query-param name="Quantity" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.FinanceOfferLineUpdate @LineId=:LineId, @Quantity=:Quantity
+  </sql-query>
+  <sql-query name="InternetUser.FinanceOfferSetLineStatus">
+    <query-param name="LineId" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.FinanceOfferSetLineStatus @LineId=:LineId, @Status=:Status
+  </sql-query>  
+</hibernate-mapping>

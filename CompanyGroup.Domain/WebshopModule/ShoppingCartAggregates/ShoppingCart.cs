@@ -7,7 +7,7 @@ namespace CompanyGroup.Domain.WebshopModule
 {
     /// <summary>
     /// bevásárló kosár
-    /// regisztrált felhasználónként egy lehet aktív, de kosár számosságára tekintve nincs megkötés. (Felső limit 10 db)
+    /// regisztrált felhasználónként egy lehet aktív, de kosár számosságára tekintve nincs megkötés.
     /// </summary>
     public class ShoppingCart : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
@@ -61,17 +61,6 @@ namespace CompanyGroup.Domain.WebshopModule
             this.Active = active;
 
             this.Status = CartStatus.Created;
-
-            this.InvoiceAttached = false;
-
-            //this.FinanceOffer = new CompanyGroup.Domain.WebshopModule.FinanceOffer() 
-            //                        { 
-            //                            Address = String.Empty, 
-            //                            NumOfMonth = 0, 
-            //                            PersonName = String.Empty, 
-            //                            Phone = String.Empty, 
-            //                            StatNumber = String.Empty 
-            //                        };
         }
 
         public ShoppingCart() : this("", "", "", "", "", false)
@@ -79,6 +68,9 @@ namespace CompanyGroup.Domain.WebshopModule
             
         }
 
+        /// <summary>
+        /// azonosító
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
@@ -126,88 +118,31 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public bool Active { get; set; }
 
+        /// <summary>
+        /// rendelésre beállított valutanem
+        /// </summary>
         public string Currency { get; set; }
-
-        public bool InvoiceAttached { get; set; }
 
         /// <summary>
         /// kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3, WaitingForAutoPost = 4)
         /// </summary>
         public CartStatus Status { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-
         /// <summary>
-        /// finanszírozási ajánlat adatait összefogó osztály
+        /// létrehozás dátuma, ideje
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonElement("FinanceOffer", Order = 11)]
-        //[MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        //public CompanyGroup.Domain.WebshopModule.FinanceOffer FinanceOffer { get; set; }
-
-        ///// <summary>
-        ///// kosár elem hozzáadása
-        ///// </summary>
-        ///// <param name="item"></param>
-        //public void AddItem(ShoppingCartItem item)
-        //{
-        //    int index = this.Items.FindIndex(x => x.ProductId.Equals(item.ProductId));
-
-        //    if (index == -1)
-        //        this.Items.Add(item);
-        //}
-
-        ///// <summary>
-        ///// kosár elem mennyiségének frissítése
-        ///// </summary>
-        ///// <param name="item"></param>
-        //public void UpdateItem(ShoppingCartItem item)
-        //{
-        //    int index = this.Items.FindIndex(x => x.ProductId.Equals(item.ProductId));
-
-        //    if (index == -1) { return; }
-
-        //    this.Items[index].Quantity = item.Quantity;
-        //}
-
-        ///// <summary>
-        ///// kosár elem eltávolítása
-        ///// </summary>
-        ///// <param name="item"></param>
-        //public void RemoveItem(ShoppingCartItem item)
-        //{
-        //    int index = this.Items.FindIndex(x => x.ProductId.Equals(item.ProductId));
-
-        //    if (index != -1)
-        //        this.Items[index].Status = CartItemStatus.Deleted;
-        //}
-
-        ///// <summary>
-        ///// összes kosár elem eltávolítása (státusz törölt-re állítása)
-        ///// </summary>
-        //public void RemoveAll()
-        //{
-        //    this.Items.ForEach(item => item.Status = CartItemStatus.Deleted);
-        //}
-
-        ///// <summary>
-        ///// kosár feladása (státusz feladott-ra állítása)
-        ///// </summary>
-        //public void PostAll()
-        //{
-        //    this.Items.ForEach(item => item.Status = CartItemStatus.Posted);
-        //}
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// kosárban lévő elemek összesen értéke 
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        public double SumTotal
+        public int SumTotal
         {
             get 
             { 
-                double total = 0;
+                int total = 0;
 
-                this.Items.ToList().ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.ItemTotal : 0);
+                this.Items.ToList().ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.CustomerPrice : 0);
 
                 return total;
             }
@@ -216,7 +151,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// aktív elemek száma a kosárban
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public int ActiveItemCount
         {
             get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count(); }
@@ -225,7 +159,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// üres-e a kosár?
         /// </summary>
-        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool IsEmpty
         {
             get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count() == 0; }
@@ -253,6 +186,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
             return this.Items.ToList().Exists(x => x.ProductId.Equals(productId));
         }
+
+        #region "EntityBase override metódusok"
 
         /// <summary>
         /// entitás tranziens vizsgálat
@@ -301,6 +236,8 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             return this.Id.GetHashCode() ^ 31;
         }
+
+        #endregion
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>

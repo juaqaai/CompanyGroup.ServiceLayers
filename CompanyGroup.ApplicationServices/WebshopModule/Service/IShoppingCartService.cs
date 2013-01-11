@@ -73,14 +73,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.ServiceRequest.ActivateCart request);
 
-        //[OperationContract(Action = "CreateFinanceOffer")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/CreateFinanceOffer",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request);
-
         [OperationContract(Action = "CreateOrder")]
         [WebInvoke(Method = "POST",
             //UriTemplate = "/CreateOrder",

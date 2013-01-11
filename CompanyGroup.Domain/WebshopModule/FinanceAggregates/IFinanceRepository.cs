@@ -23,5 +23,48 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="amount"></param>
         /// <returns></returns>
         List<CompanyGroup.Domain.WebshopModule.LeasingOption> GetLeasingByFinancedAmount(int amount);
+
+        /// <summary>
+        /// ajánlat kiolvasása azonosító alapján 
+        /// </summary>
+        /// <param name="offerId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.FinanceOffer GetFinanceOffer(int offerId);
+
+        /// <summary>
+        /// ajánlat hozzáadása kollekcióhoz
+        /// </summary>
+        /// <param name="shoppingCart"></param>
+        int Add(CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer);
+
+        /// <summary>
+        /// ajánlat eltávolítása kollekcióból
+        /// </summary>
+        /// <param name="offerId"></param>
+        void Remove(int offerId);
+
+        /// <summary>
+        /// ajánlat feladás,
+        /// </summary>
+        void Post(CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer);
+
+        /// <summary>
+        /// ajánlat elem mennyiség módosítása
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="quantity"></param>
+        void UpdateLineQuantity(int lineId, int quantity);
+
+        /// <summary>
+        /// ajánlat elem hozzáadás
+        /// </summary>
+        /// <param name="item"></param>
+        int AddLine(CompanyGroup.Domain.WebshopModule.ShoppingCartItem item);
+
+        /// <summary>
+        ///  ajánlat elem eltávolítás
+        /// </summary>
+        /// <param name="lineId"></param>
+        void RemoveLine(int lineId);
     }
 }

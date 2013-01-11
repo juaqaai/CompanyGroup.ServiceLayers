@@ -19,6 +19,6 @@ namespace CompanyGroup.Dto.ServiceRequest
 
         public int NumOfMonth { get; set; }
 
-        public string CartId { get; set; }
+        public int OfferId { get; set; }
     }
 }

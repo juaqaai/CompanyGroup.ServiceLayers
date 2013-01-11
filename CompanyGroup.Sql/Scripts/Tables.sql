@@ -34,6 +34,25 @@ CREATE TABLE InternetUser.ShoppingCart
 )
 GO
 
+-- ajánlat fej
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.FinanceOffer') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.FinanceOffer;
+GO
+CREATE TABLE InternetUser.FinanceOffer
+(
+	Id						INT IDENTITY PRIMARY KEY,						-- egyedi azonosito
+	VisitorId				NVARCHAR(64) NOT NULL DEFAULT '',				-- login azonosito, CompanyId, PersonId
+	LeasingPersonName		NVARCHAR(250) NOT NULL DEFAULT '',				-- bérbevevõ név
+	LeasingAddress			NVARCHAR(250) NOT NULL DEFAULT '',				-- bérbevevõ cím
+	LeasingPhone			NVARCHAR(100) NOT NULL DEFAULT '',				-- bérbevevõ telefonszáma
+	LeasingStatNumber		NVARCHAR(100) NOT NULL DEFAULT '',				-- bérbevevõ cégjegyzékszáma
+	NumOfMonth				INT NOT NULL DEFAULT 1,							-- leasing konstrukció
+	Currency				NVARCHAR(10) NOT NULL DEFAULT '',				-- rendelés feladáshoz tartozó pénznem
+	CreatedDate				DATETIME NOT NULL DEFAULT GETDATE(),			-- datum, ido
+	[Status]				INT NOT NULL DEFAULT 1							-- kosár státusz (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
+)
+GO
+
 -- kosar tetel
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.ShoppingCartLine') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.ShoppingCartLine;

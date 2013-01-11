@@ -8,7 +8,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// kosár kiolvasása kosár azonosító alapján 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cartId"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.ShoppingCart GetShoppingCart(int cartId);
 
@@ -28,8 +28,8 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// kosár eltávolítása kollekcióból
         /// </summary>
-        /// <param name="id"></param>
-        void Remove(int id);
+        /// <param name="cartId"></param>
+        void Remove(int cartId);
 
         /// <summary>
         /// kosár feladás,
@@ -46,7 +46,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// kosár aktív beállítása
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cartId"></param>
         /// <param name="visitorId"></param>
         void SetActive(int cartId, string visitorId);
 
@@ -68,9 +68,9 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// kosár elem mennyiség módosítása
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="lineId"></param>
         /// <param name="quantity"></param>
-        void UpdateLineQuantity(int id, int quantity);
+        void UpdateLineQuantity(int lineId, int quantity);
 
         /// <summary>
         /// kosár elem hozzáadás

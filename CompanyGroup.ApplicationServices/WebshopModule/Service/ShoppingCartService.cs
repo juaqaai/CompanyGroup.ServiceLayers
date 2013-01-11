@@ -64,32 +64,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             this.salesOrderRepository = salesOrderRepository;
         }
 
-        #region "Finance leasing műveletek (GetMinMaxLeasingValue)"
-
-        private const string CACHEKEY_MINMAXLEASINGVALUE = "MinMaxLeasingValue";
-
-        private const double CACHE_EXPIRATION_MINMAXLEASINGVALUE = 3600d;
-
-        /// <summary>
-        /// tartós bérlet számítás legkissebb és legnagyobb érték lekérdezése
-        /// </summary>
-        /// <returns></returns>
-        private CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue GetMinMaxLeasingValue()
-        {
-            CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue result = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue>(CACHEKEY_MINMAXLEASINGVALUE);
-
-            if (result == null)
-            {
-                result = this.financeRepository.GetMinMaxLeasingValues();
-
-                CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue>(CACHEKEY_MINMAXLEASINGVALUE, result, DateTime.Now.AddMinutes(CACHE_EXPIRATION_MINMAXLEASINGVALUE));
-            }
-
-            return result;
-        }
-
-        #endregion
-
         #region "kosár műveletek"
 
         /// <summary>
@@ -151,7 +125,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                StoredItems = storedOpenedShoppingCarts.StoredItems, 
                                                                                LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                               FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                               //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                            };
 
                 return response;
@@ -203,7 +177,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
                                                                                    LeasingOptions = new Dto.WebshopModule.LeasingOptions(), 
-                                                                                   FinanceOffer = new Dto.WebshopModule.FinanceOffer()
+                                                                                   //FinanceOffer = new Dto.WebshopModule.FinanceOffer()
                                                                                };
 
                 return response;
@@ -281,7 +255,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
                                                                                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                                };
 
                 return response;
@@ -363,7 +337,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
                                                                                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                                };
                 return response;
             }
@@ -421,7 +395,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
                                                                                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                                };
                 return response;
             }
@@ -466,12 +440,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
 
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetCartByKey(request.CartId); 
+                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId); 
 
                 //ha nincs meg a CartId, akkor új kosár létrehozása és hozzáadása szükséges
                 if (shoppingCart == null)
                 {
-                    shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CompanyId, visitor.PersonId, ShoppingCartService.CreateCartName(), true);
+                    shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CompanyId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                     shoppingCartRepository.Add(shoppingCart);
                 }
@@ -488,17 +462,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 shoppingCartItem.SetProduct(product);
 
-                shoppingCartItem.Id = shoppingCart.Id;
+                shoppingCartItem.CartId = shoppingCart.Id;
 
                 shoppingCartItem.Quantity = request.Quantity;
 
                 //mi van, ha létezik a termék a kosárban? 
-                bool existsProductInCart = shoppingCartRepository.ExistsProductInCart(shoppingCart.Id, request.ProductId);
-
-                if (existsProductInCart)
+                if (shoppingCart.IsInCart(request.ProductId))
                 {
                     //kosár elem módosítás
-                    shoppingCartRepository.UpdateLineQuantity(shoppingCart.Id, request.ProductId, request.Quantity);
+                    shoppingCartRepository.UpdateLineQuantity(shoppingCart.Id, request.Quantity);
                 }
                 else
                 {
@@ -506,10 +478,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     shoppingCartRepository.AddLine(shoppingCartItem);
                 }
 
-                CompanyGroup.Domain.WebshopModule.ShoppingCart cart = shoppingCartRepository.GetCartByKey(shoppingCart.Id);
+                CompanyGroup.Domain.WebshopModule.ShoppingCart cart = shoppingCartRepository.GetShoppingCart(shoppingCart.Id);
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(cart.SumTotal);
+                int financedAmount = cart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -554,7 +526,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(shoppingCart.SumTotal);
+                int financedAmount = shoppingCart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -596,7 +568,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(shoppingCart.SumTotal);
+                int financedAmount = shoppingCart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -667,8 +639,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart),
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems,
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
-                                                                                   FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions) 
+                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                                };
                 return response;
             }
@@ -687,7 +659,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                             },
                                OpenedItems = new List<Dto.WebshopModule.OpenedShoppingCart>(),
                                StoredItems = new List<Dto.WebshopModule.StoredShoppingCart>(), 
-                               FinanceOffer = new Dto.WebshopModule.FinanceOffer(), 
+                               //FinanceOffer = new Dto.WebshopModule.FinanceOffer(), 
                                LeasingOptions = new Dto.WebshopModule.LeasingOptions()
                            };
                 return response;
@@ -803,8 +775,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                    ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
                                                                                    OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
                                                                                    StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
-                                                                                   FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
+                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions) 
+                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
                                                                                };
                 return response;
             }
@@ -813,341 +785,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         #endregion
 
-        #region "finance műveletek"
-
-        private static readonly string OfferingMailSubject = Helpers.ConfigSettingsParser.GetString("OfferingMailSubject", "HRP Finance ajánlatkérés üzenet");
-
-        private static readonly string OfferingMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("OfferingMailHtmlTemplateFile", "offering.html");
-
-        private static readonly string OfferingMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("OfferingMailTextTemplateFile", "offering.txt");
-
-        private static readonly string OfferingMailToAddress = Helpers.ConfigSettingsParser.GetString("OfferingMailToAddress", "jverebelyi@hrp.hu"); //berlet@hrpfinance.hu
-
-        private static readonly string OfferingMailToName = Helpers.ConfigSettingsParser.GetString("OfferingMailToName", "HRP Finance");
-
-        private static readonly string OfferingMailCcAddress = Helpers.ConfigSettingsParser.GetString("OfferingMailCcAddress", "ajuhasz@hrp.hu"); //rtokes
-
-        private static readonly string OfferingMailCcName = Helpers.ConfigSettingsParser.GetString("OfferingMailCcName", "Tőkés Róbert");
-
-        private static readonly string OfferingMailSmtpHost = Helpers.ConfigSettingsParser.GetString("OfferingMailSmtpHost", "195.30.7.14");
-
-        private const string OfferItemHtml = "<tr>\n" +
-                                             "<td>Termékazonosító:</td>\n" +
-                                             "<td>$ProductId$</td>\n" +
-                                             "</tr>\n" + 
-                                             "<tr>\n" +
-                                             "<td>Termék neve:</td>\n" +
-                                             "<td>$ProductName$</td>\n" +
-                                             "</tr>\n" +
-                                             //"<tr>\n" +
-                                             //    "<td>Gyártó:</td>\n" +
-                                             //    "<td>$Manufacturer$</td>\n" +
-                                             //"</tr>\n" +
-                                             //"<tr>\n" +
-                                             //    "<td>Jelleg1:</td>\n" +
-                                             //    "<td>$Category1$</td>\n" +
-                                             //"</tr>\n" +
-                                             "<tr>\n" +
-                                                 "<td>Darabszám:</td>\n" +
-                                                 "<td>$Quantity$</td>\n" +
-                                             "</tr>\n" +
-                                             "<tr>\n" +
-                                                 "<td>Nettó vételára:</td>\n" +
-                                                 "<td>$Price$ Ft</td>\n" +
-                                             "</tr>\n" +
-                                             "<tr>\n" +
-                                                 "<td colspan=\"2\"><hr/></td>\n" +
-                                             "</tr>\n";
-
-        private const string OfferItemTxt = "\n" +
-                                            "Termékazonosító: $ProductId$ \n" +
-                                            "Termék neve: $ProductName$ \n" +
-                                            //"Gyártó: $Manufacturer$ \n" +
-                                            //"Jelleg1: $Category1$ \n" +
-                                            "Darabszám: $Quantity$ \n" +
-                                            "Nettó vételára: $Price$ Ft \n" +
-                                            "________________________________________\n\n";
-        /// <summary>
-        /// finanszírozási ajánlat levél txt template
-        /// </summary>
-        private static string PlainText
-        {
-            get
-            {
-                System.IO.StreamReader sr = null;
-                try
-                {
-                    string filepath = System.IO.Path.GetFullPath(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + OfferingMailTextTemplateFile);
-
-                    sr = new System.IO.StreamReader(filepath);
-
-                    return sr.ReadToEnd();
-                }
-                catch
-                {
-                    return String.Empty;
-                }
-                finally
-                {
-                    if (sr != null) { sr.Close(); }
-                }
-            }
-        }
-
-        /// <summary>
-        /// finanszírozási ajánlat levél html template
-        /// </summary>
-        private static string HtmlText
-        {
-            get
-            {
-                System.IO.StreamReader sr = null;
-                try
-                {
-                    string filepath = System.IO.Path.GetFullPath(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + OfferingMailHtmlTemplateFile);
-
-                    sr = new System.IO.StreamReader(filepath);
-
-                    return sr.ReadToEnd();
-                }
-                catch
-                {
-                    return String.Empty;
-                }
-                finally
-                {
-                    if (sr != null) { sr.Close(); }
-                }
-            }
-        }
-
-        /// <summary>
-        /// finanszírozási ajánlat készítése
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request)
-        {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.CartId), "Cart id cannot be null!");
-
-            try
-            {
-                //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
-
-                //kosár tartalom lekérdezése, levélküldés
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCartToAdd = shoppingCartRepository.GetCartByKey(request.CartId);
-                
-                Helpers.DesignByContract.Require((shoppingCartToAdd != null), "ShoppinCart cannot be null!");
-
-                //levélküldés
-                bool sendSuccess = SendFinanceOfferMail(request, shoppingCartToAdd, visitor);
-
-                //kosár beállítása finanszírozásra elküldött státuszba, ajánlathoz szükséges adatok mentése
-                shoppingCartRepository.PostFinanceOffer(request.CartId, new Domain.WebshopModule.FinanceOffer() 
-                                                                            { 
-                                                                                Address = request.Address, 
-                                                                                NumOfMonth = request.NumOfMonth, 
-                                                                                PersonName = request.PersonName, 
-                                                                                Phone = request.Phone, 
-                                                                                StatNumber = request.StatNumber 
-                                                                            });
-
-                //ha van még a felhasználónak kosara, akkor valamelyiket aktiválni kell, ha nincs, akkor létre kell hozni
-                //céghez, azon belül személyhez kapcsolódó kosár listából az aktív elem kikeresése
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
-
-                CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new Domain.WebshopModule.ShoppingCartCollection(shoppingCartList);
-
-                //az elküldést követően is van kosárelem
-                if (shoppingCartCollection.ExistsItem)
-                {
-                    //nincs aktív kosár
-                    if (shoppingCartCollection.GetActiveCart() == null)
-                    {
-                        CompanyGroup.Domain.WebshopModule.ShoppingCart firstCart = shoppingCartCollection.Carts.FirstOrDefault();
-
-                        shoppingCartRepository.SetActive(firstCart.Id, true);
-                    }
-                }
-                else
-                {
-                    //új kosár létrehozása és hozzáadása
-                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CompanyId, visitor.PersonId, ShoppingCartService.CreateCartName(), true);
-
-                    shoppingCartRepository.Add(newShoppingCart);
-                }
-
-                //kosárlista frissítése kiolvasással
-                shoppingCartList = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
-
-                //válaszüzenet előállítása
-                shoppingCartCollection = new Domain.WebshopModule.ShoppingCartCollection(shoppingCartList);
-
-                CompanyGroup.Domain.WebshopModule.ShoppingCart activeCart = shoppingCartCollection.GetActiveCart();
-
-                //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(activeCart.SumTotal);
-
-                //leasing opciók lekérdezése
-                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
-
-                //kalkuláció
-                CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new CompanyGroup.Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
-
-                leasingOptions.Amount = activeCart.SumTotal;
-
-                leasingOptions.ValidateAmount();
-
-                CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
-
-                CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = new CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment()
-                {
-                    ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart),
-                    OpenedItems = storedOpenedShoppingCarts.OpenedItems,
-                    StoredItems = storedOpenedShoppingCarts.StoredItems,
-                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
-                    EmaiNotification = sendSuccess, 
-                    Message = ""
-                };
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// finance ajánlatkérés levélküldés 
-        /// </summary>
-        /// <param name="financeOffer"></param>
-        /// <param name="shoppingCart"></param>
-        /// <param name="visitor"></param>
-        /// <returns></returns>
-        private bool SendFinanceOfferMail(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer financeOffer, 
-                                          CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart,
-                                          CompanyGroup.Domain.PartnerModule.Visitor visitor)
-        {
-            try
-            {
-                double financedAmount = 0;
-
-                string offerItemsHtml = String.Empty;
-                string offerItemsTxt = String.Empty;
-
-                shoppingCart.Items.ForEach(
-                    delegate(CompanyGroup.Domain.WebshopModule.ShoppingCartItem line)
-                    {
-                        financedAmount += (line.Quantity * line.CustomerPrice);
-
-                        offerItemsHtml += ShoppingCartService.OfferItemHtml.Replace("$ProductId$", line.ProductId)
-                                                                    //.Replace("$Manufacturer$", line.Structure.Manufacturer.ManufacturerName)
-                                                                    //.Replace("$Category1$", line.Structure.Category1.CategoryName)
-                                                                    .Replace("$ProductName$", line.ProductName)
-                                                                    .Replace("$Quantity$", Helpers.ConvertData.ConvertIntToString(line.Quantity))
-                                                                    .Replace("$Price$", Convert.ToString(line.CustomerPrice));
-
-                        offerItemsTxt += ShoppingCartService.OfferItemTxt.Replace("$ProductId$", line.ProductId)
-                                                                    //.Replace("$Manufacturer$", line.Structure.Manufacturer.ManufacturerName)
-                                                                    //.Replace("$Category1$", line.Structure.Category1.CategoryName)
-                                                                    .Replace("$ProductName$", line.ProductName)
-                                                                    .Replace("$Quantity$", Helpers.ConvertData.ConvertIntToString(line.Quantity))
-                                                                    .Replace("$Price$", Convert.ToString(line.CustomerPrice));
-                    });
-
-                string tmpHtml = ShoppingCartService.HtmlText;
-                string html = tmpHtml.Replace("$PersonName$", financeOffer.PersonName)
-                                        .Replace("$Address$", financeOffer.Address)
-                                        .Replace("$Phone$", financeOffer.Phone)
-                                        .Replace("$StatNumber$", financeOffer.StatNumber)
-                                        .Replace("$NumOfMonth$", Helpers.ConvertData.ConvertIntToString(financeOffer.NumOfMonth))
-                                        .Replace("$FinancedAmount$", Convert.ToString(financedAmount))
-                                        .Replace("$SentDate$", DateTime.Now.ToShortDateString())
-                                        .Replace("$OfferItems$", offerItemsHtml)
-                                        .Replace("$CustName$", visitor.CompanyName)
-                                        .Replace("$CustPersonName$", visitor.PersonName)
-                                        .Replace("$CustPhone$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "")
-                                        .Replace("$CustEmail$", String.IsNullOrEmpty(visitor.PersonName) ? "" : visitor.PersonName);
-
-                string tmpPlain = ShoppingCartService.PlainText;
-                string plain = tmpPlain.Replace("$PersonName$", financeOffer.PersonName)
-                                        .Replace("$Address$", financeOffer.Address)
-                                        .Replace("$Phone$", financeOffer.Phone)
-                                        .Replace("$StatNumber$", financeOffer.StatNumber)
-                                        .Replace("$NumOfMonth$", Helpers.ConvertData.ConvertIntToString(financeOffer.NumOfMonth))
-                                        .Replace("$FinancedAmount$", Convert.ToString(financedAmount))
-                                        .Replace("$SentDate$", DateTime.Now.ToShortDateString())
-                                        .Replace("$OfferItems$", offerItemsHtml)
-                                        .Replace("$CustName$", visitor.CompanyName)
-                                        .Replace("$CustPersonName$", visitor.PersonName)
-                                        .Replace("$CustPhone$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "")
-                                        .Replace("$CustEmail$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "");
-
-                MailMergeLib.MailMergeMessage mmm = new MailMergeLib.MailMergeMessage(OfferingMailSubject, plain, html);
-
-                mmm.BinaryTransferEncoding = System.Net.Mime.TransferEncoding.Base64;
-                mmm.CharacterEncoding = System.Text.Encoding.GetEncoding("iso-8859-2");
-                mmm.CultureInfo = new System.Globalization.CultureInfo("hu-HU");
-                mmm.FileBaseDir = System.IO.Path.GetFullPath(System.Web.HttpContext.Current.Server.MapPath("../"));
-                mmm.Priority = System.Net.Mail.MailPriority.Normal;
-                mmm.TextTransferEncoding = System.Net.Mime.TransferEncoding.SevenBit;
-
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.To, "<" + OfferingMailToAddress + ">", OfferingMailToName, System.Text.Encoding.Default));
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.From, "<webadmin@hrp.hu>", "web adminisztrátor csoport", System.Text.Encoding.Default));
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.CC, "<" + OfferingMailCcAddress + ">", OfferingMailCcName, System.Text.Encoding.Default));
-                mmm.MailMergeAddresses.Add(new MailMergeLib.MailMergeAddress(MailMergeLib.MailAddressType.Bcc, "<ajuhasz@hrp.hu>", "Juhász Attila", System.Text.Encoding.Default));
-
-                //mail sender
-                MailMergeLib.MailMergeSender mailSender = new MailMergeLib.MailMergeSender();
-
-                //esemenykezelok beallitasa, ha van
-                mailSender.OnSendFailure += new EventHandler<MailMergeLib.MailSenderSendFailureEventArgs>(delegate(object obj, MailMergeLib.MailSenderSendFailureEventArgs args)
-                //( ( obj, args ) =>
-                {
-                    string errorMsg = args.Error.Message;
-                    MailMergeLib.MailMergeMessage.MailMergeMessageException ex = args.Error as MailMergeLib.MailMergeMessage.MailMergeMessageException;
-                    if (ex != null && ex.Exceptions.Count > 0)
-                    {
-                        errorMsg = string.Format("{0}", ex.Exceptions[0].Message);
-                    }
-                    string text = string.Format("Error: {0}", errorMsg);
-
-                });
-
-                mailSender.LocalHostName = Environment.MachineName; //"mail." + 
-                mailSender.MaxFailures = 1;
-                mailSender.DelayBetweenMessages = 1000;
-                string messageOutputDir = System.IO.Path.GetTempPath() + @"\mail";
-                if (!System.IO.Directory.Exists(messageOutputDir))
-                {
-                    System.IO.Directory.CreateDirectory(messageOutputDir);
-                }
-                mailSender.MailOutputDirectory = messageOutputDir;
-                mailSender.MessageOutput = MailMergeLib.MessageOutput.SmtpServer;  // change to MessageOutput.Directory if you like
-
-                // smtp details
-                mailSender.SmtpHost = OfferingMailSmtpHost;
-                mailSender.SmtpPort = 25;
-                //mailSender.SetSmtpAuthentification( "username", "password" );
-
-                mailSender.Send(mmm);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
-                return false;
-            }
-
-        }
-    
- 
-        #endregion   
+        
     
         #region "rendelés feladása"
 
@@ -1162,7 +800,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.CartId), "Cart id cannot be null!");
+            Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
 
             try
             {
@@ -1170,7 +808,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
 
                 //kosár tartalom lekérdezése
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCartToAdd = shoppingCartRepository.GetCartByKey(request.CartId);
+                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCartToAdd = shoppingCartRepository.GetShoppingCart(request.CartId);
 
                 Helpers.DesignByContract.Require((shoppingCartToAdd != null), "ShoppinCart cannot be null!");
 
@@ -1185,7 +823,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 List<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate> salesOrderLineCreateRequest = new List<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>();
 
-                shoppingCartToAdd.Items.ForEach(x =>
+                shoppingCartToAdd.Items.ToList().ForEach(x =>
                 {
                     CompanyGroup.Domain.PartnerModule.ProductOrderCheck check = salesOrderRepository.GetProductOrderCheck(x.ProductId, x.DataAreaId, x.Quantity);
 
@@ -1265,7 +903,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = request.DeliveryRequest ? CompanyGroup.Domain.Core.Constants.OuterStockHrp : CompanyGroup.Domain.Core.Constants.InnerStockHrp,
-                        Lines = shoppingCartToAdd.Items.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
                         }
@@ -1299,7 +937,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = request.DeliveryRequest ? CompanyGroup.Domain.Core.Constants.OuterStockBsc : CompanyGroup.Domain.Core.Constants.InnerStockBsc,
-                        Lines = shoppingCartToAdd.Items.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
                         }
@@ -1328,11 +966,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                           };
 
                 //kosár beállítása elküldött státuszba
-                shoppingCartRepository.Post(request.CartId, (PaymentTerms) request.PaymentTerm, (DeliveryTerms) request.DeliveryTerm, shipping);
+                shoppingCartRepository.Post(shoppingCartToAdd);
 
                 //ha van még a felhasználónak kosara, akkor valamelyiket aktiválni kell, ha nincs, akkor létre kell hozni
                 //céghez, azon belül személyhez kapcsolódó kosár listából az aktív elem kikeresése
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(shoppingCartList);
 
@@ -1344,19 +982,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     {
                         CompanyGroup.Domain.WebshopModule.ShoppingCart firstCart = shoppingCartCollection.Carts.FirstOrDefault();
 
-                        shoppingCartRepository.SetActive(firstCart.Id, true);
+                        shoppingCartRepository.SetActive(firstCart.Id, request.VisitorId);
                     }
                 }
                 else
                 {
                     //új kosár létrehozása és hozzáadása
-                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CompanyId, visitor.PersonId, ShoppingCartService.CreateCartName(), true);
+                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CompanyId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                     shoppingCartRepository.Add(newShoppingCart);
                 }
 
                 //kosárlista frissítése kiolvasással
-                shoppingCartList = shoppingCartRepository.GetCartCollectionByVisitor(request.VisitorId);
+                shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
                 //válaszüzenet előállítása
                 shoppingCartCollection = new Domain.WebshopModule.ShoppingCartCollection(shoppingCartList);

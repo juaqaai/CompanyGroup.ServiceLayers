@@ -113,7 +113,27 @@ namespace CompanyGroup.ApplicationServices
             catch { return new List<CompanyGroup.Domain.WebshopModule.ExchangeRate>(); }
         }
 
+        private const string CACHEKEY_MINMAXLEASINGVALUE = "MinMaxLeasingValue";
 
+        private const double CACHE_EXPIRATION_MINMAXLEASINGVALUE = 3600d;
+
+        /// <summary>
+        /// tartós bérlet számítás legkissebb és legnagyobb érték lekérdezése
+        /// </summary>
+        /// <returns></returns>
+        protected CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue GetMinMaxLeasingValue()
+        {
+            CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue result = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue>(CACHEKEY_MINMAXLEASINGVALUE);
+
+            if (result == null)
+            {
+                result = this.financeRepository.GetMinMaxLeasingValues();
+
+                CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue>(CACHEKEY_MINMAXLEASINGVALUE, result, DateTime.Now.AddMinutes(CACHE_EXPIRATION_MINMAXLEASINGVALUE));
+            }
+
+            return result;
+        }
 
     }
 }

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.WebshopModule" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="FinanceOffer" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="VisitorId" />
+    <property name="CompanyId" />
+    <property name="PersonId" />
+    <property name="LeasingPersonName" />
+    <property name="LeasingAddress" />
+    <property name="LeasingPhone" />
+    <property name="LeasingStatNumber" />
+    <property name="NumOfMonth" />
+    <property name="Currency" />
+    <property name="Status" />
+    <property name="CreatedDate" />
+    <bag name="Items">
+      <key column="Id" />
+      <one-to-many class="ShoppingCartItem" />
+    </bag>    
+  </class>
+  <sql-query name="InternetUser.GetFinanceOffer">
+    <query-param name="OfferId" type="System.Int32"/>
+    <return alias="Offer" class="FinanceOffer"></return>  
+    <return-join alias="Line" property="Cart.Items"></return-join>
+    exec InternetUser.GetFinanceOffer :OfferId
+  </sql-query>
+  <sql-query name="InternetUser.FinanceOfferInsert">
+    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="LeasingPersonName" type="System.String"/>
+    <query-param name="LeasingAddress" type="System.String"/>
+    <query-param name="LeasingPhone" type="System.String"/>
+    <query-param name="LeasingStatNumber" type="System.String"/>
+    <query-param name="NumOfMonth" type="System.Int32"/>
+    <query-param name="Currency" type="System.String"/>
+    <return-scalar column="OfferId" type="System.Int32"/>
+    exec InternetUser.FinanceOfferInsert @VisitorId=:VisitorId, @LeasingPersonName=:LeasingPersonName, @LeasingAddress=:LeasingAddress, @LeasingPhone=:LeasingPhone, @LeasingStatNumber=:LeasingStatNumber, @NumOfMonth=:NumOfMonth, @Currency=:Currency
+  </sql-query>
+  <sql-query name="InternetUser.FinanceOfferUpdate">
+    <query-param name="OfferId" type="System.Int32"/>
+    <query-param name="LeasingPersonName" type="System.String"/>
+    <query-param name="LeasingAddress" type="System.String"/>
+    <query-param name="LeasingPhone" type="System.String"/>
+    <query-param name="LeasingStatNumber" type="System.String"/>
+    <query-param name="NumOfMonth" type="System.Int32"/>
+    <query-param name="Currency" type="System.String"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.FinanceOfferUpdate @OfferId=:OfferId, @LeasingPersonName=:LeasingPersonName, @LeasingAddress=:LeasingAddress, @LeasingPhone=:LeasingPhone, @LeasingStatNumber=:LeasingStatNumber, @NumOfMonth=:NumOfMonth, @Currency=:Currency
+  </sql-query>
+  <sql-query name="InternetUser.FianceOfferSetStatus">
+    <query-param name="OfferId" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.FianceOfferSetStatus @OfferId=:OfferId, @Status=:Status
+  </sql-query>
+</hibernate-mapping>
+
+

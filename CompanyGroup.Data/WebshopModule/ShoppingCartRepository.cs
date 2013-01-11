@@ -73,15 +73,6 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
-        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartLine(int lineId)
-        {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartLine").SetInt32("LineId", lineId);
-
-            CompanyGroup.Domain.WebshopModule.ShoppingCartItem result = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
-
-            return result;
-        }
-
         /// <summary>
         /// kosár hozzáadása kollekcióhoz, új kosárazonosítóval tér vissza
         /// </summary>
@@ -91,6 +82,8 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((shoppingCart != null), "The shoppingCart cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartInsert").SetString("VisitorId", shoppingCart.VisitorId)
                                                                                                   .SetString("Name", shoppingCart.Name)
                                                                                                   .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
@@ -101,7 +94,7 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                                   .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
                                                                                                   .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
                                                                                                   .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
-                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.InvoiceAttached)
+                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
                                                                                                   .SetBoolean("Active", shoppingCart.Active)
                                                                                                   .SetString("Currency", shoppingCart.Currency);
                 int cartId = query.UniqueResult<int>();
@@ -121,9 +114,10 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="cartId"></param>
         public void Remove(int cartId)
         {
-            CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The id parameter cannot be null!");
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The id parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetStatus").SetInt32("CartId", cartId)
                                                                                                      .SetEnum("Status", CartStatus.Deleted);
 
@@ -145,6 +139,8 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((shoppingCart != null), "The shoppingCart cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("CartId", shoppingCart.Id)
                                                                                                   .SetString("Name", shoppingCart.Name)
                                                                                                   .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
@@ -155,7 +151,7 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                                   .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
                                                                                                   .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
                                                                                                   .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
-                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.InvoiceAttached)
+                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
                                                                                                   .SetBoolean("Active", shoppingCart.Active)
                                                                                                   .SetString("Currency", shoppingCart.Currency);
                 int ret = query.UniqueResult<int>();
@@ -208,6 +204,10 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The cartId parameter cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(name), "The name parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartStore").SetInt32("CartId", cartId)
                                                                                                   .SetString("Name", name)
                                                                                                   .SetEnum("Status", CartStatus.Stored);
@@ -227,12 +227,16 @@ namespace CompanyGroup.Data.WebshopModule
         /// beállítja az "CartId" alapján az "Active" mező értékét "true"-ra.
         /// beállítja az "VisitorId" alapján az "Active" mező értékét "false"-ra.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cartId"></param>
         /// <param name="visitorId"></param>
         public void SetActive(int cartId, string visitorId)
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The cartId parameter cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartActivate").SetInt32("CartId", cartId)
                                                                                                     .SetString("VisitorId", visitorId);
 
@@ -247,12 +251,16 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// új visitorId beállítása a régi helyére
         /// </summary>
-        /// <param name="cartId"></param>
+        /// <param name="permanentVisitorId"></param>
         /// <param name="visitorId"></param>
         public void AssociateCart(string permanentVisitorId, string visitorId)
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(permanentVisitorId), "The permanentVisitorId parameter cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetString("PermanentVisitorId", permanentVisitorId)
                                                                                                      .SetString("VisitorId", visitorId);
 
@@ -266,15 +274,28 @@ namespace CompanyGroup.Data.WebshopModule
 
         #region "kosár tételhez kapcsolódó műveletek"
 
+        public CompanyGroup.Domain.WebshopModule.ShoppingCartItem GetShoppingCartLine(int lineId)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartLine").SetInt32("LineId", lineId);
+
+            CompanyGroup.Domain.WebshopModule.ShoppingCartItem result = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
+
+            return result;
+        }
+
         /// <summary>
         /// kosár elem mennyiség frissítése
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="lineId"></param>
         /// <param name="quantity"></param>
         public void UpdateLineQuantity(int lineId, int quantity)
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((lineId > 0), "The lineId parameter cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require((quantity > 0), "The quantity parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineUpdate").SetInt32("LineId", lineId)
                                                                                                       .SetInt32("Quantity", quantity);
 
@@ -294,6 +315,8 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((item != null), "The item cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineInsert").SetInt32("CartId", item.CartId)
                                                                                                       .SetString("ProductId", item.ProductId)
                                                                                                       .SetInt32("Quantity", item.Quantity)
@@ -318,6 +341,8 @@ namespace CompanyGroup.Data.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.Utils.Check.Require((lineId > 0), "The lineId parameter cannot be null!");
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetLineStatus").SetInt32("LineId", lineId)
                                                                                                          .SetEnum("Status", CartItemStatus.Deleted);
 
