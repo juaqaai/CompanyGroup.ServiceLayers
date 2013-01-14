@@ -7,17 +7,13 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-DROP PROCEDURE InternetUser.cms_CustomerPriceGroups
+DROP PROCEDURE InternetUser.CustomerPriceGroupSelect
 GO
-CREATE PROCEDURE InternetUser.cms_CustomerPriceGroups( @CustomerId NVARCHAR(10) = '' , @DataAreaId VARCHAR(3) = '' )
+CREATE PROCEDURE InternetUser.CustomerPriceGroupSelect( @CustomerId NVARCHAR(10) = '' , @DataAreaId VARCHAR(3) = '' )
 AS
 SET NOCOUNT ON
 
-	--DECLARE @VirtualDataAreaId VARCHAR(3);
-
-	--SET @VirtualDataAreaId = CASE WHEN @DataAreaId = 'ser' THEN @DataAreaId ELSE 'hun' END;
-
-	SELECT -- StructPriceGroup.VevoSzam as CustomerId, 
+	SELECT -- StructPriceGroup.VevoSzam as CustomerId,
 		   StructPriceGroup.PriceGroupID as PriceGroupId, 
 		   StructPriceGroup.GyartoId as ManufacturerId, StructPriceGroup.Jelleg1Id as Category1Id, 
 		   StructPriceGroup.Jelleg2Id as Category2Id, StructPriceGroup.Jelleg3Id as Category3Id, --TOP 1 PriceGroupID
@@ -30,11 +26,11 @@ SET NOCOUNT ON
 		  AND StructPriceGroup.VevoSzam = CASE WHEN @CustomerId <> '' THEN @CustomerId ELSE StructPriceGroup.VevoSzam END
 	--@sAxStructCode LIKE StructPriceGroup.AxStruktKod AND 
 	--StructPriceGroup.Vevoszam = @sCustAccount AND 
-	ORDER BY StructPriceGroup.VevoSzam, PriceDiscGroup.Sorrend ASC
+	ORDER BY StructPriceGroup.GyartoId, PriceDiscGroup.Sorrend ASC
 
 RETURN
 
 GO
 
--- EXEC InternetUser.cms_CustomerPriceGroups 'V002020', 'hrp';
+-- EXEC InternetUser.CustomerPriceGroupSelect 'V002020', 'hrp';
 

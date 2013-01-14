@@ -59,5 +59,9 @@ namespace CompanyGroup.Domain.PartnerModule
             this.Order = order;
         }
 
+        /// <summary>
+        /// sorrendet meghatározó jellemző
+        /// </summary>
+        public CustomerPriceGroup() : this("", "", "", "", "", 0) { }
     }
 }

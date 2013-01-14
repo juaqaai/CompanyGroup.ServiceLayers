@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    public class GetCartCollectionByVisitor
+    public class GetShoppingCartInfo
     {
-        public GetCartCollectionByVisitor() : this("", "") { }
+        public GetShoppingCartInfo() : this(0, "") { }
 
-        public GetCartCollectionByVisitor(string language, string visitorId)
-        { 
-            Language = language;
+        public GetShoppingCartInfo(int cartId, string visitorId)
+        {
+            this.CartId = cartId;
 
-            VisitorId = visitorId;
+            this.VisitorId = visitorId;
         }
 
         /// <summary>
-        /// választott nyelv
+        /// kosar azonosítója
         /// </summary>
-        public string Language { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// látogató azonosítója

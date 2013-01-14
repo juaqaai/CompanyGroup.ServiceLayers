@@ -96,12 +96,15 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Visi
 GO
 CREATE TABLE InternetUser.Visitor
 (
-	Id							UNIQUEIDENTIFIER PRIMARY KEY,					-- egyedi GUID azonosito
+	Id							INT IDENTITY PRIMARY KEY,					-- egyedi GUID azonosito
+	VisitorId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(), 
 	LoginIP						NVARCHAR (32) NOT NULL DEFAULT '' ,				-- ip cim
 	RecId						BIGINT NOT NULL DEFAULT 0 ,						-- WebShopUserInfo.RecId bigint mezo (idegen kulcs)
-	CustomerId					NVARCHAR(32) NOT NULL DEFAULT '', 
+	CustomerId					NVARCHAR(20) NOT NULL DEFAULT '', 
+	CustomerName				NVARCHAR(100) NOT NULL DEFAULT '',
 	PersonId					NVARCHAR(32) NOT NULL DEFAULT '', 
-	Email						NVARCHAR(64) NOT NULL DEFAULT '',				-- email
+	PersonName					NVARCHAR(100) NOT NULL DEFAULT '',
+	Email						NVARCHAR(100) NOT NULL DEFAULT '',				-- email
 	IsWebAdministrator			BIT NOT NULL DEFAULT 1, 
 	InvoiceInfoEnabled			BIT NOT NULL DEFAULT 1, 
 	PriceListDownloadEnabled	BIT NOT NULL DEFAULT 1, 
@@ -111,12 +114,15 @@ CREATE TABLE InternetUser.Visitor
 	Currency					NVARCHAR(10) NOT NULL		DEFAULT '', 
 	LanguageId					NVARCHAR(10) NOT NULL DEFAULT '', 
 	PriceGroupId				INT NOT NULL DEFAULT 0,
+	InventLocationId			NVARCHAR(10) NOT NULL DEFAULT '', 
 	RepresentativeId			INT NOT NULL DEFAULT 0,
 	DataAreaId					NVARCHAR(3) NOT NULL DEFAULT '',				-- vallalatkod hrp; bsc; srv
 	LoginMode					INT NOT NULL DEFAULT 0,							-- bejelentkezes modja =1: ceges; =2: szemelyes; =3: alkalmazott
+	PartnerModel				INT NOT NULL DEFAULT 0,							-- partner model (None = 0, Hrp = 1, Bsc = 2, Both = 3)
 	AutoLogin					BIT NOT NULL DEFAULT 0,							-- automatikus bejelentkezes (session nem jar le soha)
 	LoginDate					DATETIME NOT NULL DEFAULT GETDATE(),			-- bejelentkezes idopontja
 	LogoutDate					DATETIME NOT NULL DEFAULT CONVERT(DATETIME, 0),	-- kijelentkezes idopontja
+	ExpireDate					DATETIME NOT NULL DEFAULT CONVERT(DATETIME, 0), -- lejárat dátuma és ideje 
 	Valid						BIT NOT NULL DEFAULT 1
 )
 GO
@@ -128,7 +134,7 @@ GO
 CREATE TABLE InternetUser.CustomerPriceGroup
 (
 	Id				INT IDENTITY PRIMARY KEY,
-	VisitorId		BIGINT,										-- login azonosito
+	VisitorId		NVARCHAR(64) NOT NULL DEFAULT '',										-- login azonosito
 	ManufacturerId  NVARCHAR(4) NOT NULL DEFAULT '',
 	Category1Id		NVARCHAR(4) NOT NULL DEFAULT '', 
 	Category2Id		NVARCHAR(4) NOT NULL DEFAULT '', 

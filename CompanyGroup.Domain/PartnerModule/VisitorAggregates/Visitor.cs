@@ -63,6 +63,11 @@ namespace CompanyGroup.Domain.PartnerModule
         public Visitor() : this(new LoginInfo("", "", "", "", "", false, false, false, false, false, 0, 0, "", "", "", "", 0, "", "", "", "", "", "")) { }
 
         /// <summary>
+        /// egyedi azonosító
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// vállalat azonosítója
         /// </summary>
         [MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyId", Order = 1)]
