@@ -4,9 +4,9 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE [InternetUser].[cms_SignIn];
+DROP PROCEDURE [InternetUser].[SignIn];
 GO
-CREATE PROCEDURE [InternetUser].[cms_SignIn]
+CREATE PROCEDURE [InternetUser].[SignIn]
 	@UserName nvarchar(32) = '',
 	@Password nvarchar(32) = '',
 	@DataAreaId nvarchar(3) = ''	-- 1:HRP, 2:BSC, 3:SRV, 4:SER
@@ -142,11 +142,11 @@ DECLARE @CompanyId nvarchar(10),
 				ISNULL(@RepresentativeEmail, '') as RepresentativeEmail
 		RETURN;
 GO
-GRANT EXECUTE ON InternetUser.cms_SignIn TO InternetUser
+GRANT EXECUTE ON InternetUser.SignIn TO InternetUser
 GO
--- exec InternetUser.cms_SignIn 'elektroplaza', '58915891', 'bsc';
--- exec InternetUser.cms_SignIn 'joci', 'joci', 'hrp';
--- exec InternetUser.cms_SignIn 'plorinczy', 'pikolo', 'hrp';
+-- exec InternetUser.SignIn 'elektroplaza', '58915891', 'bsc';
+-- exec InternetUser.SignIn 'joci', 'joci', 'hrp';
+-- exec InternetUser.SignIn 'plorinczy', 'pikolo', 'hrp';
 -- select * from axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = 'ipon' )	gild4MAX19
 -- select * from AxDb.dbo.EmplTable
 

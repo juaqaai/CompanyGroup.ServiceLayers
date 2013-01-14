@@ -22,49 +22,31 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// képviselő azonosító
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Id", Order = 1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string Id { set; get; }
 
         /// <summary>
         /// képviselő neve
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Name", Order = 2)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]        
         public string Name { set; get; }
 
         /// <summary>
         /// képviselő telefon
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Phone", Order = 3)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]        
         public string Phone { set; get; }
 
         /// <summary>
         /// képviselő mobil telefon
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Mobile", Order = 4)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string Mobile { set; get; }
 
         /// <summary>
         /// képviselő mellék
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Extension", Order = 5)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]        
         public string Extension { set; get; }
 
         /// <summary>
         /// képviselő email cím
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Email", Order = 6)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]        
         public string Email { set; get; }
 
         /// <summary>

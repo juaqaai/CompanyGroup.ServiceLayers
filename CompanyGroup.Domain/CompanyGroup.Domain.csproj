@@ -249,7 +249,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="MaintainModule\ProductAggregates\NHibernate.txt" />
-    <EmbeddedResource Include="PartnerModule\CustomerAggregates\LoginInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -263,6 +262,7 @@
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.hbm.xml" />
+    <Content Include="PartnerModule\VisitorAggregates\Visitor.hbm.xml" />
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

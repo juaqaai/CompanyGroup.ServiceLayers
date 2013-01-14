@@ -70,47 +70,31 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// vállalat azonosítója
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyId", Order = 1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string CompanyId { get; set; }
 
         /// <summary>
         /// vállalat neve
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CompanyName", Order = 2)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string CompanyName { get; set; }
 
         /// <summary>
         /// személy azonosítója
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PersonId", Order = 3)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string PersonId { get; set; }
 
         /// <summary>
         /// személy neve
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PersonName", Order = 4)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string PersonName { get; set; }
 
         /// <summary>
         /// bejelentkezés típusától függően vagy a kapcsolattartó email címe, vagy a cég email címe
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Email", Order = 5)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string Email { get; set; }
 
         /// <summary>
-        /// bejelentkezett-e, vagy sem
+        /// bejelentkezett státusz, vagy nem 
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool LoggedIn { get; set; }
 
         /// <summary>
@@ -137,29 +121,21 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// bejelentkezés típusa (None = 0, Company = 1, Person = 2)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("LoginType", Order = 6)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public LoginType LoginType { get; set; }
 
         /// <summary>
         /// profil kiolvasás, beállítás
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Profile", Order = 7)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public CompanyGroup.Domain.PartnerModule.Profile Profile { get; private set; }
 
         /// <summary>
         /// jogosultság beállítás
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Permission", Order = 8)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Permission Permission { get; set; }
 
         /// <summary>
         /// szerepkörök beállítása a jogosultságkezeléshez
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public List<string> Roles
         {
             get 
@@ -189,76 +165,45 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// partnermodel (None = 0, Hrp = 1, Bsc = 2, Both = 3)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PartnerModel", Order = 9)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public PartnerModel PartnerModel { get; set; }
 
         /// <summary>
         /// Visitor bejegyzés keletkezésének időpontja
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedDate", Order = 10)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("0000.00.00 00:00:00")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime CreatedDate { set; get; }
 
         /// <summary>
         /// Visitor bejegyzés érvényességének időpontja
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ExpiredDate", Order = 11)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("0000.00.00 00:00:00")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime ExpiredDate { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 12)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public LoginStatus Status { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("DataAreaId", Order = 13)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string DataAreaId { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("IPAddress", Order = 14)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public string IPAddress { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PaymTermId", Order = 15)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string PaymTermId { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Currency", Order = 16)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string Currency { set; get; }
  
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("InventLocation", Order = 17)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string InventLocation { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("LanguageId", Order = 18)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string LanguageId { set; get; }
 
         /// <summary>
         /// árbesorolás 
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("PriceGroup", Order = 19)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]        
         public int PriceGroup { set; get; }
 
         /// <summary>
         /// képviselő
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Representative", Order = 20)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public Representative Representative { set; get; }
 
         /// <summary>
         /// látogatás bejegyzés akkor érvényes, ha a lejárat ideje nagyobb mint az aktuális dátum - idő értéke
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool IsValid 
         {
             get { return DateTime.Now.CompareTo(this.ExpiredDate) < 1; }
@@ -267,7 +212,6 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// bejelentkezés lejárt-e, vagy sem?
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool IsValidLogin
         {
             get { return (DateTime.Now.CompareTo(this.ExpiredDate) < 1) && (this.LoggedIn) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); }
