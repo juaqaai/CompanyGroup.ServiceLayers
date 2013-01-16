@@ -46,7 +46,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert").SetString("VisitorId", visitor.visitorId);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert").SetString("VisitorId", visitor.Id);
 
                 return;
             }

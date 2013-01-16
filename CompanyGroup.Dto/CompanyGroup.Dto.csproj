@@ -104,7 +104,7 @@
     <Compile Include="ServiceRequest\GetPriceList.cs" />
     <Compile Include="ServiceRequest\RemoveLine.cs" />
     <Compile Include="ServiceRequest\GetCartByKey.cs" />
-    <Compile Include="ServiceRequest\GetCartCollectionByVisitorId.cs" />
+    <Compile Include="ServiceRequest\GetCartCollectionByVisitor.cs" />
     <Compile Include="ServiceRequest\SaveCart.cs" />
     <Compile Include="ServiceRequest\UpdateLineQuantity.cs" />
     <Compile Include="ServiceRequest\RemoveCart.cs" />
