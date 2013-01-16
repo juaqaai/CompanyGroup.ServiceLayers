@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 DROP PROCEDURE InternetUser.CustomerPriceGroupSelect
 GO
-CREATE PROCEDURE InternetUser.CustomerPriceGroupSelect( @CustomerId NVARCHAR(10) = '' , @DataAreaId VARCHAR(3) = '' )
+CREATE PROCEDURE InternetUser.CustomerPriceGroupSelect( @CustomerId NVARCHAR(10) = '' )
 AS
 SET NOCOUNT ON
 
@@ -24,13 +24,11 @@ SET NOCOUNT ON
 	WHERE StructPriceGroup.DataAreaID IN ( 'hrp', 'bsc' )
 		  AND StructPriceGroup.PriceGroupID	IN ( '1', '2', '3', '4', '5', '6', 'H', 'B' ) 
 		  AND StructPriceGroup.VevoSzam = CASE WHEN @CustomerId <> '' THEN @CustomerId ELSE StructPriceGroup.VevoSzam END
-	--@sAxStructCode LIKE StructPriceGroup.AxStruktKod AND 
-	--StructPriceGroup.Vevoszam = @sCustAccount AND 
-	ORDER BY StructPriceGroup.GyartoId, PriceDiscGroup.Sorrend ASC
+	ORDER BY StructPriceGroup.GyartoId, StructPriceGroup.Jelleg1Id, StructPriceGroup.Jelleg2Id, StructPriceGroup.Jelleg3Id, PriceDiscGroup.Sorrend ASC
 
 RETURN
 
 GO
 
--- EXEC InternetUser.CustomerPriceGroupSelect 'V002020', 'hrp';
+-- EXEC InternetUser.CustomerPriceGroupSelect 'V001446';	--V002020
 

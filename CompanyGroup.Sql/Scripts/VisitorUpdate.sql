@@ -3,6 +3,8 @@ GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+
+-- kijelentkezés
 GO
 DROP PROCEDURE [InternetUser].[VisitorDisableStatus];
 GO
@@ -10,10 +12,11 @@ CREATE PROCEDURE [InternetUser].[VisitorDisableStatus](@VisitorId	NVARCHAR(64) =
 AS
 SET NOCOUNT ON
 
-	UPDATE InternetUser.Visitor SET Valid = 0 WHERE VisitorId = @VisitorId;
+	UPDATE InternetUser.Visitor SET Valid = 0, LogoutDate = GETDATE() WHERE VisitorId = @VisitorId;
 
 RETURN
 
+-- nyelvválasztás
 GO
 DROP PROCEDURE [InternetUser].[VisitorChangeLanguage];
 GO
@@ -25,6 +28,7 @@ SET NOCOUNT ON
 
 RETURN
 
+-- valutanem választás
 GO
 DROP PROCEDURE [InternetUser].[VisitorChangeCurrency];
 GO
