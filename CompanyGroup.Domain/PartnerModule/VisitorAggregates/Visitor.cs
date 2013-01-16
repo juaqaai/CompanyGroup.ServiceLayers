@@ -8,59 +8,59 @@ namespace CompanyGroup.Domain.PartnerModule
     /// <summary>
     /// Kijelentkezett, vagy bejelentkezett látogató entitás
     /// </summary>
-    public class Visitor : CompanyGroup.Domain.Core.NoSqlEntity, IValidatableObject
+    public class Visitor : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
         //private LoginInfo loginInfo;
 
-        public Visitor(CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo)
-        {
-            //this.loginInfo = loginInfo;
+        //public Visitor(CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo)
+        //{
+        //    //this.loginInfo = loginInfo;
 
-            this.CompanyId = loginInfo.CompanyId;
+        //    this.CompanyId = loginInfo.CompanyId;
 
-            this.CompanyName = loginInfo.CompanyName;
+        //    this.CompanyName = loginInfo.CompanyName;
 
-            this.PersonId = loginInfo.PersonId;
+        //    this.PersonId = loginInfo.PersonId;
 
-            this.PersonName = loginInfo.PersonName;
+        //    this.PersonName = loginInfo.PersonName;
 
-            this.Email = loginInfo.Email;
+        //    this.Email = loginInfo.Email;
 
-            this.LoginType = loginInfo.LoginType;
+        //    this.LoginType = loginInfo.LoginType;
 
-            //this.SetLoggedIn(this.LoginType);
+        //    //this.SetLoggedIn(this.LoginType);
 
-            this.PartnerModel = loginInfo.PartnerModel;
+        //    this.PartnerModel = loginInfo.PartnerModel;
 
-            this.Permission = new CompanyGroup.Domain.PartnerModule.Permission(loginInfo.IsWebAdministrator, loginInfo.InvoiceInfoEnabled, loginInfo.PriceListDownloadEnabled, loginInfo.CanOrder, loginInfo.RecieveGoods);
+        //    this.Permission = new CompanyGroup.Domain.PartnerModule.Permission(loginInfo.IsWebAdministrator, loginInfo.InvoiceInfoEnabled, loginInfo.PriceListDownloadEnabled, loginInfo.CanOrder, loginInfo.RecieveGoods);
 
-            this.Profile = new Profile();
+        //    this.Profile = new Profile();
 
-            this.CreatedDate = DateTime.MinValue;
+        //    this.CreatedDate = DateTime.MinValue;
 
-            this.ExpiredDate = DateTime.MinValue;
+        //    this.ExpiredDate = DateTime.MinValue;
 
-            this.Status = LoginStatus.Active;
+        //    this.Status = LoginStatus.Active;
 
-            this.DataAreaId = String.Empty; 
+        //    this.DataAreaId = String.Empty; 
 
-            this.IPAddress = String.Empty;
+        //    this.IPAddress = String.Empty;
 
-            this.PaymTermId = loginInfo.PaymTermId;
+        //    this.PaymTermId = loginInfo.PaymTermId;
 
-            this.Currency = loginInfo.Currency;
+        //    this.Currency = loginInfo.Currency;
 
-            this.InventLocation = loginInfo.InventLocation;
+        //    this.InventLocation = loginInfo.InventLocation;
 
-            this.LanguageId = loginInfo.LanguageId;
+        //    this.LanguageId = loginInfo.LanguageId;
 
-            this.Representative = new Representative( loginInfo.RepresentativeId, loginInfo.RepresentativeName, loginInfo.RepresentativePhone, loginInfo.RepresentativeMobile, loginInfo.RepresentativeExtension, loginInfo.RepresentativeEmail );
+        //    this.Representative = new Representative( loginInfo.RepresentativeId, loginInfo.RepresentativeName, loginInfo.RepresentativePhone, loginInfo.RepresentativeMobile, loginInfo.RepresentativeExtension, loginInfo.RepresentativeEmail );
 
-            this.PriceGroup = loginInfo.PriceGroup;
+        //    this.PriceGroup = loginInfo.PriceGroup;
 
-        }
+        //}
 
-        public Visitor() : this(new LoginInfo("", "", "", "", "", false, false, false, false, false, 0, 0, "", "", "", "", 0, "", "", "", "", "", "")) { }
+        //public Visitor() : this(new LoginInfo("", "", "", "", "", false, false, false, false, false, 0, 0, "", "", "", "", 0, "", "", "", "", "", "")) { }
 
         /// <summary>
         /// egyedi azonosító
@@ -70,12 +70,12 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// vállalat azonosítója
         /// </summary>
-        public string CompanyId { get; set; }
+        public string CustomerId { get; set; }
 
         /// <summary>
         /// vállalat neve
         /// </summary>
-        public string CompanyName { get; set; }
+        public string CustomerName { get; set; }
 
         /// <summary>
         /// személy azonosítója
@@ -323,6 +323,58 @@ namespace CompanyGroup.Domain.PartnerModule
             }
             return dataAreaList;
         }
+
+        #region "EntityBase override metódusok"
+
+        /// <summary>
+        /// entitás tranziens vizsgálat
+        /// </summary>
+        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
+        public override bool IsTransient()
+        {
+            return this.Id == 0;
+        }
+
+
+        /// <summary>
+        /// override-olt egyenlőség vizsgálat
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Visitor))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            Visitor item = (Visitor)obj;
+
+            if (item.IsTransient() || this.IsTransient())
+            {
+                return false;
+            }
+            else
+            {
+                return item.Id == this.Id;
+            }
+        }
+
+        /// <summary>
+        /// hash code előállítás
+        /// </summary>
+        /// <returns></returns>
+        public override int GetRequestedHashCode()
+        {
+            return this.Id.GetHashCode() ^ 31;
+        }
+
+        #endregion
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>

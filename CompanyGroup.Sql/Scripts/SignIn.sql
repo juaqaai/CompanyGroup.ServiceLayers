@@ -12,25 +12,24 @@ CREATE PROCEDURE [InternetUser].[SignIn]
 	@DataAreaId nvarchar(3) = ''	-- 1:HRP, 2:BSC, 3:SRV, 4:SER
 AS
 
-DECLARE @CompanyId nvarchar(10),
+DECLARE @RecId bigint,
+		@CompanyId nvarchar(10),
 		@CompanyName nvarchar(60),
 		@PersonId nvarchar(10),
 		@PersonName nvarchar(60),
 		@Email nvarchar(80),
-		@CanOrder bit,
-		@RecieveGoods bit,
-		@PriceListDownloadEnabled bit,
 		@IsWebAdministrator bit,
 		@InvoiceInfoEnabled bit,
-		@LoginType int, 
-		@PartnerModel int, 
-		@VirtualDataAreaId nvarchar(3),
+		@PriceListDownloadEnabled bit,
+		@CanOrder bit,
+		@RecieveGoods bit,
 		@PaymTermId nvarchar(10),
 		@Currency nvarchar(3),
-		@InventLocation nvarchar(10),
 	    @LanguageId nvarchar(10),
-		@PriceGroup int,
-		@Representative nvarchar(32),
+		@PriceGroup nvarchar(4),
+		@InventLocation nvarchar(10),
+		@LoginType int, 
+		@PartnerModel int,
 		@RepresentativeId nvarchar(32),
 		@RepresentativeName nvarchar(64),
 		@RepresentativePhone nvarchar(32),
@@ -38,9 +37,10 @@ DECLARE @CompanyId nvarchar(10),
 		@RepresentativeExtension nvarchar(16),
 		@RepresentativeEmail nvarchar(64);
 
-		SET @VirtualDataAreaId = InternetUser.GetVirtualDataAreaId( @DataAreaId );
+		DECLARE @VirtualDataAreaId nvarchar(3) = InternetUser.GetVirtualDataAreaId( @DataAreaId );
 
-		SELECT @CompanyId = CustAccount, 
+		SELECT @RecId = RecId,
+			   @CompanyId = CustAccount, 
 			   @PersonId = ContactPersonId 
 		FROM axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
 											( Pwd = @Password ) AND 
@@ -65,7 +65,7 @@ DECLARE @CompanyId nvarchar(10),
 				   @InventLocation = Cust.InventLocation, 
 				   @LanguageId = Cust.LanguageId, 
 				   @PriceGroup = Cust.PriceGroup, 
-				   @Representative = Cust.Kepviselo, 
+				   @RepresentativeId = Cust.Kepviselo, 
 				   @LoginType = 2
 			FROM axdb_20120614.dbo.ContactPerson as Cp 
 				 INNER JOIN axdb_20120614.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
@@ -88,7 +88,7 @@ DECLARE @CompanyId nvarchar(10),
 					   @InventLocation = InventLocation, 
 					   @LanguageId = LanguageId, 
 					   @PriceGroup = PriceGroup, 
-					   @Representative = Kepviselo
+					   @RepresentativeId = Kepviselo
 				FROM axdb_20120614.dbo.CustTable
 				WHERE StatisticsGroup <> 'Arhív' AND 
 					  StatisticsGroup <> 'Archív' AND 
@@ -104,7 +104,7 @@ DECLARE @CompanyId nvarchar(10),
 			END
 		END
 
-		IF (ISNULL(@Representative, '') <> '')
+		IF (ISNULL(@RepresentativeId, '') <> '')
 		BEGIN
 			SELECT @RepresentativeId = EmplId, 
 				   @RepresentativeName = [Name], 
@@ -113,39 +113,47 @@ DECLARE @CompanyId nvarchar(10),
 				   @RepresentativeExtension = PhoneLocal, 
 				   @RepresentativeEmail = Email
 			FROM AxDb.dbo.EmplTable 
-			WHERE EmplId = @Representative AND 
+			WHERE EmplId = @RepresentativeId AND 
 				  DataAreaId = @VirtualDataAreaId;
 		END			  
 
-		SELECT ISNULL(@CompanyId, '') as CompanyId,
-				ISNULL(@CompanyName, '') as CompanyName,
+		SELECT  0 as Id, '' as VisitorId, '' as LoginIP,
+				ISNULL(@RecId, 0) as RecId, 
+				ISNULL(@CompanyId, '') as CustomerId,
+				ISNULL(@CompanyName, '') as CustomerName,
 				ISNULL(@PersonId, '') as PersonId,
 				ISNULL(@PersonName, '') as PersonName,
 				ISNULL(@Email, '') as Email,
-				ISNULL(@CanOrder, 0) as CanOrder,
-				ISNULL(@RecieveGoods, 0) as RecieveGoods,
-				ISNULL(@PriceListDownloadEnabled, 0) as PriceListDownloadEnabled,
 				ISNULL(@IsWebAdministrator, 0) as IsWebAdministrator,
 				ISNULL(@InvoiceInfoEnabled, 0) as InvoiceInfoEnabled,
-				ISNULL(@LoginType, 0) as LoginType, 
-				ISNULL(@PartnerModel, 0 ) as PartnerModel,
+				ISNULL(@PriceListDownloadEnabled, 0) as PriceListDownloadEnabled,
+				ISNULL(@CanOrder, 0) as CanOrder,
+				ISNULL(@RecieveGoods, 0) as RecieveGoods,
 				ISNULL(@PaymTermId, '') as PaymTermId, 
 				ISNULL(@Currency, '') as Currency, 
-				ISNULL(@InventLocation, '') as InventLocation, 
 				ISNULL(@LanguageId, '') as LanguageId,
-				ISNULL(@PriceGroup, 2 ) as PriceGroup, 
-				ISNULL(@Representative, '') as RepresentativeId, 
+				ISNULL(@PriceGroup, '2' ) as PriceGroupId, 
+				ISNULL(@InventLocation, '') as InventLocationId, 
+				ISNULL(@RepresentativeId, '') as RepresentativeId, 
 				ISNULL(@RepresentativeName, '') as RepresentativeName,
 				ISNULL(@RepresentativePhone, '') as RepresentativePhone, 
 				ISNULL(@RepresentativeMobile, '') as RepresentativeMobile,
 				ISNULL(@RepresentativeExtension, '') as RepresentativeExtension,
-				ISNULL(@RepresentativeEmail, '') as RepresentativeEmail
+				ISNULL(@RepresentativeEmail, '') as RepresentativeEmail, 
+				@DataAreaId as DataAreaId,
+				ISNULL(@LoginType, 0) as LoginType, 
+				ISNULL(@PartnerModel, 0 ) as PartnerModel,
+				CONVERT(BIT, 0) as AutoLogin, 
+				GETDATE() as LoginDate, 
+				CONVERT(DateTime, 0) as LogoutDate, 
+				DATEADD(day, 1, GetDate()) as ExpireDate, 
+				CONVERT(BIT, 1) as Valid
 		RETURN;
 GO
 GRANT EXECUTE ON InternetUser.SignIn TO InternetUser
 GO
 -- exec InternetUser.SignIn 'elektroplaza', '58915891', 'bsc';
--- exec InternetUser.SignIn 'joci', 'joci', 'hrp';
+-- exec InternetUser.SignIn 'ipon', 'gild4MAX19', 'hrp';
 -- exec InternetUser.SignIn 'plorinczy', 'pikolo', 'hrp';
 -- select * from axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = 'ipon' )	gild4MAX19
 -- select * from AxDb.dbo.EmplTable

@@ -3,7 +3,7 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
-        <ConnectionNode Name="AXDB\HRPAXDB:GRAPHISOFT\ajuhasz">
+        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\juhasza">
           <Created>2012-07-05T15:16:37.355646+02:00</Created>
           <Type>SQL</Type>
           <Server>AXDB\HRPAXDB</Server>
@@ -15,7 +15,7 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
-        <ConnectionNode Name="JUHASZ-A-W7\BI:GRAPHISOFT\ajuhasz">
+        <ConnectionNode Name="JUHASZ-A-W7\BI:HRP_HEADOFFICE\juhasza">
           <Created>2012-12-21T13:24:27.2314875+01:00</Created>
           <Type>SQL</Type>
           <Server>JUHASZ-A-W7\BI</Server>
@@ -223,12 +223,6 @@
           <AssociatedConnUserName />
           <FullPath>cms_SecondHandList2.sql</FullPath>
         </FileNode>
-        <FileNode Name="cms_SignIn.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_SignIn.sql</FullPath>
-        </FileNode>
         <FileNode Name="cms_StockList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -247,9 +241,15 @@
           <AssociatedConnUserName />
           <FullPath>cms_VerifyForgetPassword.sql</FullPath>
         </FileNode>
+        <FileNode Name="CustomerPriceGroupInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustomerPriceGroupInsert.sql</FullPath>
+        </FileNode>
         <FileNode Name="CustomerPriceGroupSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CustomerPriceGroupSelect.sql</FullPath>
         </FileNode>
@@ -360,6 +360,12 @@
           <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartUpdate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SignIn.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SignIn.sql</FullPath>
         </FileNode>
         <FileNode Name="StructureSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>

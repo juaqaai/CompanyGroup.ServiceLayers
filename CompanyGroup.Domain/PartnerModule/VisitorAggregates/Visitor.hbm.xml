@@ -4,62 +4,69 @@
     <id name="Id">
       <generator class="identity" />
     </id>
-    <property name="CompanyId" />
-    <property name="CompanyName" />
+    <property name="VisitorId" />
+    <property name="LoginIP" />
+    <property name="RecId" />
+    <property name="CustomerId" />
+    <property name="CustomerName" />
     <property name="PersonId" />
     <property name="PersonName" />
     <property name="Email" />
-    <property name="LoggedIn" />
-    <property name="LoginType" />
     <property name="IsWebAdministrator" />
     <property name="InvoiceInfoEnabled" />
     <property name="PriceListDownloadEnabled" />
     <property name="CanOrder" />
     <property name="RecieveGoods" />
-    <property name="PartnerModel" />
-    <property name="CreatedDate" />
-    <property name="ExpiredDate" />
-    <property name="DataAreaId" />
-    <property name="IPAddress" />
     <property name="PaymTermId" />
     <property name="Currency" />
-    <property name="InventLocation" />
     <property name="LanguageId" />
     <property name="PriceGroupId" />
-    <property name="RepresentativeId" type="System.String"/>
-    <property name="RepresentativeName" type="System.String"/>
-    <property name="RepresentativePhone" type="System.String"/>
-    <property name="RepresentativeMobile" type="System.String"/>
-    <property name="RepresentativeExtension" type="System.String"/>
-    <property name="RepresentativeEmail" type="System.String"/>    
-  </class>  
+    <property name="InventLocation" />    
+    <!--<property name="LoggedIn" />-->
+    <property name="LoginType" />
+    <property name="PartnerModel" />
+    <property name="AutoLogin" />
+    <property name="LoginDate" />
+    <property name="LogoutDate" />
+    <property name="ExpiredDate" />
+    <property name="DataAreaId" />
+    <property name="Valid" />
+    <property name="RepresentativeId" />
+    <property name="RepresentativeName" />
+    <property name="RepresentativePhone" />
+    <property name="RepresentativeMobile" />
+    <property name="RepresentativeExtension" />
+    <property name="RepresentativeEmail" />    
+  </class>
   <sql-query name="InternetUser.SignIn" callable="true">
     <query-param name="UserName" type="System.String"/>
     <query-param name="Password" type="System.String"/>
     <query-param name="DataAreaId" type="System.String"/>
-    <return-scalar column="CompanyId" type="System.String"/>
-    <return-scalar column="CompanyName" type="System.String"/>
-    <return-scalar column="PersonId" type="System.String"/>
-    <return-scalar column="PersonName" type="System.String"/>
-    <return-scalar column="Email" type="System.String"/>
-    <return-scalar column="CanOrder" type="System.Boolean"/>
-    <return-scalar column="RecieveGoods" type="System.Boolean"/>
-    <return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
-    <return-scalar column="IsWebAdministrator" type="System.Boolean"/>
-    <return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
-    <return-scalar column="LoginType" type="System.Int32"/>
-    <return-scalar column="PartnerModel" type="System.Int32"/>
-    <return-scalar column="PaymTermId" type="System.String"/>
-    <return-scalar column="Currency" type="System.String"/>
-    <return-scalar column="InventLocation" type="System.String"/>
-    <return-scalar column="LanguageId" type="System.String"/>
-    <return-scalar column="PriceGroup" type="System.Int32"/>
-    <return-scalar column="RepresentativeId" type="System.String"/>
-    <return-scalar column="RepresentativeName" type="System.String"/>
-    <return-scalar column="RepresentativePhone" type="System.String"/>
-    <return-scalar column="RepresentativeMobile" type="System.String"/>
-    <return-scalar column="RepresentativeExtension" type="System.String"/>
-    <return-scalar column="RepresentativeEmail" type="System.String"/>
+    <return class="Visitor"></return>
     exec InternetUser.SignIn @UserName=:UserName,  @Password=:Password, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>
+
+<!--<return-scalar column="CompanyId" type="System.String"/>
+<return-scalar column="CompanyName" type="System.String"/>
+<return-scalar column="PersonId" type="System.String"/>
+<return-scalar column="PersonName" type="System.String"/>
+<return-scalar column="Email" type="System.String"/>
+<return-scalar column="CanOrder" type="System.Boolean"/>
+<return-scalar column="RecieveGoods" type="System.Boolean"/>
+<return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
+<return-scalar column="IsWebAdministrator" type="System.Boolean"/>
+<return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
+<return-scalar column="LoginType" type="System.Int32"/>
+<return-scalar column="PartnerModel" type="System.Int32"/>
+<return-scalar column="PaymTermId" type="System.String"/>
+<return-scalar column="Currency" type="System.String"/>
+<return-scalar column="InventLocation" type="System.String"/>
+<return-scalar column="LanguageId" type="System.String"/>
+<return-scalar column="PriceGroup" type="System.Int32"/>
+<return-scalar column="RepresentativeId" type="System.String"/>
+<return-scalar column="RepresentativeName" type="System.String"/>
+<return-scalar column="RepresentativePhone" type="System.String"/>
+<return-scalar column="RepresentativeMobile" type="System.String"/>
+<return-scalar column="RepresentativeExtension" type="System.String"/>
+<return-scalar column="RepresentativeEmail" type="System.String"/>-->

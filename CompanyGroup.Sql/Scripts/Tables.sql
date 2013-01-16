@@ -113,11 +113,11 @@ CREATE TABLE InternetUser.Visitor
 	PaymTermId					NVARCHAR(10) NOT NULL DEFAULT '', 
 	Currency					NVARCHAR(10) NOT NULL		DEFAULT '', 
 	LanguageId					NVARCHAR(10) NOT NULL DEFAULT '', 
-	PriceGroupId				INT NOT NULL DEFAULT 0,
+	DefaultPriceGroupId			NVARCHAR(4) NOT NULL DEFAULT '',
 	InventLocationId			NVARCHAR(10) NOT NULL DEFAULT '', 
 	RepresentativeId			INT NOT NULL DEFAULT 0,
 	DataAreaId					NVARCHAR(3) NOT NULL DEFAULT '',				-- vallalatkod hrp; bsc; srv
-	LoginMode					INT NOT NULL DEFAULT 0,							-- bejelentkezes modja =1: ceges; =2: szemelyes; =3: alkalmazott
+	LoginType					INT NOT NULL DEFAULT 0,							-- bejelentkezes modja =1: ceges; =2: szemelyes; =3: alkalmazott
 	PartnerModel				INT NOT NULL DEFAULT 0,							-- partner model (None = 0, Hrp = 1, Bsc = 2, Both = 3)
 	AutoLogin					BIT NOT NULL DEFAULT 0,							-- automatikus bejelentkezes (session nem jar le soha)
 	LoginDate					DATETIME NOT NULL DEFAULT GETDATE(),			-- bejelentkezes idopontja
