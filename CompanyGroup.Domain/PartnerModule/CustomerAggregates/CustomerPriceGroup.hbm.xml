@@ -4,6 +4,7 @@
     <id name="Id">
       <generator class="identity" />
     </id>
+    <property name="VisitorId" />
     <property name="PriceGroupId" />
     <property name="ManufacturerId" />
     <property name="Category1Id" />
@@ -13,7 +14,6 @@
   </class>
   <sql-query name="InternetUser.CustomerPriceGroupSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
-    <query-param name="DataAreaId" type="System.String"/>
     <!--<return-scalar column="PriceGroupId" type="System.String"/>    
     <return-scalar column="ManufacturerId" type="System.String"/>
     <return-scalar column="Category1Id" type="System.String"/>
@@ -21,6 +21,6 @@
     <return-scalar column="Category3Id" type="System.String"/>
     <return-scalar column="Order" type="System.Int32"/>-->
     <return class="CustomerPriceGroup"></return>    
-    exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+    exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
   </sql-query>
 </hibernate-mapping>

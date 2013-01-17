@@ -12,31 +12,38 @@
     <property name="PersonId" />
     <property name="PersonName" />
     <property name="Email" />
-    <property name="IsWebAdministrator" />
-    <property name="InvoiceInfoEnabled" />
-    <property name="PriceListDownloadEnabled" />
-    <property name="CanOrder" />
-    <property name="RecieveGoods" />
+    <component name="Permission" class="Permission">
+      <property name="IsWebAdministrator" />
+      <property name="InvoiceInfoEnabled" />
+      <property name="PriceListDownloadEnabled" />
+      <property name="CanOrder" />
+      <property name="RecieveGoods" />
+    </component>
     <property name="PaymTermId" />
     <property name="Currency" />
     <property name="LanguageId" />
-    <property name="PriceGroupId" />
-    <property name="InventLocation" />    
-    <!--<property name="LoggedIn" />-->
+    <property name="DefaultPriceGroupId" />
+    <property name="InventLocationId" />
+    <component name="Representative" class="Representative">
+      <property name="RepresentativeId" />
+      <property name="RepresentativeName" />
+      <property name="RepresentativePhone" />
+      <property name="RepresentativeMobile" />
+      <property name="RepresentativeExtension" />
+      <property name="RepresentativeEmail" />
+    </component>
+    <property name="DataAreaId" />
     <property name="LoginType" />
     <property name="PartnerModel" />
     <property name="AutoLogin" />
     <property name="LoginDate" />
     <property name="LogoutDate" />
     <property name="ExpiredDate" />
-    <property name="DataAreaId" />
     <property name="Valid" />
-    <property name="RepresentativeId" />
-    <property name="RepresentativeName" />
-    <property name="RepresentativePhone" />
-    <property name="RepresentativeMobile" />
-    <property name="RepresentativeExtension" />
-    <property name="RepresentativeEmail" />    
+    <bag name="CustomerPriceGroups">
+      <key column="Id" />
+      <one-to-many class="CustomerPriceGroup" />
+    </bag>    
   </class>
   <sql-query name="InternetUser.SignIn" callable="true">
     <query-param name="UserName" type="System.String"/>
@@ -45,28 +52,80 @@
     <return class="Visitor"></return>
     exec InternetUser.SignIn @UserName=:UserName,  @Password=:Password, @DataAreaId=:DataAreaId
   </sql-query>
+  <sql-query name="InternetUser.VisitorSelect" callable="true">
+    <query-param name="VisitorId" type="System.String"/>
+    <return class="Visitor"></return>
+    exec InternetUser.VisitorSelect @VisitorId=:VisitorId
+  </sql-query>
+  <sql-query name="InternetUser.VisitorInsert" callable="true">
+    <query-param name="LoginIP" type="System.String"/>
+    <query-param name="RecId" type="System.Int64"/>
+    <query-param name="CustomerId" type="System.String"/>
+    <query-param name="CustomerName" type="System.String"/>
+    <query-param name="PersonId" type="System.String"/>
+    <query-param name="PersonName" type="System.String"/>
+    <query-param name="Email" type="System.String"/>
+    <query-param name="IsWebAdministrator" type="System.Boolean"/>
+    <query-param name="InvoiceInfoEnabled" type="System.Boolean"/>
+    <query-param name="PriceListDownloadEnabled" type="System.Boolean"/>
+    <query-param name="CanOrder" type="System.Boolean"/>
+    <query-param name="RecieveGoods" type="System.Boolean"/>
+    <query-param name="PaymTermId" type="System.String"/>
+    <query-param name="Currency" type="System.String"/>
+    <query-param name="LanguageId" type="System.String"/>
+    <query-param name="DefaultPriceGroupId" type="System.String"/>
+    <query-param name="InventLocationId" type="System.String"/>
+    <query-param name="RepresentativeId" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="LoginType" type="System.Int32"/>
+    <query-param name="PartnerModel" type="System.Int32"/>
+    <query-param name="AutoLogin" type="System.Boolean"/>
+    <query-param name="LoginDate" type="System.DateTime"/>
+    <query-param name="ExpireDate" type="System.DateTime"/>
+    exec InternetUser.VisitorInsert @LoginIP=:LoginIP,
+                                    @RecId=:RecId,
+                                    @CustomerId=:CustomerId,
+                                    @CustomerName=:CustomerName,
+                                    @PersonId=:PersonId,
+                                    @PersonName=:PersonName,
+                                    @Email=:Email,
+                                    @IsWebAdministrator=:IsWebAdministrator,
+                                    @InvoiceInfoEnabled=:InvoiceInfoEnabled,
+                                    @PriceListDownloadEnabled=:PriceListDownloadEnabled,
+                                    @CanOrder=:CanOrder,
+                                    @RecieveGoods=:RecieveGoods,
+                                    @PaymTermId=:PaymTermId,
+                                    @Currency=:Currency,
+                                    @LanguageId=:LanguageId,
+                                    @DefaultPriceGroupId=:DefaultPriceGroupId,
+                                    @InventLocationId=:InventLocationId,
+                                    @RepresentativeId=:RepresentativeId,
+                                    @DataAreaId=:DataAreaId,
+                                    @LoginType=:LoginType,
+                                    @PartnerModel=:PartnerModel,
+                                    @AutoLogin=:AutoLogin,
+                                    @LoginDate=:LoginDate,
+                                    @ExpireDate=:ExpireDate
+  </sql-query>
+  <sql-query name="InternetUser.VisitorDisableStatus" callable="true">
+    <query-param name="Currency" type="System.String"/>
+    exec InternetUser.VisitorDisableStatus @VisitorId=:VisitorId
+  </sql-query>
+  <sql-query name="InternetUser.VisitorChangeLanguage" callable="true">
+    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="Language" type="System.String"/>    
+    exec InternetUser.VisitorChangeLanguage @VisitorId=:VisitorId, @Language=:Language
+  </sql-query>
+  <sql-query name="InternetUser.VisitorChangeCurrency" callable="true">
+    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="Language" type="System.String"/>
+    InternetUser.VisitorChangeCurrency @VisitorId=:VisitorId, @Language=:Language
+  </sql-query>
+  <sql-query name="InternetUser.SignIn" callable="true">
+    <query-param name="UserName" type="System.String"/>
+    <query-param name="Password" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>    
+    exec InternetUser.SignIn @UserName=:UserName, @Password=:Password, @DataAreaId=:DataAreaId
+  </sql-query>
 </hibernate-mapping>
 
-<!--<return-scalar column="CompanyId" type="System.String"/>
-<return-scalar column="CompanyName" type="System.String"/>
-<return-scalar column="PersonId" type="System.String"/>
-<return-scalar column="PersonName" type="System.String"/>
-<return-scalar column="Email" type="System.String"/>
-<return-scalar column="CanOrder" type="System.Boolean"/>
-<return-scalar column="RecieveGoods" type="System.Boolean"/>
-<return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
-<return-scalar column="IsWebAdministrator" type="System.Boolean"/>
-<return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
-<return-scalar column="LoginType" type="System.Int32"/>
-<return-scalar column="PartnerModel" type="System.Int32"/>
-<return-scalar column="PaymTermId" type="System.String"/>
-<return-scalar column="Currency" type="System.String"/>
-<return-scalar column="InventLocation" type="System.String"/>
-<return-scalar column="LanguageId" type="System.String"/>
-<return-scalar column="PriceGroup" type="System.Int32"/>
-<return-scalar column="RepresentativeId" type="System.String"/>
-<return-scalar column="RepresentativeName" type="System.String"/>
-<return-scalar column="RepresentativePhone" type="System.String"/>
-<return-scalar column="RepresentativeMobile" type="System.String"/>
-<return-scalar column="RepresentativeExtension" type="System.String"/>
-<return-scalar column="RepresentativeEmail" type="System.String"/>-->

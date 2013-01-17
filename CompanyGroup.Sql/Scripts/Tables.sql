@@ -134,7 +134,7 @@ GO
 CREATE TABLE InternetUser.CustomerPriceGroup
 (
 	Id				INT IDENTITY PRIMARY KEY,
-	VisitorId		NVARCHAR(64) NOT NULL DEFAULT '',										-- login azonosito
+	VisitorId		INT NOT NULL DEFAULT 0,		
 	ManufacturerId  NVARCHAR(4) NOT NULL DEFAULT '',
 	Category1Id		NVARCHAR(4) NOT NULL DEFAULT '', 
 	Category2Id		NVARCHAR(4) NOT NULL DEFAULT '', 
@@ -154,7 +154,8 @@ CREATE TABLE InternetUser.Representative
 	Name NVARCHAR(64) NOT NULL DEFAULT '', 
 	Phone NVARCHAR(64) NOT NULL DEFAULT '',
 	Mobile NVARCHAR(20) NOT NULL DEFAULT '', 
-	Email NVARCHAR(64) NOT NULL DEFAULT '' 
+	Email NVARCHAR(64) NOT NULL DEFAULT '', 
+	Extension NVARCHAR(20) NOT NULL DEFAULT ''
 )
 GO
 

@@ -111,9 +111,9 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="loginType"></param>
         public void SetLoggedIn(LoginType loginType)
         { 
-            bool personalLoginOK = (loginType == LoginType.Person) && (!String.IsNullOrWhiteSpace(this.CompanyId)) && (!String.IsNullOrWhiteSpace(this.CompanyName))  && (!String.IsNullOrWhiteSpace(this.PersonId)) && (!String.IsNullOrWhiteSpace(this.PersonName));
+            bool personalLoginOK = (loginType == LoginType.Person) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName))  && (!String.IsNullOrWhiteSpace(this.PersonId)) && (!String.IsNullOrWhiteSpace(this.PersonName));
 
-            bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CompanyId)) && (!String.IsNullOrWhiteSpace(this.CompanyName));
+            bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
 
             this.LoggedIn = DateTime.Now.CompareTo(this.ExpiredDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
         }
@@ -126,7 +126,8 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// profil kiolvasás, beállítás
         /// </summary>
-        public CompanyGroup.Domain.PartnerModule.Profile Profile { get; private set; }
+        //public CompanyGroup.Domain.PartnerModule.Profile Profile { get; private set; }
+        public IList<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> CustomerPriceGroups { get; set; }
 
         /// <summary>
         /// jogosultság beállítás
@@ -186,15 +187,15 @@ namespace CompanyGroup.Domain.PartnerModule
         public string PaymTermId { set; get; }
 
         public string Currency { set; get; }
- 
-        public string InventLocation { set; get; }
+
+        public string InventLocationId { set; get; }
 
         public string LanguageId { set; get; }
 
         /// <summary>
         /// árbesorolás 
         /// </summary>
-        public int PriceGroup { set; get; }
+        public string DefaultPriceGroupId { set; get; }
 
         /// <summary>
         /// képviselő
@@ -204,10 +205,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// látogatás bejegyzés akkor érvényes, ha a lejárat ideje nagyobb mint az aktuális dátum - idő értéke
         /// </summary>
-        public bool IsValid 
-        {
-            get { return DateTime.Now.CompareTo(this.ExpiredDate) < 1; }
-        }
+        public bool IsValid { set; get; }
 
         /// <summary>
         /// bejelentkezés lejárt-e, vagy sem?
@@ -220,16 +218,16 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// profile beállítása
         /// </summary>
-        public void SetProfile(CompanyGroup.Domain.PartnerModule.Profile profile)
-        {
+        //public void SetProfile(CompanyGroup.Domain.PartnerModule.Profile profile)
+        //{
 
-            if (profile == null)
-            {
-                throw new ArgumentNullException("profile");
-            }
+        //    if (profile == null)
+        //    {
+        //        throw new ArgumentNullException("profile");
+        //    }
 
-            this.Profile = profile;
-        }
+        //    this.Profile = profile;
+        //}
 
         /// <summary>
         /// jogosultság beállítása
@@ -262,17 +260,17 @@ namespace CompanyGroup.Domain.PartnerModule
                                               string manufacturerId, string category1Id, string category2Id, string category3Id)
         {
             //Amiből nincs 2-es ára a vevőnek, azok a belépéskor a profil-ba kerülnek. Ebből a listából ki kell keresni a termékhez tartozó elemet.
-            this.Profile.CustomerPriceGroups.Where(x =>
+            this.CustomerPriceGroups.Where(x =>
                                     (x.ManufacturerId == manufacturerId || String.IsNullOrEmpty(x.ManufacturerId)) &&
                                     (x.Category1Id == category1Id || String.IsNullOrEmpty(x.Category1Id)) &&
                                     (x.Category2Id == category2Id || String.IsNullOrEmpty(x.Category2Id)) &&
                                     (x.Category3Id == category3Id || String.IsNullOrEmpty(x.Category3Id)));
 
             //sorba rendezés 1..n -ig
-            this.Profile.CustomerPriceGroups.OrderBy(x => x.Order);
+            this.CustomerPriceGroups.OrderBy(x => x.Order);
 
             //legkisebb árcsoport szerinti kiválasztás történik. Az AX szöveges formában tárolja az árcsoportokat
-            string priceGroup = this.Profile.CustomerPriceGroups.Select(x => x.PriceGroupId).FirstOrDefault();
+            string priceGroup = this.CustomerPriceGroups.Select(x => x.PriceGroupId).FirstOrDefault();
 
             //decimal priceGroup = 0;
 

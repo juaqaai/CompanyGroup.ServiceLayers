@@ -8,10 +8,6 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public static class Factory
     {
-        public static CompanyGroup.Domain.PartnerModule.Visitor CreateVisitor(CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo)
-        {
-            return new CompanyGroup.Domain.PartnerModule.Visitor(loginInfo);
-        }
 
         public static CompanyGroup.Domain.PartnerModule.Visitor CreateVisitor()
         {
