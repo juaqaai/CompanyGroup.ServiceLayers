@@ -37,7 +37,7 @@ SET NOCOUNT ON
 RETURN
 
 /*
-DECLARE @CartId INT, @date DateTime = GetDate();
+DECLARE @date DateTime = GetDate();
 EXEC [InternetUser].[ShoppingCartInsert] 'teszt', 
 										 'Shopping cart 1',	
 										  1,					-- fizetesi opciok: KP, ÁTUT, Elõre ut., Utánvét (Cash = 1, Transfer = 2, ForwardTransfer = 3, CashOnDelivery = 4)
@@ -50,9 +50,7 @@ EXEC [InternetUser].[ShoppingCartInsert] 'teszt',
 										  0,
 										  0,				-- lett-e számla csatolva
 										  1,						-- aktív-e a kosár (egyszerre csak egy kosár lehet aktív)
-										  'HUF',			-- rendelés feladáshoz tartozó pénznem 
-										  @CartId OUT;
-SELECT @CartId as CartId;
+										  'HUF'			-- rendelés feladáshoz tartozó pénznem 
 select * from InternetUser.ShoppingCart;  
 */
 GO

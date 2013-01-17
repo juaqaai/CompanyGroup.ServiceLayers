@@ -111,7 +111,6 @@
     <Compile Include="RegistrationModule\CustomerAggregates\BankAccount.cs" />
     <Compile Include="RegistrationModule\CustomerAggregates\CrudMethod.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\DeliveryAddress.cs" />
-    <Compile Include="PartnerModule\CustomerAggregates\LoginInfo.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\PartnerModel.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\Factory.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\IVisitorRepository.cs" />
@@ -199,10 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
-    <EmbeddedResource Include="WebshopModule\FinanceAggregates\FinanceOfferItem.hbm.xml">
+    <EmbeddedResource Include="WebshopModule\FinanceAggregates\FinanceOffer.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="WebshopModule\FinanceAggregates\FinanceOffer.hbm.xml">
+    <EmbeddedResource Include="WebshopModule\FinanceAggregates\FinanceOfferItem.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WebshopModule\ShoppingCartAggregates\ShoppingCart.hbm.xml">

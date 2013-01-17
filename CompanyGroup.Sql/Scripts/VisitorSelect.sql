@@ -11,11 +11,11 @@ CREATE PROCEDURE [InternetUser].[VisitorSelect] @VisitorId NVARCHAR(64) = ''
 AS
 SET NOCOUNT ON
 
-SELECT V.Id, V.VisitorId, LoginIP, RecId,  CustomerId,  CustomerName,  PersonId,  PersonName,  V.Email,  
-	   IsWebAdministrator, InvoiceInfoEnabled, PriceListDownloadEnabled, CanOrder, RecieveGoods, PaymTermId, Currency, LanguageId, V.DefaultPriceGroupId, InventLocationId,  
-	   DataAreaId, LoginType as LoginType, PartnerModel, AutoLogin, LoginDate, LogoutDate, ExpireDate, Valid,
-	   ISNULL(P.Id, 0) as PriceGroupId, ISNULL(P.Category1Id, '') as PriceGroupCategory1Id, ISNULL(P.Category2Id, '') as PriceGroupCategory2Id, ISNULL(P.Category3Id, '') as PriceGroupCategory3Id, ISNULL(P.ManufacturerId, '') as PriceGroupManufacturerId, 
-	   ISNULL(P.[Order], 0) as PriceGroupOrder, ISNULL(P.PriceGroupId, '') as PriceGroup, 
+SELECT V.Id, V.VisitorId, V.LoginIP, V.RecId,  V.CustomerId,  V.CustomerName,  V.PersonId,  V.PersonName,  V.Email,  
+	   V.IsWebAdministrator, V.InvoiceInfoEnabled, V.PriceListDownloadEnabled, V.CanOrder, V.RecieveGoods, V.PaymTermId, V.Currency, V.LanguageId, V.DefaultPriceGroupId, V.InventLocationId,  
+	   V.DataAreaId, V.LoginType as LoginType, V.PartnerModel, V.AutoLogin, V.LoginDate, V.LogoutDate, V.ExpireDate, V.Valid,
+	   ISNULL(P.Id, 0) as Id, ISNULL(P.Category1Id, '') as Category1Id, ISNULL(P.Category2Id, '') as Category2Id, ISNULL(P.Category3Id, '') as Category3Id, ISNULL(P.ManufacturerId, '') as ManufacturerId, 
+	   ISNULL(P.[Order], 0) as [Order], ISNULL(P.PriceGroupId, '') as PriceGroupId, 
 	   V.RepresentativeId,
        ISNULL(R.Name, '') as RepresentativeName,
        ISNULL(R.Phone, '') as RepresentativePhone,

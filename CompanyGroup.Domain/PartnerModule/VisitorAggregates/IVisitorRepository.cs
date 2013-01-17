@@ -5,16 +5,16 @@ namespace CompanyGroup.Domain.PartnerModule
 {
     public interface IVisitorRepository
     {
-        void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
+        CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId);
 
-        CompanyGroup.Domain.PartnerModule.Visitor GetItemByKey(string id);
+        CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId);
+
+        void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
 
         void DisableStatus(string id, string dataAreaId);
 
-        void Disconnect();
+        void ChangeLanguage(string id, string language);
 
-        CompanyGroup.Domain.PartnerModule.Visitor ChangeLanguage(string id, string language);
-
-        CompanyGroup.Domain.PartnerModule.Visitor ChangeCurrency(string id, string currency);
+        void ChangeCurrency(string id, string currency);
     }
 }

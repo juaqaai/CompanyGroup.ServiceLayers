@@ -21,7 +21,6 @@
     </component>    
     <property name="Active" />
     <property name="Currency" />
-    <property name="InvoiceAttached" />
     <property name="Status" />
     <property name="CreatedDate" />
     <bag name="Items">
@@ -33,7 +32,7 @@
     <query-param name="CartId" type="System.Int32"/>
     <return alias="Cart" class="ShoppingCart"></return>  
     <return-join alias="Line" property="Cart.Items"></return-join>
-    exec InternetUser.GetShoppingCart :CartId 
+    exec InternetUser.GetShoppingCart @CartId=:CartId
   </sql-query>
   <sql-query name="InternetUser.GetShoppingCartCollection">
     <query-param name="VisitorId" type="System.String"/>

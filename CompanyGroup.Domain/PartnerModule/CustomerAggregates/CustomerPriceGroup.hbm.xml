@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
   <class name="CustomerPriceGroup" lazy="false">
     <id name="Id">
       <generator class="identity" />
@@ -14,13 +14,13 @@
   </class>
   <sql-query name="InternetUser.CustomerPriceGroupSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
-    <!--<return-scalar column="PriceGroupId" type="System.String"/>    
+    <return class="CustomerPriceGroup"></return>    
+    exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
+  </sql-query>
+</hibernate-mapping>
+<!--<return-scalar column="PriceGroupId" type="System.String"/>    
     <return-scalar column="ManufacturerId" type="System.String"/>
     <return-scalar column="Category1Id" type="System.String"/>
     <return-scalar column="Category2Id" type="System.String"/>
     <return-scalar column="Category3Id" type="System.String"/>
     <return-scalar column="Order" type="System.Int32"/>-->
-    <return class="CustomerPriceGroup"></return>    
-    exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
-  </sql-query>
-</hibernate-mapping>

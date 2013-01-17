@@ -153,23 +153,23 @@ namespace CompanyGroup.Data.PartnerModule
         /// <param name="password"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId)
-        {
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
+        //public CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId)
+        //{
+        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
 
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(password), "Password may not be null or empty");
+        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(password), "Password may not be null or empty");
 
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
+        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_SignIn")
-                                            .SetString("UserName", userName)
-                                            .SetString("Password", password)
-                                            .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
+        //    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_SignIn")
+        //                                    .SetString("UserName", userName)
+        //                                    .SetString("Password", password)
+        //                                    .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
 
-            CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = query.UniqueResult<CompanyGroup.Domain.PartnerModule.LoginInfo>();
+        //    CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = query.UniqueResult<CompanyGroup.Domain.PartnerModule.LoginInfo>();
 
-            return loginInfo;
-        }
+        //    return loginInfo;
+        //}
 
         /// <summary>
         /// InternetUser.CustomerPrices( @DataAreaId VARCHAR(3) = '', @CustomerId NVARCHAR(10) = '' )

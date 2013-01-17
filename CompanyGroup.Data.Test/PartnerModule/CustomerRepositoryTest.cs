@@ -79,15 +79,15 @@ namespace CompanyGroup.Data.Test.PartnerModule
             Assert.IsTrue(addresszipCode.Count > 0);
         }
 
-        [TestMethod]
-        public void SignIn()
-        {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+        //[TestMethod]
+        //public void SignIn()
+        //{
+        //    CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
 
-            CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = repository.SignIn("elektroplaza", "58915891", "hrp");
+        //    CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = repository.SignIn("elektroplaza", "58915891", "hrp");
 
-            Assert.IsNotNull(loginInfo);
-        }
+        //    Assert.IsNotNull(loginInfo);
+        //}
 
         [TestMethod]
         public void GetCustomerPriceGroups()

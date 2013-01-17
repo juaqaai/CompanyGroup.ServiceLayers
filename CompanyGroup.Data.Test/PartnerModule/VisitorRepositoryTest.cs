@@ -59,6 +59,14 @@ namespace CompanyGroup.Data.Test.PartnerModule
         //
         #endregion
 
+        [TestMethod]
+        public void SignIn()
+        {
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository(NHibernateSessionManager.Instance.GetSession());
 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.SignIn("elektroplaza", "58915891", "hrp");
+
+            Assert.IsNotNull(visitor);
+        }
     }
 }

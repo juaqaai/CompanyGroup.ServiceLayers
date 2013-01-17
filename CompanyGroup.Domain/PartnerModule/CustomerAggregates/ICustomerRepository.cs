@@ -33,7 +33,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="password"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId);
+        //CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId);
 
         /// <summary>
         /// vevők árcsoportjainak lekérdezése 

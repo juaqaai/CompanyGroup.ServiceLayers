@@ -7,10 +7,10 @@
     <property name="VisitorId" />
     <property name="CompanyId" />
     <property name="PersonId" />
-    <property name="LeasingPersonName" />
-    <property name="LeasingAddress" />
-    <property name="LeasingPhone" />
-    <property name="LeasingStatNumber" />
+    <property name="PersonName" />
+    <property name="Address" />
+    <property name="Phone" />
+    <property name="StatNumber" />
     <property name="NumOfMonth" />
     <property name="Currency" />
     <property name="Status" />
@@ -23,8 +23,8 @@
   <sql-query name="InternetUser.GetFinanceOffer">
     <query-param name="OfferId" type="System.Int32"/>
     <return alias="Offer" class="FinanceOffer"></return>  
-    <return-join alias="Line" property="Cart.Items"></return-join>
-    exec InternetUser.GetFinanceOffer :OfferId
+    <return-join alias="Line" property="Offer.Items"></return-join>
+    exec InternetUser.GetFinanceOffer @OfferId=:OfferId
   </sql-query>
   <sql-query name="InternetUser.FinanceOfferInsert">
     <query-param name="VisitorId" type="System.String"/>

@@ -37,6 +37,43 @@ DECLARE @RecId bigint,
 		@RepresentativeExtension nvarchar(16),
 		@RepresentativeEmail nvarchar(64);
 
+		IF ( 'JUHASZ-A-W7\BI' = (Select meta.name FROM WebDb_Test.sys.servers AS meta) )
+		BEGIN
+			SELECT  0 as Id, 'VisitorId' as VisitorId, 'LoginIP' as LoginIP,
+				0 as RecId, 
+				'CustomerId' as CustomerId,
+				'CustomerName' as CustomerName,
+				'PersonId' as PersonId,
+				'PersonName' as PersonName,
+				'Email' as Email,
+				0 as IsWebAdministrator,
+				0 as InvoiceInfoEnabled,
+				0 as PriceListDownloadEnabled,
+				0 as CanOrder,
+				0 as RecieveGoods,
+				'PaymTermId' as PaymTermId, 
+				'Currency' as Currency, 
+				'LanguageId' as LanguageId,
+				'2' as DefaultPriceGroupId, 
+				'InventLocationId' as InventLocationId, 
+				'RepresentativeId' as RepresentativeId, 
+				'RepresentativeName' as RepresentativeName,
+				'RepresentativePhone' as RepresentativePhone, 
+				'RepresentativeMobile' as RepresentativeMobile,
+				'RepresentativeExtension' as RepresentativeExtension,
+				'RepresentativeEmail' as RepresentativeEmail, 
+				@DataAreaId as DataAreaId,
+				0 as LoginType, 
+				0 as PartnerModel,
+				CONVERT(BIT, 0) as AutoLogin, 
+				GETDATE() as LoginDate, 
+				CONVERT(DateTime, 0) as LogoutDate, 
+				DATEADD(day, 1, GetDate()) as ExpireDate, 
+				CONVERT(BIT, 1) as Valid
+			
+			RETURN;
+		END
+
 		DECLARE @VirtualDataAreaId nvarchar(3) = InternetUser.GetVirtualDataAreaId( @DataAreaId );
 
 		SELECT @RecId = RecId,

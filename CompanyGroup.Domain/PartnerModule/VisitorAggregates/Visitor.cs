@@ -10,58 +10,6 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class Visitor : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
-        //private LoginInfo loginInfo;
-
-        //public Visitor(CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo)
-        //{
-        //    //this.loginInfo = loginInfo;
-
-        //    this.CompanyId = loginInfo.CompanyId;
-
-        //    this.CompanyName = loginInfo.CompanyName;
-
-        //    this.PersonId = loginInfo.PersonId;
-
-        //    this.PersonName = loginInfo.PersonName;
-
-        //    this.Email = loginInfo.Email;
-
-        //    this.LoginType = loginInfo.LoginType;
-
-        //    //this.SetLoggedIn(this.LoginType);
-
-        //    this.PartnerModel = loginInfo.PartnerModel;
-
-        //    this.Permission = new CompanyGroup.Domain.PartnerModule.Permission(loginInfo.IsWebAdministrator, loginInfo.InvoiceInfoEnabled, loginInfo.PriceListDownloadEnabled, loginInfo.CanOrder, loginInfo.RecieveGoods);
-
-        //    this.Profile = new Profile();
-
-        //    this.CreatedDate = DateTime.MinValue;
-
-        //    this.ExpiredDate = DateTime.MinValue;
-
-        //    this.Status = LoginStatus.Active;
-
-        //    this.DataAreaId = String.Empty; 
-
-        //    this.IPAddress = String.Empty;
-
-        //    this.PaymTermId = loginInfo.PaymTermId;
-
-        //    this.Currency = loginInfo.Currency;
-
-        //    this.InventLocation = loginInfo.InventLocation;
-
-        //    this.LanguageId = loginInfo.LanguageId;
-
-        //    this.Representative = new Representative( loginInfo.RepresentativeId, loginInfo.RepresentativeName, loginInfo.RepresentativePhone, loginInfo.RepresentativeMobile, loginInfo.RepresentativeExtension, loginInfo.RepresentativeEmail );
-
-        //    this.PriceGroup = loginInfo.PriceGroup;
-
-        //}
-
-        //public Visitor() : this(new LoginInfo("", "", "", "", "", false, false, false, false, false, 0, 0, "", "", "", "", 0, "", "", "", "", "", "")) { }
-
         /// <summary>
         /// egyedi azonosító
         /// </summary>
@@ -98,27 +46,6 @@ namespace CompanyGroup.Domain.PartnerModule
         public bool LoggedIn { get; set; }
 
         /// <summary>
-        /// bejelentkezett-e tulajdonság beállítása beállító metóduson keresztül       
-        /// </summary>
-        public void SetLoggedIn()
-        {
-            this.SetLoggedIn(this.LoginType);
-        }
-
-        /// <summary>
-        /// bejelentkezett-e tulajdonság beállítása beállító metóduson keresztül       
-        /// </summary>
-        /// <param name="loginType"></param>
-        public void SetLoggedIn(LoginType loginType)
-        { 
-            bool personalLoginOK = (loginType == LoginType.Person) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName))  && (!String.IsNullOrWhiteSpace(this.PersonId)) && (!String.IsNullOrWhiteSpace(this.PersonName));
-
-            bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
-
-            this.LoggedIn = DateTime.Now.CompareTo(this.ExpiredDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
-        }
-
-        /// <summary>
         /// bejelentkezés típusa (None = 0, Company = 1, Person = 2)
         /// </summary>
         public LoginType LoginType { get; set; }
@@ -133,35 +60,6 @@ namespace CompanyGroup.Domain.PartnerModule
         /// jogosultság beállítás
         /// </summary>
         public Permission Permission { get; set; }
-
-        /// <summary>
-        /// szerepkörök beállítása a jogosultságkezeléshez
-        /// </summary>
-        public List<string> Roles
-        {
-            get 
-            {
-                List<string> roles = new List<string>();
-
-                if (this.Permission.IsWebAdministrator)
-                {
-                    roles.Add("WebAdministrator");
-                }
-                if (this.Permission.InvoiceInfoEnabled)
-                {
-                roles.Add("InvoiceInfoReader");
-                }
-                if (this.Permission.PriceListDownloadEnabled)
-                {
-                    roles.Add("PriceListReader");
-                }
-                if (this.Permission.CanOrder)
-                {
-                    roles.Add("CanOrder");
-                }
-                return roles;
-            }
-        }
 
         /// <summary>
         /// partnermodel (None = 0, Hrp = 1, Bsc = 2, Both = 3)
@@ -213,6 +111,57 @@ namespace CompanyGroup.Domain.PartnerModule
         public bool IsValidLogin
         {
             get { return (DateTime.Now.CompareTo(this.ExpiredDate) < 1) && (this.LoggedIn) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); }
+        }
+
+        /// <summary>
+        /// bejelentkezett-e tulajdonság beállítása beállító metóduson keresztül       
+        /// </summary>
+        public void SetLoggedIn()
+        {
+            this.SetLoggedIn(this.LoginType);
+        }
+
+        /// <summary>
+        /// bejelentkezett-e tulajdonság beállítása beállító metóduson keresztül       
+        /// </summary>
+        /// <param name="loginType"></param>
+        public void SetLoggedIn(LoginType loginType)
+        {
+            bool personalLoginOK = (loginType == LoginType.Person) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName)) && (!String.IsNullOrWhiteSpace(this.PersonId)) && (!String.IsNullOrWhiteSpace(this.PersonName));
+
+            bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
+
+            this.LoggedIn = DateTime.Now.CompareTo(this.ExpiredDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
+        }
+
+        /// <summary>
+        /// szerepkörök beállítása a jogosultságkezeléshez
+        /// </summary>
+        public List<string> Roles
+        {
+            get
+            {
+                List<string> roles = new List<string>();
+
+                if (this.Permission.IsWebAdministrator)
+                {
+                    roles.Add("WebAdministrator");
+                }
+                if (this.Permission.InvoiceInfoEnabled)
+                {
+                    roles.Add("InvoiceInfoReader");
+                }
+                if (this.Permission.PriceListDownloadEnabled)
+                {
+                    roles.Add("PriceListReader");
+                }
+                if (this.Permission.CanOrder)
+                {
+                    roles.Add("CanOrder");
+                }
+                return roles;
+            }
+            set { }
         }
 
         /// <summary>
