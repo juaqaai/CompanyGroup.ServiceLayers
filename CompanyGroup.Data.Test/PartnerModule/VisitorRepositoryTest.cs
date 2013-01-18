@@ -68,5 +68,15 @@ namespace CompanyGroup.Data.Test.PartnerModule
 
             Assert.IsNotNull(visitor);
         }
+
+        [TestMethod]
+        public void GetItemById()
+        {
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository(NHibernateSessionManager.Instance.GetSession());
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.GetItemById("teszt");
+
+            Assert.IsNotNull(visitor);
+        }
     }
 }
