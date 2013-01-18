@@ -15,6 +15,13 @@ namespace CompanyGroup.Data.PartnerModule
         /// <param name="session"></param>
         public VisitorRepository(NHibernate.ISession session) : base(session) { }
 
+        /// <summary>
+        /// bejelentkezés
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
         public CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
@@ -75,11 +82,10 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// bejelentkezett státusz állapot törlése 
+        /// bejelentkezett státusz állapot törlése, kijelentkezés 
         /// </summary>
         /// <param name="visitorId"></param>
-        /// <param name="dataAreaId"></param>
-        public void DisableStatus(string visitorId, string dataAreaId)
+        public void DisableStatus(string visitorId)
         {
             try
             {

@@ -37,7 +37,7 @@ DECLARE @RecId bigint,
 		@RepresentativeExtension nvarchar(16),
 		@RepresentativeEmail nvarchar(64);
 
-		IF ( 'JUHASZ-A-W7\BI' = (Select meta.name FROM WebDb_Test.sys.servers AS meta) )
+		IF ( EXISTS(Select * FROM WebDb_Test.sys.servers AS meta WHERE meta.name = 'JUHASZ-A-W7\BI') )
 		BEGIN
 			SELECT  0 as Id, 'VisitorId' as VisitorId, 'LoginIP' as LoginIP,
 				0 as RecId, 
@@ -68,7 +68,7 @@ DECLARE @RecId bigint,
 				CONVERT(BIT, 0) as AutoLogin, 
 				GETDATE() as LoginDate, 
 				CONVERT(DateTime, 0) as LogoutDate, 
-				DATEADD(day, 1, GetDate()) as ExpireDate, 
+				DATEADD(day, 1, GetDate()) as [ExpiredDate], 
 				CONVERT(BIT, 1) as Valid
 			
 			RETURN;
@@ -183,7 +183,7 @@ DECLARE @RecId bigint,
 				CONVERT(BIT, 0) as AutoLogin, 
 				GETDATE() as LoginDate, 
 				CONVERT(DateTime, 0) as LogoutDate, 
-				DATEADD(day, 1, GetDate()) as ExpireDate, 
+				DATEADD(day, 1, GetDate()) as ExpiredDate, 
 				CONVERT(BIT, 1) as Valid
 		RETURN;
 GO

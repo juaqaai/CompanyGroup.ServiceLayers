@@ -11,10 +11,10 @@ namespace CompanyGroup.Domain.PartnerModule
 
         void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
 
-        void DisableStatus(string id, string dataAreaId);
+        void DisableStatus(string visitorId);
 
-        void ChangeLanguage(string id, string language);
+        void ChangeLanguage(string visitorId, string language);
 
-        void ChangeCurrency(string id, string currency);
+        void ChangeCurrency(string visitorId, string currency);
     }
 }

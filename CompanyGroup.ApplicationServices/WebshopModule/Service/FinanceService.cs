@@ -139,7 +139,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             try
             {
                 //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
                 //kosár tartalom lekérdezése, levélküldés
                 Domain.WebshopModule.FinanceOffer financeOfferToAdd = new Domain.WebshopModule.FinanceOffer()
@@ -233,7 +233,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                         .Replace("$FinancedAmount$", Convert.ToString(financedAmount))
                                         .Replace("$SentDate$", DateTime.Now.ToShortDateString())
                                         .Replace("$OfferItems$", offerItemsHtml)
-                                        .Replace("$CustName$", visitor.CompanyName)
+                                        .Replace("$CustName$", visitor.CustomerName)
                                         .Replace("$CustPersonName$", visitor.PersonName)
                                         .Replace("$CustPhone$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "")
                                         .Replace("$CustEmail$", String.IsNullOrEmpty(visitor.PersonName) ? "" : visitor.PersonName);
@@ -247,7 +247,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                         .Replace("$FinancedAmount$", Convert.ToString(financedAmount))
                                         .Replace("$SentDate$", DateTime.Now.ToShortDateString())
                                         .Replace("$OfferItems$", offerItemsHtml)
-                                        .Replace("$CustName$", visitor.CompanyName)
+                                        .Replace("$CustName$", visitor.CustomerName)
                                         .Replace("$CustPersonName$", visitor.PersonName)
                                         .Replace("$CustPhone$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "")
                                         .Replace("$CustEmail$", String.IsNullOrEmpty(visitor.PersonName) ? "" : "");

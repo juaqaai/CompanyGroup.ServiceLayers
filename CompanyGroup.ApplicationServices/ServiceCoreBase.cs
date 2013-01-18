@@ -68,7 +68,7 @@ namespace CompanyGroup.ApplicationServices
         {
             try
             {
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(objectId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(objectId);
 
                 visitor.SetLoggedIn();
 
@@ -85,10 +85,6 @@ namespace CompanyGroup.ApplicationServices
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                visitorRepository.Disconnect();
             }
         }
 

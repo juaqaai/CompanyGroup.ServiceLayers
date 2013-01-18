@@ -16,6 +16,26 @@ namespace CompanyGroup.Domain.PartnerModule
         public int Id { get; set; }
 
         /// <summary>
+        /// látogató azonosító
+        /// </summary>
+        public string VisitorId { get; set; }
+
+        /// <summary>
+        /// login ip address
+        /// </summary>
+        public string LoginIP { get; set; }
+
+        /// <summary>
+        /// automatikus belépés beállítása megtörtént?
+        /// </summary>
+        public bool AutoLogin { get; set; }
+
+        /// <summary>
+        /// ax record id
+        /// </summary>
+        public long RecId { get; set; }
+
+        /// <summary>
         /// vállalat azonosítója
         /// </summary>
         public string CustomerId { get; set; }
@@ -69,7 +89,12 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// Visitor bejegyzés keletkezésének időpontja
         /// </summary>
-        public DateTime CreatedDate { set; get; }
+        public DateTime LoginDate { set; get; }
+
+        /// <summary>
+        /// kijelentkezés időpontja
+        /// </summary>
+        public DateTime LogoutDate { set; get; }
 
         /// <summary>
         /// Visitor bejegyzés érvényességének időpontja
@@ -78,16 +103,29 @@ namespace CompanyGroup.Domain.PartnerModule
 
         public LoginStatus Status { set; get; }
 
+        /// <summary>
+        /// vállalat
+        /// </summary>
         public string DataAreaId { set; get; }
 
-        public string IPAddress { set; get; }
-
+        /// <summary>
+        /// vevő fizetési feltétele
+        /// </summary>
         public string PaymTermId { set; get; }
 
+        /// <summary>
+        /// alapértelmezett valutanem
+        /// </summary>
         public string Currency { set; get; }
 
+        /// <summary>
+        /// alapértelmezett raktár
+        /// </summary>
         public string InventLocationId { set; get; }
 
+        /// <summary>
+        /// alapértelmezett nyelv
+        /// </summary>
         public string LanguageId { set; get; }
 
         /// <summary>
@@ -103,7 +141,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// látogatás bejegyzés akkor érvényes, ha a lejárat ideje nagyobb mint az aktuális dátum - idő értéke
         /// </summary>
-        public bool IsValid { set; get; }
+        public bool Valid { set; get; }
 
         /// <summary>
         /// bejelentkezés lejárt-e, vagy sem?

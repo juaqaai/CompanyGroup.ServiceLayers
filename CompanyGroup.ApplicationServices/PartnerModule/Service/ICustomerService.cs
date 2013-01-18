@@ -51,31 +51,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request);
 
         /// <summary>
-        /// bejelentkezés           
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        //[OperationContract(Action = "SignIn")]
-        //[WebInvoke(Method = "POST",
-        //    UriTemplate = "/SignIn",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request);
-
-        /// <summary>
-        /// kijelentkezés   
-        /// </summary>
-        /// <param name="request"></param>
-        //[OperationContract(Action = "SignOut")]
-        //[WebInvoke(Method = "POST",
-        //    UriTemplate = "/SignOut",
-        //    RequestFormat = WebMessageFormat.Json, 
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.ServiceResponse.Empty SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request);
-
-        /// <summary>
         /// vevőhöz tartozó számlák listája
         /// </summary>
         /// <param name="request"></param>

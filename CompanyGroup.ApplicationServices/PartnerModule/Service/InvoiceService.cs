@@ -52,7 +52,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //látogató kiolvasása
             CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CompanyId, visitor.DataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CustomerId, visitor.DataAreaId);
 
             List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfoList.ConvertAll( x => new InvoiceInfoToInvoiceInfo().Map(x) );
 
