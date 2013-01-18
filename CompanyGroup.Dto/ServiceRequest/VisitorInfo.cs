@@ -7,6 +7,6 @@ namespace CompanyGroup.Dto.ServiceRequest
     {
         public string DataAreaId { get; set; }
 
-        public string ObjectId { get; set; }
+        public string VisitorId { get; set; }
     }
 }

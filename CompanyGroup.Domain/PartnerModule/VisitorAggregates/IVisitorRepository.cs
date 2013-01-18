@@ -9,7 +9,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
         CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId);
 
-        void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
+        int Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
 
         void DisableStatus(string visitorId);
 

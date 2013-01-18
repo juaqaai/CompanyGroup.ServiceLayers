@@ -17,10 +17,13 @@
     <return class="CustomerPriceGroup"></return>    
     exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
   </sql-query>
+  <sql-query name="InternetUser.CustomerPriceGroupInsert" callable="true">
+    <query-param name="VisitorId" type="System.Int32"/>
+    <query-param name="ManufacturerId" type="System.String"/>
+    <query-param name="Category1Id" type="System.String"/>
+    <query-param name="Category2Id" type="System.String"/>
+    <query-param name="Category3Id" type="System.String"/>
+    <query-param name="Order" type="System.Int32"/>
+    exec InternetUser.CustomerPriceGroupInsert @VisitorId=:VisitorId,  @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
+  </sql-query>  
 </hibernate-mapping>
-<!--<return-scalar column="PriceGroupId" type="System.String"/>    
-    <return-scalar column="ManufacturerId" type="System.String"/>
-    <return-scalar column="Category1Id" type="System.String"/>
-    <return-scalar column="Category2Id" type="System.String"/>
-    <return-scalar column="Category3Id" type="System.String"/>
-    <return-scalar column="Order" type="System.Int32"/>-->

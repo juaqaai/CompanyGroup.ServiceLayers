@@ -67,13 +67,37 @@ namespace CompanyGroup.Data.PartnerModule
         /// új látogató hozzáadása
         /// </summary>
         /// <param name="visitor"></param>
-        public void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor)
+        public int Add(CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert").SetString("CustomerId", visitor.CustomerId);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert").SetString("LoginIP", visitor.LoginIP)
+                        .SetInt64("RecId", visitor.RecId)
+                        .SetString("CustomerId", visitor.CustomerId)
+                        .SetString("CustomerName", visitor.CustomerName)
+                        .SetString("PersonId", visitor.PersonId)
+                        .SetString("PersonName", visitor.PersonName)
+                        .SetString("Email", visitor.Email)
+                        .SetBoolean("IsWebAdministrator", visitor.Permission.IsWebAdministrator)
+                        .SetBoolean("InvoiceInfoEnabled", visitor.Permission.InvoiceInfoEnabled)
+                        .SetBoolean("PriceListDownloadEnabled", visitor.Permission.PriceListDownloadEnabled)
+                        .SetBoolean("CanOrder", visitor.Permission.CanOrder)
+                        .SetBoolean("RecieveGoods", visitor.Permission.RecieveGoods)
+                        .SetString("Currency", visitor.Currency)
+                        .SetString("LanguageId", visitor.LanguageId)
+                        .SetString("DefaultPriceGroupId", visitor.DefaultPriceGroupId)
+                        .SetString("InventLocationId", visitor.InventLocationId)
+                        .SetString("RepresentativeId", visitor.Representative.Id)
+                        .SetString("DataAreaId", visitor.DataAreaId)
+                        .SetEnum("LoginType", visitor.LoginType)
+                        .SetEnum("PartnerModel", visitor.PartnerModel)
+                        .SetBoolean("AutoLogin", visitor.AutoLogin)
+                        .SetDateTime("LoginDate", visitor.LoginDate)
+                        .SetDateTime("ExpireDate", visitor.ExpiredDate);
 
-                return;
+                int result = query.UniqueResult<int>();
+
+                return result;
             }
             catch (Exception ex)
             {

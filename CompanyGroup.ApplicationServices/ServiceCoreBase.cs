@@ -40,20 +40,20 @@ namespace CompanyGroup.ApplicationServices
         /// - ha nem érvényes a bejelentkezés, akkor repository hívás történik
         /// - egyebkent visszaadásra kerül a cache tartalma
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="visitorId"></param>
         /// <returns></returns>
-        protected CompanyGroup.Domain.PartnerModule.Visitor GetVisitor(string objectId)
+        protected CompanyGroup.Domain.PartnerModule.Visitor GetVisitor(string visitorId)
         {
-            if (String.IsNullOrWhiteSpace(objectId))
+            if (String.IsNullOrWhiteSpace(visitorId))
             {
                 return CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor();
             }
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, objectId));
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId));
 
             if ((visitor == null) || (!visitor.IsValidLogin))
             {
-                visitor = this.GetVisitorFromRepository(objectId);
+                visitor = this.GetVisitorFromRepository(visitorId);
             }
 
             return visitor;
@@ -62,13 +62,13 @@ namespace CompanyGroup.ApplicationServices
         /// <summary>
         /// visitor kikeresése repository-ból, majd cache-be mentés
         /// </summary>
-        /// <param name="objectId"></param>
+        /// <param name="visitorId"></param>
         /// <returns></returns>
-        private CompanyGroup.Domain.PartnerModule.Visitor GetVisitorFromRepository(string objectId)
+        private CompanyGroup.Domain.PartnerModule.Visitor GetVisitorFromRepository(string visitorId)
         {
             try
             {
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(objectId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(visitorId);
 
                 visitor.SetLoggedIn();
 
@@ -77,7 +77,7 @@ namespace CompanyGroup.ApplicationServices
                 {
                     visitor.Representative.SetDefault();
 
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, objectId), visitor, DateTime.Now.AddMinutes(CACHE_EXPIRATION_VISITOR));
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddMinutes(CACHE_EXPIRATION_VISITOR));
                 }
 
                 return visitor;

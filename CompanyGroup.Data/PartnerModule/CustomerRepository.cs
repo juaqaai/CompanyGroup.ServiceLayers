@@ -192,7 +192,25 @@ namespace CompanyGroup.Data.PartnerModule
             return customerPriceGroups;
         }
 
-
-
+        /// <summary>
+        /// vevő árcsoport hozzáadás
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="manufacturerId"></param>
+        /// <param name="category1Id"></param>
+        /// <param name="category2Id"></param>
+        /// <param name="category3Id"></param>
+        /// <param name="order"></param>
+        public void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupInsert")
+                                                            .SetInt32("VisitorId", customerPriceGroup.VisitorId)
+                                                            .SetString("ManufacturerId", customerPriceGroup.ManufacturerId)
+                                                            .SetString("Category1Id", customerPriceGroup.Category1Id)
+                                                            .SetString("Category2Id", customerPriceGroup.Category2Id)
+                                                            .SetString("Category3Id", customerPriceGroup.Category3Id)
+                                                            .SetInt32("Order", customerPriceGroup.Order);
+            query.UniqueResult();
+        }
     }
 }

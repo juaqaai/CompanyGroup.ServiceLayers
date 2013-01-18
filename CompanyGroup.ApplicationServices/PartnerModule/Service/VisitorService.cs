@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -54,14 +55,17 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 return new VisitorToVisitor().Map(visitor);
             }
 
-            //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
-            visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
-
             //alapértelmezett képviselő adatainak beállítása 
             visitor.Representative.SetDefault();
 
             //bejelentkezett visitor-t tárolni kell
-            visitorRepository.Add(visitor);
+            visitor.Id = visitorRepository.Add(visitor);
+
+            //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
+            visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
+
+            //árcsoportok hozzáadása 
+            visitor.CustomerPriceGroups.ToList().ForEach(x => { customerRepository.AddCustomerPriceGroup(x); });
 
             //mappelés dto-ra
             return new VisitorToVisitor().Map(visitor);
@@ -86,9 +90,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DataAreaId), "DataAreaId cannot be null, or empty!");
 
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.ObjectId), "ObjectId cannot be null, or empty!");
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "ObjectId cannot be null, or empty!");
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.ObjectId);
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
             //mappelés dto-ra
             return new VisitorToVisitor().Map(visitor);

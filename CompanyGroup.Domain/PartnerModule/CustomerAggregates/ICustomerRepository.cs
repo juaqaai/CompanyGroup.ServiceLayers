@@ -36,14 +36,6 @@ namespace CompanyGroup.Domain.PartnerModule
         //CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId);
 
         /// <summary>
-        /// vevők árcsoportjainak lekérdezése 
-        /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string dataAreaId, string customerId);
-
-        /// <summary>
         /// vevőhöz tartozó szállítási címek
         /// </summary>
         /// <param name="customerId"></param>
@@ -66,5 +58,24 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
         List<CompanyGroup.Domain.PartnerModule.ContactPerson> GetContactPersons(string customerId, string dataAreaId);
+
+        /// <summary>
+        /// vevők árcsoportjainak lekérdezése 
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string dataAreaId, string customerId);
+
+        /// <summary>
+        /// vevő árcsoport hozzáadás
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="manufacturerId"></param>
+        /// <param name="category1Id"></param>
+        /// <param name="category2Id"></param>
+        /// <param name="category3Id"></param>
+        /// <param name="order"></param>
+        void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup);
     }
 }
