@@ -14,13 +14,67 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
     //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] 
     public class VisitorService : ServiceCoreBase, IVisitorService
     {
+        private CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository;
+
         /// <summary>
         /// konstruktor
         /// </summary>
         /// <param name="visitorRepository"></param>
-        /// <param name="financeRepository"></param>
-        public VisitorService(CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
+        /// <param name="customerRepository"></param>
+        public VisitorService(CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository, CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository) : base(visitorRepository)
         {
+            this.customerRepository = customerRepository;
+        }
+
+        /// <summary>
+        /// bejelentkezés
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
+        {
+            //tárolt eljárás hívással történik a bejelentkezés 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
+
+            //kérés IP címét menteni kell
+            visitor.LoginIP = request.IPAddress;
+
+            //vállalat kódja, ahov a bejelentkezés történik
+            visitor.DataAreaId = request.DataAreaId;
+
+            //aktív státusz beállítása a bejelentkezést követően
+            visitor.Status = LoginStatus.Active;
+
+            //bejelentkezett állapot beállítása
+            visitor.SetLoggedIn();
+
+            //ha nem sikerült a bejelentkezés, vagy nem érvényes a bejelentkezés, akkor üres visitor objektum felhasználásával történik a visszatérés
+            if (!visitor.LoggedIn)
+            {
+                return new VisitorToVisitor().Map(visitor);
+            }
+
+            //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
+            visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
+
+            //alapértelmezett képviselő adatainak beállítása 
+            visitor.Representative.SetDefault();
+
+            //bejelentkezett visitor-t tárolni kell
+            visitorRepository.Add(visitor);
+
+            //mappelés dto-ra
+            return new VisitorToVisitor().Map(visitor);
+        }
+
+        /// <summary>
+        /// kijelentkezés
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public void SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
+        {
+            visitorRepository.DisableStatus(request.ObjectId);
         }
 
         /// <summary>
@@ -40,33 +94,30 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return new VisitorToVisitor().Map(visitor);
         }
 
-        /// <summary>
-        /// bejelentkezett látogatóhoz kapcsolódó jogosultságok listázása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
-        {
-            CompanyGroup.Dto.PartnerModule.Visitor visitor = GetVisitorInfo(request);
+        ///// <summary>
+        ///// bejelentkezett látogatóhoz kapcsolódó jogosultságok listázása
+        ///// </summary>
+        ///// <param name="request"></param>
+        ///// <returns></returns>
+        //public List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
+        //{
+        //    CompanyGroup.Dto.PartnerModule.Visitor visitor = GetVisitorInfo(request);
 
-            return visitor.Roles;
-        }
+        //    return visitor.Roles;
+        //}
 
         /// <summary>
         /// valutanem csere
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="currency"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        public void ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Currency), "Currency cannot be null, or empty!");
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.ChangeCurrency(request.VisitorId, request.Currency);
-
-            return new VisitorToVisitor().Map(visitor);
+            visitorRepository.ChangeCurrency(request.VisitorId, request.Currency);
         }
 
         /// <summary>
@@ -74,15 +125,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        public void ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Language), "Language cannot be null, or empty!");
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.ChangeLanguage(request.VisitorId, request.Language);
-
-            return new VisitorToVisitor().Map(visitor);
+            visitorRepository.ChangeLanguage(request.VisitorId, request.Language);
         }
     }
 }

@@ -10,6 +10,31 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
     public interface IVisitorService
     {
         /// <summary>
+        /// bejelentkezés           
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        //[OperationContract(Action = "SignIn")]
+        //[WebInvoke(Method = "POST",
+        //    UriTemplate = "/SignIn",
+        //    RequestFormat = WebMessageFormat.Json,
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Bare)]
+        CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request);
+
+        /// <summary>
+        /// kijelentkezés   
+        /// </summary>
+        /// <param name="request"></param>
+        //[OperationContract(Action = "SignOut")]
+        //[WebInvoke(Method = "POST",
+        //    UriTemplate = "/SignOut",
+        //    RequestFormat = WebMessageFormat.Json, 
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Bare)]
+        void SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request);
+
+        /// <summary>
         /// bejelentkezett látogatóhoz kapcsolódó mentett információk kiolvasása            
         /// </summary>
         /// <param name="request"></param>
@@ -33,20 +58,20 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request);
+        //List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request);
 
         /// <summary>
         /// valutanem csere
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request);
+        void ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request);
 
         /// <summary>
         /// nyelvválasztás csere
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request);
+        void ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request);
     }
 }

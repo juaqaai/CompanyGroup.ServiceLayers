@@ -65,10 +65,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             try
             {
                 //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
                 //látogató alapján kikeresett vevő rendelés listája
-                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CompanyId, visitor.DataAreaId);
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId, visitor.DataAreaId);
 
                 //megrendelés info aggregátum elkészítése
                 IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfos.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
@@ -106,7 +106,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             try
             {
                 //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
                 //kosár tartalom lekérdezése
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCartToAdd = shoppingCartRepository.GetShoppingCart(request.CartId);
@@ -114,7 +114,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 Helpers.DesignByContract.Require((shoppingCartToAdd != null), "ShoppingCart cannot be null!");
 
                 //szállítási cím keresése
-                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddressList = customerRepository.GetDeliveryAddress(visitor.CompanyId, visitor.DataAreaId);
+                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddressList = customerRepository.GetDeliveryAddress(visitor.CustomerId, visitor.DataAreaId);
 
                 CompanyGroup.Domain.PartnerModule.DeliveryAddress deliveryAddress = deliveryAddressList.Find(x => x.RecId.Equals(request.DeliveryAddressRecId));
 
@@ -126,7 +126,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreate = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
                 {
                     ContactPersonId = visitor.PersonId,
-                    CustomerId = visitor.CompanyId,
+                    CustomerId = visitor.CustomerId,
                     DataAreaId = visitor.DataAreaId,
                     DeliveryCity = deliveryAddress.City,
                     DeliveryCompanyName = "",

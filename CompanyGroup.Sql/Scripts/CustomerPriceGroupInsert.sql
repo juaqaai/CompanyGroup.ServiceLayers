@@ -4,7 +4,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
+-- select * from InternetUser.CustomerPriceGroup
 DROP PROCEDURE [InternetUser].[CustomerPriceGroupInsert];
 GO
 CREATE PROCEDURE [InternetUser].[CustomerPriceGroupInsert](@VisitorId INT = 0,

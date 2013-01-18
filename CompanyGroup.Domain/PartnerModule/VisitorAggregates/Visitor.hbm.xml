@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="Visitor" lazy="false">
+    <class name="Visitor" lazy="false">
     <id name="Id">
       <generator class="identity" />
     </id>
@@ -25,12 +25,12 @@
     <property name="DefaultPriceGroupId" />
     <property name="InventLocationId" />
     <component name="Representative" class="Representative">
-      <property name="RepresentativeId" />
-      <property name="RepresentativeName" />
-      <property name="RepresentativePhone" />
-      <property name="RepresentativeMobile" />
-      <property name="RepresentativeExtension" />
-      <property name="RepresentativeEmail" />
+      <property name="Id" column="RepresentativeId" />
+      <property name="Name" column="RepresentativeName" />
+      <property name="Phone" column="RepresentativePhone" />
+      <property name="Mobile" column="RepresentativeMobile" />
+      <property name="Extension" column="RepresentativeExtension" />
+      <property name="Email" column="RepresentativeEmail" />
     </component>
     <property name="DataAreaId" />
     <property name="LoginType" />
@@ -55,7 +55,7 @@
   <sql-query name="InternetUser.VisitorSelect" callable="true">
     <query-param name="VisitorId" type="System.String"/>
     <return alias="V" class="Visitor"></return>
-    <return-join alias="P" property="CustomerPriceGroups"></return-join>
+    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorInsert" callable="true">
@@ -121,12 +121,6 @@
     <query-param name="VisitorId" type="System.String"/>
     <query-param name="Language" type="System.String"/>
     InternetUser.VisitorChangeCurrency @VisitorId=:VisitorId, @Language=:Language
-  </sql-query>
-  <sql-query name="InternetUser.SignIn" callable="true">
-    <query-param name="UserName" type="System.String"/>
-    <query-param name="Password" type="System.String"/>
-    <query-param name="DataAreaId" type="System.String"/>    
-    exec InternetUser.SignIn @UserName=:UserName, @Password=:Password, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>
 

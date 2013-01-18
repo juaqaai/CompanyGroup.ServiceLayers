@@ -103,7 +103,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
 
-                newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CompanyId : String.Empty;
+                newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
 
                 newRegistration.PersonId = visitor.IsValidLogin ? visitor.PersonId : String.Empty;
 

@@ -70,15 +70,15 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
             CompanyGroup.Dto.RegistrationModule.Registration result = new CompanyGroup.Dto.RegistrationModule.Registration();
 
-            List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = customerRepository.GetBankAccounts(visitor.CompanyId, request.DataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = customerRepository.GetBankAccounts(visitor.CustomerId, request.DataAreaId);
 
-            List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = customerRepository.GetContactPersons(visitor.CompanyId, request.DataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = customerRepository.GetContactPersons(visitor.CustomerId, request.DataAreaId);
 
-            CompanyGroup.Domain.PartnerModule.Customer customer = customerRepository.GetCustomer(visitor.CompanyId, request.DataAreaId);
+            CompanyGroup.Domain.PartnerModule.Customer customer = customerRepository.GetCustomer(visitor.CustomerId, request.DataAreaId);
 
-            List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CompanyId, request.DataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
 
-            CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = customerRepository.GetMailAddress(visitor.CompanyId, request.DataAreaId);
+            CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = customerRepository.GetMailAddress(visitor.CustomerId, request.DataAreaId);
 
             //válasz objektum feltöltés
             result.BankAccounts = bankAccounts.ConvertAll(x => new BankAccountToBankAccount().Map(x));
@@ -120,73 +120,12 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             if (visitor.IsValidLogin)
             {
 
-                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CompanyId, request.DataAreaId);
+                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
 
                 result.Items.AddRange(deliveryAddresses.ConvertAll( x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x) ));
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// bejelentkezés
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
-        {
-            //tárolt eljárás hívással történik a bejelentkezés 
-            CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = customerRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
-
-            //visitor domain objektum létrehozása
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(loginInfo);
-
-            visitor.IPAddress = request.IPAddress;
-
-            visitor.DataAreaId = request.DataAreaId;
-
-            //bejelentkezés keletkezési idejének beállítása
-            visitor.CreatedDate = DateTime.Now;
-
-            //bejelentkezés lejárati idejének beállítása
-            visitor.ExpiredDate = DateTime.Now.AddHours(CustomerService.AuthCookieExpiredHours);
-
-            //aktív státusz beállítása a bejelentkezést követően
-            visitor.Status = LoginStatus.Active;
-
-            //bejelentkezett állapot beállítása
-            visitor.SetLoggedIn();
-
-            //ha nem sikerült a bejelentkezés, vagy nem érvényes a bejelentkezés, akkor üres visitor objektum felhasználásával történik a visszatérés
-            if (!visitor.LoggedIn) 
-            {
-                return new VisitorToVisitor().Map(visitor); 
-            }
-
-            //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket és 
-            //a profil beállításai közé kell menteni
-            visitor.Profile.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, loginInfo.CompanyId);
-
-            //alapértelmezett képviselő adatainak beállítása 
-            visitor.Representative.SetDefault();
-
-            //új profilt tárolni kell
-            visitorRepository.Add(visitor);
-
-            //mappelés dto-ra
-            return new VisitorToVisitor().Map(visitor);
-        }
-
-        /// <summary>
-        /// kijelentkezés
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.ServiceResponse.Empty SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
-        {
-            visitorRepository.DisableStatus(request.ObjectId, request.DataAreaId);
-
-            return new CompanyGroup.Dto.ServiceResponse.Empty();
         }
 
     }

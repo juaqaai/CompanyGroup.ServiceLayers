@@ -14,9 +14,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.Visitor Map(CompanyGroup.Domain.PartnerModule.Visitor from)
         {
-            return new CompanyGroup.Dto.PartnerModule.Visitor() { CompanyId = from.CompanyId, 
-                                                                  CompanyName = from.CompanyName, 
-                                                                  History = CreateHistory(from.Profile.Histories),
+            return new CompanyGroup.Dto.PartnerModule.Visitor() { CompanyId = from.CustomerId, 
+                                                                  CompanyName = from.CustomerName, 
+                                                                  //History = CreateHistory(from.Profile.Histories),
                                                                   Id = from.Id.ToString(), 
                                                                   IsValidLogin = from.IsValidLogin,
                                                                   LoggedIn = from.LoggedIn, 
@@ -25,7 +25,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                   PersonName = from.PersonName,
                                                                   Roles = from.Roles,
                                                                   Currency = from.Currency,
-                                                                  InventLocation = from.InventLocation,
+                                                                  InventLocation = from.InventLocationId,
                                                                   LanguageId = from.LanguageId,
                                                                   PaymTermId = from.PaymTermId,
                                                                   BscAuthorized = from.PartnerModel.Equals(PartnerModel.Both) || from.PartnerModel.Equals(PartnerModel.Bsc),
