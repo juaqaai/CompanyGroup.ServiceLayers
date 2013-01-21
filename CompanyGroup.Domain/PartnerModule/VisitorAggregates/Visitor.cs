@@ -8,13 +8,8 @@ namespace CompanyGroup.Domain.PartnerModule
     /// <summary>
     /// Kijelentkezett, vagy bejelentkezett látogató entitás
     /// </summary>
-    public class Visitor : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
+    public class Visitor : CompanyGroup.Domain.Core.Entity, IValidatableObject
     {
-        /// <summary>
-        /// egyedi azonosító
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// látogató azonosító
         /// </summary>
@@ -160,7 +155,9 @@ namespace CompanyGroup.Domain.PartnerModule
         }
 
         /// <summary>
-        /// bejelentkezett-e tulajdonság beállítása beállító metóduson keresztül       
+        /// bejelentkezett tulajdonság beállítása
+        /// személyes belépés: vevőkód, vevőnév, kapcsolattartó kód, kapcsolattartó név nem lehet üres
+        /// céges belépés:     vevőkód, vevőnév nem lehet üres  
         /// </summary>
         /// <param name="loginType"></param>
         public void SetLoggedIn(LoginType loginType)
@@ -308,58 +305,6 @@ namespace CompanyGroup.Domain.PartnerModule
             }
             return dataAreaList;
         }
-
-        #region "EntityBase override metódusok"
-
-        /// <summary>
-        /// entitás tranziens vizsgálat
-        /// </summary>
-        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
-        public override bool IsTransient()
-        {
-            return this.Id == 0;
-        }
-
-
-        /// <summary>
-        /// override-olt egyenlőség vizsgálat
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Visitor))
-            {
-                return false;
-            }
-
-            if (Object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            Visitor item = (Visitor)obj;
-
-            if (item.IsTransient() || this.IsTransient())
-            {
-                return false;
-            }
-            else
-            {
-                return item.Id == this.Id;
-            }
-        }
-
-        /// <summary>
-        /// hash code előállítás
-        /// </summary>
-        /// <returns></returns>
-        public override int GetRequestedHashCode()
-        {
-            return this.Id.GetHashCode() ^ 31;
-        }
-
-        #endregion
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>

@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations;
 namespace CompanyGroup.Domain.WebshopModule
 {
     /// <summary>
+    /// hírlevél entitás
     /// </summary>
-    public class Newsletter : CompanyGroup.Domain.Core.Entity, IValidatableObject
+    public class Newsletter : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
         /// <summary>
         /// </summary>
@@ -28,16 +29,18 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.HtmlPath = htmlPath;
 
-            this.EndDateTime = endDate; //endTime
+            this.EndDateTime = endDate; 
 
             this.PicturePath = picturePath;
 
-            this.AllowedDateTime = allowedDate;    //allowedTime   
+            this.AllowedDateTime = allowedDate;    
 
             this.Body = String.Empty;
 
             this.ProductId = String.Empty;
         }
+
+        public string Id { get; set; }
 
         /// <summary>
         /// hírlevél cím
@@ -94,6 +97,53 @@ namespace CompanyGroup.Domain.WebshopModule
             }
 
             return validationResults;
+        }
+
+        /// <summary>
+        /// entitás tranziens vizsgálat
+        /// </summary>
+        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
+        public override bool IsTransient()
+        {
+            return (String.IsNullOrEmpty(this.Id));
+        }
+
+        /// <summary>
+        /// override-olt egyenlőség vizsgálat
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Newsletter))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            Newsletter item = (Newsletter)obj;
+
+            if (item.IsTransient() || this.IsTransient())
+            {
+                return false;
+            }
+            else
+            {
+                return item.Id == this.Id;
+            }
+        }
+
+        /// <summary>
+        /// hash code segédmetódus
+        /// </summary>
+        /// <returns></returns>
+        public override int GetRequestedHashCode()
+        {
+            return this.Id.GetHashCode() ^ 31;
         }
     }
 }

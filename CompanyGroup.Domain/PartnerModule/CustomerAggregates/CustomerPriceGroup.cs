@@ -6,7 +6,7 @@ namespace CompanyGroup.Domain.PartnerModule
     /// <summary>
     /// vevő - árcsoport besorolás
     /// </summary>
-    public class CustomerPriceGroup : CompanyGroup.Domain.Core.EntityBase   //CompanyGroup.Domain.Core.ValueObject<CustomerPriceGroup>
+    public class CustomerPriceGroup : CompanyGroup.Domain.Core.Entity   //CompanyGroup.Domain.Core.ValueObject<CustomerPriceGroup>
     {
         /// <summary>
         /// kulcs
@@ -83,56 +83,5 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         public CustomerPriceGroup() : this(0, 0, "", "", "", "", "", 0) { }
 
-        #region "EntityBase override metódusok"
-
-        /// <summary>
-        /// entitás tranziens vizsgálat
-        /// </summary>
-        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
-        public override bool IsTransient()
-        {
-            return this.Id == 0;
-        }
-
-
-        /// <summary>
-        /// override-olt egyenlőség vizsgálat
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is CustomerPriceGroup))
-            {
-                return false;
-            }
-
-            if (Object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            CustomerPriceGroup item = (CustomerPriceGroup)obj;
-
-            if (item.IsTransient() || this.IsTransient())
-            {
-                return false;
-            }
-            else
-            {
-                return item.Id == this.Id;
-            }
-        }
-
-        /// <summary>
-        /// hash code előállítás
-        /// </summary>
-        /// <returns></returns>
-        public override int GetRequestedHashCode()
-        {
-            return this.Id.GetHashCode() ^ 31;
-        }
-
-        #endregion
     }
 }
