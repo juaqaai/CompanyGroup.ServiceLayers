@@ -74,28 +74,5 @@ namespace CompanyGroup.WebApi.Controllers
             return service.GetDeliveryAddresses(request);
         }
 
-        /// <summary>
-        /// bejelentkezés           
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("SignIn")]
-        [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
-        {
-            return service.SignIn(request);
-        }
-
-        /// <summary>
-        /// kijelentkezés   
-        /// </summary>
-        /// <param name="request"></param>
-        [ActionName("SignOut")]
-        [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.Empty SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
-        {
-            return service.SignOut(request);
-        }
-
     }
 }

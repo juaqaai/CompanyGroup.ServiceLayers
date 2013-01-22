@@ -30,9 +30,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("GetCollection")]
-        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetCollection(CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request)
+        public HttpResponseMessage  GetCollection(CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request)
         {
-            return service.GetNewsletterCollection(request);
+            CompanyGroup.Dto.WebshopModule.NewsletterCollection response = service.GetNewsletterCollection(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(HttpStatusCode.OK, response);
         }
 
 

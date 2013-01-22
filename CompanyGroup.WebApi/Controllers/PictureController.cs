@@ -32,9 +32,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetListByProduct")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.ServiceRequest.PictureFilter request)
+        public HttpResponseMessage GetListByProduct(CompanyGroup.Dto.ServiceRequest.PictureFilter request)
         {
-            return this.service.GetListByProduct(request);
+            CompanyGroup.Dto.WebshopModule.Pictures response = this.service.GetListByProduct(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Pictures>(HttpStatusCode.OK, response);
         }
 
         /// <summary>

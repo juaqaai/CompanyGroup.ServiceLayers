@@ -170,12 +170,12 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [ActionName("CreateFinanceOffer")]
-        [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request)
-        {
-            return service.CreateFinanceOffer(request);
-        }
+        //[ActionName("CreateFinanceOffer")]
+        //[HttpPost]
+        //public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request)
+        //{
+        //    return service.CreateFinanceOffer(request);
+        //}
 
         /// <summary>
         /// rendelés elküldése

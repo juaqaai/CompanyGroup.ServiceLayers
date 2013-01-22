@@ -33,7 +33,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// [RoutePrefix("items", TranslationKey = "itemsKey")]
         [ActionName("GetProducts")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
+        public HttpResponseMessage GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request)
         {
             CompanyGroup.Dto.WebshopModule.Products response = this.service.GetProducts(request);
 
@@ -42,7 +42,7 @@ namespace CompanyGroup.WebApi.Controllers
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
 
-            return response;
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Products>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -52,9 +52,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetBannerList")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request)
+        public HttpResponseMessage GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request)
         {
-            return this.service.GetBannerList(request);
+            CompanyGroup.Dto.WebshopModule.BannerList response = this.service.GetBannerList(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.BannerList>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -64,9 +66,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetPriceList")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.PriceList GetPriceList(CompanyGroup.Dto.ServiceRequest.GetPriceList request)
+        public HttpResponseMessage GetPriceList(CompanyGroup.Dto.ServiceRequest.GetPriceList request)
         {
-            return this.service.GetPriceList(request);
+            CompanyGroup.Dto.WebshopModule.PriceList response = this.service.GetPriceList(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.PriceList>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -76,9 +80,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetItemByProductId")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Product GetItemByProductId(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
+        public HttpResponseMessage GetItemByProductId(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
         {
-            return this.service.GetItemByProductId(request);
+            CompanyGroup.Dto.WebshopModule.Product response = this.service.GetItemByProductId(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Product>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -88,9 +94,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCompletionList")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request) 
+        public HttpResponseMessage GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request) 
         {
-            return this.service.GetCompletionList(request);
+            CompanyGroup.Dto.WebshopModule.CompletionList response = this.service.GetCompletionList(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.CompletionList>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -100,9 +108,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCompatibleProducts")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.CompatibleProducts GetCompatibleProducts(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
+        public HttpResponseMessage GetCompatibleProducts(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request)
         {
-            return this.service.GetCompatibleProducts(request);
+            CompanyGroup.Dto.WebshopModule.CompatibleProducts response = this.service.GetCompatibleProducts(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.CompatibleProducts>(HttpStatusCode.OK, response);
         }
 
 
