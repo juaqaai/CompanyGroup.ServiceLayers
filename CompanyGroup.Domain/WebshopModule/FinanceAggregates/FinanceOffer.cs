@@ -7,13 +7,8 @@ namespace CompanyGroup.Domain.WebshopModule
     /// <summary>
     /// finanszírozási ajánlat
     /// </summary>
-    public class FinanceOffer : CompanyGroup.Domain.Core.EntityBase
+    public class FinanceOffer : CompanyGroup.Domain.Core.Entity
     {
-        /// <summary>
-        /// egyedi azonosító
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// látogató azonosító, egyedi, bejelentkezéshez kötött
         /// </summary>
@@ -88,56 +83,5 @@ namespace CompanyGroup.Domain.WebshopModule
                 return result;
             }
         }
-
-        #region "EntityBase override metódusok"
-
-        /// <summary>
-        /// entitás tranziens vizsgálat
-        /// </summary>
-        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
-        public override bool IsTransient()
-        {
-            return this.Id == 0;
-        }
-
-        /// <summary>
-        /// override-olt egyenlőség vizsgálat
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is ShoppingCartItem))
-            {
-                return false;
-            }
-
-            if (Object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            ShoppingCartItem item = (ShoppingCartItem)obj;
-
-            if (item.IsTransient() || this.IsTransient())
-            {
-                return false;
-            }
-            else
-            {
-                return item.CartId == this.Id;
-            }
-        }
-
-        /// <summary>
-        /// hash code előállítás
-        /// </summary>
-        /// <returns></returns>
-        public override int GetRequestedHashCode()
-        {
-            return this.Id.GetHashCode() ^ 31;
-        }
-
-        #endregion
     }
 }

@@ -55,7 +55,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 return new VisitorToVisitor().Map(visitor);
             }
 
-            //alapértelmezett képviselő adatainak beállítása 
+            //telesales mint képviselő adatainak beállítása 
             visitor.Representative.SetDefault();
 
             //bejelentkezett visitor-t tárolni kell
@@ -64,7 +64,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
             visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
 
-            //árcsoportok hozzáadása 
+            //árcsoportok tárolása 
             visitor.CustomerPriceGroups.ToList().ForEach(x => { customerRepository.AddCustomerPriceGroup(x); });
 
             //mappelés dto-ra

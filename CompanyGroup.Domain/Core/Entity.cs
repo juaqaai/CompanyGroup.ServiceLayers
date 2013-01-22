@@ -8,7 +8,7 @@ namespace CompanyGroup.Domain.Core
     /// </summary>
     public abstract class Entity : EntityBase
     {
-        public string Id { set; get; }
+        public int Id { set; get; }
 
         /// <summary>
         /// entitás tranziens vizsgálat
@@ -16,7 +16,7 @@ namespace CompanyGroup.Domain.Core
         /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
         public override bool IsTransient()
         {
-            return String.IsNullOrEmpty(this.Id);
+            return (this.Id == 0);
         }
 
         /// <summary>
@@ -56,5 +56,11 @@ namespace CompanyGroup.Domain.Core
         {
             return this.Id.GetHashCode() ^ 31;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }
