@@ -12,7 +12,7 @@ namespace CompanyGroup.WebClient.Models
         {
             this.Visitor = visitor;
 
-            this.ActiveCart = new Dto.WebshopModule.ShoppingCart(shoppingCartAndLeasingOptions.Items, 
+            this.ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart(shoppingCartAndLeasingOptions.Items, 
                                                                  shoppingCartAndLeasingOptions.SumTotal, 
                                                                  shoppingCartAndLeasingOptions.Id, 
                                                                  shoppingCartAndLeasingOptions.Shipping, 

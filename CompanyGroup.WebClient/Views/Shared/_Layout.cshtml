@@ -12,6 +12,7 @@
 		
 		@Scripts.Render("~/bundles/Cufon")
 		@Scripts.Render("~/bundles/Segoe")
+		
 
         @RenderSection("ScriptsInHead", required: false)
     </head>
@@ -98,10 +99,10 @@
         <div id="cus_header2"></div>
 		<div id="cus_content_container">
 			<div id="cus_header_navigation_b">
-				<table border="0" cellspacing="0" cellpadding="4">
+			<table border="0" cellspacing="0" cellpadding="4">
 					<tr id="cus_header_navigation_b_table">
+						
 						<td id="usermenuContainer">
-                        
 						</td>
                         <script id="usermenuTemplate" type="text/html">
                         {{#IsValidLogin}}
@@ -131,7 +132,7 @@
 						<td >
 <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
-							<select data-placeholder="Choose a Country..." class="#" style="width:auto;" tabindex="2">
+							<select class="select1">
   							<option value="#">Név vagy cikkszám</option>
  							 <option value="#">Laptop</option>
 							 <option value="#">Tablet</option>
@@ -146,12 +147,12 @@
 						</td>
 					</tr>
 				</table>
+	
 			</div>
 			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
-		        <div id="akcio_badge"><a href="#"><img src="@Url.Content("~/Content/Media/images/akcio_badge.png")" border="0" alt="" /></a></div>
         	    <a title="" id="top-link">Top of Page</a>
 			    <div id="cus_ax_nav">
-				    <ul id="menu-bar">
+					 <ul id="menu-bar">
 					    <li>
 						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
@@ -169,16 +170,17 @@
 							    </li>
 						    </ul>
 					    </li>
-					    <li>
-						    <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>
+						<li>
+						    <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>	
 					    </li>
-					    <li>
+						 <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
 					    <li>
 						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
 				    </ul>
+					
 			    </div>
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
@@ -394,6 +396,8 @@
                 .js('@Scripts.Url("~/bundles/smarttab")')
                 .js('@Scripts.Url("~/bundles/scrollto")')
 				.js('@Scripts.Url("~/bundles/toastr")');
+				@*.js('@Scripts.Url("~/bundles/skinner")')*@
+
 				              
 
             @RenderSection("ScriptFiles", false)
@@ -411,10 +415,12 @@
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
-			 $(".chzn-select").chosen();
-			 $(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
-
-            @*Cufon.replace('p');*@
+			
+			@*$(function(){						
+			$('.select1').skinner({'type':'left'});			
+			});*@
+		
+			@*Cufon.replace('p');*@
             @RenderSection("ScriptOnReady", false)
         }); 
 

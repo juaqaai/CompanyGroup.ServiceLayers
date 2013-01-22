@@ -3,13 +3,19 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.PartnerModule
 {
-    [System.Runtime.Serialization.DataContract(Name = "ForgetPassword", Namespace = "CompanyGroup.Dto.PartnerModule")]
     public class ForgetPassword
     {
-        [System.Runtime.Serialization.DataMember(Name = "Succeeded", Order = 1)]
+        public ForgetPassword() : this(false, String.Empty) { }
+
+        public ForgetPassword(bool succeeded, string message)
+        {
+            this.Succeeded = succeeded;
+
+            this.Message = message;
+        }
+
         public bool Succeeded { set; get; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Message", Order = 3)]
         public string Message { set; get; }
     }
 }

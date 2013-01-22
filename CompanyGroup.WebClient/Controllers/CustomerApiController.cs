@@ -48,7 +48,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request = new Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = CustomerApiController.DataAreaId, VisitorId = visitorData.ObjectId };
+            CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request = new Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = CustomerApiController.DataAreaId, VisitorId = visitorData.VisitorId };
 
             CompanyGroup.Dto.PartnerModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", request);
 
@@ -141,11 +141,11 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
+                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.VisitorId };
 
                 CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
 
-                visitorData.ObjectId = String.Empty;
+                visitorData.VisitorId = String.Empty;
 
                 this.WriteCookie(visitorData);
 

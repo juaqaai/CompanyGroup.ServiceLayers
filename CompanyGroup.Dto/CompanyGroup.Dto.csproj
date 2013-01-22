@@ -71,12 +71,12 @@
     <Compile Include="ServiceRequest\AssociateCart.cs" />
     <Compile Include="ServiceRequest\AddContactPerson.cs" />
     <Compile Include="ServiceRequest\ChangeCurrency.cs" />
-    <Compile Include="ServiceRequest\ChangePassword.cs" />
+    <Compile Include="PartnerModule\ChangePasswordRequest.cs" />
     <Compile Include="ServiceRequest\ChangeLanguage.cs" />
-    <Compile Include="ServiceRequest\ForgetPassword.cs" />
-    <Compile Include="ServiceRequest\GetContactPersonById.cs" />
+    <Compile Include="PartnerModule\ForgetPasswordRequest.cs" />
+    <Compile Include="PartnerModule\GetContactPersonByIdRequest.cs" />
     <Compile Include="ServiceRequest\ProductListComplation.cs" />
-    <Compile Include="ServiceRequest\UndoChangePassword.cs" />
+    <Compile Include="PartnerModule\UndoChangePasswordRequest.cs" />
     <Compile Include="ServiceRequest\GetNewsletterCollection.cs" />
     <Compile Include="ServiceRequest\GetInvoiceInfo.cs" />
     <Compile Include="ServiceRequest\GetContactPerson.cs" />

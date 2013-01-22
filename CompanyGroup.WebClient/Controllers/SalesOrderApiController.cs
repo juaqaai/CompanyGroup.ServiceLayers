@@ -25,7 +25,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.ServiceRequest.GetOrderInfo req = new CompanyGroup.Dto.ServiceRequest.GetOrderInfo()
             {
                 LanguageId = visitorData.Language,
-                VisitorId = visitorData.ObjectId,
+                VisitorId = visitorData.VisitorId,
             };
 
             List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfo, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", req);

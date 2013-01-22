@@ -33,8 +33,6 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         protected readonly static string DefaultCurrency = CompanyGroup.Helpers.ConfigSettingsParser.GetString("DefaultCurrency", "HUF");
 
-        protected readonly static string MongoDbEmptyObjectId = CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDbEmptyObjectId", "000000000000000000000000");
-
         #region "PostJSonData, GetJSonData, DownloadData"
 
         /// <summary>
@@ -173,12 +171,12 @@ namespace CompanyGroup.WebClient.Controllers
             try
             {
 
-                if (String.IsNullOrWhiteSpace(visitorData.ObjectId))
+                if (String.IsNullOrWhiteSpace(visitorData.VisitorId))
                 {
                     return new CompanyGroup.WebClient.Models.Visitor();
                 }
 
-                CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { ObjectId = visitorData.ObjectId, DataAreaId = ApiBaseController.DataAreaId };
+                CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { VisitorId = visitorData.VisitorId, DataAreaId = ApiBaseController.DataAreaId };
 
                 CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 

@@ -91,7 +91,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
 
-            if (visitor.IsValidLogin && !String.IsNullOrEmpty(visitorData.CartId))
+            if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
                 CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo(visitorData.CartId, visitor.Id);
 
@@ -119,7 +119,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
-            if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
+            if (cartInfo.ActiveCart.Id > 0)
             {
                 visitorData.CartId = cartInfo.ActiveCart.Id;
 
@@ -178,10 +178,10 @@ namespace CompanyGroup.WebClient.Controllers
                 Sequence = CompanyGroup.Helpers.QueryStringParser.GetInt("Sequence", 0),
                 StockFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("StockFilter", false),
                 TextFilter = CompanyGroup.Helpers.QueryStringParser.GetString("TextFilter", ""),
-                VisitorId = visitorData.ObjectId
+                VisitorId = visitorData.VisitorId
             };
 
-            request.VisitorId = visitorData.ObjectId;
+            request.VisitorId = visitorData.VisitorId;
 
             CompanyGroup.Dto.WebshopModule.PriceList priceList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetPriceList, CompanyGroup.Dto.WebshopModule.PriceList>("Product", "GetPriceList", request);
 

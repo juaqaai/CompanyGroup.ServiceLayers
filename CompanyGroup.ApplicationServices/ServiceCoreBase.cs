@@ -6,7 +6,8 @@ using System.Text;
 namespace CompanyGroup.ApplicationServices
 {
     /// <summary>
-    /// ősosztály a visitor service-ek összefogására
+    /// ősosztály service-ek közös metódusainak összefogására
+    /// GetVisitor, PlainText, HtmlText, SendMail, Serialize, DeSerialize
     /// </summary>
     public class ServiceCoreBase
     {
@@ -34,7 +35,7 @@ namespace CompanyGroup.ApplicationServices
         }
 
         /// <summary>
-        /// bejelentkezett látogatóhoz kapcsolódó mentett információk kiolvasása
+        /// bejelentkezett látogatóhoz kapcsolódó információk kiolvasása
         /// - ha a kulcs üres, akkor új visitor példánnyal tér vissza
         /// - ha nincs a cache-ben az objektum, akkor repository hívás történik
         /// - ha nem érvényes a bejelentkezés, akkor repository hívás történik

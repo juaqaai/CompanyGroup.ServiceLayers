@@ -92,7 +92,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
 
-            if (visitor.IsValidLogin && !String.IsNullOrEmpty(visitorData.CartId))
+            if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
                 CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo(visitorData.CartId, visitor.Id);
 
@@ -120,7 +120,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
-            if (!String.IsNullOrWhiteSpace(cartInfo.ActiveCart.Id))
+            if (cartInfo.ActiveCart.Id > 0)
             {
                 visitorData.CartId = cartInfo.ActiveCart.Id;
 
@@ -179,7 +179,7 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 ProductId = productId,
                 DataAreaId = ApiBaseController.DataAreaId,
-                VisitorId = visitorData.ObjectId,
+                VisitorId = visitorData.VisitorId,
                 Currency = visitorData.Currency
             };
 
@@ -393,11 +393,11 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
+                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.VisitorId };
 
                 CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
 
-                visitorData.ObjectId = String.Empty;
+                visitorData.VisitorId = String.Empty;
 
                 this.WriteCookie(visitorData);
 

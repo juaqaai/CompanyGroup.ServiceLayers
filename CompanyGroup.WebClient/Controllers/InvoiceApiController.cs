@@ -32,7 +32,7 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo req = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
                 {
                     LanguageId = visitorData.Language,
-                    VisitorId = visitorData.ObjectId,
+                    VisitorId = visitorData.VisitorId,
                     PaymentType = id
                 };
 
