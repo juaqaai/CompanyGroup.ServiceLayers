@@ -37,7 +37,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
             CustomerController controller = new CustomerController(service);
 
-            Dto.ServiceRequest.SignIn request = new Dto.ServiceRequest.SignIn("bsc", "elektroplaza", "58915891", "127.0.0.1");
+            Dto.ServiceRequest.SignInRequest request = new Dto.ServiceRequest.SignInRequest("bsc", "elektroplaza", "58915891", "127.0.0.1");
             
             // Act
             CompanyGroup.Dto.PartnerModule.Visitor result = controller.SignIn(request);

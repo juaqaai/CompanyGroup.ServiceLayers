@@ -107,9 +107,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin)
             {
-                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses getDeliveryAddresses = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = BaseController.DataAreaId, VisitorId = visitor.Id };
+                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest getDeliveryAddresses = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest() { DataAreaId = BaseController.DataAreaId, VisitorId = visitor.Id };
 
-                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
+                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
             }
             else
             {

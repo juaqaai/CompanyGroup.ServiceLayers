@@ -384,7 +384,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void SignInTest()
         { 
-            CompanyGroup.Dto.ServiceRequest.SignIn request = new Dto.ServiceRequest.SignIn("hrp", "elektroplaza", "58915891", "");
+            CompanyGroup.Dto.ServiceRequest.SignInRequest request = new Dto.ServiceRequest.SignInRequest("hrp", "elektroplaza", "58915891", "");
 
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 

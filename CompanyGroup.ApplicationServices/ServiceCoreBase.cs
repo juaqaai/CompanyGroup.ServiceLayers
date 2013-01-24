@@ -13,12 +13,12 @@ namespace CompanyGroup.ApplicationServices
     {
         protected CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository;
 
-        private const string CACHEKEY_VISITOR = "visitor";
+        protected const string CACHEKEY_VISITOR = "visitor";
 
         /// <summary>
-        /// 30 percig cache-be kerül a visitor objektum
+        /// AuthCookieExpiredHours időtartamra cache-be kerül a visitor objektum
         /// </summary>
-        private const double CACHE_EXPIRATION_VISITOR = 30d;
+        protected readonly static double AuthCookieExpiredHours = Helpers.ConfigSettingsParser.GetDouble("AuthCookieExpiredHours", 24d);
 
         /// <summary>
         /// konstruktor visitor repository-val
@@ -78,7 +78,7 @@ namespace CompanyGroup.ApplicationServices
                 {
                     visitor.Representative.SetDefault();
 
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddMinutes(CACHE_EXPIRATION_VISITOR));
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
                 }
 
                 return visitor;

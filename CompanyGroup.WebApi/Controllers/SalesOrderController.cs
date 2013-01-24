@@ -30,7 +30,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetOrderInfo")]
         [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.ServiceRequest.GetOrderInfo request)
+        public List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest request)
         {
             return service.GetOrderInfo(request);
         }

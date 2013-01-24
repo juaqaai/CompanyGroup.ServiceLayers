@@ -32,10 +32,18 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
+        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.PartnerModule.SignInRequest request)
         {
-            //tárolt eljárás hívással történik a bejelentkezés 
+            CompanyGroup.Helpers.DesignByContract.Require((request != null), "The request cannot be null!");
+
+            CompanyGroup.Helpers.DesignByContract.Require((!String.IsNullOrEmpty(request.Password)), "The password cannot be null or empty!");
+
+            CompanyGroup.Helpers.DesignByContract.Require((!String.IsNullOrEmpty(request.UserName)), "The username cannot be null or empty!");
+
+            //bejelentkezés 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
+
+            CompanyGroup.Helpers.DesignByContract.Ensure(visitor != null, "Visitor can not be null!");
 
             //kérés IP címét menteni kell
             visitor.LoginIP = request.IPAddress;
@@ -43,7 +51,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //vállalat kódja, ahov a bejelentkezés történik
             visitor.DataAreaId = request.DataAreaId;
 
-            //aktív státusz beállítása a bejelentkezést követően
+            //aktív státusz beállítása a bejelentkezést követően (passzív, aktív, permanens)
             visitor.Status = LoginStatus.Active;
 
             //bejelentkezett állapot beállítása
@@ -61,11 +69,17 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //bejelentkezett visitor-t tárolni kell
             visitor.Id = visitorRepository.Add(visitor);
 
-            //ha sikeres a bejelentkezés, akkor le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
+            //visitor.Id nem lehet nulla
+            CompanyGroup.Helpers.DesignByContract.Ensure(!visitor.IsTransient(), "Visitor can not be transient!");
+
+            //le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
             visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
 
             //árcsoportok tárolása 
             visitor.CustomerPriceGroups.ToList().ForEach(x => { customerRepository.AddCustomerPriceGroup(x); });
+
+            //visitor objektum cache-ben tárolása
+            CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, visitor.VisitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
 
             //mappelés dto-ra
             return new VisitorToVisitor().Map(visitor);
@@ -76,9 +90,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
+        public void SignOut(CompanyGroup.Dto.PartnerModule.SignOutRequest request)
         {
-            visitorRepository.DisableStatus(request.ObjectId);
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+            visitorRepository.DisableStatus(request.VisitorId);
         }
 
         /// <summary>
@@ -86,11 +102,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.Visitor GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
+        public CompanyGroup.Dto.PartnerModule.Visitor GetVisitorInfo(CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DataAreaId), "DataAreaId cannot be null, or empty!");
 
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "ObjectId cannot be null, or empty!");
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -98,24 +114,12 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return new VisitorToVisitor().Map(visitor);
         }
 
-        ///// <summary>
-        ///// bejelentkezett látogatóhoz kapcsolódó jogosultságok listázása
-        ///// </summary>
-        ///// <param name="request"></param>
-        ///// <returns></returns>
-        //public List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
-        //{
-        //    CompanyGroup.Dto.PartnerModule.Visitor visitor = GetVisitorInfo(request);
-
-        //    return visitor.Roles;
-        //}
-
         /// <summary>
         /// valutanem csere
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        public void ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Currency), "Currency cannot be null, or empty!");
 
@@ -129,7 +133,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        public void ChangeLanguage(CompanyGroup.Dto.PartnerModule.ChangeLanguageRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Language), "Language cannot be null, or empty!");
 

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
-    public class ChangeCurrency
+    public class ChangeLanguageRequest
     {
-        public ChangeCurrency() : this(String.Empty, String.Empty) { }
+        public ChangeLanguageRequest() : this(String.Empty, String.Empty) { }
 
-        public ChangeCurrency(string visitorId, string currency)
+        public ChangeLanguageRequest(string visitorId, string language)
         {
             VisitorId = visitorId;
 
-            Currency = currency;
+            Language = language;
         }
 
         /// <summary>
@@ -23,6 +23,6 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// <summary>
         /// választott nyelv
         /// </summary>
-        public string Currency { get; set; }
+        public string Language { get; set; }
     }
 }

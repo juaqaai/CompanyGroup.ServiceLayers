@@ -162,7 +162,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer req = new CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer()
+            CompanyGroup.Dto.ServiceRequest.CreateFinanceOfferRequest req = new CompanyGroup.Dto.ServiceRequest.CreateFinanceOfferRequest()
             {
                 Address = request.Address,
                 NumOfMonth = request.NumOfMonth,
@@ -172,7 +172,7 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitorData.VisitorId
             };
 
-            CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer, CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment>("ShoppingCart", "CreateFinanceOffer", req);
+            CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.CreateFinanceOfferRequest, CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment>("ShoppingCart", "CreateFinanceOffer", req);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             //visitorData.CartId = response..Id;

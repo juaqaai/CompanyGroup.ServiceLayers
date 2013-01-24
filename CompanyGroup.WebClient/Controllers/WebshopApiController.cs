@@ -108,9 +108,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin)
             {
-                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses getDeliveryAddresses = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitor.Id };
+                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest getDeliveryAddresses = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitor.Id };
 
-                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
+                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
             }
             else
             {
@@ -245,12 +245,12 @@ namespace CompanyGroup.WebClient.Controllers
                 //előző belépés azonosítójának mentése
                 string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.ServiceRequest.SignIn singnInRequest = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
+                CompanyGroup.Dto.ServiceRequest.SignInRequest singnInRequest = new CompanyGroup.Dto.ServiceRequest.SignInRequest(ApiBaseController.DataAreaId,
                                                                                                         request.UserName,
                                                                                                         request.Password,
                                                                                                         System.Web.HttpContext.Current.Request.UserHostAddress);
 
-                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
+                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
 
@@ -310,9 +310,9 @@ namespace CompanyGroup.WebClient.Controllers
                     };
 
                     //szállítási címek lekérdezése
-                    CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses deliveryAddressRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses(WebshopApiController.DataAreaId, visitor.Id);
+                    CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest deliveryAddressRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest(WebshopApiController.DataAreaId, visitor.Id);
 
-                    deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressRequest);
+                    deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressRequest);
 
                     //visitor adatok http sütibe írása     
                     this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));

@@ -35,9 +35,9 @@ namespace CompanyGroup.WebClient.Controllers
                 }
                 else
                 {
-                    CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { VisitorId = visitorData.VisitorId, DataAreaId = BaseController.DataAreaId };
+                    CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request = new CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = BaseController.DataAreaId };
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }

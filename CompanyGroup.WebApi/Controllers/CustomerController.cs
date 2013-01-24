@@ -38,7 +38,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetAddressZipCodes")]
         [HttpGet]
-        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCode request)
+        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCodeRequest request)
         {
             return service.GetAddressZipCodes(request);
         }
@@ -57,7 +57,7 @@ namespace CompanyGroup.WebApi.Controllers
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration(visitorId, dataAreaId);
+            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistrationRequest request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistrationRequest(visitorId, dataAreaId);
 
             return service.GetCustomerRegistration(request);
         }
@@ -69,7 +69,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetDeliveryAddresses")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request)
+        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest request)
         {
             return service.GetDeliveryAddresses(request);
         }

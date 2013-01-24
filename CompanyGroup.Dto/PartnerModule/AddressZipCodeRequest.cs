@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
-    public class AddressZipCode
+    public class AddressZipCodeRequest
     {
         public string Prefix { get; set; }
 

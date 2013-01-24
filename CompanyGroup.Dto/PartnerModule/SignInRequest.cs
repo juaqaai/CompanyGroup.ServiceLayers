@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
     /// <summary>
-    /// bejelentkezés adatait összefogó osztály
+    /// bejelentkezés paramétereit összefogó típus
     /// </summary>
-    public class SignIn
+    public class SignInRequest
     {
-        public SignIn() : this("", "", "", "") { }
+        public SignInRequest() : this("", "", "", "") { }
 
-        public SignIn(string dataAreaId, string userName, string password, string ipAddress)
+        public SignInRequest(string dataAreaId, string userName, string password, string ipAddress)
         {
             this.DataAreaId = dataAreaId;
 

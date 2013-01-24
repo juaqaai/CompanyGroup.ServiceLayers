@@ -48,9 +48,9 @@ namespace CompanyGroup.WebClient.Controllers
                 //ha nincs bejelentkezve, akkor nincs szervizhívás sem
                 if (!String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    CompanyGroup.Dto.ServiceRequest.ChangeCurrency req = new CompanyGroup.Dto.ServiceRequest.ChangeCurrency(visitorData.VisitorId, visitorData.Currency);
+                    CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest req = new CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest(visitorData.VisitorId, visitorData.Currency);
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeCurrency, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeCurrency", req);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeCurrency", req);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }
@@ -91,9 +91,9 @@ namespace CompanyGroup.WebClient.Controllers
                 //ha nincs bejelentkezve, akkor nincs szervizhívás sem
                 if (!String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    CompanyGroup.Dto.ServiceRequest.ChangeLanguage req = new CompanyGroup.Dto.ServiceRequest.ChangeLanguage(visitorData.VisitorId, visitorData.Language);
+                    CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest req = new CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest(visitorData.VisitorId, visitorData.Language);
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeLanguage, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeLanguage", req);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeLanguage", req);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }

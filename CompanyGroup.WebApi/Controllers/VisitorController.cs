@@ -30,7 +30,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("SignIn")]
         [HttpPost]
-        public HttpResponseMessage SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
+        public HttpResponseMessage SignIn(CompanyGroup.Dto.ServiceRequest.SignInRequest request)
         {
             CompanyGroup.Dto.PartnerModule.Visitor response = service.SignIn(request);
 
@@ -57,7 +57,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetVisitorInfo")]
         [HttpPost]
-        public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
+        public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request)
         {
             CompanyGroup.Dto.PartnerModule.Visitor response = service.GetVisitorInfo(request);
 
@@ -71,7 +71,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeCurrency")]
         [HttpPost]
-        public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest request)
         {
             service.ChangeCurrency(request);
 
@@ -85,7 +85,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeLanguage")]
         [HttpPost]
-        public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest request)
         {
             service.ChangeLanguage(request);
 

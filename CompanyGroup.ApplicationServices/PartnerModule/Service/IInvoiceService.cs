@@ -22,7 +22,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request);
+        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request);
 
         /// <summary>
         /// összes számla kiolvasása
@@ -30,9 +30,5 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll();
 
-        /// <summary>
-        /// indexek létrehozása
-        /// </summary>
-        void CreateIndexes();
     }
 }

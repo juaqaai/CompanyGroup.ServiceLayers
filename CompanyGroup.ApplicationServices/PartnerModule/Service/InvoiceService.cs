@@ -45,7 +45,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request)
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
             CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), "The VisitorId cannot be null!");
 
@@ -73,12 +73,5 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return result;
         }
 
-        /// <summary>
-        /// indexek létrehozása
-        /// </summary>
-        public void CreateIndexes()
-        {
-            invoiceRepository.CreateIndexes();
-        }
     }
 }
