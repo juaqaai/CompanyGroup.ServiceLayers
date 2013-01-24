@@ -13,7 +13,7 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// termékazonosító
         /// </summary>
-        public string ProductId { get; set; }
+        public int LineId { get; set; }
 
         /// <summary>
         /// mennyiség

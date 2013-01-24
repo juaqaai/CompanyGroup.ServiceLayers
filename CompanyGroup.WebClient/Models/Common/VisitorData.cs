@@ -8,28 +8,11 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class VisitorData
     {
-        public VisitorData()
+        public VisitorData() : this(String.Empty, String.Empty, false, false, String.Empty, String.Empty, 0, String.Empty) { }
+
+        public VisitorData(string visitorId, string language, bool isShoppingCartOpened, bool isCatalogueOpened, string currency, string permanentId, int cartId, string registrationId)
         {
-            this.ObjectId = String.Empty;
-
-            this.Language = String.Empty;
-
-            this.IsShoppingCartOpened = false;
-
-            this.IsCatalogueOpened = false;
-
-            this.Currency =String.Empty;
-
-            this.PermanentId = String.Empty;
-
-            this.CartId = String.Empty;
-
-            this.RegistrationId = String.Empty;
-        }
-
-        public VisitorData(string objectId, string language, bool isShoppingCartOpened, bool isCatalogueOpened, string currency, string permanentId, string cartId, string registrationId)
-        {
-            this.ObjectId = objectId;
+            this.VisitorId = visitorId;
 
             this.Language = language;
 
@@ -49,7 +32,7 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// egyedi látogató azonosító
         /// </summary>
-        public string ObjectId { set; get; }
+        public string VisitorId { set; get; }
 
         /// <summary>
         /// beállított nyelv
@@ -72,14 +55,14 @@ namespace CompanyGroup.WebClient.Models
         public string Currency { set; get; }
 
         /// <summary>
-        /// megmarado objectId
+        /// megmarado Id
         /// </summary>
         public string PermanentId { set; get; }
 
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        public string CartId { set; get; }
+        public int CartId { set; get; }
 
         /// <summary>
         /// regisztrációs azonosító

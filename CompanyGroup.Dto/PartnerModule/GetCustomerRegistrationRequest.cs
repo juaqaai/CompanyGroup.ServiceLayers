@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
-    public class GetCustomerRegistration
+    /// <summary>
+    /// vevőregisztráció lekérdezés paramétereit összefogó típus
+    /// </summary>
+    public class GetCustomerRegistrationRequest
     {
-        public GetCustomerRegistration(string visitorId, string dataAreaId)
+        public GetCustomerRegistrationRequest(string visitorId, string dataAreaId)
         {
             this.VisitorId = visitorId;
 

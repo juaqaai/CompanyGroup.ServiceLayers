@@ -71,7 +71,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request)
+        public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
         {
             //ha üres a látogató azonosító
             CompanyGroup.Helpers.DesignByContract.Require( !String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
@@ -95,7 +95,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request)
+        public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request)
         {
             if (String.IsNullOrEmpty(request.Id))
             {
@@ -152,7 +152,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.ServiceRequest.ChangePassword request)
+        public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request)
         {
             //ha üres a látogató azonosító
             if (String.IsNullOrEmpty(request.VisitorId))
@@ -375,12 +375,12 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request)
+        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request)
         {
             //ha üres a felhasználónév 
             if (String.IsNullOrEmpty(request.UserName))
             {
-                return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull, Succeeded = false };
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull);
             }
 
             string dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
@@ -399,7 +399,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //ha nem, akkor kilépés hibaüzenettel
             if (!verify.Success)
             {
-                return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = verify.Message, Succeeded = false };
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, verify.Message);
             }
 
             //elfelejtett jelszó művelet előkészítése
@@ -429,7 +429,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 this.SendForgetPasswordFailedMail(forgetPassword, forgetPasswordCreateResult);
             }
 
-            return new CompanyGroup.Dto.PartnerModule.ForgetPassword() { Message = forgetPasswordCreateResult.Message, Succeeded = forgetPasswordCreateResult.Succeeded };
+            return new CompanyGroup.Dto.PartnerModule.ForgetPassword(forgetPasswordCreateResult.Succeeded, forgetPasswordCreateResult.Message);
         }
 
         #region "Elfelejtett jelszó email küldés"

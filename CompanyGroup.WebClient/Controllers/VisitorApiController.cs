@@ -30,24 +30,6 @@ namespace CompanyGroup.WebClient.Controllers
         }
 
         /// <summary>
-        /// látogatói jogosultságok
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("GetRoles")]
-        public List<string> GetRoles()
-        {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            CompanyGroup.Dto.ServiceRequest.VisitorInfo req = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { DataAreaId = VisitorApiController.DataAreaId, ObjectId = visitorData.ObjectId };
-
-            List<string> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, List<string>>("Customer", "GetRoles", req);
-
-            return response;
-        }
-
-
-        /// <summary>
         /// beállítja a http süti Currency mező értékét.
         /// /// </summary>
         /// <returns></returns>
@@ -64,11 +46,11 @@ namespace CompanyGroup.WebClient.Controllers
                 visitorData.Currency = String.IsNullOrEmpty(request.Currency) ? ApiBaseController.DefaultCurrency : request.Currency;
 
                 //ha nincs bejelentkezve, akkor nincs szervizhívás sem
-                if (!String.IsNullOrEmpty(visitorData.ObjectId))
+                if (!String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    CompanyGroup.Dto.ServiceRequest.ChangeCurrency req = new CompanyGroup.Dto.ServiceRequest.ChangeCurrency(visitorData.ObjectId, visitorData.Currency);
+                    CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest req = new CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest(visitorData.VisitorId, visitorData.Currency);
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeCurrency, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeCurrency", req);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeCurrency", req);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }
@@ -107,11 +89,11 @@ namespace CompanyGroup.WebClient.Controllers
                 visitorData.Language = String.IsNullOrEmpty(request.Language) ? ApiBaseController.LanguageHungarian : request.Language;
 
                 //ha nincs bejelentkezve, akkor nincs szervizhívás sem
-                if (!String.IsNullOrEmpty(visitorData.ObjectId))
+                if (!String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    CompanyGroup.Dto.ServiceRequest.ChangeLanguage req = new CompanyGroup.Dto.ServiceRequest.ChangeLanguage(visitorData.ObjectId, visitorData.Language);
+                    CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest req = new CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest(visitorData.VisitorId, visitorData.Language);
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeLanguage, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeLanguage", req);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeLanguage", req);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }

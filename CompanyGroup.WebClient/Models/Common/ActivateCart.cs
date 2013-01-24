@@ -7,6 +7,6 @@ namespace CompanyGroup.WebClient.Models
 {
     public class ActivateCart
     {
-        public string CartId { get; set; }
+        public int CartId { get; set; }
     }
 }

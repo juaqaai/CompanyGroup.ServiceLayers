@@ -16,8 +16,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
     //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
     public class CustomerService : ServiceCoreBase, ICustomerService 
     {
-        private readonly static double AuthCookieExpiredHours = Helpers.ConfigSettingsParser.GetDouble("AuthCookieExpiredHours", 24d);
-
         private CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository;
 
         /// <summary>
@@ -39,7 +37,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCode request)
+        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request)
         {
             List<CompanyGroup.Domain.PartnerModule.AddressZipCode> addressZipCodes = customerRepository.GetAddressZipCode(request.DataAreaId, request.Prefix);
 
@@ -52,7 +50,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request)
+        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request)
         {
             //ha üres a látogató azonosító
             if (String.IsNullOrEmpty(request.VisitorId))
@@ -111,7 +109,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request)
+        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request)
         {
             CompanyGroup.Dto.PartnerModule.DeliveryAddresses result = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
 

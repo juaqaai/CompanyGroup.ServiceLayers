@@ -7,8 +7,6 @@ namespace CompanyGroup.WebClient.Models
     {
         public FinanceOfferFulFillment(CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment financeOfferFulFillment, bool catalogueOpenStatus, bool shoppingCartOpenStatus, Visitor visitor)
         {
-            this.ActiveCart = financeOfferFulFillment.ActiveCart;
-
             this.CatalogueOpenStatus = catalogueOpenStatus;
 
             this.EmaiNotification = financeOfferFulFillment.EmaiNotification;
@@ -17,11 +15,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.Message = financeOfferFulFillment.Message;
 
-            this.OpenedItems = financeOfferFulFillment.OpenedItems;
-
             this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
-
-            this.StoredItems = financeOfferFulFillment.StoredItems;
 
             this.Visitor = visitor;
         }

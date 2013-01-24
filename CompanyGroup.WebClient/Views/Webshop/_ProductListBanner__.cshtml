@@ -1,0 +1,94 @@
+﻿@model  CompanyGroup.Dto.WebshopModule.BannerList
+<table border="0" cellpadding="0" cellspacing="0">
+	<tr>
+	<td>
+<div id="container">
+<h2>Recent Items</h2>
+	<ul id="items">
+    <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+            <li>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><p class="image"><a href="#"><img src="~/Content/Media/images/nopic.jpg" width="50" height="50" /></a></p></td><td>		<h3>RroductID</h3><span class="info">ProductID</span></td>
+		</tr>
+		</table>
+		</li>
+    	</ul>
+</div></td>
+          <td><div id="cus_recommended_prod_container">
+	<h2>Ajánlott termékeink</h2>
+	<ul id="cus_recommended_prod_content">
+        @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.Items)
+        {
+		<li>
+			<a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=120&MaxHeight=80", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a><span>@banner.ProductId</span>
+		</li>
+        }
+	</ul>
+</div></td>
+        </tr>
+      </table>
+	  
+

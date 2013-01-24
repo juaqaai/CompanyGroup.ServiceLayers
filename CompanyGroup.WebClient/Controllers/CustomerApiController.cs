@@ -18,9 +18,9 @@ namespace CompanyGroup.WebClient.Controllers
         [HttpGet]
         public CompanyGroup.WebClient.Models.AddressZipCodes GetAddressZipCodes(string prefix)
         {
-            CompanyGroup.Dto.ServiceRequest.AddressZipCode req = new Dto.ServiceRequest.AddressZipCode() { DataAreaId = CustomerApiController.DataAreaId, Prefix = prefix };
+            CompanyGroup.Dto.ServiceRequest.AddressZipCodeRequest req = new Dto.ServiceRequest.AddressZipCodeRequest() { DataAreaId = CustomerApiController.DataAreaId, Prefix = prefix };
 
-            CompanyGroup.Dto.PartnerModule.AddressZipCodes response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddressZipCode, CompanyGroup.Dto.PartnerModule.AddressZipCodes>("Customer", "GetAddressZipCodes", req);
+            CompanyGroup.Dto.PartnerModule.AddressZipCodes response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddressZipCodeRequest, CompanyGroup.Dto.PartnerModule.AddressZipCodes>("Customer", "GetAddressZipCodes", req);
 
             return new CompanyGroup.WebClient.Models.AddressZipCodes(response);
         }
@@ -48,9 +48,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request = new Dto.ServiceRequest.GetDeliveryAddresses() { DataAreaId = CustomerApiController.DataAreaId, VisitorId = visitorData.ObjectId };
+            CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest request = new Dto.ServiceRequest.GetDeliveryAddressesRequest() { DataAreaId = CustomerApiController.DataAreaId, VisitorId = visitorData.VisitorId };
 
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", request);
+            CompanyGroup.Dto.PartnerModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", request);
 
             return new CompanyGroup.WebClient.Models.DeliveryAddresses(response);
         }
@@ -77,12 +77,12 @@ namespace CompanyGroup.WebClient.Controllers
                 //előző belépés azonosítójának mentése
                 string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.ServiceRequest.SignIn req = new CompanyGroup.Dto.ServiceRequest.SignIn(ApiBaseController.DataAreaId,
+                CompanyGroup.Dto.ServiceRequest.SignInRequest req = new CompanyGroup.Dto.ServiceRequest.SignInRequest(ApiBaseController.DataAreaId,
                                                                                                         request.UserName,
                                                                                                         request.Password,
                                                                                                         System.Web.HttpContext.Current.Request.UserHostAddress);
 
-                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignIn, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", req);
+                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", req);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
 
@@ -141,11 +141,11 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.ObjectId };
+                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.VisitorId };
 
                 CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
 
-                visitorData.ObjectId = String.Empty;
+                visitorData.VisitorId = String.Empty;
 
                 this.WriteCookie(visitorData);
 

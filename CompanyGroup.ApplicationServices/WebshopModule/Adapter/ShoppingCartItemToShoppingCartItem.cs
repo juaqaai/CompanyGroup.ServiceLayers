@@ -19,7 +19,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 DataAreaId = from.DataAreaId,   //CompanyGroup.Domain.Core.Adapter.ConvertDataAreaIdEnumToString
                 //Flags = new FlagsToFlags().Map(from.Flags),
                 //Garanty = new GarantyToGaranty().Map(from.Garanty),
-                Id = from.CartId.ToString(),
+                Id = from.CartId,
                 //IsInStock = from.IsInStock,
                 ItemState = (int)from.ItemState,
                 ItemTotal = from.ItemTotal,

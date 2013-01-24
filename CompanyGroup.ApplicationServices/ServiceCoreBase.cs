@@ -6,18 +6,19 @@ using System.Text;
 namespace CompanyGroup.ApplicationServices
 {
     /// <summary>
-    /// ősosztály a visitor service-ek összefogására
+    /// ősosztály service-ek közös metódusainak összefogására
+    /// GetVisitor, PlainText, HtmlText, SendMail, Serialize, DeSerialize
     /// </summary>
     public class ServiceCoreBase
     {
         protected CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository;
 
-        private const string CACHEKEY_VISITOR = "visitor";
+        protected const string CACHEKEY_VISITOR = "visitor";
 
         /// <summary>
-        /// 30 percig cache-be kerül a visitor objektum
+        /// AuthCookieExpiredHours időtartamra cache-be kerül a visitor objektum
         /// </summary>
-        private const double CACHE_EXPIRATION_VISITOR = 30d;
+        protected readonly static double AuthCookieExpiredHours = Helpers.ConfigSettingsParser.GetDouble("AuthCookieExpiredHours", 24d);
 
         /// <summary>
         /// konstruktor visitor repository-val
@@ -34,7 +35,7 @@ namespace CompanyGroup.ApplicationServices
         }
 
         /// <summary>
-        /// bejelentkezett látogatóhoz kapcsolódó mentett információk kiolvasása
+        /// bejelentkezett látogatóhoz kapcsolódó információk kiolvasása
         /// - ha a kulcs üres, akkor új visitor példánnyal tér vissza
         /// - ha nincs a cache-ben az objektum, akkor repository hívás történik
         /// - ha nem érvényes a bejelentkezés, akkor repository hívás történik
@@ -77,7 +78,7 @@ namespace CompanyGroup.ApplicationServices
                 {
                     visitor.Representative.SetDefault();
 
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddMinutes(CACHE_EXPIRATION_VISITOR));
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
                 }
 
                 return visitor;

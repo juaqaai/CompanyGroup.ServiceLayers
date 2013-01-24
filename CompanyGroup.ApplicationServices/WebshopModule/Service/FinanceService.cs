@@ -130,7 +130,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request)
+        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.PartnerModule.CreateFinanceOfferRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -193,7 +193,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="financeOffer"></param>
         /// <param name="visitor"></param>
         /// <returns></returns>
-        private bool SendFinanceOfferMail(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request,
+        private bool SendFinanceOfferMail(CompanyGroup.Dto.PartnerModule.CreateFinanceOfferRequest request,
                                           CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer,
                                           CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {

@@ -6,7 +6,8 @@ using System.Text;
 namespace CompanyGroup.ApplicationServices
 {
     /// <summary>
-    /// ősosztály a közös service-k összefogására
+    /// ősosztály a közös service műveletek összefogására
+    /// ChangePrice, GetMinMaxLeasingValue
     /// </summary>
     public class ServiceBase : ServiceCoreBase
     {

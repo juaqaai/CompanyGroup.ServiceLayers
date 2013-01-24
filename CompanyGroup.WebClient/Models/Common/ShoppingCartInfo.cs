@@ -44,7 +44,6 @@ namespace CompanyGroup.WebClient.Models
             this.ActiveCart = shoppingCartInfo.ActiveCart;
             this.CatalogueOpenStatus = catalogueOpenStatus;
             this.ErrorMessage = "";
-            this.FinanceOffer = shoppingCartInfo.FinanceOffer;
             this.LeasingOptions = shoppingCartInfo.LeasingOptions;
             this.OpenedItems = shoppingCartInfo.OpenedItems;
             this.StoredItems = shoppingCartInfo.StoredItems;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace CompanyGroup.WebClient.Controllers
@@ -28,56 +29,60 @@ namespace CompanyGroup.WebClient.Controllers
         /// InvoiceInfo view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        //public ActionResult InvoiceInfo()
-        //{
-        //    ViewBag.Message = "InvoiceInfo view.";
+        public ActionResult InvoiceInfo()
+        {
+            ViewBag.Message = "InvoiceInfo view.";
 
-        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
 
-        //    CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo()
-        //    {
-        //        LanguageId = visitorData.Language,
-        //        VisitorId = visitorData.ObjectId,
-        //        PaymentType = 1
-        //    };
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-        //    List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfo, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
+            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest()
+            {
+                LanguageId = visitorData.Language,
+                VisitorId = visitorData.VisitorId,
+                PaymentType = 1
+            };
 
-        //    List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
+            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
 
-        //    invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
+            List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
 
-        //    CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList);
+            invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
 
-        //    return View(model);
-        //}
+            CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList, visitor);
+
+            return View(model);
+        }
 
         /// <summary>
         /// OrderInfo view kezdőérték beállításokkal
         /// </summary>
         /// <returns></returns>
-        //public ActionResult OrderInfo()
-        //{
-        //    ViewBag.Message = "OrderInfo view.";
+        public ActionResult OrderInfo()
+        {
+            ViewBag.Message = "OrderInfo view.";
 
-        //    CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(this.Request, CookieName);
+            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
 
-        //    CompanyGroup.Dto.ServiceRequest.GetOrderInfo request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfo()
-        //    {
-        //        LanguageId = visitorData.Language,
-        //        VisitorId = visitorData.ObjectId,
-        //    };
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-        //    List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfo, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
+            CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest()
+            {
+                LanguageId = visitorData.Language,
+                VisitorId = visitorData.VisitorId,
+            };
 
-        //    List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
+            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
 
-        //    orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+            List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
 
-        //    CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList);
+            orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
 
-        //     return View(model);
-        //}
+            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList, visitor);
+
+            return View(model);
+        }
 
         /// <summary>
         /// ChangePassword view kezdőérték beállításokkal
@@ -99,7 +104,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <param name="undoChangePassword"></param>
         /// <returns></returns>
-        [HttpGet]
+        //[System.Web.Mvc.HttpGet]
         public ActionResult UndoChangePassword(string undoChangePassword)
         {
             ViewBag.Message = "UndoChangePassword view.";

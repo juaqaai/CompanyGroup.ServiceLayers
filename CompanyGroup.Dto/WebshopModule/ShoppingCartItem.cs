@@ -11,7 +11,7 @@ namespace CompanyGroup.Dto.WebshopModule
         /// kosár elem azonosító
         /// </summary>
         [System.Runtime.Serialization.DataMember(Name = "Id", Order = 1)]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// termékazonosító

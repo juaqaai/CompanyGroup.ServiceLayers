@@ -16,14 +16,17 @@ namespace CompanyGroup.Domain.WebshopModule
         ///  konstruktor, létrehozza az elemek listát üresen
         ///  beállítja a látogató azonosítót, cégazonosítót, személ azonosítót, kosár nevét, aktív státuszát    
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="visitorId"></param>
         /// <param name="companyId"></param>
         /// <param name="personId"></param>
         /// <param name="name"></param>
         /// <param name="currency"></param>
         /// <param name="active"></param>
-        public ShoppingCart(string visitorId, string companyId, string personId, string name, string currency, bool active)
+        public ShoppingCart(int id, string visitorId, string companyId, string personId, string name, string currency, bool active)
         {
+            this.Id = id;
+
             this.Items = new List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem>();
 
             this.VisitorId = visitorId;
@@ -63,7 +66,7 @@ namespace CompanyGroup.Domain.WebshopModule
             this.Status = CartStatus.Created;
         }
 
-        public ShoppingCart() : this("", "", "", "", "", false)
+        public ShoppingCart() : this(0, "", "", "", "", "", false)
         { 
             
         }

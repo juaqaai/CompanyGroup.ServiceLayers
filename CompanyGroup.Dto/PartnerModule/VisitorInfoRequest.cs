@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
-    public class VisitorInfo
+    public class VisitorInfoRequest
     {
         public string DataAreaId { get; set; }
 

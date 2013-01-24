@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace CompanyGroup.Dto.ServiceRequest
+namespace CompanyGroup.Dto.PartnerModule
 {
     /// <summary>
     /// finanszírozási ajánlat létrehozás
     /// </summary>
-    public class CreateFinanceOffer
+    public class CreateFinanceOfferRequest
     {
         public string VisitorId { get; set; }
 

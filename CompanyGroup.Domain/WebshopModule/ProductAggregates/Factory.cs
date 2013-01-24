@@ -308,6 +308,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// felhasználói kosár létrehozása
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="visitorId"></param>
         /// <param name="companyId"></param>
         /// <param name="personId"></param>
@@ -315,9 +316,9 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="currency"></param>
         /// <param name="active"></param>
         /// <returns></returns>
-        public static CompanyGroup.Domain.WebshopModule.ShoppingCart CreateShoppingCart(string visitorId, string companyId, string personId, string name, string currency, bool active)
+        public static CompanyGroup.Domain.WebshopModule.ShoppingCart CreateShoppingCart(int id, string visitorId, string companyId, string personId, string name, string currency, bool active)
         {
-            return new CompanyGroup.Domain.WebshopModule.ShoppingCart(visitorId, companyId, personId, name, currency, active);
+            return new CompanyGroup.Domain.WebshopModule.ShoppingCart(id, visitorId, companyId, personId, name, currency, active);
         }
     }
 }

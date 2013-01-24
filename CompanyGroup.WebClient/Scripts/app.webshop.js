@@ -59,19 +59,22 @@ companyGroup.webshop = $.sammy(function () {
         });
         //alsó (ajánlott) termék lapozó 
         $('#cus_recommended_prod_content').easyPaginate({
-            step: 3,
+            step: 4,
             delay: 300,
-            numeric: true,
-            nextprev: false,
+            numeric: false,
+            nextprev: true,
             auto: false,
             pause: 5000,
             clickstop: true,
             controls: 'pagination',
             current: 'current'
         });
-        //	$('ul#items').easyPaginate({
-        //	    step:4
-        //	});
+		$('ul#items').easyPaginate({
+			step:3,
+			nextprev: true,
+            auto: false,
+			numeric: false,
+		});
         //$(".expand_all").toggle(function () {
         /*$(".expand_all").toggle(function () {
         $(this).addClass("expanded");
@@ -644,7 +647,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#usermenuContainer").empty();
                     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
                     $('#usermenuContainer').html(usermenuHtml);
-
+					
                     $("#div_pager_top").empty();
                     $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
                     $("#div_pager_bottom").empty();

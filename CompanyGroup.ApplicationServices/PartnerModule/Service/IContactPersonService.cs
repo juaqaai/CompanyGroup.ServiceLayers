@@ -21,7 +21,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         ////[WebGet(UriTemplate = "/Client/{id}", BodyStyle = WebMessageBodyStyle.Bare)]  string prefix, string dataAreaId
-        CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.ServiceRequest.ChangePassword request);
+        CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request);
 
         /// <summary>
         /// jelszómódosítás visszavonás
@@ -34,7 +34,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request);
+        CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request);
 
         /// <summary>
         /// kapcsolattartó lekérdezése azonosító alapján
@@ -47,7 +47,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request);
+        CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request);
 
         //[OperationContract(Action = "ForgetPassword")]
         //[WebInvoke(Method = "POST",
@@ -55,6 +55,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request);
+        CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request);
     }
 }

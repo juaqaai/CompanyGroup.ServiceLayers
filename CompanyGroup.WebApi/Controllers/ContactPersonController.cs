@@ -53,7 +53,7 @@ namespace CompanyGroup.WebApi.Controllers
 
         [HttpPost]
         [ActionName("ForgetPassword")]
-        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPassword request)
+        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest request)
         {
             return service.ForgetPassword(request);
         }

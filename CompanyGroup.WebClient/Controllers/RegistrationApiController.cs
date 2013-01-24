@@ -101,9 +101,9 @@ namespace CompanyGroup.WebClient.Controllers
                 //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
                 //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
-                if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.ObjectId))
+                if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.ObjectId, RegistrationApiController.DataAreaId)); ;
+                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.VisitorId, RegistrationApiController.DataAreaId)); ;
                 }
                 else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
                 {
@@ -165,11 +165,11 @@ namespace CompanyGroup.WebClient.Controllers
             }
 
             //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
-            if ((response == null) || (response.RegistrationId.Equals(RegistrationApiController.MongoDbEmptyObjectId)) || (String.IsNullOrEmpty(response.RegistrationId)))
+            if ((response == null) || String.IsNullOrEmpty(response.RegistrationId) || (String.IsNullOrEmpty(response.RegistrationId)))
             {
                 CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
                 {
-                    VisitorId = visitorData.ObjectId,
+                    VisitorId = visitorData.VisitorId,
                     LanguageId = visitorData.Language
                 };
 

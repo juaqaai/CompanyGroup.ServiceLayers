@@ -85,7 +85,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
                 //új kosár létrehozása és hozzáadása
-                CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
+                CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(0, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                 int newCartId = shoppingCartRepository.Add(newShoppingCart);
 
@@ -156,7 +156,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 string cartName = String.IsNullOrEmpty(request.CartName) ? ShoppingCartService.CreateCartName() : request.CartName;
 
                 //új kosár létrehozása és hozzáadása
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
+                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(0, request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
 
                 int newCartId = shoppingCartRepository.Add(shoppingCart);
 
@@ -214,7 +214,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     string cartName = String.IsNullOrEmpty(request.Name) ? ShoppingCartService.CreateCartName() : request.Name;
 
                     //új kosár létrehozása és hozzáadása
-                    CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
+                    CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
 
                     int newCartId = shoppingCartRepository.Add(shoppingCart);
 
@@ -302,7 +302,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 else
                 {
                     //új kosár létrehozása és hozzáadása
-                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
+                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                     int newCartId = shoppingCartRepository.Add(newShoppingCart);
 
@@ -445,7 +445,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //ha nincs meg a CartId, akkor új kosár létrehozása és hozzáadása szükséges
                 if (shoppingCart == null)
                 {
-                    shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
+                    shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                     shoppingCartRepository.Add(shoppingCart);
                 }
@@ -651,7 +651,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                ActiveCart = new Dto.WebshopModule.ShoppingCart()
                                             {
                                                 DeliveryTerms = 0,
-                                                Id = "",
+                                                Id = 0,
                                                 Items = new List<Dto.WebshopModule.ShoppingCartItem>(),
                                                 PaymentTerms = 0,
                                                 Shipping = new Dto.WebshopModule.Shipping() { AddrRecId = 0, City = "", Country = "", DateRequested = DateTime.MinValue, InvoiceAttached = false, Street = "", ZipCode = "" },
@@ -988,7 +988,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 else
                 {
                     //új kosár létrehozása és hozzáadása
-                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
+                    CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                     shoppingCartRepository.Add(newShoppingCart);
                 }

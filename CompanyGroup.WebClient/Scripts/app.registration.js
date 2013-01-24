@@ -860,37 +860,52 @@ companyGroup.registration = $.sammy(function () {
         //        $('#chkContactPersonSmsOrderConfirm').val();
     }
 
-    var setTabsVisibility = function (i) {
-        if (i == 1) { $("#tabs-1").show(); }
-        else { $("#tabs-1").hide(); }
+var setTabsVisibility = function (i) {
+		if (i == 1) { 
+		$('#tabs-1').show(); 
+		$('#tabs-1-button').hide();
+ 		} else { 
+		$("#tabs-1").hide(500);
+		}
 
-        if (i == 2) { $("#tabs-2").show(); }
-        else { $("#tabs-2").hide(); }
-
-        if (i == 3) {
-            $("#tabs-3").show();
+		if (i == 2) { 
+			$('#tabs-2').show(500); 
+			$('#tabs-1-button').show(500);
+		} else { 
+			$("#tabs-2").hide(500);
+			$('#tabs-2-button').hide();
+		}
+		if (i == 3) {
+            $('#tabs-3').show(500);
+			$('#tabs-2-button').show(500);
         } else {
-            $("#tabs-3").hide();
+            $("#tabs-3").hide(500);
+			$('#tabs-3-button').hide();
         }
         if (i == 4) {
-            $("#tabs-4").show();
+            $("#tabs-4").show(500);
+			$('#tabs-3-button').show(500);
         } else {
-            $("#tabs-4").hide();
+            $("#tabs-4").hide(500);
+			$('#tabs-4-button').hide();
         }
         if (i == 5) {
-            $("#tabs-5").show();
+            $("#tabs-5").show(500);
+			$('#tabs-4-button').show(500);
         } else {
-            $("#tabs-5").hide();
+            $("#tabs-5").hide(500);
+			$('#tabs-5-button').hide();
         }
         if (i == 6) {
-            $("#tabs-6").show();
+            $("#tabs-6").show(500);
+			$('#tabs-5-button').show(500);
         } else {
-            $("#tabs-6").hide();
+            $("#tabs-6").hide(500);
         }
         if (i == 7) {
-            $("#tabs-7").show();
+            $("#tabs-7").show(500);
         } else {
-            $("#tabs-7").hide();
+            $("#tabs-7").hide(500);
         }
     }
 

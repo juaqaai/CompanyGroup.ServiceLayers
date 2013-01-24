@@ -38,7 +38,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetAddressZipCodes")]
         [HttpGet]
-        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCode request)
+        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.ServiceRequest.AddressZipCodeRequest request)
         {
             return service.GetAddressZipCodes(request);
         }
@@ -57,7 +57,7 @@ namespace CompanyGroup.WebApi.Controllers
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration(visitorId, dataAreaId);
+            CompanyGroup.Dto.ServiceRequest.GetCustomerRegistrationRequest request = new CompanyGroup.Dto.ServiceRequest.GetCustomerRegistrationRequest(visitorId, dataAreaId);
 
             return service.GetCustomerRegistration(request);
         }
@@ -69,32 +69,9 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetDeliveryAddresses")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddresses request)
+        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest request)
         {
             return service.GetDeliveryAddresses(request);
-        }
-
-        /// <summary>
-        /// bejelentkezés           
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("SignIn")]
-        [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.Visitor SignIn(CompanyGroup.Dto.ServiceRequest.SignIn request)
-        {
-            return service.SignIn(request);
-        }
-
-        /// <summary>
-        /// kijelentkezés   
-        /// </summary>
-        /// <param name="request"></param>
-        [ActionName("SignOut")]
-        [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.Empty SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
-        {
-            return service.SignOut(request);
         }
 
     }

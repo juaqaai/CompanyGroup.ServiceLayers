@@ -24,27 +24,44 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
+        /// bejelentkezés           
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("SignIn")]
+        [HttpPost]
+        public HttpResponseMessage SignIn(CompanyGroup.Dto.ServiceRequest.SignInRequest request)
+        {
+            CompanyGroup.Dto.PartnerModule.Visitor response = service.SignIn(request);
+
+            return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
+        }
+
+        /// <summary>
+        /// kijelentkezés   
+        /// </summary>
+        /// <param name="request"></param>
+        [ActionName("SignOut")]
+        [HttpPost]
+        public HttpResponseMessage SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
+        {
+            service.SignOut(request);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        /// <summary>
         /// bejelentkezett látogatóhoz kapcsolódó információk kiolvasása
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetVisitorInfo")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.Visitor GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
+        public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request)
         {
-            return service.GetVisitorInfo(request);
-        }
+            CompanyGroup.Dto.PartnerModule.Visitor response = service.GetVisitorInfo(request);
 
-        /// <summary>
-        /// bejelentkezett látogatóhoz kapcsolódó jogosultságok listázása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("GetRoles")]
-        [HttpPost]
-        public List<string> GetRoles(CompanyGroup.Dto.ServiceRequest.VisitorInfo request)
-        {
-            return service.GetRoles(request);
+            return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
         }
 
         /// <summary>
@@ -54,9 +71,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeCurrency")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrency request)
+        public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest request)
         {
-            return service.ChangeCurrency(request);
+            service.ChangeCurrency(request);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -66,9 +85,11 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeLanguage")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.Visitor ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguage request)
+        public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest request)
         {
-            return service.ChangeLanguage(request);
+            service.ChangeLanguage(request);
+
+            return Request.CreateResponse(HttpStatusCode.OK); 
         }
     }
 }

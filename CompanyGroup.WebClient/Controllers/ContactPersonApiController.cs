@@ -24,7 +24,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.ServiceRequest.ChangePassword req = new CompanyGroup.Dto.ServiceRequest.ChangePassword()
             {
-                VisitorId = visitorData.ObjectId,
+                VisitorId = visitorData.VisitorId,
                 Language = visitorData.Language,
                 NewPassword = request.NewPassword,
                 OldPassword = request.OldPassword,
@@ -53,13 +53,13 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.ForgetPassword req = new CompanyGroup.Dto.ServiceRequest.ForgetPassword()
+            CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest req = new CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest()
             {
                 Language = visitorData.Language,
                 UserName = request.UserName
             };
 
-            CompanyGroup.Dto.PartnerModule.ForgetPassword response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ForgetPassword, CompanyGroup.Dto.PartnerModule.ForgetPassword>("ContactPerson", "ForgetPassword", req);
+            CompanyGroup.Dto.PartnerModule.ForgetPassword response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest, CompanyGroup.Dto.PartnerModule.ForgetPassword>("ContactPerson", "ForgetPassword", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 

@@ -17,7 +17,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 {
                     Items = shoppingCart.Items.ToList().ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, shoppingCart.Currency)),
                     SumTotal = shoppingCart.SumTotal,
-                    Id = shoppingCart.Id.ToString(),
+                    Id = shoppingCart.Id,
                     DeliveryTerms = Convert.ToInt32(shoppingCart.DeliveryTerms),
                     PaymentTerms = Convert.ToInt32(shoppingCart.PaymentTerms),
                     Shipping = new ShippingToShipping().Map(shoppingCart.Shipping), 

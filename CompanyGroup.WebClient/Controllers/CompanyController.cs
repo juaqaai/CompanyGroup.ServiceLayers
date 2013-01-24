@@ -40,7 +40,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request = new CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection()
             {
                 Language = visitorData.Language,
-                VisitorId = visitorData.ObjectId,
+                VisitorId = visitorData.VisitorId,
                 ManufacturerId = String.Empty
             };
 

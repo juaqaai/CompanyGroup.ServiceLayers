@@ -9,6 +9,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     [ServiceContract(Namespace = "http://CompanyGroup.ApplicationServices.WebshopModule/", Name = "FinanceService")]
     public interface IFinanceService
     {
-        CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOffer request);
+        CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.ServiceRequest.CreateFinanceOfferRequest request);
     }
 }

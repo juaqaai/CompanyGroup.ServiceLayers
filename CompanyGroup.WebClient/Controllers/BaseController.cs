@@ -29,15 +29,15 @@ namespace CompanyGroup.WebClient.Controllers
 
             try
             {
-                if (String.IsNullOrWhiteSpace(visitorData.ObjectId))
+                if (String.IsNullOrWhiteSpace(visitorData.VisitorId))
                 {
                     visitor = new CompanyGroup.WebClient.Models.Visitor();
                 }
                 else
                 {
-                    CompanyGroup.Dto.ServiceRequest.VisitorInfo request = new CompanyGroup.Dto.ServiceRequest.VisitorInfo() { ObjectId = visitorData.ObjectId, DataAreaId = BaseController.DataAreaId };
+                    CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request = new CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = BaseController.DataAreaId };
 
-                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfo, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
+                    CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 
                     visitor = new CompanyGroup.WebClient.Models.Visitor(response);
                 }

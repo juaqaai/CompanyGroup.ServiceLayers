@@ -229,5 +229,6 @@ GO
 -- select * from AxDb.dbo.PBAUserProfiles
 
 /*
-select * from AxDb.dbo.WebShopUserInfo where CustAccount = 'V005024'
+select * from AxDb.dbo.WebShopUserInfo where CustAccount = 'V004875'	--V005024
+select * from AxDb.dbo.WebShopUserInfo where ContactPersonId = 'KAPCS11030'
 */
