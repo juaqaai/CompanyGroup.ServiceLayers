@@ -75,19 +75,25 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AssociateCart(CompanyGroup.Dto.ServiceRequest.AssociateCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AssociateCart(CompanyGroup.Dto.WebshopModule.AssociateCartRequest request)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+            Helpers.DesignByContract.Require((request != null), "ShoppingCartService AssociateCart request cannot be null, or empty!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "ShoppingCartService AssociateCart VisitorId cannot be null, or empty!");
 
             try
             {
                 //visitor lekérdezés
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService AssociateCart visitor must be logged in!");
+
                 //új kosár létrehozása és hozzáadása
                 CompanyGroup.Domain.WebshopModule.ShoppingCart newShoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(0, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
                 int newCartId = shoppingCartRepository.Add(newShoppingCart);
+
+                Helpers.DesignByContract.Ensure(newCartId > 0, "ShoppingCartService AssociateCart newCartId can not be zero!");
 
                 //beállítja az új VisitorId-t, a permanens helyett
                 shoppingCartRepository.AssociateCart(request.PermanentId, request.VisitorId);
@@ -119,14 +125,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                           { 
-                                                                               ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
-                                                                               OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                               StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                               LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                               //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                           };
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems, 
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart), 
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
 
                 return response;
             }
@@ -140,8 +142,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// bevásárlókosár hozzáadása bevásárlókosár kollekcióhoz, 
         /// új kosár inicializálása + új elem hozzáadása
         /// </summary>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AddCart(CompanyGroup.Dto.ServiceRequest.AddCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AddCart(CompanyGroup.Dto.WebshopModule.AddCartRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "AddCart request cannot be null!");
+
             //ellenörzés, visitorId-re, productId-re, DataAreaId-re
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -150,7 +154,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
-                //lehetséges-e az új kosár létrehozása? ellenörzés, hogy elértük-e a kosár limitek számát?
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService AddCart visitor must be logged in!");                
 
                 //kosár név kalkulálása
                 string cartName = String.IsNullOrEmpty(request.CartName) ? ShoppingCartService.CreateCartName() : request.CartName;
@@ -159,6 +163,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(0, request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
 
                 int newCartId = shoppingCartRepository.Add(shoppingCart);
+
+                Helpers.DesignByContract.Ensure(newCartId > 0, "ShoppingCartService AddCart newCartId can not be zero!");
 
                 shoppingCartRepository.SetActive(newCartId, request.VisitorId);
 
@@ -171,15 +177,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart = new ShoppingCartToShoppingCart().Map(shoppingCartCollection.GetActiveCart());
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                               { 
-                                                                                   ActiveCart = activeCart, 
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new Dto.WebshopModule.LeasingOptions(), 
-                                                                                   //FinanceOffer = new Dto.WebshopModule.FinanceOffer()
-                                                                               };
-
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems, 
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems, 
+                                                                                                                               activeCart, 
+                                                                                                                               new CompanyGroup.Dto.WebshopModule.LeasingOptions());
                 return response;
             }
             catch (Exception ex)
@@ -193,8 +194,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.ServiceRequest.SaveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.WebshopModule.SaveCartRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "SaveCart request cannot be null!");
+
             //ellenörzés, visitorId-re, productId-re, DataAreaId-re
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -207,6 +210,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService SaveCart visitor must be logged in!");         
+
                 //nincs kosár azonosító
                 if (request.CartId == 0)
                 {
@@ -217,6 +222,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, cartName, visitor.Currency, true);
 
                     int newCartId = shoppingCartRepository.Add(shoppingCart);
+
+                    Helpers.DesignByContract.Ensure(newCartId > 0, "ShoppingCartService AddCart newCartId can not be zero!");
 
                     shoppingCartRepository.Store(newCartId, ShoppingCartService.CreateCartName());
                 }
@@ -249,15 +256,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                               { 
-                                                                                   ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                               };
-
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems, 
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems,
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart),
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
                 return response;
             }
             catch (Exception ex)
@@ -270,8 +272,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// látogatóhoz tartozó aktív kosár törlése kosár kollekcióból 
         /// </summary>
         /// <param name="cartId"></param>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.ServiceRequest.RemoveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.WebshopModule.RemoveCartRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "RemoveCart request cannot be null!");
+
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "Visitor id cannot be null!");
 
             Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
@@ -280,6 +284,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService RemoveCart visitor must be logged in!");       
 
                 shoppingCartRepository.Remove(request.CartId);
 
@@ -331,14 +337,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                               {
-                                                                                   ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                               };
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems, 
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems,
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart),
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
                 return response;
             }
             catch (Exception ex)
@@ -352,8 +354,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="id"></param>
         /// <param name="active"></param>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.ServiceRequest.ActivateCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.WebshopModule.ActivateCartRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "ActivateCart request cannot be null!");
+
             //ellenörzés, visitorId-re, productId-re, DataAreaId-re
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -363,6 +367,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService ActivateCart visitor must be logged in!");   
 
                 //active-ra állítás
                 shoppingCartRepository.SetActive(request.CartId, request.VisitorId);
@@ -389,14 +395,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                               { 
-                                                                                   ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                               };
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems, 
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems,
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart), 
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
                 return response;
             }
             catch(Exception ex)
@@ -423,8 +425,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// ha nincs aktív kosár, akkor létrehoz egy új kosarat és ahhoz adja hozzá az új elemet
         /// </summary>
         /// <param name="request"></param>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.ServiceRequest.AddLine request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.WebshopModule.AddLineRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "AddLine request cannot be null!");
+
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DataAreaId), "DataAreaId cannot be null, or empty!");
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.ProductId), "Product cannot be null, or empty!");
@@ -440,6 +444,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService AddLine visitor must be logged in!");   
+
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId); 
 
                 //ha nincs meg a CartId, akkor új kosár létrehozása és hozzáadása szükséges
@@ -447,7 +453,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 {
                     shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
 
-                    shoppingCartRepository.Add(shoppingCart);
+                    shoppingCart.Id = shoppingCartRepository.Add(shoppingCart);
                 }
 
                 Helpers.DesignByContract.Invariant(shoppingCart != null, "ShoppingCart cannot be null!");
@@ -507,8 +513,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// elem törlése meglévő kosárból
         /// </summary>
         /// <param name="request"></param>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.ServiceRequest.RemoveLine request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.WebshopModule.RemoveLineRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "RemoveLine request cannot be null!");
+
             //ellenörzés 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null!");
 
@@ -518,6 +526,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService ActivateCart visitor must be logged in!");   
 
                 //sor törlése
                 shoppingCartRepository.RemoveLine(request.LineId);
@@ -552,9 +562,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// meglévő kosárban elem frissítése 
         /// </summary>
         /// <param name="request"></param>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request)
         {
             //ellenörzés, 
+            Helpers.DesignByContract.Require((request != null), "UpdateLineQuantity request cannot be null!");
+
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
             Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
@@ -594,15 +606,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         #region "kosár lekérdezések"
 
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "GetShoppingCartInfo request cannot be null!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+            Helpers.DesignByContract.Invariant((request.CartId > 0), "CartId cannot be null!");
+
             try
             {
-                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-                Helpers.DesignByContract.Invariant((request.CartId > 0), "CartId cannot be null!");
-
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Invariant(!visitor.IsValidLogin, "ShoppingCartService GetShoppingCartInfo visitor must be logged in!");  
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
@@ -622,7 +638,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(activeCart.SumTotal);
+                int financedAmount = activeCart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -634,14 +650,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo()
-                                                                               {
-                                                                                   ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart),
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems,
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions) 
-                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                               };
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems,
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart),
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
                 return response;
             }
             catch
@@ -671,15 +683,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
+        public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "GetStoredOpenedShoppingCartCollectionByVisitor request cannot be null!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "GetStoredOpenedShoppingCartCollectionByVisitor VisitorId cannot be null, or empty!");
+
             try
             {
-                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
 
-                Helpers.DesignByContract.Invariant(!String.IsNullOrWhiteSpace(visitor.CustomerId), "CompanyId id cannot be null!");
+                Helpers.DesignByContract.Invariant(!String.IsNullOrWhiteSpace(visitor.CustomerId), "GetStoredOpenedShoppingCartCollectionByVisitor CompanyId id cannot be null!");
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
@@ -695,13 +709,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="visitorId"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "GetCartCollectionByVisitor request cannot be null!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "GetCartCollectionByVisitor VisitorId cannot be null, or empty!");
+
             try
             {
-                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Invariant(!visitor.IsValidLogin, "ShoppingCartService GetCartCollectionByVisitor visitor must be logged in!");  
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
@@ -717,15 +735,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="cartId"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.ServiceRequest.GetCartByKey request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "GetCartCollectionByVisitor request cannot be null!");
+
+            Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
             try
             {
-                Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
-
-                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Invariant(!visitor.IsValidLogin, "ShoppingCartService GetCartByKey visitor must be logged in!");  
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
@@ -741,13 +763,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.ServiceRequest.GetActiveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request)
         {
+            Helpers.DesignByContract.Require((request != null), "GetCartCollectionByVisitor request cannot be null!");
+
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
             try
             {
-                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+                Helpers.DesignByContract.Invariant(!visitor.IsValidLogin, "ShoppingCartService GetActiveCart visitor must be logged in!");  
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCartList = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
@@ -756,7 +782,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCart activeCart = shoppingCartCollection.GetActiveCart();
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(activeCart.SumTotal);
+                int financedAmount = activeCart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -770,14 +796,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartCollection);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo() 
-                                                                               { 
-                                                                                   ActiveCart = new ShoppingCartToShoppingCart().Map(activeCart), 
-                                                                                   OpenedItems = storedOpenedShoppingCarts.OpenedItems, 
-                                                                                   StoredItems = storedOpenedShoppingCarts.StoredItems, 
-                                                                                   LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions) 
-                                                                                   //FinanceOffer = new FinanceOfferToFinanceOffer().Map(new CompanyGroup.Domain.WebshopModule.FinanceOffer())
-                                                                               };
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,  
+                                                                                                                               storedOpenedShoppingCarts.OpenedItems, 
+                                                                                                                               new ShoppingCartToShoppingCart().Map(activeCart), 
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
                 return response;
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(); }
@@ -785,8 +807,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         #endregion
 
-        
-    
         #region "rendelés feladása"
 
         /// <summary>
@@ -794,7 +814,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.ServiceRequest.SalesOrderCreate request)
+        public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request)
         {
             CompanyGroup.Dto.WebshopModule.OrderFulFillment response = new CompanyGroup.Dto.WebshopModule.OrderFulFillment();
 

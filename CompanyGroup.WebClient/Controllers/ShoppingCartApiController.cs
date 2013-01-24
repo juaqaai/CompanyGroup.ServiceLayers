@@ -24,9 +24,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetCartByKey req = new CompanyGroup.Dto.ServiceRequest.GetCartByKey(visitorData.Language, visitorData.CartId, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest req = new CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest(visitorData.Language, visitorData.CartId, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCart response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetCartByKey, CompanyGroup.Dto.WebshopModule.ShoppingCart>("ShoppingCart", "GetCartByKey", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCart response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest, CompanyGroup.Dto.WebshopModule.ShoppingCart>("ShoppingCart", "GetCartByKey", req);
 
             return new CompanyGroup.WebClient.Models.ShoppingCart(response);
         }
@@ -42,9 +42,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetActiveCart req = new CompanyGroup.Dto.ServiceRequest.GetActiveCart(visitorData.Language, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest req = new CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest(visitorData.Language, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetActiveCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetActiveCart", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetActiveCart", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -88,9 +88,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.ActivateCart req = new CompanyGroup.Dto.ServiceRequest.ActivateCart(request.CartId, visitorData.Language, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.ActivateCartRequest req = new CompanyGroup.Dto.ServiceRequest.ActivateCartRequest(request.CartId, visitorData.Language, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ActivateCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "ActivateCart", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ActivateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "ActivateCart", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -112,9 +112,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.RemoveCart req = new CompanyGroup.Dto.ServiceRequest.RemoveCart(visitorData.CartId, visitorData.Language, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.RemoveCartRequest req = new CompanyGroup.Dto.ServiceRequest.RemoveCartRequest(visitorData.CartId, visitorData.Language, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "RemoveCart", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "RemoveCart", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -137,9 +137,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.SaveCart req = new CompanyGroup.Dto.ServiceRequest.SaveCart(visitorData.Language, visitorData.VisitorId, visitorData.CartId, request.Name);
+            CompanyGroup.Dto.ServiceRequest.SaveCartRequest req = new CompanyGroup.Dto.ServiceRequest.SaveCartRequest(visitorData.Language, visitorData.VisitorId, visitorData.CartId, request.Name);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SaveCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "SaveCart", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SaveCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "SaveCart", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -226,9 +226,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.AddLine req = new CompanyGroup.Dto.ServiceRequest.AddLine(visitorData.CartId, request.ProductId, visitorData.Language, ShoppingCartApiController.DataAreaId, request.Quantity, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.AddLineRequest req = new CompanyGroup.Dto.ServiceRequest.AddLineRequest(visitorData.CartId, request.ProductId, visitorData.Language, ShoppingCartApiController.DataAreaId, request.Quantity, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddLine, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "AddLine", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddLineRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "AddLine", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -246,9 +246,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.RemoveLine req = new CompanyGroup.Dto.ServiceRequest.RemoveLine(visitorData.CartId, request.LineId, visitorData.Language, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.RemoveLineRequest req = new CompanyGroup.Dto.ServiceRequest.RemoveLineRequest(visitorData.CartId, request.LineId, visitorData.Language, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveLine, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "RemoveLine", req);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveLineRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "RemoveLine", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -266,9 +266,9 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity updateLineQuantity = new CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity(visitorData.CartId, request.LineId, visitorData.Language, ShoppingCartApiController.DataAreaId, request.Quantity, visitorData.VisitorId);
+            CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest updateLineQuantity = new CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest(visitorData.CartId, request.LineId, visitorData.Language, ShoppingCartApiController.DataAreaId, request.Quantity, visitorData.VisitorId);
 
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "UpdateLineQuantity", updateLineQuantity);
+            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "UpdateLineQuantity", updateLineQuantity);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 

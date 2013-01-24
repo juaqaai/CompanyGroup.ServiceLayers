@@ -8,9 +8,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 {
 
     /// <summary>
-    /// 
+    /// struktúra szolgáltatás interfész
     /// </summary>
-    //[ServiceContract(Namespace = "http://CompanyGroup.ApplicationServices.WebshopModule/", Name = "StructureService")]
     public interface IStructureService
     {
         /// <summary>
@@ -18,13 +17,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        //[OperationContract(Action = "GetAll")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/GetAll",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.ServiceRequest.GetAllStructure request);
+        CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request);
 
     }
 }

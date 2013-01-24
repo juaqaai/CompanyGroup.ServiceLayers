@@ -39,7 +39,7 @@ namespace CompanyGroup.GlobalServices
 
             request.Category3IdList.RemoveAll(x => String.IsNullOrEmpty(x));
 
-            CompanyGroup.Dto.ServiceRequest.GetAllProduct productFilter = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+            CompanyGroup.Dto.ServiceRequest.GetAllProductRequest productFilter = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
             {
                 ActionFilter = request.ActionFilter,
                 BargainFilter = false,
@@ -78,7 +78,7 @@ namespace CompanyGroup.GlobalServices
         public CompanyGroup.GlobalServices.Dto.GetItemByProductIdResponse GetItemByProductId(CompanyGroup.GlobalServices.Dto.GetItemByProductIdRequest request)
         {
 
-            CompanyGroup.Dto.ServiceRequest.GetItemByProductId productItemFilter = new CompanyGroup.Dto.ServiceRequest.GetItemByProductId()
+            CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest productItemFilter = new CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest()
             {
                 DataAreaId = request.DataAreaId,
                 ProductId = request.ProductId,

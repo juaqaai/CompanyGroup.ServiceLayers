@@ -6,7 +6,6 @@ using System.ServiceModel.Web;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    //[ServiceContract(Namespace = "http://CompanyGroup.ApplicationServices.WebshopModule/", Name = "ProductService")]
     public interface IProductService
     {
         /// <summary>
@@ -14,74 +13,26 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        //[OperationContract(Action = "GetAll")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/GetAll",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProduct request);
+        CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request);
 
-        //[OperationContract(Action = "GetBannerList")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/GetAll",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerList request);
+        CompanyGroup.Dto.WebshopModule.BannerList GetBannerList(CompanyGroup.Dto.WebshopModule.GetBannerListRequest request);
 
         /// <summary>
         /// összes, a feltételeknek megfelelő árlista termékelem leválogatása
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        //[OperationContract(Action = "GetPriceList")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/GetAll",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.PriceList GetPriceList(CompanyGroup.Dto.ServiceRequest.GetPriceList request);
-
-        /// <summary>
-        /// objectId egyedi kulccsal rendelkező termékelem lekérdezése
-        /// </summary>
-        /// <param name="objectId"></param>
-        /// <returns></returns>
-        //[OperationContract(Action = "GetItemByObjectId")]
-        //[WebInvoke(Method = "GET",
-        //    //UriTemplate = "/GetItemByObjectId/{objectId}",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        //CompanyGroup.Dto.WebshopModule.Product GetItemByObjectId(string objectId, string visitorId);
+        CompanyGroup.Dto.WebshopModule.PriceList GetPriceList(CompanyGroup.Dto.WebshopModule.GetPriceListRequest request);
 
         /// <summary>
         /// productId és dataAreaId összetett kulccsal rendelkező termékelem lekérdezése
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        //[OperationContract(Action = "GetItemByProductId")]
-        //[WebInvoke(Method = "POST",
-        //    //UriTemplate = "/GetItemByProductId",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.Product GetItemByProductId(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request);
+        CompanyGroup.Dto.WebshopModule.Product GetItemByProductId(CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request);
 
-        //[OperationContract(Action = "GetCompatibleProducts")]
-        //[WebInvoke(Method = "POST",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.CompatibleProducts GetCompatibleProducts(CompanyGroup.Dto.ServiceRequest.GetItemByProductId request);
+        CompanyGroup.Dto.WebshopModule.CompatibleProducts GetCompatibleProducts(CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request);
 
-        //[OperationContract(Action = "GetCompletionList")]
-        //[WebInvoke(Method = "POST",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare)]
-        //[WebInvoke(Method = "GET", UriTemplate = "/GetCompletionList/{DataAreaId}/{Prefix}/{CompletionType}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplation request);
+        CompanyGroup.Dto.WebshopModule.CompletionList GetCompletionList(CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request);
     }
 }

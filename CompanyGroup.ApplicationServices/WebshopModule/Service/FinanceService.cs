@@ -130,11 +130,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.PartnerModule.CreateFinanceOfferRequest request)
+        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "FinanceService CreateFinanceOffer request cannot be null, or empty!");
 
-            Helpers.DesignByContract.Require((request.OfferId > 0), "Offer id cannot be null!");
+            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "FinanceService CreateFinanceOffer VisitorId parameter cannot be null, or empty!");
+
+            Helpers.DesignByContract.Require((request.OfferId > 0), "FinanceService CreateFinanceOffer Offer id parameter cannot be zero!");
 
             try
             {
@@ -193,7 +195,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="financeOffer"></param>
         /// <param name="visitor"></param>
         /// <returns></returns>
-        private bool SendFinanceOfferMail(CompanyGroup.Dto.PartnerModule.CreateFinanceOfferRequest request,
+        private bool SendFinanceOfferMail(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request,
                                           CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer,
                                           CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {

@@ -37,14 +37,14 @@ namespace CompanyGroup.WebClient.Controllers
                 visitorData = new CompanyGroup.WebClient.Models.VisitorData();
             }
 
-            CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request = new CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection()
+            CompanyGroup.Dto.ServiceRequest.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.ServiceRequest.GetNewsletterCollectionRequest()
             {
                 Language = visitorData.Language,
                 VisitorId = visitorData.VisitorId,
                 ManufacturerId = String.Empty
             };
 
-            CompanyGroup.Dto.WebshopModule.NewsletterCollection response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection, CompanyGroup.Dto.WebshopModule.NewsletterCollection>("Newsletter", "GetCollection", request);
+            CompanyGroup.Dto.WebshopModule.NewsletterCollection response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetNewsletterCollectionRequest, CompanyGroup.Dto.WebshopModule.NewsletterCollection>("Newsletter", "GetCollection", request);
 
             CompanyGroup.WebClient.Models.NewsletterCollection model = new CompanyGroup.WebClient.Models.NewsletterCollection(response);
 

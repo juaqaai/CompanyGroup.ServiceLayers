@@ -50,7 +50,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("SaveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.ServiceRequest.SaveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.ServiceRequest.SaveCartRequest request)
         {
             return service.SaveCart(request);
         }
@@ -61,7 +61,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="cartId"></param>
         [ActionName("RemoveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.ServiceRequest.RemoveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.ServiceRequest.RemoveCartRequest request)
         {
             return service.RemoveCart(request);
         }
@@ -73,7 +73,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="active"></param>
         [ActionName("ActivateCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.ServiceRequest.ActivateCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.ServiceRequest.ActivateCartRequest request)
         {
             return service.ActivateCart(request);
         }
@@ -85,7 +85,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("AddLine")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.ServiceRequest.AddLine request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.ServiceRequest.AddLineRequest request)
         {
             return service.AddLine(request);
         }
@@ -96,7 +96,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("RemoveLine")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.ServiceRequest.RemoveLine request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.ServiceRequest.RemoveLineRequest request)
         {
             return service.RemoveLine(request);
         }
@@ -107,12 +107,12 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("UpdateLineQuantity")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest request)
         {
             return service.UpdateLineQuantity(request);
         }
 
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest request)
         {
             return service.GetShoppingCartInfo(request);
         }
@@ -124,7 +124,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetStoredOpenedShoppingCartCollectionByVisitor")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
+        public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitorRequest request)
         {
             return service.GetStoredOpenedShoppingCartCollectionByVisitor(request);
         }
@@ -136,7 +136,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCartCollectionByVisitor")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitorRequest request)
         {
             return service.GetCartCollectionByVisitor(request);
         }
@@ -148,7 +148,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCartByKey")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.ServiceRequest.GetCartByKey request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest request)
         {
             return service.GetCartByKey(request);
         }
@@ -160,7 +160,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetActiveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.ServiceRequest.GetActiveCart request)
+        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest request)
         {
             return service.GetActiveCart(request);
         }
@@ -184,7 +184,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("CreateOrder")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.ServiceRequest.SalesOrderCreate request)
+        public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.ServiceRequest.SalesOrderCreateRequest request)
         {
             return service.CreateOrder(request);
         }

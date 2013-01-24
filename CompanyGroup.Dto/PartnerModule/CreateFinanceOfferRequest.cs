@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CompanyGroup.Dto.PartnerModule
+namespace CompanyGroup.Dto.WebshopModule
 {
     /// <summary>
     /// finanszírozási ajánlat létrehozás

@@ -38,7 +38,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetNewsletterCollection()
         {
-            Dto.ServiceRequest.GetNewsletterCollection request = new Dto.ServiceRequest.GetNewsletterCollection("hu", "5092cfe46ee0121e98101481", "");
+            Dto.ServiceRequest.GetNewsletterCollectionRequest request = new Dto.ServiceRequest.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
 
             if (!IsHttpClientTest)
             {

@@ -24,7 +24,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllStructure structuresRequest = new CompanyGroup.Dto.ServiceRequest.GetAllStructure()
+            CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest structuresRequest = new CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest()
             {
                 ActionFilter = false,
                 BargainFilter = false,
@@ -42,10 +42,10 @@ namespace CompanyGroup.WebClient.Controllers
                 PriceFilterRelation = "0"
             };
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructure, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", structuresRequest);
+            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", structuresRequest);
 
             //katalógus lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllProduct productsRequest = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+            CompanyGroup.Dto.ServiceRequest.GetAllProductRequest productsRequest = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
             {
                 ActionFilter = false,
                 BargainFilter = false,
@@ -68,10 +68,10 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitor.Id
             };
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", productsRequest);
+            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", productsRequest);
 
             //banner lista lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetBannerList bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerList()
+            CompanyGroup.Dto.ServiceRequest.GetBannerListRequest bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerListRequest()
             {
                 BscFilter = true,
                 HrpFilter = true,
@@ -82,7 +82,7 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitor.Id
             };
 
-            CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBannerList, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
+            CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBannerListRequest, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
 
             //kosár lekérdezések     
             bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
@@ -93,9 +93,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
-                CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo(visitorData.CartId, visitor.Id);
+                CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest(visitorData.CartId, visitor.Id);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfo, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
 
                 cartInfo.ActiveCart = (shoppingCartInfo != null) ? shoppingCartInfo.ActiveCart : cartInfo.ActiveCart;
                 cartInfo.OpenedItems = (shoppingCartInfo != null) ? shoppingCartInfo.OpenedItems : cartInfo.OpenedItems;
@@ -160,7 +160,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.ServiceRequest.GetPriceList request = new CompanyGroup.Dto.ServiceRequest.GetPriceList()
+            CompanyGroup.Dto.ServiceRequest.GetPriceListRequest request = new CompanyGroup.Dto.ServiceRequest.GetPriceListRequest()
             {
                 ActionFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("ActionFilter", false),
                 BargainFilter = CompanyGroup.Helpers.QueryStringParser.GetBool("BargainFilter", false),
@@ -183,7 +183,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             request.VisitorId = visitorData.VisitorId;
 
-            CompanyGroup.Dto.WebshopModule.PriceList priceList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetPriceList, CompanyGroup.Dto.WebshopModule.PriceList>("Product", "GetPriceList", request);
+            CompanyGroup.Dto.WebshopModule.PriceList priceList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetPriceListRequest, CompanyGroup.Dto.WebshopModule.PriceList>("Product", "GetPriceList", request);
 
             //System.Data.DataSet ds = CreateDataSet(priceList);
 

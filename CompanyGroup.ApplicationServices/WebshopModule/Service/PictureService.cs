@@ -7,12 +7,9 @@ using System.ServiceModel;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    //[ServiceBehavior(UseSynchronizationContext = false,
-    //                InstanceContextMode = InstanceContextMode.PerCall,
-    //                ConcurrencyMode = ConcurrencyMode.Multiple,
-    //                IncludeExceptionDetailInFaults = true),
-    //                System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()]
+    /// <summary>
+    /// képek szolgáltatás
+    /// </summary>
     public class PictureService : IPictureService
     {
         private CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository;
@@ -30,14 +27,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <summary>
         /// képek listát visszaadó service
         /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="dataAreaId"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.ServiceRequest.PictureFilter request) 
+        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.PartnerModel.PictureFilterRequest request) 
         {
+            CompanyGroup.Helpers.DesignByContract.Require((request != null), "The GetListByProduct request parameter can not be null!");
+
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.ProductId), "The GetListByProduct request parameter can not be null!");
+
             try
             {
                 List<CompanyGroup.Domain.WebshopModule.Picture> pictureList = pictureRepository.GetListByProduct(request.ProductId);
+
+                CompanyGroup.Helpers.DesignByContract.Ensure((pictureList != null), "Repository GetListByProduct result cannot be null!");
 
                 if (pictureList.Count == 0) { return new CompanyGroup.Dto.WebshopModule.Pictures(); }
 
@@ -51,29 +53,43 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         }
 
         /// <summary>
-        /// képtartalmat adja vissza 
+        /// termékazonosítóhoz és rekordazonosítóhoz tartozó képtartalmat adja vissza 
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="recId"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
         /// <returns></returns>
-        public Stream GetItem(string productId, string recId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
+        public Stream GetItem(string productId, string recId, string maxWidth, string maxHeight) 
         {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "The PictureService GetItem request productId parameter can not be null!");
+
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(recId), "The PictureService GetItem request recId parameter can not be null!");
+
             try
             {
                 List<CompanyGroup.Domain.WebshopModule.Picture> pictures = pictureRepository.GetListByProduct(productId);
 
+                CompanyGroup.Helpers.DesignByContract.Ensure((pictures != null), "Repository GetItem result cannot be null!");
+
                 if (pictures.Count == 0) { return null; }
 
-                CompanyGroup.Domain.WebshopModule.Picture picture = pictures.FirstOrDefault(x => x.RecId.Equals(Convert.ToInt64(recId)));
+                long recordId = 0;
+
+                CompanyGroup.Domain.WebshopModule.Picture picture;
+
+                if (!Int64.TryParse(recId, out recordId))
+                {
+                    picture = pictures.FirstOrDefault();
+                }
+                else
+                {
+                    picture = pictures.FirstOrDefault(x => x.RecId.Equals(recordId));
+                }
 
                 if (picture == null) { return null; }
 
-                //System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.ContentType = "image/jpeg";
-
-                byte[] buffer = ReadFileContent(picture);
-                //string path = Path.Combine(CompanyGroup.Helpers.ConfigSettingsParser.GetString("PicturePhysicalPath", @"\\axos3\ProductPictures"), picture.FileName);
+                byte[] buffer = this.ReadFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -81,17 +97,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 if (!Int32.TryParse(maxWidth, out w)) { w = 0; }
                 if (!Int32.TryParse(maxHeight, out h)) { h = 0; }
 
-                //System.Drawing.Bitmap imgToResize = new System.Drawing.Bitmap(fileStream);
-
-                // PictureService.ResizeImage(imgToResize, new System.Drawing.Size(w, h)); //ResizeImage(fileStream, w, h);
-
                 return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(new MemoryStream(buffer), w, h, "image/jpeg");
             }
             catch { return null; }
         }
 
         /// <summary>
-        /// képtartalom képazonosító alapján
+        /// képtartalom kiolvasása képazonosító alapján
         /// </summary>
         /// <param name="pictureId"></param>
         /// <param name="maxWidth"></param>
@@ -101,11 +113,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
+                CompanyGroup.Helpers.DesignByContract.Require((pictureId > 0), "The PictureService GetItemById request pictureId parameter can not be null!");
+
                 CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetItemById(pictureId);
 
                 if (picture == null) { return null; }
 
-                byte[] buffer = ReadFileContent(picture);
+                byte[] buffer = this.ReadFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -162,92 +176,5 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
             }
         }
-
-        //private Stream ResizeImage(FileStream fileStream, int width, int height)
-        //{
-        //    if (fileStream == null) { return null; }
-
-        //    if (width == 0) { width = 200; }
-
-        //    if (height == 0) { width = 200; }
-
-        //    string settingsForImages = String.Format("maxwidth={0}&maxheight={1}", width, height);   //"width={0}&height={1}&format=jpg&crop=auto" ,    maxwidth=100;maxheight=100
-
-        //    ImageResizer.ResizeSettings resizeSettings = new ImageResizer.ResizeSettings(settingsForImages);
-
-        //    //using (MemoryStream ms = new MemoryStream()) 
-        //    //{
-        //    MemoryStream ms = new MemoryStream();
-
-        //        ImageResizer.ImageBuilder.Current.Build(fileStream, ms, resizeSettings);
-
-        //        return (Stream) ms;
-        //    //}
-        //}
-
-        //private static Stream ResizeImage(System.Drawing.Image imgToResize, System.Drawing.Size size)
-        //{
-        //    int sourceWidth = imgToResize.Width;
-        //    int sourceHeight = imgToResize.Height;
-
-        //    float nPercent = 0;
-        //    float nPercentW = 0;
-        //    float nPercentH = 0;
-
-        //    nPercentW = ((float)size.Width / (float)sourceWidth);
-        //    nPercentH = ((float)size.Height / (float)sourceHeight);
-
-        //    if (nPercentH < nPercentW)
-        //        nPercent = nPercentH;
-        //    else
-        //        nPercent = nPercentW;
-
-        //    int destWidth = (int)(sourceWidth * nPercent);
-        //    int destHeight = (int)(sourceHeight * nPercent);
-
-        //    System.Drawing.Bitmap b = new System.Drawing.Bitmap(destWidth, destHeight);
-
-        //    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage((System.Drawing.Image)b);
-
-        //    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-
-        //    g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
-
-        //    g.Dispose();
-
-        //    return SaveBitmapToStream(b, "image/jpeg", 100L);
-        //}
-
-        //private static System.Drawing.Imaging.ImageCodecInfo GetEncoderInfo(string mimeType)
-        //{
-        //    System.Drawing.Imaging.ImageCodecInfo info = null;
-
-        //    string s = !String.IsNullOrEmpty(mimeType) ? mimeType : "image/jpeg";
-
-        //    var encoders = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
-        //    for (int j = 0; (j < encoders.Length); ++j)
-        //    {
-        //        if (encoders[j].MimeType.Equals(s))
-        //        {
-        //            info = encoders[j];
-        //        }
-        //    }
-        //    return info;
-        //}
-
-        //private static Stream SaveBitmapToStream(System.Drawing.Bitmap bmp, string mimeType, long quality)
-        //{
-        //    System.Drawing.Imaging.EncoderParameters eps = new System.Drawing.Imaging.EncoderParameters(1);
-
-        //    eps.Param[0] = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
-
-        //    System.Drawing.Imaging.ImageCodecInfo ici = GetEncoderInfo(mimeType);    //"image/jpeg"
-
-        //    MemoryStream ms = new MemoryStream();
-
-        //    bmp.Save(ms, ici, eps);
-
-        //    return ms;
-        //}
     }
 }

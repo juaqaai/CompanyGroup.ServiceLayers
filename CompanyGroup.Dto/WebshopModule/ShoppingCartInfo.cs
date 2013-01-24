@@ -3,36 +3,36 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    //[Serializable]
-    //[System.Runtime.Serialization.DataContract(Name = "ShoppingCartInfo", Namespace = "CompanyGroup.Dto.WebshopModule")]
+
     public class ShoppingCartInfo
     {
-        public ShoppingCartInfo()
-        {
-            this.StoredItems = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>();
-
-            this.OpenedItems = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>();
-
-            this.ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart();
-
-            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
-
-            //this.FinanceOffer = new CompanyGroup.Dto.WebshopModule.FinanceOffer(); 
+        public ShoppingCartInfo() : this(new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(), 
+                                         new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(), 
+                                         new CompanyGroup.Dto.WebshopModule.ShoppingCart(), 
+                                         new CompanyGroup.Dto.WebshopModule.LeasingOptions())
+        { 
         }
 
-        //[System.Runtime.Serialization.DataMember(Name = "StoredItems", Order = 1)]
+        public ShoppingCartInfo(List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems, 
+                                List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems, 
+                                CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
+                                CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
+        {
+            this.StoredItems = storedItems;
+
+            this.OpenedItems = openedItems;
+
+            this.ActiveCart = activeCart;
+
+            this.LeasingOptions = leasingOptions;
+        }
+
         public List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> StoredItems { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "OpenedItems", Order = 2)]
         public List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> OpenedItems { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ActiveCart", Order = 3)]
         public CompanyGroup.Dto.WebshopModule.ShoppingCart ActiveCart { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "LeasingOptions", Order = 4)]
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
-
-        //[System.Runtime.Serialization.DataMember(Name = "FinanceOffer", Order = 5)]
-        //public CompanyGroup.Dto.WebshopModule.FinanceOffer FinanceOffer { get; set; }
     }
 }

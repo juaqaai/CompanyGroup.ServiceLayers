@@ -7,12 +7,9 @@ using CompanyGroup.Helpers;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    //[ServiceBehavior(UseSynchronizationContext = false,
-    //                 InstanceContextMode = InstanceContextMode.PerCall,
-    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
-    //                 IncludeExceptionDetailInFaults = true),
-    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
+    /// <summary>
+    /// struktúra szolgáltatás
+    /// </summary>
     public class StructureService : IStructureService
     {
         private const string CACHEKEY_STRUCTURE = "structure";
@@ -38,7 +35,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.ServiceRequest.GetAllStructure request)
+        public CompanyGroup.Dto.WebshopModule.Structures GetAll(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request)
         {
             request.ManufacturerIdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
@@ -83,8 +80,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_STRUCTURE, dataAreaIdCacheKey);
 
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.ActionFilter, cacheKey, "ActionFilter");
-                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.BargainFilter, cacheKey, "BargainFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.DiscountFilter, cacheKey, "DiscountFilter");
+                cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.SecondhandFilter, cacheKey, "SecondhandFilter");
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.IsInNewsletterFilter, cacheKey, "IsInNewsletterFilter");
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.NewFilter, cacheKey, "NewFilter");
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.StockFilter, cacheKey, "StockFilter");
@@ -103,8 +100,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                          ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
                                                          ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
                                                          ConvertData.ConvertStringListToDelimitedString(request.Category3IdList), 
-                                                         request.ActionFilter, 
-                                                         request.BargainFilter, 
+                                                         request.DiscountFilter, 
+                                                         request.SecondhandFilter, 
                                                          request.IsInNewsletterFilter,
                                                          request.NewFilter, 
                                                          request.StockFilter, 

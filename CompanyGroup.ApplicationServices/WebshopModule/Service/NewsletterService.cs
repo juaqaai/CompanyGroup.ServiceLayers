@@ -6,17 +6,15 @@ using System.ServiceModel;
 
 namespace CompanyGroup.ApplicationServices.WebshopModule
 {
-    //[ServiceBehavior(UseSynchronizationContext = false,
-    //                InstanceContextMode = InstanceContextMode.PerCall,
-    //                ConcurrencyMode = ConcurrencyMode.Multiple,
-    //                IncludeExceptionDetailInFaults = true),
-    //                System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()]
+    /// <summary>
+    /// hírlevél szolgáltatás
+    /// </summary>
     public class NewsletterService : ServiceCoreBase, INewsletterService
     {
         private CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository;
 
-        public NewsletterService(CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository, CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
+        public NewsletterService(CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository, 
+                                 CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
         {
             if (newsletterRepository == null)
             {
@@ -31,7 +29,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterCollection(CompanyGroup.Dto.ServiceRequest.GetNewsletterCollection request)
+        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterCollection(CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -59,7 +57,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 result.Items = newsletterCollection.Newsletters.ConvertAll(x => new NewsletterToNewsletter().Map(x));
 
                 return result;
-
             }
             catch (Exception ex)
             { 

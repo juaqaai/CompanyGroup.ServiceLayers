@@ -119,7 +119,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void StructureGetAll()
         {
-            CompanyGroup.Dto.ServiceRequest.GetAllStructure request = new CompanyGroup.Dto.ServiceRequest.GetAllStructure() { ActionFilter = false, BargainFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false,  ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
+            CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest request = new CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest() { ActionFilter = false, BargainFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false,  ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
 
             CompanyGroup.Data.WebshopModule.StructureRepository structureRepository = new CompanyGroup.Data.WebshopModule.StructureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
 
@@ -139,7 +139,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void StructureGetAllRest()
         {
-            CompanyGroup.Dto.ServiceRequest.GetAllStructure request = new CompanyGroup.Dto.ServiceRequest.GetAllStructure() { ActionFilter = false, BargainFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false, ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
+            CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest request = new CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest() { ActionFilter = false, BargainFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false, ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
 
             CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.Structures>("StructureService", "GetAll", request);
 
@@ -161,7 +161,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void ProductGetAll()
         {
-            CompanyGroup.Dto.ServiceRequest.GetAllProduct request = new CompanyGroup.Dto.ServiceRequest.GetAllProduct()
+            CompanyGroup.Dto.ServiceRequest.GetAllProductRequest request = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
                                                                         {
                                                                             ActionFilter = false,
                                                                             BargainFilter = false, 
@@ -221,7 +221,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void GetPriceList()
         {
-            CompanyGroup.Dto.ServiceRequest.GetPriceList request = new CompanyGroup.Dto.ServiceRequest.GetPriceList()
+            CompanyGroup.Dto.ServiceRequest.GetPriceListRequest request = new CompanyGroup.Dto.ServiceRequest.GetPriceListRequest()
             {
                 ActionFilter = false,
                 BargainFilter = false,
@@ -265,7 +265,7 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             //http://localhost/CompanyGroup.ServicesHost/ProductService.svc/GetItemByProductId
 
-            CompanyGroup.Dto.ServiceRequest.GetItemByProductId request = new CompanyGroup.Dto.ServiceRequest.GetItemByProductId() { ProductId = "PGI7BK", DataAreaId = UnitTest.DataAreaId };
+            CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest request = new CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest() { ProductId = "PGI7BK", DataAreaId = UnitTest.DataAreaId };
 
             CompanyGroup.Dto.WebshopModule.ProductDetails productDetails = this.PostJSonData<CompanyGroup.Dto.WebshopModule.ProductDetails>("ProductService", "GetItemByProductId", request);
 
@@ -290,7 +290,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository);
                 
-            CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.ServiceRequest.GetItemByProductId() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
+            CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
 
             Assert.IsNotNull(product);
         }
@@ -332,7 +332,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void PictureGetItem()
         {
-            CompanyGroup.Dto.ServiceRequest.PictureFilter request = new CompanyGroup.Dto.ServiceRequest.PictureFilter()
+            CompanyGroup.Dto.ServiceRequest.PictureFilterRequest request = new CompanyGroup.Dto.ServiceRequest.PictureFilterRequest()
             {
                 DataAreaId = "ser",
                 ProductId = "PFI702GY"
@@ -513,7 +513,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.ServiceRequest.AddLine request = new CompanyGroup.Dto.ServiceRequest.AddLine();
+            CompanyGroup.Dto.ServiceRequest.AddLineRequest request = new CompanyGroup.Dto.ServiceRequest.AddLineRequest();
 
             request.CartId = "5039d98b6ee01212f8abc3e5";
             request.DataAreaId = "hrp";
@@ -552,7 +552,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.ServiceRequest.GetCartByKey request = new CompanyGroup.Dto.ServiceRequest.GetCartByKey("hu", "5039d98b6ee01212f8abc3e5", "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest request = new CompanyGroup.Dto.ServiceRequest.GetCartByKeyRequest("hu", "5039d98b6ee01212f8abc3e5", "5039d7e66ee01213b0c8c201");
 
             CompanyGroup.Dto.WebshopModule.ShoppingCart cart = service.GetCartByKey(request);
 
@@ -580,7 +580,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.ServiceRequest.GetActiveCart request = new CompanyGroup.Dto.ServiceRequest.GetActiveCart("hu", "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest request = new CompanyGroup.Dto.ServiceRequest.GetActiveCartRequest("hu", "5039d7e66ee01213b0c8c201");
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartInfo cart = service.GetActiveCart(request);
 
@@ -613,7 +613,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemByKey("5039d7e66ee01213b0c8c201");
 
-            CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request = new CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor("hu", "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitorRequest("hu", "5039d7e66ee01213b0c8c201");
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartCollection sc = service.GetCartCollectionByVisitor(request);
 
@@ -645,7 +645,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity request = new CompanyGroup.Dto.ServiceRequest.UpdateLineQuantity();
+            CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest request = new CompanyGroup.Dto.ServiceRequest.UpdateLineQuantityRequest();
 
             request.CartId = "5039d98b6ee01212f8abc3e5";
             request.DataAreaId = "hrp";
