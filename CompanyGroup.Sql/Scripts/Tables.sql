@@ -1,4 +1,15 @@
-USE [WebDb_Test]
+/* =============================================
+	description	   : srv2 Web adatbázisban táblák létrehozása
+	running script : 
+	version		   : 1.0
+	created by	   : JUHATT
+	modified by	   :
+	created date   : 2013.01.27.
+	modified date  :
+	modify reason  :
+ ============================================= */
+
+USE [Web]
 -- =========================================
 -- adatbazis tablak letrehozasa
 -- =========================================
@@ -175,17 +186,17 @@ CREATE TABLE InternetUser.Catalogue
 	EnglishName				nvarchar(80) not null default '',
 	PartNumber				nvarchar(20) not null default '',		-- dbo.GYARTOICIKKSZAMOK.GYARTOICIKKSZAM
 	ManufacturerId			nvarchar(4) not null default '',		-- updStruktura gyarto id
-	ManufacturerName		nvarchar(64) not null default '',		-- updStruktura gyarto nev 
-	ManufacturerEnglishName nvarchar(64) not null default '',		-- updStruktura gyarto nev 
+	ManufacturerName		nvarchar(80) not null default '',		-- updStruktura gyarto nev 
+	ManufacturerEnglishName nvarchar(80) not null default '',		-- updStruktura gyarto nev 
 	Category1Id				nvarchar(4) not null default '',		-- updStruktura jelleg1 id	
-	Category1Name			nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
-	Category1EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category1Name			nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
+	Category1EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
 	Category2Id				nvarchar(4) not null default '',		-- updStruktura jelleg2 id
-	Category2Name			nvarchar(64) not null default '', 		-- updStruktura jelleg2 nev 
-	Category2EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category2Name			nvarchar(80) not null default '', 		-- updStruktura jelleg2 nev 
+	Category2EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
 	Category3Id				nvarchar(4) not null default '',		-- updStruktura jelleg3 id
-	Category3Name			nvarchar(64) not null default '', 		-- updStruktura jelleg3 nev 
-	Category3EnglishName	nvarchar(64) not null default '', 		-- updStruktura jelleg1 nev 
+	Category3Name			nvarchar(80) not null default '', 		-- updStruktura jelleg3 nev 
+	Category3EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
 	InnerStock				int not null default 0,
 	OuterStock				int not null default 0,
 	AverageInventory		int not null default 0,
@@ -208,7 +219,9 @@ CREATE TABLE InternetUser.Catalogue
 	Available				bit not null default 1,					-- kereskedelmi forgalomban elerheto-e a termek
 	PictureId				int not null default 0,
 	SecondHand				bit not null default 0,					-- elerheto-e a termek hasznalt konfig-on,
-	Valid					bit not null default 1
+	Valid					bit not null default 1, 
+    [ExtractDate] datetime2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]			int not null default 0
 )
 GO
 */
@@ -314,8 +327,10 @@ CREATE TABLE InternetUser.Picture
 	Id					INT IDENTITY NOT NULL PRIMARY KEY,
 	RecId				BIGINT NOT NULL DEFAULT 0,					-- rekord azonosító 
 	ProductId			NVARCHAR(20) NOT NULL DEFAULT '',		
-	[FileName]			NVARCHAR(256) NOT NULL DEFAULT '',	 
+	[FileName]			NVARCHAR(300) NOT NULL DEFAULT '',	 
 	[Primary]			BIT NOT NULL DEFAULT 0, 				
 	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
-	Valid				BIT NOT NULL DEFAULT 1	
+	Valid				BIT NOT NULL DEFAULT 1, 
+    [ExtractDate] datetime2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]			int not null default 0
 )

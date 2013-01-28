@@ -1,6 +1,6 @@
 /* =============================================
-	description	   : srv2 Web adatbázisban Catalogue tábla betöltése
-	running script : 
+	description	   : AXDB\HRPAXDB ExtractInterface adatbázisban Catalogue tábla szerinti lekérdezés
+	running script : InternetUser, Acetylsalicilum91 nevében
 	version		   : 1.0
 	created by	   : JUHATT
 	modified by	   :
@@ -8,22 +8,20 @@
 	modified date  :
 	modify reason  :
  ============================================= */
-
-USE [WebDb_Test]
+ 
+USE ExtractInterface
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- használt cikkek lista
-DROP PROCEDURE [InternetUser].[CatalogueInsert];
+-- cikkek lista
+DROP PROCEDURE [InternetUser].[CatalogueExtract];
 GO
-CREATE PROCEDURE [InternetUser].[CatalogueInsert] 
+CREATE PROCEDURE [InternetUser].[CatalogueExtract] 
 AS
 SET NOCOUNT ON
-
-	TRUNCATE TABLE InternetUser.Catalogue;
-
+	;
 	WITH EnglishProductName_CTE(ProductId, ProductName)
 	AS (
 	SELECT inventlng.ITEMID,
@@ -126,49 +124,48 @@ SET NOCOUNT ON
 		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
 	)
 
-	INSERT INTO InternetUser.Catalogue
-	SELECT DISTINCT Invent.ItemId, 
-					Invent.AXSTRUKTKOD, 
+	SELECT DISTINCT Invent.ItemId as ProductId, 
+					Invent.AXSTRUKTKOD as AxStructCode, 
 					Invent.DataAreaId, 
 					Invent.StandardConfigId, 
-					Invent.ItemName,
-					ISNULL(EnglishProductName.ProductName, ''), 
-					Invent.GYARTOICIKKSZAM, 
-					Invent.GYARTOID, 
-					ISNULL(Manufacturer.ManufacturerName, ''),
-					ISNULL(Manufacturer.ManufacturerEnglishName, ''),
-					JELLEG1ID, 
-					ISNULL(Category1.CategoryName, ''), 
-					ISNULL(Category1.CategoryNameEnglish, ''), 
-					JELLEG2ID, 
-					ISNULL(Category2.CategoryName, ''),  
-					ISNULL(Category2.CategoryNameEnglish, ''), 
-					JELLEG3ID, 
-					ISNULL(Category3.CategoryName, ''),  
-					ISNULL(Category3.CategoryNameEnglish, ''), 
-					ISNULL(StockInner.Quantity, 0), 
-					ISNULL(StockOuter.Quantity, 0),
-					Invent.AtlagosKeszletkor_Szamitott, 
-					CONVERT( INT, Invent.AMOUNT1 ),
-					CONVERT( INT, Invent.AMOUNT2 ),
-					CONVERT( INT, Invent.AMOUNT3 ),
-					CONVERT( INT, Invent.AMOUNT4 ),
-					CONVERT( INT, Invent.AMOUNT5 ),
-					ISNULL( gt.MEGJEGYZES, '' ), 
-					ISNULL( gm.MEGJEGYZES, '' ),
-					CONVERT( bit, Invent.AKCIOS ), 
+					Invent.ItemName as [Name],
+					ISNULL(EnglishProductName.ProductName, '') as EnglishName, 
+					Invent.GYARTOICIKKSZAM as PartNumber, 
+					Invent.GYARTOID as ManufacturerId, 
+					ISNULL(Manufacturer.ManufacturerName, '') as ManufacturerName,
+					ISNULL(Manufacturer.ManufacturerEnglishName, '') as ManufacturerEnglishName,
+					JELLEG1ID as Category1Id, 
+					ISNULL(Category1.CategoryName, '') as Category1Name, 
+					ISNULL(Category1.CategoryNameEnglish, '') as Category1EnglishName, 
+					JELLEG2ID as Category2Id, 
+					ISNULL(Category2.CategoryName, '') as Category2Name,  
+					ISNULL(Category2.CategoryNameEnglish, '') as Category2EnglishName, 
+					JELLEG3ID as Category3Id, 
+					ISNULL(Category3.CategoryName, '') as Category3Name,  
+					ISNULL(Category3.CategoryNameEnglish, '') as Category3EnglishName, 
+					ISNULL(StockInner.Quantity, 0) as InnerStock, 
+					ISNULL(StockOuter.Quantity, 0) as OuterStock,
+					Invent.AtlagosKeszletkor_Szamitott as AverageInventory, 
+					CONVERT( INT, Invent.AMOUNT1 ) as Price1,
+					CONVERT( INT, Invent.AMOUNT2 ) as Price2,
+					CONVERT( INT, Invent.AMOUNT3 ) as Price3,
+					CONVERT( INT, Invent.AMOUNT4 ) as Price4,
+					CONVERT( INT, Invent.AMOUNT5 ) as Price5,
+					ISNULL( gt.MEGJEGYZES, '' ) as Garanty, 
+					ISNULL( gm.MEGJEGYZES, '' ) as GarantyMode,
+					CONVERT( bit, Invent.AKCIOS ) as Discount, 
 					CASE WHEN DATEADD( day, 30, Invent.CREATEDDATE ) >=  GETDATE() THEN CONVERT( bit, 1 ) ELSE CONVERT( bit, 0 ) END as New, 
 					Invent.ItemState,	-- 0 : aktiv, 1 : kifuto, 2 : passziv	
-					ISNULL(HunDescription.Txt, '' ), 
-					ISNULL(EnglishDescription.Txt, '' ),				
-				    0,
-					ISNULL(PurchaseOrderLine.DeliveryDate, CONVERT(datetime, 0)),
-			        GetDate(),		-- Invent.CREATEDTIME
-				    GetDate(), -- Invent.ModifiedTime
-					CONVERT(BIT, 1), 
-					0, 
-					CONVERT(BIT, 0),
-					CONVERT(BIT, 1)			
+					ISNULL(HunDescription.Txt, '' ) as [Description], 
+					ISNULL(EnglishDescription.Txt, '' ) as EnglishDescription,				
+				    0 as ProductManagerId,
+					ISNULL(PurchaseOrderLine.DeliveryDate, CONVERT(datetime, 0)) as ShippingDate,
+			        GetDate() as CreatedDate,		-- Invent.CREATEDTIME
+				    GetDate() as Updated, -- Invent.ModifiedTime
+					CONVERT(BIT, 1) as Available, 
+					0 as PictureId, 
+					CONVERT(BIT, 0) as SecondHand,
+					CONVERT(BIT, 1)	as Valid		
 	FROM axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
 	LEFT OUTER JOIN EnglishProductName_CTE as EnglishProductName ON EnglishProductName.ProductId = Invent.ItemId
 	LEFT OUTER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID
@@ -203,8 +200,10 @@ SET NOCOUNT ON
 	ORDER BY CONVERT( bit, AKCIOS ) DESC, Invent.AtlagosKeszletkor_Szamitott DESC, JELLEG1ID, JELLEG2ID, JELLEG3ID, Invent.ItemId;
 
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[CatalogueExtract] TO InternetUser
 
--- EXEC [InternetUser].[CatalogueInsert];
+-- EXEC [InternetUser].[CatalogueExtract];
 -- select * from InternetUser.Catalogue;
 
 -- 1. CatalogueInsert

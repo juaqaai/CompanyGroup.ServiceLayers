@@ -1,0 +1,385 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/5/2012 12:05:41 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="1JUHASZA"
+  DTS:CreatorName="HRP_HEADOFFICE\juhasza"
+  DTS:DTSID="{64854914-CFA1-41FD-983D-7D67DFF7A570}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="WebLoader"
+  DTS:PackageType="5"
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{32F54B0E-7625-487B-9555-980A439C0DD1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{79061EC3-8EAF-443B-B176-945FCC1C5394}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobLogKey">
+      <DTS:VariableValue
+        DTS:DataType="3">-1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\JobLog close"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{73f29568-bf6f-43c3-81d3-28173caccddc}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JobLog close"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:SqlStatementSource="exec TechnicalMetadata.dbo.usp_JobLog_Close ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobLogKey"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JobLog start"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1D36EDFB-D4C5-437A-8955-2B27D918A0E2}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JobLog start"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:SqlStatementSource="exec TechnicalMetadata.dbo.usp_JobLog_Start ?, ?, ?;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="JobLogKey"
+            SQLTask:DtsVariableName="User::JobLogKey" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::JobName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="50" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="System::ServerExecutionID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="$Project::SystemKey"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Web staging sequence container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{4A0DB068-859B-4B58-BC0B-A1C641A808C2}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Web staging sequence container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\Catalogue"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{675280A5-0F6E-4A88-A967-66EA4C36EDAA}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Catalogue"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>Catalogue.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\Picture"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{176d1b04-91b8-4815-975e-b80ecc7fbcac}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Picture"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>Picture.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\SecondHand"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{0b5c5036-47f1-4808-ac66-41450376f731}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SecondHand"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>SecondHand.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{673B9378-4852-45A8-9C6A-A6B83B78E063}"
+      DTS:From="Package\JobLog start"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Web staging sequence container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{855755CD-3614-43F6-981D-F394FA904162}"
+      DTS:From="Package\Web staging sequence container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\JobLog close" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{CD6E2A11-B06E-4C09-A87E-226881CB0752}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{16996963-3D4C-4954-B503-EEEE343D72AA}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\JobLogOnError"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{EDB5D9BE-C89A-4E1D-906F-7206131ADF8A}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="JobLogOnError"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+              SQLTask:SqlStatementSource="exec [dbo].[usp_JobLog_OnError] ?, ?, ?, ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobLogKey"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="20"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="20"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="4000" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="System::SourceDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="100" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,42"
+          Id="Package\JobLog close"
+          TopLeft="260,488" />
+        <NodeLayout
+          Size="138,42"
+          Id="Package\JobLog start"
+          TopLeft="139,46" />
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Web staging sequence container\Catalogue"
+          TopLeft="35,17" />
+        <NodeLayout
+          Size="112,42"
+          Id="Package\Web staging sequence container\Picture"
+          TopLeft="207,23" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Web staging sequence container\SecondHand"
+          TopLeft="355,20" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="556,218"
+          Size="556,261"
+          Id="Package\Web staging sequence container"
+          TopLeft="47,161" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="208,88">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117,73"
+              Start="0,0"
+              End="117,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="4,36.5" />
+                  <mssgle:LineSegment
+                    End="113,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="113,36.5"
+                    Point2="117,36.5"
+                    Point3="117,40.5" />
+                  <mssgle:LineSegment
+                    End="117,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="327.5,422">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66"
+              Start="0,0"
+              End="0,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="[dbo].[usp_JobLog_Start]&#xA;input:&#xA;@JobName nvarchar(50),&#xA;@ServerExecutionID bigint, &#xD;&#xA;@SystemKey int&#xA;output: &#xA;JobLogKey"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177,138"
+          Id="ab428f44-598b-4479-8707-e43f5e14cce5"
+          TopLeft="389,26" />
+        <AnnotationLayout
+          Text="[dbo].[usp_JobLog_Close] &#xA;input: @JobLogKey INT&#xA;output:"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="167,74"
+          Id="2e1ca605-6266-46e5-b3a2-24a1cd7fe615"
+          TopLeft="408,475" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="227,66"
+          Id="Package.EventHandlers[OnError]\JobLogOnError"
+          TopLeft="72,67" />
+        <AnnotationLayout
+          Text="[dbo].[usp_JobLog_OnError] @JobLogKey INT,&#xA;              @ErrorCode  INT,&#xA;              @ErrorDesc  NVARCHAR(4000),&#xA;              @ErrorSource  NVARCHAR(100)"
+          ParentId="Package.EventHandlers[OnError]"
+          FontInfo="{assembly:Null}"
+          Size="273,90"
+          Id="0153e562-9ef3-4cbb-9586-2b3c2e3df838"
+          TopLeft="360,61" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

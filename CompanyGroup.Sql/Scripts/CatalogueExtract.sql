@@ -1,29 +1,16 @@
-/* =============================================
-	description	   : srv2 Web adatbázisban Catalogue tábla betöltése
-	running script : 
-	version		   : 1.0
-	created by	   : JUHATT
-	modified by	   :
-	created date   : 2013.01.27.
-	modified date  :
-	modify reason  :
- ============================================= */
-
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- használt cikkek lista
-DROP PROCEDURE [InternetUser].[CatalogueInsert];
+-- cikkek lista
+DROP PROCEDURE [InternetUser].[CatalogueExtract];
 GO
-CREATE PROCEDURE [InternetUser].[CatalogueInsert] 
+CREATE PROCEDURE [InternetUser].[CatalogueExtract] 
 AS
 SET NOCOUNT ON
-
-	TRUNCATE TABLE InternetUser.Catalogue;
-
+	;
 	WITH EnglishProductName_CTE(ProductId, ProductName)
 	AS (
 	SELECT inventlng.ITEMID,
@@ -126,7 +113,6 @@ SET NOCOUNT ON
 		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
 	)
 
-	INSERT INTO InternetUser.Catalogue
 	SELECT DISTINCT Invent.ItemId, 
 					Invent.AXSTRUKTKOD, 
 					Invent.DataAreaId, 
@@ -203,8 +189,10 @@ SET NOCOUNT ON
 	ORDER BY CONVERT( bit, AKCIOS ) DESC, Invent.AtlagosKeszletkor_Szamitott DESC, JELLEG1ID, JELLEG2ID, JELLEG3ID, Invent.ItemId;
 
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[CatalogueExtract] TO InternetUser
 
--- EXEC [InternetUser].[CatalogueInsert];
+-- EXEC [InternetUser].[CatalogueExtract];
 -- select * from InternetUser.Catalogue;
 
 -- 1. CatalogueInsert
