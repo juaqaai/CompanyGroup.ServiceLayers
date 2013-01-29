@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -20,6 +20,8 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.FianceOfferSetStatus TO InternetUser
 
 /*
 EXEC [InternetUser].[FianceOfferSetStatus] 1, 2;
@@ -45,6 +47,8 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.FinanceOfferSetLineStatus TO InternetUser
 /*
 EXEC [InternetUser].[FinanceOfferSetLineStatus] 1, 1;
 

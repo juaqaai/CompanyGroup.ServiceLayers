@@ -207,3 +207,26 @@ RETURN 0
 
 -- exec dbo.usp_PackageLogOnError 1, 30, 10, 'Error desc', 'Error source';
 -- SELECT * FROM dbo.PackageLog
+
+GO
+DROP  PROCEDURE dbo.usp_ValidateModelParameters;
+GO
+CREATE PROCEDURE dbo.usp_ValidateModelParameters(@ModelName NVARCHAR(50))
+AS
+
+	DECLARE @Model_id int 
+	DECLARE @UserName nvarchar(50)= 'HRP_HEADOFFICE\juhasza' 
+	DECLARE @User_ID int 
+	DECLARE @Version_ID int 
+
+	SET @User_ID = (SELECT ID  FROM ProductParameters.mdm.tblUser u WHERE u.UserName = @UserName);
+
+	SET @Model_ID = (SELECT Top 1 Model_ID FROM ProductParameters.mdm.viw_SYSTEM_SCHEMA_VERSION WHERE Model_Name = @ModelName);
+
+	SET @Version_ID = (SELECT MAX(ID) FROM ProductParameters.mdm.viw_SYSTEM_SCHEMA_VERSION WHERE Model_ID = @Model_ID);
+
+	SELECT @User_ID as UserId, @Model_ID as ModelId, @Version_ID as VersionID;
+
+RETURN 0
+
+-- exec dbo.usp_ValidateModelParameters 'Web';

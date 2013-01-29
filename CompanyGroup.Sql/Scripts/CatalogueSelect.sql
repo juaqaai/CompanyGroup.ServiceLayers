@@ -34,7 +34,7 @@ EXEC sp_xml_removedocument @handle
 
 */
 
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -168,7 +168,8 @@ SET NOCOUNT ON
 	FETCH NEXT @ItemsOnPage ROWS ONLY;
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.CatalogueSelect TO InternetUser
 /*
 EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @Manufacturers = 'A098,A142',

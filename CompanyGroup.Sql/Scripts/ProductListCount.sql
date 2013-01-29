@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 
 /****** Object:  StoredProcedure [InternetUser].[ProductListCount]    Script Date: 2013.01.06. 20:25:27 ******/
@@ -72,7 +72,8 @@ SET NOCOUNT ON
 	);
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.ProductListCount TO InternetUser
 -- EXEC InternetUser.[ProductListCount] @Stock = 1;
 /*
 EXEC InternetUser.[ProductListCount]  @StructureXml = '

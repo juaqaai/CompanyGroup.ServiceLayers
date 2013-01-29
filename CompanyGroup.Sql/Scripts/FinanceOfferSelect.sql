@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -46,4 +46,5 @@ SET NOCOUNT ON
 		  Offer.Id = @OfferId;
 RETURN
 GO
+GRANT EXECUTE ON InternetUser.GetFinanceOffer TO InternetUser
 -- EXEC [InternetUser].[GetFinanceOffer] 1;

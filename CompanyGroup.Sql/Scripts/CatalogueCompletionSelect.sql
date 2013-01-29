@@ -34,7 +34,7 @@ EXEC sp_xml_removedocument @handle
 
 */
 
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -131,7 +131,8 @@ SET NOCOUNT ON
 	ORDER BY Name;
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.CatalogueCompletionSelect TO InternetUser
 -- EXEC InternetUser.CatalogueCompletionSelect @Prefix = 'DELL', @Stock = 1;
 /*
 EXEC InternetUser.CatalogueCompletionSelect  @Prefix = 'Zy', @StructureXml = '

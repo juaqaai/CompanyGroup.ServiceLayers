@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -82,6 +82,9 @@ SET NOCOUNT ON
 	ORDER BY Discount DESC, AverageInventory DESC;
 			
 RETURN
+GO
+GO
+GRANT EXECUTE ON InternetUser.CatalogueBannerSelect TO InternetUser
 
 -- EXEC InternetUser.CatalogueBannerSelect @DataAreaId = 'hrp', @StructureXml = '';
 /*

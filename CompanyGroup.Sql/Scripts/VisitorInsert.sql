@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -55,7 +55,7 @@ CREATE PROCEDURE [InternetUser].[VisitorInsert](@LoginIP	NVARCHAR(32) = '',
 												@LanguageId					NVARCHAR(10) = '', 
 												@DefaultPriceGroupId		NVARCHAR(4) = '',
 												@InventLocationId			NVARCHAR(10) = '', 
-												@RepresentativeId			INT = 0,
+												@RepresentativeId			NVARCHAR(10) = '',
 												@DataAreaId					NVARCHAR(3) = '',				
 												@LoginType					INT = 0,							
 												@PartnerModel				INT = 0,							
@@ -68,19 +68,23 @@ SET NOCOUNT ON
 	DECLARE @VisitorId UNIQUEIDENTIFIER = NEWID(),
 	@LogoutDate DATETIME = CONVERT(DATETIME, 0);
 
+	DECLARE @ReprId INT = ISNULL((SELECT Id FROM InternetUser.Representative WHERE RepresentativeId = @RepresentativeId), 0);
+
 	INSERT INTO InternetUser.Visitor (VisitorId, LoginIP, RecId, CustomerId, CustomerName, PersonId, PersonName, Email,  
 									  IsWebAdministrator,  InvoiceInfoEnabled,  PriceListDownloadEnabled, CanOrder, RecieveGoods,  
 									  PaymTermId, Currency, LanguageId, DefaultPriceGroupId, InventLocationId, RepresentativeId,  
 									  DataAreaId, LoginType, PartnerModel, AutoLogin, LoginDate, LogoutDate, ExpireDate, Valid)
 							  VALUES (@VisitorId,@LoginIP, @RecId, @CustomerId, @CustomerName, @PersonId, @PersonName, @Email, 
 									  @IsWebAdministrator, @InvoiceInfoEnabled, @PriceListDownloadEnabled, @CanOrder, @RecieveGoods, 
-									  @PaymTermId, @Currency, @LanguageId, @DefaultPriceGroupId, @InventLocationId, @RepresentativeId, 
+									  @PaymTermId, @Currency, @LanguageId, @DefaultPriceGroupId, @InventLocationId, @ReprId, 
 									  @DataAreaId, @LoginType, @PartnerModel, @AutoLogin, @LoginDate, @LogoutDate, @ExpireDate, 1);
 
 	SELECT @VisitorId as VisitorId;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.VisitorInsert TO InternetUser
+GO
 /*
 DECLARE @Date1 DateTime = GetDate(); 
 DECLARE	@Date2 DateTime = DATEADD(day, 1, GetDate());

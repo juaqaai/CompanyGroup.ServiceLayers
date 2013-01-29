@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -28,5 +28,7 @@ SELECT V.Id, V.VisitorId, V.LoginIP, V.RecId,  V.CustomerId,  V.CustomerName,  V
 	   WHERE V.VisitorId = @VisitorId
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
+GO
 -- EXEC [InternetUser].[VisitorSelect] '03925DB0-4487-470F-BCD5-ED90FF478EFD'

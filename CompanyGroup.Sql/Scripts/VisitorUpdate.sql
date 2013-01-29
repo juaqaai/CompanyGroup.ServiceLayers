@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -15,6 +15,9 @@ SET NOCOUNT ON
 	UPDATE InternetUser.Visitor SET Valid = 0, LogoutDate = GETDATE() WHERE VisitorId = @VisitorId;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.[VisitorDisableStatus] TO InternetUser
+GO
 
 -- nyelvválasztás
 GO
@@ -27,6 +30,9 @@ SET NOCOUNT ON
 	UPDATE InternetUser.Visitor SET LanguageId = @Language WHERE VisitorId = @VisitorId;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.[VisitorChangeLanguage] TO InternetUser
+GO
 
 -- valutanem választás
 GO
@@ -39,3 +45,6 @@ SET NOCOUNT ON
 	UPDATE InternetUser.Visitor SET Currency = @Currency WHERE VisitorId = @VisitorId;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.[VisitorChangeCurrency] TO InternetUser
+GO

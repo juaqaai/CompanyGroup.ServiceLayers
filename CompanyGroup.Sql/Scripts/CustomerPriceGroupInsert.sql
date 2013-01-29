@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -22,3 +22,5 @@ SET NOCOUNT ON
 										 VALUES (@VisitorId, @ManufacturerId, @Category1Id, @Category2Id, @Category3Id, @PriceGroupId, @Order);
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.CustomerPriceGroupInsert TO InternetUser

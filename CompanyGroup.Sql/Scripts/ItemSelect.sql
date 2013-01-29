@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -22,5 +22,6 @@ SET NOCOUNT ON
 		ProductId = @ProductId;
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.ItemSelect TO InternetUser
 -- EXEC InternetUser.ItemSelect @ProductId = 'EXT105';

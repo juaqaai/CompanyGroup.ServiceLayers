@@ -44,14 +44,14 @@
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="CatalogueBannerSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CatalogueBannerSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="CatalogueCompletionSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CatalogueCompletionSelect.sql</FullPath>
         </FileNode>
@@ -62,14 +62,14 @@
           <FullPath>CatalogueInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="CatalogueRecentSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CatalogueRecentSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="CatalogueSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CatalogueSelect.sql</FullPath>
         </FileNode>
@@ -260,14 +260,14 @@
           <FullPath>CreateDb.sql</FullPath>
         </FileNode>
         <FileNode Name="CustomerPriceGroupInsert.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CustomerPriceGroupInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="CustomerPriceGroupSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CustomerPriceGroupSelect.sql</FullPath>
         </FileNode>
@@ -278,32 +278,32 @@
           <FullPath>DispoStatus.sql</FullPath>
         </FileNode>
         <FileNode Name="FianceOfferSetStatus.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FianceOfferSetStatus.sql</FullPath>
         </FileNode>
         <FileNode Name="FinanceOfferInsert.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FinanceOfferInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="FinanceOfferSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FinanceOfferSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="FinanceOfferUpdate.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FinanceOfferUpdate.sql</FullPath>
         </FileNode>
         <FileNode Name="ItemSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ItemSelect.sql</FullPath>
         </FileNode>
@@ -314,14 +314,14 @@
           <FullPath>PictureInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="PictureItemSelect.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>PictureItemSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="PictureSelect.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>PictureSelect.sql</FullPath>
         </FileNode>
@@ -332,14 +332,14 @@
           <FullPath>PictureUpdate.sql</FullPath>
         </FileNode>
         <FileNode Name="PriceListSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>PriceListSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="ProductListCount.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ProductListCount.sql</FullPath>
         </FileNode>
@@ -356,8 +356,8 @@
           <FullPath>SecondHandInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="SecondHandSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>SecondHandSelect.sql</FullPath>
         </FileNode>
@@ -368,26 +368,26 @@
           <FullPath>SecondHandUpdate.sql</FullPath>
         </FileNode>
         <FileNode Name="ShoppingCartInsert.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="ShoppingCartSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="ShoppingCartSetStatus.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartSetStatus.sql</FullPath>
         </FileNode>
         <FileNode Name="ShoppingCartUpdate.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartUpdate.sql</FullPath>
         </FileNode>
@@ -398,8 +398,8 @@
           <FullPath>SignIn.sql</FullPath>
         </FileNode>
         <FileNode Name="StructureSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JUHASZ-A-W7\BI:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>JUHASZ-A-W7\BI</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>StructureSelect.sql</FullPath>
         </FileNode>
@@ -410,20 +410,20 @@
           <FullPath>Tables.sql</FullPath>
         </FileNode>
         <FileNode Name="VisitorInsert.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>VisitorInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="VisitorSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>VisitorSelect.sql</FullPath>
         </FileNode>
         <FileNode Name="VisitorUpdate.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>VisitorUpdate.sql</FullPath>
         </FileNode>

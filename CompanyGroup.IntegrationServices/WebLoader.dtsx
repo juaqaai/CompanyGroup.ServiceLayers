@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="WebLoader"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{32F54B0E-7625-487B-9555-980A439C0DD1}">
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{FAED57F0-5BBC-46AE-82C0-823ACBA0601A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables>
@@ -136,6 +136,27 @@
             <ExecutePackageTask>
               <UseProjectReference>True</UseProjectReference>
               <PackageName>Picture.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\Representative"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{175b84f1-eaab-42ad-a285-63455c6a2da7}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Representative"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>Representative.dtsx</PackageName>
               <ParameterAssignment>
                 <ParameterName>JobLogKey</ParameterName>
                 <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
@@ -282,11 +303,15 @@
           Size="139,42"
           Id="Package\Web staging sequence container\SecondHand"
           TopLeft="355,20" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Web staging sequence container\Representative"
+          TopLeft="34,97" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="556,218"
-          Size="556,261"
+          PanelSize="556,227"
+          Size="556,270"
           Id="Package\Web staging sequence container"
           TopLeft="47,161" />
         <EdgeLayout
@@ -325,18 +350,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="327.5,422">
+          TopLeft="327.5,431">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,66"
+              EndConnector="0,57"
               Start="0,0"
-              End="0,58.5">
+              End="0,49.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,58.5" />
+                    End="0,49.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

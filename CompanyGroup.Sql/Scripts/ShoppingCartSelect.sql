@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -50,8 +50,10 @@ SET NOCOUNT ON
 		  Line.Status IN (1, 2) AND 
 		  Cart.Id = @CartId;
 RETURN
-GO
 -- EXEC [InternetUser].[GetShoppingCart] 1;
+GO
+GRANT EXECUTE ON [InternetUser].[GetShoppingCart] TO InternetUser
+GO
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartCollection];
 GO
@@ -98,6 +100,8 @@ SET NOCOUNT ON
 
 RETURN
 GO
+GRANT EXECUTE ON [InternetUser].[GetShoppingCartCollection] TO InternetUser
+GO
 -- EXEC [InternetUser].[GetShoppingCartCollection] 'teszt';
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
@@ -125,6 +129,8 @@ SET NOCOUNT ON
 	WHERE Line.Status IN (1, 2) AND 
 		  Line.Id = @LineId;
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[GetShoppingCartLine] TO InternetUser
 GO
 
 -- EXEC [InternetUser].[GetShoppingCartLine] 1

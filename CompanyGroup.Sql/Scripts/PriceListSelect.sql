@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -122,7 +122,8 @@ SET NOCOUNT ON
 		Garanty END DESC;
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.PricelistSelect TO InternetUser
 -- EXEC InternetUser.PricelistSelect @Stock = 1, @Sequence = 3;
 /*
 EXEC InternetUser.PricelistSelect  @StructureXml = '

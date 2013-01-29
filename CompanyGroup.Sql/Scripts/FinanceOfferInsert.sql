@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -31,15 +31,17 @@ CREATE PROCEDURE [InternetUser].[FinanceOfferInsert](@VisitorId	NVARCHAR(64) = '
 AS
 SET NOCOUNT ON
 	DECLARE @OfferId INT = -1;
+	DECLARE @CartId INT = 0;
 
-	INSERT INTO InternetUser.FinanceOffer (VisitorId, LeasingPersonName, LeasingAddress, LeasingPhone, LeasingStatNumber, NumOfMonth, Currency, CreatedDate, Status) 
-								   VALUES (@VisitorId, @LeasingPersonName, @LeasingAddress, @LeasingPhone, @LeasingStatNumber, @NumOfMonth, @Currency, GetDate(), 1);
+	INSERT INTO InternetUser.FinanceOffer (CartId, PersonName, Address, Phone, StatNumber, NumOfMonth, CreatedDate) 
+								   VALUES (@CartId, @LeasingPersonName, @LeasingAddress, @LeasingPhone, @LeasingStatNumber, @NumOfMonth, GetDate());
 	SET @OfferId = @@IDENTITY;
 
 	SELECT @OfferId as OfferId;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.FinanceOfferInsert TO InternetUser
 /*
 EXEC [InternetUser].[FinanceOfferInsert] 'VisitorId', 
 										 'LeasingPersonName',	
@@ -73,6 +75,8 @@ SET NOCOUNT ON
 	SELECT @LineId as LineId;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.FinanceOfferLineInsert TO InternetUser
 /*
 DECLARE @LineId INT;
 

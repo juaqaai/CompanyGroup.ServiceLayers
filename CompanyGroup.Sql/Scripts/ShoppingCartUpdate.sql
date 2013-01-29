@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -44,7 +44,9 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.ShoppingCartUpdate TO InternetUser
+GO
 /*
 DECLARE @date DateTime = GetDate();
 EXEC [InternetUser].[ShoppingCartUpdate] 1, 
@@ -63,7 +65,7 @@ EXEC [InternetUser].[ShoppingCartUpdate] 1,
 
 select * from InternetUser.ShoppingCart;  
 */
-GO
+
 -- kosár sor módosítás (csak a mennyiséget lehet megváltoztatni)
 DROP PROCEDURE [InternetUser].[ShoppingCartLineUpdate];
 GO
@@ -83,12 +85,14 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.[ShoppingCartLineUpdate] TO InternetUser
+GO
 /*
 EXEC [InternetUser].[ShoppingCartLineUpdate] 1, 1, 1;
 
 select * from InternetUser.ShoppingCartLine
 */
-GO
 -- kosár "tárolt" flag beállítása
 DROP PROCEDURE [InternetUser].[ShoppingCartStore];
 GO
@@ -112,7 +116,8 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.[ShoppingCartStore] TO InternetUser
 GO
 -- kosár "aktív" flag beállítása
 DROP PROCEDURE [InternetUser].[ShoppingCartActivate];
@@ -135,7 +140,8 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.[ShoppingCartActivate] TO InternetUser
 GO
 -- VisitorId beállítása
 DROP PROCEDURE [InternetUser].[ShoppingCartAssociate];
@@ -155,3 +161,6 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.[ShoppingCartAssociate] TO InternetUser
+GO

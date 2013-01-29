@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -13,6 +13,7 @@ SET NOCOUNT ON
 	SELECT Id, [FileName], [Primary], RecId 
 	FROM InternetUser.Picture WHERE ProductId = @ProductId;
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.PictureSelect TO InternetUser
 -- EXEC [InternetUser].[PictureSelect] '0021165103535';
 -- select * from InternetUser.Picture

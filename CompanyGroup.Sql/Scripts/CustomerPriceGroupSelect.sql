@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 
 /****** Object:  StoredProcedure [InternetUser].[CustomerPriceGroups]    Script Date: 2012.10.25. 6:48:26 ******/
@@ -31,6 +31,6 @@ SET NOCOUNT ON
 RETURN
 
 GO
-
+GRANT EXECUTE ON InternetUser.CustomerPriceGroupSelect TO InternetUser
 -- EXEC InternetUser.CustomerPriceGroupSelect 'V001446';	--V002020
 

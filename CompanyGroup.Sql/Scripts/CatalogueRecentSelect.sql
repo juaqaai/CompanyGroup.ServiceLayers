@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -60,3 +60,5 @@ SET NOCOUNT ON
 	ORDER BY Discount DESC, AverageInventory DESC;
 
 RETURN
+GO
+GRANT EXECUTE ON InternetUser.CatalogueRecentSelect TO InternetUser

@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -54,6 +54,8 @@ EXEC [InternetUser].[ShoppingCartInsert] 'teszt',
 select * from InternetUser.ShoppingCart;  
 */
 GO
+GRANT EXECUTE ON [InternetUser].[ShoppingCartInsert] TO InternetUser
+GO
 -- kosár fej hozzaadas 
 DROP PROCEDURE [InternetUser].[ShoppingCartLineInsert];
 GO
@@ -75,6 +77,8 @@ SET NOCOUNT ON
 	SELECT @LineId as LineId;
 
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[ShoppingCartLineInsert] TO InternetUser
 /*
 DECLARE @LineId INT;
 

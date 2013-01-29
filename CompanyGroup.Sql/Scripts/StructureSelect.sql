@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -98,7 +98,9 @@ SET NOCOUNT ON
 	ORDER BY ManufacturerName, Category1Name, Category2Name, Category3Name;
 			
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.StructureSelect TO InternetUser
+GO
 /* EXEC InternetUser.StructureSelect @DataAreaId = '',
 									 @Manufacturers = '',
 									 @Category1 = '',													      

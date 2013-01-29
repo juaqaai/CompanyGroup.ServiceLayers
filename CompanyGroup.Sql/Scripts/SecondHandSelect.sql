@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -16,5 +16,6 @@ SET NOCOUNT ON
 	WHERE Valid = 1;
 
 RETURN
-
+GO
+GRANT EXECUTE ON InternetUser.SecondHandSelect TO InternetUser
 -- EXEC [InternetUser].[SecondHandSelect];

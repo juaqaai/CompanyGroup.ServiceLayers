@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 SET ANSI_NULLS ON
 GO
@@ -20,7 +20,9 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
-
+GO
+GRANT EXECUTE ON [InternetUser].[ShoppingCartSetStatus] TO InternetUser
+GO
 /*
 EXEC [InternetUser].[ShoppingCartSetStatus] 1;
 
@@ -45,6 +47,9 @@ SET NOCOUNT ON
 	SELECT @Ret as Ret;
 
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[ShoppingCartSetLineStatus] TO InternetUser
+GO
 /*
 EXEC [InternetUser].[ShoppingCartSetLineStatus] 1, 1;
 
