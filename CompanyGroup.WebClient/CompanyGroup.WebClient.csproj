@@ -194,7 +194,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Common\ActivateCart.cs" />
     <Compile Include="Models\Common\AddCartRequest.cs" />
-    <Compile Include="Models\Common\ApiMessageError.cs" />
+    <Compile Include="Models\Common\ApiMessage.cs" />
     <Compile Include="Models\Common\RemoveCartRequest.cs" />
     <Compile Include="Models\Common\EmptyResponse.cs" />
     <Compile Include="Models\Common\ShoppingCartInfo.cs" />
