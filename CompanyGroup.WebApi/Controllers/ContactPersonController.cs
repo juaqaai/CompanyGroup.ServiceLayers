@@ -25,21 +25,21 @@ namespace CompanyGroup.WebApi.Controllers
 
         [HttpPost]
         [ActionName("ChangePassword")]
-        public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.ServiceRequest.ChangePassword request)
+        public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request)
         {
             return service.ChangePassword(request);
         }
 
         [HttpPost]
         [ActionName("UndoChangePassword")]
-        public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.ServiceRequest.UndoChangePassword request)
+        public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request)
         {
             return service.UndoChangePassword(request);
         }
 
         [HttpPost]
         [ActionName("GetById")]
-        public CompanyGroup.Dto.PartnerModule.ContactPerson GetById(CompanyGroup.Dto.ServiceRequest.GetContactPersonById request)
+        public CompanyGroup.Dto.PartnerModule.ContactPerson GetById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
         {
             CompanyGroup.Dto.PartnerModule.ContactPerson response = service.GetContactPersonById(request);
 
@@ -53,7 +53,7 @@ namespace CompanyGroup.WebApi.Controllers
 
         [HttpPost]
         [ActionName("ForgetPassword")]
-        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest request)
+        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request)
         {
             return service.ForgetPassword(request);
         }

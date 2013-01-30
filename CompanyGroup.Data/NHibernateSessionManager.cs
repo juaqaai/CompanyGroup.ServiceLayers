@@ -10,7 +10,7 @@ namespace CompanyGroup.Data
     /// <summary>
     /// NHibernte singleton session. (http://www.typemock.com) for testing.
     /// </summary>
-    public sealed class NHibernateSessionManager
+    public class NHibernateSessionManager
     {
 
         private const string TRANSACTION_KEY = "CONTEXT_TRANSACTION";
@@ -106,7 +106,25 @@ namespace CompanyGroup.Data
             GetSessionFrom(sessionFactoryConfigPath, interceptor);
         }
 
-        public ISession GetSessionFrom(string sessionFactoryConfigPath)
+        /// <summary>
+        /// web interfész adatbázis session
+        /// </summary>
+        /// <returns></returns>
+        public ISession GetWebInterfaceSession()
+        {
+            return GetSessionFrom(Helpers.ConfigSettingsParser.GetString("WebInterfaceSessionFactoryConfigPath"));
+        }
+
+        /// <summary>
+        /// extract interface adatbázis session
+        /// </summary>
+        /// <returns></returns>
+        public ISession GetExtractInterfaceSession()
+        {
+            return GetSessionFrom(Helpers.ConfigSettingsParser.GetString("ExtractInterfaceSessionFactoryConfigPath"));
+        }
+
+        private ISession GetSessionFrom(string sessionFactoryConfigPath)
         {
             return GetSessionFrom(sessionFactoryConfigPath, null);
         }

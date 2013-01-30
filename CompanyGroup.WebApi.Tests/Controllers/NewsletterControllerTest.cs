@@ -17,16 +17,9 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         private CompanyGroup.ApplicationServices.WebshopModule.INewsletterService CreateService()
         {
 
-            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
-            CompanyGroup.Data.NoSql.ISettings settings = new CompanyGroup.Data.NoSql.Settings(CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoServerHost", "srv1.hrp.hu"),
-                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetInt("MongoServerPort", 27017),
-                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoDatabaseName", "CompanyGroup"),
-                                                                                               CompanyGroup.Helpers.ConfigSettingsParser.GetString("MongoCollectionName", "Visitor"));
-
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(settings);
-
-
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
             return new CompanyGroup.ApplicationServices.WebshopModule.NewsletterService(newsletterRepository, visitorRepository);
         }
@@ -38,7 +31,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetNewsletterCollection()
         {
-            Dto.ServiceRequest.GetNewsletterCollectionRequest request = new Dto.ServiceRequest.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
+            CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
 
             if (!IsHttpClientTest)
             {
@@ -46,10 +39,11 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
                 NewsletterController controller = new NewsletterController(service);
 
-                CompanyGroup.Dto.WebshopModule.NewsletterCollection result = controller.GetCollection(request);
+                HttpResponseMessage result = controller.GetCollection(request);
 
-                // Assert
-                Assert.IsNotNull(result);
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection collection;
+
+                Assert.IsNotNull(result.TryGetContentValue<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(out collection));
             }
             else
             {

@@ -15,29 +15,17 @@ namespace CompanyGroup.WebApi.Controllers
         private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService;
 
         /// <summary>
-        /// privát karbantartó szerviz interfész referencia
-        /// </summary>
-        private CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService maintainService;
-
-        /// <summary>
         /// konstruktor service interfésszel
         /// </summary>
         /// <param name="service"></param>
-        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService, CompanyGroup.ApplicationServices.MaintainModule.IInvoiceService maintainService)
+        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService)
         {
             if (partnerService == null)
             {
                 throw new ArgumentNullException("PartnerService");
             }
 
-            if (maintainService == null)
-            {
-                throw new ArgumentNullException("MaintainService");
-            }
-
             this.partnerService = partnerService;
-
-            this.maintainService = maintainService;
         }
 
         /// <summary>
@@ -47,20 +35,8 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetList")]
         [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest request)
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
-            //DateTime from; DateTime to;
-
-            //if (!DateTime.TryParse(request.FromDate, out from))
-            //{
-            //    from = DateTime.MinValue;
-            //}
-
-            //if (!DateTime.TryParse(request.ToDate, out to))
-            //{
-            //    to = DateTime.MaxValue;
-            //}
-
             return partnerService.GetList(request);
         }
 
@@ -87,17 +63,6 @@ namespace CompanyGroup.WebApi.Controllers
             return partnerService.GetAll();
         }
 
-        /// <summary>
-        /// számla cache újratöltése
-        /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <returns></returns>
-        [ActionName("ReFillCache")]
-        [HttpGet]
-        public bool ReFillCache(string dataAreaId)
-        {
-            return maintainService.ReFillCache(dataAreaId);
-        }
     }
 
 

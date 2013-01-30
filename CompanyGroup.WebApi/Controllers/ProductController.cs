@@ -33,7 +33,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// [RoutePrefix("items", TranslationKey = "itemsKey")]
         [ActionName("GetProducts")]
         [HttpPost]
-        public HttpResponseMessage GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProductRequest request)
+        public HttpResponseMessage GetProducts(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request)
         {
             CompanyGroup.Dto.WebshopModule.Products response = this.service.GetProducts(request);
 
@@ -52,7 +52,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetBannerList")]
         [HttpPost]
-        public HttpResponseMessage GetBannerList(CompanyGroup.Dto.ServiceRequest.GetBannerListRequest request)
+        public HttpResponseMessage GetBannerList(CompanyGroup.Dto.WebshopModule.GetBannerListRequest request)
         {
             CompanyGroup.Dto.WebshopModule.BannerList response = this.service.GetBannerList(request);
 
@@ -66,7 +66,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetPriceList")]
         [HttpPost]
-        public HttpResponseMessage GetPriceList(CompanyGroup.Dto.ServiceRequest.GetPriceListRequest request)
+        public HttpResponseMessage GetPriceList(CompanyGroup.Dto.WebshopModule.GetPriceListRequest request)
         {
             CompanyGroup.Dto.WebshopModule.PriceList response = this.service.GetPriceList(request);
 
@@ -80,7 +80,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetItemByProductId")]
         [HttpPost]
-        public HttpResponseMessage GetItemByProductId(CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest request)
+        public HttpResponseMessage GetItemByProductId(CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request)
         {
             CompanyGroup.Dto.WebshopModule.Product response = this.service.GetItemByProductId(request);
 
@@ -94,7 +94,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCompletionList")]
         [HttpPost]
-        public HttpResponseMessage GetCompletionList(CompanyGroup.Dto.ServiceRequest.ProductListComplationRequest request) 
+        public HttpResponseMessage GetCompletionList(CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request) 
         {
             CompanyGroup.Dto.WebshopModule.CompletionList response = this.service.GetCompletionList(request);
 
@@ -108,7 +108,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCompatibleProducts")]
         [HttpPost]
-        public HttpResponseMessage GetCompatibleProducts(CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest request)
+        public HttpResponseMessage GetCompatibleProducts(CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request)
         {
             CompanyGroup.Dto.WebshopModule.CompatibleProducts response = this.service.GetCompatibleProducts(request);
 

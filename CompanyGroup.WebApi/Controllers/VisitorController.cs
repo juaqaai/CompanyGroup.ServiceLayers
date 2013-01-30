@@ -30,7 +30,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("SignIn")]
         [HttpPost]
-        public HttpResponseMessage SignIn(CompanyGroup.Dto.ServiceRequest.SignInRequest request)
+        public HttpResponseMessage SignIn(CompanyGroup.Dto.PartnerModule.SignInRequest request)
         {
             CompanyGroup.Dto.PartnerModule.Visitor response = service.SignIn(request);
 
@@ -43,7 +43,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("SignOut")]
         [HttpPost]
-        public HttpResponseMessage SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
+        public HttpResponseMessage SignOut(CompanyGroup.Dto.PartnerModule.SignOutRequest request)
         {
             service.SignOut(request);
 
@@ -57,7 +57,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetVisitorInfo")]
         [HttpPost]
-        public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request)
+        public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request)
         {
             CompanyGroup.Dto.PartnerModule.Visitor response = service.GetVisitorInfo(request);
 
@@ -71,7 +71,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeCurrency")]
         [HttpPost]
-        public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.ServiceRequest.ChangeCurrencyRequest request)
+        public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request)
         {
             service.ChangeCurrency(request);
 
@@ -85,7 +85,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("ChangeLanguage")]
         [HttpPost]
-        public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.ServiceRequest.ChangeLanguageRequest request)
+        public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.PartnerModule.ChangeLanguageRequest request)
         {
             service.ChangeLanguage(request);
 

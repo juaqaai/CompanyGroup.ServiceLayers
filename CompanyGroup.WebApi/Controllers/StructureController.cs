@@ -30,7 +30,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetStructures")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Structures GetStructures(CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest request)
+        public CompanyGroup.Dto.WebshopModule.Structures GetStructures(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request)
         {
             return this.service.GetAll(request);
         }
