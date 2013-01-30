@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -53,9 +54,11 @@
   <ItemGroup>
     <Compile Include="Dynamics\Repository.cs" />
     <Compile Include="MaintainModule\InvoiceRepository.cs" />
+    <Compile Include="NHibernateSessionModule.cs" />
     <Compile Include="NoSql\MongoHelper.cs" />
     <Compile Include="NoSql\ISettings.cs" />
     <Compile Include="NoSql\Settings.cs" />
+    <Compile Include="OpenSessionInViewSection.cs" />
     <Compile Include="PartnerModule\ChangePasswordRepository.cs" />
     <Compile Include="PartnerModule\ContactPersonRepository.cs" />
     <Compile Include="PartnerModule\ForgetPasswordRepository.cs" />
@@ -68,6 +71,8 @@
     <Compile Include="PartnerModule\VisitorRepository.cs" />
     <Compile Include="RegistrationModule\RegistrationRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
+    <Compile Include="SessionFactoriesCollection.cs" />
+    <Compile Include="SessionFactoryElement .cs" />
     <Compile Include="WebshopModule\NewsletterRepository.cs" />
     <Compile Include="WebshopModule\FinanceRepository.cs" />
     <Compile Include="WebshopModule\ShoppingCartRepository.cs" />

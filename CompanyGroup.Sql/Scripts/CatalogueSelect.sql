@@ -185,7 +185,7 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @PriceFilter = '',
 								  @PriceFilterRelation = 0,	
 								  @CurrentPageIndex = 1, 
-								  @ItemsOnPage = 500
+								  @ItemsOnPage = 50
 
 SELECT * FROM InternetUser.Catalogue
 */

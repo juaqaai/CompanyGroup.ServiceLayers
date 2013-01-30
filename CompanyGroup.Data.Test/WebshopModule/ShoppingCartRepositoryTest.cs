@@ -76,7 +76,7 @@ namespace CompanyGroup.Data.Test
 
             ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
 
-            ShoppingCart shoppingCart = new ShoppingCart("4f666a456ee01212480d7eb6", "teszt2 company", "test2 person", "cart1", "HUF", false); 
+            ShoppingCart shoppingCart = new ShoppingCart(1, "4f666a456ee01212480d7eb6", "teszt2 company", "test2 person", "cart1", "HUF", false); 
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
 
