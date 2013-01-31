@@ -77,5 +77,14 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category3Id"></param>
         /// <param name="order"></param>
         void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup);
+
+        /// <summary>
+        /// vevői bejelentkezés
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId);
     }
 }

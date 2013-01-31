@@ -11,9 +11,9 @@ namespace CompanyGroup.Data.Dynamics
         private NHibernate.ISession session;
 
         /// <summary>
-        /// Repository példányosítása
+        /// Repository példányosítása session-el
         /// </summary>
-        /// <param name="session">NHibernate session</param>
+        /// <param name="session"></param>
         public Repository(NHibernate.ISession session)
         {
             if (session == null)
@@ -31,7 +31,6 @@ namespace CompanyGroup.Data.Dynamics
         {
             get { return session; }
         }
-
 
     }
 }

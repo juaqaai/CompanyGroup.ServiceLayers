@@ -12,33 +12,8 @@ namespace CompanyGroup.Data.PartnerModule
         /// <summary>
         /// látogatóhoz kapcsolódó műveletek 
         /// </summary>
-        /// <param name="session"></param>
+        /// <param name="sessionWebInterface"></param>
         public VisitorRepository(NHibernate.ISession session) : base(session) { }
-
-        /// <summary>
-        /// bejelentkezés
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="dataAreaId"></param>
-        /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId)
-        {
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
-
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(password), "Password may not be null or empty");
-
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
-
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SignIn")
-                                            .SetString("UserName", userName)
-                                            .SetString("Password", password)
-                                            .SetString("DataAreaId", dataAreaId);    //.SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
-
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
-
-            return visitor;
-        }
 
         /// <summary>
         /// látogató kiolvasása kulcs alapján

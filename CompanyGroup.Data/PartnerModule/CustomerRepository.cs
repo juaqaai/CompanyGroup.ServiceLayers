@@ -212,5 +212,30 @@ namespace CompanyGroup.Data.PartnerModule
                                                             .SetInt32("Order", customerPriceGroup.Order);
             query.UniqueResult();
         }
+
+        /// <summary>
+        /// bejelentkezés
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId)
+        {
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
+
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(password), "Password may not be null or empty");
+
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
+
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SignIn")
+                                            .SetString("UserName", userName)
+                                            .SetString("Password", password)
+                                            .SetString("DataAreaId", dataAreaId);    //.SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
+
+            return visitor;
+        }
     }
 }

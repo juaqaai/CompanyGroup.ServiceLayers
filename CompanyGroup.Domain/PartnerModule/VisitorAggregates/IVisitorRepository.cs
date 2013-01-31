@@ -5,8 +5,6 @@ namespace CompanyGroup.Domain.PartnerModule
 {
     public interface IVisitorRepository
     {
-        CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId);
-
         CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId);
 
         int Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
