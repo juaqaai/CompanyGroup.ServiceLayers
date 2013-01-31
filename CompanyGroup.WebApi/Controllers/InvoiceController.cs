@@ -7,25 +7,28 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebApi.Controllers
 {
-    public class InvoiceController : ApiController
+    /// <summary>
+    /// számla web api kontroller
+    /// </summary>
+    public class InvoiceController : ApiBaseController
     {
         /// <summary>
-        /// privát partner szerviz interfész referencia
+        /// invoice szerviz interfész referencia
         /// </summary>
-        private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService;
+        private CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service;
 
         /// <summary>
-        /// konstruktor service interfésszel
+        /// konstruktor invoice service interfésszel
         /// </summary>
         /// <param name="service"></param>
-        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService partnerService)
+        public InvoiceController(CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService service)
         {
-            if (partnerService == null)
+            if (service == null)
             {
                 throw new ArgumentNullException("PartnerService");
             }
 
-            this.partnerService = partnerService;
+            this.service = service;
         }
 
         /// <summary>
@@ -35,9 +38,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetList")]
         [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
+        public HttpResponseMessage GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
-            return partnerService.GetList(request);
+            try
+            {
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetList(request);
+
+                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -47,9 +59,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetById")]
         [HttpGet]
-        public CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId)
+        public HttpResponseMessage GetById(string invoiceId)
         {
-            return partnerService.GetById(invoiceId);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.InvoiceInfo response = service.GetById(invoiceId);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -58,13 +79,19 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetAll")]
         [HttpGet]
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll()
+        public HttpResponseMessage GetAll()
         {
-            return partnerService.GetAll();
+            try
+            {
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetAll();
+
+                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
-
     }
-
-
 
 }

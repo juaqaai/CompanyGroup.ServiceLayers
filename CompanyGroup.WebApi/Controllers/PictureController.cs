@@ -11,7 +11,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// képekkel kapcsolatos műveletek
     /// </summary>
-    public class PictureController : ApiController
+    public class PictureController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.WebshopModule.IPictureService service;
 
@@ -33,10 +33,17 @@ namespace CompanyGroup.WebApi.Controllers
         [ActionName("GetListByProduct")]
         [HttpPost]
         public HttpResponseMessage GetListByProduct(CompanyGroup.Dto.PartnerModel.PictureFilterRequest request)
-        {
-            CompanyGroup.Dto.WebshopModule.Pictures response = this.service.GetListByProduct(request);
+        {           
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.Pictures response = this.service.GetListByProduct(request);
 
-            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Pictures>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Pictures>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -52,42 +59,56 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetItem(string productId, string recId, string maxWidth, string maxHeight) //CompanyGroup.Dto.ServiceRequest.PictureFilter request
         {
-            Stream stream = this.service.GetItem(productId, recId, maxWidth, maxHeight);
+            try
+            {
+                Stream stream = this.service.GetItem(productId, recId, maxWidth, maxHeight);
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            result.Content = new System.Net.Http.StreamContent(stream);
+                result.Content = new System.Net.Http.StreamContent(stream);
 
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         [ActionName("GetItemById")] 
         [HttpGet]
         public HttpResponseMessage GetItemById(string pictureId, string maxWidth, string maxHeight) 
         {
-            int id = 0;
-
-            if (!Int32.TryParse(pictureId, out id))
+            try
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                int id = 0;
+
+                if (!Int32.TryParse(pictureId, out id))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                Stream stream = this.service.GetItemById(id, maxWidth, maxHeight);
+
+                if (stream == null)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+                result.Content = new System.Net.Http.StreamContent(stream);
+
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+                return result;
             }
-
-            Stream stream = this.service.GetItemById(id, maxWidth, maxHeight);
-
-            if (stream == null)
+            catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return ThrowHttpError(ex);
             }
-
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-
-            result.Content = new System.Net.Http.StreamContent(stream);
-
-            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-
-            return result;
         }
     }
 }

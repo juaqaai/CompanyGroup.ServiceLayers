@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace CompanyGroup.WebApi.Controllers
 {
+    /// <summary>
+    /// html kezdőlap kontroller
+    /// </summary>
     public class HomeController : Controller
     {
         public ActionResult Index()

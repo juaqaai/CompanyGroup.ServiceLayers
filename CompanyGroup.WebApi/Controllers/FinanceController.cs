@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebApi.Controllers
 {
-    public class FinanceController : ApiController
+    public class FinanceController : ApiBaseController
     {
     }
 }

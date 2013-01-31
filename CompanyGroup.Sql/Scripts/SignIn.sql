@@ -1,4 +1,4 @@
-USE WebDb_Test;
+USE ExtractInterface;
 GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
@@ -74,7 +74,7 @@ DECLARE @RecId bigint,
 			RETURN;
 		END
 
-		DECLARE @VirtualDataAreaId nvarchar(3) = InternetUser.GetVirtualDataAreaId( @DataAreaId );
+		DECLARE @VirtualDataAreaId nvarchar(3) = 'hun';	--InternetUser.GetVirtualDataAreaId( @DataAreaId );
 
 		SELECT @RecId = RecId,
 			   @CompanyId = CustAccount, 

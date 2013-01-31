@@ -50,8 +50,8 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ISalesOrderRepository, CompanyGroup.Data.PartnerModule.SalesOrderRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IVisitorRepository, CompanyGroup.Data.PartnerModule.VisitorRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IContactPersonRepository, CompanyGroup.Data.PartnerModule.ContactPersonRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IChangePasswordRepository, CompanyGroup.Data.PartnerModule.ChangePasswordRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository, CompanyGroup.Data.PartnerModule.ForgetPasswordRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IChangePasswordRepository, CompanyGroup.Data.PartnerModule.ChangePasswordRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository, CompanyGroup.Data.PartnerModule.ForgetPasswordRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IStructureRepository, CompanyGroup.Data.WebshopModule.StructureRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IProductRepository, CompanyGroup.Data.WebshopModule.ProductRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IPictureRepository, CompanyGroup.Data.WebshopModule.PictureRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
@@ -60,7 +60,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.INewsletterRepository, CompanyGroup.Data.WebshopModule.NewsletterRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
             unityContainer.RegisterType<CompanyGroup.Domain.RegistrationModule.IRegistrationRepository, CompanyGroup.Data.RegistrationModule.RegistrationRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IInvoiceRepository, CompanyGroup.Data.MaintainModule.InvoiceRepository>();
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();
 
             //unityContainer.Configure<InjectedMembers>().
 

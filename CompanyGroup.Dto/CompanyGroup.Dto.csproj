@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CompanyGroup.Dto</RootNamespace>
     <AssemblyName>CompanyGroup.Dto</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +65,7 @@
     <Compile Include="PartnerModule\Representative.cs" />
     <Compile Include="RegistrationModule\DataRecording.cs" />
     <Compile Include="RegistrationModule\WebAdministrator.cs" />
+    <Compile Include="SharedModule\ApiMessage.cs" />
     <Compile Include="WebshopModule\ActivateCartRequest.cs" />
     <Compile Include="ServiceRequest\AddBankAccount.cs" />
     <Compile Include="ServiceRequest\AddDeliveryAddress.cs" />

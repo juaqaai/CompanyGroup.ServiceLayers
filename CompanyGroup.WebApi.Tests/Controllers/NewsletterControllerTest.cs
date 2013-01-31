@@ -12,67 +12,30 @@ using System.Net.Http.Headers;
 namespace CompanyGroup.WebApi.Tests.Controllers
 {
     [TestClass]
-    public class NewsletterControllerTest
+    public class NewsletterControllerTest : ControllerBase
     {
-        private CompanyGroup.ApplicationServices.WebshopModule.INewsletterService CreateService()
-        {
-
-            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
-
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
-
-            return new CompanyGroup.ApplicationServices.WebshopModule.NewsletterService(newsletterRepository, visitorRepository);
-        }
-
-        private static string BaseAddress = "http://localhost/CompanyGroup.WebApi/api/";
-
-        private static bool IsHttpClientTest = true;
 
         [TestMethod]
         public void GetNewsletterCollection()
         {
             CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
 
-            if (!IsHttpClientTest)
+            Uri requestUri = null;
+
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Newsletter/GetCollection", request).Result;
+
+            if (response.IsSuccessStatusCode)
             {
-                CompanyGroup.ApplicationServices.WebshopModule.INewsletterService service = CreateService();
-
-                NewsletterController controller = new NewsletterController(service);
-
-                HttpResponseMessage result = controller.GetCollection(request);
-
-                CompanyGroup.Dto.WebshopModule.NewsletterCollection collection;
-
-                Assert.IsNotNull(result.TryGetContentValue<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(out collection));
+                requestUri = response.Headers.Location;
             }
             else
             {
-                HttpClient client = new HttpClient();
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                // Add an Accept header for JSON format.
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                Uri requestUri = null;
-
-                HttpResponseMessage response = client.PostAsJsonAsync("Newsletter/GetCollection", request).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    requestUri = response.Headers.Location;
-                }
-                else
-                {
-                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                }
-
-                CompanyGroup.Dto.WebshopModule.NewsletterCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.NewsletterCollection>().Result;
-
-                // Assert
-                Assert.IsNotNull(collection);
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
+            CompanyGroup.Dto.WebshopModule.NewsletterCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.NewsletterCollection>().Result;
+
+            Assert.IsNotNull(collection);
         }
 
     }

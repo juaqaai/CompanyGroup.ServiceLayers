@@ -570,5 +570,21 @@ namespace CompanyGroup.ApplicationServices.Test
 
         #endregion
 
+        [TestMethod]
+        public void GetNewsletterCollection()
+        {
+            CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
+
+            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+
+            CompanyGroup.ApplicationServices.WebshopModule.INewsletterService service = new CompanyGroup.ApplicationServices.WebshopModule.NewsletterService(newsletterRepository, visitorRepository);
+
+            CompanyGroup.Dto.WebshopModule.NewsletterCollection collection = service.GetNewsletterCollection(request);
+
+            Assert.IsNotNull(collection);
+        }
+
     }
 }

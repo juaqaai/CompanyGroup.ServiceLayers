@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace CompanyGroup.WebApi.Models
+namespace CompanyGroup.Dto.SharedModule
 {
 
     public class ApiMessage

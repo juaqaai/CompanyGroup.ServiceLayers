@@ -10,7 +10,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// hírlevéllel kapcsolatos műveletek
     /// </summary>
-    public class NewsletterController : ApiController
+    public class NewsletterController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.WebshopModule.INewsletterService service;
 
@@ -30,13 +30,19 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("GetCollection")]
-        public HttpResponseMessage  GetCollection(CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request)
+        public HttpResponseMessage GetCollection(CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request)
         {
-            CompanyGroup.Dto.WebshopModule.NewsletterCollection response = service.GetNewsletterCollection(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection response = service.GetNewsletterCollection(request);
 
-            return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
-
 
     }
 }

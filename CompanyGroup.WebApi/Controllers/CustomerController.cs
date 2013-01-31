@@ -10,10 +10,10 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// vevőhöz kapcsolódó műveletek
     /// </summary>
-    public class CustomerController : ApiController
+    public class CustomerController : ApiBaseController
     {
         /// <summary>
-        /// privát szerviz interfész referencia
+        /// customer szerviz interfész referencia
         /// </summary>
         private CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service;
 
@@ -38,9 +38,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetAddressZipCodes")]
         [HttpGet]
-        public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request)
+        public HttpResponseMessage GetAddressZipCodes(CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request)
         {
-            return service.GetAddressZipCodes(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.AddressZipCodes response = service.GetAddressZipCodes(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.AddressZipCodes>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -50,16 +59,25 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCustomerRegistration")]
         [HttpGet]
-        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(string visitorId, string dataAreaId)
+        public HttpResponseMessage GetCustomerRegistration(string visitorId, string dataAreaId)
         {
             if(String.IsNullOrEmpty(visitorId))
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                ThrowSafeException("The visitor id cannot be null!", HttpStatusCode.NotFound);
             }
 
             CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request = new CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest(visitorId, dataAreaId);
 
-            return service.GetCustomerRegistration(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.Registration response = service.GetCustomerRegistration(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.Registration>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -69,9 +87,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetDeliveryAddresses")]
         [HttpPost]
-        public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request)
+        public HttpResponseMessage GetDeliveryAddresses(CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request)
         {
-            return service.GetDeliveryAddresses(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.DeliveryAddresses response = service.GetDeliveryAddresses(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.DeliveryAddresses>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
     }

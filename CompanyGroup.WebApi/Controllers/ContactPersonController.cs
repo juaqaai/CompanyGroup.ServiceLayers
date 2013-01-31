@@ -7,8 +7,10 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebApi.Controllers
 {
-
-    public class ContactPersonController : ApiController
+    /// <summary>
+    /// kapcsolattartókkal kapcsolatos műveletek
+    /// </summary>
+    public class ContactPersonController : ApiBaseController
     {
 
         private CompanyGroup.ApplicationServices.PartnerModule.IContactPersonService service;
@@ -23,66 +25,70 @@ namespace CompanyGroup.WebApi.Controllers
             this.service = service;
         }
 
+
         [HttpPost]
         [ActionName("ChangePassword")]
-        public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request)
+        public HttpResponseMessage ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request)
         {
-            return service.ChangePassword(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.ChangePassword response = service.ChangePassword(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.ChangePassword>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         [HttpPost]
         [ActionName("UndoChangePassword")]
-        public CompanyGroup.Dto.PartnerModule.UndoChangePassword UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request)
+        public HttpResponseMessage UndoChangePassword(CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request)
         {
-            return service.UndoChangePassword(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.UndoChangePassword response = service.UndoChangePassword(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.UndoChangePassword>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         [HttpPost]
         [ActionName("GetById")]
-        public CompanyGroup.Dto.PartnerModule.ContactPerson GetById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
+        public HttpResponseMessage GetById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
         {
-            CompanyGroup.Dto.PartnerModule.ContactPerson response = service.GetContactPersonById(request);
-
-            if (response == null)
+            try
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+                CompanyGroup.Dto.PartnerModule.ContactPerson response = service.GetContactPersonById(request);
 
-            return response;
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.ContactPerson>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         [HttpPost]
         [ActionName("ForgetPassword")]
-        public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request)
+        public HttpResponseMessage ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request)
         {
-            return service.ForgetPassword(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.ForgetPassword response = service.ForgetPassword(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.ForgetPassword>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
-        //// GET api/contactperson
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/contactperson/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/contactperson
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/contactperson/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/contactperson/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

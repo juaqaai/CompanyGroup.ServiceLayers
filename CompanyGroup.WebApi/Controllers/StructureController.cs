@@ -10,7 +10,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// struktúrával kapcsolatos műveletek
     /// </summary>
-    public class StructureController : ApiController
+    public class StructureController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.WebshopModule.IStructureService service;
 
@@ -30,9 +30,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetStructures")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.Structures GetStructures(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request)
+        public HttpResponseMessage GetStructures(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request)
         {
-            return this.service.GetAll(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.Structures response = this.service.GetAll(request);
+                
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Structures>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
     }
 }

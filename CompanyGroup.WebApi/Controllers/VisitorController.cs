@@ -10,7 +10,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// látogatóval kapcsolatos műveletek
     /// </summary>
-    public class VisitorController : ApiController
+    public class VisitorController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.PartnerModule.IVisitorService service;
 
@@ -32,9 +32,16 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage SignIn(CompanyGroup.Dto.PartnerModule.SignInRequest request)
         {
-            CompanyGroup.Dto.PartnerModule.Visitor response = service.SignIn(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.Visitor response = service.SignIn(request);
 
-            return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -45,9 +52,16 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage SignOut(CompanyGroup.Dto.PartnerModule.SignOutRequest request)
         {
-            service.SignOut(request);
+            try
+            {
+                service.SignOut(request);
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -59,9 +73,16 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage GetVisitorInfo(CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request)
         {
-            CompanyGroup.Dto.PartnerModule.Visitor response = service.GetVisitorInfo(request);
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.Visitor response = service.GetVisitorInfo(request);
 
-            return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -73,9 +94,16 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request)
         {
-            service.ChangeCurrency(request);
+            try
+            {
+                service.ChangeCurrency(request);
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -87,9 +115,16 @@ namespace CompanyGroup.WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage ChangeLanguage(CompanyGroup.Dto.PartnerModule.ChangeLanguageRequest request)
         {
-            service.ChangeLanguage(request);
+            try
+            {
+                service.ChangeLanguage(request);
 
-            return Request.CreateResponse(HttpStatusCode.OK); 
+                return Request.CreateResponse(HttpStatusCode.OK); 
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
     }
 }

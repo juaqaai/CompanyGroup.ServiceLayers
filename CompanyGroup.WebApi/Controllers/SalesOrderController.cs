@@ -10,7 +10,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// vevőrendelés műveletek kontroller
     /// </summary>
-    public class SalesOrderController : ApiController
+    public class SalesOrderController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.PartnerModule.ISalesOrderService service;
 
@@ -30,9 +30,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetOrderInfo")]
         [HttpPost]
-        public List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request)
+        public HttpResponseMessage GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request)
         {
-            return service.GetOrderInfo(request);
+            try
+            {
+                List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = service.GetOrderInfo(request);
+
+                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
     }
 }

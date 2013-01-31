@@ -10,7 +10,7 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// regisztrációval kapcsolatos műveletek
     /// </summary>
-    public class RegistrationController : ApiController
+    public class RegistrationController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.RegistrationModule.IRegistrationService service;
 
@@ -30,16 +30,25 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetByKey")]
         [HttpGet]
-        public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(string id, string visitorId)
+        public HttpResponseMessage GetByKey(string id, string visitorId)
         {
             if (String.IsNullOrEmpty(id))
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                ThrowSafeException("Id can not be null or empty!", HttpStatusCode.BadRequest);
             }
 
-            CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id, visitorId);
+            try
+            {
+                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id, visitorId);
 
-            return service.GetByKey(request);
+                CompanyGroup.Dto.RegistrationModule.Registration response = service.GetByKey(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.Registration>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -49,9 +58,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("AddNew")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.Registration AddNew(CompanyGroup.Dto.ServiceRequest.AddNewRegistration request)
+        public HttpResponseMessage AddNew(CompanyGroup.Dto.ServiceRequest.AddNewRegistration request)
         {
-            return service.AddNew(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.Registration response = service.AddNew(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.Registration>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -60,9 +78,22 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="id"></param>
         [ActionName("Remove")] 
         [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.Empty Remove(string id)
+        public HttpResponseMessage Remove(string id)
         {
-            return service.Remove(id);
+            if (String.IsNullOrEmpty(id))
+            {
+                ThrowSafeException("Id can not be null or empty!", HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                service.Remove(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -71,9 +102,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="id"></param>
         [ActionName("Post")] 
         [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.PostRegistration Post(CompanyGroup.Dto.ServiceRequest.PostRegistration request)
+        public HttpResponseMessage Post(CompanyGroup.Dto.ServiceRequest.PostRegistration request)
         {
-            return service.Post(request);
+            try
+            {
+                CompanyGroup.Dto.ServiceResponse.PostRegistration response = service.Post(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.ServiceResponse.PostRegistration>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -82,9 +122,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="dataRecording"></param>
         [ActionName("UpdateDataRecording")] 
         [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.UpdateDataRecording UpdateDataRecording(CompanyGroup.Dto.ServiceRequest.UpdateDataRecording request)
+        public HttpResponseMessage UpdateDataRecording(CompanyGroup.Dto.ServiceRequest.UpdateDataRecording request)
         {
-            return service.UpdateDataRecording(request);
+            try
+            {
+                CompanyGroup.Dto.ServiceResponse.UpdateDataRecording response = service.UpdateDataRecording(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.ServiceResponse.UpdateDataRecording>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -93,9 +142,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("UpdateRegistrationData")] 
         [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData UpdateRegistrationData(CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData request)
+        public HttpResponseMessage UpdateRegistrationData(CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData request)
         {
-            return service.UpdateRegistrationData(request);
+            try
+            {
+                CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData response = service.UpdateRegistrationData(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -105,9 +163,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="webAdministrator"></param>
         [ActionName("UpdateWebAdministrator")] 
         [HttpPost]
-        public CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator UpdateWebAdministrator(CompanyGroup.Dto.ServiceRequest.UpdateWebAdministrator request)
+        public HttpResponseMessage UpdateWebAdministrator(CompanyGroup.Dto.ServiceRequest.UpdateWebAdministrator request)
         {
-            return service.UpdateWebAdministrator(request);
+            try
+            {
+                CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator response = service.UpdateWebAdministrator(request);
+                
+                return Request.CreateResponse<CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -117,9 +184,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetDeliveryAddresses")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddress request)
+        public HttpResponseMessage GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddress request)
         {
-            return service.GetDeliveryAddresses(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = service.GetDeliveryAddresses(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -128,9 +204,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("AddDeliveryAddress")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses AddDeliveryAddress(CompanyGroup.Dto.ServiceRequest.AddDeliveryAddress request)
+        public HttpResponseMessage AddDeliveryAddress(CompanyGroup.Dto.ServiceRequest.AddDeliveryAddress request)
         {
-            return service.AddDeliveryAddress(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = service.AddDeliveryAddress(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -140,9 +225,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("UpdateDeliveryAddress")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses UpdateDeliveryAddress(CompanyGroup.Dto.ServiceRequest.UpdateDeliveryAddress request)
+        public HttpResponseMessage UpdateDeliveryAddress(CompanyGroup.Dto.ServiceRequest.UpdateDeliveryAddress request)
         {
-            return service.UpdateDeliveryAddress(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response =  service.UpdateDeliveryAddress(request);
+                
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -163,9 +257,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("GetBankAccounts")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.BankAccounts GetBankAccounts(CompanyGroup.Dto.ServiceRequest.GetBankAccounts request)
+        public HttpResponseMessage GetBankAccounts(CompanyGroup.Dto.ServiceRequest.GetBankAccounts request)
         {
-            return service.GetBankAccounts(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = service.GetBankAccounts(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.BankAccounts>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -174,9 +277,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("AddBankAccount")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.BankAccounts AddBankAccount(CompanyGroup.Dto.ServiceRequest.AddBankAccount request)
+        public HttpResponseMessage AddBankAccount(CompanyGroup.Dto.ServiceRequest.AddBankAccount request)
         {
-            return service.AddBankAccount(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = service.AddBankAccount(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.BankAccounts>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -186,9 +298,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("UpdateBankAccount")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.BankAccounts UpdateBankAccount(CompanyGroup.Dto.ServiceRequest.UpdateBankAccount request)
+        public HttpResponseMessage UpdateBankAccount(CompanyGroup.Dto.ServiceRequest.UpdateBankAccount request)
         {
-            return service.UpdateBankAccount(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = service.UpdateBankAccount(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.BankAccounts>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -198,9 +319,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("RemoveBankAccount")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.BankAccounts RemoveBankAccount(CompanyGroup.Dto.ServiceRequest.RemoveBankAccount request)
+        public HttpResponseMessage RemoveBankAccount(CompanyGroup.Dto.ServiceRequest.RemoveBankAccount request)
         {
-            return service.RemoveBankAccount(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = service.RemoveBankAccount(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.BankAccounts>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -221,9 +351,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetContactPersons")]
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.ContactPersons GetContactPersons(CompanyGroup.Dto.ServiceRequest.GetContactPerson request)
+        public HttpResponseMessage GetContactPersons(CompanyGroup.Dto.ServiceRequest.GetContactPerson request)
         {
-            return service.GetContactPersons(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = service.GetContactPersons(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.ContactPersons>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -233,9 +372,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("UpdateContactPerson")]
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.ContactPersons UpdateContactPerson(CompanyGroup.Dto.ServiceRequest.UpdateContactPerson request)
+        public HttpResponseMessage UpdateContactPerson(CompanyGroup.Dto.ServiceRequest.UpdateContactPerson request)
         {
-            return service.UpdateContactPerson(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = service.UpdateContactPerson(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.ContactPersons>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -245,9 +393,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("RemoveContactPerson")]
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.ContactPersons RemoveContactPerson(CompanyGroup.Dto.ServiceRequest.RemoveContactPerson request)
+        public HttpResponseMessage RemoveContactPerson(CompanyGroup.Dto.ServiceRequest.RemoveContactPerson request)
         {
-            return service.RemoveContactPerson(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = service.RemoveContactPerson(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.ContactPersons>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
     }
 }

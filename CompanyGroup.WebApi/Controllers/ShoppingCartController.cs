@@ -7,7 +7,10 @@ using System.Web.Http;
 
 namespace CompanyGroup.WebApi.Controllers
 {
-    public class ShoppingCartController : ApiController
+    /// <summary>
+    /// kosár műveletek
+    /// </summary>
+    public class ShoppingCartController : ApiBaseController
     {
         private CompanyGroup.ApplicationServices.WebshopModule.IShoppingCartService service;
 
@@ -27,9 +30,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>CompanyGroup.Dto.ServiceResponse
         [ActionName("AssociateCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AssociateCart(CompanyGroup.Dto.WebshopModule.AssociateCartRequest request)
+        public HttpResponseMessage AssociateCart(CompanyGroup.Dto.WebshopModule.AssociateCartRequest request)
         {
-            return service.AssociateCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.AssociateCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -38,9 +50,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         [ActionName("AddCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AddCart(CompanyGroup.Dto.WebshopModule.AddCartRequest request)
+        public HttpResponseMessage AddCart(CompanyGroup.Dto.WebshopModule.AddCartRequest request)
         {
-            return service.AddCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.AddCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -50,9 +71,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("SaveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.WebshopModule.SaveCartRequest request)
+        public HttpResponseMessage SaveCart(CompanyGroup.Dto.WebshopModule.SaveCartRequest request)
         {
-            return service.SaveCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.SaveCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -61,9 +91,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="cartId"></param>
         [ActionName("RemoveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.WebshopModule.RemoveCartRequest request)
+        public HttpResponseMessage RemoveCart(CompanyGroup.Dto.WebshopModule.RemoveCartRequest request)
         {
-            return service.RemoveCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.RemoveCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -73,9 +112,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="active"></param>
         [ActionName("ActivateCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.WebshopModule.ActivateCartRequest request)
+        public HttpResponseMessage ActivateCart(CompanyGroup.Dto.WebshopModule.ActivateCartRequest request)
         {
-            return service.ActivateCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.ActivateCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -85,9 +133,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("AddLine")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.WebshopModule.AddLineRequest request)
+        public HttpResponseMessage AddLine(CompanyGroup.Dto.WebshopModule.AddLineRequest request)
         {
-            return service.AddLine(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = service.AddLine(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -96,9 +153,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("RemoveLine")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.WebshopModule.RemoveLineRequest request)
+        public HttpResponseMessage RemoveLine(CompanyGroup.Dto.WebshopModule.RemoveLineRequest request)
         {
-            return service.RemoveLine(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = service.RemoveLine(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -107,14 +173,34 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("UpdateLineQuantity")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request)
+        public HttpResponseMessage UpdateLineQuantity(CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request)
         {
-            return service.UpdateLineQuantity(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = service.UpdateLineQuantity(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request)
+        [ActionName("GetShoppingCartInfo")]
+        [HttpPost]
+        public HttpResponseMessage GetShoppingCartInfo(CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request)
         {
-            return service.GetShoppingCartInfo(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.GetShoppingCartInfo(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -124,9 +210,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetStoredOpenedShoppingCartCollectionByVisitor")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
+        public HttpResponseMessage GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
         {
-            return service.GetStoredOpenedShoppingCartCollectionByVisitor(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection response = service.GetStoredOpenedShoppingCartCollectionByVisitor(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -136,9 +231,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCartCollectionByVisitor")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
+        public HttpResponseMessage GetCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
         {
-            return service.GetCartCollectionByVisitor(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartCollection response = service.GetCartCollectionByVisitor(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartCollection>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -148,9 +252,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCartByKey")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request)
+        public HttpResponseMessage GetCartByKey(CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request)
         {
-            return service.GetCartByKey(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCart response = service.GetCartByKey(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCart>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -160,9 +273,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetActiveCart")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request)
+        public HttpResponseMessage GetActiveCart(CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request)
         {
-            return service.GetActiveCart(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.GetActiveCart(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>
@@ -184,9 +306,18 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("CreateOrder")]
         [HttpPost]
-        public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request)
+        public HttpResponseMessage CreateOrder(CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request)
         {
-            return service.CreateOrder(request);
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.OrderFulFillment response = service.CreateOrder(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.OrderFulFillment>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
     }

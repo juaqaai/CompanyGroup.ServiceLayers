@@ -111,8 +111,12 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ExtractInterface.config" />
-    <None Include="WebInterface.config" />
+    <None Include="ExtractInterface.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="WebInterface.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
