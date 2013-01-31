@@ -41,7 +41,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             CompanyGroup.Helpers.DesignByContract.Require((!String.IsNullOrEmpty(request.UserName)), "The username cannot be null or empty!");
 
             //bejelentkezés 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = customerRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
 
             CompanyGroup.Helpers.DesignByContract.Ensure(visitor != null, "Visitor can not be null!");
 

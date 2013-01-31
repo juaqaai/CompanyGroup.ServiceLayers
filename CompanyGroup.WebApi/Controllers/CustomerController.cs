@@ -58,7 +58,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [ActionName("GetCustomerRegistration")]
-        [HttpGet]
+        [HttpGet, HttpPost]
         public HttpResponseMessage GetCustomerRegistration(string visitorId, string dataAreaId)
         {
             if(String.IsNullOrEmpty(visitorId))

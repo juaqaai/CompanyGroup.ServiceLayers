@@ -90,6 +90,7 @@ namespace CompanyGroup.Data.PartnerModule
             {
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetStatus").SetString("VisitorId", visitorId).SetEnum("Status", LoginStatus.Passive);
 
+                query.UniqueResult();
             }
             catch (Exception ex)
             {
@@ -109,6 +110,7 @@ namespace CompanyGroup.Data.PartnerModule
             {
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetString("LanguageId", language);
 
+                query.UniqueResult();
             }
             catch (Exception ex)
             {
@@ -127,6 +129,8 @@ namespace CompanyGroup.Data.PartnerModule
             try
             {
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetString("Currency", currency);
+
+                query.UniqueResult();
             }
             catch (Exception ex)
             {

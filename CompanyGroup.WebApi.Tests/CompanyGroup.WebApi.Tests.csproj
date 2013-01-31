@@ -149,6 +149,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\ContactPersonControllerTest.cs" />
+    <Compile Include="Controllers\ShoppingCartControllerTest.cs" />
+    <Compile Include="Controllers\StructureControllerTest.cs" />
+    <Compile Include="Controllers\SalesOrderControllerTest.cs" />
+    <Compile Include="Controllers\ProductControllerTest.cs" />
+    <Compile Include="Controllers\PictureControllerTest.cs" />
+    <Compile Include="Controllers\InvoiceControllerTest.cs" />
     <Compile Include="Controllers\CustomerControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\NewsletterControllerTest.cs" />

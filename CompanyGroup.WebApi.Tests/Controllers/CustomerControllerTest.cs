@@ -11,29 +11,54 @@ using CompanyGroup.WebApi.Controllers;
 namespace CompanyGroup.WebApi.Tests.Controllers
 {
     [TestClass]
-    public class CustomerControllerTest
+    public class CustomerControllerTest : ControllerBase
     {
-        private CompanyGroup.ApplicationServices.PartnerModule.ICustomerService CreateService()
+
+        [TestMethod]
+        public void GetAddressZipCodesTest()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request = new Dto.PartnerModule.AddressZipCodeRequest() { DataAreaId = "hrp", Prefix = "11" };
 
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Customer/GetAddressZipCodes", request).Result;
 
-            return new CompanyGroup.ApplicationServices.PartnerModule.CustomerService(customerRepository, visitorRepository);
+            CompanyGroup.Dto.PartnerModule.AddressZipCodes addressZipCodes = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.AddressZipCodes>().Result;
+
+            Assert.IsNotNull(addressZipCodes);
         }
 
         [TestMethod]
-        public void SignIn()
+        public void GetCustomerRegistrationTest()
         {
-            CompanyGroup.ApplicationServices.PartnerModule.ICustomerService service = CreateService();
+            string visitorId = "";
 
-            CustomerController controller = new CustomerController(service);
+            HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Customer/GetCustomerRegistration/{0}/hrp", visitorId)).Result;
 
-            CompanyGroup.Dto.PartnerModule.SignInRequest request = new CompanyGroup.Dto.PartnerModule.SignInRequest("bsc", "elektroplaza", "58915891", "127.0.0.1");
-            
-            //CompanyGroup.Dto.PartnerModule.Visitor result = controller.SignIn(request);
+            string registrationId = String.Empty;
 
-            //Assert.IsNotNull(result);
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.RegistrationModule.Registration registration = response.Content.ReadAsAsync<CompanyGroup.Dto.RegistrationModule.Registration>().Result;
+
+                registrationId = registration.RegistrationId;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+
+            Assert.IsTrue(!String.IsNullOrEmpty(registrationId));
+        }
+
+        [TestMethod]
+        public void GetDeliveryAddressesTest()
+        {
+            CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request = new Dto.PartnerModule.GetDeliveryAddressesRequest("hrp", "visitorId");
+
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Customer/GetDeliveryAddresses", request).Result;
+
+            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.DeliveryAddresses>().Result;
+
+            Assert.IsNotNull(deliveryAddresses);
         }
 
     }
