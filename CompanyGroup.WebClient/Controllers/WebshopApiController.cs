@@ -25,10 +25,10 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest allStructure = new CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest()
+            CompanyGroup.Dto.WebshopModule.GetAllStructureRequest allStructure = new CompanyGroup.Dto.WebshopModule.GetAllStructureRequest()
             {
-                ActionFilter = false,
-                BargainFilter = false,
+                DiscountFilter = false,
+                SecondhandFilter = false,
                 Category1IdList = new List<string>(),
                 Category2IdList = new List<string>(),
                 Category3IdList = new List<string>(),
@@ -43,10 +43,10 @@ namespace CompanyGroup.WebClient.Controllers
                 PriceFilterRelation = "0"
             };
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetAll", allStructure);
+            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetAll", allStructure);
 
             //katalógus lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetAllProductRequest allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
+            CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
             {
                 ActionFilter = false,
                 BargainFilter = false,
@@ -69,10 +69,10 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitor.Id
             };
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
+            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
 
             //banner lista lekérdezése
-            CompanyGroup.Dto.ServiceRequest.GetBannerListRequest bannerListRequest = new CompanyGroup.Dto.ServiceRequest.GetBannerListRequest()
+            CompanyGroup.Dto.WebshopModule.GetBannerListRequest bannerListRequest = new CompanyGroup.Dto.WebshopModule.GetBannerListRequest()
             {
                 BscFilter = true,
                 HrpFilter = true,
@@ -83,7 +83,7 @@ namespace CompanyGroup.WebClient.Controllers
                 VisitorId = visitor.Id
             };
 
-            CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBannerListRequest, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
+            CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetBannerListRequest, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
 
             //kosár lekérdezések     
             bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
@@ -94,9 +94,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
-                CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest shoppingCartInfoRequest = new CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest(visitorData.CartId, visitor.Id);
+                CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest shoppingCartInfoRequest = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest(visitorData.CartId, visitor.Id);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
 
                 cartInfo.ActiveCart = (shoppingCartInfo != null) ? shoppingCartInfo.ActiveCart : cartInfo.ActiveCart;
                 cartInfo.OpenedItems = (shoppingCartInfo != null) ? shoppingCartInfo.OpenedItems : cartInfo.OpenedItems;
@@ -108,9 +108,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin)
             {
-                CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest getDeliveryAddresses = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitor.Id };
+                CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest getDeliveryAddresses = new CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitor.Id };
 
-                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
+                deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", getDeliveryAddresses);
             }
             else
             {
@@ -137,7 +137,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns>terméklista objektum és a látogató objektum JSON formátumban</returns>
         [HttpPost]
         [ActionName("GetProducts")]
-        public CompanyGroup.WebClient.Models.ProductCatalogue GetProducts(CompanyGroup.Dto.ServiceRequest.GetAllProductRequest request) 
+        public CompanyGroup.WebClient.Models.ProductCatalogue GetProducts(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request) 
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -145,9 +145,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             request.VisitorId = visitor.Id;   
 
-            request.Currency = visitorData.Currency;    
+            request.Currency = visitorData.Currency;
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", request);
+            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", request);
 
             return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor);
         }
@@ -175,7 +175,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest request = new CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest()
+            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest()
             {
                 ProductId = productId,
                 DataAreaId = ApiBaseController.DataAreaId,
@@ -183,9 +183,9 @@ namespace CompanyGroup.WebClient.Controllers
                 Currency = visitorData.Currency
             };
 
-            CompanyGroup.Dto.WebshopModule.Product product = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.Product>("Product", "GetItemByProductId", request);
+            CompanyGroup.Dto.WebshopModule.Product product = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.Product>("Product", "GetItemByProductId", request);
 
-            CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.CompatibleProducts>("Product", "GetCompatibleProducts", request);
+            CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.CompatibleProducts>("Product", "GetCompatibleProducts", request);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -245,12 +245,12 @@ namespace CompanyGroup.WebClient.Controllers
                 //előző belépés azonosítójának mentése
                 string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.ServiceRequest.SignInRequest singnInRequest = new CompanyGroup.Dto.ServiceRequest.SignInRequest(ApiBaseController.DataAreaId,
+                CompanyGroup.Dto.PartnerModule.SignInRequest singnInRequest = new CompanyGroup.Dto.PartnerModule.SignInRequest(ApiBaseController.DataAreaId,
                                                                                                         request.UserName,
                                                                                                         request.Password,
                                                                                                         System.Web.HttpContext.Current.Request.UserHostAddress);
 
-                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
+                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
 
@@ -295,9 +295,9 @@ namespace CompanyGroup.WebClient.Controllers
                     CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
 
                     //kosár társítása
-                    CompanyGroup.Dto.ServiceRequest.AssociateCart associateRequest = new CompanyGroup.Dto.ServiceRequest.AssociateCart(visitor.Id, permanentObjectId) { Language = visitorData.Language };
+                    CompanyGroup.Dto.WebshopModule.AssociateCartRequest associateRequest = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest(visitor.Id, permanentObjectId) { Language = visitorData.Language };
 
-                    CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AssociateCart, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
+                    CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AssociateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
 
                     //aktív kosár beállítás
                     cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo()
@@ -310,9 +310,9 @@ namespace CompanyGroup.WebClient.Controllers
                     };
 
                     //szállítási címek lekérdezése
-                    CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest deliveryAddressRequest = new CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest(WebshopApiController.DataAreaId, visitor.Id);
+                    CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest deliveryAddressRequest = new CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest(WebshopApiController.DataAreaId, visitor.Id);
 
-                    deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressRequest);
+                    deliveryAddresses = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest, CompanyGroup.Dto.PartnerModule.DeliveryAddresses>("Customer", "GetDeliveryAddresses", deliveryAddressRequest);
 
                     //visitor adatok http sütibe írása     
                     this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
@@ -320,7 +320,7 @@ namespace CompanyGroup.WebClient.Controllers
                     visitor.ErrorMessage = String.Empty;
 
                     //katalógus lekérdezése
-                    CompanyGroup.Dto.ServiceRequest.GetAllProductRequest allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
+                    CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
                     {
                         ActionFilter = false,
                         BargainFilter = false,
@@ -343,7 +343,7 @@ namespace CompanyGroup.WebClient.Controllers
                         VisitorId = visitor.Id
                     };
 
-                    products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
+                    products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
 
                     httpStatusCode = HttpStatusCode.Created;
                 }
@@ -387,15 +387,15 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("SignOut")]
-        public HttpResponseMessage SignOut(CompanyGroup.Dto.ServiceRequest.SignOut request)
+        public HttpResponseMessage SignOut(CompanyGroup.Dto.PartnerModule.SignOutRequest request)
         {
             try
             {
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                CompanyGroup.Dto.ServiceRequest.SignOut req = new CompanyGroup.Dto.ServiceRequest.SignOut() { DataAreaId = ApiBaseController.DataAreaId, ObjectId = visitorData.VisitorId };
+                CompanyGroup.Dto.PartnerModule.SignOutRequest req = new CompanyGroup.Dto.PartnerModule.SignOutRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitorData.VisitorId };
 
-                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.SignOut, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
+                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
 
                 visitorData.VisitorId = String.Empty;
 
@@ -404,7 +404,7 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
 
                 //katalógus lekérdezése
-                CompanyGroup.Dto.ServiceRequest.GetAllProductRequest allProduct = new CompanyGroup.Dto.ServiceRequest.GetAllProductRequest()
+                CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
                 {
                     ActionFilter = false,
                     BargainFilter = false,
@@ -427,7 +427,7 @@ namespace CompanyGroup.WebClient.Controllers
                     VisitorId = visitor.Id
                 };
 
-                CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
+                CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
                 //CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
 
                 CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,

@@ -29,14 +29,14 @@ namespace CompanyGroup.WebClient.Controllers
 
             try
             {
-                CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest req = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest()
+                CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest()
                 {
                     LanguageId = visitorData.Language,
                     VisitorId = visitorData.VisitorId,
                     PaymentType = id
                 };
 
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetList", req);
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetList", req);
 
                 List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
 

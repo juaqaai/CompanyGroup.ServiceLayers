@@ -37,14 +37,14 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest request = new CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest()
+            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest()
             {
                 LanguageId = visitorData.Language,
                 VisitorId = visitorData.VisitorId,
                 PaymentType = 1
             };
 
-            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
+            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
 
             List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
 
@@ -67,13 +67,13 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest request = new CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest()
+            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest()
             {
                 LanguageId = visitorData.Language,
                 VisitorId = visitorData.VisitorId,
             };
 
-            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
+            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
 
             List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
 
@@ -113,9 +113,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (String.IsNullOrEmpty(undoChangePassword))
             {
-                CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+                CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request = new CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest(undoChangePassword);
 
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
+                response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
             }
             else
             {

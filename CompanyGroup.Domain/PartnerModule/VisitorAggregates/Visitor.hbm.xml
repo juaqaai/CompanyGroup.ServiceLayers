@@ -53,7 +53,7 @@
     exec InternetUser.SignIn @UserName=:UserName, @Password=:Password, @DataAreaId=:DataAreaId
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
-    <query-param name="VisitorId" type="System.Guid"/>
+    <query-param name="VisitorId" type="System.String"/>
     <return alias="V" class="Visitor"></return>
     <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
@@ -111,16 +111,16 @@
                                     @ExpireDate=:ExpireDate
   </sql-query>
   <sql-query name="InternetUser.VisitorDisableStatus" callable="true">
-    <query-param name="VisitorId" type="System.Guid"/>
+    <query-param name="VisitorId" type="System.String"/>
     exec InternetUser.VisitorDisableStatus @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorChangeLanguage" callable="true">
-    <query-param name="VisitorId" type="System.Guid"/>
+    <query-param name="VisitorId" type="System.String"/>
     <query-param name="Language" type="System.String"/>    
     exec InternetUser.VisitorChangeLanguage @VisitorId=:VisitorId, @Language=:Language
   </sql-query>
   <sql-query name="InternetUser.VisitorChangeCurrency" callable="true">
-    <query-param name="VisitorId" type="System.Guid"/>
+    <query-param name="VisitorId" type="System.String"/>
     <query-param name="Currency" type="System.String"/>
     InternetUser.VisitorChangeCurrency @VisitorId=:VisitorId, @Currency=:Currency
   </sql-query>

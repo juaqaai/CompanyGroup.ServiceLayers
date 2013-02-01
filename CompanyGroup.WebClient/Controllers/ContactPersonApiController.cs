@@ -22,7 +22,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.ChangePassword req = new CompanyGroup.Dto.ServiceRequest.ChangePassword()
+            CompanyGroup.Dto.PartnerModule.ChangePasswordRequest req = new CompanyGroup.Dto.PartnerModule.ChangePasswordRequest()
             {
                 VisitorId = visitorData.VisitorId,
                 Language = visitorData.Language,
@@ -31,7 +31,7 @@ namespace CompanyGroup.WebClient.Controllers
                 UserName = request.UserName
             };
 
-            CompanyGroup.Dto.PartnerModule.ChangePassword response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ChangePassword, CompanyGroup.Dto.PartnerModule.ChangePassword>("ContactPerson", "ChangePassword", req);
+            CompanyGroup.Dto.PartnerModule.ChangePassword response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ChangePasswordRequest, CompanyGroup.Dto.PartnerModule.ChangePassword>("ContactPerson", "ChangePassword", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -53,13 +53,13 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest req = new CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest()
+            CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest req = new CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest()
             {
                 Language = visitorData.Language,
                 UserName = request.UserName
             };
 
-            CompanyGroup.Dto.PartnerModule.ForgetPassword response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.ForgetPasswordRequest, CompanyGroup.Dto.PartnerModule.ForgetPassword>("ContactPerson", "ForgetPassword", req);
+            CompanyGroup.Dto.PartnerModule.ForgetPassword response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest, CompanyGroup.Dto.PartnerModule.ForgetPassword>("ContactPerson", "ForgetPassword", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
@@ -89,9 +89,9 @@ namespace CompanyGroup.WebClient.Controllers
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
 
-            CompanyGroup.Dto.ServiceRequest.UndoChangePassword request = new CompanyGroup.Dto.ServiceRequest.UndoChangePassword(undoChangePassword);
+            CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest request = new CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest(undoChangePassword);
 
-            response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UndoChangePassword, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
+            response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.UndoChangePasswordRequest, CompanyGroup.Dto.PartnerModule.UndoChangePassword>("ContactPerson", "UndoChangePassword", request);
 
 //          response = new CompanyGroup.Dto.PartnerModule.UndoChangePassword() { Succeeded = false, Message = "A jelszómódosítás visszavonásához tartozó azonosító nem lett megadva!" };
 

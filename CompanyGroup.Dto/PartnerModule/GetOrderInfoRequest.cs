@@ -8,6 +8,8 @@ namespace CompanyGroup.Dto.PartnerModule
     /// </summary>
     public class GetOrderInfoRequest
     {
+        public GetOrderInfoRequest() : this("", "") {}
+
         public GetOrderInfoRequest(string visitorId, string languageId)
         {
             this.VisitorId = visitorId;

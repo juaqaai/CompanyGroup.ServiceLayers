@@ -26,14 +26,14 @@ namespace CompanyGroup.Data.PartnerModule
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(visitorId), "The visitorId parameter cannot be null!");
 
-                Guid guid;
+                //Guid guid;
 
-                if (!Guid.TryParse(visitorId, out guid))
-                {
-                    return new CompanyGroup.Domain.PartnerModule.Visitor();
-                }
+                //if (!Guid.TryParse(visitorId, out guid))
+                //{
+                //    return new CompanyGroup.Domain.PartnerModule.Visitor();
+                //}
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetGuid("VisitorId", guid);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetString("VisitorId", visitorId);
 
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
 
@@ -123,14 +123,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                Guid guid;
-
-                if (!Guid.TryParse(visitorId, out guid))
-                {
-                    return;
-                }
-
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorDisableStatus").SetGuid("VisitorId", guid);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorDisableStatus").SetString("VisitorId", visitorId);
 
                 query.UniqueResult();
             }
@@ -150,14 +143,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                Guid guid;
-
-                if (!Guid.TryParse(visitorId, out guid))
-                {
-                    return;
-                }
-
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetGuid("LanguageId", guid);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetString("LanguageId", language);
 
                 query.UniqueResult();
             }
@@ -177,14 +163,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                Guid guid;
-
-                if (!Guid.TryParse(visitorId, out guid))
-                {
-                    return;
-                }
-
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetGuid("Currency", guid);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetString("Currency", currency);
 
                 query.UniqueResult();
             }

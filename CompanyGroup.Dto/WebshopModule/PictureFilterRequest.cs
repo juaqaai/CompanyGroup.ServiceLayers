@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CompanyGroup.Dto.PartnerModel
+namespace CompanyGroup.Dto.WebshopModule
 {
     /// <summary>
     /// képlista lekérdezés paramétereit összefogó adattípus
@@ -13,6 +13,8 @@ namespace CompanyGroup.Dto.PartnerModel
 
             this.ProductId = productId;
         }
+
+        public PictureFilterRequest() : this("", "") { }
 
         public string DataAreaId { get; set; }
 

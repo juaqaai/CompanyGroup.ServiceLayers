@@ -89,13 +89,13 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("GetListByProduct")]
-        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.ServiceRequest.PictureFilterRequest request)
+        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request)
         {
             //request.DataAreaId = CatalogueController.DataAreaId;
 
             request.ProductId = System.Web.HttpUtility.UrlDecode(request.ProductId);
 
-            CompanyGroup.Dto.WebshopModule.Pictures pictures = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PictureFilterRequest, CompanyGroup.Dto.WebshopModule.Pictures>("Picture", "GetListByProduct", request);
+            CompanyGroup.Dto.WebshopModule.Pictures pictures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.PictureFilterRequest, CompanyGroup.Dto.WebshopModule.Pictures>("Picture", "GetListByProduct", request);
 
             return pictures;
         }

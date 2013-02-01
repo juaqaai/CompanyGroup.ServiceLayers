@@ -14,6 +14,8 @@ namespace CompanyGroup.Dto.PartnerModule
             this.VisitorId = visitorId;
         }
 
+        public SignOutRequest() : this("", "") { }
+
         public string DataAreaId { get; set; }
 
         public string VisitorId { get; set; }

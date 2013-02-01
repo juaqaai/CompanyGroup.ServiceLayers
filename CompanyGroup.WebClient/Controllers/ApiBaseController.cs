@@ -176,9 +176,9 @@ namespace CompanyGroup.WebClient.Controllers
                     return new CompanyGroup.WebClient.Models.Visitor();
                 }
 
-                CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest request = new CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = ApiBaseController.DataAreaId };
+                CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request = new CompanyGroup.Dto.PartnerModule.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = ApiBaseController.DataAreaId };
 
-                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
+                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
 
