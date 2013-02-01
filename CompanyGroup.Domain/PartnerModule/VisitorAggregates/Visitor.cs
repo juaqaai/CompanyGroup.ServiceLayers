@@ -94,7 +94,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// Visitor bejegyzés érvényességének időpontja
         /// </summary>
-        public DateTime ExpiredDate { set; get; }
+        public DateTime ExpireDate { set; get; }
 
         public LoginStatus Status { set; get; }
 
@@ -143,7 +143,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         public bool IsValidLogin
         {
-            get { return (DateTime.Now.CompareTo(this.ExpiredDate) < 1) && (this.LoggedIn) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); }
+            get { return (DateTime.Now.CompareTo(this.ExpireDate) < 1) && (this.LoggedIn) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); }
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
             bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
 
-            this.LoggedIn = DateTime.Now.CompareTo(this.ExpiredDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
+            this.LoggedIn = DateTime.Now.CompareTo(this.ExpireDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
         }
 
         /// <summary>

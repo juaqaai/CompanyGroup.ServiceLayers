@@ -8,7 +8,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 DROP PROCEDURE [InternetUser].[VisitorDisableStatus];
 GO
-CREATE PROCEDURE [InternetUser].[VisitorDisableStatus](@VisitorId	NVARCHAR(64) = '')
+CREATE PROCEDURE [InternetUser].[VisitorDisableStatus](@VisitorId UNIQUEIDENTIFIER)
 AS
 SET NOCOUNT ON
 
@@ -23,7 +23,7 @@ GO
 GO
 DROP PROCEDURE [InternetUser].[VisitorChangeLanguage];
 GO
-CREATE PROCEDURE [InternetUser].[VisitorChangeLanguage](@VisitorId	NVARCHAR(64) = '', @Language NVARCHAR(10))
+CREATE PROCEDURE [InternetUser].[VisitorChangeLanguage](@VisitorId	UNIQUEIDENTIFIER, @Language NVARCHAR(10))
 AS
 SET NOCOUNT ON
 
@@ -38,7 +38,7 @@ GO
 GO
 DROP PROCEDURE [InternetUser].[VisitorChangeCurrency];
 GO
-CREATE PROCEDURE [InternetUser].[VisitorChangeCurrency](@VisitorId	NVARCHAR(64) = '', @Currency NVARCHAR(10))
+CREATE PROCEDURE [InternetUser].[VisitorChangeCurrency](@VisitorId	UNIQUEIDENTIFIER, @Currency NVARCHAR(10))
 AS
 SET NOCOUNT ON
 

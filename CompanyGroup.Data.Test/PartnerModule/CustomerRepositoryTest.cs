@@ -88,13 +88,22 @@ namespace CompanyGroup.Data.Test.PartnerModule
 
         //    Assert.IsNotNull(loginInfo);
         //}
+        [TestMethod]
+        public void SignIn()
+        {
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.SignIn("elektroplaza", "58915891", "hrp");
+
+            Assert.IsNotNull(visitor);
+        }
 
         [TestMethod]
         public void GetCustomerPriceGroups()
         {
             CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
 
-            List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = repository.GetCustomerPriceGroups("hrp", "V006199");
+            List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = repository.GetCustomerPriceGroups("V006199");
 
             Assert.IsNotNull(customerPriceGroups);
         }

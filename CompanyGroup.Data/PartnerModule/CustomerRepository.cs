@@ -172,45 +172,21 @@ namespace CompanyGroup.Data.PartnerModule
         //}
 
         /// <summary>
-        /// InternetUser.CustomerPrices( @DataAreaId VARCHAR(3) = '', @CustomerId NVARCHAR(10) = '' )
+        /// 
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string dataAreaId, string customerId)
+        public List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string customerId)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "CustomerId may not be null or empty");
 
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
-
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CustomerPriceGroups")
-                                            .SetString("CustomerId", customerId)
-                                            .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupSelect")
+                                            .SetString("CustomerId", customerId);   //.SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
 
             List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = query.List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>() as List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>;
 
             return customerPriceGroups;
-        }
-
-        /// <summary>
-        /// vevő árcsoport hozzáadás
-        /// </summary>
-        /// <param name="visitorId"></param>
-        /// <param name="manufacturerId"></param>
-        /// <param name="category1Id"></param>
-        /// <param name="category2Id"></param>
-        /// <param name="category3Id"></param>
-        /// <param name="order"></param>
-        public void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup)
-        {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupInsert")
-                                                            .SetInt32("VisitorId", customerPriceGroup.VisitorId)
-                                                            .SetString("ManufacturerId", customerPriceGroup.ManufacturerId)
-                                                            .SetString("Category1Id", customerPriceGroup.Category1Id)
-                                                            .SetString("Category2Id", customerPriceGroup.Category2Id)
-                                                            .SetString("Category3Id", customerPriceGroup.Category3Id)
-                                                            .SetInt32("Order", customerPriceGroup.Order);
-            query.UniqueResult();
         }
 
         /// <summary>

@@ -67,16 +67,21 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             visitor.Representative.SetDefault();
 
             //bejelentkezett visitor-t tárolni kell
-            visitor.Id = visitorRepository.Add(visitor);
+            visitorRepository.Add(visitor);
 
             //visitor.Id nem lehet nulla
             CompanyGroup.Helpers.DesignByContract.Ensure(!visitor.IsTransient(), "Visitor can not be transient!");
 
             //le kell kérdezni a vevőhöz tartozó árbesorolás kivételeket
-            visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(request.DataAreaId, visitor.CustomerId);
+            visitor.CustomerPriceGroups = customerRepository.GetCustomerPriceGroups(visitor.CustomerId);
 
             //árcsoportok tárolása 
-            visitor.CustomerPriceGroups.ToList().ForEach(x => { customerRepository.AddCustomerPriceGroup(x); });
+            visitor.CustomerPriceGroups.ToList().ForEach(x => 
+            {
+                x.VisitorId = visitor.Id;
+
+                visitorRepository.AddCustomerPriceGroup(x); 
+            });
 
             //visitor objektum cache-ben tárolása
             CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, visitor.VisitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
@@ -95,6 +100,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
             visitorRepository.DisableStatus(request.VisitorId);
+
+            CompanyGroup.Helpers.CacheHelper.Clear(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, request.VisitorId));
         }
 
         /// <summary>

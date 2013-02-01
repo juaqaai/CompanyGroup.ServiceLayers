@@ -107,7 +107,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetVisitorInfoTest()
         {
-            VisitorInfoRequest request = new VisitorInfoRequest();
+            VisitorInfoRequest request = new VisitorInfoRequest("9D10677B-4409-4E4C-80A7-EDDB20D04E5B", "hrp");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/GetVisitorInfo", request).Result;
 
@@ -139,7 +139,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void SignOutTest()
         {
-            SignOutRequest request = new SignOutRequest("hrp", "127.0.0.1");
+            SignOutRequest request = new SignOutRequest("hrp", "EE01730E-4F1A-4215-A2AB-317F5D3F0033");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/SignOut", request).Result;
 

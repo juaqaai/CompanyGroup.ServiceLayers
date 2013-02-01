@@ -62,21 +62,9 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// vevők árcsoportjainak lekérdezése 
         /// </summary>
-        /// <param name="dataAreaId"></param>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string dataAreaId, string customerId);
-
-        /// <summary>
-        /// vevő árcsoport hozzáadás
-        /// </summary>
-        /// <param name="visitorId"></param>
-        /// <param name="manufacturerId"></param>
-        /// <param name="category1Id"></param>
-        /// <param name="category2Id"></param>
-        /// <param name="category3Id"></param>
-        /// <param name="order"></param>
-        void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup);
+        List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string customerId);
 
         /// <summary>
         /// vevői bejelentkezés

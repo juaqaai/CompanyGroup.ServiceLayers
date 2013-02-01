@@ -10,7 +10,7 @@
     <property name="Category1Id" />
     <property name="Category2Id" />
     <property name="Category3Id" />
-    <property name="Order" />
+    <property name="Order" />    
   </class>
   <sql-query name="InternetUser.CustomerPriceGroupSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
@@ -19,11 +19,12 @@
   </sql-query>
   <sql-query name="InternetUser.CustomerPriceGroupInsert" callable="true">
     <query-param name="VisitorId" type="System.Int32"/>
+    <query-param name="PriceGroupId" type="System.String"/>
     <query-param name="ManufacturerId" type="System.String"/>
     <query-param name="Category1Id" type="System.String"/>
     <query-param name="Category2Id" type="System.String"/>
     <query-param name="Category3Id" type="System.String"/>
     <query-param name="Order" type="System.Int32"/>
-    exec InternetUser.CustomerPriceGroupInsert @VisitorId=:VisitorId,  @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
+    exec InternetUser.CustomerPriceGroupInsert @VisitorId=:VisitorId, @PriceGroupId=:PriceGroupId, @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
   </sql-query>  
 </hibernate-mapping>

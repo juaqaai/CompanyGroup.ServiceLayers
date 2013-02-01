@@ -108,7 +108,7 @@ GO
 CREATE TABLE InternetUser.Visitor
 (
 	Id							INT IDENTITY PRIMARY KEY,					-- egyedi GUID azonosito
-	VisitorId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(), 
+	VisitorId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID() ROWGUIDCOL, 
 	LoginIP						NVARCHAR (32) NOT NULL DEFAULT '' ,				-- ip cim
 	RecId						BIGINT NOT NULL DEFAULT 0 ,						-- WebShopUserInfo.RecId bigint mezo (idegen kulcs)
 	CustomerId					NVARCHAR(20) NOT NULL DEFAULT '', 

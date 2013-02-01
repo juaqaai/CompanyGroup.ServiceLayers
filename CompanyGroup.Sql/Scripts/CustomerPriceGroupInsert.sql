@@ -8,11 +8,11 @@ GO
 DROP PROCEDURE [InternetUser].[CustomerPriceGroupInsert];
 GO
 CREATE PROCEDURE [InternetUser].[CustomerPriceGroupInsert](@VisitorId INT = 0,
+														   @PriceGroupId NVARCHAR(4) = '',
 														   @ManufacturerId NVARCHAR(4) = '',
 														   @Category1Id NVARCHAR(4) = '',
 														   @Category2Id NVARCHAR(4) = '',
-														   @Category3Id NVARCHAR(4) = '',
-														   @PriceGroupId NVARCHAR(4) = '',							
+														   @Category3Id NVARCHAR(4) = '',							
 														   @Order INT = 0
 														  )			
 AS

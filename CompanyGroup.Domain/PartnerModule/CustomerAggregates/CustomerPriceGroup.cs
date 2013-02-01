@@ -19,6 +19,11 @@ namespace CompanyGroup.Domain.PartnerModule
         public int VisitorId { get; set; }
 
         /// <summary>
+        /// árcsoport azonosító
+        /// </summary>
+        public string PriceGroupId { get; set; }
+
+        /// <summary>
         /// gyártó, jelleg1, jelleg2, jelleg3 kiválasztása
         /// </summary>
         public string ManufacturerId { get; set; }
@@ -39,11 +44,6 @@ namespace CompanyGroup.Domain.PartnerModule
         public string Category3Id { get; set; }
 
         /// <summary>
-        /// árcsoport azonosító
-        /// </summary>
-        public string PriceGroupId { get; set; }
-
-        /// <summary>
         /// sorrendiség beállítás
         /// </summary>
         public int Order { get; set; }
@@ -59,11 +59,13 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category3Id"></param>
         /// <param name="priceGroupId"></param>
         /// <param name="order"></param>
-        public CustomerPriceGroup(int id, int visitorId, string manufacturerId, string category1Id, string category2Id, string category3Id, string priceGroupId, int order)
+        public CustomerPriceGroup(int id, int visitorId, string priceGroupId, string manufacturerId, string category1Id, string category2Id, string category3Id, int order)
         {
             this.Id = id;
 
             this.VisitorId = visitorId;
+
+            this.PriceGroupId = priceGroupId;
 
             this.ManufacturerId = manufacturerId;
 
@@ -72,8 +74,6 @@ namespace CompanyGroup.Domain.PartnerModule
             this.Category2Id = category2Id;
 
             this.Category3Id = category3Id;
-
-            this.PriceGroupId = priceGroupId;
 
             this.Order = order;
         }

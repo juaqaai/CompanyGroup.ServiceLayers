@@ -26,7 +26,14 @@ namespace CompanyGroup.Data.PartnerModule
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetString("VisitorId", visitorId);
+                Guid guid;
+
+                if (!Guid.TryParse(visitorId, out guid))
+                {
+                    return new CompanyGroup.Domain.PartnerModule.Visitor();
+                }
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetGuid("VisitorId", guid);
 
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
 
@@ -42,11 +49,12 @@ namespace CompanyGroup.Data.PartnerModule
         /// új látogató hozzáadása
         /// </summary>
         /// <param name="visitor"></param>
-        public int Add(CompanyGroup.Domain.PartnerModule.Visitor visitor)
+        public void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert").SetString("LoginIP", visitor.LoginIP)
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert")
+                        .SetString("LoginIP", visitor.LoginIP)
                         .SetInt64("RecId", visitor.RecId)
                         .SetString("CustomerId", visitor.CustomerId)
                         .SetString("CustomerName", visitor.CustomerName)
@@ -58,6 +66,7 @@ namespace CompanyGroup.Data.PartnerModule
                         .SetBoolean("PriceListDownloadEnabled", visitor.Permission.PriceListDownloadEnabled)
                         .SetBoolean("CanOrder", visitor.Permission.CanOrder)
                         .SetBoolean("RecieveGoods", visitor.Permission.RecieveGoods)
+                        .SetString("PaymTermId", visitor.PaymTermId)
                         .SetString("Currency", visitor.Currency)
                         .SetString("LanguageId", visitor.LanguageId)
                         .SetString("DefaultPriceGroupId", visitor.DefaultPriceGroupId)
@@ -68,16 +77,42 @@ namespace CompanyGroup.Data.PartnerModule
                         .SetEnum("PartnerModel", visitor.PartnerModel)
                         .SetBoolean("AutoLogin", visitor.AutoLogin)
                         .SetDateTime("LoginDate", visitor.LoginDate)
-                        .SetDateTime("ExpireDate", visitor.ExpiredDate);
+                        .SetDateTime("ExpireDate", visitor.ExpireDate).SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.VisitorInsertResult).GetConstructors()[0]));
 
-                int result = query.UniqueResult<int>();
+                CompanyGroup.Domain.PartnerModule.VisitorInsertResult result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.VisitorInsertResult>();
 
-                return result;
+                visitor.Id = result.Id;
+
+                visitor.VisitorId = result.VisitorId;
+
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
+        }
+
+        /// <summary>
+        /// vevő árcsoport hozzáadás
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="manufacturerId"></param>
+        /// <param name="category1Id"></param>
+        /// <param name="category2Id"></param>
+        /// <param name="category3Id"></param>
+        /// <param name="order"></param>
+        public void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupInsert")
+                                                            .SetInt32("VisitorId", customerPriceGroup.VisitorId)
+                                                            .SetString("PriceGroupId", customerPriceGroup.PriceGroupId)
+                                                            .SetString("ManufacturerId", customerPriceGroup.ManufacturerId)
+                                                            .SetString("Category1Id", customerPriceGroup.Category1Id)
+                                                            .SetString("Category2Id", customerPriceGroup.Category2Id)
+                                                            .SetString("Category3Id", customerPriceGroup.Category3Id)
+                                                            .SetInt32("Order", customerPriceGroup.Order);
+            query.UniqueResult();
         }
 
         /// <summary>
@@ -88,7 +123,14 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetStatus").SetString("VisitorId", visitorId).SetEnum("Status", LoginStatus.Passive);
+                Guid guid;
+
+                if (!Guid.TryParse(visitorId, out guid))
+                {
+                    return;
+                }
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorDisableStatus").SetGuid("VisitorId", guid);
 
                 query.UniqueResult();
             }
@@ -108,7 +150,14 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetString("LanguageId", language);
+                Guid guid;
+
+                if (!Guid.TryParse(visitorId, out guid))
+                {
+                    return;
+                }
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetGuid("LanguageId", guid);
 
                 query.UniqueResult();
             }
@@ -128,7 +177,14 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetString("Currency", currency);
+                Guid guid;
+
+                if (!Guid.TryParse(visitorId, out guid))
+                {
+                    return;
+                }
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetGuid("Currency", guid);
 
                 query.UniqueResult();
             }

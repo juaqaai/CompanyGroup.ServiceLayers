@@ -79,7 +79,7 @@ SET NOCOUNT ON
 									  @PaymTermId, @Currency, @LanguageId, @DefaultPriceGroupId, @InventLocationId, @ReprId, 
 									  @DataAreaId, @LoginType, @PartnerModel, @AutoLogin, @LoginDate, @LogoutDate, @ExpireDate, 1);
 
-	SELECT @VisitorId as VisitorId;
+	SELECT @@Identity as Id, CONVERT(NVARCHAR(100), @VisitorId) as VisitorId;
 
 RETURN
 GO

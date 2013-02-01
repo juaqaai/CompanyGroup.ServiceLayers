@@ -8,5 +8,14 @@ namespace CompanyGroup.Dto.PartnerModule
         public string DataAreaId { get; set; }
 
         public string VisitorId { get; set; }
+
+        public VisitorInfoRequest(string visitorId, string dataAreaId)
+        {
+            this.VisitorId = visitorId;
+
+            this.DataAreaId = dataAreaId;
+        }
+
+        public VisitorInfoRequest() : this("", "") { }
     }
 }

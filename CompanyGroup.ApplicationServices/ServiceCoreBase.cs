@@ -71,6 +71,8 @@ namespace CompanyGroup.ApplicationServices
             {
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(visitorId);
 
+                //TODO: ellenorzes NULL-ra
+
                 visitor.SetLoggedIn();
 
                 //cache-be mentés csak akkor, ha érvényes a login

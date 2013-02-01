@@ -1,4 +1,4 @@
-USE [Web]
+USE [ExtractInterface]
 GO
 
 /****** Object:  StoredProcedure [InternetUser].[CustomerPriceGroups]    Script Date: 2012.10.25. 6:48:26 ******/
@@ -17,8 +17,10 @@ SET NOCOUNT ON
 			Row_Number() Over(order by StructPriceGroup.GyartoId, StructPriceGroup.Jelleg1Id, StructPriceGroup.Jelleg2Id, StructPriceGroup.Jelleg3Id, PriceDiscGroup.Sorrend desc) as Id, 
 		   0 as VisitorId, 
 		   StructPriceGroup.PriceGroupID as PriceGroupId, 
-		   StructPriceGroup.GyartoId as ManufacturerId, StructPriceGroup.Jelleg1Id as Category1Id, 
-		   StructPriceGroup.Jelleg2Id as Category2Id, StructPriceGroup.Jelleg3Id as Category3Id, --TOP 1 PriceGroupID
+		   StructPriceGroup.GyartoId as ManufacturerId, 
+		   StructPriceGroup.Jelleg1Id as Category1Id, 
+		   StructPriceGroup.Jelleg2Id as Category2Id, 
+		   StructPriceGroup.Jelleg3Id as Category3Id, --TOP 1 PriceGroupID
 		   PriceDiscGroup.Sorrend as [Order]
 	FROM axdb_20120614.dbo.updStrukturaArcsoport as StructPriceGroup
 	INNER JOIN axdb_20120614.dbo.PriceDiscGroup as PriceDiscGroup ON StructPriceGroup.PriceGroupID = PriceDiscGroup.GroupID AND 

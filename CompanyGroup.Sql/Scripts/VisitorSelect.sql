@@ -7,7 +7,7 @@ GO
 -- látogató kiolvasás 
 DROP PROCEDURE [InternetUser].[VisitorSelect];
 GO
-CREATE PROCEDURE [InternetUser].[VisitorSelect] @VisitorId NVARCHAR(64) = ''
+CREATE PROCEDURE [InternetUser].[VisitorSelect]( @VisitorId UNIQUEIDENTIFIER)
 AS
 SET NOCOUNT ON
 
@@ -31,4 +31,4 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
 GO
--- EXEC [InternetUser].[VisitorSelect] '03925DB0-4487-470F-BCD5-ED90FF478EFD'
+-- EXEC [InternetUser].[VisitorSelect] '9D10677B-4409-4E4C-80A7-EDDB20D04E5B'

@@ -38,7 +38,7 @@
     <property name="AutoLogin" />
     <property name="LoginDate" />
     <property name="LogoutDate" />
-    <property name="ExpiredDate" />
+    <property name="ExpireDate" />
     <property name="Valid" />
     <bag name="CustomerPriceGroups">
       <key column="Id" />
@@ -53,7 +53,7 @@
     exec InternetUser.SignIn @UserName=:UserName, @Password=:Password, @DataAreaId=:DataAreaId
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
-    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="VisitorId" type="System.Guid"/>
     <return alias="V" class="Visitor"></return>
     <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
@@ -83,6 +83,8 @@
     <query-param name="AutoLogin" type="System.Boolean"/>
     <query-param name="LoginDate" type="System.DateTime"/>
     <query-param name="ExpireDate" type="System.DateTime"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="VisitorId" type="System.String"/>    
     exec InternetUser.VisitorInsert @LoginIP=:LoginIP,
                                     @RecId=:RecId,
                                     @CustomerId=:CustomerId,
@@ -109,18 +111,18 @@
                                     @ExpireDate=:ExpireDate
   </sql-query>
   <sql-query name="InternetUser.VisitorDisableStatus" callable="true">
-    <query-param name="Currency" type="System.String"/>
+    <query-param name="VisitorId" type="System.Guid"/>
     exec InternetUser.VisitorDisableStatus @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorChangeLanguage" callable="true">
-    <query-param name="VisitorId" type="System.String"/>
+    <query-param name="VisitorId" type="System.Guid"/>
     <query-param name="Language" type="System.String"/>    
     exec InternetUser.VisitorChangeLanguage @VisitorId=:VisitorId, @Language=:Language
   </sql-query>
   <sql-query name="InternetUser.VisitorChangeCurrency" callable="true">
-    <query-param name="VisitorId" type="System.String"/>
-    <query-param name="Language" type="System.String"/>
-    InternetUser.VisitorChangeCurrency @VisitorId=:VisitorId, @Language=:Language
+    <query-param name="VisitorId" type="System.Guid"/>
+    <query-param name="Currency" type="System.String"/>
+    InternetUser.VisitorChangeCurrency @VisitorId=:VisitorId, @Currency=:Currency
   </sql-query>
 </hibernate-mapping>
 
