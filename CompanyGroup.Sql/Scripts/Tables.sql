@@ -108,7 +108,7 @@ GO
 CREATE TABLE InternetUser.Visitor
 (
 	Id							INT IDENTITY PRIMARY KEY,					-- egyedi GUID azonosito
-	VisitorId					UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID() ROWGUIDCOL, 
+	VisitorId					NVARCHAR(64) NOT NULL DEFAULT CONVERT(NVARCHAR(64), NEWID()), 
 	LoginIP						NVARCHAR (32) NOT NULL DEFAULT '' ,				-- ip cim
 	RecId						BIGINT NOT NULL DEFAULT 0 ,						-- WebShopUserInfo.RecId bigint mezo (idegen kulcs)
 	CustomerId					NVARCHAR(20) NOT NULL DEFAULT '', 
@@ -137,6 +137,7 @@ CREATE TABLE InternetUser.Visitor
 	Valid						BIT NOT NULL DEFAULT 1
 )
 GO
+
 
 -- árcsoportok
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CustomerPriceGroup') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
-    <class name="Visitor" lazy="false">
+  <class name="Visitor" lazy="false">
     <id name="Id">
       <generator class="identity" />
     </id>
@@ -24,14 +24,6 @@
     <property name="LanguageId" />
     <property name="DefaultPriceGroupId" />
     <property name="InventLocationId" />
-    <component name="Representative" class="Representative">
-      <property name="Id" column="RepresentativeId" />
-      <property name="Name" column="RepresentativeName" />
-      <property name="Phone" column="RepresentativePhone" />
-      <property name="Mobile" column="RepresentativeMobile" />
-      <property name="Extension" column="RepresentativeExtension" />
-      <property name="Email" column="RepresentativeEmail" />
-    </component>
     <property name="DataAreaId" />
     <property name="LoginType" />
     <property name="PartnerModel" />
@@ -40,6 +32,14 @@
     <property name="LogoutDate" />
     <property name="ExpireDate" />
     <property name="Valid" />
+    <component name="Representative" class="Representative">
+      <property name="Id" column="RepresentativeId" />
+      <property name="Name" column="RepresentativeName" />
+      <property name="Phone" column="RepresentativePhone" />
+      <property name="Mobile" column="RepresentativeMobile" />
+      <property name="Extension" column="RepresentativeExtension" />
+      <property name="Email" column="RepresentativeEmail" />
+    </component>
     <bag name="CustomerPriceGroups">
       <key column="Id" />
       <one-to-many class="CustomerPriceGroup" />
@@ -54,8 +54,9 @@
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
     <query-param name="VisitorId" type="System.String"/>
-    <return alias="V" class="Visitor"></return>
-    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
+    <return class="Visitor"></return>
+    <!--<return alias="V" class="Visitor"></return>
+    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>-->
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorInsert" callable="true">

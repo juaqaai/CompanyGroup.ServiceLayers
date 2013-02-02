@@ -68,7 +68,7 @@ DECLARE @RecId bigint,
 				CONVERT(BIT, 0) as AutoLogin, 
 				GETDATE() as LoginDate, 
 				CONVERT(DateTime, 0) as LogoutDate, 
-				DATEADD(day, 1, GetDate()) as [ExpiredDate], 
+				DATEADD(day, 1, GetDate()) as [ExpireDate], 
 				CONVERT(BIT, 1) as Valid
 			
 			RETURN;
@@ -183,7 +183,7 @@ DECLARE @RecId bigint,
 				CONVERT(BIT, 0) as AutoLogin, 
 				GETDATE() as LoginDate, 
 				CONVERT(DateTime, 0) as LogoutDate, 
-				DATEADD(day, 1, GetDate()) as ExpiredDate, 
+				DATEADD(day, 1, GetDate()) as ExpireDate, 
 				CONVERT(BIT, 1) as Valid
 		RETURN;
 GO

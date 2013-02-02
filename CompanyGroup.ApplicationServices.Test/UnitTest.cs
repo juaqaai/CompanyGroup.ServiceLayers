@@ -296,7 +296,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void PictureGetItem()
         {
-            CompanyGroup.Dto.PartnerModel.PictureFilterRequest request = new CompanyGroup.Dto.PartnerModel.PictureFilterRequest("hrp", "PFI702GY");
+            CompanyGroup.Dto.WebshopModule.PictureFilterRequest request = new CompanyGroup.Dto.WebshopModule.PictureFilterRequest("hrp", "PFI702GY");
 
             CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -573,7 +573,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void GetNewsletterCollection()
         {
-            CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
+            CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
 
             CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 

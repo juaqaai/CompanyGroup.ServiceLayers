@@ -29,7 +29,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.PartnerModel.PictureFilterRequest request) 
+        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request) 
         {
             CompanyGroup.Helpers.DesignByContract.Require((request != null), "The GetListByProduct request parameter can not be null!");
 

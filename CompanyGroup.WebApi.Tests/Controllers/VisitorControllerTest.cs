@@ -69,9 +69,6 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         /// <summary>
         ///A test for ChangeCurrency
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod]
         public void ChangeCurrencyTest()
         {
@@ -85,9 +82,6 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         /// <summary>
         ///A test for ChangeLanguage
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod]
         public void ChangeLanguageTest()
         {
@@ -101,13 +95,10 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         /// <summary>
         ///A test for GetVisitorInfo
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod]
         public void GetVisitorInfoTest()
         {
-            VisitorInfoRequest request = new VisitorInfoRequest("9D10677B-4409-4E4C-80A7-EDDB20D04E5B", "hrp");
+            VisitorInfoRequest request = new VisitorInfoRequest("CBB75B0D-D8C1-4863-8456-7A7DA685E164", "hrp");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/GetVisitorInfo", request).Result;
 
@@ -117,9 +108,6 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         /// <summary>
         ///A test for SignIn
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod]
         public void SignInTest()
         {
@@ -132,14 +120,11 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
         /// <summary>
         ///A test for SignOut
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
+        /// </summary>
         [TestMethod]
         public void SignOutTest()
         {
-            SignOutRequest request = new SignOutRequest("hrp", "EE01730E-4F1A-4215-A2AB-317F5D3F0033");
+            SignOutRequest request = new SignOutRequest("hrp", "CBB75B0D-D8C1-4863-8456-7A7DA685E164");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/SignOut", request).Result;
 

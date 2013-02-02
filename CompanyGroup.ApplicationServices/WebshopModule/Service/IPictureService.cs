@@ -13,6 +13,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         System.IO.Stream GetItemById(int pictureId, string maxWidth, string maxHeight);
 
-        CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.PartnerModel.PictureFilterRequest request);
+        CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request);
     }
 }

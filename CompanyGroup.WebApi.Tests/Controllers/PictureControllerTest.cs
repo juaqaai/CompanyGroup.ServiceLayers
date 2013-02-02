@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetListByProductTest()
         {
-            CompanyGroup.Dto.PartnerModel.PictureFilterRequest request = new CompanyGroup.Dto.PartnerModel.PictureFilterRequest("hrp", "");
+            CompanyGroup.Dto.WebshopModule.PictureFilterRequest request = new CompanyGroup.Dto.WebshopModule.PictureFilterRequest("hrp", "");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Picture/GetListByProduct", request).Result;
 

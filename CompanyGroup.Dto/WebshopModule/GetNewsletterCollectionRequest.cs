@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompanyGroup.Dto.PartnerModule
+namespace CompanyGroup.Dto.WebshopModule
 {
     /// <summary>
     /// hírlevél lista lekérdezés paramétereit összefogó adattípus

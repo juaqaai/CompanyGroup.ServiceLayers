@@ -30,7 +30,7 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("GetCollection")]
-        public HttpResponseMessage GetCollection(CompanyGroup.Dto.PartnerModel.GetNewsletterCollectionRequest request)
+        public HttpResponseMessage GetCollection(CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request)
         {
             try
             {

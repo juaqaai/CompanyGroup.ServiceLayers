@@ -62,9 +62,9 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetItemById()
         {
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.GetItemById("teszt");
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.GetItemById("alma");    //CBB75B0D-D8C1-4863-8456-7A7DA685E164
 
             Assert.IsNotNull(visitor);
         }

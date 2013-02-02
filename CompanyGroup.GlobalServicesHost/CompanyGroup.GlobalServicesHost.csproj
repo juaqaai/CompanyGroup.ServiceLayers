@@ -76,10 +76,6 @@
       <Project>{68A772C3-C742-4282-A5B3-2A11C17FC867}</Project>
       <Name>CompanyGroup.Dto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CompanyGroup.GlobalServices\CompanyGroup.GlobalServices.csproj">
-      <Project>{5A3FFA39-B925-456F-89A2-2FB437B4FC0E}</Project>
-      <Name>CompanyGroup.GlobalServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}</Project>
       <Name>Helpers</Name>

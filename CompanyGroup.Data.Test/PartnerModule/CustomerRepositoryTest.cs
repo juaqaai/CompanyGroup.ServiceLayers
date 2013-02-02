@@ -62,7 +62,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetCustomerLetter()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = repository.GetMailAddress("V002020", "hrp");
 
@@ -72,7 +72,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetAddressZipCode()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             List<CompanyGroup.Domain.PartnerModule.AddressZipCode> addresszipCode = repository.GetAddressZipCode("1", "hrp");
 
@@ -91,7 +91,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void SignIn()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.SignIn("elektroplaza", "58915891", "hrp");
 
@@ -101,7 +101,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetCustomerPriceGroups()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = repository.GetCustomerPriceGroups("V006199");
 
@@ -111,7 +111,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetDeliveryAddress()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddress = repository.GetDeliveryAddress("V006199", "hrp");
 
@@ -121,7 +121,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetBankAccounts()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = repository.GetBankAccounts("V006199", "hrp");
 
@@ -131,7 +131,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetContactPersons()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = repository.GetContactPersons("V006199", "hrp");
 
@@ -142,7 +142,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetCustomer()
         {
-            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository(NHibernateSessionManager.Instance.GetExtractInterfaceSession());
 
             CompanyGroup.Domain.PartnerModule.Customer customer = repository.GetCustomer("V006199", "hrp");
 

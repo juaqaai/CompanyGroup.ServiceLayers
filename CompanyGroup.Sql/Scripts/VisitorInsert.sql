@@ -65,7 +65,7 @@ CREATE PROCEDURE [InternetUser].[VisitorInsert](@LoginIP	NVARCHAR(32) = '',
 												)			
 AS
 SET NOCOUNT ON
-	DECLARE @VisitorId UNIQUEIDENTIFIER = NEWID(),
+	DECLARE @VisitorId NVARCHAR(64) = REPLACE(CONVERT(NVARCHAR(64), NEWID()), '-', ''),
 	@LogoutDate DATETIME = CONVERT(DATETIME, 0);
 
 	DECLARE @ReprId INT = ISNULL((SELECT Id FROM InternetUser.Representative WHERE RepresentativeId = @RepresentativeId), 0);
@@ -79,7 +79,7 @@ SET NOCOUNT ON
 									  @PaymTermId, @Currency, @LanguageId, @DefaultPriceGroupId, @InventLocationId, @ReprId, 
 									  @DataAreaId, @LoginType, @PartnerModel, @AutoLogin, @LoginDate, @LogoutDate, @ExpireDate, 1);
 
-	SELECT @@Identity as Id, CONVERT(NVARCHAR(100), @VisitorId) as VisitorId;
+	SELECT @@Identity as Id, @VisitorId as VisitorId;
 
 RETURN
 GO
@@ -114,4 +114,7 @@ EXEC [InternetUser].[VisitorInsert] '127.0.0.1',
 									@Date2;
 
 select * from InternetUser.Visitor;  
+
+update InternetUser.Visitor set visitorId = 'alma' + LOWER(REPLACE(CONVERT(NVARCHAR(64), NEWID()), '-', ''))
+
 */
