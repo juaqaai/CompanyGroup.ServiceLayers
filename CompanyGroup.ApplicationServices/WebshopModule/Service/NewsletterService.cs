@@ -41,7 +41,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 List<CompanyGroup.Domain.WebshopModule.Newsletter> newsletters = new List<CompanyGroup.Domain.WebshopModule.Newsletter>();
 
                 //ha regisztrált mindkét vállalatban, akkor mindkét vállalat listáját megkapja
-                //ha nem, akkor csak annak a vállalatnak a listáját, amelyben regisztrálva van
+                //ha nem, akkor csak annak a vállalatnak a listáját, amelyikben regisztrálva van
                 visitor.AuthorizedDataAreaList().ForEach(x =>
                 {
                     List<CompanyGroup.Domain.WebshopModule.Newsletter> tmp = newsletterRepository.GetNewsletterList(CompanyGroup.Helpers.ConfigSettingsParser.GetInt("NewsletterListLimit", 100), x, String.Empty, request.ManufacturerId);

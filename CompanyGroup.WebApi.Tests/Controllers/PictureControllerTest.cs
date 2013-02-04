@@ -13,67 +13,87 @@ namespace CompanyGroup.WebApi.Tests.Controllers
     [TestClass]
     public class PictureControllerTest : ControllerBase
     {
+        private TestContext testContextInstance;
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
 
         [TestMethod]
         public void GetListByProductTest()
         {
-            CompanyGroup.Dto.WebshopModule.PictureFilterRequest request = new CompanyGroup.Dto.WebshopModule.PictureFilterRequest("hrp", "");
+            CompanyGroup.Dto.WebshopModule.PictureFilterRequest request = new CompanyGroup.Dto.WebshopModule.PictureFilterRequest("hrp", "0021165103535");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Picture/GetListByProduct", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.Pictures pictures = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Pictures>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.Pictures pictures = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Pictures>().Result;
 
-            Assert.IsNotNull(pictures);
+                Assert.IsNotNull(pictures);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
         public void GetByIdTest()
         {
-            string productId = ""; 
-            string recId = "";
-            string maxWidth = "";
-            string maxHeight = "";
-
-            System.IO.Stream stream = null;
+            string productId = "0021165103535";
+            string recId = "5637192799";
+            string maxWidth = "120";
+            string maxHeight = "120";
 
             HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Picture/GetItem/{0}/{1}/{2}/{3}", productId, recId, maxWidth, maxHeight)).Result;
 
             if (response.IsSuccessStatusCode)
             {
-                stream = response.Content.ReadAsStreamAsync().Result;
+                System.IO.Stream stream = response.Content.ReadAsStreamAsync().Result;
+
+                Assert.IsNotNull(stream);
+
+                Assert.IsTrue(stream.Length > 0);
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            Assert.IsNotNull(stream);
-
-            Assert.IsTrue(stream.Length > 0);
         }
 
         [TestMethod]
         public void GetItemByIdTest()
-        {
-            System.IO.Stream stream = null;
-            
-            string pictureId = "";
-            string maxWidth = "";
-            string maxHeight = "";
+        {          
+            string pictureId = "40";
+            string maxWidth = "120";
+            string maxHeight = "120";
 
             HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Picture/GetItemById/{0}/{1}/{2}", pictureId, maxWidth, maxHeight)).Result;
 
-            stream = response.Content.ReadAsStreamAsync().Result;
-
             if (response.IsSuccessStatusCode)
             {
-                stream = response.Content.ReadAsStreamAsync().Result;
+                System.IO.Stream stream = stream = response.Content.ReadAsStreamAsync().Result;
+
+                Assert.IsNotNull(stream);
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-            Assert.IsNotNull(stream);
+
         }
 
     }

@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 
 SET ANSI_NULLS ON
@@ -10,9 +10,9 @@ GO
 --   Type : aktuális címtipus ( 0:none, 1:Invoice, 2:Delivery, 3:AltDlv, 4:SWIFT, 5:Payment(kifizetes), 6:Service(szolgaltatas), 7:Levelezes  )
 
    
-DROP FUNCTION InternetUser.cms_ExistCustomerAddress
+DROP FUNCTION InternetUser.ExistCustomerAddress
 GO
-CREATE FUNCTION InternetUser.cms_ExistCustomerAddress( @CustomerId nvarchar(16), 
+CREATE FUNCTION InternetUser.ExistCustomerAddress( @CustomerId nvarchar(16), 
 													   @DataAreaId nvarchar(3), 
 												       @AddrType int )
 RETURNS BIT	
@@ -33,15 +33,15 @@ BEGIN
 
 END
 GO
-GRANT EXECUTE ON InternetUser.cms_ExistCustomerAddress TO InternetUser
+GRANT EXECUTE ON InternetUser.ExistCustomerAddress TO InternetUser
 GO
 
 -- SELECT InternetUser.ExistCustomerAddress( 'V002575', 1, 2 );
 
 -- select * from AxDb.dbo.Address
-DROP PROCEDURE InternetUser.cms_DeliveryAddress
+DROP PROCEDURE InternetUser.DeliveryAddressSelect
 GO
-CREATE PROCEDURE InternetUser.cms_DeliveryAddress( @CustomerId nvarchar(16), @DataAreaId nvarchar(3) )	
+CREATE PROCEDURE InternetUser.DeliveryAddressSelect( @CustomerId nvarchar(16), @DataAreaId nvarchar(3) )	
 AS
 SET NOCOUNT ON
 
@@ -49,7 +49,7 @@ SET NOCOUNT ON
 	SET @Exist = 0;
 
 	-- létezik-e a szállítási cím a vevõkódhoz, vállalatkódhoz?
-	IF ( InternetUser.cms_ExistCustomerAddress( @CustomerId, @DataAreaId, 2 ) = 1 )
+	IF ( InternetUser.ExistCustomerAddress( @CustomerId, @DataAreaId, 2 ) = 1 )
 	BEGIN
 		SELECT Addr.RecId as RecId, 
 			   Addr.City AS City, 
@@ -67,7 +67,7 @@ SET NOCOUNT ON
 	END
 
 	-- létezik-e a számlázási cím a vevõkódhoz, vállalatkódhoz?
-	IF ( @Exist = 0 AND InternetUser.cms_ExistCustomerAddress( @CustomerId, @DataAreaId, 1 ) = 1 )
+	IF ( @Exist = 0 AND InternetUser.ExistCustomerAddress( @CustomerId, @DataAreaId, 1 ) = 1 )
 	BEGIN
 		SELECT Addr.RecId as RecId, 
 			   Addr.City AS City, 
@@ -100,16 +100,16 @@ SET NOCOUNT ON
 	RETURN
 
 GO
-GRANT EXECUTE ON InternetUser.cms_DeliveryAddress TO InternetUser
+GRANT EXECUTE ON InternetUser.DeliveryAddressSelect TO InternetUser
 GO
 
 /*
-EXEC InternetUser.cms_DeliveryAddress 'V005884', 'hrp';   
+EXEC InternetUser.DeliveryAddressSelect 'V005884', 'hrp';   
 
-EXEC InternetUser.cms_DeliveryAddress 'V002575', 'hrp';
-EXEC InternetUser.cms_DeliveryAddress 'V004178', 'hrp';
-EXEC InternetUser.cms_DeliveryAddress 'V000051', 'hrp';
+EXEC InternetUser.DeliveryAddressSelect 'V002575', 'hrp';
+EXEC InternetUser.DeliveryAddressSelect 'V004178', 'hrp';
+EXEC InternetUser.DeliveryAddressSelect 'V000051', 'hrp';
 
-EXEC InternetUser.cms_DeliveryAddress 'V016884', 'ser';
+EXEC InternetUser.DeliveryAddressSelect 'V016884', 'ser';
 
 */

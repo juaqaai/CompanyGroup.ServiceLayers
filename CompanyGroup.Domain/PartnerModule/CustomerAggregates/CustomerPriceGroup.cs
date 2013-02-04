@@ -6,17 +6,17 @@ namespace CompanyGroup.Domain.PartnerModule
     /// <summary>
     /// vevő - árcsoport besorolás
     /// </summary>
-    public class CustomerPriceGroup : CompanyGroup.Domain.Core.Entity   //CompanyGroup.Domain.Core.ValueObject<CustomerPriceGroup>
+    public class CustomerPriceGroup : CompanyGroup.Domain.Core.EntityBase   //CompanyGroup.Domain.Core.ValueObject<CustomerPriceGroup>
     {
         /// <summary>
         /// kulcs
         /// </summary>
-        public int Id { get; set; }
+        public int LineId { get; set; }
 
         /// <summary>
         /// látogató azonosító
         /// </summary>
-        public int VisitorId { get; set; }
+        public int VisitorKey { get; set; }
 
         /// <summary>
         /// árcsoport azonosító
@@ -51,19 +51,19 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// sorrendet meghatározó jellemző
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="visitorId"></param>
+        /// <param name="lineId"></param>
+        /// <param name="visitorKey"></param>
         /// <param name="manufacturerId"></param>
         /// <param name="category1Id"></param>
         /// <param name="category2Id"></param>
         /// <param name="category3Id"></param>
         /// <param name="priceGroupId"></param>
         /// <param name="order"></param>
-        public CustomerPriceGroup(int id, int visitorId, string priceGroupId, string manufacturerId, string category1Id, string category2Id, string category3Id, int order)
+        public CustomerPriceGroup(int lineId, int visitorKey, string priceGroupId, string manufacturerId, string category1Id, string category2Id, string category3Id, int order)
         {
-            this.Id = id;
+            this.LineId = lineId;
 
-            this.VisitorId = visitorId;
+            this.VisitorKey = visitorKey;
 
             this.PriceGroupId = priceGroupId;
 
@@ -83,5 +83,55 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         public CustomerPriceGroup() : this(0, 0, "", "", "", "", "", 0) { }
 
+        #region "EntityBase"overrides"
+
+        /// <summary>
+        /// entitás tranziens vizsgálat
+        /// </summary>
+        /// <returns>Igaz ha az entitás tranziens, egyébként hamis</returns>
+        public override bool IsTransient()
+        {
+            return this.LineId == 0;
+        }
+
+        /// <summary>
+        /// override-olt egyenlőség vizsgálat
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is CustomerPriceGroup))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            CustomerPriceGroup item = (CustomerPriceGroup)obj;
+
+            if (item.IsTransient() || this.IsTransient())
+            {
+                return false;
+            }
+            else
+            {
+                return item.LineId == this.LineId;
+            }
+        }
+
+        /// <summary>
+        /// hash code előállítás
+        /// </summary>
+        /// <returns></returns>
+        public override int GetRequestedHashCode()
+        {
+            return this.LineId.GetHashCode() ^ 31;
+        }
+
+        #endregion
     }
 }

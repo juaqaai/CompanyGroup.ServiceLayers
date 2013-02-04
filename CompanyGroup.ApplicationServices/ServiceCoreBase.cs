@@ -72,7 +72,12 @@ namespace CompanyGroup.ApplicationServices
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(visitorId);
 
                 //TODO: ellenorzes NULL-ra
+                CompanyGroup.Helpers.DesignByContract.Invariant(visitor != null, "ServiceCoreBase - GetVisitorFromRepository - visitorRepository.GetItemById result can not be null!");
 
+                //aktív státusz beállítása a bejelentkezést követően (passzív, aktív, permanens)
+                visitor.Status = LoginStatus.Active;
+
+                //bejelentkezett állapot beállítása
                 visitor.SetLoggedIn();
 
                 //cache-be mentés csak akkor, ha érvényes a login

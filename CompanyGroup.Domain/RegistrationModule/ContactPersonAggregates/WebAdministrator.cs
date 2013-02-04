@@ -13,7 +13,7 @@ namespace CompanyGroup.Domain.RegistrationModule
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, 
                              bool priceListDownload, bool invoiceInfo,
                              string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId)
-            : base(contactPersonId, lastName, firstName, email, cellularPhone, phone, 
+            : base(contactPersonId, lastName, firstName, email, cellularPhone, phone, "", 
                              allowOrder, allowReceiptOfGoods, 
                              smsArriveOfGoods, smsOrderConfirm, smsOfDelivery, 
                              emailArriveOfGoods, emailOfOrderConfirm, emailOfDelivery, 

@@ -1,17 +1,17 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 /****** Object:  StoredProcedure [InternetUser].[web_GetNewsletterList]    Script Date: 2012.10.08. 6:15:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-DROP PROCEDURE [InternetUser].[cms_NewsletterList];
+DROP PROCEDURE [InternetUser].[NewsletterSelect];
 GO
-CREATE PROCEDURE [InternetUser].[cms_NewsletterList]( @TopN INT = 0, 
-													  @DataAreaId nvarchar(3) = 'hrp', --vallalat azonosito
-													  @BusinessUnitId nvarchar(16) = '', -- hozzarendelt uzletag
-													  @ManufacturerId nvarchar(16) = '' -- hozzarendelt gyarto
-													  )
+CREATE PROCEDURE [InternetUser].[NewsletterSelect]( @TopN INT = 0, 
+													@DataAreaId nvarchar(3) = 'hrp', --vallalat azonosito
+													@BusinessUnitId nvarchar(16) = '', -- hozzarendelt uzletag
+													@ManufacturerId nvarchar(16) = '' -- hozzarendelt gyarto
+													)
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -37,4 +37,4 @@ END
 RETURN
 GO
 
--- exec [InternetUser].[cms_NewsletterList] 10, 'hrp', '', '';
+-- exec [InternetUser].[NewsletterSelect] 10, 'hrp', '', '';

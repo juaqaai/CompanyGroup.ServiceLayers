@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 
 SET ANSI_NULLS ON
@@ -6,13 +6,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE InternetUser.cms_ContactPerson
+DROP PROCEDURE InternetUser.ContactPersonSelect
 GO
-CREATE PROCEDURE InternetUser.cms_ContactPerson( @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')											
+CREATE PROCEDURE InternetUser.ContactPersonSelect( @CustomerId nvarchar(20), @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')											
 AS
-	DECLARE @VirtualDataAreaId nvarchar(3);
-
-	SET @VirtualDataAreaId = InternetUser.GetVirtualDataAreaId( @DataAreaId );
+	DECLARE @VirtualDataAreaId nvarchar(3) = 'hun';
 
 	DECLARE @Yes BIT, @No BIT;
 	SET @Yes = CONVERT( BIT, 1);
@@ -44,12 +42,14 @@ AS
 			   CASE WHEN ( ISNULL( ( SELECT TEMAID FROM axdb_20120614.dbo.UPDHIRLEVELTEMA WHERE ContactPersonID = cp.ContactPersonId AND DataAreaID = @DataAreaId AND TemaID = 'Periféria' ), '' ) ) = '' THEN @No ELSE @Yes END as Newsletter
 		FROM axdb_20120614.dbo.ContactPerson as cp
 			 LEFT OUTER JOIN axdb_20120614.dbo.WebShopUserInfo as wsui ON wsui.ContactPersonID = cp.ContactPersonId AND wsui.DataAreaID = @VirtualDataAreaId
-		WHERE cp.ContactPersonId = @ContactPersonId AND 
+		WHERE cp.CustAccount = CASE WHEN (@CustomerId <> '') THEN @CustomerId ELSE cp.CustAccount END AND
+			  cp.ContactPersonId = CASE WHEN (@ContactPersonId <> '') THEN @ContactPersonId ELSE cp.ContactPersonId END AND 
 			  cp.DataAreaID = @VirtualDataAreaId;
 
 	RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_ContactPerson TO InternetUser
+GRANT EXECUTE ON InternetUser.ContactPersonSelect TO InternetUser
 GO
 
--- exec InternetUser.cms_ContactPerson 'KAPCS06231', 'hrp';
+-- exec InternetUser.ContactPersonSelect '', 'KAPCS06231', 'hrp';
+-- exec InternetUser.ContactPersonSelect 'V002020', '', 'hrp'

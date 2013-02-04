@@ -13,25 +13,50 @@ namespace CompanyGroup.WebApi.Tests.Controllers
     [TestClass]
     public class CustomerControllerTest : ControllerBase
     {
+        private TestContext testContextInstance;
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
 
         [TestMethod]
         public void GetAddressZipCodesTest()
         {
             CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request = new Dto.PartnerModule.AddressZipCodeRequest() { DataAreaId = "hrp", Prefix = "11" };
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Customer/GetAddressZipCodes", request).Result;
+            HttpResponseMessage response = CreateHttpClient().GetAsync("Customer/GetAddressZipCodes/hrp/11").Result;
 
-            CompanyGroup.Dto.PartnerModule.AddressZipCodes addressZipCodes = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.AddressZipCodes>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.PartnerModule.AddressZipCodes addressZipCodes = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.AddressZipCodes>().Result;
 
-            Assert.IsNotNull(addressZipCodes);
+                Assert.IsNotNull(addressZipCodes);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+
         }
 
         [TestMethod]
         public void GetCustomerRegistrationTest()
         {
-            string visitorId = "";
+            CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request = new Dto.PartnerModule.GetCustomerRegistrationRequest("alma", "hrp");
 
-            HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Customer/GetCustomerRegistration/{0}/hrp", visitorId)).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Customer/GetCustomerRegistration", request).Result;
 
             string registrationId = String.Empty;
 
@@ -43,7 +68,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
             Assert.IsTrue(!String.IsNullOrEmpty(registrationId));
@@ -52,13 +77,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetDeliveryAddressesTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request = new Dto.PartnerModule.GetDeliveryAddressesRequest("hrp", "visitorId");
+            CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request = new Dto.PartnerModule.GetDeliveryAddressesRequest("hrp", "alma");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Customer/GetDeliveryAddresses", request).Result;
 
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.DeliveryAddresses>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.DeliveryAddresses>().Result;
 
-            Assert.IsNotNull(deliveryAddresses);
+                Assert.IsNotNull(deliveryAddresses);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+
         }
 
     }

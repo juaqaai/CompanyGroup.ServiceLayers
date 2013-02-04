@@ -28,11 +28,10 @@ namespace CompanyGroup.WebApi
             //    defaults: new { dataAreaId = "hrp" }
             //);
 
-            //config.Routes.MapHttpRoute(
-            //    name: "CompletionApi",
-            //    routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}/{completionType}",
-            //    defaults: new { controller = "Product", action = "GetCompletionList", dataAreaId = "hrp" }
-            //);
+            config.Routes.MapHttpRoute(
+                name: "CustomerApi",
+                routeTemplate: "api/{controller}/{action}/{dataAreaId}/{prefix}"
+            );
 
             config.Routes.MapHttpRoute(
                 name: "PictureItemApi",

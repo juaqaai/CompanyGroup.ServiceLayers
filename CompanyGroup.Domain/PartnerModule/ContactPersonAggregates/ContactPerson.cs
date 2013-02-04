@@ -9,7 +9,7 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class ContactPerson : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
-        public ContactPerson(string contactPersonId, string lastName, string firstName, string email, string cellularPhone, string phone,
+        public ContactPerson(string contactPersonId, string lastName, string firstName, string email, string cellularPhone, string phone, string phoneLocal,
                              bool allowOrder, bool allowReceiptOfGoods, 
                              bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery, 
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, 
@@ -38,7 +38,7 @@ namespace CompanyGroup.Domain.PartnerModule
             LeftCompany = leftCompany;
         }
 
-        public ContactPerson() : this("", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false) { }
+        public ContactPerson() : this("", "", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false) { }
 
         /// <summary>
         /// kapcsolattartó egyedi azonosító

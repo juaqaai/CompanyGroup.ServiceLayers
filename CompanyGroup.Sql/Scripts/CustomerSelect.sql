@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 
 SET ANSI_NULLS ON
@@ -7,9 +7,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- vevõregisztrációs adatok lekérdezése
-DROP PROCEDURE InternetUser.cms_CustomerData
+DROP PROCEDURE InternetUser.CustomerSelect
 GO
-CREATE PROCEDURE InternetUser.cms_CustomerData( @CustomerId nvarchar(20), @DataAreaId nvarchar(3) = 'hrp' )											
+CREATE PROCEDURE InternetUser.CustomerSelect( @CustomerId nvarchar(20), @DataAreaId nvarchar(3) = 'hrp' )											
 AS
 	SELECT  
 		   --ISNULL( tmp.RegType, 0 ) as RegType,
@@ -43,7 +43,7 @@ AS
 
 	RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_CustomerData TO InternetUser
+GRANT EXECUTE ON InternetUser.CustomerSelect TO InternetUser
 GO
 
--- exec InternetUser.cms_CustomerData 'V002020', 'hrp';
+-- exec InternetUser.CustomerSelect 'V002020', 'hrp';

@@ -54,9 +54,9 @@
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
     <query-param name="VisitorId" type="System.String"/>
-    <return class="Visitor"></return>
-    <!--<return alias="V" class="Visitor"></return>
-    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>-->
+    <!--<return class="Visitor"></return>-->
+    <return alias="V" class="Visitor"></return>
+    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorInsert" callable="true">

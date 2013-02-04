@@ -18,24 +18,24 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetNewsletterCollection()
         {
-            CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
-
-            Uri requestUri = null;
+            CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest("hu", "alma", "");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Newsletter/GetCollection", request).Result;
 
             if (response.IsSuccessStatusCode)
             {
-                requestUri = response.Headers.Location;
+                Uri requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.NewsletterCollection>().Result;
+
+                Assert.IsNotNull(collection);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
-            CompanyGroup.Dto.WebshopModule.NewsletterCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.NewsletterCollection>().Result;
 
-            Assert.IsNotNull(collection);
         }
 
     }

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
   <class name="CustomerPriceGroup" lazy="false">
-    <id name="Id">
+    <id name="LineId">
       <generator class="identity" />
     </id>
-    <property name="VisitorId" />
+    <property name="VisitorKey" />
     <property name="PriceGroupId" />
     <property name="ManufacturerId" />
     <property name="Category1Id" />
@@ -18,13 +18,13 @@
     exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
   </sql-query>
   <sql-query name="InternetUser.CustomerPriceGroupInsert" callable="true">
-    <query-param name="VisitorId" type="System.Int32"/>
+    <query-param name="VisitorKey" type="System.Int32"/>
     <query-param name="PriceGroupId" type="System.String"/>
     <query-param name="ManufacturerId" type="System.String"/>
     <query-param name="Category1Id" type="System.String"/>
     <query-param name="Category2Id" type="System.String"/>
     <query-param name="Category3Id" type="System.String"/>
     <query-param name="Order" type="System.Int32"/>
-    exec InternetUser.CustomerPriceGroupInsert @VisitorId=:VisitorId, @PriceGroupId=:PriceGroupId, @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
+    exec InternetUser.CustomerPriceGroupInsert @VisitorKey=:VisitorKey, @PriceGroupId=:PriceGroupId, @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
   </sql-query>  
 </hibernate-mapping>

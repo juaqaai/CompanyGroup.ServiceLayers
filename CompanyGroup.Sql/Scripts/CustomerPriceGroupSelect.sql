@@ -14,8 +14,8 @@ AS
 SET NOCOUNT ON
 
 	SELECT -- StructPriceGroup.VevoSzam as CustomerId,
-			Row_Number() Over(order by StructPriceGroup.GyartoId, StructPriceGroup.Jelleg1Id, StructPriceGroup.Jelleg2Id, StructPriceGroup.Jelleg3Id, PriceDiscGroup.Sorrend desc) as Id, 
-		   0 as VisitorId, 
+			Row_Number() Over(order by StructPriceGroup.GyartoId, StructPriceGroup.Jelleg1Id, StructPriceGroup.Jelleg2Id, StructPriceGroup.Jelleg3Id, PriceDiscGroup.Sorrend desc) as LineId, 
+		   0 as VisitorKey, 
 		   StructPriceGroup.PriceGroupID as PriceGroupId, 
 		   StructPriceGroup.GyartoId as ManufacturerId, 
 		   StructPriceGroup.Jelleg1Id as Category1Id, 

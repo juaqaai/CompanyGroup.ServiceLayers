@@ -20,12 +20,12 @@ SELECT V.Id, V.VisitorId, V.LoginIP, V.RecId,  V.CustomerId,  V.CustomerName,  V
        ISNULL(R.Mobile, '') as RepresentativeMobile,
        ISNULL(R.Extension, '') as RepresentativeExtension,
        ISNULL(R.Email, '') as RepresentativeEmail,	 	    
-	   V.DataAreaId, V.LoginType as LoginType, V.PartnerModel, V.AutoLogin, V.LoginDate, V.LogoutDate, V.ExpireDate, V.Valid
---	   ISNULL(P.Id, 0) as Id, P.VisitorId, ISNULL(P.PriceGroupId, '') as PriceGroupId, ISNULL(P.ManufacturerId, '') as ManufacturerId, ISNULL(P.Category1Id, '') as Category1Id, ISNULL(P.Category2Id, '') as Category2Id, ISNULL(P.Category3Id, '') as Category3Id, 
---	   ISNULL(P.[Order], 0) as [Order] 
+	   V.DataAreaId, V.LoginType as LoginType, V.PartnerModel, V.AutoLogin, V.LoginDate, V.LogoutDate, V.ExpireDate, V.Valid, 
+	   ISNULL(P.Id, 0) as LineId, ISNULL(P.VisitorId, 0) as VisitorKey, ISNULL(P.PriceGroupId, '') as PriceGroupId, ISNULL(P.ManufacturerId, '') as ManufacturerId, ISNULL(P.Category1Id, '') as Category1Id, ISNULL(P.Category2Id, '') as Category2Id, ISNULL(P.Category3Id, '') as Category3Id, 
+	   ISNULL(P.[Order], 0) as [Order] 
 	   FROM InternetUser.Visitor as V
 	   LEFT OUTER JOIN Representative as R ON R.Id = V.RepresentativeId
---	   LEFT OUTER JOIN InternetUser.CustomerPriceGroup as P ON V.Id = P.VisitorId
+	   LEFT OUTER JOIN InternetUser.CustomerPriceGroup as P ON V.Id = P.VisitorId
 	   WHERE V.VisitorId = @VisitorId
 /*
   Id	VisitorId	LoginIP	RecId	CustomerId	CustomerName	PersonId	PersonName	Email	

@@ -38,10 +38,12 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetAddressZipCodes")]
         [HttpGet]
-        public HttpResponseMessage GetAddressZipCodes(CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request)
+        public HttpResponseMessage GetAddressZipCodes(string dataAreaId, string prefix) //CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request
         {
             try
             {
+                CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request = new Dto.PartnerModule.AddressZipCodeRequest() { DataAreaId = dataAreaId, Prefix = prefix };
+
                 CompanyGroup.Dto.PartnerModule.AddressZipCodes response = service.GetAddressZipCodes(request);
 
                 return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.AddressZipCodes>(HttpStatusCode.OK, response);
@@ -59,14 +61,12 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetCustomerRegistration")]
         [HttpGet, HttpPost]
-        public HttpResponseMessage GetCustomerRegistration(string visitorId, string dataAreaId)
+        public HttpResponseMessage GetCustomerRegistration(CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request)
         {
-            if(String.IsNullOrEmpty(visitorId))
+            if(String.IsNullOrEmpty(request.VisitorId))
             {
                 ThrowSafeException("The visitor id cannot be null!", HttpStatusCode.NotFound);
-            }
-
-            CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request = new CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest(visitorId, dataAreaId);
+            }            
 
             try
             {

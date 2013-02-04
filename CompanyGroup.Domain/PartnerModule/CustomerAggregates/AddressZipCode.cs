@@ -8,13 +8,15 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class AddressZipCode
     {
-        private string zipCode = String.Empty;
-
+        /// <summary>
+        /// irányítószám
+        /// </summary>
+        /// <param name="zipCode"></param>
         public AddressZipCode(string zipCode)
         {
-            this.zipCode = zipCode;
+            this.ZipCode = zipCode;
         }
 
-        public string ZipCode { get { return zipCode; } }
+        public string ZipCode { get; set; }
     }
 }

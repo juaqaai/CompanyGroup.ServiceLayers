@@ -24,7 +24,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.Newsletter> GetNewsletterList(int topN, string dataAreaId, string businessUnitId, string manufacturerId)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_NewsletterList")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.NewsletterSelect")
                                              .SetInt32("TopN", topN)
                                              .SetString("DataAreaId", dataAreaId)
                                              .SetString("BusinessUnitId", businessUnitId)

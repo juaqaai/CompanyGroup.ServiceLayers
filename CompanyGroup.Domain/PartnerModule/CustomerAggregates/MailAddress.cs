@@ -7,11 +7,11 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class MailAddress : Address
     {
-        public MailAddress() : this("", "", "", "") { }
-
         public MailAddress(string city, string country, string zipCode, string street) : base(city, country, zipCode, street)
         {
         }
+
+        public MailAddress() : this("", "", "", "") { }
 
         public override string ToString()
         {

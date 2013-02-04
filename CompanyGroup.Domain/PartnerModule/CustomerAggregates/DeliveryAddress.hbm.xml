@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.cms_DeliveryAddress" callable="true">
+  <sql-query name="InternetUser.DeliveryAddressSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
     <query-param name="DataAreaId" type="System.String"/>
     <return-scalar column="RecId" type="System.Int64"/>
@@ -8,6 +8,6 @@
     <return-scalar column="Street" type="System.String"/>
     <return-scalar column="ZipCode" type="System.String"/>
     <return-scalar column="CountryRegionId" type="System.String"/>
-    exec InternetUser.cms_DeliveryAddress @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+    exec InternetUser.DeliveryAddressSelect @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>

@@ -78,7 +78,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //árcsoportok tárolása 
             visitor.CustomerPriceGroups.ToList().ForEach(x => 
             {
-                x.VisitorId = visitor.Id;
+                x.VisitorKey = visitor.Id;
 
                 visitorRepository.AddCustomerPriceGroup(x); 
             });

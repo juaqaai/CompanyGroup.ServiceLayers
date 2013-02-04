@@ -105,7 +105,7 @@ namespace CompanyGroup.Data.PartnerModule
         public void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup)
         {
             NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupInsert")
-                                                            .SetInt32("VisitorId", customerPriceGroup.VisitorId)
+                                                            .SetInt32("VisitorKey", customerPriceGroup.VisitorKey)
                                                             .SetString("PriceGroupId", customerPriceGroup.PriceGroupId)
                                                             .SetString("ManufacturerId", customerPriceGroup.ManufacturerId)
                                                             .SetString("Category1Id", customerPriceGroup.Category1Id)
@@ -143,7 +143,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetLanguage").SetString("VisitorId", visitorId).SetString("LanguageId", language);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorChangeLanguage").SetString("VisitorId", visitorId).SetString("Language", language);
 
                 query.UniqueResult();
             }
@@ -163,7 +163,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSetCurrency").SetString("VisitorId", visitorId).SetString("Currency", currency);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorChangeCurrency").SetString("VisitorId", visitorId).SetString("Currency", currency);
 
                 query.UniqueResult();
             }

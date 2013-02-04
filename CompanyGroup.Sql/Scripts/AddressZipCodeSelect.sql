@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE [ExtractInterface]
 GO
 
 /****** Object:  StoredProcedure [InternetUser].[cms_AddressZipCode]    Script Date: 2012.10.25. 6:37:41 ******/
@@ -8,16 +8,16 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE [InternetUser].[cms_AddressZipCode]
+DROP PROCEDURE [InternetUser].[AddressZipCodeSelect]
 GO
 
-CREATE PROCEDURE [InternetUser].[cms_AddressZipCode](@Prefix NVARCHAR(8) = '', @DataAreaId NVARCHAR(3) = 'hrp')
+CREATE PROCEDURE [InternetUser].[AddressZipCodeSelect](@Prefix NVARCHAR(8) = '', @DataAreaId NVARCHAR(3) = 'hrp')
 AS
 SET NOCOUNT ON;
 
 	DECLARE @VirtualDataAreaId nvarchar(3);
 
-	SET @VirtualDataAreaId = InternetUser.GetVirtualDataAreaId( @DataAreaId );
+	SET @VirtualDataAreaId = 'hun';
 
 	--SET @@RowCount = @iRowCount;
 
@@ -28,5 +28,7 @@ SET NOCOUNT ON;
 RETURN
 
 GO
--- EXEC [InternetUser].[cms_AddressZipCode] '10', 'hrp'
+GRANT EXECUTE ON InternetUser.AddressZipCodeSelect TO InternetUser
+GO
+-- EXEC [InternetUser].[AddressZipCodeSelect] '11', 'hrp'
 

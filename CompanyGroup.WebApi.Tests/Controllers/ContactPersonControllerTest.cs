@@ -14,6 +14,24 @@ namespace CompanyGroup.WebApi.Tests.Controllers
     [TestClass]
     public class ContactPersonControllerTest : ControllerBase
     {
+        private TestContext testContextInstance;
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
+
         [TestMethod]
         public void ChangePasswordTest()
         {
@@ -29,7 +47,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
             CompanyGroup.Dto.PartnerModule.ChangePassword changePassword = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.ChangePassword>().Result;
@@ -52,7 +70,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
             CompanyGroup.Dto.PartnerModule.UndoChangePassword changePassword = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.UndoChangePassword>().Result;
@@ -63,7 +81,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetByIdTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request = new CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest();
+            CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request = new CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest("alma", "hu");
 
             Uri requestUri = null;
 
@@ -75,7 +93,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
             CompanyGroup.Dto.PartnerModule.ContactPerson contactPerson = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.ContactPerson>().Result;
@@ -98,7 +116,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             }
             else
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
             CompanyGroup.Dto.PartnerModule.ForgetPassword changePassword = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.ForgetPassword>().Result;

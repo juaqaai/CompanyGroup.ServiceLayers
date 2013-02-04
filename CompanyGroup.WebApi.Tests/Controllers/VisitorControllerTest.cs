@@ -72,11 +72,18 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void ChangeCurrencyTest()
         {
-            ChangeCurrencyRequest request = new ChangeCurrencyRequest("", "HUF");
+            ChangeCurrencyRequest request = new ChangeCurrencyRequest("alma", "EUR");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/ChangeCurrency", request).Result;
 
-            Assert.IsNotNull(response);
+            if (response.IsSuccessStatusCode)
+            {
+                Assert.IsNotNull(response);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         /// <summary>
@@ -85,11 +92,18 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void ChangeLanguageTest()
         {
-            ChangeLanguageRequest request = new ChangeLanguageRequest("", "hu");
+            ChangeLanguageRequest request = new ChangeLanguageRequest("alma", "en");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/ChangeLanguage", request).Result;
 
-            Assert.IsNotNull(response);
+            if (response.IsSuccessStatusCode)
+            {
+                Assert.IsNotNull(response);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         /// <summary>
@@ -98,11 +112,20 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetVisitorInfoTest()
         {
-            VisitorInfoRequest request = new VisitorInfoRequest("CBB75B0D-D8C1-4863-8456-7A7DA685E164", "hrp");
+            VisitorInfoRequest request = new VisitorInfoRequest("alma", "hrp");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/GetVisitorInfo", request).Result;
 
-            Assert.IsNotNull(response);
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.PartnerModule.Visitor visitor = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.Visitor>().Result;
+
+                Assert.IsNotNull(visitor);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         /// <summary>
@@ -115,7 +138,16 @@ namespace CompanyGroup.WebApi.Tests.Controllers
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/SignIn", request).Result;
 
-            Assert.IsNotNull(response);
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.PartnerModule.Visitor visitor = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.Visitor>().Result;
+
+                Assert.IsNotNull(visitor);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         /// <summary>
@@ -124,7 +156,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void SignOutTest()
         {
-            SignOutRequest request = new SignOutRequest("hrp", "CBB75B0D-D8C1-4863-8456-7A7DA685E164");
+            SignOutRequest request = new SignOutRequest("hrp", "alma");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/SignOut", request).Result;
 

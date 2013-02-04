@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 
 SET ANSI_NULLS ON
@@ -6,9 +6,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- vevõhöz tartozó levelezési adatok lekérdezése
-DROP PROCEDURE InternetUser.cms_MailAddress
+DROP PROCEDURE InternetUser.MailAddressSelect
 GO
-CREATE PROCEDURE InternetUser.cms_MailAddress( @CustomerId nvarchar(20), @DataAreaId nvarchar(3) )											
+CREATE PROCEDURE InternetUser.MailAddressSelect( @CustomerId nvarchar(20), @DataAreaId nvarchar(3) )											
 AS
 	SELECT MCity AS City, 
 		   --MCounty as County,
@@ -19,11 +19,11 @@ AS
 	WHERE DataAreaId = @DataAreaId AND AccountNum = @CustomerId;
 	RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_MailAddress TO InternetUser
+GRANT EXECUTE ON InternetUser.MailAddressSelect TO InternetUser
 GO
 
 /*
-exec InternetUser.cms_MailAddress 'V002020', 'hrp'
+exec InternetUser.MailAddressSelect 'V002020', 'hrp'
 select MCountryRegionId FROM AxDb20101004.dbo.CustTable group by MCountryRegionId
 
 */

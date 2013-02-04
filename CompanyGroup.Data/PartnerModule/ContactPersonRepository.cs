@@ -61,7 +61,7 @@ namespace CompanyGroup.Data.PartnerModule
 
         /// <summary>
         /// kapcsolattartó lekérdezés
-        /// InternetUser.cms_ContactPerson( @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')
+        /// InternetUser.ContactPersonSelect( @CustomerId nvarchar(20), @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
@@ -72,8 +72,9 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ContactPerson")
-                                                            .SetString("CustomerId", contactPersonId)
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ContactPersonSelect")
+                                                            .SetString("CustomerId", String.Empty)
+                                                            .SetString("ContactPersonId", contactPersonId)
                                                             .SetString("DataAreaId", dataAreaId)
                                                             .SetResultTransformer(
                                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.ContactPerson).GetConstructors()[0]));

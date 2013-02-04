@@ -28,7 +28,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CustomerData")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerSelect")
                                             .SetString("CustomerId", customerId)
                                             .SetString("DataAreaId", dataAreaId)    //.UniqueResult<CompanyGroup.Domain.PartnerModule.MailAddress>();
                                             .SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.Customer).GetConstructors()[0]));
@@ -50,11 +50,13 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = Session.GetNamedQuery("InternetUser.cms_MailAddress")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.MailAddressSelect")
                                             .SetString("CustomerId", customerId)
-                                            .SetString("DataAreaId", dataAreaId).UniqueResult<CompanyGroup.Domain.PartnerModule.MailAddress>();
-                                            //.SetResultTransformer(
-                                            //new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerLetter).GetConstructors()[0]));
+                                            .SetString("DataAreaId", dataAreaId)
+                                            .SetResultTransformer(
+                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.MailAddress).GetConstructors()[0]));
+
+            CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = query.UniqueResult<CompanyGroup.Domain.PartnerModule.MailAddress>();
 
             return mailAddress;  //query.List<CompanyGroup.Domain.PartnerModule.CustomerLetter>() as List<CompanyGroup.Domain.PartnerModule.CustomerLetter>;
         }
@@ -69,7 +71,7 @@ namespace CompanyGroup.Data.PartnerModule
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_AddressZipCode")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.AddressZipCodeSelect")
                                             .SetString("Prefix", prefix)
                                             .SetString("DataAreaId", dataAreaId)
                                             .SetResultTransformer(
@@ -90,7 +92,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_DeliveryAddress")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.DeliveryAddressSelect")
                                             .SetString("CustomerId", customerId)
                                             .SetString("DataAreaId", dataAreaId)
                                             .SetResultTransformer(
@@ -102,7 +104,7 @@ namespace CompanyGroup.Data.PartnerModule
         /// <summary>
         /// vevőhöz tartozó bankszámlaszámok
         /// </summary>
-        /// <example>InternetUser.cms_BankAccountList( @CustomerId NVARCHAR(20), @DataAreaId NVARCHAR(3) = 'hrp' )</example>
+        /// <example>InternetUser.BankAccountSelect( @CustomerId NVARCHAR(20), @DataAreaId NVARCHAR(3) = 'hrp' )</example>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
@@ -112,7 +114,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_BankAccountList")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.BankAccountSelect")
                                                             .SetString("CustomerId", customerId)
                                                             .SetString("DataAreaId", dataAreaId)
                                                             .SetResultTransformer(
@@ -123,7 +125,7 @@ namespace CompanyGroup.Data.PartnerModule
 
         /// <summary>
         /// vevő kapcsolattartói
-        /// InternetUser.cms_ContactPersons( @CustomerId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')
+        /// InternetUser.ContactPersonSelect( @CustomerId nvarchar(20), @ContactPersonId nvarchar(20), @DataAreaId NVARCHAR(3) = 'hrp')
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
@@ -134,42 +136,15 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ContactPersons")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ContactPersonSelect")
                                                             .SetString("CustomerId", customerId)
+                                                            .SetString("ContactPersonId", String.Empty)
                                                             .SetString("DataAreaId", dataAreaId)
                                                             .SetResultTransformer(
                                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.ContactPerson).GetConstructors()[0]));
 
             return query.List<CompanyGroup.Domain.PartnerModule.ContactPerson>() as List<CompanyGroup.Domain.PartnerModule.ContactPerson>;
         }
-
-        /// <summary>
-        /// bejelentkezés
-        /// </summary>
-        /// <remarks>
-        /// [InternetUser].[SignIn] @UserName nvarchar(32) = '', @Password nvarchar(32) = '', @DataAreaId nvarchar(3) = ''
-        /// </remarks>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="dataAreaId"></param>
-        /// <returns></returns>
-        //public CompanyGroup.Domain.PartnerModule.LoginInfo SignIn(string userName, string password, string dataAreaId)
-        //{
-        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "User name may not be null or empty");
-
-        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(password), "Password may not be null or empty");
-
-        //    CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
-
-        //    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_SignIn")
-        //                                    .SetString("UserName", userName)
-        //                                    .SetString("Password", password)
-        //                                    .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.LoginInfo).GetConstructors()[0]));
-
-        //    CompanyGroup.Domain.PartnerModule.LoginInfo loginInfo = query.UniqueResult<CompanyGroup.Domain.PartnerModule.LoginInfo>();
-
-        //    return loginInfo;
-        //}
 
         /// <summary>
         /// 
