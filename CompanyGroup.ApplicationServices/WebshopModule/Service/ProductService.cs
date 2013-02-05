@@ -582,6 +582,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 product.IsInCart = false;
             }
 
+            product.SecondHandList = (product.SecondHand) ? this.GetSecondHandList(product.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+
             CompanyGroup.Dto.WebshopModule.Product result = new ProductToProduct().Map(product);
 
             return result;

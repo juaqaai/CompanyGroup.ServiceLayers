@@ -11,13 +11,13 @@ namespace CompanyGroup.Dto.WebshopModule
 
         public GetItemByProductIdRequest(string productId, string dataAreaId, string visitorId, string currency)
         {
-            this.ProductId = ProductId;
+            this.ProductId = productId;
 
-            this.DataAreaId = DataAreaId;
+            this.DataAreaId = dataAreaId;
 
-            this.VisitorId = VisitorId;
+            this.VisitorId = visitorId;
 
-            this.Currency = Currency;
+            this.Currency = currency;
         }
 
         public string ProductId { get; set; }

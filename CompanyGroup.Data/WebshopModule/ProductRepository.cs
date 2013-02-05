@@ -467,9 +467,9 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_CompatibilityList").SetString("DataAreaId", dataAreaId)
-                                                                                                 .SetString("ProductId", productId)
-                                                                                                 .SetBoolean("Part", part).SetResultTransformer(
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CompatibilityList").SetString("DataAreaId", dataAreaId)
+                                                                                             .SetString("ProductId", productId)
+                                                                                             .SetBoolean("Part", part).SetResultTransformer(
                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CompatibilityItem).GetConstructors()[0]));
 
             return query.List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>() as List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>;

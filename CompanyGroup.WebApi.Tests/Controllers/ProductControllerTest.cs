@@ -13,17 +13,41 @@ namespace CompanyGroup.WebApi.Tests.Controllers
     [TestClass]
     public class ProductControllerTest : ControllerBase
     {
+        private TestContext testContextInstance;
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
 
         [TestMethod]
         public void GetProductsTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetAllProductRequest request = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest();
+            CompanyGroup.Dto.WebshopModule.GetAllProductRequest request = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest() { CurrentPageIndex = 1, ItemsOnPage = 30 };
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetProducts", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetProducts", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.Products products = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Products>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.Products products = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Products>().Result;
 
-            Assert.IsNotNull(products);
+                Assert.IsNotNull(products);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
@@ -31,11 +55,18 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         {
             CompanyGroup.Dto.WebshopModule.GetBannerListRequest request = new CompanyGroup.Dto.WebshopModule.GetBannerListRequest();
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetBannerList", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetBannerList", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.BannerList bannerList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.BannerList>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.BannerList bannerList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.BannerList>().Result;
 
-            Assert.IsNotNull(bannerList);
+                Assert.IsNotNull(bannerList);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
@@ -43,47 +74,75 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         {
             CompanyGroup.Dto.WebshopModule.GetPriceListRequest request = new CompanyGroup.Dto.WebshopModule.GetPriceListRequest();
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetPriceList", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetPriceList", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.PriceList priceList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.PriceList>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.PriceList priceList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.PriceList>().Result;
 
-            Assert.IsNotNull(priceList);
+                Assert.IsNotNull(priceList);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
         public void GetItemByProductIdTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("", "", "", "HUF");
+            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("NWA3160", "hrp", "alma", "HUF");
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetItemByProductId", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetItemByProductId", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.Product product = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Product>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.Product product = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Product>().Result;
 
-            Assert.IsNotNull(product);
+                Assert.IsNotNull(product);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
         public void GetCompletionListTest()
         {
-            CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request = new CompanyGroup.Dto.WebshopModule.ProductListComplationRequest();
+            CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request = new CompanyGroup.Dto.WebshopModule.ProductListComplationRequest() { Prefix = "del" };
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetCompletionList", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetCompletionList", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.CompletionList completionList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompletionList>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.CompletionList completionList = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompletionList>().Result;
 
-            Assert.IsNotNull(completionList);
+                Assert.IsNotNull(completionList);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
 
         [TestMethod]
         public void GetCompatibleProductsTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest();
+            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("NWA3160", "hrp", "alma", "HUF");
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Products/GetCompatibleProducts", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetCompatibleProducts", request).Result;
 
-            CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompatibleProducts>().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompatibleProducts>().Result;
 
-            Assert.IsNotNull(compatibleProducts);
+                Assert.IsNotNull(compatibleProducts);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
         }
     }
 }

@@ -36,5 +36,7 @@ BEGIN
 END
 RETURN
 GO
+GRANT EXECUTE ON InternetUser.NewsletterSelect TO InternetUser
+GO
 
 -- exec [InternetUser].[NewsletterSelect] 10, 'hrp', '', '';

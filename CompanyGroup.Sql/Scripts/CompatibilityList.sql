@@ -1,13 +1,13 @@
-USE [WebDb_Test]
+USE [Web]
 GO
 /****** Object:  StoredProcedure [InternetUser].[cms_CompatibilityList]    Script Date: 2012.08.22. 23:04:17 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-DROP PROCEDURE InternetUser.cms_CompatibilityList;
+DROP PROCEDURE InternetUser.CompatibilityList;
 GO
-CREATE PROCEDURE InternetUser.cms_CompatibilityList( @DataAreaId nvarchar (3), 
+CREATE PROCEDURE InternetUser.CompatibilityList( @DataAreaId nvarchar (3), 
 													 @ProductId nvarchar (20), 
 													 @Part BIT = 0	-- alkatresz jelolese : 0 = a termekazonositohoz tartozo alkatreszeket keressuk
 																		--						1 = a termekazonositohoz mint alkatreszhez tartozo termekeket keressuk
@@ -26,7 +26,7 @@ SET NOCOUNT ON
 		WHERE cat.DataAreaId = @DataAreaId AND cmp.CompatItemId = @ProductId;		
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_CompatibilityList TO InternetUser
+GRANT EXECUTE ON InternetUser.CompatibilityList TO InternetUser
 GO
 
--- EXEC InternetUser.cms_CompatibilityList 'hrp', 'A500-1DN', 0;
+-- EXEC InternetUser.CompatibilityList 'hrp', 'A500-1DN', 0;
