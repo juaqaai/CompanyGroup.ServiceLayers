@@ -72,11 +72,11 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
-            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
+            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession()); 
 
-            ShoppingCart shoppingCart = new ShoppingCart(1, "4f666a456ee01212480d7eb6", "teszt2 company", "test2 person", "cart1", "HUF", false); 
+            ShoppingCart shoppingCart = new ShoppingCart(1, "alma", "teszt rt", "test2 person", "cart55", "HUF", false); 
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
 
@@ -99,9 +99,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddItemTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
-            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
             Product product = productRepository.GetItem("AMVS238H", "hrp");
 
@@ -120,7 +120,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void GetShoppingCartTest()
         {
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
             ShoppingCart cart = repository.GetShoppingCart(1);
 
@@ -133,9 +133,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void GetItemsByVisitorIdTest()
         {
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
-            string visitorId = "4f666a456ee01212480d7eb6";
+            string visitorId = "alma";
 
             List<ShoppingCart> carts = repository.GetCartCollection(visitorId);
 
@@ -148,7 +148,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void GetShoppingCartLineTest()
         {
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
             ShoppingCartItem shoppingCartItem = repository.GetShoppingCartLine(1);
 
@@ -161,9 +161,9 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void RemoveTest()
         {
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession()); 
 
-            repository.Remove(3);
+            repository.Remove(2);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void RemoveLineTest()
         {
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession()); 
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession()); 
 
             repository.RemoveLine(2);
         }
@@ -184,11 +184,15 @@ namespace CompanyGroup.Data.Test
         public void UpdateItemQuantityTest()
         {
 
-            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetSession());
+            ShoppingCartRepository repository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
             int quantity = 4;
 
-            repository.UpdateLineQuantity(2, quantity);
+            repository.UpdateLineQuantity(1, quantity);
+
+            ShoppingCart shoppingCart = repository.GetShoppingCart(1);
+
+            Assert.IsNotNull(shoppingCart);
         }
     }
 }

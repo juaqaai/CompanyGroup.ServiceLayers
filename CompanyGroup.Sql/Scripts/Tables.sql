@@ -335,3 +335,17 @@ CREATE TABLE InternetUser.Picture
     [ExtractDate] datetime2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]			int not null default 0
 )
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Compatibility') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Compatibility;
+GO
+CREATE TABLE InternetUser.Compatibility
+(
+	Id					INT IDENTITY NOT NULL PRIMARY KEY,
+	ProductId			NVARCHAR(20) NOT NULL DEFAULT '',
+	CompatibleProductId	NVARCHAR(20) NOT NULL DEFAULT '',
+	CompatibilityType	INT NOT NULL DEFAULT 0, 
+	DataAreaId			NVARCHAR(3) NOT NULL DEFAULT '',
+    [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		INT NOT NULL DEFAULT 0
+)

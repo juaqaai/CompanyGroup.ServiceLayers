@@ -387,7 +387,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("503a0aad6ee01209a42e0c41", "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("503a0aad6ee01209a42e0c41", "alma", "hu");
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.AssociateCart(request);
 

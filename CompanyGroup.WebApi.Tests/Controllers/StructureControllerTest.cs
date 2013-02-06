@@ -26,15 +26,16 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.Structures structures = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Structures>().Result;
+
+                Assert.IsNotNull(structures);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Structures>().Result;
-
-            Assert.IsNotNull(structures);
         }
 
     }

@@ -659,7 +659,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, false);
 
-            compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
+            compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, visitor)));
 
             return result;
         }
@@ -670,7 +670,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, true);
 
-            compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ItemId, x.DataAreaId, visitorId, visitor)));
+            compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, visitor)));
 
             return result;
         }

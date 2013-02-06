@@ -28,27 +28,27 @@ SET NOCOUNT ON
 		Cart.Currency,
 		Cart.[Status],
 		Cart.CreatedDate,
-		Line.Id as LineId, 
-		Line.ProductId, 
-		Line.CartId,
-		Catalogue.Name as ProductName,
-		Catalogue.EnglishName as ProductNameEnglish,
-		Catalogue.PartNumber,
-		Catalogue.StandardConfigId as ConfigId,
-		Line.Price as CustomerPrice,
-		Catalogue.ItemState,
-		Line.DataAreaId,
-		Line.Quantity,
-		Line.Status, 
-		Line.CreatedDate, 
-		Catalogue.InnerStock as [Inner], 
-		Catalogue.OuterStock as [Outer]
+		Line.Id as LineId,
+		ISNULL(Line.CartId, 0) as CartId, 
+		Line.ProductId as ProductId,
+		ISNULL(Catalogue.Name, '') as ProductName,
+		ISNULL(Catalogue.EnglishName, '') as ProductNameEnglish,
+		ISNULL(Catalogue.PartNumber, '') as PartNumber,
+		ISNULL(Catalogue.StandardConfigId, '') as ConfigId,
+		ISNULL(Line.Price, 0) as CustomerPrice,
+		ISNULL(Catalogue.ItemState, 0) as ItemState,
+		ISNULL(Line.DataAreaId, '') as DataAreaId,
+		ISNULL(Line.Quantity, 0) as Quantity,
+		ISNULL(Line.Status, 0) as Status, 
+		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
+		ISNULL(Catalogue.InnerStock, 0) as [Inner], 
+		ISNULL(Catalogue.OuterStock, 0) as [Outer]
 	FROM InternetUser.ShoppingCart as Cart
-	INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
-	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
-	WHERE Cart.Status IN (1, 2) AND 
-		  Line.Status IN (1, 2) AND 
-		  Cart.Id = @CartId;
+	LEFT OUTER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
+	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	WHERE (Cart.Status IN (1, 2)) AND 
+		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
+		  (Cart.Id = @CartId);
 RETURN
 -- EXEC [InternetUser].[GetShoppingCart] 1;
 GO
@@ -66,6 +66,7 @@ SET NOCOUNT ON
 		'' as PersonId,
 		Cart.Name, 
 		Cart.PaymentTerms,
+		Cart.DeliveryTerms,
 		Cart.DeliveryDateRequested as DateRequested,
 		Cart.DeliveryZipCode as ZipCode,
 		Cart.DeliveryCity as City,
@@ -76,33 +77,33 @@ SET NOCOUNT ON
 		Cart.Active, 
 		Cart.Currency,
 		Cart.[Status],
-		Line.Id as LineId,
-		Line.CartId, 
-		Line.ProductId,
-		Catalogue.Name as ProductName,
-		Catalogue.EnglishName as ProductNameEnglish,
-		Catalogue.PartNumber,
-		Catalogue.StandardConfigId as ConfigId,
-		Line.Price as CustomerPrice,
-		Catalogue.ItemState,
-		Line.DataAreaId,
-		Line.Quantity,
-		Line.Status, 
-		Line.CreatedDate, 
-		Catalogue.InnerStock as [Inner], 
-		Catalogue.OuterStock as [Outer]
+		ISNULL(Line.Id, 0) as LineId,
+		ISNULL(Line.CartId, 0) as CartId, 
+		ISNULL(Line.ProductId, '') as ProductId,
+		ISNULL(Catalogue.Name, '') as ProductName,
+		ISNULL(Catalogue.EnglishName, '') as ProductNameEnglish,
+		ISNULL(Catalogue.PartNumber, '') as PartNumber,
+		ISNULL(Catalogue.StandardConfigId, '') as ConfigId,
+		ISNULL(Line.Price, 0) as CustomerPrice,
+		ISNULL(Catalogue.ItemState, 0) as ItemState,
+		ISNULL(Line.DataAreaId, '') as DataAreaId,
+		ISNULL(Line.Quantity, 0) as Quantity,
+		ISNULL(Line.Status, 0) as Status, 
+		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
+		ISNULL(Catalogue.InnerStock, 0) as [Inner], 
+		ISNULL(Catalogue.OuterStock, 0) as [Outer]
 	FROM InternetUser.ShoppingCart as Cart
-	INNER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
-	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	LEFT OUTER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
+	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
 	WHERE Cart.Status IN (1, 2) AND 
-		  Line.Status IN (1, 2) AND 
+		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
 		  Cart.VisitorId = @VisitorId;
 
 RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCartCollection] TO InternetUser
 GO
--- EXEC [InternetUser].[GetShoppingCartCollection] 'teszt';
+-- EXEC [InternetUser].[GetShoppingCartCollection] 'alma';
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
 GO
@@ -125,7 +126,7 @@ SET NOCOUNT ON
 		Catalogue.InnerStock as [Inner], 
 		Catalogue.OuterStock as [Outer]
 	FROM InternetUser.ShoppingCartLine as Line
-	INNER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
+	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
 	WHERE Line.Status IN (1, 2) AND 
 		  Line.Id = @LineId;
 RETURN

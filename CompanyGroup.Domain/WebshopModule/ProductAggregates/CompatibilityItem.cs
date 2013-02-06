@@ -5,15 +5,19 @@ namespace CompanyGroup.Domain.WebshopModule
 {
     public class CompatibilityItem
     {
-        public CompatibilityItem(string itemId, string dataAreaId)
+        public CompatibilityItem(string productId, string dataAreaId, int compatibilityType)
         { 
-            ItemId = itemId;
+            this.ProductId = productId;
 
-            DataAreaId = dataAreaId;
+            this.DataAreaId = dataAreaId;
+
+            this.CompatibilityType = (CompatibilityType) compatibilityType;
         }
 
-        public string ItemId { get; set; }
+        public string ProductId { get; set; }
 
         public string DataAreaId { get; set; }
+
+        public CompatibilityType CompatibilityType { get; set; }
     }
 }

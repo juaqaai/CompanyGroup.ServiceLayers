@@ -3,7 +3,7 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
-        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\juhasza">
           <Created>2013-01-27T03:54:40.4406025+01:00</Created>
           <Type>SQL</Type>
           <Server>AXDB\HRPAXDB</Server>
@@ -15,7 +15,7 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
-        <ConnectionNode Name="srv2:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="srv2:HRP_HEADOFFICE\juhasza">
           <Created>2013-01-27T03:52:33.5606025+01:00</Created>
           <Type>SQL</Type>
           <Server>srv2</Server>
@@ -48,6 +48,12 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Category2Extract.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CompatibilityExtract.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CompatibilityExtract.sql</FullPath>
         </FileNode>
         <FileNode Name="CreateDb.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>

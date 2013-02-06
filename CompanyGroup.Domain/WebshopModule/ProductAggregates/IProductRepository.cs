@@ -144,9 +144,9 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="dataAreaId"></param>
-        /// <param name="part"></param>
+        /// <param name="reverse"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part);
+        List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool reverse);
 
         /// <summary>
         /// leértékelt lista

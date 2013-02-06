@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.cms_LeasingByFinancedAmount" callable="true">
+  <sql-query name="InternetUser.LeasingByFinancedAmount" callable="true">
     <query-param name="FinancedAmount" type="System.Int32"/>
     <return-scalar column="Id" type="System.Int32"/>    
     <return-scalar column="IntervalFrom" type="System.Int32"/>
@@ -9,6 +9,6 @@
     <return-scalar column="PercentValue" type="System.Double"/>
     <return-scalar column="InterestRate" type="System.Double"/>
     <return-scalar column="PresentValue" type="System.Double"/>    
-    exec InternetUser.cms_LeasingByFinancedAmount @FinancedAmount=:FinancedAmount
+    exec InternetUser.LeasingByFinancedAmount @FinancedAmount=:FinancedAmount
   </sql-query>
 </hibernate-mapping>

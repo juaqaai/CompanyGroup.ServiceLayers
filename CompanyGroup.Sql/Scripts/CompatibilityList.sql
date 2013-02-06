@@ -8,25 +8,29 @@ GO
 DROP PROCEDURE InternetUser.CompatibilityList;
 GO
 CREATE PROCEDURE InternetUser.CompatibilityList( @DataAreaId nvarchar (3), 
-													 @ProductId nvarchar (20), 
-													 @Part BIT = 0	-- alkatresz jelolese : 0 = a termekazonositohoz tartozo alkatreszeket keressuk
+												 @ProductId nvarchar (20), 
+												 @Reverse BIT = 0	-- alkatresz jelolese : 0 = a termekazonositohoz tartozo alkatreszeket keressuk
 																		--						1 = a termekazonositohoz mint alkatreszhez tartozo termekeket keressuk
 													  )
 AS
 SET NOCOUNT ON
-	IF ( @Part = 0 )
-		SELECT cat.ItemId, cat.DataAreaId
-		FROM axdb_20120614.dbo.updCompatib as cmp
-		INNER JOIN axdb_20120614.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.CompatItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
-		WHERE cat.DataAreaId = @DataAreaId AND cmp.ItemId = @ProductId;
+	IF ( @Reverse = 0 )	-- kellékanyag
+		SELECT ProductId, DataAreaId, CompatibleProductId,  CompatibilityType
+		FROM InternetUser.Compatibility WITH (READUNCOMMITTED)
+		WHERE DataAreaId = @DataAreaId AND ProductId = @ProductId;
 	ELSE
-		SELECT cat.ItemId, cat.DataAreaId
-		FROM axdb_20120614.dbo.updCompatib as cmp
-		INNER JOIN axdb_20120614.dbo.InventTable AS cat WITH (READUNCOMMITTED) ON cmp.ItemId = cat.ItemId AND cat.DataAreaId = cmp.DataAreaId
-		WHERE cat.DataAreaId = @DataAreaId AND cmp.CompatItemId = @ProductId;		
+		SELECT ProductId, DataAreaId, CompatibleProductId, CompatibilityType
+		FROM InternetUser.Compatibility
+		WHERE DataAreaId = @DataAreaId AND CompatibleProductId = @ProductId;		
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.CompatibilityList TO InternetUser
 GO
 
--- EXEC InternetUser.CompatibilityList 'hrp', 'A500-1DN', 0;
+-- EXEC InternetUser.CompatibilityList 'hrp', 'A500-1DN', 1;
+
+/*
+select count(*), Tipus from axdb.dbo.updCompatib group by Tipus -- Kellékanyag, Opció
+select * from axdb.dbo.updCompatib where Tipus = 'Kellékanyag'
+select * from axdb.dbo.updCompatib where Tipus = 'Opció'
+*/

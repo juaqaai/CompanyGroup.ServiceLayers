@@ -3,7 +3,7 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
-        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\juhasza">
           <Created>2012-07-05T15:16:37.355646+02:00</Created>
           <Type>SQL</Type>
           <Server>AXDB\HRPAXDB</Server>
@@ -15,7 +15,7 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
-        <ConnectionNode Name="JUHASZ-A-W7\BI:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="JUHASZ-A-W7\BI:HRP_HEADOFFICE\juhasza">
           <Created>2012-12-21T13:24:27.2314875+01:00</Created>
           <Type>SQL</Type>
           <Server>JUHASZ-A-W7\BI</Server>
@@ -27,7 +27,7 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
-        <ConnectionNode Name="srv2:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="srv2:HRP_HEADOFFICE\juhasza">
           <Created>2013-01-27T00:25:49.1338825+01:00</Created>
           <Type>SQL</Type>
           <Server>srv2</Server>
@@ -103,12 +103,6 @@
           <AssociatedConnUserName />
           <FullPath>cms_Category3List.sql</FullPath>
         </FileNode>
-        <FileNode Name="cms_CompatibilityList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_CompatibilityList.sql</FullPath>
-        </FileNode>
         <FileNode Name="cms_ContactPerson.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -138,18 +132,6 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>cms_EmployeeList.sql</FullPath>
-        </FileNode>
-        <FileNode Name="cms_ExchangeRate.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_ExchangeRate.sql</FullPath>
-        </FileNode>
-        <FileNode Name="cms_Finance.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_Finance.sql</FullPath>
         </FileNode>
         <FileNode Name="cms_GetSecondHandPrice.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -217,12 +199,6 @@
           <AssociatedConnUserName />
           <FullPath>cms_PurchaseLine.sql</FullPath>
         </FileNode>
-        <FileNode Name="cms_SalesOrderList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_SalesOrderList.sql</FullPath>
-        </FileNode>
         <FileNode Name="cms_SecondHandList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -253,6 +229,12 @@
           <AssociatedConnUserName />
           <FullPath>cms_VerifyForgetPassword.sql</FullPath>
         </FileNode>
+        <FileNode Name="CompatibilityList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CompatibilityList.sql</FullPath>
+        </FileNode>
         <FileNode Name="CreateDb.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
@@ -277,11 +259,23 @@
           <AssociatedConnUserName />
           <FullPath>DispoStatus.sql</FullPath>
         </FileNode>
+        <FileNode Name="ExchangeRate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>ExchangeRate.sql</FullPath>
+        </FileNode>
         <FileNode Name="FianceOfferSetStatus.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FianceOfferSetStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Finance.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Finance.sql</FullPath>
         </FileNode>
         <FileNode Name="FinanceOfferInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
@@ -342,6 +336,12 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ProductListCount.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SalesOrderList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SalesOrderList.sql</FullPath>
         </FileNode>
         <FileNode Name="SecondHandCatalogueInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>

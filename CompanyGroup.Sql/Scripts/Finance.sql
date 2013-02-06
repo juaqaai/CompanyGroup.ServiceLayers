@@ -1,4 +1,4 @@
-USE [WebDb_Test]
+USE ExtractInterface
 GO
 SET ANSI_NULLS ON
 GO
@@ -8,9 +8,9 @@ GO
 /*
 	finanszirozasi ajanlat szamitas	 
 */
-DROP PROCEDURE InternetUser.cms_PaymentPeriod
+DROP PROCEDURE InternetUser.PaymentPeriod
 GO
-CREATE PROCEDURE InternetUser.cms_PaymentPeriod
+CREATE PROCEDURE InternetUser.PaymentPeriod
 AS
 SET NOCOUNT ON
 
@@ -20,25 +20,25 @@ SET NOCOUNT ON
 
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_PaymentPeriod TO InternetUser
+GRANT EXECUTE ON InternetUser.PaymentPeriod TO InternetUser
 GO
 
--- exec InternetUser.cms_PaymentPeriod;
+-- exec InternetUser.PaymentPeriod;
 
 /*
 legkisebb és legnagyobb finanszírozható értékhatár lekérdezése
 */
-DROP PROCEDURE InternetUser.cms_MinMaxFinanceLeasingValues
+DROP PROCEDURE InternetUser.MinMaxFinanceLeasingValues
 GO
-CREATE PROCEDURE InternetUser.cms_MinMaxFinanceLeasingValues
+CREATE PROCEDURE InternetUser.MinMaxFinanceLeasingValues
 AS
 SET NOCOUNT ON
 	SELECT MIN(FromValue) as MinValue, MAX(ToValue) as MaxValue FROM axdb_20120614.dbo.FinanceLeasingIntervall;
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_MinMaxFinanceLeasingValues TO InternetUser
+GRANT EXECUTE ON InternetUser.MinMaxFinanceLeasingValues TO InternetUser
 GO
--- exec InternetUser.cms_MinMaxFinanceLeasingValues;
+-- exec InternetUser.MinMaxFinanceLeasingValues;
 
 /*
 	finanszirozasi ajanlat szamitas	 
@@ -50,9 +50,9 @@ GO
 	select * from AxDb.dbo.FinancePaymentPeriod
  
 */
-DROP PROCEDURE InternetUser.cms_LeasingByFinancedAmount
+DROP PROCEDURE InternetUser.LeasingByFinancedAmount
 GO
-CREATE PROCEDURE InternetUser.cms_LeasingByFinancedAmount( @FinancedAmount int = 0 )
+CREATE PROCEDURE InternetUser.LeasingByFinancedAmount( @FinancedAmount int = 0 )
 AS
 SET NOCOUNT ON
 
@@ -81,12 +81,12 @@ SET NOCOUNT ON
 
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_LeasingByFinancedAmount TO InternetUser
+GRANT EXECUTE ON InternetUser.LeasingByFinancedAmount TO InternetUser
 GO
 
 /*
-exec InternetUser.cms_LeasingByFinancedAmount 5000001;
-exec InternetUser.cms_LeasingByFinancedAmount 280000;
+exec InternetUser.LeasingByFinancedAmount 5000001;
+exec InternetUser.LeasingByFinancedAmount 280000;
 
 select * from AxDb.dbo.FinanceLeasingIntervall
 

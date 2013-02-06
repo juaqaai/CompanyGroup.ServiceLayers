@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="WebLoader"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{FAED57F0-5BBC-46AE-82C0-823ACBA0601A}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{A919E5E1-15BE-451A-A4BA-3CE8C4B7F3AF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables>
@@ -115,6 +115,27 @@
             <ExecutePackageTask>
               <UseProjectReference>True</UseProjectReference>
               <PackageName>Catalogue.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\Compatibility"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{dd8f18eb-b0e4-43b5-a9ad-e49c589393f0}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Compatibility"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>Compatibility.dtsx</PackageName>
               <ParameterAssignment>
                 <ParameterName>JobLogKey</ParameterName>
                 <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
@@ -284,9 +305,9 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="140,42"
+          Size="140,51"
           Id="Package\JobLog close"
-          TopLeft="260,488" />
+          TopLeft="259,532" />
         <NodeLayout
           Size="138,42"
           Id="Package\JobLog start"
@@ -296,22 +317,26 @@
           Id="Package\Web staging sequence container\Catalogue"
           TopLeft="35,17" />
         <NodeLayout
-          Size="112,42"
+          Size="135,42"
           Id="Package\Web staging sequence container\Picture"
-          TopLeft="207,23" />
+          TopLeft="185,22" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Web staging sequence container\Representative"
+          TopLeft="34,97" />
         <NodeLayout
           Size="139,42"
           Id="Package\Web staging sequence container\SecondHand"
           TopLeft="355,20" />
         <NodeLayout
-          Size="168,42"
-          Id="Package\Web staging sequence container\Representative"
-          TopLeft="34,97" />
+          Size="156,42"
+          Id="Package\Web staging sequence container\Compatibility"
+          TopLeft="251,94" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="556,227"
-          Size="556,270"
+          PanelSize="556,296"
+          Size="556,339"
           Id="Package\Web staging sequence container"
           TopLeft="47,161" />
         <EdgeLayout
@@ -350,18 +375,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="327.5,431">
+          TopLeft="327,500">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,57"
+              EndConnector="0,32"
               Start="0,0"
-              End="0,49.5">
+              End="0,24.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,49.5" />
+                    End="0,24.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -371,7 +396,7 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <AnnotationLayout
-          Text="[dbo].[usp_JobLog_Start]&#xA;input:&#xA;@JobName nvarchar(50),&#xA;@ServerExecutionID bigint, &#xD;&#xA;@SystemKey int&#xA;output: &#xA;JobLogKey"
+          Text="[dbo].[usp_JobLog_Start]&#xA;input:&#xA;@JobName nvarchar(50),&#xA;@ServerExecutionID bigint, &#xA;@SystemKey int&#xA;output: &#xA;JobLogKey"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="177,138"
@@ -383,7 +408,7 @@
           FontInfo="{assembly:Null}"
           Size="167,74"
           Id="2e1ca605-6266-46e5-b3a2-24a1cd7fe615"
-          TopLeft="408,475" />
+          TopLeft="455,532" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -400,7 +425,7 @@
           Text="[dbo].[usp_JobLog_OnError] @JobLogKey INT,&#xA;              @ErrorCode  INT,&#xA;              @ErrorDesc  NVARCHAR(4000),&#xA;              @ErrorSource  NVARCHAR(100)"
           ParentId="Package.EventHandlers[OnError]"
           FontInfo="{assembly:Null}"
-          Size="273,90"
+          Size="273,NaN"
           Id="0153e562-9ef3-4cbb-9586-2b3c2e3df838"
           TopLeft="360,61" />
       </GraphLayout>

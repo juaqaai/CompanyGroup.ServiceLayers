@@ -178,11 +178,20 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request = new CompanyGroup.Dto.PartnerModule.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = ApiBaseController.DataAreaId };
 
-                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request);
+                HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request).Result;
 
-                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
+                if (response.IsSuccessStatusCode)
+                {
+                    CompanyGroup.Dto.PartnerModule.Visitor visitor = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.Visitor>().Result;
 
-                return visitor;
+                    CompanyGroup.WebClient.Models.Visitor visitorViewModel = new CompanyGroup.WebClient.Models.Visitor(visitor);
+
+                    return visitorViewModel;
+                }
+                else
+                {
+                    return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = String.Format("{0}/{1}", response.StatusCode, response.ReasonPhrase) };
+                }
             }
             catch (Exception ex) { return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message }; }
         }        

@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.cms_CompatibilityList" callable="true">
-    <return-scalar column="ItemId" type="System.String"/>
+  <sql-query name="InternetUser.CompatibilityList" callable="true">
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="Reverse" type="System.Boolean"/>
+    <return-scalar column="ProductId" type="System.String"/>
     <return-scalar column="DataAreaId" type="System.String"/>
-    exec InternetUser.cms_CompatibilityList :DataAreaId, :ProductId, :Part
+    <return-scalar column="CompatibilityType" type="System.Int32"/>
+    exec InternetUser.CompatibilityList @ProductId=:ProductId, @DataAreaId=:DataAreaId, @Reverse=:Reverse
   </sql-query>
 </hibernate-mapping>
 

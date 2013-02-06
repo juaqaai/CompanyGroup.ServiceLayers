@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetOrderInfoTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest("5092cfe46ee0121e98101481", "hu");
+            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest("alma", "hu");
 
             Uri requestUri = null;
 
@@ -26,15 +26,15 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfo = response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>().Result;
+
+                Assert.IsNotNull(orderInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfo = response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>().Result;
-
-            Assert.IsNotNull(orderInfo);
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.cms_SalesOrderList" callable="true">
+  <sql-query name="InternetUser.SalesOrderList" callable="true">
     <query-param name="CustomerId" type="System.String"/>
     <query-param name="DataAreaId" type="System.String"/>
     <return-scalar column="SalesId" type="System.String"/>
@@ -18,6 +18,6 @@
     <return-scalar column="StatusIssue" type="System.Int32"/>
     <return-scalar column="InventLocationId" type="System.String"/>
     <return-scalar column="Payment" type="System.String"/>
-    exec InternetUser.cms_SalesOrderList @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+    exec InternetUser.SalesOrderList @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>

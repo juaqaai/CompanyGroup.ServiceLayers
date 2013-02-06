@@ -1,22 +1,22 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 /****** Object:  StoredProcedure [InternetUser].[web_GetSales]    Script Date: 2012.09.18. 20:55:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-DROP PROCEDURE InternetUser.cms_GetSalesOrders
+DROP PROCEDURE InternetUser.GetSalesOrders
 GO
-CREATE PROCEDURE InternetUser.cms_GetSalesOrders( @CustomerID NVARCHAR(10),
-												@DataAreaID NVARCHAR(3) = 'hrp',
-												@SalesSource INT = -1, -- -1: mindegyik, 0: bolt, 1:internet, 2: xml, 3 : edi 
-												@SalesStatus INT = 1, -- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
-												@SalesType INT = 3, -- 0 : naplo (Journal), 1 : Árajánlat (Quotation), 2 : Elõfizetés (Subscription)
+CREATE PROCEDURE InternetUser.GetSalesOrders( @CustomerID NVARCHAR(10),
+											  @DataAreaID NVARCHAR(3) = 'hrp',
+											  @SalesSource INT = -1, -- -1: mindegyik, 0: bolt, 1:internet, 2: xml, 3 : edi 
+											  @SalesStatus INT = 1, -- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
+											  @SalesType INT = 3, -- 0 : naplo (Journal), 1 : Árajánlat (Quotation), 2 : Elõfizetés (Subscription)
 																	 -- 3 : Értékesítési rendelés (Sales), 4 : Visszáru (ReturnItem), 5 : Keretrendelés (TradeBlanketOrder), 
 																     -- 6 : Cikkszükséglet (ItemReq), 7 : Nem definiált információ (Undefined)
-												@OnOrder BIT = 1, 
-												@Reserved BIT = 1,
-												@ReservedOrdered BIT = 1 )
+											  @OnOrder BIT = 1, 
+											  @Reserved BIT = 1,
+											  @ReservedOrdered BIT = 1 )
 AS
 SET NOCOUNT ON
 
@@ -71,17 +71,18 @@ SET NOCOUNT ON
 
 RETURN
 GO
+GRANT EXECUTE ON [InternetUser].[GetSalesOrders] TO InternetUser;
 
--- exec [InternetUser].[cms_GetSalesOrders] 'V000787', 'hrp';
+-- exec [InternetUser].[GetSalesOrders] 'V000787', 'hrp';
 
 --select SalesHeaderType from Axdb.dbo.updSalesType where dataAreaID = 'hrp' group by SalesHeaderType;
 -- select * from Axdb.dbo.PaymTerm
 -- select * from Axdb.dbo.Currency
 
 GO
-DROP FUNCTION InternetUser.cms_ConvertInventLocationId
+DROP FUNCTION InternetUser.ConvertInventLocationId
 GO
-CREATE FUNCTION InternetUser.cms_ConvertInventLocationId( @InventLocationId NVARCHAR(10) )
+CREATE FUNCTION InternetUser.ConvertInventLocationId( @InventLocationId NVARCHAR(10) )
 RETURNS NVARCHAR(10)	
 AS
 BEGIN
@@ -98,12 +99,12 @@ BEGIN
 	RETURN @Result;
 END
 
--- SELECT InternetUser.cms_ConvertInventLocationId('7000');
+-- SELECT InternetUser.ConvertInventLocationId('7000');
 GO
-DROP PROCEDURE InternetUser.cms_SalesOrderList
+DROP PROCEDURE InternetUser.SalesOrderList
 GO
-CREATE PROCEDURE InternetUser.cms_SalesOrderList( @CustomerId NVARCHAR(10),
-													 @DataAreaId NVARCHAR(3) = 'hrp' )
+CREATE PROCEDURE InternetUser.SalesOrderList( @CustomerId NVARCHAR(10),
+											  @DataAreaId NVARCHAR(3) = 'hrp' )
 AS
 SET NOCOUNT ON;
 with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId, Name, SalesPrice, CurrencyCode, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, InventLocationId)
@@ -141,5 +142,6 @@ with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId,
 
 RETURN 
 GO
+GRANT EXECUTE ON [InternetUser].[SalesOrderList] TO InternetUser;
 
--- exec InternetUser.cms_SalesOrderList 'V001446'; --'V001686'	--'V000787'
+-- exec InternetUser.SalesOrderList 'V001446'; --'V001686'	--'V000787'

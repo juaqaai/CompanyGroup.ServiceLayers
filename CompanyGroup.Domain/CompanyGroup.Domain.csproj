@@ -142,6 +142,7 @@
     <Compile Include="WebshopModule\NewsletterAggregates\NewsletterCollection.cs" />
     <Compile Include="WebshopModule\ProductAggregates\BannerProduct.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Catalogue.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\CompatibilityType.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Completion.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CompletionType.cs" />
     <Compile Include="WebshopModule\ProductAggregates\DataAreaId.cs" />

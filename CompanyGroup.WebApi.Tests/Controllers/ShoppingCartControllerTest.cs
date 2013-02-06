@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void AssociateCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest();
+            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("alma", "", "hu");
 
             Uri requestUri = null;
 
@@ -26,21 +26,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void AddCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest();
+            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "alma", "teszt1");
 
             Uri requestUri = null;
 
@@ -49,21 +49,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void SaveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.SaveCartRequest request = new CompanyGroup.Dto.WebshopModule.SaveCartRequest();
+            CompanyGroup.Dto.WebshopModule.SaveCartRequest request = new CompanyGroup.Dto.WebshopModule.SaveCartRequest("hu", "alma", 1, "teszt2");
 
             Uri requestUri = null;
 
@@ -72,21 +72,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void RemoveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.RemoveCartRequest request = new CompanyGroup.Dto.WebshopModule.RemoveCartRequest();
+            CompanyGroup.Dto.WebshopModule.RemoveCartRequest request = new CompanyGroup.Dto.WebshopModule.RemoveCartRequest(1, "hu", "alma");
 
             Uri requestUri = null;
 
@@ -95,21 +95,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void ActivateCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.ActivateCartRequest request = new CompanyGroup.Dto.WebshopModule.ActivateCartRequest();
+            CompanyGroup.Dto.WebshopModule.ActivateCartRequest request = new CompanyGroup.Dto.WebshopModule.ActivateCartRequest(1, "hu", "alma");
 
             Uri requestUri = null;
 
@@ -118,21 +118,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void AddLineTest()
         {
-            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest();
+            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest(1, "ZYWALL5", "hu", "hrp", 2, "alma");
 
             Uri requestUri = null;
 
@@ -141,21 +141,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
+
+                Assert.IsNotNull(shoppingCartAndLeasingOptions);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
-
-            Assert.IsNotNull(shoppingCartAndLeasingOptions);
         }
 
         [TestMethod]
         public void RemoveLineTest()
         {
-            CompanyGroup.Dto.WebshopModule.RemoveLineRequest request = new CompanyGroup.Dto.WebshopModule.RemoveLineRequest();
+            CompanyGroup.Dto.WebshopModule.RemoveLineRequest request = new CompanyGroup.Dto.WebshopModule.RemoveLineRequest(1, 1, "hu", "alma");
 
             Uri requestUri = null;
 
@@ -164,21 +164,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
+
+                Assert.IsNotNull(shoppingCartAndLeasingOptions);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
-
-            Assert.IsNotNull(shoppingCartAndLeasingOptions);
         }
 
         [TestMethod]
         public void UpdateLineQuantityTest()
         {
-            CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request = new CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest();
+            CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request = new CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest(1, 1, "hu", "hrp", 2, "alma");
 
             Uri requestUri = null;
 
@@ -187,21 +187,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
+
+                Assert.IsNotNull(shoppingCartAndLeasingOptions);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCartAndLeasingOptions = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>().Result;
-
-            Assert.IsNotNull(shoppingCartAndLeasingOptions);
         }
 
         [TestMethod]
         public void GetShoppingCartInfoTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest();
+            CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest(1, "alma");
 
             Uri requestUri = null;
 
@@ -210,21 +210,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void GetStoredOpenedShoppingCartCollectionByVisitorTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest();
+            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest("hu", "alma");
 
             Uri requestUri = null;
 
@@ -233,21 +233,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>().Result;
+
+                Assert.IsNotNull(collection);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>().Result;
-
-            Assert.IsNotNull(collection);
         }
 
         [TestMethod]
         public void GetCartCollectionByVisitorTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest();
+            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest("hu", "alma");
 
             Uri requestUri = null;
 
@@ -256,21 +256,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartCollection>().Result;
+
+                Assert.IsNotNull(collection);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartCollection>().Result;
-
-            Assert.IsNotNull(collection);
         }
 
         [TestMethod]
         public void GetCartByKeyTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest();
+            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "alma");
 
             Uri requestUri = null;
 
@@ -279,21 +279,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCart collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCart>().Result;
+
+                Assert.IsNotNull(collection);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCart collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCart>().Result;
-
-            Assert.IsNotNull(collection);
         }
 
         [TestMethod]
         public void GetActiveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest();
+            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "alma");
 
             Uri requestUri = null;
 
@@ -302,21 +302,21 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
+
+                Assert.IsNotNull(shoppingCartInfo);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>().Result;
-
-            Assert.IsNotNull(shoppingCartInfo);
         }
 
         [TestMethod]
         public void CreateOrderTest()
         {
-            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest();
+            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest(1, "hu", "alma");
 
             Uri requestUri = null;
 
@@ -325,15 +325,15 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             if (response.IsSuccessStatusCode)
             {
                 requestUri = response.Headers.Location;
+
+                CompanyGroup.Dto.WebshopModule.OrderFulFillment orderFulFillment = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.OrderFulFillment>().Result;
+
+                Assert.IsNotNull(orderFulFillment);
             }
             else
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
-
-            CompanyGroup.Dto.WebshopModule.OrderFulFillment orderFulFillment = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.OrderFulFillment>().Result;
-
-            Assert.IsNotNull(orderFulFillment);
         }
     }
 }

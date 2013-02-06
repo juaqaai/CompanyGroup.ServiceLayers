@@ -5,15 +5,15 @@ namespace CompanyGroup.Dto.WebshopModule
 {
     public class AssociateCartRequest
     {
-        public AssociateCartRequest() : this("", "") { }
+        public AssociateCartRequest() : this("", "", "") { }
 
-        public AssociateCartRequest(string visitorId, string permanentId)
+        public AssociateCartRequest(string visitorId, string permanentId, string language)
         {
             this.VisitorId = visitorId;
 
             this.PermanentId = permanentId;
 
-            this.Language = "";
+            this.Language = language;
         }
 
         /// <summary>

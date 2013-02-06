@@ -456,20 +456,19 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
-        /// InternetUser.cms_CompatibilityList( @DataAreaId nvarchar (3), 
-        ///									    @ProductId nvarchar (20), 
-        ///									    @Part BIT = 0	0 = a termekazonositohoz tartozo alkatreszeket keressuk
-        ///													    1 = a termekazonositohoz mint alkatreszhez tartozo termekeket keressuk )
+        /// InternetUser.CompatibilityList( @DataAreaId nvarchar (3), 
+        ///									@ProductId nvarchar (20), 
+        ///									@Reverse BIT = 0	0 = a termekazonositohoz tartozo alkatreszeket keressuk, 1 = a termekazonositohoz mint alkatreszhez tartozo termekeket keressuk )
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="dataAreaId"></param>
-        /// <param name="part"></param>
+        /// <param name="reverse"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool part)
+        public List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool reverse)
         {
             NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CompatibilityList").SetString("DataAreaId", dataAreaId)
                                                                                              .SetString("ProductId", productId)
-                                                                                             .SetBoolean("Part", part).SetResultTransformer(
+                                                                                             .SetBoolean("Reverse", reverse).SetResultTransformer(
                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CompatibilityItem).GetConstructors()[0]));
 
             return query.List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>() as List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>;

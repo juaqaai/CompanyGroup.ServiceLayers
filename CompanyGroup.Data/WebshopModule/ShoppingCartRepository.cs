@@ -61,7 +61,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetCartCollection").SetString("VisitorId", visitorId);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartCollection").SetString("VisitorId", visitorId);
 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> resultList = query.List<CompanyGroup.Domain.WebshopModule.ShoppingCart>() as List<CompanyGroup.Domain.WebshopModule.ShoppingCart>;
 

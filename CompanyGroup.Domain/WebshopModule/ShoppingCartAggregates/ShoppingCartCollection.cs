@@ -19,14 +19,11 @@ namespace CompanyGroup.Domain.WebshopModule
             this.Carts = carts; 
         }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Carts", Order = 1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public List<ShoppingCart> Carts { get; set; }
 
         /// <summary>
         /// van-e a elem a kosár kollekcióban ?  
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool ExistsItem
         {
             get { return (this.Carts.Count > 0); }
@@ -35,7 +32,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// létrehozható-e további kosár, vagy nem (fegfeljebb 10 kosár hozható létre)
         /// </summary>
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
         public bool EnableCreateCart
         {
             get { return this.Carts.Count < MAX_SHOPPING_CART_COUNT; }

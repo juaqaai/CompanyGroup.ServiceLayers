@@ -13,7 +13,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.ExchangeRate> GetCurrentRates()
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ExchangeRate")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ExchangeRate")
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.ExchangeRate).GetConstructors()[0]));
 
@@ -26,7 +26,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue GetMinMaxLeasingValues()
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_MinMaxFinanceLeasingValues")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.MinMaxFinanceLeasingValues")
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue).GetConstructors()[0]));
 
@@ -52,7 +52,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.LeasingOption> GetLeasingByFinancedAmount(int amount)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_LeasingByFinancedAmount")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.LeasingByFinancedAmount")
                                              .SetInt32("FinancedAmount", amount)
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.LeasingOption).GetConstructors()[0]));
