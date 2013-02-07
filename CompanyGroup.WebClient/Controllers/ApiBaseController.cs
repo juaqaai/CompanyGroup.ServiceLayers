@@ -33,6 +33,44 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         protected readonly static string DefaultCurrency = CompanyGroup.Helpers.ConfigSettingsParser.GetString("DefaultCurrency", "HUF");
 
+        #region "Http exception"
+
+        /// <summary>
+        /// biztonságos kivétel dobása
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="statusCode"></param>
+        protected void ThrowSafeException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+        {
+            HttpResponseMessage response = Request.CreateResponse<CompanyGroup.Dto.SharedModule.ApiMessage>(statusCode, new CompanyGroup.Dto.SharedModule.ApiMessage(message));
+
+            throw new HttpResponseException(response);
+        }
+
+        /// <summary>
+        /// http kivétel visszaadása
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage ThrowHttpError(Exception ex)
+        {
+            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+        }
+
+        /// <summary>
+        /// http kivétel visszaadása
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage ThrowHttpError(string message, string source)
+        {
+            ApplicationException ex = new ApplicationException(message);
+
+            ex.Source = source;
+
+            return ThrowHttpError(ex);
+        }
+
+        #endregion
+
         #region "PostJSonData, GetJSonData, DownloadData"
 
         /// <summary>
@@ -81,6 +119,32 @@ namespace CompanyGroup.WebClient.Controllers
             catch { return default(TResponse); }
         }
 
+        protected HttpResponseMessage PostJSonData<TRequest>(string controllerName, string actionName, TRequest request) where TRequest : new()
+        {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(controllerName), "Controller name can not be null or empty!");
+
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(actionName), "Action name can not be null or empty!");
+
+            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Request can not be null!");
+
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                client.BaseAddress = new Uri(ApiBaseController.ServiceBaseAddress);
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.PostAsJsonAsync(String.Format("{0}/{1}", controllerName, actionName), request).Result;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
+
         /// <summary>
         /// GET json data
         /// </summary>
@@ -124,6 +188,27 @@ namespace CompanyGroup.WebClient.Controllers
                 return result;
             }
             catch { return default(T); }
+        }
+
+        protected HttpResponseMessage GetJSonData(string controllerName, string actionName, string parameter)
+        {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(controllerName), "ControllerName can not be null or empty!");
+
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(actionName), "ActionName can not be null or empty!");
+
+            HttpClient client = new HttpClient();
+
+            client.BaseAddress = new Uri(ApiBaseController.ServiceBaseAddress);
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string requestUrl = String.Format("{0}/{1}", controllerName, actionName);
+
+            if (!String.IsNullOrWhiteSpace(parameter)) { requestUrl = String.Format("{0}/{1}", requestUrl, parameter); }
+
+            HttpResponseMessage response = client.GetAsync(requestUrl).Result;
+
+            return response;
         }
 
         /// <summary>
@@ -176,9 +261,9 @@ namespace CompanyGroup.WebClient.Controllers
                     return new CompanyGroup.WebClient.Models.Visitor();
                 }
 
-                CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request = new CompanyGroup.Dto.PartnerModule.VisitorInfoRequest() { VisitorId = visitorData.VisitorId, DataAreaId = ApiBaseController.DataAreaId };
+                CompanyGroup.Dto.PartnerModule.VisitorInfoRequest request = new CompanyGroup.Dto.PartnerModule.VisitorInfoRequest(visitorData.VisitorId, ApiBaseController.DataAreaId);
 
-                HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.VisitorInfoRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "GetVisitorInfo", request).Result;
+                HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.VisitorInfoRequest>("Visitor", "GetVisitorInfo", request);
 
                 if (response.IsSuccessStatusCode)
                 {

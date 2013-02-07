@@ -24,18 +24,20 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language);
 
-            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", req);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest>("SalesOrder", "GetOrderInfo", req);
+
+            List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfos = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>().Result : new List<CompanyGroup.Dto.PartnerModule.OrderInfo>();
 
             List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
 
             if (response != null)
             {
-                orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+                orderInfoList.AddRange(orderInfos.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
             }
 
-            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList, visitor);
+            CompanyGroup.WebClient.Models.OrderInfoList viewModel = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList, visitor);
 
-            return model;
+            return viewModel;
         }
     }
 }

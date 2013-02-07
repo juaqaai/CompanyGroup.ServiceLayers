@@ -17,6 +17,8 @@ namespace CompanyGroup.Dto.PartnerModule
             this.DataAreaId = dataAreaId;
         }
 
+        public GetCustomerRegistrationRequest() : this("", "") { }
+
         public string DataAreaId { get; set; }
 
         public string VisitorId { get; set; }

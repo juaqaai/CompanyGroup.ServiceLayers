@@ -18,11 +18,13 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("GetStructure")]
         public CompanyGroup.WebClient.Models.Structures GetStructure(CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request)
         {
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", request);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllStructureRequest>("Structure", "GetStructures", request);
 
-            CompanyGroup.WebClient.Models.Structures response = new CompanyGroup.WebClient.Models.Structures(structures);
+            CompanyGroup.Dto.WebshopModule.Structures structures = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Structures>().Result : new CompanyGroup.Dto.WebshopModule.Structures();
 
-            return response;
+            CompanyGroup.WebClient.Models.Structures viewModel = new CompanyGroup.WebClient.Models.Structures(structures);
+
+            return viewModel;
         }
 
 

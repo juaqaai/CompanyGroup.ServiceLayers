@@ -23,7 +23,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
 
-            return GetPictureItemById(pictureId, maxWidth, maxHeight);
+            return this.GetPictureItemById(pictureId, maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -89,15 +89,24 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("GetListByProduct")]
-        public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request)
+        public HttpResponseMessage GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request)
         {
-            //request.DataAreaId = CatalogueController.DataAreaId;
-
             request.ProductId = System.Web.HttpUtility.UrlDecode(request.ProductId);
 
-            CompanyGroup.Dto.WebshopModule.Pictures pictures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.PictureFilterRequest, CompanyGroup.Dto.WebshopModule.Pictures>("Picture", "GetListByProduct", request);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.PictureFilterRequest>("Picture", "GetListByProduct", request);
 
-            return pictures;
+            return response;
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    CompanyGroup.Dto.WebshopModule.Pictures pictures = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Pictures>().Result;
+
+            //    return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Pictures>(HttpStatusCode.OK, pictures);
+            //}
+            //else
+            //{
+            //    return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture list not found"));
+            //}
         }
     }
 }

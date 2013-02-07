@@ -141,15 +141,17 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+            //CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            request.VisitorId = visitor.Id;   
+            request.VisitorId = visitorData.VisitorId; //visitor.Id;   
 
             request.Currency = visitorData.Currency;
 
-            CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", request);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest>("Product", "GetProducts", request);
 
-            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor);
+            CompanyGroup.Dto.WebshopModule.Products products = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Products>().Result : new CompanyGroup.Dto.WebshopModule.Products();
+
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, this.GetVisitor(visitorData));
         }
 
         /// <summary>
@@ -183,7 +185,9 @@ namespace CompanyGroup.WebClient.Controllers
                 Currency = visitorData.Currency
             };
 
-            CompanyGroup.Dto.WebshopModule.Product product = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.Product>("Product", "GetItemByProductId", request);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest>("Product", "GetItemByProductId", request);
+
+            CompanyGroup.Dto.WebshopModule.Product product = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Product>().Result : new CompanyGroup.Dto.WebshopModule.Product();
 
             CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.CompatibleProducts>("Product", "GetCompatibleProducts", request);
 

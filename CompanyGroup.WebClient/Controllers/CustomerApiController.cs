@@ -18,11 +18,17 @@ namespace CompanyGroup.WebClient.Controllers
         [HttpGet]
         public CompanyGroup.WebClient.Models.AddressZipCodes GetAddressZipCodes(string prefix)
         {
-            CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest req = new Dto.PartnerModule.AddressZipCodeRequest() { DataAreaId = CustomerApiController.DataAreaId, Prefix = prefix };
+            //CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest req = new Dto.PartnerModule.AddressZipCodeRequest() { DataAreaId = CustomerApiController.DataAreaId, Prefix = prefix };
 
-            CompanyGroup.Dto.PartnerModule.AddressZipCodes response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest, CompanyGroup.Dto.PartnerModule.AddressZipCodes>("Customer", "GetAddressZipCodes", req);
+            //CompanyGroup.Dto.PartnerModule.AddressZipCodes response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest, CompanyGroup.Dto.PartnerModule.AddressZipCodes>("Customer", "GetAddressZipCodes", req);
 
-            return new CompanyGroup.WebClient.Models.AddressZipCodes(response);
+            //return new CompanyGroup.WebClient.Models.AddressZipCodes(response);
+
+            HttpResponseMessage response = this.GetJSonData("Customer", "GetAddressZipCodes", String.Format("{0}/{1}", CustomerApiController.DataAreaId, prefix));
+
+            CompanyGroup.Dto.PartnerModule.AddressZipCodes addressZipCodes =  (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.AddressZipCodes>().Result : new CompanyGroup.Dto.PartnerModule.AddressZipCodes();
+
+            return new CompanyGroup.WebClient.Models.AddressZipCodes(addressZipCodes);
         }
 
         ///// <summary>
@@ -30,12 +36,16 @@ namespace CompanyGroup.WebClient.Controllers
         ///// </summary>
         ///// <param name="request"></param>
         ///// <returns></returns>
-        //[ActionName("GetCustomerRegistration")]
-        //[HttpPost]
-        //public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.ServiceRequest.GetCustomerRegistration request)
-        //{
-        //    return service.GetCustomerRegistration(request);
-        //}
+        [ActionName("GetCustomerRegistration")]
+        [HttpPost]
+        public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request)
+        {
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest>("Customer", "GetCustomerRegistration", request);
+
+            CompanyGroup.Dto.RegistrationModule.Registration registration = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.RegistrationModule.Registration>().Result : new CompanyGroup.Dto.RegistrationModule.Registration();
+
+            return registration;
+        }
 
         /// <summary>
         /// szállítási címek   
@@ -60,106 +70,106 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost]
-        [ActionName("SignIn")]
-        public HttpResponseMessage SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require((request != null), "SignIn request can not be null!");
+        //[HttpPost]
+        //[ActionName("SignIn")]
+        //public HttpResponseMessage SignIn(CompanyGroup.WebClient.Models.SignInRequest request)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Helpers.DesignByContract.Require((request != null), "SignIn request can not be null!");
 
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Password), "A jelszó megadása kötelező!");
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Password), "A jelszó megadása kötelező!");
 
-                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.UserName), "A belépési név megadása kötelező!");
+        //        CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.UserName), "A belépési név megadása kötelező!");
 
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                //előző belépés azonosítójának mentése
-                string permanentObjectId = visitorData.PermanentId;
+        //        //előző belépés azonosítójának mentése
+        //        string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.PartnerModule.SignInRequest req = new CompanyGroup.Dto.PartnerModule.SignInRequest(ApiBaseController.DataAreaId,
-                                                                                                        request.UserName,
-                                                                                                        request.Password,
-                                                                                                        System.Web.HttpContext.Current.Request.UserHostAddress);
+        //        CompanyGroup.Dto.PartnerModule.SignInRequest req = new CompanyGroup.Dto.PartnerModule.SignInRequest(ApiBaseController.DataAreaId,
+        //                                                                                                request.UserName,
+        //                                                                                                request.Password,
+        //                                                                                                System.Web.HttpContext.Current.Request.UserHostAddress);
 
-                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", req);
+        //        CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", req);
 
-                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
+        //        CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(response);
 
-                HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+        //        HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
-                //check status
-                if (!visitor.LoggedIn)
-                {
-                    visitor.ErrorMessage = "A bejelentkezés nem sikerült!";
-                }
-                else    //SignIn process, set http cookie, etc...
-                {
-                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.Id), "A bejelentkezés nem sikerült! (üres azonosító)");
+        //        //check status
+        //        if (!visitor.LoggedIn)
+        //        {
+        //            visitor.ErrorMessage = "A bejelentkezés nem sikerült!";
+        //        }
+        //        else    //SignIn process, set http cookie, etc...
+        //        {
+        //            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.Id), "A bejelentkezés nem sikerült! (üres azonosító)");
 
-                    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
+        //            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.CompanyId), "A bejelentkezés nem sikerült! (üres cégazonosító)");
 
-                    //kosár társítása
-                    CompanyGroup.Dto.WebshopModule.AssociateCartRequest associateRequest = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest(visitor.Id, permanentObjectId, visitorData.Language);
+        //            //kosár társítása
+        //            CompanyGroup.Dto.WebshopModule.AssociateCartRequest associateRequest = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest(visitor.Id, permanentObjectId, visitorData.Language);
 
-                    CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AssociateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
+        //            CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AssociateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
 
-                    //visitor adatok http sütibe írása     
-                    this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
+        //            //visitor adatok http sütibe írása     
+        //            this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(visitor.Id, visitor.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, visitor.Currency, visitor.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
 
-                    visitor.ErrorMessage = String.Empty;
+        //            visitor.ErrorMessage = String.Empty;
 
-                    httpStatusCode = HttpStatusCode.Created;
-                }
+        //            httpStatusCode = HttpStatusCode.Created;
+        //        }
 
-                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(httpStatusCode, visitor);
+        //        HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(httpStatusCode, visitor);
 
-                return httpResponseMessage;
-            }
-            catch (CompanyGroup.Helpers.DesignByContractException ex)
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
+        //        return httpResponseMessage;
+        //    }
+        //    catch (CompanyGroup.Helpers.DesignByContractException ex)
+        //    {
+        //        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
 
-                //ex.Message
-            }
-            catch
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
-            }
-        }
+        //        //ex.Message
+        //    }
+        //    catch
+        //    {
+        //        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
+        //    }
+        //}
 
         /// <summary>
         /// kijelentkezés
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost]
-        [ActionName("SignOut")]
-        public HttpResponseMessage SignOut()
-        {
-            try
-            {
-                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+        //[HttpPost]
+        //[ActionName("SignOut")]
+        //public HttpResponseMessage SignOut()
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                CompanyGroup.Dto.PartnerModule.SignOutRequest req = new CompanyGroup.Dto.PartnerModule.SignOutRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitorData.VisitorId };
+        //        CompanyGroup.Dto.PartnerModule.SignOutRequest req = new CompanyGroup.Dto.PartnerModule.SignOutRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitorData.VisitorId };
 
-                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
+        //        CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
 
-                visitorData.VisitorId = String.Empty;
+        //        visitorData.VisitorId = String.Empty;
 
-                this.WriteCookie(visitorData);
+        //        this.WriteCookie(visitorData);
 
-                CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
+        //        CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
 
-                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(HttpStatusCode.OK, visitor);
+        //        HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(HttpStatusCode.OK, visitor);
 
-                return httpResponseMessage;
-            }
-            catch (Exception ex)
-            {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
-            }
-        }
+        //        return httpResponseMessage;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError));
+        //    }
+        //}
 
     }
 }
