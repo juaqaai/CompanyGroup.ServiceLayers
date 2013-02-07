@@ -207,9 +207,13 @@ namespace CompanyGroup.WebClient.Controllers
         {
             string prefix = CompanyGroup.Helpers.QueryStringParser.GetString("Prefix");
 
-            CompanyGroup.Dto.WebshopModule.CompletionList response = this.GetJSonData<CompanyGroup.Dto.WebshopModule.CompletionList>(String.Format("Product/GetCompletionList/{0}/{1}/{2}", WebshopApiController.DataAreaId, prefix, 2));
+            CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request = new CompanyGroup.Dto.WebshopModule.ProductListComplationRequest() { Prefix = prefix };
 
-            return new CompanyGroup.WebClient.Models.CompletionList(response);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.ProductListComplationRequest>("Product", "GetCompletionList", request);
+
+            CompanyGroup.Dto.WebshopModule.CompletionList completionList = (response.IsSuccessStatusCode) ?  response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompletionList>().Result : new CompanyGroup.Dto.WebshopModule.CompletionList();
+
+            return new CompanyGroup.WebClient.Models.CompletionList(completionList);
         }
 
         /// <summary>
@@ -221,10 +225,14 @@ namespace CompanyGroup.WebClient.Controllers
         public CompanyGroup.WebClient.Models.CompletionList GetCompletionListBaseProduct()
         {
             string prefix = CompanyGroup.Helpers.QueryStringParser.GetString("Prefix");
+            
+            CompanyGroup.Dto.WebshopModule.ProductListComplationRequest request = new CompanyGroup.Dto.WebshopModule.ProductListComplationRequest() { Prefix = prefix };
 
-            CompanyGroup.Dto.WebshopModule.CompletionList response = this.GetJSonData<CompanyGroup.Dto.WebshopModule.CompletionList>(String.Format("Product/GetCompletionList/{0}/{1}/{2}", WebshopApiController.DataAreaId, prefix, 1));
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.ProductListComplationRequest>("Product", "GetCompletionList", request);
 
-            return new CompanyGroup.WebClient.Models.CompletionList(response);
+            CompanyGroup.Dto.WebshopModule.CompletionList completionList = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CompletionList>().Result : new CompanyGroup.Dto.WebshopModule.CompletionList();
+
+            return new CompanyGroup.WebClient.Models.CompletionList(completionList);
         }
 
         /// <summary>

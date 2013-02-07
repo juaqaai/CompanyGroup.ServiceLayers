@@ -19,6 +19,8 @@ namespace CompanyGroup.WebClient
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));
 			
 			bundles.Add(new ScriptBundle("~/bundles/skinner").Include("~/Scripts/jquery-skinner.js"));  
+			
+			bundles.Add(new ScriptBundle("~/bundles/prettynumber").Include("~/Scripts/jquery.prettynumber.js"));  
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

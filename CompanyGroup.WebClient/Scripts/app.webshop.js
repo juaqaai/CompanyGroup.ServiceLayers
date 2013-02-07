@@ -75,6 +75,7 @@ companyGroup.webshop = $.sammy(function () {
             auto: false,
 			numeric: false,
 		});
+		
         //$(".expand_all").toggle(function () {
         /*$(".expand_all").toggle(function () {
         $(this).addClass("expanded");
@@ -648,16 +649,23 @@ companyGroup.webshop = $.sammy(function () {
                     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
                     $('#usermenuContainer').html(usermenuHtml);
 					
-                    $("#div_pager_top").empty();
+					 $("#becomePartnerContainer").empty();
+                    var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), result.Visitor);
+                    $('#becomePartnerContainer').html(becomePartnerHtml);
+					
+					$("#div_pager_top").empty();
                     $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
+							
+                  
                     $("#div_pager_bottom").empty();
                     $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
-                    $("#div_catalogue").empty();
+                    
+					$("#div_catalogue").empty();
                     $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
-                    $("#catalogueSequenceContainer").empty();
-                    $("#catalogueSequenceTemplate").tmpl(result.Visitor).appendTo("#catalogueSequenceContainer");
-                    $("#catalogueDownloadContainer").empty();
-                    $("#catalogueDownloadTemplate").tmpl(result.Visitor).appendTo("#catalogueDownloadContainer");
+                    //$("#catalogueSequenceContainer").empty();
+                    //$("#catalogueSequenceTemplate").tmpl(result.Visitor).appendTo("#catalogueSequenceContainer");
+                    //$("#catalogueDownloadContainer").empty();
+                    //$("#catalogueDownloadTemplate").tmpl(result.Visitor).appendTo("#catalogueDownloadContainer");
                     //$("#cus_filter_price").empty();
                     //$("#priceFilterTemplate").tmpl(result.Visitor).appendTo("#cus_filter_price");
                     $("#cus_filter_price").hide();
@@ -724,17 +732,24 @@ companyGroup.webshop = $.sammy(function () {
                     $("#usermenuContainer").empty();
                     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
                     $('#usermenuContainer').html(usermenuHtml);
-
-                    $("#div_pager_top").empty();
+					
+					 $("#becomePartnerContainer").empty();
+                    var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), result.Visitor);
+                    $('#becomePartnerContainer').html(becomePartnerHtml);
+					
+					
+					$("#div_pager_top").empty();
                     $("#pagerTemplateTop").tmpl(result.Products).appendTo("#div_pager_top");
+					
+					
                     $("#div_pager_bottom").empty();
                     $("#pagerTemplateBottom").tmpl(result.Products).appendTo("#div_pager_bottom");
                     $("#div_catalogue").empty();
                     $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
-                    $("#catalogueSequenceContainer").empty();
-                    $("#catalogueSequenceTemplate").tmpl(result.Visitor).appendTo("#catalogueSequenceContainer");
-                    $("#catalogueDownloadContainer").empty();
-                    $("#catalogueDownloadTemplate").tmpl(result.Visitor).appendTo("#catalogueDownloadContainer");
+                    //$("#catalogueSequenceContainer").empty();
+                    //$("#catalogueSequenceTemplate").tmpl(result.Visitor).appendTo("#catalogueSequenceContainer");
+                    //$("#catalogueDownloadContainer").empty();
+                    //$("#catalogueDownloadTemplate").tmpl(result.Visitor).appendTo("#catalogueDownloadContainer");
 
                     //$("#cus_filter_price").empty();
                     //$("#priceFilterTemplate").tmpl(result.Visitor).appendTo("#cus_filter_price");
@@ -956,7 +971,7 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
-                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? '[ + Megnyitás ]' : '[ - Bezárás ]');
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása' : 'bezárása');
             },
             error: function () {
                 alert('saveShoppingCartOpenStatus call failed');
@@ -1737,7 +1752,7 @@ companyGroup.webshop = $.sammy(function () {
         PriceFilterRelation: '0',
         Sequence: 0,
         CurrentPageIndex: 1,
-        ItemsOnPage: 30,
+        ItemsOnPage: 10,
         clear: function () {
             this.ManufacturerIdList = [];
             this.Category1IdList = [];

@@ -4,7 +4,9 @@
         <meta charset="utf-8" />
         <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<meta name="viewport" content="width=device-width" />
+
         @Styles.Render("~/Content/css")
 
         @Scripts.Render("~/bundles/head")
@@ -113,16 +115,19 @@
 								</div>
 								<ul>
 									<li>
-										<a href="@Url.Content("~/Home/Registration")">Adatlap / módosítás</a>
+										<a href="@Url.Content("~/Registration/Registration")">Adatlap / módosítás</a>
 									</li>
 									<li>
-										<a href="@Url.Content("~/Home/Invoice")">Számlák</a>
+										<a href="@Url.Content("~/PartnerInfo/InvoiceInfo")">Számlák</a>
 									</li>
 									<li>
-										<a href="@Url.Content("~/Home/SalesOrder")">Megrendelések</a>
+										<a href="@Url.Content("~/PartnerInfo/OrderInfo")">Megrendelések</a>
 									</li>
 									<li>
-										<a href="@Url.Content("~/Home/ForgetPassword")">Jelszó módosítás</a>
+										<a href="@Url.Content("~/PartnerInfo/ForgetPassword")">Jelszó módosítás</a>
+									</li>
+									<li>
+										<a href="@Url.Content("~/PartnerInfo/")">Egyéb</a>
 									</li>
 								</ul>
 							</li>
@@ -140,8 +145,8 @@
 							 <option value="#">Nyomtató</option>
 							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-                            <input style="border: 0px; margin-left:3px;" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
-                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.jpg" onClick="#/searchByTextFilter" style="float:right; margin-top:0px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
+                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
+                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.png" onClick="#/searchByTextFilter" style="float:right; margin-top:2px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
                             </div>
                             </form>
 						</td>
@@ -169,10 +174,10 @@
 								   <a href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
 							    </li>
 						    </ul>
+					    </li> 
+						<li id="becomePartnerContainer">
 					    </li>
-						<li>
-						    <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>	
-					    </li>
+						
 						 <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
@@ -180,7 +185,11 @@
 						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
 				    </ul>
-					
+					<script id="becomePartnerTemplate" type="text/html">
+					{{#IsValidLogin}}
+					{{/IsValidLogin}}
+						   {{^IsValidLogin}} <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>{{/IsValidLogin}}
+						   </script>
 			    </div>
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
@@ -395,10 +404,10 @@
                 .js('@Scripts.Url("~/bundles/amplify")')
                 .js('@Scripts.Url("~/bundles/smarttab")')
                 .js('@Scripts.Url("~/bundles/scrollto")')
-				.js('@Scripts.Url("~/bundles/toastr")');
-				@*.js('@Scripts.Url("~/bundles/skinner")')*@
-
-				              
+				.js('@Scripts.Url("~/bundles/toastr")')
+				.js('@Scripts.Url("~/bundles/prettynumber")')
+				.js('@Scripts.Url("~/bundles/skinner")');
+						              
 
             @RenderSection("ScriptFiles", false)
         });
@@ -416,9 +425,10 @@
                 $('#preloader').hide();
             });
 			
-			@*$(function(){						
-			$('.select1').skinner({'type':'left'});			
-			});*@
+			$(function(){						
+			$('.select1').skinner({'type':'left'});				
+			});
+			
 		
 			@*Cufon.replace('p');*@
             @RenderSection("ScriptOnReady", false)

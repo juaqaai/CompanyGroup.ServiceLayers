@@ -98,9 +98,10 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return resultList;
             }
-            catch
+            catch(Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(currentPageIndex, count, itemsOnPage));
+                throw (ex);
+                //return new CompanyGroup.Domain.WebshopModule.Products(new CompanyGroup.Domain.WebshopModule.Pager(currentPageIndex, count, itemsOnPage));
             }
         }
 

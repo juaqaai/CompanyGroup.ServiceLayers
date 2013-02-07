@@ -19,7 +19,7 @@ companyGroup.registration = $.sammy(function () {
             //console.log(response);
             initRegistrationData(response);
             setTabsVisibility(1);
-        });
+        });                                       
     });
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
@@ -840,24 +840,24 @@ companyGroup.registration = $.sammy(function () {
 
         $('#contactPersonContainer').html(Mustache.render($('#contactPersonTemplate').html(), data.ContactPersons));
 
-        //        $('#txtContactPersonUserName').val();
-        //        $('#txtContactPersonPassword').val();
-        //        $('#txtContactPersonPassword2').val();
-        //        $('#txtContactPersonFirstName').val();
-        //        $('#txtContactPersonLastName').val();
-        //        $('#txtContactPersonEmail').val();
-        //        $('#txtContactPersonPhone').val();
-        //        $('#chkContactPersonAllowOrder').val();
-        //        $('#chkContactPersonAllowReceiptOfGoods').val();
-        //        $('#chkContactPersonEmailArriveOfGoods').val();
-        //        $('#chkContactPersonEmailOfDelivery').val();
-        //        $('#chkContactPersonEmailOfOrderConfirm').val();
-        //        $('#chkContactPersonInvoiceInfo').val();
-        //        $('#chkContactPersonNewsletter').val();
-        //        $('#chkContactPersonPriceListDownload').val();
-        //        $('#chkContactPersonSmsArriveOfGoods').val();
-        //        $('#chkContactPersonSmsOfDelivery').val();
-        //        $('#chkContactPersonSmsOrderConfirm').val();
+        //  $('#txtContactPersonUserName').val();
+        //  $('#txtContactPersonPassword').val();
+        //  $('#txtContactPersonPassword2').val();
+        //  $('#txtContactPersonFirstName').val();
+        //  $('#txtContactPersonLastName').val();
+        //  $('#txtContactPersonEmail').val();
+        //  $('#txtContactPersonPhone').val();
+        //  $('#chkContactPersonAllowOrder').val();
+        //  $('#chkContactPersonAllowReceiptOfGoods').val();
+        //  $('#chkContactPersonEmailArriveOfGoods').val();
+        //  $('#chkContactPersonEmailOfDelivery').val();
+        //  $('#chkContactPersonEmailOfOrderConfirm').val();
+        //  $('#chkContactPersonInvoiceInfo').val();
+        //  $('#chkContactPersonNewsletter').val();
+        //  $('#chkContactPersonPriceListDownload').val();
+        //  $('#chkContactPersonSmsArriveOfGoods').val();
+        //  $('#chkContactPersonSmsOfDelivery').val();
+        //  $('#chkContactPersonSmsOrderConfirm').val();
     }
 
 var setTabsVisibility = function (i) {
