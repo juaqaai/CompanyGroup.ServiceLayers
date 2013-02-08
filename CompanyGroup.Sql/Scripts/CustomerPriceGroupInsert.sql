@@ -7,7 +7,7 @@ GO
 -- select * from InternetUser.CustomerPriceGroup
 DROP PROCEDURE [InternetUser].[CustomerPriceGroupInsert];
 GO
-CREATE PROCEDURE [InternetUser].[CustomerPriceGroupInsert](@VisitorId INT = 0,
+CREATE PROCEDURE [InternetUser].[CustomerPriceGroupInsert](@VisitorKey INT = 0,
 														   @PriceGroupId NVARCHAR(4) = '',
 														   @ManufacturerId NVARCHAR(4) = '',
 														   @Category1Id NVARCHAR(4) = '',
@@ -19,7 +19,7 @@ AS
 SET NOCOUNT ON
 
 	INSERT INTO InternetUser.CustomerPriceGroup (VisitorId, ManufacturerId, Category1Id, Category2Id, Category3Id, PriceGroupId, [Order])
-										 VALUES (@VisitorId, @ManufacturerId, @Category1Id, @Category2Id, @Category3Id, @PriceGroupId, @Order);
+										 VALUES (@VisitorKey, @ManufacturerId, @Category1Id, @Category2Id, @Category3Id, @PriceGroupId, @Order);
 
 RETURN
 GO

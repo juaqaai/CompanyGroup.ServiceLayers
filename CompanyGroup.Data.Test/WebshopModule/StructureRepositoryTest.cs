@@ -63,7 +63,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetStructure()
         {
-            CompanyGroup.Domain.WebshopModule.IStructureRepository repository = new CompanyGroup.Data.WebshopModule.StructureRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IStructureRepository repository = new CompanyGroup.Data.WebshopModule.StructureRepository();
 
             string manufacturers = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "A169" });
 

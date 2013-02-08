@@ -8,13 +8,21 @@ namespace CompanyGroup.Data.PartnerModule
     /// <summary>
     /// vevő repository
     /// </summary>
-    public class CustomerRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.PartnerModule.ICustomerRepository
+    public class CustomerRepository : CompanyGroup.Domain.PartnerModule.ICustomerRepository
     {
         /// <summary>
-        /// vevőhöz kapcsolódó műveletek 
+        /// vevőhöz kapcsolódó műveletek konstruktor
         /// </summary>
         /// <param name="session"></param>
-        public CustomerRepository(NHibernate.ISession session) : base(session) { }
+        public CustomerRepository() { }
+
+        /// <summary>
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
 
         /// <summary>
         /// InternetUser.cms_CustomerData( @CustomerId nvarchar(20), @DataAreaId nvarchar(3) = 'hrp' )	

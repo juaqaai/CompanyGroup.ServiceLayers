@@ -4,9 +4,20 @@ using MongoDB.Driver;
 
 namespace CompanyGroup.Data.WebshopModule
 {
-    public class PictureRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IPictureRepository
+    public class PictureRepository : CompanyGroup.Domain.WebshopModule.IPictureRepository
     {
-        public PictureRepository(NHibernate.ISession session) : base(session) { }
+        /// <summary>
+        /// konstruktor
+        /// </summary>
+        public PictureRepository() { }
+
+        /// <summary>
+        /// nhibernate web session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
 
         /// <summary>
         /// képek lista termékazonosító és vállalatkód szerint 

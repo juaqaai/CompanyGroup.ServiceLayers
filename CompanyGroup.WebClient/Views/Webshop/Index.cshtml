@@ -133,8 +133,10 @@
                                         <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" /></td>
                             <!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                                          <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td>-->
-                                        <td nowrap="nowrap" width="100%"><a style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése </strong></a><a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.gif")" alt="Help" height="12" width="12"/><span><strong>HRP Finance árajánlat</strong></br>Online adatszolgáltatás és ügyintézés,
-gyorsított minősítés!</span></a></td>
+                                        <td nowrap="nowrap" width="100%">
+                                        <a style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése </strong></a>
+                                        <a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.gif")" alt="Help" height="12" width="12"/><span><strong>HRP Finance árajánlat</strong><br/>Online adatszolgáltatás és ügyintézés, gyorsított minősítés!</span></a>
+                                        </td>
                                     </tr>
                                     </table>
                                 </td>
@@ -145,25 +147,22 @@ gyorsított minősítés!</span></a></td>
                     <form action="#/createOrder" method="post" id="form_createorder">
                     <table width="100%" border="0" cellspacing="1" cellpadding="7">
                     <tr>
-    				<td style="font-size:20px; color: rgb(8, 67, 133);" ><strong>1. Átvételi mód </strong>
- </td>
+    				<td style="font-size:20px; color: rgb(8, 67, 133);" ><strong>1. Átvételi mód </strong></td>
                     </tr>
                     <tr>
                     <td><input id="atvetel" type="radio" name="radio_delivery" value="1" />Raktári átvétel 
 					<input id="kiszallitas" type="radio" name="radio_delivery" value="2" />
-					Kiszállítás
-</td>
-</tr>
-</table>
-<hr / class="hr1" style="border-style: none none dotted; border-width: 1px; margin-left:0px">                
-<div id="szal_adat">
-<table width="100%" border="0" cellspacing="1" cellpadding="7">
+					Kiszállítás</td>
+                    </tr>
+                    </table>
+                    <hr / class="hr1" style="border-style: none none dotted; border-width: 1px; margin-left:0px">                
+                    <div id="szal_adat">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="7">
                     <tr>
                       <td colspan="2" style="font-size:20px; color: rgb(8, 67, 133);" ><strong>2. Szállítási adatok</strong></td>
     				</tr>
                     <tr>
-                      <td width="13%"><strong>Kiszállítási cím: </strong>
-</td>
+                      <td width="13%"><strong>Kiszállítási cím: </strong></td>
                     <td width="87%">  <select name="site_select" id="site_select"></select>
   <script id="deliveryAddressTemplate" type="text/x-jquery-tmpl">
                                                 <!-- {{each( i, item ) Items}} -->
@@ -483,15 +482,16 @@ gyorsított minősítés!</span></a></td>
 		            </div>
 		
                     <script id="pagerTemplateTop" type="text/x-jquery-tmpl">
-                   <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
+                    <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
 				        <tr>
-                        <td width="3%" >
-					                <div class="expand_all">						                <a href="#/expandall"><img style="cursor: pointer;" src="@Url.Content("~/Content/Media/images/plusicon.png")" title="Összes kinyitása / bezárása" alt="" /></a>
-					                </div>
-                                </td>
-                            <td align="left" nowrap="nowrap">Eredmény: <b>${ListCount}</b></td>
-                            <td align="left" nowrap="nowrap">{{if IsValidLogin}}
-                              
+                            <td width="3%" >
+					            <div class="expand_all">
+                                    <a href="#/expandall"><img style="cursor: pointer;" src="@Url.Content("~/Content/Media/images/plusicon.png")" title="Összes kinyitása / bezárása" alt="" /></a>
+					            </div>
+                            </td>
+                            <td align="left" nowrap="nowrap">Eredmény: <b>${Products.ListCount}</b></td>
+                            <td align="left" nowrap="nowrap">
+                            {{if Visitor.IsValidLogin}}
 							  <select class="select2" name="catalogueSequence" value="Rendezés">
                                 <option value="">Rendezés</option>
                                 <option value="14"><strong>Legnépszerűbb elöl</strong></option>
@@ -508,50 +508,37 @@ gyorsított minősítés!</span></a></td>
                                 <option value="12">Garancia: <strong>növekvő</strong></option>
                                 <option value="13">Garancia: <strong>csökkenő</strong></option>
                               </select>
-{{else}}
-<select class="select2" name="catalogueSequence" value="Rendezés">
-  <option value="">Rendezés</option>
-  <option value="2">Cikkszám: <strong>növekvő</strong></option>
-  <option value="3">Cikkszám: <strong>csökkenő</strong></option>
-  <option value="4">Név: <strong>növekvő</strong></option>
-  <option value="5">Név: <strong>csökkenő</strong></option>
-</select>
-{{/if}} </td>
+                            {{else}}
+                            <select class="select2" name="catalogueSequence" value="Rendezés">
+                              <option value="">Rendezés</option>
+                              <option value="2">Cikkszám: <strong>növekvő</strong></option>
+                              <option value="3">Cikkszám: <strong>csökkenő</strong></option>
+                              <option value="4">Név: <strong>növekvő</strong></option>
+                              <option value="5">Név: <strong>csökkenő</strong></option>
+                            </select>
+                            {{/if}}</td>
 					        <td nowrap="nowrap"><table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
 					          <tr>
-					            <td> {{if Pager.FirstEnabled}} <a href="#/firstPage">&lt;&lt;</a> {{else}} <span style="color: #999;">&lt;&lt;</span> {{/if}} </td>
-					            <td> {{if Pager.PreviousEnabled}} <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> {{else}} <span style="color: #999;">&lt;</span> {{/if}} </td>
+					            <td> {{if Products.Pager.FirstEnabled}} <a href="#/firstPage">&lt;&lt;</a> {{else}} <span style="color: #999;">&lt;&lt;</span> {{/if}} </td>
+					            <td> {{if Products.Pager.PreviousEnabled}} <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> {{else}} <span style="color: #999;">&lt;</span> {{/if}} </td>
 					            <td align="center"><select name="select_pageindex_top" id="select_pageindex_top">
-					              
-      
-				                {{each( i, item ) Pager.PageItemList}}
+				                {{each( i, item ) Products.Pager.PageItemList}}
 				                {{if item.Selected }}
-				                
-      
 					              <option value="${item.Index}" selected="selected">${item.Value}</option>
-					              
-      
 				                {{else}}
-				                
-      
 					              <option value="${item.Index}">${item.Value}</option>
-					              
-      
 				                {{/if}}
 				                {{/each}}
-				                
-    
-					              </select></td>
+   				                </select></td>
 					            <td align="center">/</td>
-					            <td align="center"><span id="spanTopLastPageIndex"><b>${Pager.LastPageIndex}</b></span></td>
-					            <td align="right"> {{if Pager.NextEnabled}} <a href="#/nextPage/${Pager.NextPageIndex}">&gt;</a> {{else}} <span>&gt;</span> {{/if}} </td>
-					            <td align="right"> {{if Pager.LastEnabled}} <a href="#/lastPage">&gt;&gt;</a> {{else}} <span>&gt;&gt;</span> {{/if}} </td>
+					            <td align="center"><span id="spanTopLastPageIndex"><b>${Products.Pager.LastPageIndex}</b></span></td>
+					            <td align="right"> {{if Products.Pager.NextEnabled}} <a href="#/nextPage/${Products.Pager.NextPageIndex}">&gt;</a> {{else}} <span>&gt;</span> {{/if}} </td>
+					            <td align="right"> {{if Products.Pager.LastEnabled}} <a href="#/lastPage">&gt;&gt;</a> {{else}} <span>&gt;&gt;</span> {{/if}} </td>
 				              </tr>
 				            </table></td>
-                            
 							<td align="right">Elemek száma:
                             <select id="select_visibleitemlist_top">
-                            {{each( i, visibleitem ) Pager.VisibleItemList}}
+                            {{each( i, visibleitem ) Products.Pager.VisibleItemList}}
                             {{if visibleitem.Selected }}
                                 <option value="${visibleitem.Value}" selected="selected">${visibleitem.Value}</option>
                             {{else}}
@@ -560,7 +547,7 @@ gyorsított minősítés!</span></a></td>
                             {{/each}}
                             </select></td>
                             <td>
-                        		{{if IsValidLogin}}
+                        		{{if Visitor.IsValidLogin}}
                                 <div id="cus_listdown_text">
                                     <a href="#/downloadPriceList" title="Szűrt lista mentése excel fájlba">Lista letöltése</a>
                                 </div>
@@ -569,8 +556,6 @@ gyorsított minősítés!</span></a></td>
 							 </td>  
                          </tr>
 			        </table>
-
-
 					 </script>
 
                     @*<div id="listscroll">*@
@@ -832,8 +817,6 @@ gyorsított minősítés!</span></a></td>
                     </div>
                     @*</div>*@
 
-
-
 			        @*alsó lapozó*@
                     <div id="cus_list_order_panel2" class="cus_list_order_panel" style="float:left">
 			        <div id="div_pager_bottom"></div>
@@ -913,18 +896,15 @@ gyorsított minősítés!</span></a></td>
 							<tr>
 								<td valign="top">
 								<div id="cus_termekkep">
-                                    {{if Product.Pictures.Items.length > 0}}
-                                        {{each(i, item) Product.Pictures.Items}}
+                                    {{if Product.PictureId > 0}}
                                         <a class="popupimg" href="#/showPicture/${Product.ProductId}/${Product.DataAreaId}/${Product.ItemName}" title="${Product.ItemName}">
-                                        <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.ProductId, item.RecId, Product.DataAreaId)" /></a>
+                                        <img src="${companyGroup.utils.instance().getBigPictureUrl(Product.PictureId)}" alt="companyGroup.utils.instance().getBigPictureUrl(Product.PictureId)" /></a>
                                         <br/>
-                                        {{/each}}
                                     {{else}}
                                         <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="100" height="94" alt="" />
                                     {{/if}}
 								</div></td>
 								<td valign="top" id="cus_prod_table_middle_cell">
-			
 								<div id="cus_prod_table_desc_full">
                                     <span>Gyártó:</span><strong> ${Product.Manufacturer.Name} </strong><br/><br/>
 									<span>Jelleg1:</span><strong> ${Product.FirstLevelCategory.Name} </strong><br/>
@@ -945,9 +925,6 @@ gyorsított minősítés!</span></a></td>
                                             <span>Várható beérkezés dátuma:</span><strong>  ${Product.ShippingDate} </strong><br/>
                                          {{/if}}
                                     {{/if}} 
-
-
-
    								</div></td>
 								<td valign="top" nowrap="nowrap">
                                 {{if Visitor.IsValidLogin}}
@@ -1157,14 +1134,13 @@ gyorsított minősítés!</span></a></td>
             prefix: 'R$ ',
             centsSeparator: ',',
             thousandsSeparator: '.'
-});
+            });
 
 
 			
-			$(function(){						
+@*			$(function(){						
 			$('.select2').skinner({'type':'left'});			
-			});
-			
+			});*@
 
 			@*kosár toggle*@
 			
@@ -1216,7 +1192,7 @@ gyorsított minősítés!</span></a></td>
     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
   	$('#usermenuContainer').html(usermenuHtml);
 
-            $("#pagerTemplateTop").tmpl(model.Products).appendTo("#div_pager_top");
+            $("#pagerTemplateTop").tmpl(model).appendTo("#div_pager_top");
             $("#pagerTemplateBottom").tmpl(model.Products).appendTo("#div_pager_bottom");
 
             $("#productTemplate").tmpl(model).appendTo("#div_catalogue");
@@ -1234,6 +1210,8 @@ gyorsított minősítés!</span></a></td>
                     
             $("#leasingOptionsContainer").empty();
             $("#leasingOptionsTemplate").tmpl(model.LeasingOptions).appendTo("#leasingOptionsContainer");            
+
+            $('.select2').skinner({'type':'left'});
 
             //$('body').trigger('selectedPageIndexChanged', {msg: 'hello world!'});
 

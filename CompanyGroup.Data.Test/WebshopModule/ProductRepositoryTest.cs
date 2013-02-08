@@ -62,13 +62,13 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetList()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            long count = 0;
+            long count = 100;
 
             string categories = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "B004" });
 
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, ref count);
+            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, count);
 
             Assert.IsTrue(products.Count > 0);
 
@@ -78,7 +78,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetItem()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Domain.WebshopModule.Product product = repository.GetItem("WX950BTHDTRU", "hrp");
 
@@ -88,7 +88,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod]
         public void GetBannerList()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Domain.WebshopModule.BannerProducts products = repository.GetBannerList("hrp", "", "", "", "");
 

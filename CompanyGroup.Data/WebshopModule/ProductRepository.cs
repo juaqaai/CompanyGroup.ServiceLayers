@@ -5,10 +5,73 @@ using MongoDB.Driver;
 
 namespace CompanyGroup.Data.WebshopModule
 {
-    public class ProductRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IProductRepository
+    public class ProductRepository : CompanyGroup.Domain.WebshopModule.IProductRepository   //CompanyGroup.Data.Dynamics.Repository
     {
 
-        public ProductRepository(NHibernate.ISession session) : base(session) { }
+        public ProductRepository() { }
+
+        /// <summary>
+        /// nhibernate session manager
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
+
+        /// <summary>
+        /// lista elemeinek száma
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="manufacturers"></param>
+        /// <param name="category1"></param>
+        /// <param name="category2"></param>
+        /// <param name="category3"></param>
+        /// <param name="discountFilter"></param>
+        /// <param name="secondHandFilter"></param>
+        /// <param name="isInNewsletterFilter"></param>
+        /// <param name="newFilter"></param>
+        /// <param name="stockFilter"></param>
+        /// <param name="sequence"></param>
+        /// <param name="textFilter"></param>
+        /// <param name="priceFilter"></param>
+        /// <param name="priceFilterRelation"></param>
+        /// <returns></returns>
+        public int GetListCount(string dataAreaId,
+                                string manufacturers,
+                                string category1,
+                                string category2,
+                                string category3,
+                                bool discountFilter,
+                                bool secondHandFilter,
+                                bool isInNewsletterFilter,
+                                bool newFilter,
+                                bool stockFilter,
+                                int sequence,
+                                string textFilter,
+                                string priceFilter,
+                                int priceFilterRelation)
+        {
+            try
+            {
+                int count = Session.GetNamedQuery("InternetUser.ProductListCount").SetString("DataAreaId", dataAreaId)
+                                                                                  .SetString("Manufacturers", manufacturers)
+                                                                                  .SetString("Category1", category1)
+                                                                                  .SetString("Category2", category2)
+                                                                                  .SetString("Category3", category3)
+                                                                                  .SetBoolean("Discount", discountFilter)
+                                                                                  .SetBoolean("SecondHand", secondHandFilter)
+                                                                                  .SetBoolean("New", newFilter)
+                                                                                  .SetBoolean("Stock", stockFilter)
+                                                                                  .SetString("FindText", textFilter)
+                                                                                  .SetString("PriceFilter", priceFilter)
+                                                                                  .SetInt32("PriceFilterRelation", priceFilterRelation).UniqueResult<int>();
+                return count;
+            }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
+        }
 
         /// <summary>
         /// lapozható terméklista lekérdezése
@@ -47,7 +110,7 @@ namespace CompanyGroup.Data.WebshopModule
                                                                   int priceFilterRelation,
                                                                   int currentPageIndex,
                                                                   int itemsOnPage,
-                                                                  ref long count)
+                                                                  long count)
         {
             try
             {
@@ -56,20 +119,6 @@ namespace CompanyGroup.Data.WebshopModule
                 CompanyGroup.Domain.Utils.Check.Require((currentPageIndex > 0), "The currentPageIndex parameter must be a positive number!");
 
                 CompanyGroup.Domain.Utils.Check.Require((itemsOnPage > 0), "The itemsOnPage parameter must be a positive number!");
-
-                count = Session.GetNamedQuery("InternetUser.ProductListCount")
-                                               .SetString("DataAreaId", dataAreaId)
-                                                .SetString("Manufacturers", manufacturers)
-                                                .SetString("Category1", category1)
-                                                .SetString("Category2", category2)
-                                                .SetString("Category3", category3)
-                                               .SetBoolean("Discount", discountFilter)
-                                               .SetBoolean("SecondHand", secondHandFilter)
-                                               .SetBoolean("New", newFilter)
-                                               .SetBoolean("Stock", stockFilter)
-                                               .SetString("FindText", textFilter)
-                                               .SetString("PriceFilter", priceFilter)
-                                               .SetInt32("PriceFilterRelation", priceFilterRelation).UniqueResult<int>();
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueSelect")
                                                 .SetString("DataAreaId", dataAreaId)
@@ -169,9 +218,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return resultList;
             }
-            catch
+            catch(Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.CompletionList();
+                throw ex;
             }
         }
 
@@ -211,9 +260,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return resultList;
             }
-            catch
+            catch(Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.BannerProducts();
+                throw ex;
             }
         }
 
@@ -277,9 +326,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return resultList;
             }
-            catch
+            catch (Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.PriceList(new List<CompanyGroup.Domain.WebshopModule.PriceListItem>());
+                throw ex;
             }
         }
 
@@ -301,9 +350,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return resultList;
             }
-            catch
+            catch (Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
+                throw ex;
             }
         }
 
@@ -450,9 +499,9 @@ namespace CompanyGroup.Data.WebshopModule
 
                 return product;
             }
-            catch
+            catch (Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.Product();
+                throw ex;
             }
         }
 
@@ -467,12 +516,19 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> GetCompatibilityItemList(string productId, string dataAreaId, bool reverse)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CompatibilityList").SetString("DataAreaId", dataAreaId)
-                                                                                             .SetString("ProductId", productId)
-                                                                                             .SetBoolean("Reverse", reverse).SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CompatibilityItem).GetConstructors()[0]));
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CompatibilityList").SetString("DataAreaId", dataAreaId)
+                                                                                                 .SetString("ProductId", productId)
+                                                                                                 .SetBoolean("Reverse", reverse).SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CompatibilityItem).GetConstructors()[0]));
 
-            return query.List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>() as List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>;
+                return query.List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>() as List<CompanyGroup.Domain.WebshopModule.CompatibilityItem>;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 

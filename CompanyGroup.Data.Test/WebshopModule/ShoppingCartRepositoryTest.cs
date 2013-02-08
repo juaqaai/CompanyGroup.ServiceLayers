@@ -72,7 +72,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession()); 
 
@@ -99,7 +99,7 @@ namespace CompanyGroup.Data.Test
         [TestMethod()]
         public void AddItemTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository(NHibernateSessionManager.Instance.GetWebInterfaceSession());
 

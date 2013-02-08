@@ -190,6 +190,14 @@ namespace CompanyGroup.Domain.WebshopModule
             return this.Items.ToList().Exists(x => x.ProductId.Equals(productId));
         }
 
+        /// <summary>
+        /// törli a tranziens elemeket
+        /// </summary>
+        public void RemoveTransientItems()
+        {
+            this.Items.ToList().RemoveAll(x => x.IsTransient());
+        }
+
         #region "EntityBase override metódusok"
 
         /// <summary>

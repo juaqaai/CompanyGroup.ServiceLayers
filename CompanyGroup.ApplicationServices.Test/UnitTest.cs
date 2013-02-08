@@ -118,7 +118,7 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.WebshopModule.GetAllStructureRequest request = new CompanyGroup.Dto.WebshopModule.GetAllStructureRequest() { DiscountFilter = false, SecondhandFilter = false, BscFilter = false, Category1IdList = new List<string>(), Category2IdList = new List<string>(), Category3IdList = new List<string>(), HrpFilter = false, IsInNewsletterFilter = false, ManufacturerIdList = new List<string>(), NewFilter = false, StockFilter = false, TextFilter = "" };
 
-            CompanyGroup.Data.WebshopModule.StructureRepository structureRepository = new CompanyGroup.Data.WebshopModule.StructureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.WebshopModule.StructureRepository structureRepository = new CompanyGroup.Data.WebshopModule.StructureRepository();
 
             CompanyGroup.Dto.WebshopModule.Structures structures = new CompanyGroup.ApplicationServices.WebshopModule.StructureService(structureRepository).GetAll(request);
 
@@ -179,7 +179,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                             VisitorId = ""
                                                                         };
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -232,7 +232,7 @@ namespace CompanyGroup.ApplicationServices.Test
                 VisitorId = "502111910de52b2484b80269"
             };
 
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -262,7 +262,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void GetItemByProductId()
         {
-            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -280,7 +280,7 @@ namespace CompanyGroup.ApplicationServices.Test
         //[TestMethod]
         //public void GetComplationList()
         //{
-        //    CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetSession());
+        //    CompanyGroup.Data.WebshopModule.ProductRepository productWebshopRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
         //    CompanyGroup.Domain.WebshopModule.CompletionList result = productWebshopRepository.GetComplationList("dell", "hrp", 20, Domain.WebshopModule.CompletionType.Full);
 
@@ -373,7 +373,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void AssociateCart()
         { 
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -400,7 +400,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void AddCartTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -427,7 +427,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void AddItemTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -461,7 +461,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void GetCartByKeyTests()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -485,7 +485,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void GetActiveCartTests()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -512,7 +512,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void GetCartCollectionByVisitorTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 
@@ -541,7 +541,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod()]
         public void UpdateItemQuantityTest()
         {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
 

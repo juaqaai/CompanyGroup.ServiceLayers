@@ -7,13 +7,20 @@ namespace CompanyGroup.Data.PartnerModule
     /// <summary>
     /// látogató repository
     /// </summary>
-    public class VisitorRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.PartnerModule.IVisitorRepository
+    public class VisitorRepository : CompanyGroup.Domain.PartnerModule.IVisitorRepository
     {
         /// <summary>
-        /// látogatóhoz kapcsolódó műveletek 
+        /// látogatóhoz kapcsolódó műveletek konstruktora
         /// </summary>
-        /// <param name="sessionWebInterface"></param>
-        public VisitorRepository(NHibernate.ISession session) : base(session) { }
+        public VisitorRepository() { }
+
+        /// <summary>
+        /// nhibernate web session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
 
         /// <summary>
         /// látogató kiolvasása kulcs alapján

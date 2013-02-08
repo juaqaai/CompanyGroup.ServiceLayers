@@ -3,9 +3,17 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Data.WebshopModule
 {
-    public class FinanceRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IFinanceRepository
+    public class FinanceRepository : CompanyGroup.Domain.WebshopModule.IFinanceRepository
     {
-        public FinanceRepository(NHibernate.ISession session) : base(session) { }
+        public FinanceRepository() { }
+
+        /// <summary>
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
 
         /// <summary>
         /// átváltási rátát visszaadó lekérdezés

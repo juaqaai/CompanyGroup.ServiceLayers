@@ -3,13 +3,21 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Data.PartnerModule
 {
-    public class ContactPersonRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.PartnerModule.IContactPersonRepository
+    public class ContactPersonRepository : CompanyGroup.Domain.PartnerModule.IContactPersonRepository
     {
         /// <summary>
-        /// kapcsolattartóhoz kapcsolódó műveletek 
+        /// kapcsolattartóhoz kapcsolódó műveletek konstruktor
         /// </summary>
         /// <param name="session"></param>
-        public ContactPersonRepository(NHibernate.ISession session) : base(session) { }
+        public ContactPersonRepository() { }
+
+        /// <summary>
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
 
         /// <summary>
         /// jelszómódosítás ellenörzése

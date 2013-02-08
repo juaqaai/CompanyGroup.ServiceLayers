@@ -17,7 +17,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return new CompanyGroup.Dto.PartnerModule.Visitor() { CompanyId = from.CustomerId, 
                                                                   CompanyName = from.CustomerName, 
                                                                   //History = CreateHistory(from.Profile.Histories),
-                                                                  Id = from.Id.ToString(), 
+                                                                  Id = from.VisitorId, 
                                                                   IsValidLogin = from.IsValidLogin,
                                                                   LoggedIn = from.LoggedIn, 
                                                                   Permission = CreatePermission(from.Permission),  

@@ -59,7 +59,11 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             int index = this.Carts.FindIndex(x => x.Active);
 
-            return (index != -1) ? this.Carts[index] : new ShoppingCart();
+            ShoppingCart activeCart = (index != -1) ? this.Carts[index] : new ShoppingCart();
+
+            activeCart.RemoveTransientItems();
+
+            return activeCart;
         }
 
         /// <summary>

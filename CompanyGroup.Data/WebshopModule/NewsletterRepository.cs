@@ -3,9 +3,17 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Data.WebshopModule
 {
-    public class NewsletterRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.INewsletterRepository
+    public class NewsletterRepository : CompanyGroup.Domain.WebshopModule.INewsletterRepository
     {
-        public NewsletterRepository(NHibernate.ISession session) : base(session) { }
+        public NewsletterRepository() { }
+
+        /// <summary>
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
 
         /// <summary>
         /// hírlevél lista

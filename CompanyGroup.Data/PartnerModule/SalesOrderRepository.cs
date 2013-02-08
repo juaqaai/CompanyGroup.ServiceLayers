@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CompanyGroup.Data.PartnerModule
 {
-    public class SalesOrderRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.PartnerModule.ISalesOrderRepository
+    public class SalesOrderRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.ISalesOrderRepository
     {
         private static readonly string ClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("OrderServiceClassName", "SalesOrderService");
 
@@ -13,7 +13,15 @@ namespace CompanyGroup.Data.PartnerModule
         /// vevőrendeléshez kapcsolódó műveletek 
         /// </summary>
         /// <param name="session"></param>
-        public SalesOrderRepository(NHibernate.ISession session) : base(session) { }
+        public SalesOrderRepository() { }
+
+        /// <summary>
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
 
         /// <summary>
         /// InternetUser.cms_ProductOrderCheck( @ProductId nvarchar(20), @DataAreaId nvarchar(3), @OrderedQty int = 0) 

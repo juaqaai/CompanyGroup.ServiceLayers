@@ -8,13 +8,21 @@ namespace CompanyGroup.Data.WebshopModule
     /// <summary>
     /// termékstruktúra repository
     /// </summary>
-    public class StructureRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IStructureRepository
+    public class StructureRepository : CompanyGroup.Domain.WebshopModule.IStructureRepository
     {
+        /// <summary>
+        /// nhibernate web session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
+
         /// <summary>
         /// termékstruktúra repository konstruktor
         /// </summary>
         /// <param name="settings"></param>
-        public StructureRepository(NHibernate.ISession session) : base(session) { }
+        public StructureRepository() { }
 
         /// <summary>
         /// termékstruktúra lekérdezés 

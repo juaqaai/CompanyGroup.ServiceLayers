@@ -46,18 +46,18 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.StructureController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.VisitorController>();
 
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ISalesOrderRepository, CompanyGroup.Data.PartnerModule.SalesOrderRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IVisitorRepository, CompanyGroup.Data.PartnerModule.VisitorRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IContactPersonRepository, CompanyGroup.Data.PartnerModule.ContactPersonRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ICustomerRepository, CompanyGroup.Data.PartnerModule.CustomerRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.ISalesOrderRepository, CompanyGroup.Data.PartnerModule.SalesOrderRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IVisitorRepository, CompanyGroup.Data.PartnerModule.VisitorRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IContactPersonRepository, CompanyGroup.Data.PartnerModule.ContactPersonRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IChangePasswordRepository, CompanyGroup.Data.PartnerModule.ChangePasswordRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IForgetPasswordRepository, CompanyGroup.Data.PartnerModule.ForgetPasswordRepository>();
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IStructureRepository, CompanyGroup.Data.WebshopModule.StructureRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IProductRepository, CompanyGroup.Data.WebshopModule.ProductRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IPictureRepository, CompanyGroup.Data.WebshopModule.PictureRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IShoppingCartRepository, CompanyGroup.Data.WebshopModule.ShoppingCartRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IFinanceRepository, CompanyGroup.Data.WebshopModule.FinanceRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
-            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.INewsletterRepository, CompanyGroup.Data.WebshopModule.NewsletterRepository>(new InjectionConstructor(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession()));
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IStructureRepository, CompanyGroup.Data.WebshopModule.StructureRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IProductRepository, CompanyGroup.Data.WebshopModule.ProductRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IPictureRepository, CompanyGroup.Data.WebshopModule.PictureRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IShoppingCartRepository, CompanyGroup.Data.WebshopModule.ShoppingCartRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IFinanceRepository, CompanyGroup.Data.WebshopModule.FinanceRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.INewsletterRepository, CompanyGroup.Data.WebshopModule.NewsletterRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.RegistrationModule.IRegistrationRepository, CompanyGroup.Data.RegistrationModule.RegistrationRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IInvoiceRepository, CompanyGroup.Data.MaintainModule.InvoiceRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();

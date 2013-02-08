@@ -135,7 +135,7 @@
                         {{/IsValidLogin}}
                         </script>
 						<td >
-<form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
+                            <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
 							<select class="select1">
   							<option value="#">Név vagy cikkszám</option>
@@ -146,7 +146,7 @@
 							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                             <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
-                            <img alt="Keresés" src="~/Content/Media/images/bg_nagyito.png" onClick="#/searchByTextFilter" style="float:right; margin-top:2px; margin-right:10px; cursor:pointer;">@Html.AntiForgeryToken()
+                            <input type="image" alt="Keresés" src="~/Content/Media/images/bg_nagyito.png" style="float:right; margin-top:2px; margin-right:10px; cursor:pointer;" />@Html.AntiForgeryToken()
                             </div>
                             </form>
 						</td>

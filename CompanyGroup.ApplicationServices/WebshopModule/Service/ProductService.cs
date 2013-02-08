@@ -68,8 +68,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.Products GetProducts(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request)
         {
-            long count = 0;
-
             request.ManufacturerIdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
             request.Category1IdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
@@ -91,6 +89,22 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             int priceFilterRelation = 0;
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
+
+            long count = productRepository.GetListCount(dataAreaId, 
+                                                         ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
+                                                         ConvertData.ConvertStringListToDelimitedString(request.Category3IdList), 
+                                                         request.ActionFilter, 
+                                                         request.BargainFilter, 
+                                                         request.IsInNewsletterFilter, 
+                                                         request.NewFilter, 
+                                                         request.StockFilter, 
+                                                         request.Sequence, 
+                                                         request.TextFilter, 
+                                                         request.PriceFilter, 
+                                                         priceFilterRelation);
+
 
             CompanyGroup.Domain.WebshopModule.Products products = null;
 
@@ -139,7 +153,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                      priceFilterRelation, 
                                                      request.CurrentPageIndex, 
                                                      request.ItemsOnPage, 
-                                                     ref count);
+                                                     count);
                 //használt lista
                 products.ForEach(x =>
                 {

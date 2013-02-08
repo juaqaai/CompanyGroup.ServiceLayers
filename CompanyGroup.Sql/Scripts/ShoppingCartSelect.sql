@@ -57,7 +57,7 @@ GO
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartCollection];
 GO
-CREATE PROCEDURE [InternetUser].[GetShoppingCartCollection] (@VisitorId NVARCHAR(20) = '') 
+CREATE PROCEDURE [InternetUser].[GetShoppingCartCollection] (@VisitorId NVARCHAR(64) = '') 
 AS
 SET NOCOUNT ON
 	SELECT Cart.Id, 
@@ -96,14 +96,14 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
 	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
 	WHERE Cart.Status IN (1, 2) AND 
-		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
+		  ((Line.Status IN (1, 2)) OR (Line.Status IS NULL)) AND 
 		  Cart.VisitorId = @VisitorId;
 
 RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCartCollection] TO InternetUser
 GO
--- EXEC [InternetUser].[GetShoppingCartCollection] 'alma';
+-- EXEC [InternetUser].[GetShoppingCartCollection] '6E55EA1B8ECA4DBC82840854DC652B95';
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
 GO

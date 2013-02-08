@@ -48,7 +48,7 @@ color:#F6F6F6;
 }
 
 #cus_checkout_menu {
-	
+	display:none;
 	background:#084385;
 	width:975px;
 	margin-left:7px;

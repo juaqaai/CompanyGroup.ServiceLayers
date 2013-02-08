@@ -12,13 +12,20 @@ namespace CompanyGroup.Data.WebshopModule
     /// kosár elem hozzáadás,
     /// kosár elem törlés
     /// </summary>
-    public class ShoppingCartRepository : CompanyGroup.Data.Dynamics.Repository, CompanyGroup.Domain.WebshopModule.IShoppingCartRepository
+    public class ShoppingCartRepository : CompanyGroup.Domain.WebshopModule.IShoppingCartRepository
     {
+        /// <summary>
+        /// nhibernate web session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
+
         /// <summary>
         /// konstruktor
         /// </summary>
-        /// <param name="settings"></param>
-        public ShoppingCartRepository(NHibernate.ISession session) : base(session) { }
+        public ShoppingCartRepository() { }
 
         /// <summary>
         /// kosár kiolvasása kosárazonosító alapján 

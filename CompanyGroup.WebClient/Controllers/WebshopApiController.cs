@@ -262,7 +262,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                         request.Password,
                                                                                                         System.Web.HttpContext.Current.Request.UserHostAddress);
 
-                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Customer", "SignIn", singnInRequest);
+                CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "SignIn", singnInRequest);
 
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
 
@@ -407,7 +407,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.PartnerModule.SignOutRequest req = new CompanyGroup.Dto.PartnerModule.SignOutRequest() { DataAreaId = ApiBaseController.DataAreaId, VisitorId = visitorData.VisitorId };
 
-                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest, CompanyGroup.Dto.ServiceResponse.Empty>("Customer", "SignOut", req);
+                CompanyGroup.Dto.ServiceResponse.Empty empty = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest, CompanyGroup.Dto.ServiceResponse.Empty>("Visitor", "SignOut", req);
 
                 visitorData.VisitorId = String.Empty;
 
