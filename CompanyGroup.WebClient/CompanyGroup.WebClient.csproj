@@ -246,6 +246,7 @@
     <Compile Include="Models\Webshop\CatalogueOpenStatus.cs" />
     <Compile Include="Models\Webshop\CompletionList.cs" />
     <Compile Include="Models\Webshop\CatalogueResponse.cs" />
+    <Compile Include="Models\Webshop\RemoveCart.cs" />
     <Compile Include="Models\Webshop\CreateFinanceOffer.cs" />
     <Compile Include="Models\Webshop\CreateOrder.cs" />
     <Compile Include="Models\Webshop\DeleteShoppingCart.cs" />

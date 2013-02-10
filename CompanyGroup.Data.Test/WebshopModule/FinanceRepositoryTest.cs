@@ -12,7 +12,7 @@ namespace CompanyGroup.Data.Test.WebshopModule
         [TestMethod]
         public void GetCurrentRates()
         {
-            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             List<CompanyGroup.Domain.WebshopModule.ExchangeRate> rates = repository.GetCurrentRates();
 
@@ -24,7 +24,7 @@ namespace CompanyGroup.Data.Test.WebshopModule
         [TestMethod]
         public void GetMinMaxLeasingValues()
         {
-            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue values = repository.GetMinMaxLeasingValues();
 
@@ -34,7 +34,7 @@ namespace CompanyGroup.Data.Test.WebshopModule
         [TestMethod]
         public void GetLeasingByFinancedAmount()
         {
-            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.IFinanceRepository repository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptions = repository.GetLeasingByFinancedAmount(3000000);
 

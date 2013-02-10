@@ -7,16 +7,16 @@ namespace CompanyGroup.WebClient.Models
 {
     public class SaveCart
     {
-        public SaveCart() : this("") { }
+        public SaveCart() : this(0, "") { }
 
-        public SaveCart(string name)
+        public SaveCart(int cartId, string name)
         {
-            //this.CartId = cartId;
+            this.CartId = cartId;
 
             this.Name = name;
         }
 
-        //public string CartId { get; set; }
+        public int CartId { get; set; }
 
         public string Name { get; set; }
     }

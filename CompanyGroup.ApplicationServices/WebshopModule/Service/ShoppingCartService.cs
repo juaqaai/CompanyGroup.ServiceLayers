@@ -166,7 +166,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Ensure(newCartId > 0, "ShoppingCartService AddCart newCartId can not be zero!");
 
-                shoppingCartRepository.SetActive(newCartId, request.VisitorId);
+                //shoppingCartRepository.SetActive(newCartId, request.VisitorId);
 
                 //kosarak lista frissítése, válaszüzenet generálása
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> shoppingCarts = shoppingCartRepository.GetCartCollection(request.VisitorId);
@@ -415,7 +415,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         private static string CreateCartName()
         {
-            return String.Format("Kosár {0}.{1}.{2} - {3} : {4} : {5}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            string month = (DateTime.Now.Month < 10) ? String.Format("0{0}", DateTime.Now.Month) : String.Format("{0}", DateTime.Now.Month);
+
+            string day = (DateTime.Now.Day < 10) ? String.Format("0{0}", DateTime.Now.Day) : String.Format("{0}", DateTime.Now.Day);
+
+            string hour = (DateTime.Now.Hour < 10) ? String.Format("0{0}", DateTime.Now.Hour) : String.Format("{0}", DateTime.Now.Hour);
+
+            string minute = (DateTime.Now.Minute < 10) ? String.Format("0{0}", DateTime.Now.Minute) : String.Format("{0}", DateTime.Now.Minute);
+
+            string second = (DateTime.Now.Second < 10) ? String.Format("0{0}", DateTime.Now.Second) : String.Format("{0}", DateTime.Now.Second);
+
+            return String.Format("Kosár {0}.{1}.{2} - {3} : {4} : {5}", DateTime.Now.Year, month, day, hour, minute, second);
         }
 
         #region "kosár sor műveletek"
@@ -446,18 +456,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Ensure(!visitor.IsValidLogin, "ShoppingCartService AddLine visitor must be logged in!");   
 
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId); 
-
-                //ha nincs meg a CartId, akkor új kosár létrehozása és hozzáadása szükséges
-                if (shoppingCart == null)
-                {
-                    shoppingCart = CompanyGroup.Domain.WebshopModule.Factory.CreateShoppingCart(request.CartId, request.VisitorId, visitor.CustomerId, visitor.PersonId, ShoppingCartService.CreateCartName(), visitor.Currency, true);
-
-                    shoppingCart.Id = shoppingCartRepository.Add(shoppingCart);
-                }
-
-                Helpers.DesignByContract.Invariant(shoppingCart != null, "ShoppingCart cannot be null!");
-
                 //termék lekérdezés, vizsgálat
                 CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(request.ProductId, request.DataAreaId);
 
@@ -468,26 +466,20 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 shoppingCartItem.SetProduct(product);
 
-                shoppingCartItem.CartId = shoppingCart.Id;
+                shoppingCartItem.CartId = request.CartId;
 
                 shoppingCartItem.Quantity = request.Quantity;
 
-                //mi van, ha létezik a termék a kosárban? 
-                if (shoppingCart.IsInCart(request.ProductId))
-                {
-                    //kosár elem módosítás
-                    shoppingCartRepository.UpdateLineQuantity(shoppingCart.Id, request.Quantity);
-                }
-                else
-                {
-                    //hozzáadás kosárhoz
-                    shoppingCartRepository.AddLine(shoppingCartItem);
-                }
+                shoppingCartItem.CustomerPrice = Convert.ToInt32( visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5, 
+                                                                                                 product.Structure.Manufacturer.ManufacturerId, product.Structure.Category1.CategoryId, product.Structure.Category2.CategoryId, product.Structure.Category3.CategoryId));
 
-                CompanyGroup.Domain.WebshopModule.ShoppingCart cart = shoppingCartRepository.GetShoppingCart(shoppingCart.Id);
+                //ha létezik a termék a kosárban, akkor a cikk mennyisége frissítésre kerül, ha nem létezik akkor hozzáadás kosárhoz
+                shoppingCartRepository.AddLine(shoppingCartItem);
+
+                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
                 //finanszírozandó összeg
-                int financedAmount = cart.SumTotal;
+                int financedAmount = shoppingCart.SumTotal;
 
                 //leasing opciók lekérdezése
                 List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
@@ -495,11 +487,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //kalkuláció
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
 
-                leasingOptions.Amount = cart.SumTotal;
+                leasingOptions.Amount = shoppingCart.SumTotal;
 
                 leasingOptions.ValidateAmount();
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(cart, leasingOptions);
+                CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
 
                 return response;
             }

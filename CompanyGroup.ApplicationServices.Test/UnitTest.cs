@@ -181,11 +181,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetProducts(request);
 
@@ -234,11 +234,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetPriceList(request);
 
@@ -264,11 +264,11 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository);
 
@@ -298,7 +298,7 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.WebshopModule.PictureFilterRequest request = new CompanyGroup.Dto.WebshopModule.PictureFilterRequest("hrp", "PFI702GY");
 
-            CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
 
             System.IO.Stream stream = new CompanyGroup.ApplicationServices.WebshopModule.PictureService(pictureRepository).GetItem("5637193425", request.ProductId, "180", "180");
 
@@ -341,9 +341,9 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.PartnerModule.SignInRequest request = new Dto.PartnerModule.SignInRequest("hrp", "elektroplaza", "58915891", "");
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.ApplicationServices.PartnerModule.VisitorService service = new CompanyGroup.ApplicationServices.PartnerModule.VisitorService(visitorRepository, customerRepository);
 
@@ -357,9 +357,9 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.PartnerModule.SignOutRequest request = new CompanyGroup.Dto.PartnerModule.SignOutRequest("hrp", "5039d7e66ee01213b0c8c201");
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.ApplicationServices.PartnerModule.IVisitorService service = new CompanyGroup.ApplicationServices.PartnerModule.VisitorService(visitorRepository, customerRepository);
 
@@ -375,15 +375,15 @@ namespace CompanyGroup.ApplicationServices.Test
         { 
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -402,15 +402,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -429,15 +429,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -463,15 +463,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -487,15 +487,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -514,15 +514,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -543,15 +543,15 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
@@ -575,9 +575,9 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest("hu", "5092cfe46ee0121e98101481", "");
 
-            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession());
+            CompanyGroup.Domain.WebshopModule.INewsletterRepository newsletterRepository = new Data.WebshopModule.NewsletterRepository();
 
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository(CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession());
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.ApplicationServices.WebshopModule.INewsletterService service = new CompanyGroup.ApplicationServices.WebshopModule.NewsletterService(newsletterRepository, visitorRepository);
 

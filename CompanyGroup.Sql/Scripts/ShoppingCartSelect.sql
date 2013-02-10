@@ -50,7 +50,7 @@ SET NOCOUNT ON
 		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
 		  (Cart.Id = @CartId);
 RETURN
--- EXEC [InternetUser].[GetShoppingCart] 1;
+-- EXEC [InternetUser].[GetShoppingCart] 20;
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCart] TO InternetUser
 GO

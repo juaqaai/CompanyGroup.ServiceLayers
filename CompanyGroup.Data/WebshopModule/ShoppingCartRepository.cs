@@ -41,11 +41,17 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The cartId parameter must be greather than zero!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCart").SetInt32("CartId", cartId);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+                {
 
-                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCart>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCart").SetInt32("CartId", cartId);
 
-                return shoppingCart;
+                    CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = query.UniqueResult<CompanyGroup.Domain.WebshopModule.ShoppingCart>();
+
+                    transaction.Commit();
+
+                    return shoppingCart;
+                }
             }
             catch(Exception ex)
             {
@@ -68,11 +74,17 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartCollection").SetString("VisitorId", visitorId);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+                {
 
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCart> resultList = query.List<CompanyGroup.Domain.WebshopModule.ShoppingCart>() as List<CompanyGroup.Domain.WebshopModule.ShoppingCart>;
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartCollection").SetString("VisitorId", visitorId);
 
-                return resultList;
+                    List<CompanyGroup.Domain.WebshopModule.ShoppingCart> resultList = query.List<CompanyGroup.Domain.WebshopModule.ShoppingCart>() as List<CompanyGroup.Domain.WebshopModule.ShoppingCart>;
+
+                    transaction.Commit();
+
+                    return resultList;
+                }
             }
             catch (Exception ex)
             {
@@ -82,6 +94,7 @@ namespace CompanyGroup.Data.WebshopModule
 
         /// <summary>
         /// kosár hozzáadása kollekcióhoz, új kosárazonosítóval tér vissza
+        /// a felhasználó többi kosarának Active mező értékét false-ra állítja
         /// </summary>
         /// <param name="shoppingCart"></param>
         /// <returns></returns>
@@ -91,22 +104,27 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((shoppingCart != null), "The shoppingCart cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartInsert").SetString("VisitorId", shoppingCart.VisitorId)
-                                                                                                  .SetString("Name", shoppingCart.Name)
-                                                                                                  .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
-                                                                                                  .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
-                                                                                                  .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
-                                                                                                  .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
-                                                                                                  .SetString("DeliveryCity", shoppingCart.Shipping.City)
-                                                                                                  .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
-                                                                                                  .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
-                                                                                                  .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
-                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
-                                                                                                  .SetBoolean("Active", shoppingCart.Active)
-                                                                                                  .SetString("Currency", shoppingCart.Currency);
-                int cartId = query.UniqueResult<int>();
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartInsert").SetString("VisitorId", shoppingCart.VisitorId)
+                                                                                                      .SetString("Name", shoppingCart.Name)
+                                                                                                      .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
+                                                                                                      .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
+                                                                                                      .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
+                                                                                                      .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
+                                                                                                      .SetString("DeliveryCity", shoppingCart.Shipping.City)
+                                                                                                      .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
+                                                                                                      .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
+                                                                                                      .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
+                                                                                                      .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
+                                                                                                      .SetBoolean("Active", shoppingCart.Active)
+                                                                                                      .SetString("Currency", shoppingCart.Currency);
+                    int cartId = query.UniqueResult<int>();
 
-                return cartId;
+                    transaction.Commit();
+
+                    return cartId;
+                }
             }
             catch (Exception ex)
             {
@@ -125,11 +143,16 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((cartId > 0), "The id parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetStatus").SetInt32("CartId", cartId)
-                                                                                                     .SetEnum("Status", CartStatus.Deleted);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetStatus").SetInt32("CartId", cartId)
+                                                                                                         .SetEnum("Status", CartStatus.Deleted);
 
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
                 return;
             }
             catch (Exception ex)
@@ -148,20 +171,26 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((shoppingCart != null), "The shoppingCart cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("CartId", shoppingCart.Id)
-                                                                                                  .SetString("Name", shoppingCart.Name)
-                                                                                                  .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
-                                                                                                  .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
-                                                                                                  .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
-                                                                                                  .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
-                                                                                                  .SetString("DeliveryCity", shoppingCart.Shipping.City)
-                                                                                                  .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
-                                                                                                  .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
-                                                                                                  .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
-                                                                                                  .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
-                                                                                                  .SetBoolean("Active", shoppingCart.Active)
-                                                                                                  .SetString("Currency", shoppingCart.Currency);
-                int ret = query.UniqueResult<int>();
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
+
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("CartId", shoppingCart.Id)
+                                                                                                      .SetString("Name", shoppingCart.Name)
+                                                                                                      .SetEnum("PaymentTerms", shoppingCart.PaymentTerms)
+                                                                                                      .SetEnum("DeliveryTerms", shoppingCart.DeliveryTerms)
+                                                                                                      .SetDateTime("DeliveryDateRequested", shoppingCart.Shipping.DateRequested)
+                                                                                                      .SetString("DeliveryZipCode", shoppingCart.Shipping.ZipCode)
+                                                                                                      .SetString("DeliveryCity", shoppingCart.Shipping.City)
+                                                                                                      .SetString("DeliveryCountry", shoppingCart.Shipping.Country)
+                                                                                                      .SetString("DeliveryStreet", shoppingCart.Shipping.Street)
+                                                                                                      .SetInt64("DeliveryAddrRecId", shoppingCart.Shipping.AddrRecId)
+                                                                                                      .SetBoolean("InvoiceAttached", shoppingCart.Shipping.InvoiceAttached)
+                                                                                                      .SetBoolean("Active", shoppingCart.Active)
+                                                                                                      .SetString("Currency", shoppingCart.Currency);
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
 
                 return;
             }
@@ -215,11 +244,17 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(name), "The name parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartStore").SetInt32("CartId", cartId)
-                                                                                                  .SetString("Name", name)
-                                                                                                  .SetEnum("Status", CartStatus.Stored);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartStore").SetInt32("CartId", cartId)
+                                                                                                      .SetString("Name", name)
+                                                                                                      .SetEnum("Status", CartStatus.Stored);
+
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
 
                 return;
             }
@@ -244,10 +279,16 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartActivate").SetInt32("CartId", cartId)
-                                                                                                    .SetString("VisitorId", visitorId);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartActivate").SetInt32("CartId", cartId)
+                                                                                                        .SetString("VisitorId", visitorId);
+
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
             }
             catch (Exception ex)
             {
@@ -268,10 +309,16 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetString("PermanentVisitorId", permanentVisitorId)
-                                                                                                     .SetString("VisitorId", visitorId);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartAssociate").SetString("PermanentVisitorId", permanentVisitorId)
+                                                                                                         .SetString("VisitorId", visitorId);
+
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
             }
             catch (Exception ex)
             {
@@ -303,10 +350,16 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require((quantity > 0), "The quantity parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineUpdate").SetInt32("LineId", lineId)
-                                                                                                      .SetInt32("Quantity", quantity);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineUpdate").SetInt32("LineId", lineId)
+                                                                                                          .SetInt32("Quantity", quantity);
+
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
             }
             catch (Exception ex)
             {
@@ -324,15 +377,21 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((item != null), "The item cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineInsert").SetInt32("CartId", item.CartId)
-                                                                                                      .SetString("ProductId", item.ProductId)
-                                                                                                      .SetInt32("Quantity", item.Quantity)
-                                                                                                      .SetInt32("Price", item.CustomerPrice)
-                                                                                                      .SetString("DataAreaId", item.DataAreaId)
-                                                                                                      .SetEnum("Status", item.Status);
-                int lineId = query.UniqueResult<int>();
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                return lineId;
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartLineInsert").SetInt32("CartId", item.CartId)
+                                                                                                          .SetString("ProductId", item.ProductId)
+                                                                                                          .SetInt32("Quantity", item.Quantity)
+                                                                                                          .SetInt32("Price", item.CustomerPrice)
+                                                                                                          .SetString("DataAreaId", item.DataAreaId)
+                                                                                                          .SetEnum("Status", item.Status);
+                    int lineId = query.UniqueResult<int>();
+
+                    transaction.Commit();
+
+                    return lineId;
+                }
             }
             catch (Exception ex)
             {
@@ -350,10 +409,16 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((lineId > 0), "The lineId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetLineStatus").SetInt32("LineId", lineId)
-                                                                                                         .SetEnum("Status", CartItemStatus.Deleted);
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
 
-                int ret = query.UniqueResult<int>();
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartSetLineStatus").SetInt32("LineId", lineId)
+                                                                                                             .SetEnum("Status", CartItemStatus.Deleted);
+
+                    int ret = query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
             }
             catch (Exception ex)
             {

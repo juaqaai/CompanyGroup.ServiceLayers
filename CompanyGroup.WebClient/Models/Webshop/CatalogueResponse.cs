@@ -9,14 +9,14 @@ namespace CompanyGroup.WebClient.Models
     public class CatalogueResponse
     {
         public CatalogueResponse(CompanyGroup.Dto.WebshopModule.Products products,
-                         CompanyGroup.WebClient.Models.Visitor visitor,
-                         CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
-                         List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems, 
-                         List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems,
-                         bool shoppingCartOpenStatus, 
-                         bool catalogueOpenStatus, 
-                         CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
-                         CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
+                                 CompanyGroup.WebClient.Models.Visitor visitor,
+                                 CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
+                                 List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems, 
+                                 List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems,
+                                 bool shoppingCartOpenStatus, 
+                                 bool catalogueOpenStatus, 
+                                 CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
+                                 CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
         {
             this.Products = products;   
 

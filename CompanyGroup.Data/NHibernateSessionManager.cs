@@ -144,6 +144,8 @@ namespace CompanyGroup.Data
                     session = GetSessionFactoryFor(sessionFactoryConfigPath).OpenSession();
                 }
 
+                session.CacheMode = CacheMode.Put;
+
                 contextSessions[sessionFactoryConfigPath] = session;
             }
 

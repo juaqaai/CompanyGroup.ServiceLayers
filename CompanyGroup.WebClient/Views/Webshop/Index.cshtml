@@ -98,14 +98,14 @@
                                 <td width="12%"nowrap="nowrap">${item.PartNumber}</td>
                                 <td width="41%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
                                 <td width="14%" nowrap="nowrap">
-                                <input class="cartnumber" value="${item.Quantity}" title="${item.ProductId}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
+                                <input class="cartnumber" value="${item.Quantity}" title="${item.Id}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                 db</td>
                                 <td width="4%">&nbsp;</td>
                                 <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
                                 <!-- <td nowrap="nowrap"><a href="javascript:void(0)" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
                                 <td nowrap="nowrap">&nbsp;</td>
                                 <td>${item.ItemTotal}</td>
-                                <td><a href="#/removeLineFromShoppingCart/${item.ProductId}" title="Tétel törlése"><img src="@Url.Content("~/content/media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
+                                <td><a href="#/removeLineFromShoppingCart/${item.Id}" title="Tétel törlése"><img src="@Url.Content("~/content/media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
                             </tr>
                             {{/each}}
                             <tr>
@@ -659,7 +659,7 @@
                                         </td>
 				                    </tr>
 				                </table>
-                                					            </div>
+                                </div>
                             </div>			        
                                 <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
 			                    <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
@@ -1202,6 +1202,9 @@
             if (!model.Visitor.IsValidLogin){
                 $("#cus_filter_price").hide();
             }
+            else {
+                $("#cus_checkout_menu").show();            
+            }
 
             $("#shoppingCartHeaderTemplate").tmpl(model).appendTo("#cus_basket_menu");
             $("#shoppingCartLineTemplate").tmpl(model).appendTo("#cus_basket");
@@ -1210,6 +1213,8 @@
                     
             $("#leasingOptionsContainer").empty();
             $("#leasingOptionsTemplate").tmpl(model.LeasingOptions).appendTo("#leasingOptionsContainer");            
+
+            $("input#hidden_cartId").val(model.ActiveCart.Id);
 
             $('.select2').skinner({'type':'left'});
 

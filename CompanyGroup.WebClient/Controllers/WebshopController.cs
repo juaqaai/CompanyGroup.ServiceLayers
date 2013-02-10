@@ -85,11 +85,15 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetBannerListRequest, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
 
             //kosár lekérdezések     
-            bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
+            List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedShoppingCart;
 
-            bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
+            List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedShoppingCart;
 
-            CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
+            CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart;
+
+            CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions;
+
+            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
 
             if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
@@ -97,13 +101,24 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
 
-                cartInfo.ActiveCart = (shoppingCartInfo != null) ? shoppingCartInfo.ActiveCart : cartInfo.ActiveCart;
-                cartInfo.OpenedItems = (shoppingCartInfo != null) ? shoppingCartInfo.OpenedItems : cartInfo.OpenedItems;
-                cartInfo.StoredItems = (shoppingCartInfo != null) ? shoppingCartInfo.StoredItems : cartInfo.StoredItems;
-                cartInfo.LeasingOptions = (shoppingCartInfo != null) ? shoppingCartInfo.LeasingOptions : cartInfo.LeasingOptions;
-            }
+                activeCart = shoppingCartInfo.ActiveCart;
 
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
+                openedShoppingCart = shoppingCartInfo.OpenedItems;
+
+                storedShoppingCart = shoppingCartInfo.StoredItems;
+
+                leasingOptions = shoppingCartInfo.LeasingOptions;
+            }
+            else
+            {
+                activeCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart();
+
+                openedShoppingCart = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>();
+
+                storedShoppingCart = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>();
+
+                leasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();            
+            }
 
             if (visitor.IsValidLogin)
             {
@@ -113,15 +128,15 @@ namespace CompanyGroup.WebClient.Controllers
             }
             else
             {
-                deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
+                deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
             }
 
-            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, deliveryAddresses, bannerList, leasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
-            if (cartInfo.ActiveCart.Id > 0)
+            if (activeCart.Id > 0)
             {
-                visitorData.CartId = cartInfo.ActiveCart.Id;
+                visitorData.CartId = activeCart.Id;
 
                 string json = CompanyGroup.Helpers.JsonConverter.ToJSON<CompanyGroup.WebClient.Models.VisitorData>(visitorData);
 

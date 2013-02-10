@@ -8,7 +8,7 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// kosár azonosító
         /// </summary>
-        //public string CartId { get; set; }
+        public int CartId { get; set; }
 
         /// <summary>
         /// termékazonosító

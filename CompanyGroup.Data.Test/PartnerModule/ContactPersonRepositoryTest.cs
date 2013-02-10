@@ -62,7 +62,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         [TestMethod]
         public void GetOrderDetailedLineInfoTest()
         {
-            CompanyGroup.Domain.PartnerModule.IContactPersonRepository repository = new CompanyGroup.Data.PartnerModule.ContactPersonRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.PartnerModule.IContactPersonRepository repository = new CompanyGroup.Data.PartnerModule.ContactPersonRepository();
 
             CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = repository.VerifyChangePassword("KAPCS06943", "sero", "sero2000", "sero2001", "hrp");
 

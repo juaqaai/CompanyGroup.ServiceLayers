@@ -3,61 +3,43 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.WebClient.Models
 {
-    //public class StoredOpenedShoppingCartCollection : CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection
-    //{
-    //    public StoredOpenedShoppingCartCollection() : this(new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(), new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>()) { }
-
-    //    public StoredOpenedShoppingCartCollection(List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedShoppingCart, List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedShoppingCart)
-    //    {
-    //        this.StoredItems.AddRange(storedShoppingCart);
-
-    //        this.OpenedItems.AddRange(openedShoppingCart);
-
-    //        this.ErrorMessage = String.Empty;
-    //    }
-
-    //    public string ErrorMessage { get; set; }
-    //}
-
-    //public class StoredShoppingCartCollection : List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>
-    //{
-    //    public StoredShoppingCartCollection(List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedShoppingCarts)
-    //    {
-    //        this.AddRange(storedShoppingCarts);
-    //    }
-    //}
-
-    //public class OpenedShoppingCartCollection : List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>
-    //{
-    //    public OpenedShoppingCartCollection(List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedShoppingCarts)
-    //    {
-    //        this.AddRange(openedShoppingCarts);
-    //    }
-    //}
-
-    public class ShoppingCartInfo : CompanyGroup.Dto.WebshopModule.ShoppingCartInfo
+    public class ShoppingCartInfo
     {
-        public ShoppingCartInfo() : this (new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(), new Visitor(), false, false) { }
+        public ShoppingCartInfo(List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems,
+                                List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedItems,
+                                CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart,
+                                CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, 
+                                Visitor visitor, 
+                                bool catalogueOpenStatus, 
+                                bool shoppingCartOpenStatus)
+        {
+            this.StoredItems = storedItems;
 
-        public ShoppingCartInfo(CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo, Visitor visitor, bool catalogueOpenStatus, bool shoppingCartOpenStatus)
-        { 
-            this.ActiveCart = shoppingCartInfo.ActiveCart;
+            this.OpenedItems = openedItems;
+
+            this.ActiveCart = activeCart;
+
+            this.LeasingOptions = leasingOptions;
+
             this.CatalogueOpenStatus = catalogueOpenStatus;
-            this.ErrorMessage = "";
-            this.LeasingOptions = shoppingCartInfo.LeasingOptions;
-            this.OpenedItems = shoppingCartInfo.OpenedItems;
-            this.StoredItems = shoppingCartInfo.StoredItems;
+
             this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
+
             this.Visitor = visitor;
         }
 
-        public string ErrorMessage { get; set; }
+        public List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> StoredItems { get; set; }
+
+        public List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> OpenedItems { get; set; }
+
+        public CompanyGroup.Dto.WebshopModule.ShoppingCart ActiveCart { get; set; }
+
+        public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
 
         public Visitor Visitor { get; set; }
 
         public bool ShoppingCartOpenStatus { get; set; }
 
         public bool CatalogueOpenStatus { get; set; }
-
     }
 }

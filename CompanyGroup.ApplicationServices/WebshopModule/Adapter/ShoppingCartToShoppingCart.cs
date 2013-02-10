@@ -9,21 +9,28 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     /// </summary>
     public class ShoppingCartToShoppingCart
     {
+        /// <summary>
+        /// kosár sorokat domain típusról DTO típusra konvertálja
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCart Map(CompanyGroup.Domain.WebshopModule.ShoppingCart from)
         {
             try
             {
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> items = from.Items.ToList().Where(x => x.LineId > 0).ToList();
+
                 return new CompanyGroup.Dto.WebshopModule.ShoppingCart()
                 {
-                    Items = from.Items.ToList().ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency)),
-                    SumTotal = from.SumTotal, 
                     Id = from.Id, 
+                    SumTotal = from.SumTotal, 
                     DeliveryTerms = Convert.ToInt32(from.DeliveryTerms),
                     PaymentTerms =  Convert.ToInt32(from.PaymentTerms), 
-                    Shipping =  new ShippingToShipping().Map(from.Shipping)
+                    Shipping =  new ShippingToShipping().Map(from.Shipping),
+                    Items = items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency)),
                 };
             }
-            catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCart(); }
+            catch(Exception ex) { throw ex; }
         }
 
     }

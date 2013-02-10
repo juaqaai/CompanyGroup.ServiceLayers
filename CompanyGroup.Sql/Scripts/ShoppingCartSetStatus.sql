@@ -13,7 +13,9 @@ SET NOCOUNT ON
 
 	DECLARE @Ret INT = 0;
 
-	UPDATE InternetUser.ShoppingCart SET Status = @Status WHERE Id = @CartId;
+	--UPDATE InternetUser.ShoppingCart SET Status = @Status WHERE Id = @CartId;
+
+	UPDATE InternetUser.ShoppingCartLine SET [Status] = @Status WHERE CartId = @CartId;
 
 	SET @Ret = 1;
 

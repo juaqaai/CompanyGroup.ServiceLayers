@@ -13,7 +13,7 @@ namespace CompanyGroup.Data.Test.WebshopModule
         [TestMethod]
         public void GetNewsletterList()
         {
-            CompanyGroup.Domain.WebshopModule.INewsletterRepository repository = new CompanyGroup.Data.WebshopModule.NewsletterRepository(NHibernateSessionManager.Instance.GetSession());
+            CompanyGroup.Domain.WebshopModule.INewsletterRepository repository = new CompanyGroup.Data.WebshopModule.NewsletterRepository();
 
             List<CompanyGroup.Domain.WebshopModule.Newsletter> newsletters = repository.GetNewsletterList(10, "hrp", "", "");
 

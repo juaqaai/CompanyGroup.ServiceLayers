@@ -32,9 +32,14 @@ SET NOCOUNT ON
 										   @InvoiceAttached, @Active, @Currency, GetDate(), 1);
 	SET @CartId = @@IDENTITY;
 
+	-- felhasználó kosarai active = false-ra állítása
+	UPDATE InternetUser.ShoppingCart SET Active = 0 WHERE VisitorId = @VisitorId AND Id <> @CartId AND [Status] IN (1, 2);
+
 	SELECT @CartId as CartId;
 
 RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[ShoppingCartInsert] TO InternetUser
 
 /*
 DECLARE @date DateTime = GetDate();
@@ -56,7 +61,7 @@ select * from InternetUser.ShoppingCart;
 GO
 GRANT EXECUTE ON [InternetUser].[ShoppingCartInsert] TO InternetUser
 GO
--- kosár fej hozzaadas 
+-- kosár sor hozzaadas 
 DROP PROCEDURE [InternetUser].[ShoppingCartLineInsert];
 GO
 CREATE PROCEDURE [InternetUser].[ShoppingCartLineInsert]( @CartId INT = 0,						-- kosar fej azonosito
@@ -70,10 +75,15 @@ AS
 SET NOCOUNT ON
 	DECLARE @CreatedDate DateTime = GetDate(), @LineId INT = -1 ;
 
-	INSERT INTO InternetUser.ShoppingCartLine (CartId, ProductId, Quantity, Price, DataAreaId, Status, CreatedDate) VALUES 
-											  (@CartId, @ProductId, @Quantity, @Price, @DataAreaId, @Status, @CreatedDate);
-	SET @LineId = @@IDENTITY;
-
+	IF (EXISTS(SELECT * FROM InternetUser.ShoppingCartLine WHERE CartId = @CartId AND ProductId = @ProductId AND DataAreaId = @DataAreaId AND Status IN (1, 2)))
+		UPDATE InternetUser.ShoppingCartLine SET Quantity = Quantity + @Quantity 
+		WHERE CartId = @CartId AND ProductId = @ProductId AND DataAreaId = @DataAreaId AND Status IN (1, 2)
+	ELSE
+	BEGIN
+		INSERT INTO InternetUser.ShoppingCartLine (CartId, ProductId, Quantity, Price, DataAreaId, Status, CreatedDate) VALUES 
+												  (@CartId, @ProductId, @Quantity, @Price, @DataAreaId, @Status, @CreatedDate);
+		SET @LineId = @@IDENTITY;
+	END
 	SELECT @LineId as LineId;
 
 RETURN

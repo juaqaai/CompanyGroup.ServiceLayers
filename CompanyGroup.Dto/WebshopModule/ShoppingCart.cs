@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "ShoppingCart", Namespace = "CompanyGroup.Dto.WebshopModule")]
     public class ShoppingCart
     {
         public ShoppingCart() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0)

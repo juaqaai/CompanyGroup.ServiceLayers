@@ -142,7 +142,12 @@ namespace CompanyGroup.Domain.WebshopModule
         public int SumTotal
         {
             get 
-            { 
+            {
+                if (this.Items == null || this.Items.Count.Equals(0))
+                {
+                    return 0;
+                }
+
                 int total = 0;
 
                 this.Items.ToList().ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.CustomerPrice : 0);
@@ -156,7 +161,15 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public int ActiveItemCount
         {
-            get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count(); }
+            get 
+            {
+                if (this.Items == null || this.Items.Count.Equals(0))
+                {
+                    return 0;
+                }
+
+                return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count(); 
+            }
         }
 
         /// <summary>
@@ -164,7 +177,17 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public bool IsEmpty
         {
-            get { return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count() == 0; }
+            get 
+            {
+                if (this.Items == null || this.Items.Count.Equals(0))
+                {
+                    return true;
+                }
+
+                return this.Items.Where(x => {
+                    return x != null && (x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored));
+                }).Count() == 0; 
+            }
         }
 
         /// <summary>
@@ -172,6 +195,11 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public int ItemCountByDataAreaId(DataAreaId dataAreaId)
         {
+            if (this.Items == null || this.Items.Count.Equals(0))
+            {
+                return 0;
+            }
+
             return this.Items.Where(x => (x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.DataAreaId.Equals(dataAreaId))).Count();
         }
 
@@ -182,12 +210,19 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         public bool IsInCart(string productId)
         {
-            if (String.IsNullOrEmpty(productId))
+            if (String.IsNullOrEmpty(productId) || this.Items == null || this.Items.Count.Equals(0))
             {
                 return false;
             }
 
-            return this.Items.ToList().Exists(x => x.ProductId.Equals(productId));
+            return this.Items.ToList().Exists(x => 
+            { 
+                if (x == null) 
+                {
+                    return false;
+                }
+                return x.ProductId.Equals(productId);
+            });
         }
 
         /// <summary>
@@ -195,7 +230,15 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public void RemoveTransientItems()
         {
-            this.Items.ToList().RemoveAll(x => x.IsTransient());
+            if (this.Items == null || this.Items.Count.Equals(0))
+            {
+                return;
+            }
+
+            this.Items.ToList().RemoveAll(x => 
+            {
+                return x == null || x.IsTransient();
+            });
         }
 
         #region "EntityBase override metódusok"

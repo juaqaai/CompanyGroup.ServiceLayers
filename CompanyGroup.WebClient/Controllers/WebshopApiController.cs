@@ -86,11 +86,15 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.WebshopModule.BannerList bannerList = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetBannerListRequest, CompanyGroup.Dto.WebshopModule.BannerList>("Product", "GetBannerList", bannerListRequest);
 
             //kosár lekérdezések     
-            bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
+            List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedShoppingCart;
 
-            bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
+            List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedShoppingCart;
 
-            CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo();  //(visitor.IsValidLogin) ? this.GetCartInfo() : 
+            CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart;
+
+            CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions;
+
+            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
 
             if (visitor.IsValidLogin && visitorData.CartId > 0)
             {
@@ -98,13 +102,25 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
 
-                cartInfo.ActiveCart = (shoppingCartInfo != null) ? shoppingCartInfo.ActiveCart : cartInfo.ActiveCart;
-                cartInfo.OpenedItems = (shoppingCartInfo != null) ? shoppingCartInfo.OpenedItems : cartInfo.OpenedItems;
-                cartInfo.StoredItems = (shoppingCartInfo != null) ? shoppingCartInfo.StoredItems : cartInfo.StoredItems;
-                cartInfo.LeasingOptions = (shoppingCartInfo != null) ? shoppingCartInfo.LeasingOptions : cartInfo.LeasingOptions;
-            }
 
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
+                activeCart = shoppingCartInfo.ActiveCart;
+
+                openedShoppingCart = shoppingCartInfo.OpenedItems;
+
+                storedShoppingCart = shoppingCartInfo.StoredItems;
+
+                leasingOptions = shoppingCartInfo.LeasingOptions;
+            }
+            else
+            {
+                activeCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart();
+
+                openedShoppingCart = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>();
+
+                storedShoppingCart = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>();
+
+                leasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
+            }
 
             if (visitor.IsValidLogin)
             {
@@ -114,15 +130,15 @@ namespace CompanyGroup.WebClient.Controllers
             }
             else
             {
-                deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses() { Items = new List<CompanyGroup.Dto.PartnerModule.DeliveryAddress>() };
+                deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
             }
 
-            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, cartInfo.ActiveCart, cartInfo.OpenedItems, cartInfo.StoredItems, shoppingCartOpenStatus, catalogueOpenStatus, deliveryAddresses, bannerList, cartInfo.LeasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, deliveryAddresses, bannerList, leasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
-            if (cartInfo.ActiveCart.Id > 0)
+            if (activeCart.Id > 0)
             {
-                visitorData.CartId = cartInfo.ActiveCart.Id;
+                visitorData.CartId = activeCart.Id;
 
                 this.WriteCookie(visitorData);
             }
@@ -267,15 +283,15 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor(signInResponse);
 
                 //válaszüzenet összeállítása
-                CompanyGroup.WebClient.Models.ShoppingCartInfo cartInfo;
+                List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedShoppingCart;
+
+                List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> openedShoppingCart;
+
+                CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart;
+
+                CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions;
 
                 CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
-
-                bool shoppingCartOpenStatus = visitorData.IsShoppingCartOpened;
-
-                bool catalogueOpenStatus = visitorData.IsCatalogueOpened;
-
-                HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
                 CompanyGroup.WebClient.Models.CatalogueResponse catalogueResponse;
 
@@ -287,14 +303,13 @@ namespace CompanyGroup.WebClient.Controllers
                 {
                     visitor.ErrorMessage = "A bejelentkezés nem sikerült!";
 
-                    cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo()
-                    {
-                        ActiveCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart(),
-                        OpenedItems = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>(),
-                        StoredItems = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>(),
-                        ErrorMessage = "",
-                        LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions()
-                    };
+                    storedShoppingCart = new List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart>();
+
+                    openedShoppingCart  = new List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart>();
+
+                    activeCart = new CompanyGroup.Dto.WebshopModule.ShoppingCart();
+
+                    leasingOptions =  new CompanyGroup.Dto.WebshopModule.LeasingOptions();
 
                     deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
 
@@ -312,15 +327,14 @@ namespace CompanyGroup.WebClient.Controllers
                     CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AssociateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
 
                     //aktív kosár beállítás
-                    cartInfo = new CompanyGroup.WebClient.Models.ShoppingCartInfo()
-                    {
-                        ActiveCart = associateCart.ActiveCart,
-                        OpenedItems = associateCart.OpenedItems,
-                        StoredItems = associateCart.StoredItems,
-                        LeasingOptions = associateCart.LeasingOptions,
-                        ErrorMessage = ""
-                    };
-
+                    storedShoppingCart = associateCart.StoredItems;
+                    
+                    openedShoppingCart = associateCart.OpenedItems;
+                    
+                    activeCart = associateCart.ActiveCart;
+                    
+                    leasingOptions = associateCart.LeasingOptions;
+ 
                     //szállítási címek lekérdezése
                     CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest deliveryAddressRequest = new CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest(WebshopApiController.DataAreaId, visitor.Id);
 
@@ -356,21 +370,19 @@ namespace CompanyGroup.WebClient.Controllers
                     };
 
                     products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
-
-                    httpStatusCode = HttpStatusCode.Created;
                 }
 
                 catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
                                                                                         visitor,
-                                                                                        cartInfo.ActiveCart,
-                                                                                        cartInfo.OpenedItems,
-                                                                                        cartInfo.StoredItems,
-                                                                                        shoppingCartOpenStatus,
-                                                                                        catalogueOpenStatus,
+                                                                                        activeCart,
+                                                                                        openedShoppingCart,
+                                                                                        storedShoppingCart,
+                                                                                        visitorData.IsShoppingCartOpened,
+                                                                                        visitorData.IsCatalogueOpened,
                                                                                         deliveryAddresses,
-                                                                                        cartInfo.LeasingOptions);
+                                                                                        leasingOptions);
 
-                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(httpStatusCode, catalogueResponse);
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(HttpStatusCode.OK, catalogueResponse);
 
                 return httpResponseMessage;
             }
