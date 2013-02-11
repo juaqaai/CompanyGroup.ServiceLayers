@@ -507,35 +507,6 @@ namespace CompanyGroup.ApplicationServices.Test
         }
 
         /// <summary>
-        ///A test for GetCartCollectionByVisitor
-        ///</summary>
-        [TestMethod()]
-        public void GetCartCollectionByVisitorTest()
-        {
-            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
-
-            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
-
-            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
-
-            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
-
-            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
-
-            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
-
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
-
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("5039d7e66ee01213b0c8c201");
-
-            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest("hu", "5039d7e66ee01213b0c8c201");
-
-            CompanyGroup.Dto.WebshopModule.ShoppingCartCollection sc = service.GetCartCollectionByVisitor(request);
-
-            Assert.IsFalse(sc.Carts.Count == 0);
-        }
-
-        /// <summary>
         ///A test for UpdateItemQuantity
         ///</summary>
         [TestMethod()]

@@ -126,10 +126,10 @@
     <Compile Include="WebshopModule\Adapter\ProductToProductDetails.cs" />
     <Compile Include="WebshopModule\Adapter\PriceListToPriceList.cs" />
     <Compile Include="WebshopModule\Adapter\SecondHandToSecondHand.cs" />
-    <Compile Include="WebshopModule\Adapter\ShoppingCartToOpenedShoppingCart.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartHeaderToOpenedShoppingCart.cs" />
     <Compile Include="WebshopModule\Adapter\ShippingToShipping.cs" />
-    <Compile Include="WebshopModule\Adapter\ShoppingCartCollectionToStoredShoppingCartCollection.cs" />
-    <Compile Include="WebshopModule\Adapter\ShoppingCartToStoredShoppingCart.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\Adapter\ShoppingCartHeaderToStoredShoppingCart.cs" />
     <Compile Include="WebshopModule\Adapter\GarantyToGaranty.cs" />
     <Compile Include="WebshopModule\Adapter\ManufacturerToManufacturer.cs" />
     <Compile Include="WebshopModule\Adapter\PagerToPager.cs" />

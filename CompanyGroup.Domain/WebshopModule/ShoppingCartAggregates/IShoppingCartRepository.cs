@@ -20,6 +20,13 @@ namespace CompanyGroup.Domain.WebshopModule
         List<CompanyGroup.Domain.WebshopModule.ShoppingCart> GetCartCollection(string visitorId);
 
         /// <summary>
+        /// nyitott, tárolt kosár fejléc lista információk
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> GetShoppingCartHeaders(string visitorId);
+
+        /// <summary>
         /// kosár hozzáadása kollekcióhoz
         /// </summary>
         /// <param name="shoppingCart"></param>

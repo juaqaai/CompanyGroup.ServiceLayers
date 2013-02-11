@@ -33,7 +33,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        void ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request);
+        CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request);
 
         /// <summary>
         /// nyelvválasztás csere

@@ -171,6 +171,7 @@
     <Compile Include="WebshopModule\ShoppingCartAggregates\Shipping.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCart.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCartCollection.cs" />
+    <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCartHeader.cs" />
     <Compile Include="WebshopModule\ShoppingCartAggregates\ShoppingCartItem.cs" />
     <Compile Include="WebshopModule\StructureAggregates\Category.cs" />
     <Compile Include="WebshopModule\StructureAggregates\IStructureRepository.cs" />
@@ -266,6 +267,7 @@
     <EmbeddedResource Include="PartnerModule\VisitorAggregates\Visitor.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PartnerModule\OrderAggregates\ProductOrderCheck.hbm.xml" />
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

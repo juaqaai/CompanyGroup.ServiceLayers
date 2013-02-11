@@ -106,7 +106,6 @@
     <Compile Include="WebshopModule\GetPriceListRequest.cs" />
     <Compile Include="WebshopModule\RemoveLineRequest.cs" />
     <Compile Include="WebshopModule\GetCartByKeyRequest.cs" />
-    <Compile Include="WebshopModule\GetCartCollectionByVisitorRequest.cs" />
     <Compile Include="WebshopModule\SaveCartRequest.cs" />
     <Compile Include="WebshopModule\UpdateLineQuantityRequest.cs" />
     <Compile Include="WebshopModule\RemoveCartRequest.cs" />

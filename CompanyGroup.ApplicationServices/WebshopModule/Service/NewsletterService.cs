@@ -38,6 +38,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
+                CompanyGroup.Helpers.DesignByContract.Ensure(visitor != null, "Visitor can not be null!");
+
+                CompanyGroup.Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "Visitor must be logged in!");
+
                 List<CompanyGroup.Domain.WebshopModule.Newsletter> newsletters = new List<CompanyGroup.Domain.WebshopModule.Newsletter>();
 
                 //ha regisztrált mindkét vállalatban, akkor mindkét vállalat listáját megkapja

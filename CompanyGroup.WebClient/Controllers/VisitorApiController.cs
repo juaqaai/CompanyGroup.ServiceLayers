@@ -43,20 +43,24 @@ namespace CompanyGroup.WebClient.Controllers
 
                 visitorData.Currency = String.IsNullOrEmpty(request.Currency) ? ApiBaseController.DefaultCurrency : request.Currency;
 
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-
                 //ha nincs bejelentkezve, akkor nincs szervizhívás sem
-                if (!String.IsNullOrEmpty(visitorData.VisitorId))
+                if (String.IsNullOrEmpty(visitorData.VisitorId))
                 {
-                    CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest req = new CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest(visitorData.VisitorId, visitorData.Currency);
-
-                    response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest>("Visitor", "ChangeCurrency", req);
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
+                    
+                CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest req = new CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest(visitorData.VisitorId, visitorData.Currency);
+
+                CompanyGroup.Dto.PartnerModule.Visitor response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "ChangeCurrency", req);
 
                 //változások mentése a sütibe
                 this.WriteCookie(visitorData);
 
-                return response;
+                CompanyGroup.WebClient.Models.Visitor visitor = new Models.Visitor(response);
+
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.Visitor>(HttpStatusCode.OK, visitor);
+
+                return httpResponseMessage;
             }
             catch
             {

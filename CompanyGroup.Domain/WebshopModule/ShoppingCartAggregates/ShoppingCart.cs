@@ -143,16 +143,27 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             get 
             {
-                if (this.Items == null || this.Items.Count.Equals(0))
+                try
+                {
+                    if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
+                    {
+                        return 0;
+                    }
+
+                    int total = 0;
+
+                    this.Items.ToList().ForEach(x =>
+                    {
+
+                        total += (x != null) && (x.Status.Equals(CartItemStatus.Created)) || (x.Status.Equals(CartItemStatus.Stored)) ? x.CustomerPrice : 0;
+                    });
+
+                    return total;
+                }
+                catch(Exception ex)
                 {
                     return 0;
                 }
-
-                int total = 0;
-
-                this.Items.ToList().ForEach(item => total += item.Status.Equals(CartItemStatus.Created) || item.Status.Equals(CartItemStatus.Stored) ? item.CustomerPrice : 0);
-
-                return total;
             }
         }
 
@@ -163,12 +174,24 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             get 
             {
-                if (this.Items == null || this.Items.Count.Equals(0))
+                try
+                {
+                    if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
+                    {
+                        return 0;
+                    }
+
+                    return this.Items.Where(x =>
+                    {
+
+                        return (x != null) && (x.Status.Equals(CartItemStatus.Created)) || (x.Status.Equals(CartItemStatus.Stored));
+
+                    }).Count();
+                }
+                catch (Exception ex)
                 {
                     return 0;
                 }
-
-                return this.Items.Where(x => x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)).Count(); 
             }
         }
 
@@ -179,13 +202,15 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             get 
             {
-                if (this.Items == null || this.Items.Count.Equals(0))
+                if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
                 {
                     return true;
                 }
 
                 return this.Items.Where(x => {
+
                     return x != null && (x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored));
+
                 }).Count() == 0; 
             }
         }
@@ -193,14 +218,14 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// üres-e a kosár?
         /// </summary>
-        public int ItemCountByDataAreaId(DataAreaId dataAreaId)
+        public int ItemCountByDataAreaId(string dataAreaId)
         {
-            if (this.Items == null || this.Items.Count.Equals(0))
+            if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
             {
                 return 0;
             }
 
-            return this.Items.Where(x => (x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.DataAreaId.Equals(dataAreaId))).Count();
+            return this.Items.Where(x => (x != null || x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.DataAreaId.ToLower().Equals(dataAreaId))).Count();
         }
 
         /// <summary>
@@ -210,7 +235,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         public bool IsInCart(string productId)
         {
-            if (String.IsNullOrEmpty(productId) || this.Items == null || this.Items.Count.Equals(0))
+            if (String.IsNullOrEmpty(productId) || this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
             {
                 return false;
             }
@@ -223,6 +248,20 @@ namespace CompanyGroup.Domain.WebshopModule
                 }
                 return x.ProductId.Equals(productId);
             });
+        }
+
+        public List<ShoppingCartItem> GetItems()
+        {
+            try
+            {
+                this.RemoveTransientItems();
+
+                return (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null) ? new List<ShoppingCartItem>() : this.Items.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

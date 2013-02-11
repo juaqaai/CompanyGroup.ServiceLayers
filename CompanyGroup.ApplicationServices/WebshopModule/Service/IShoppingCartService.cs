@@ -72,25 +72,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request);
 
         /// <summary>
-        /// felhasználóhoz tartozó aktív kosár kiolvasása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        CompanyGroup.Dto.WebshopModule.ShoppingCartCollection GetCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request);
-
-        /// <summary>
         /// aktiv kosár kiolvasása   
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request);
-
-        /// <summary>
-        /// céghez, azon belül személyhez tartozó érvényes / tárolt kosarak kiolvasása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request);
 
         /// <summary>
         /// kosárazonosítóval rendelkező kosár kiolvasása   

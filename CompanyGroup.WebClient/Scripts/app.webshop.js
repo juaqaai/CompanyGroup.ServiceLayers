@@ -828,13 +828,14 @@ companyGroup.webshop = $.sammy(function () {
         };
         $.ajax({
             type: "POST",
-            url: companyGroup.utils.instance().getCustomerApiUrl('ChangeCurrency'),
+            url: companyGroup.utils.instance().getVisitorApiUrl('ChangeCurrency'),
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             timeout: 10000,
             dataType: "json",
             processData: true,
             success: function (result) {
+                $("#cus_header1").empty();
                 var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
                 $('#cus_header1').html(visitorInfoHtml);
                 loadCatalogue();
@@ -1011,6 +1012,7 @@ companyGroup.webshop = $.sammy(function () {
                         $("#form_financeoffer").show();
                     }
                     //$('.cartnumber').spin();
+                    $("input#hidden_cartId").val(result.ActiveCart.Id);
                 }
                 else {
                     alert('Nincs eleme a listának.');
@@ -1054,6 +1056,7 @@ companyGroup.webshop = $.sammy(function () {
                     }
 
                     //$('.cartnumber').spin();
+                    $("input#hidden_cartId").val(result.ActiveCart.Id);
                 }
                 else {
                     alert('Nincs eleme a listának.');
@@ -1213,12 +1216,13 @@ companyGroup.webshop = $.sammy(function () {
     //rendelés feladás
     this.post('#/createOrder', function (context) {
         var data = {
+            CartId: parseInt($("input#hidden_cartId").val()),
             CustomerOrderNote: $("#user_comment").val(),
             CustomerOrderId: $("#custom_number").val(),
-            DeliveryRequest: $("input[name=radio_szallitasimod]:checked").val() === '2',  //szállítást kért-e
+            DeliveryRequest: $("input[name=radio_delivery]:checked").val() === '2',  //szállítást kért-e
             DeliveryDate: $("#naptar").val(),                                            //szállítás időpontja
-            PaymentTerm: $("input[name=radio_fizetesimod]:checked").val(),               //1: átut, 2: KP, 3: előreut, 4: utánvét
-            DeliveryTerm: $("input[name=radio_szallitasimod]:checked").val(),             //1: raktár, 2: kiszállítás
+            PaymentTerm: $("input[name=radio_payment]:checked").val(),               //1: átut, 2: KP, 3: előreut, 4: utánvét
+            DeliveryTerm: $("input[name=radio_delivery]:checked").val(),             //1: raktár, 2: kiszállítás
             DeliveryAddressRecId: $("#site_select").val()                                //szállítási cím azonosító
         };
         $.ajax({
@@ -1273,6 +1277,7 @@ companyGroup.webshop = $.sammy(function () {
                         $("#form_financeoffer").show();
                     }
                     //$("#form_createorder").hide();
+                    $("input#hidden_cartId").val(result.ActiveCart.Id);
                 }
                 else {
                     alert('Nincs eleme a listának.');
@@ -1330,7 +1335,7 @@ companyGroup.webshop = $.sammy(function () {
     //kosár aktiválás
     this.bind('activateShoppingCart', function (e, data) {
         var data = {
-            CartId: data.CartId
+            CartId: parseInt(data.CartId)
         };
         $.ajax({
             type: "POST",
@@ -1351,6 +1356,8 @@ companyGroup.webshop = $.sammy(function () {
 
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
+
+                    $("input#hidden_cartId").val(result.ActiveCart.Id);
 
                     if (result.LeasingOptions.Items.length == 0) {
                         $("#form_financeoffer").hide();

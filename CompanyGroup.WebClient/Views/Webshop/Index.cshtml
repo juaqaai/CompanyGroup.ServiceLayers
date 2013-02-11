@@ -33,7 +33,7 @@
                         </tr>
                     </table>
                     {{/if}}
-					</script>
+				</script>
 				<div id="basket_panel">
                     <div id="cus_basket_menu"></div>
                     <script id="shoppingCartHeaderTemplate" type="text/x-jquery-tmpl">
@@ -151,77 +151,76 @@
                     </tr>
                     <tr>
                     <td><input id="atvetel" type="radio" name="radio_delivery" value="1" />Raktári átvétel 
-					<input id="kiszallitas" type="radio" name="radio_delivery" value="2" />
-					Kiszállítás</td>
+					<input id="kiszallitas" type="radio" name="radio_delivery" value="2" />Kiszállítás</td>
                     </tr>
                     </table>
-                    <hr / class="hr1" style="border-style: none none dotted; border-width: 1px; margin-left:0px">                
+                    <hr class="hr1" style="border-style: none none dotted; border-width: 1px; margin-left:0px" />                
                     <div id="szal_adat">
-                    <table width="100%" border="0" cellspacing="1" cellpadding="7">
-                    <tr>
-                      <td colspan="2" style="font-size:20px; color: rgb(8, 67, 133);" ><strong>2. Szállítási adatok</strong></td>
-    				</tr>
-                    <tr>
-                      <td width="13%"><strong>Kiszállítási cím: </strong></td>
-                    <td width="87%">  <select name="site_select" id="site_select"></select>
-  <script id="deliveryAddressTemplate" type="text/x-jquery-tmpl">
-                                                <!-- {{each( i, item ) Items}} -->
-  <option value="${item.RecId}">${item.ZipCode} ${item.City} ${item.Street}</option>
-                                                <!-- {{/each}} -->
-                                            </script>
-  <input type="button" name="newOrderForm" id="newOrderForm" value="Új telephely hozzáadása" />
-</td>
-</tr>
-                    <tr>
-                      <td ><strong>Szállítási időpont:</strong></td>
-                      <td >  <input name="naptar" id="naptar" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
-                    </tr>
-</table>
-<hr / style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px">
-</div>
-<div id="payment_option">
-<table border="0" cellspacing="1" cellpadding="7">
-<tr></tr>
-<tr>
-  <td style="font-size:20px; color: rgb(8, 67, 133);" ><strong>3. Fizetési mód</strong></td>
-</tr>
-<tr>
-  <td class="transfer"><input id="transfer" type="radio" name="radio_payment" value="1" />
-    Átutalásos fizetés</td>
-  <td class="cash"><input id="cash" type="radio" name="radio_payment" value="2" />
-    Készpénzes fizetés</td>
-  <td class="payadvance" ><input id="payadvance" type="radio" name="radio_payment" value="3" />
-    Előreutalás</td>
-  <td class="payafter"><input id="payafter" type="radio" name="radio_payment" value="4" />
-    Utánvét</td>
-</tr>
-</table>
-<hr / class="hr2" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px">
-</div>
-<div id="order_rest">
-<table width="61%" border="0" cellpadding="7" cellspacing="5">
-   <tr>
-    <td width="31%" style="border-style: none dotted none none; border-width:1px;" ><strong>Egyedi rendelés azonosító: </strong>
-   <input type="text" name="custom_number" id="custom_number"/></td>
-    <td width="69%" ><span style="padding-left:5px;">
-      <textarea style="width:335px; height:40px;" name="user_comment" cols="50" rows="4" class="regfields" id="textarea">Megjegyzés:
-      </textarea>
-    </span></td>
-  </tr>
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="6">
-  <tr>
-    <td><input type="submit" name="feladas" id="feladas" value="Rendelés feladása"  class="feladasopciok_block" /></td>
-  </tr>
-</table>
-</div>
-<table width="100%" heaight="20px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
-  <tr>
-    <td></td>
-  </tr>
-</table>
-</form>
-               </div>
+                        <table width="100%" border="0" cellspacing="1" cellpadding="7">
+                        <tr>
+                          <td colspan="2" style="font-size:20px; color: rgb(8, 67, 133);" ><strong>2. Szállítási adatok</strong></td>
+    				    </tr>
+                        <tr>
+                            <td width="13%"><strong>Kiszállítási cím: </strong></td>
+                            <td width="87%"><select name="site_select" id="site_select"></select>
+                            <script id="deliveryAddressTemplate" type="text/x-jquery-tmpl">
+                            <!-- {{each( i, item ) Items}} -->
+                            <option value="${item.RecId}">${item.ZipCode} ${item.City} ${item.Street}</option>
+                            <!-- {{/each}} -->
+                            </script>
+                            @*<input type="button" name="newOrderForm" id="newOrderForm" value="Új telephely hozzáadása" />*@
+                            </td>
+                        </tr>
+                        <tr>
+                          <td ><strong>Szállítási időpont:</strong></td>
+                          <td >  <input name="naptar" id="naptar" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        </tr>
+                        </table>
+                        <hr style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px" />
+                    </div>
+                    <div id="payment_option">
+                        <table border="0" cellspacing="1" cellpadding="7">
+                        <tr></tr>
+                        <tr>
+                          <td style="font-size:20px; color: rgb(8, 67, 133);" ><strong>3. Fizetési mód</strong></td>
+                        </tr>
+                        <tr>
+                          <td class="transfer"><input id="transfer" type="radio" name="radio_payment" value="1" />
+                            Átutalásos fizetés</td>
+                          <td class="cash"><input id="cash" type="radio" name="radio_payment" value="2" />
+                            Készpénzes fizetés</td>
+                          <td class="payadvance" ><input id="payadvance" type="radio" name="radio_payment" value="3" />
+                            Előreutalás</td>
+                          <td class="payafter"><input id="payafter" type="radio" name="radio_payment" value="4" />
+                            Utánvét</td>
+                        </tr>
+                        </table>
+                        <hr class="hr2" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px" />
+                    </div>
+                    <div id="order_rest">
+                        <table width="61%" border="0" cellpadding="7" cellspacing="5">
+                           <tr>
+                            <td width="31%" style="border-style: none dotted none none; border-width:1px;" ><strong>Egyedi rendelés azonosító: </strong>
+                           <input type="text" name="custom_number" id="custom_number"/></td>
+                            <td width="69%" ><span style="padding-left:5px;">
+                              <textarea style="width:335px; height:40px;" name="user_comment" cols="50" rows="4" class="regfields" id="user_comment">Megjegyzés:
+                              </textarea>
+                            </span></td>
+                          </tr>
+                        </table>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                          <tr>
+                            <td><input type="submit" name="feladas" id="feladas" value="Rendelés feladása" class="feladasopciok_block" /></td>
+                          </tr>
+                        </table>
+                    </div>
+                    <table width="100%" heaight="20px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
+                      <tr>
+                        <td></td>
+                      </tr>
+                    </table>
+                    </form>
+                    </div>
                     <div id="cus_ajanlat_vegfelhasznalo">
                     Végfelhasználói árajánlat készítése
                     <br />
@@ -276,91 +275,88 @@
                     </table>
                 </div>
                 
-<div id="cus_ajanlat_finance">
+                    <div id="cus_ajanlat_finance">
                         <span style="font-size:20px; color: rgb(8, 67, 133);"><strong>HRP Finance árajánlat készítése</strong></span><br/>
-<table width="100%" height="163" cellpadding="1" cellspacing="1" style="height:150px">
+                        <table width="100%" height="163" cellpadding="1" cellspacing="1" style="height:150px">
                         <tr>
-						<td align="left" id="leasingOptionsContainer"></td>
+					    <td align="left" id="leasingOptionsContainer"></td>
                         </tr>
-             </table>
-                                <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
-                                <table class="financeajanlat" width="0" border="0" cellspacing="4" cellpadding="1">
-                  <tr>
-                    <td width="142"><strong>Bérbevevő Neve:</strong></td>
-                    <td><label for="txt_offername"></label>
-                                    @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;"})
-<label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Címe:</strong></td>
-                    <td><label for="txt_offeraddress"></label>
-                                    @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
-                                    <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Telefon:</strong></td>
-                    <td><label for="txt_offerphone"></label>
-                                    @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
-                    <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Cégjegyzékszám:</strong></td>
-                    <td><label for="txt_offerstatnumber"></label>          
-                                    @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
-                                    <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label></td>
-                  </tr>
-                  <tr>
-                    <td><input type="submit" value="Ajánlatkérés" /></td>
-                    <td>&nbsp;</td>
-                  </tr>
-                </table>
-<div id="financeoffer_errors"></div>
-  </form>
-  <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="6">
-  <tr>
-    <td><ul>
-      <li>• Ajánlatunkat ajánlati kötöttség nélkül tettük meg, az ügylet megkötéséhez a refinanszírozó jóváhagyása szükséges.
-      </li>
-      <li>• HUF alapú finanszírozás, a havi díj az 1 havi BUBOR-hoz kötött. </li>
-    </ul>
-      <p><strong>A tartós bérlet alapvetői jellemzői</strong></p>
-      <ul>
-        <li>
+                        </table>
+                      <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
+                      <table class="financeajanlat" width="0" border="0" cellspacing="4" cellpadding="1">
+                      <tr>
+                        <td width="142"><strong>Bérbevevő Neve:</strong></td>
+                        <td><label for="txt_offername"></label>
+                        @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;"})
+                        <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Címe:</strong></td>
+                        <td><label for="txt_offeraddress"></label>
+                        @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
+                        <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Telefon:</strong></td>
+                        <td><label for="txt_offerphone"></label>
+                        @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
+                        <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Cégjegyzékszám:</strong></td>
+                        <td><label for="txt_offerstatnumber"></label>          
+                        @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
+                        <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label></td>
+                      </tr>
+                      <tr>
+                        <td><input type="submit" value="Ajánlatkérés" /></td>
+                        <td>&nbsp;</td>
+                      </tr>
+                    </table>
+                    <div id="financeoffer_errors"></div>
+                    </form>
+                      <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="6">
+                      <tr>
+                        <td><ul>
+                          <li>• Ajánlatunkat ajánlati kötöttség nélkül tettük meg, az ügylet megkötéséhez a refinanszírozó jóváhagyása szükséges.
+                          </li>
+                          <li>• HUF alapú finanszírozás, a havi díj az 1 havi BUBOR-hoz kötött. </li>
+                        </ul>
+                          <p><strong>A tartós bérlet alapvetői jellemzői</strong></p>
+                          <ul>
+                            <li>
           
-          Az ÁFA a havi díjakat terheli</li>
-        <li> A terméket a bérbeadó aktiválja</li>
-        <li> A havi díj költségként elszámolható</li>
-      </ul>      </td>
-  </tr>
-</table>                
-<table width="100%" height="30px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
-  <tr>
-    <td></td>
-  </tr>
-</table>
+                              Az ÁFA a havi díjakat terheli</li>
+                            <li> A terméket a bérbeadó aktiválja</li>
+                            <li> A havi díj költségként elszámolható</li>
+                          </ul>      </td>
+                      </tr>
+                    </table>                
+                        <table width="100%" height="30px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
+                          <tr>
+                            <td></td>
+                          </tr>
+                        </table>
                         <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
                         {{if Message.length > 0}}
                             <strong>${Message}</strong>
                         {{else}}
-						<strong>Elérhető hitelkonstrukciók</strong>
+				        <strong>Elérhető hitelkonstrukciók</strong>
                             <ul>
                             {{each( i, item ) Items}} 
                                 <li><table style=" border-radius:3px; padding-top: 5px;" width="auto" border="0" cellspacing="5" cellpadding="5">
-  <tr>
-    <td><input class="radiohitel" id="radiohitel" type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;"/></td>
-    <td>futamidő: <strong>${item.NumOfMonth} honap</strong></td>
-    <td>összeg: <strong>${item.CalculatedValue} Ft</strong></td>
-  </tr>
-</table></li>
+                                        <tr>
+                                        <td><input class="radiohitel" id="radiohitel" type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;"/></td>
+                                        <td>futamidő: <strong>${item.NumOfMonth} honap</strong></td>
+                                        <td>összeg: <strong>${item.CalculatedValue} Ft</strong></td>
+                                        </tr>
+                                    </table></li>
                             {{/each}} 
                             </ul> 
                         {{/if}}
-                        
                         </script>
                     </div>
                 </div>
-                
-
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
@@ -520,7 +516,7 @@
 					        <td nowrap="nowrap"><table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
 					          <tr>
 					            <td> {{if Products.Pager.FirstEnabled}} <a href="#/firstPage">&lt;&lt;</a> {{else}} <span style="color: #999;">&lt;&lt;</span> {{/if}} </td>
-					            <td> {{if Products.Pager.PreviousEnabled}} <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> {{else}} <span style="color: #999;">&lt;</span> {{/if}} </td>
+					            <td> {{if Products.Pager.PreviousEnabled}} <a href="#/previousPage/${Products.Pager.PreviousPageIndex}">&lt;</a> {{else}} <span style="color: #999;">&lt;</span> {{/if}} </td>
 					            <td align="center"><select name="select_pageindex_top" id="select_pageindex_top">
 				                {{each( i, item ) Products.Pager.PageItemList}}
 				                {{if item.Selected }}

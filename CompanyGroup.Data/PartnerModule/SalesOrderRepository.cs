@@ -38,7 +38,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require((quantity > 0), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_ProductOrderCheck")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ProductOrderCheck")
                                              .SetString("ProductId", productId)
                                              .SetString("DataAreaId", dataAreaId)    //.UniqueResult<CompanyGroup.Domain.PartnerModule.MailAddress>();
                                              .SetInt32("OrderedQty", quantity)

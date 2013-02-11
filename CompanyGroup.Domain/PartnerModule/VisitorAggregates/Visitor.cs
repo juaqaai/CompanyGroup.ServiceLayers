@@ -139,11 +139,18 @@ namespace CompanyGroup.Domain.PartnerModule
         public bool Valid { set; get; }
 
         /// <summary>
-        /// bejelentkezés lejárt-e, vagy sem?
+        /// bejelentkezés érvényes-e, vagy sem?
         /// </summary>
         public bool IsValidLogin
         {
-            get { return (DateTime.Now.CompareTo(this.ExpireDate) < 1) && (this.LoggedIn) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); }
+            get 
+            {
+                bool personalLoginOK = (this.LoginType == LoginType.Person) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName)) && (!String.IsNullOrWhiteSpace(this.PersonId)) && (!String.IsNullOrWhiteSpace(this.PersonName));
+
+                bool companyLoginOK = (this.LoginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
+
+                return (DateTime.Now.CompareTo(this.ExpireDate) < 1) && (personalLoginOK || companyLoginOK) && (this.Valid);       //(this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);             
+            }
         }
 
         /// <summary>
@@ -321,6 +328,28 @@ namespace CompanyGroup.Domain.PartnerModule
             }
 
             return validationResults;
+        }
+
+        public bool EqualsVisitor(Visitor obj)
+        {
+            if (obj == null || !(obj is Visitor))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.IsTransient() || this.IsTransient())
+            {
+                return false;
+            }
+            else
+            {
+                return (obj.CustomerId == this.CustomerId) && (obj.PersonId == this.PersonId);
+            }
         }
     }
 }

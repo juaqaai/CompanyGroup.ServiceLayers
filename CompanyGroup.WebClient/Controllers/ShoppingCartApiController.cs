@@ -192,7 +192,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.ServiceRequest.CreateOrder req = new CompanyGroup.Dto.ServiceRequest.CreateOrder()
             {
-                CartId = visitorData.CartId,
+                CartId = request.CartId,
                 CustomerOrderId = request.CustomerOrderId,
                 CustomerOrderNote = request.CustomerOrderNote,
                 DeliveryAddressRecId = request.DeliveryAddressRecId,

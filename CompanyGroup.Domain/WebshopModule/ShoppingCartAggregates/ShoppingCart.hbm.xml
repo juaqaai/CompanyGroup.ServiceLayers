@@ -40,6 +40,14 @@
     <return-join alias="Line" property="Cart.Items"></return-join>
     exec InternetUser.GetShoppingCartCollection @VisitorId=:VisitorId
   </sql-query>
+  <sql-query name="InternetUser.GetShoppingCartHeaders">
+    <query-param name="VisitorId" type="System.String"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="Active" type="System.Boolean"/>
+    <return-scalar column="Status" type="System.Int32"/>
+    exec InternetUser.GetShoppingCartHeaders @VisitorId=:VisitorId
+  </sql-query>
   <sql-query name="InternetUser.ShoppingCartInsert">
     <query-param name="VisitorId" type="System.String"/>
     <query-param name="Name" type="System.String"/>

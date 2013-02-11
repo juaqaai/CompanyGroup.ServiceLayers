@@ -95,11 +95,11 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses;
 
-            if (visitor.IsValidLogin && visitorData.CartId > 0)
+            if (visitor.IsValidLogin)
             {
-                CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest shoppingCartInfoRequest = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest(visitorData.CartId, visitor.Id);
+                CompanyGroup.Dto.WebshopModule.GetActiveCartRequest activeCartRequest = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest(visitorData.Language, visitor.Id);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetShoppingCartInfo", shoppingCartInfoRequest);
+                CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetActiveCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetActiveCart", activeCartRequest);
 
                 activeCart = shoppingCartInfo.ActiveCart;
 

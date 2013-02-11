@@ -17,6 +17,8 @@ namespace CompanyGroup.Domain.PartnerModule
             this.Message = message;
         }
 
+        public SalesOrderCreateResult() : this(0, String.Empty) { }
+
         public int ResultCode { get; set; }
 
         public string Message { get; set; }

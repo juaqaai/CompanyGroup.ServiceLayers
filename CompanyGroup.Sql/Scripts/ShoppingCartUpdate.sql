@@ -152,9 +152,9 @@ CREATE PROCEDURE [InternetUser].[ShoppingCartAssociate]( @PermanentVisitorId NVA
 AS
 SET NOCOUNT ON
 
-	DECLARE @Ret INT = 0 
+	DECLARE @Ret INT = 0;
 
-	UPDATE InternetUser.ShoppingCart SET VisitorId = @VisitorId WHERE VisitorId = @PermanentVisitorId;
+	UPDATE InternetUser.ShoppingCart SET VisitorId = @VisitorId WHERE VisitorId = @PermanentVisitorId AND [Status] = 2;
 
 	SET @Ret = 1;
 

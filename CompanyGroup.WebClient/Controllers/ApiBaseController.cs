@@ -765,25 +765,5 @@ namespace CompanyGroup.WebClient.Controllers
 
         #endregion
 
-        #region "ShoppingCart"
-
-        /// <summary>
-        /// CompanyGroup.Dto.WebshopModule.StoredShoppingCartCollection GetStoredShoppingCartCollectionByVisitor(CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request)
-        /// </summary>
-        /// <returns></returns>
-        //public CompanyGroup.WebClient.Response.StoredOpenedShoppingCartCollection GetStoredOpenedShoppingCartCollectionByVisitor()
-        //{
-        //    try
-        //    {
-        //        CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor request = new CompanyGroup.Dto.ServiceRequest.GetCartCollectionByVisitor(this.ReadLanguageFromCookie(), this.ReadObjectIdFromCookie());
-
-        //        CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>("ShoppingCartService", "GetStoredOpenedShoppingCartCollectionByVisitor", request);
-
-        //        return new CompanyGroup.WebClient.Response.StoredOpenedShoppingCartCollection(response.StoredItems, response.OpenedItems);
-        //    }
-        //    catch (Exception ex) { return new CompanyGroup.WebClient.Response.StoredOpenedShoppingCartCollection() { ErrorMessage = ex.Message }; }            
-        //}
-
-        #endregion
     }
 }

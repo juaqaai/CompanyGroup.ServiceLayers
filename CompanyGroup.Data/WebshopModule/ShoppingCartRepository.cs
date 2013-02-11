@@ -93,6 +93,39 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         /// <summary>
+        /// nyitott, tárolt kosár fejléc lista információk
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> GetShoppingCartHeaders(string visitorId)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId parameter cannot be null!");
+
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+                {
+
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetShoppingCartHeaders").SetString("VisitorId", visitorId)
+                                             .SetResultTransformer(
+                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.ShoppingCartHeader).GetConstructors()[0])); ;
+
+                    List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> resultList = query.List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader>() as List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader>;
+
+                    transaction.Commit();
+
+                    return resultList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        // [InternetUser].[GetShoppingCartHeadaders] (@VisitorId NVARCHAR(64) = '')
+
+        /// <summary>
         /// kosár hozzáadása kollekcióhoz, új kosárazonosítóval tér vissza
         /// a felhasználó többi kosarának Active mező értékét false-ra állítja
         /// </summary>

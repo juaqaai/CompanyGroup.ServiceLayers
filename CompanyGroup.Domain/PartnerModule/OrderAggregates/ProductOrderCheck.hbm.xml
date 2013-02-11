@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.ProductOrderCheck" callable="true">
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="OrderedQty" type="System.Int32"/>
+    <return-scalar column="ResultCode" type="System.Int32"/>
+    <return-scalar column="AvailableQuantity" type="System.Int32"/>
+    exec InternetUser.ProductOrderCheck @ProductId=:ProductId, @DataAreaId=:DataAreaId, @OrderedQty=:OrderedQty
+  </sql-query>
+</hibernate-mapping>

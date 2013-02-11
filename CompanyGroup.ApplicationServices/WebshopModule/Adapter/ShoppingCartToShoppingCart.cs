@@ -18,7 +18,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
-                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> items = from.Items.ToList().Where(x => x.LineId > 0).ToList();
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> items = from.GetItems();
 
                 return new CompanyGroup.Dto.WebshopModule.ShoppingCart()
                 {
@@ -27,7 +27,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     DeliveryTerms = Convert.ToInt32(from.DeliveryTerms),
                     PaymentTerms =  Convert.ToInt32(from.PaymentTerms), 
                     Shipping =  new ShippingToShipping().Map(from.Shipping),
-                    Items = items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency)),
+                    Items = items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency))
                 };
             }
             catch(Exception ex) { throw ex; }

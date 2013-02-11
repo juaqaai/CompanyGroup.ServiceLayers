@@ -222,52 +222,6 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         }
 
         [TestMethod]
-        public void GetStoredOpenedShoppingCartCollectionByVisitorTest()
-        {
-            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest("hu", "alma");
-
-            Uri requestUri = null;
-
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("ShoppingCart/GetStoredOpenedShoppingCartCollectionByVisitor", request).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                requestUri = response.Headers.Location;
-
-                CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>().Result;
-
-                Assert.IsNotNull(collection);
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-            }
-        }
-
-        [TestMethod]
-        public void GetCartCollectionByVisitorTest()
-        {
-            CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request = new CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest("hu", "alma");
-
-            Uri requestUri = null;
-
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("ShoppingCart/GetCartCollectionByVisitor", request).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                requestUri = response.Headers.Location;
-
-                CompanyGroup.Dto.WebshopModule.ShoppingCartCollection collection = response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.ShoppingCartCollection>().Result;
-
-                Assert.IsNotNull(collection);
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-            }
-        }
-
-        [TestMethod]
         public void GetCartByKeyTest()
         {
             CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "alma");

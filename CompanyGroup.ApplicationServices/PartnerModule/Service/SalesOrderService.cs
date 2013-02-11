@@ -46,7 +46,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             try
             {
                 //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 //látogató alapján kikeresett vevő rendelések listája
                 List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId, visitor.DataAreaId);

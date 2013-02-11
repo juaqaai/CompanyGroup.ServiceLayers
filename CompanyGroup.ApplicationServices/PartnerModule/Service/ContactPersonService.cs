@@ -74,7 +74,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
         {
             //ha üres a látogató azonosító
-            CompanyGroup.Helpers.DesignByContract.Require( !String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
 
             try
             {

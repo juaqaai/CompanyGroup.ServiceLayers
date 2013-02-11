@@ -204,48 +204,6 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// céghez, azon belül személyhez tartozó érvényes / tárolt kosarak kiolvasása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [ActionName("GetStoredOpenedShoppingCartCollectionByVisitor")]
-        [HttpPost]
-        public HttpResponseMessage GetStoredOpenedShoppingCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
-        {
-            try
-            {
-                CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection response = service.GetStoredOpenedShoppingCartCollectionByVisitor(request);
-
-                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection>(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                return ThrowHttpError(ex);
-            }
-        }
-
-        /// <summary>
-        /// felhasználóhoz tartozó érvényes kosarak kiolvasása
-        /// </summary>
-        /// <param name="visitorId"></param>
-        /// <returns></returns>
-        [ActionName("GetCartCollectionByVisitor")]
-        [HttpPost]
-        public HttpResponseMessage GetCartCollectionByVisitor(CompanyGroup.Dto.WebshopModule.GetCartCollectionByVisitorRequest request)
-        {
-            try
-            {
-                CompanyGroup.Dto.WebshopModule.ShoppingCartCollection response = service.GetCartCollectionByVisitor(request);
-
-                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.ShoppingCartCollection>(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                return ThrowHttpError(ex);
-            }
-        }
-
-        /// <summary>
         /// kosárazonosítóval rendelkező kosár kiolvasása   
         /// </summary>
         /// <param name="cartId"></param>

@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 SET ANSI_NULLS ON
 GO
@@ -6,9 +6,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 /* webes rendelés elõtt ellenõrzi a cikket */
-DROP PROCEDURE InternetUser.cms_ProductOrderCheck
+DROP PROCEDURE InternetUser.ProductOrderCheck
 GO
-CREATE PROCEDURE InternetUser.cms_ProductOrderCheck( @ProductId nvarchar(20), @DataAreaId nvarchar(3), @OrderedQty int = 0) 
+CREATE PROCEDURE InternetUser.ProductOrderCheck( @ProductId nvarchar(20), @DataAreaId nvarchar(3), @OrderedQty int = 0) 
 AS
 SET NOCOUNT ON
 
@@ -25,7 +25,7 @@ SET NOCOUNT ON
 	BEGIN
 		SET @Ret = -5;	-- le van állítva a cikk
 		SET @AvailableQty = 0;
-		SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+		SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 		RETURN;
 	END
 
@@ -37,7 +37,7 @@ SET NOCOUNT ON
 	BEGIN
 		SET @Ret = -1;	-- nincs meg a cikk, nincs ConfigId
 		SET @AvailableQty = 0;
-		SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+		SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 		RETURN;
 	END
 
@@ -45,7 +45,7 @@ SET NOCOUNT ON
 	BEGIN
 		SET @Ret = -2;	-- nem webes a cikk
 		SET @AvailableQty = 0;
-		SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+		SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 		
 		RETURN;
 	END
@@ -54,7 +54,7 @@ SET NOCOUNT ON
 	BEGIN
 		SET @Ret = -3;	-- kifutott cikk 
 		SET @AvailableQty = 0;
-		SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+		SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 		RETURN;
 	END
 
@@ -94,7 +94,7 @@ SET NOCOUNT ON
 
 		SET @AvailableQty = ISNULL(@Amount, 0) + @Amount2;
 
-		SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+		SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 
 		RETURN;
 	END
@@ -103,17 +103,17 @@ SET NOCOUNT ON
 
 	SET @AvailableQty = ISNULL(@Amount, 0) + @Amount2;
 
-	SELECT @Ret as Ret, @AvailableQty as AvailableQty;
+	SELECT @Ret as ResultCode, @AvailableQty as AvailableQuantity;
 
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.cms_ProductOrderCheck TO InternetUser
+GRANT EXECUTE ON InternetUser.ProductOrderCheck TO InternetUser
 GO
 
 /*
-exec InternetUser.cms_ProductOrderCheck 'EB1900', 'hrp', 0;
+exec InternetUser.ProductOrderCheck 'EB1900', 'hrp', 0;
 
-exec InternetUser.cms_ProductOrderCheck 'LX-300+II', 'ser', 0;
+exec InternetUser.ProductOrderCheck 'LX-300+II', 'ser', 0;
 */
 
 /*

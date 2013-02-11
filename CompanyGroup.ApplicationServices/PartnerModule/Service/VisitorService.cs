@@ -126,13 +126,21 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request)
+        public CompanyGroup.Dto.PartnerModule.Visitor ChangeCurrency(CompanyGroup.Dto.PartnerModule.ChangeCurrencyRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Currency), "Currency cannot be null, or empty!");
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
             visitorRepository.ChangeCurrency(request.VisitorId, request.Currency);
+
+            //
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+
+            //visitor objektum cache-ben tárolása
+            CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, visitor.VisitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
+
+            return new VisitorToVisitor().Map(visitor);
         }
 
         /// <summary>

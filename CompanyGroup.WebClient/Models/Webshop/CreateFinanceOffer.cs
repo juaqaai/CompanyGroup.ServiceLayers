@@ -41,5 +41,10 @@ namespace CompanyGroup.WebClient.Models
         /// idegen rendeléshez kapcsolódó feljegyzés
         /// </summary>
         public string CustomerOrderNote { get; set; }
+
+        /// <summary>
+        /// kosár azonosítója
+        /// </summary>
+        public int CartId { get; set; }
     }
 }

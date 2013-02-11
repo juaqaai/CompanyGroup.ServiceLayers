@@ -50,7 +50,7 @@ SET NOCOUNT ON
 		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
 		  (Cart.Id = @CartId);
 RETURN
--- EXEC [InternetUser].[GetShoppingCart] 20;
+-- EXEC [InternetUser].[GetShoppingCart] 34;
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCart] TO InternetUser
 GO
@@ -103,7 +103,23 @@ RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCartCollection] TO InternetUser
 GO
--- EXEC [InternetUser].[GetShoppingCartCollection] '6E55EA1B8ECA4DBC82840854DC652B95';
+-- EXEC [InternetUser].[GetShoppingCartCollection] 'C1FF170BBF084ABEBCD9EFF9AA1EB5F0';
+
+DROP PROCEDURE [InternetUser].[GetShoppingCartHeaders];
+GO
+CREATE PROCEDURE [InternetUser].[GetShoppingCartHeaders] (@VisitorId NVARCHAR(64) = '') 
+AS
+SET NOCOUNT ON
+	SELECT Id, Name, Active, [Status]
+	FROM InternetUser.ShoppingCart
+	WHERE [Status] IN (1, 2) AND 
+		  VisitorId = @VisitorId;
+
+RETURN
+GO
+GRANT EXECUTE ON [InternetUser].[GetShoppingCartHeaders] TO InternetUser
+GO
+-- EXEC [InternetUser].[GetShoppingCartHeaders] 'C1FF170BBF084ABEBCD9EFF9AA1EB5F0';
 
 DROP PROCEDURE [InternetUser].[GetShoppingCartLine];
 GO

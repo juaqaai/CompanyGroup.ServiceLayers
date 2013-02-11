@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
+
     /// <summary>
     /// látogatóhoz tartozó kosár feladása 
     /// </summary>

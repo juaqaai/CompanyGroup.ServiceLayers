@@ -96,9 +96,9 @@ namespace CompanyGroup.WebApi.Controllers
         {
             try
             {
-                service.ChangeCurrency(request);
+                CompanyGroup.Dto.PartnerModule.Visitor response = service.ChangeCurrency(request);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.Visitor>(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
