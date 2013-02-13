@@ -94,13 +94,13 @@
                         <tbody>
                             {{each( i, item ) ActiveCart.Items}}
                             <tr>
-                                <td width="11%"nowrap="nowrap">${item.ProductId}</td>
+                                <td width="11%"nowrap="nowrap"><span style="max-width:200px; overflow:hidden;" size>${item.ProductName}</span></td>
                                 <td width="12%"nowrap="nowrap">${item.PartNumber}</td>
-                                <td width="41%" nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
+                                <td width="41%"nowrap="nowrap">${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} </td>
                                 <td width="14%" nowrap="nowrap">
                                 <input class="cartnumber" value="${item.Quantity}" title="${item.Id}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                 db</td>
-                                <td width="4%">&nbsp;</td>
+                                <td width="4%">${item.DataAreaId}</td>
                                 <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
                                 <!-- <td nowrap="nowrap"><a href="javascript:void(0)" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
                                 <td nowrap="nowrap">&nbsp;</td>
@@ -579,15 +579,15 @@
 				                            
 											<td class="price" style="text-align:right">
 											{{if item.SecondHandList.Items.length > 0}}
-											<span> Ár:<strong id="price1">${item.Price}</strong> 
+											<span> Ár:<strong >${companyGroup.utils.instance().formatNumber(item.Price)}</strong> 
 											{{if Products.Currency == 'HUF'}} Ft {{else}} €
 											{{/if}}
 											</span>
 				                            <br/>
-											<a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b>
+											<a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b>
 											</a>
 											{{else}}
-											<span style="font-size:18px;"> Ár: <b>${item.Price}</b>
+											<span style="font-size:18px;"> Ár: <b>${companyGroup.utils.instance().formatNumber(item.Price)}</b>
 											{{if Products.Currency == 'HUF'}} Ft {{else}} €
 											{{/if}}
 											</span>							
@@ -657,12 +657,12 @@
 				                </table>
                                 </div>
                             </div>			        
-                                <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
+                                <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}" method="post"> 
 			                    <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				                <tr>
 				                    <td nowrap="nowrap">
 				                        <div class="cus_prod_table_morelink">
-				                            <a href="#/details/${item.ProductId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">[+] Részletes adatlap</a>
+				                            <a href="#/details/${item.ProductId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
 				                        </div>
                                     </td>
                                     <td>
@@ -715,7 +715,7 @@
 	                                    <tr>
 				                            <td class="price_used" style="text-align:right">
 										    {{if item.SecondHandList.Items.length > 0}}
-				                            <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a>
+				                            <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b></a>
 				                            {{/if}}
                                           </td>
     		                            </tr>
@@ -888,7 +888,7 @@
                         <td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code"> <br>  ${Product.ProductId}</span></td>
                       </tr>
                     </table>
-					<table width="100%" border="0" cellspacing="1" cellpadding="1">
+                        <table width="100%" border="0" cellspacing="1" cellpadding="1">
 							<tr>
 								<td valign="top">
 								<div id="cus_termekkep">
@@ -925,20 +925,31 @@
 								<td valign="top" nowrap="nowrap">
                                 {{if Visitor.IsValidLogin}}
 								<table width="130" border="0" cellspacing="1" cellpadding="2">
-									<tr>
+								  <tr>
 										<td nowrap="nowrap" class="cus_prod_table_price">
-                                            <span>Ár:</span> <strong>${Product.Price} ${Product.Currency}</strong></td>
-									
-										<td>
-											{{if Product.Discount}}<b>AKCIÓS!<b></br>{{/if}}{{if Product.New}}<span style="background:#000; padding:2px; color:#00ff33; text-decoration:none;"><b>ÚJDONSÁG!<b></span>{{/if}}										
+										<span>Ár:</span> <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)} ${Product.Currency}</strong>
+										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br><span style="color:#ffc000; text-decoration: none; font-size:14px;" >Használt:<strong> ${Product.SecondHandList.MinimumPrice} Ft-tól</span></strong></a>{{/if}}
 										</td>
+										
 									</tr>
+                                    <tr>
+										<td>&nbsp;</td>
 									</tr>
+                                    <tr>
+									<td>
+											{{if Product.Discount}}<div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
+
+                                    </div> 
+
+{{/if}}{{if Product.New}}<div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>ÚJDONSÁG!</b></span></div>{{/if}}										
+									
+                                    </td>
+									</tr>
+						
 									<tr>
 										<td nowrap="nowrap">
-                                            <p>{{if Product.IsInStock}} <span>Véső készlet:</span><strong> ${Product.InnerStock} db</strong><br />
-                                            <span>Huszti készlet:</span><strong> ${Product.OuterStock} db</strong><br />
-										    <span></span>
+                                            <p>{{if Product.IsInStock}} <span>Készleten:</span><span style="color:green"><strong> ${Product.InnerStock +Product.OuterStock} db</strong></span><br />
+                                            <br />
                                         {{else}} 
                                                {{if Product.PurchaseInProgress}}
 				                                    <span>Várható érkezés:<strong> ${Product.ShippingDate}</strong></span>
@@ -947,64 +958,31 @@
                                                 {{/if}}                                       
                                         {{/if}}</p></td>
 									</tr>
-									<tr>
+</table>
+
 									<form action="#/addLineToShoppingCart/${Product.ProductId}" method="post">
 								<table width="100%" border="0" cellspacing="1" cellpadding="5">
 									<tr>
-									<td nowrap="nowrap">
+									<td width="87%" nowrap="nowrap">
                                     <div class="cus_prod_table_quantity">
                                         <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
                                     </div>
                                     </td>
-                                    <td align="right" nowrap="nowrap">
+                                    <td width="13%" align="right" nowrap="nowrap">
                                         <div class="cus_prod_table_basket">
-                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
-                                        </div>
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /> kosárba</div>
                                     </td>
 									</tr>
 								</table>
                                 </form>
-	
-									</tr>
-									<tr>
-										<td nowrap="nowrap">&nbsp;</td>
-									</tr>									
-								</table>
-                               {{/if}}<!-- {{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br />Használt:<strong> ${Product.SecondHandList.MinimumPrice} Ft-tól </strong></a>{{/if}}-->
+                               {{/if}}
                             </td>
 							</tr>
 							<tr>
-								<td colspan="3" valign="top" id="cus_prod_table_more_full">
-                                {{if Visitor.IsValidLogin}}
-                                <form action="#/addLineToShoppingCart/${Product.ProductId}" method="post">
-								<table width="100%" border="0" cellspacing="1" cellpadding="5">
-									<tr>
-										<!-- <td nowrap="nowrap">
-										<div id="cus_prod_table_add_compare">
-											<input type="checkbox" name="checkbox2" id="checkbox2" />
-											Összehasonlító listához ad
-										</div></td> -->
-									<td nowrap="nowrap">
-                                    <div class="cus_prod_table_quantity">
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
-                                    </div>
-                                    </td>
-                                    <td align="right" nowrap="nowrap">
-                                        <div class="cus_prod_table_basket">
-                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
-                                        </div>
-                                    </td>
-									</tr>
-								</table>
-                                </form>
-                                {{/if}}</td>
-							</tr>
-                            <tr>
-                                <td></td>
-                                <td><a href="#/backtolist">&laquo; vissza a listára</a></td>
-                                <td></td>
+                                <td><a style="text-decoration:none" href="#/backtolist">&laquo; vissza a listára</a></td>
                             </tr>
 						</table>
+						<br>
 						@*tabok*@
 						<div id="wrapper">
 							<ul class="tabs">
@@ -1073,7 +1051,7 @@
                                         <td width="102">
                                         <input type="hidden" value="${item.ConfigId}">
                                         {{if Visitor.IsValidLogin}}
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" />db <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" width="16" height="20" border="0" align="absmiddle" />
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" />db <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" />
                                         {{/if}}
                                         </td>
                                       </tr>
@@ -1144,6 +1122,8 @@
             $('#payment_option').hide();
             $('#order_rest').hide();
             $('.hr1').hide();
+
+
             $('.hr2').hide();
             
             $("#kiszallitas").change(function () {

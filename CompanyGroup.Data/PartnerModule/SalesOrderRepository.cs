@@ -90,7 +90,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SalesOrderList")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetSalesOrders")
                                             .SetString("CustomerId", customerId)
                                             .SetString("DataAreaId", dataAreaId)
                                             .SetResultTransformer(

@@ -1,11 +1,8 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
-		<link href='http://fonts.googleapis.com/css?family=Advent+Pro:400,300' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Armata&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!--[if IE 9 ]>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >
@@ -20,9 +17,7 @@
         @Scripts.Render("~/bundles/head")
         @Scripts.Render("~/bundles/modernizr")
 		
-		@Scripts.Render("~/bundles/Cufon")
-		@Scripts.Render("~/bundles/Segoe")
-		
+
 
         @RenderSection("ScriptsInHead", required: false)
     </head>
@@ -169,9 +164,8 @@
 					    <li>
 						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
-			    <li>
-						    <a href="@Url.Content("~/Company/Newsletter")">Akciók</a>
-						 </li>
+			    <li id="becomePartnerContainer1">
+                        </li>
 					    <li>
 						    <a href="@Url.Content("~/Company/Index")">Céginformáció</a>
 							<ul>
@@ -197,6 +191,11 @@
 					{{#IsValidLogin}}
 					{{/IsValidLogin}}
 						   {{^IsValidLogin}} <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>{{/IsValidLogin}}
+						   </script>
+                    <script id="becomePartnerTemplateNews" type="text/html">
+					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
+				    {{^IsValidLogin}}
+                    {{/IsValidLogin}}
 						   </script>
 			    </div>
 			</div>
@@ -407,10 +406,10 @@
                 .js('@Scripts.Url("~/bundles/fancybox")')
                 .js('@Scripts.Url("~/bundles/json2")')
                 .js('@Scripts.Url("~/bundles/tmpl")')
-                .js('@Scripts.Url("~/bundles/vegas")')
+//                .js('@Scripts.Url("~/bundles/vegas")')
                 .js('@Scripts.Url("~/bundles/mustache")')
-                .js('@Scripts.Url("~/bundles/amplify")')
-                .js('@Scripts.Url("~/bundles/smarttab")')
+//                .js('@Scripts.Url("~/bundles/amplify")')
+//                .js('@Scripts.Url("~/bundles/smarttab")')
                 .js('@Scripts.Url("~/bundles/scrollto")')
 				.js('@Scripts.Url("~/bundles/toastr")')
 				.js('@Scripts.Url("~/bundles/prettynumber")')
@@ -425,7 +424,7 @@
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 
-            //$.vegas({ src: '@Url.Content("~/Content/Media/images/background6.jpg")'});
+
 
             $('#preloader').ajaxStart(function () {
                 $('#preloader').show();

@@ -5,6 +5,37 @@ companyGroup.partnerinfo = $.sammy(function () {
     //this.use(Sammy.Mustache, 'html');
 
     this.use(Sammy.Title);
+
+    this.use(companyGroupHelpers);
+
+    this.setTitle('Partnerinfo -');
+
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+
+        $("input[name='radio_paymenttype']").live('change', function () {
+            context.redirect('#/invoiceinfo/' + $(this).val());
+            //context.trigger('invoiceinfo', { PaymentType: parseInt($(this).val(), 0) });
+        });
+
+        //azonnal elvihető
+        $("#chk_rightaway").live('change', function () {
+            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
+            context.redirect('#/salesorderinfo');
+        });
+        //áttárolás után elvihető
+        $("#chk_afteroverstore").live('change', function () {
+            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
+            context.redirect('#/salesorderinfo');
+        });
+        //beszerzés után elvihető
+        $("#chk_afterpurchasing").live('change', function () {
+            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
+            context.redirect('#/salesorderinfo');  
+        });
+    });
+
     //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
         var data = {
@@ -128,7 +159,7 @@ companyGroup.partnerinfo = $.sammy(function () {
         $.ajax({
             //console.log(context);
             url: companyGroup.utils.instance().getContactPersonApiUrl('UndoChagePassword'),
-            data: {Token:context.params['token']},
+            data: { Token: context.params['token'] },
             type: "GET",
             contentType: "application/json;charset=utf-8",
             timeout: 10000,
@@ -146,10 +177,11 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //számla info
     this.get('#/invoiceinfo/:paymenttype', function (context) {
-        //context.params['paymenttype']
+        console.log(context.params['paymenttype']);
+        var paymenttype = context.params['paymenttype']
         $.ajax({
             //console.log(context);
-            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
+            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList/' + paymenttype),
             data: {},
             type: "GET",
             contentType: "application/json;charset=utf-8",

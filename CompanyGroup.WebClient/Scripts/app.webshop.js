@@ -73,7 +73,7 @@ companyGroup.webshop = $.sammy(function () {
 			step:3,
 			nextprev: true,
             auto: false,
-			numeric: false,
+			numeric: false
 		});
 		
         //$(".expand_all").toggle(function () {
@@ -1119,11 +1119,13 @@ companyGroup.webshop = $.sammy(function () {
         });
     });
     //kosár sor hozzáadás 
-    this.post('#/addLineToShoppingCart/:productId', function (context) {
+    this.post('#/addLineToShoppingCart/:productId/:dataAreaId', function (context) {
+        console.log(context.params['productId'] + ' ' + context.params['dataAreaId']);
         var data = {
             CartId: parseInt($("input#hidden_cartId").val()),   //alert($('input#foo').val());
             ProductId: context.params['productId'],
-            Quantity: context.params['txt_quantity']
+            Quantity: context.params['txt_quantity'], 
+            DataAreaId: context.params['dataAreaId'] 
         };
         $.ajax({
             type: "POST",
@@ -1709,6 +1711,12 @@ companyGroup.webshop = $.sammy(function () {
             dataType: "json",
             processData: true,
             success: function (result) {
+				if (result.Products.ListCount == 0) {
+                 $('list_item_container').show();
+					alert('Nincs megjelenitendő elem!');
+                } else {
+	                $('list_item_container').hide(); 
+				}
                 if (result) {
                     //console.log(result);
                     $("#div_pager_top").empty();
@@ -1862,7 +1870,7 @@ companyGroup.autocomplete = (function () {
         })
         .data("autocomplete")._renderItem = function (ul, item) {
             console.log(item);
-            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
+            var inner_html = '<div class="list_item_container"><div class="image"><a style="color:#FFF; text-decoration:none; font-size:12px;" href="#/details/' + item.ProductId + '" title="' + item.ProductName + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId) + '" alt="" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
             .append(inner_html)
