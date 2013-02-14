@@ -28,7 +28,7 @@
 							<a href="#/saveShoppingCartOpenStatus" class="btn_basket_slide">
                                 <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></a>
                             </td>
-							 <td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus"><div id="modify_btn"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">modosítás</span></span><img src="@Url.Content("~/Content/Media/images/edit.png")" width="15px" height="15px" alt=""/></div></a></td>
+							 <td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}"><div id="modify_btn"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">{{if ShoppingCartOpenStatus}}összezárás{{else}}modosítás{{/if}}</span></span><img src="@Url.Content("~/Content/Media/images/edit.png")" width="15px" height="15px" alt=""/></div></a></td>
                             <td><a style="text-decoration:none;" href="#/showCreateOrder"><div id="checkout_btn">Vásárlás <img src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></div></a></td> 
                         </tr>
                     </table>
@@ -221,6 +221,7 @@
                     </table>
                     </form>
                     </div>
+
                     <div id="cus_ajanlat_vegfelhasznalo">
                     Végfelhasználói árajánlat készítése
                     <br />
@@ -1193,6 +1194,15 @@
             $("input#hidden_cartId").val(model.ActiveCart.Id);
 
             $('.select2').skinner({'type':'left'});
+
+            $('#hidden_cartopen').val('');
+
+            if (model.ShoppingCartOpenStatus) { 
+                $('#basket_panel').show();
+            }
+            else {
+                $('#basket_panel').hide();
+            }
 
             //$('body').trigger('selectedPageIndexChanged', {msg: 'hello world!'});
 

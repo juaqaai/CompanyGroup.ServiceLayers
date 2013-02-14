@@ -331,7 +331,6 @@ companyGroup.webshop = $.sammy(function () {
                 }
             });
         }
-
     });
     //szűrés készleten lévő termékekre
     this.bind('filterByStock', function (e, data) {
@@ -954,17 +953,18 @@ companyGroup.webshop = $.sammy(function () {
         loadCatalogue();
         showProductList(true);
     });
-    //kosár nyitott állapotát menti
-    this.get('#/saveShoppingCartOpenStatus', function (context) {
-        var isOpen = ($('#hidden_cartopen').val() === '1');
-        isOpen = !isOpen;
-        if (isOpen) {
-            $('#hidden_cartopen').val('1');
-        } else {
-            $('#hidden_cartopen').val('');
-        }
+    //kosár állapotát menti
+    this.get('#/saveShoppingCartOpenStatus/:status', function (context) {
+        
+//        var isOpen = ($('#hidden_cartopen').val() === '1');
+//        isOpen = !isOpen;
+//        if (isOpen) {
+//            $('#hidden_cartopen').val('1');
+//        } else {
+//            $('#hidden_cartopen').val('');
+//        }
         var data = {
-            IsOpen: isOpen
+            IsOpen: context.params['status'] == 1 ? true : false
         };
         $.ajax({
             type: "POST",
@@ -978,6 +978,7 @@ companyGroup.webshop = $.sammy(function () {
                 $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
                 $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása' : 'bezárása');
+                context.redirect('#/shoppingcartopenedstatus');
             },
             error: function () {
                 alert('saveShoppingCartOpenStatus call failed');
