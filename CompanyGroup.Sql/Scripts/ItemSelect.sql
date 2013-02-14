@@ -24,4 +24,5 @@ SET NOCOUNT ON
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.ItemSelect TO InternetUser
--- EXEC InternetUser.ItemSelect @ProductId = 'EXT105';
+-- EXEC InternetUser.ItemSelect @ProductId = '0636926019071', @DataAreaId = 'bsc';
+-- SELECT * FROM InternetUser.Catalogue WHERE DataAreaId = 'bsc' AND 

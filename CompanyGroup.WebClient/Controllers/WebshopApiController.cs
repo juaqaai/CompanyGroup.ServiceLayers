@@ -178,34 +178,36 @@ namespace CompanyGroup.WebClient.Controllers
         [ActionName("Details")]
         public CompanyGroup.WebClient.Models.ProductCatalogueItem Details()
         {
-            return GetDetails(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"));
+            CompanyGroup.WebClient.Models.GetItemByProductIdRequest request = new CompanyGroup.WebClient.Models.GetItemByProductIdRequest(CompanyGroup.Helpers.QueryStringParser.GetString("ProductId"), CompanyGroup.Helpers.QueryStringParser.GetString("DataAreaId"));
+            
+            return GetDetails(request);
         }
 
         /// <summary>
         /// részletes termék adatlap
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
         [HttpGet]
         [ActionName("GetDetails")]
-        public CompanyGroup.WebClient.Models.ProductCatalogueItem GetDetails(string productId)
+        public CompanyGroup.WebClient.Models.ProductCatalogueItem GetDetails(CompanyGroup.WebClient.Models.GetItemByProductIdRequest request)
         {
-            if (String.IsNullOrWhiteSpace(productId)) { productId = "PGI7BK"; }
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest()
+            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest req = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest()
             {
-                ProductId = productId,
-                DataAreaId = ApiBaseController.DataAreaId,
+                ProductId = request.ProductId,
+                DataAreaId = request.DataAreaId,
                 VisitorId = visitorData.VisitorId,
                 Currency = visitorData.Currency
             };
 
-            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest>("Product", "GetItemByProductId", request);
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest>("Product", "GetItemByProductId", req);
 
             CompanyGroup.Dto.WebshopModule.Product product = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Product>().Result : new CompanyGroup.Dto.WebshopModule.Product();
 
-            CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.CompatibleProducts>("Product", "GetCompatibleProducts", request);
+            CompanyGroup.Dto.WebshopModule.CompatibleProducts compatibleProducts = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest, CompanyGroup.Dto.WebshopModule.CompatibleProducts>("Product", "GetCompatibleProducts", req);
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 

@@ -584,7 +584,7 @@
 											{{/if}}
 											</span>
 				                            <br/>
-											<a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b>
+											<a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b>
 											</a>
 											{{else}}
 											<span style="font-size:18px;"> Ár: <b>${companyGroup.utils.instance().formatNumber(item.Price)}</b>
@@ -592,7 +592,7 @@
 											{{/if}}
 											</span>							
 				                            {{/if}}
-                                            <!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a-->
+                                            <!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a-->
 											
                                           </td>
 										  
@@ -662,7 +662,7 @@
 				                <tr>
 				                    <td nowrap="nowrap">
 				                        <div class="cus_prod_table_morelink">
-				                            <a href="#/details/${item.ProductId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
+				                            <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
 				                        </div>
                                     </td>
                                     <td>
@@ -715,7 +715,7 @@
 	                                    <tr>
 				                            <td class="price_used" style="text-align:right">
 										    {{if item.SecondHandList.Items.length > 0}}
-				                            <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b></a>
+				                            <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b></a>
 				                            {{/if}}
                                           </td>
     		                            </tr>
@@ -1005,7 +1005,7 @@
 							</ul>
 							<div class="tab-content" id="tabs1">
                                 {{each( i, item ) CompatibleProducts}}
-								<a href="#/details/${item.ProductId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
+								<a href="#/details/${item.ProductId}/${item.DataAreaId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
 								<br />
                                     {{if Visitor.IsValidLogin}}
                                         <span>Ár</span>${item.Price} <br /><br />
@@ -1018,7 +1018,7 @@
 							<div class="tab-content" id="tabs2">
 
                                 {{each( i, item ) ReverseCompatibleProducts}}
-								<a href="#/details/${item.ProductId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
+								<a href="#/details/${item.ProductId}/${item.DataAreaId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
 								<br />
                                     {{if Visitor.IsValidLogin}}
                                         <span>Ár</span>${item.Price} <br /><br />

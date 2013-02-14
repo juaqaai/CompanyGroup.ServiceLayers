@@ -101,7 +101,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.CompletionList GetComplationList(string prefix,
+        CompanyGroup.Domain.WebshopModule.CompletionList GetCompletionList(string prefix,
                                                                            string dataAreaId,
                                                                            string manufacturers,
                                                                            string category1,

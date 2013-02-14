@@ -5,6 +5,9 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
+    /// <summary>
+    /// autosuggestion lista 
+    /// </summary>
     public class CompletionList : CompanyGroup.Dto.WebshopModule.CompletionList
     {
         public CompletionList(CompanyGroup.Dto.WebshopModule.CompletionList completionList)

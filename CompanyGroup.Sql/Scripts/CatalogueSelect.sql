@@ -137,7 +137,7 @@ SET NOCOUNT ON
 		  )
 	ORDER BY 
 	CASE WHEN @Sequence =  0 THEN --átlagos életkor csökkenõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
-		AverageInventory + Discount END DESC,
+		Discount + AverageInventory + InnerStock + OuterStock END DESC,
 	CASE WHEN @Sequence =  1 THEN -- átlagos életkor növekvõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
 		AverageInventory + Discount END ASC, 
 	CASE WHEN @Sequence =  2 THEN -- azonosito novekvo

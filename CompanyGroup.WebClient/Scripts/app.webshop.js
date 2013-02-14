@@ -207,7 +207,7 @@ companyGroup.webshop = $.sammy(function () {
         })
         .data("autocomplete")._renderItem = function (ul, item) {
             console.log(item);
-            var inner_html = '<div class="list_item_container"><a href="#/details/' + item.ProductId + '"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div></td><td><div class="label"><strong>' + item.ProductId + '</strong></div><div class="description">' + item.ProductName + '</div></td></tr></table><a></div>';
+            var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a href="#/details/' + item.ProductId + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.PictureId) + ' alt=\"\" /></a></div></td><td><div class="label"><strong><a href="#/details/' + item.ProductId + '">' + item.ProductId + '</a></strong></div><div class="description"><a href="#/details/' + item.ProductId + '">' + item.ProductName + '<a></div></td></tr></table></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
             .append(inner_html)
@@ -1508,12 +1508,15 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     //termék adatlap
-    this.get('#/details/:productId', function (context) {
-        var productId = context.params['productId'];
+    this.get('#/details/:productId/:dataAreaId', function (context) {
+        var data = {
+            ProductId: context.params['productId'],
+            DataAreaId: context.params['dataAreaId']
+        };
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: companyGroup.utils.instance().getWebshopApiUrl('GetDetails'),
-            data: { ProductId: productId },
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             timeout: 15000,
             dataType: "json",
@@ -1521,7 +1524,6 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 $("#cus_productdetails_table").empty();
                 $("#productDetailsTemplate").tmpl(result).appendTo("#cus_productdetails_table");
-
                 switch_tabs($('.defaulttab'));
                 showProductList(false);
             },

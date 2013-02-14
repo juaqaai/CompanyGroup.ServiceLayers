@@ -634,7 +634,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetComplationList(request.Prefix, 
+            CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetCompletionList(request.Prefix, 
                                                                                                           dataAreaId, 
                                                                                                           ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
                                                                                                           ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
