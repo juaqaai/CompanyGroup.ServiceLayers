@@ -148,5 +148,26 @@ namespace CompanyGroup.WebApi.Controllers
                 return ThrowHttpError(ex);
             }
         }
+
+        /// <summary>
+        /// részletes adatlap log lista
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("GetCatalogueDetailsLogList")]
+        [HttpPost]
+        public HttpResponseMessage GetCatalogueDetailsLogList(CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request)
+        {
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList response = this.service.GetCatalogueDetailsLogList(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
     }
 }

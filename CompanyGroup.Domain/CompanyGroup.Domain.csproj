@@ -56,6 +56,7 @@
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\VisitorInsertResult.cs" />
     <Compile Include="WebshopModule\FinanceAggregates\OfferStatus.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\CatalogueDetailsLog.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CompatibilityItem.cs" />
     <Compile Include="MaintainModule\ProductAggregates\InventName.cs" />
     <Compile Include="MaintainModule\ProductAggregates\Manufacturer.cs" />
@@ -201,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueDetailsLog.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\FinanceAggregates\FinanceOffer.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

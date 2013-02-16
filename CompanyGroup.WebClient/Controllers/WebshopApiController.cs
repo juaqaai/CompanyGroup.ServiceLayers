@@ -489,6 +489,25 @@ namespace CompanyGroup.WebClient.Controllers
             }
         }
 
+        /// <summary>
+        /// részletes termékadatlap látogatottsági lista 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("GetCatalogueDetailsLogList")]
+        public CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList GetCatalogueDetailsLogList()
+        {
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+            CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request = new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest() { VisitorId = visitorData.VisitorId };
+
+            HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest>("Product", "GetCatalogueDetailsLogList", request);
+
+            CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList list = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList>().Result : new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList();
+
+            return list;
+        }
+
         //// GET api/webshop/5
         //public string Get(int id)
         //{

@@ -1,5 +1,21 @@
 ﻿@charset "utf-8";
 
+img {
+    border-style:none;
+}
+.imgClass { 
+    background-image: url(../../Media/images/bg_nagyito.png);
+    background-position:  0px 0px;
+    background-repeat: no-repeat;
+	width: 25px;
+    height: 25px;
+	border:0;
+	float:right; 
+	margin-top:2px; 
+	margin-right:10px; 
+	cursor:pointer;
+
+}
 html {
     overflow-Y: scroll;
 }
@@ -285,8 +301,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 background: #DDD;
 
     color: #666;
-    
-    width: 695px;
+	width: 695px;
     margin-left: 0px;
     margin-top:5px;
     border-bottom:2px #666 solid;
@@ -651,12 +666,6 @@ box-shadow: 0px 0px 2px 0px ;
     width: 25px;
     
     color: #333;
-}
-
-#basket_open_button {
-    position:absolute;
-    margin-top:-65px;
-    margin-left:450px;
 }
 /************************************************ teljes háttérkép ************************************************/
 
@@ -1359,11 +1368,13 @@ ul#usermenu li:hover ul, ul#usermenu ul li:hover ul, ul#usermenu ul ul li:hover 
     cursor: pointer;
 }
 /***************************** felső kosár panel *****************************/
-
+#basket_open_button {
+    position:absolute;
+    margin-top:-49px;
+    left:538px;
+}
 #active_basket {
 	padding:2px;
-	margin-left:80px;
-	margin-top:15px;
     cursor: pointer;
 border-radius:3px;
 background: rgb(246,248,249); /* Old browsers */
@@ -1430,11 +1441,11 @@ box-shadow:         0px 1px 1px rgba(50, 50, 50, 1);
 }
 #basket_panel {
     /*border-bottom: 3px #000 solid;*/
-    /*background: #DEDEDE;*/
-    margin-top: 0px;
+    background: #FFF;
+    /*margin-top: 0px;
     margin-bottom:10px;
     /*background-image:url(images/filter_panel_bg.png);*/
-    /*	-moz-opacity:1;
+    /*	-moz-opacity:1;bat
      filter:alpha(opacity=1);
      opacity:1;*/
     height: auto;
@@ -1442,6 +1453,11 @@ box-shadow:         0px 1px 1px rgba(50, 50, 50, 1);
     padding-top: 6px;
 	vertical-align: middle; 
 	display: table-cell;
+	z-index:2;
+	position:absolute;
+		-webkit-box-shadow: 0px 5px 5px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow:    0px 5px 5px rgba(50, 50, 50, 0.5);
+	box-shadow:         0px 5px 5px rgba(50, 50, 50, 0.5);
 }
 #basket_panel a {
     color: #FFF;

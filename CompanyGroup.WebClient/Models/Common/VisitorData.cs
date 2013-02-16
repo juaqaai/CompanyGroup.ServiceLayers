@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// visitor related data
+    /// látogató adatokat tartalmazó osztály
     /// </summary>
     public class VisitorData
     {

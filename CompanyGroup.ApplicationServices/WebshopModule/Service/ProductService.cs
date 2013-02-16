@@ -586,6 +586,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 product.IsInNewsletter = false;
 
                 product.IsInCart = shoppingCartCollection.IsInCart(product.ProductId);
+
+                // részletes adatlap log hozzáadás
+                productRepository.AddCatalogueDetailsLog(visitor.VisitorId, visitor.CustomerId, visitor.PersonId, request.DataAreaId, request.ProductId);
             }
             else
             {
@@ -731,5 +734,32 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         }
 
         #endregion
+
+        /// <summary>
+        /// részletes adatlap log lista
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList GetCatalogueDetailsLogList(CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request)
+        {
+            Helpers.DesignByContract.Require((request != null), "ProductService GetCatalogueDetailsLogList request cannot be null, or empty!");
+
+            try
+            {
+                //ha a látogató azonosító üres, akkor nincs mihez részletes adatlap log listát keresni, üreset kell visszaadni
+                if (String.IsNullOrEmpty(request.VisitorId))
+                {
+                    return new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList();
+                }
+
+                List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog> result = productRepository.CatalogueDetailsLogList(request.VisitorId);
+
+                return new CatalogueDetailsLogToCatalogueDetailsLog().Map(result);
+            }
+            catch(Exception ex)
+            {
+                throw(ex);
+            }
+        }
     }
 }

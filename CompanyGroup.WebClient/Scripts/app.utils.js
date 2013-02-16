@@ -78,6 +78,9 @@ companyGroup.utils = (function () {
             getProductDetailsUrl: function (productId) {
                 return _webshopBaseApiUrl + 'Details/?ProductId=' + encodeURIComponent(productId);
             },
+            getSmallThumbnailPictureUrl: function (pictureId) {
+                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=50&MaxHeight=50';
+            },
             getThumbnailPictureUrl: function (pictureId) {
                 return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=60&MaxHeight=60';
             },

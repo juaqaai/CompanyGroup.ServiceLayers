@@ -2,42 +2,54 @@
 <table border="0" cellpadding="0" cellspacing="0">
 	<tr>
 	<td>
-<div id="container_2">
-<br>
-<p><strong>Megtekintett termékek</strong><p>
+    <div id="container_2">
+    @*catalogueDetailsLogTemplate*@
+    </div></td>
+          <td><div id="cus_recommended_prod_container">
+	        <br/>
+	        <p><strong>Ajánlott termékek</strong></p>
+	        <ul id="cus_recommended_prod_content">
+                @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.Items)
+                {
+		        <li>
+		        <table  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="100" height="100" align="center" ><a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))">
+                    <img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=100&MaxHeight=100", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+	                <div style="height:50px; overflow:hidden;" align="center">
+                    <span style="color:#888;">@banner.ProductId</span><br/>
+	                <span>@banner.ItemName</span>
+                    </div></td>
+                </tr>
+                </table>	
+		        </li>
+                }
+	        </ul>
+        </div></td>
+  </tr>
+  </table>
+  <script id="catalogueDetailsLogTemplate" type="text/x-jquery-tmpl">
+    <br/>
+    {{if Items.length > 0}}{{/if}}
+    <p><strong>Megtekintett termékek</strong></p>
 	<ul id="items">
-	 @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.Items)
-        {
-    <li>
+	    {{each( i, item ) Items}}
+        <li>
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-		<td width="50px" height="50px"><p class="image"><a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=50&MaxHeight=50", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a></p></td><td><h3></h3><span class="info">@banner.ProductId</span></td>
-		</tr>
-		</table>
+		    <td style="padding-right:5px" width="50px" height="50px">
+                <a href="#/details/${item.ProductId}/${item.DataAreaId}"><img src="${companyGroup.utils.instance().getSmallThumbnailPictureUrl(item.PictureId)}" alt="${item.ProductName}" title="${item.ProductName}" /></a>
+            </td>
+            <td>
+                <div style="height:50px; overflow:hidden;"><span style="color:#000;">${item.ProductName}</span></div>
+            </td>
+        </tr>
+		</table> 
 		</li>
-		 }
-    	</ul>
-</div></td>
-          <td><div id="cus_recommended_prod_container">
-	<br>
-	<p><strong>Ajánlott termékek</strong><p>
-	<ul id="cus_recommended_prod_content">
-        @foreach (CompanyGroup.Dto.WebshopModule.BannerProduct banner in @Model.Items)
-        {
-		<li>
-		<table  border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="100" height="100" ><a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))"><img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=100&MaxHeight=100", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a></td>
-  </tr>
-  <tr>
-    <td>
-	<span>@banner.ProductId</span>
-</td>
-  </tr>
-</table>	
-		</li>
-        }
-	</ul>
-</div></td>
-  </tr>
-      </table>
+		{{/each}}
+    </ul>
+  </script>

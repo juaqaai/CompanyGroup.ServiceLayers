@@ -187,5 +187,21 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList();
 
+        /// <summary>
+        /// részletes adatlap log lista
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog> CatalogueDetailsLogList(string visitorId);
+
+        /// <summary>
+        /// részletes adatlap log hozzáadás
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="customerId"></param>
+        /// <param name="personId"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="productId"></param>
+        void AddCatalogueDetailsLog(string visitorId, string customerId, string personId, string dataAreaId, string productId);
     }
 }

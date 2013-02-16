@@ -32,6 +32,8 @@ EXEC sp_xml_preparedocument @handle OUTPUT, @XMLDoc
 		 
 EXEC sp_xml_removedocument @handle
 
+SELECT * FROM InternetUser.Catalogue where StandardConfigId <> 'ALAP'
+
 */
 
 USE [Web]
@@ -137,9 +139,9 @@ SET NOCOUNT ON
 		  )
 	ORDER BY 
 	CASE WHEN @Sequence =  0 THEN --átlagos életkor csökkenõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
-		Discount + AverageInventory + InnerStock + OuterStock END DESC,
+		Sequence0 END ASC,
 	CASE WHEN @Sequence =  1 THEN -- átlagos életkor növekvõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
-		AverageInventory + Discount END ASC, 
+		Sequence0 END DESC, 
 	CASE WHEN @Sequence =  2 THEN -- azonosito novekvo
 		ProductId END ASC,
 	CASE WHEN @Sequence = 3 THEN -- azonosito csokkeno 
@@ -187,10 +189,44 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @CurrentPageIndex = 1, 
 								  @ItemsOnPage = 50
 
-SELECT * FROM InternetUser.Catalogue
+SELECT * FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
 */
 
+GO
+-- cikkek rendezés beállítása
+DROP PROCEDURE [InternetUser].[UpdateCatalogueSequence];
+GO
+CREATE PROCEDURE [InternetUser].[UpdateCatalogueSequence]
+AS
 
+	SET NOCOUNT ON;
+	UPDATE InternetUser.Catalogue SET Sequence0 = NULL;
+
+	WITH Sequence0_CTE (Id, Sequence, AverageInventory, Discount, Category1Id)
+	AS (
+		SELECT Id, ROW_NUMBER() OVER (ORDER BY AverageInventory DESC), AverageInventory, Discount, Category1Id 
+		FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
+	)
+
+	--select * from Sequence0_CTE
+
+	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Sequence0_CTE WHERE InternetUser.Catalogue.Id = Sequence0_CTE.Id)
+	WHERE Discount = 1 AND AverageInventory > 0 AND InnerStock + OuterStock > 0;
+
+	WITH Remain_CTE (Id, Sequence, AverageInventory, Discount, Category1Id)
+	AS (
+		SELECT Id, ROW_NUMBER() OVER (ORDER BY AverageInventory DESC, Discount DESC), AverageInventory, Discount, Category1Id 
+		FROM InternetUser.Catalogue WHERE Sequence0 IS NULL
+	)
+
+	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Remain_CTE WHERE InternetUser.Catalogue.Id = Remain_CTE.Id)
+	WHERE Sequence0 IS NULL;
+
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.UpdateCatalogueSequence TO InternetUser
+
+-- SELECT * FROM InternetUser.Catalogue where Sequence0 IS NOT NULL ORDER BY Sequence0 desc
 	
 /*
 

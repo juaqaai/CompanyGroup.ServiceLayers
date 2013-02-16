@@ -116,6 +116,7 @@
     <Compile Include="WebshopModule\Adapter\AdapterBase.cs" />
     <Compile Include="WebshopModule\Adapter\CategoryToCategory.cs" />
     <Compile Include="WebshopModule\Adapter\CompletionToCompletion.cs" />
+    <Compile Include="WebshopModule\Adapter\CatalogueDetailsLogToatalogueDetailsLog.cs" />
     <Compile Include="WebshopModule\Adapter\NewsletterToNewsletter.cs" />
     <Compile Include="WebshopModule\Adapter\FinanceOfferToFinanceOffer.cs" />
     <Compile Include="WebshopModule\Adapter\ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions.cs" />

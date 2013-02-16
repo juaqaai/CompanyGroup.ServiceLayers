@@ -530,6 +530,63 @@ namespace CompanyGroup.Data.WebshopModule
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// [InternetUser].[CatalogueDetailsLogSelect] (@VisitorId NVARCHAR(64) = '')
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog> CatalogueDetailsLogList(string visitorId)
+        {
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueDetailsLogSelect").SetString("VisitorId", visitorId).SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog).GetConstructors()[0]));
+
+                return query.List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog>() as List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog>;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// InternetUser.CatalogueDetailsLogInsert @VisitorId=:VisitorId, @CustomerId=:CustomerId, @PersonId=:PersonId, @DataAreaId=:DataAreaId, @ProductId=:ProductId
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="cstomerId"></param>
+        /// <param name="personId"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="productId"></param>
+           
+        public void AddCatalogueDetailsLog(string visitorId, string customerId, string personId, string dataAreaId, string productId)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(visitorId), "The visitorId cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(customerId), "The customerId cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(productId), "The productId cannot be null!");
+
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueDetailsLogInsert").SetString("VisitorId", visitorId)
+                                                                                                             .SetString("CustomerId", customerId)
+                                                                                                             .SetString("PersonId", personId)
+                                                                                                             .SetString("DataAreaId", dataAreaId)
+                                                                                                             .SetString("ProductId", productId);
+                    query.UniqueResult<int>();
+
+                    transaction.Commit();   
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }            
+        }
     }
 
 }

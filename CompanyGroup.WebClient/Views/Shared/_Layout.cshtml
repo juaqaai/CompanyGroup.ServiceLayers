@@ -4,12 +4,12 @@
         <meta charset="utf-8" />
         <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <!--[if IE 9 ]>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >
-           <![endif]-->
-        <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=1" />
-		<meta content="IE=edge,chrome=1" name="X-UA-Compatible" />
-        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<!-- [if IE]>
+        <meta http-equiv="imagetoolbar" content="no" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<![endif]-->
+
 		<meta name="viewport" content="width=device-width" />
 
         @Styles.Render("~/Content/css")
@@ -22,7 +22,6 @@
         @RenderSection("ScriptsInHead", required: false)
     </head>
     <body>
-    <!-- -->
     <a name="top" id="top"></a>
     <div class="aside-1" id="layout-wrapper">
 		<header id="layout-header" class="group">
@@ -33,7 +32,7 @@
         <!-- alsó felnyíló panel div -->
 @*		<div id="bottom_button_open">
 			<div id="cus_bottom_content_on">
-				<div id="openclose_button"><img src="/Cms/Media/images/openclose.png" alt=""/>
+				<div id="openclose_button"><img style="border-style:none;" src="/Cms/Media/images/openclose.png" alt=""/>
 				</div>
 				<table align="center" width="970" border="0" cellspacing="1" cellpadding="2">
 					<tr>
@@ -63,7 +62,7 @@
                         <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
-                        <img src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
+                        <img style="border-style:none;" src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
                     {{/IsValidLogin}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
@@ -142,14 +141,10 @@
                             <div class="inputwrapper">
 							<select class="select1">
   							<option value="#">Név vagy cikkszám</option>
- 							 <option value="#">Laptop</option>
-							 <option value="#">Tablet</option>
-							 <option value="#">Monitor</option>
-							 <option value="#">Nyomtató</option>
 							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                             <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
-                            <input type="image" alt="Keresés" src="~/Content/Media/images/bg_nagyito.png" style="float:right; margin-top:2px; margin-right:10px; cursor:pointer;" />@Html.AntiForgeryToken()
+                            <input type="submit" value="" class="imgClass" />
                             </div>
                             </form>
 						</td>
@@ -157,7 +152,7 @@
 				</table>
 	
 			</div>
-			<div id="cus_logo_and_pages_menu"><img src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" />
+			<div id="cus_logo_and_pages_menu"><a href="~/Webshop/Index"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>
         	    <a title="" id="top-link">Top of Page</a>
 			    <div id="cus_ax_nav">
 					 <ul id="menu-bar">
@@ -386,7 +381,7 @@
                           <a href="#/forgetPassword" style="margin-left:30px;">Elfelejtett jelszó?</a></span>
                           <br />
                           <br />
-                          <button type="submit"><!--img src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
+                          <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
                         <br />
                         <p>Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#084385; text-decoration: none;"><strong>Regisztráljon!</strong></a></p>
                         <div id="login_errors"></div>

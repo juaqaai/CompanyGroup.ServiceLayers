@@ -296,7 +296,9 @@ GO
 CREATE TABLE InternetUser.CatalogueDetailsLog
 (
 	Id			BIGINT IDENTITY NOT NULL PRIMARY KEY,
-	VisitorId	INT NOT NULL DEFAULT 0,					-- belépés azonosító 
+	VisitorId	NVARCHAR(64) NOT NULL DEFAULT '',  
+	CustomerId	NVARCHAR(20) NOT NULL DEFAULT '',
+	PersonId	NVARCHAR(20) NOT NULL DEFAULT '',
 	DataAreaId	NVARCHAR(4) NOT NULL DEFAULT '',		-- vállalat azonosító
 	ProductId	NVARCHAR(20) NOT NULL DEFAULT '',			
 	CreatedDate	DATETIME NOT NULL DEFAULT GETDATE()		
