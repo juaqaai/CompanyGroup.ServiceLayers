@@ -14,7 +14,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     {
         private const string CACHEKEY_STRUCTURE = "structure";
 
-        private const double CACHE_EXPIRATION_STRUCTURE = 24d;
+        /// <summary>
+        /// struktúra cache időtartama percben
+        /// </summary>
+        private const double CACHE_EXPIRATION_STRUCTURE = 60d;
 
         private static readonly bool StructureCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("StructureCacheEnabled", true);
 
@@ -95,11 +98,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             //vagy nem engedélyezett a cache, vagy nem volt a cache-ben
             if (structures == null)
             {
-                structures = structureRepository.GetList(dataAreaId, 
-                                                         ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
-                                                         ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
-                                                         ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
-                                                         ConvertData.ConvertStringListToDelimitedString(request.Category3IdList), 
+                structures = structureRepository.GetList(dataAreaId,
+                                                         String.Empty,  // ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList)
+                                                         String.Empty,  // ConvertData.ConvertStringListToDelimitedString(request.Category1IdList)
+                                                         String.Empty,  // ConvertData.ConvertStringListToDelimitedString(request.Category2IdList)
+                                                         String.Empty,  // ConvertData.ConvertStringListToDelimitedString(request.Category3IdList)
                                                          request.DiscountFilter, 
                                                          request.SecondhandFilter, 
                                                          request.IsInNewsletterFilter,

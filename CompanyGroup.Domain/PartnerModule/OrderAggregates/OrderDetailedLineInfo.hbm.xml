@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.GetSalesOrders" callable="true">
+  <sql-query name="InternetUser.SalesOrderList" callable="true">
     <query-param name="CustomerId" type="System.String"/>
     <query-param name="DataAreaId" type="System.String"/>
     <return-scalar column="SalesId" type="System.String"/>
     <return-scalar column="CreatedDate" type="System.DateTime"/>
     <return-scalar column="LineNum" type="System.Int32"/>
+    <return-scalar column="SalesStatus" type="System.Int32"/>
     <return-scalar column="ShippingDateRequested" type="System.DateTime"/>
-    <return-scalar column="ItemId" type="System.String"/>
-    <return-scalar column="Name" type="System.String"/>
+    <return-scalar column="ProductId" type="System.String"/>
+    <return-scalar column="ProductName" type="System.String"/>
     <return-scalar column="SalesPrice" type="System.Decimal"/>
     <return-scalar column="CurrencyCode" type="System.String"/>
     <return-scalar column="Quantity" type="System.Int32"/>
@@ -18,6 +19,9 @@
     <return-scalar column="StatusIssue" type="System.Int32"/>
     <return-scalar column="InventLocationId" type="System.String"/>
     <return-scalar column="Payment" type="System.String"/>
-    exec InternetUser.GetSalesOrders @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
+    <return-scalar column="SalesHeaderType" type="System.String"/>    
+    <return-scalar column="HeaderSalesStatus" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.SalesOrderList @CustomerId=:CustomerId
   </sql-query>
 </hibernate-mapping>

@@ -82,17 +82,13 @@ namespace CompanyGroup.Data.PartnerModule
         /// részletes vevőrendelés sorok listája
         /// </summary>
         /// <param name="customerId"></param>
-        /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId, string dataAreaId)
+        public List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
 
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
-
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetSalesOrders")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SalesOrderList")
                                             .SetString("CustomerId", customerId)
-                                            .SetString("DataAreaId", dataAreaId)
                                             .SetResultTransformer(
                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo).GetConstructors()[0]));
 

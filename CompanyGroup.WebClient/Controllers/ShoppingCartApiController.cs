@@ -296,27 +296,5 @@ namespace CompanyGroup.WebClient.Controllers
 
             return visitorData.IsShoppingCartOpened;
         }
-
-        [HttpPost]
-        [ActionName("SaveCatalogueOpenStatus")]
-        public void SaveCatalogueOpenStatus(CompanyGroup.WebClient.Models.CatalogueOpenStatus request)
-        {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            visitorData.IsCatalogueOpened = request.IsOpen;
-
-            this.WriteCookie(visitorData);
-
-            return;
-        }
-
-        [HttpPost]
-        [ActionName("ReadCatalogueOpenStatus")]
-        public bool ReadCatalogueOpenStatus()
-        {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            return visitorData.IsCatalogueOpened;
-        }
     }
 }

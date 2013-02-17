@@ -8,14 +8,14 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class OrderInfoList
     {
-        public OrderInfoList(List<CompanyGroup.WebClient.Models.OrderInfo> items, Visitor visitor)
+        public OrderInfoList(List<CompanyGroup.Dto.PartnerModule.OrderInfo> items, Visitor visitor)
         {
             this.Items = items;
 
             this.Visitor = visitor;
         }
 
-        public List<CompanyGroup.WebClient.Models.OrderInfo> Items { get; set; }
+        public List<CompanyGroup.Dto.PartnerModule.OrderInfo> Items { get; set; }
 
         public bool HasItems { get { return Items.Count > 0; } }
 

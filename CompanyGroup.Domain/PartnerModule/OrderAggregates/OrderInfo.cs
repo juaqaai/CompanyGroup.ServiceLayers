@@ -15,11 +15,23 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         /// <param name="salesId"></param>
         /// <param name="createdDate"></param>
-        public OrderInfo(string salesId, DateTime createdDate)
+        /// <param name="dataAreaId"></param>
+        /// <param name="payment"></param>
+        /// <param name="salesHeaderType"></param>
+        /// <param name="headerSalesStatus"></param>
+        public OrderInfo(string salesId, DateTime createdDate, string dataAreaId, string payment, string salesHeaderType, int headerSalesStatus)
         { 
             this.SalesId = salesId;
 
             this.CreatedDate = createdDate;
+
+            this.DataAreaId = dataAreaId;
+
+            this.Payment = payment;
+
+            this.SalesHeaderType = salesHeaderType;
+
+            this.HeaderSalesStatus = headerSalesStatus;
 
             this.OrderLines = new List<OrderLineInfo>();
         }
@@ -33,6 +45,26 @@ namespace CompanyGroup.Domain.PartnerModule
         /// bizonylat elkészülte
         /// </summary>
         public DateTime CreatedDate { set; get; }
+
+        /// <summary>
+        /// vállalatkód, ahonnan a rendelés származik
+        /// </summary>
+        public string DataAreaId { set; get; }
+
+        /// <summary>
+        /// fizetés módja (Átutalás 8 nap)
+        /// </summary>
+        public string Payment { set; get; }
+
+        /// <summary>
+        /// Standard / Csereigazolás
+        /// </summary>
+        public string SalesHeaderType { set; get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int HeaderSalesStatus { set; get; }
 
         /// <summary>
         /// rendelés sorok
@@ -69,10 +101,10 @@ namespace CompanyGroup.Domain.PartnerModule
             {
                 if (orderInfo == null)
                 {
-                    orderInfo = new OrderInfo(x.SalesId, x.CreatedDate);
+                    orderInfo = new OrderInfo(x.SalesId, x.CreatedDate, x.DataAreaId, x.Payment, x.SalesHeaderType, x.HeaderSalesStatus);
                 }
 
-                OrderLineInfo orderLineInfo = new OrderLineInfo(x.LineNum, x.ShippingDateRequested, x.ItemId, x.Name, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment);
+                OrderLineInfo orderLineInfo = new OrderLineInfo(x.LineNum, x.ShippingDateRequested, x.ProductId, x.ProductName, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment);
 
                 orderInfo.AddOrderLine(orderLineInfo);
             });

@@ -67,19 +67,15 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest()
-            {
-                LanguageId = visitorData.Language,
-                VisitorId = visitorData.VisitorId,
-            };
+            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language);
 
             List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
 
-            List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
+            //List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
 
-            orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+            //orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
 
-            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList, visitor);
+            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(response, visitor);
 
             return View(model);
         }

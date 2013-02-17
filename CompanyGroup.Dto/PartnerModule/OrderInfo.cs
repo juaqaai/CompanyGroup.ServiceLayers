@@ -3,25 +3,44 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.PartnerModule
 {
-    [System.Runtime.Serialization.DataContract(Name = "OrderInfo", Namespace = "CompanyGroup.Dto.PartnerModule")]
+    /// <summary>
+    /// megrendelés információ  
+    /// </summary>
     public class OrderInfo
     {
         /// <summary>
         /// VR, vagy BR azonosító
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "SalesId", Order = 1)]
         public string SalesId { set; get; }
 
         /// <summary>
         /// bizonylat elkészülte
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "CreatedDate", Order = 2)]
         public DateTime CreatedDate { set; get; }
+
+        /// <summary>
+        /// vállalatkód, ahonnan a rendelés származik
+        /// </summary>
+        public string DataAreaId { set; get; }
+
+        /// <summary>
+        /// fizetés módja (Átutalás 8 nap)
+        /// </summary>
+        public string Payment { set; get; }
+
+        /// <summary>
+        /// Standard / Csereigazolás
+        /// </summary>
+        public string SalesHeaderType { set; get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int HeaderSalesStatus { set; get; }
 
         /// <summary>
         /// sorok
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Lines", Order = 3)]
         public List<OrderLineInfo> Lines { get; set; }
     }
 }

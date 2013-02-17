@@ -6,20 +6,22 @@ using System.Text;
 namespace CompanyGroup.Domain.PartnerModule
 {
     /// <summary>
-    /// SalesId	    CreatedDate             LineNum	ShippingDateRequested	ItemId	        Name	                                                                            SalesPrice	CurrencyCode	Quantity	LineAmount	SalesDeliverNow	RemainSalesPhysical	StatusIssue	InventLocationId	Payment
-    /// VR605202	2012-10-03 00:00:00.000 1	    2012-10-10 00:00:00.000	N76VMV2GT1095V	ASUS N76VM-V2G-T1095V  17.3" FHD,i5-3210M,6GB,750GB,B-Ray Combo,GT630M 2G, W7 HP	213140	HUF	                1	        213140	    0	            1	                4	        KULSO	            Átutalás 8 nap
-    /// </summary>
+    /// 
+    ///SalesId	CreatedDate	LineNum	SalesStatus	ShippingDateRequested	ProductId	ProductName	SalesPrice	CurrencyCode	Quantity	LineAmount	SalesDeliverNow	RemainSalesPhysical	StatusIssue	InventLocationId	Payment	SalesHeaderType	HeaderSalesStatus
+    ///BVR118466	2011-01-13 00:00:00.000	1	1	2011-01-20 00:00:00.000	942-000005	Extreme 3D Pro New Packaging (Logitech)	7130	HUF	1	7130	0	1	4	1000	Átutalás 21 napra	Standard	3    /// </summary>
     public class OrderDetailedLineInfo
     {
-        public OrderDetailedLineInfo(string salesId, DateTime createdDate, int lineNum, DateTime shippingDateRequested, string itemId, string name, decimal salesPrice, string currencyCode, 
-                                     int quantity, decimal lineAmount, int salesDeliverNow, int remainSalesPhysical, int statusIssue, string inventLocationId, string payment)
+        public OrderDetailedLineInfo(string salesId, DateTime createdDate, int lineNum, int salesStatus, DateTime shippingDateRequested, string productId, string productName, 
+                                     decimal salesPrice, string currencyCode, int quantity, decimal lineAmount, int salesDeliverNow, int remainSalesPhysical, int statusIssue, string inventLocationId,
+                                     string payment, string salesHeaderType, int headerSalesStatus, string dataAreaId) 
         {
             this.SalesId = salesId;
             this.CreatedDate = createdDate;
             this.LineNum = lineNum;
+            this.SalesStatus = salesStatus;
             this.ShippingDateRequested = shippingDateRequested;
-            this.ItemId = itemId;
-            this.Name = name;
+            this.ProductId = productId;
+            this.ProductName = productName;
             this.SalesPrice = salesPrice;
             this.CurrencyCode = currencyCode;
             this.Quantity = quantity;
@@ -29,25 +31,36 @@ namespace CompanyGroup.Domain.PartnerModule
             this.StatusIssue = (StatusIssue)statusIssue;
             this.InventLocationId = inventLocationId;
             this.Payment = payment;
+            this.SalesHeaderType = salesHeaderType;
+            this.HeaderSalesStatus = headerSalesStatus;
+            this.DataAreaId = dataAreaId;
         }
 
         public string SalesId { set; get; }
 
         public DateTime CreatedDate { set; get; }
 
-        public int LineNum { set; get; }
+        public string Payment { set; get; }
+
+        public string SalesHeaderType { set; get; }
+
+        public int HeaderSalesStatus { set; get; }
 
         public DateTime ShippingDateRequested { set; get; }
 
-        public string ItemId { set; get; }
-
-        public string Name { set; get; }
-
-        public decimal SalesPrice { set; get; }
-
         public string CurrencyCode { set; get; }
 
+        public int LineNum { set; get; }
+
+        public int SalesStatus { set; get; }
+
+        public string ProductId { set; get; }
+
+        public string ProductName { set; get; }
+
         public int Quantity { set; get; }
+
+        public decimal SalesPrice { set; get; }
 
         public decimal LineAmount { set; get; }
 
@@ -59,6 +72,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
         public string InventLocationId { set; get; }
 
-        public string Payment { set; get; }
+        public string DataAreaId { set; get; }
+
     }
 }

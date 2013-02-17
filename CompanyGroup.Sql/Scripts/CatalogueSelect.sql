@@ -182,12 +182,14 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @SecondHand = 0,     
 								  @New = 0,         
 								  @Stock = 0,     
-								  @Sequence = 3,	
+								  @Sequence = 0,	
 								  @FindText = '', 
 								  @PriceFilter = '',
 								  @PriceFilterRelation = 0,	
 								  @CurrentPageIndex = 1, 
 								  @ItemsOnPage = 50
+
+EXEC InternetUser.CatalogueSelect @Sequence = 0
 
 SELECT * FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
 */
@@ -207,11 +209,10 @@ AS
 		SELECT Id, ROW_NUMBER() OVER (ORDER BY AverageInventory DESC), AverageInventory, Discount, Category1Id 
 		FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
 	)
-
-	--select * from Sequence0_CTE
-
 	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Sequence0_CTE WHERE InternetUser.Catalogue.Id = Sequence0_CTE.Id)
 	WHERE Discount = 1 AND AverageInventory > 0 AND InnerStock + OuterStock > 0;
+
+	DECLARE @RowNumber INT = (SELECT MAX(Sequence0) FROM InternetUser.Catalogue);  
 
 	WITH Remain_CTE (Id, Sequence, AverageInventory, Discount, Category1Id)
 	AS (
@@ -219,14 +220,15 @@ AS
 		FROM InternetUser.Catalogue WHERE Sequence0 IS NULL
 	)
 
-	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Remain_CTE WHERE InternetUser.Catalogue.Id = Remain_CTE.Id)
+	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence + @RowNumber FROM Remain_CTE WHERE InternetUser.Catalogue.Id = Remain_CTE.Id)
 	WHERE Sequence0 IS NULL;
 
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.UpdateCatalogueSequence TO InternetUser
-
--- SELECT * FROM InternetUser.Catalogue where Sequence0 IS NOT NULL ORDER BY Sequence0 desc
+GO
+-- EXEC  [InternetUser].[UpdateCatalogueSequence]
+-- SELECT * FROM InternetUser.Catalogue where Sequence0 is null ORDER BY Sequence0
 	
 /*
 

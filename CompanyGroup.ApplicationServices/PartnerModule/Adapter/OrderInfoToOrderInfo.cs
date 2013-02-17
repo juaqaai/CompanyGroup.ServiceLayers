@@ -15,7 +15,16 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private CompanyGroup.Dto.PartnerModule.OrderInfo ConvertOrderInfo(CompanyGroup.Domain.PartnerModule.OrderInfo from)
         {
-            return new CompanyGroup.Dto.PartnerModule.OrderInfo() { CreatedDate = from.CreatedDate, SalesId = from.SalesId, Lines = from.OrderLines.ConvertAll(x => ConvertOrderLineInfo(x)) };
+            return new CompanyGroup.Dto.PartnerModule.OrderInfo() 
+                       { 
+                           CreatedDate = from.CreatedDate, 
+                           DataAreaId = from.DataAreaId, 
+                           HeaderSalesStatus = from.HeaderSalesStatus, 
+                           Payment = from.Payment, 
+                           SalesHeaderType = from.SalesHeaderType, 
+                           SalesId = from.SalesId, 
+                           Lines = from.OrderLines.ConvertAll(x => ConvertOrderLineInfo(x)) 
+                       };
         }
 
         private CompanyGroup.Dto.PartnerModule.OrderLineInfo ConvertOrderLineInfo(CompanyGroup.Domain.PartnerModule.OrderLineInfo from)
@@ -29,9 +38,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            Name = from.Name,
                            Payment = from.Payment,
                            Quantity = from.Quantity,
+                           RemainSalesPhysical = from.RemainSalesPhysical, 
                            SalesPrice = String.Format(((Math.Round(from.SalesPrice) == from.SalesPrice) ? "{0:0}" : "{0:0.00}"), from.SalesPrice),
                            ShippingDateRequested = from.ShippingDateRequested,
-                           StatusIssue = (int) from.StatusIssue
+                           StatusIssue = (int) from.StatusIssue, 
+                           SalesDeliverNow = from.SalesDeliverNow                          
                        };
         }
     }

@@ -49,7 +49,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 //látogató alapján kikeresett vevő rendelések listája
-                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId, visitor.DataAreaId);
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId);
 
                 //megrendelés info aggregátum elkészítése
                 IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfos.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>

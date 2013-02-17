@@ -8,8 +8,19 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class VisitorData
     {
-        public VisitorData() : this(String.Empty, String.Empty, false, false, String.Empty, String.Empty, 0, String.Empty) { }
+        public VisitorData() : this(String.Empty, String.Empty, false, true, String.Empty, String.Empty, 0, String.Empty) { }
 
+        /// <summary>
+        /// felhasználóhoz kapcsolódó beállítások, (sütibe íródik a tartalma)
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <param name="language"></param>
+        /// <param name="isShoppingCartOpened"></param>
+        /// <param name="isCatalogueOpened"></param>
+        /// <param name="currency"></param>
+        /// <param name="permanentId"></param>
+        /// <param name="cartId"></param>
+        /// <param name="registrationId"></param>
         public VisitorData(string visitorId, string language, bool isShoppingCartOpened, bool isCatalogueOpened, string currency, string permanentId, int cartId, string registrationId)
         {
             this.VisitorId = visitorId;
@@ -55,7 +66,7 @@ namespace CompanyGroup.WebClient.Models
         public string Currency { set; get; }
 
         /// <summary>
-        /// megmarado Id
+        /// megmaradó Id, (korábbi belépés alkalmával használt Id)
         /// </summary>
         public string PermanentId { set; get; }
 

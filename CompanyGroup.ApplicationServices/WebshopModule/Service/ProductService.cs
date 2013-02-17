@@ -586,9 +586,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 product.IsInNewsletter = false;
 
                 product.IsInCart = shoppingCartCollection.IsInCart(product.ProductId);
-
-                // részletes adatlap log hozzáadás
-                productRepository.AddCatalogueDetailsLog(visitor.VisitorId, visitor.CustomerId, visitor.PersonId, request.DataAreaId, request.ProductId);
             }
             else
             {
@@ -597,6 +594,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 product.IsInNewsletter = false;
 
                 product.IsInCart = false;
+            }
+
+            //részletes adatlap log hozzáadás (akkor is hozzáadja, ha nincs bejelentkezve, de korábban be volt - van visitorId és van customerId)
+            if (!String.IsNullOrEmpty(visitor.VisitorId) && !String.IsNullOrEmpty(visitor.CustomerId))
+            {
+                productRepository.AddCatalogueDetailsLog(visitor.VisitorId, visitor.CustomerId, visitor.PersonId, request.DataAreaId, request.ProductId);
             }
 
             product.SecondHandList = (product.SecondHand) ? this.GetSecondHandList(product.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());

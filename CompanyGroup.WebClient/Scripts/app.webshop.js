@@ -101,38 +101,7 @@ companyGroup.webshop = $.sammy(function () {
         $("#select_visibleitemlist_bottom").live('change', function () {
             context.trigger('visibleItemListChanged', { Orientation: 'bottom', Index: parseInt($("#select_visibleitemlist_bottom").val(), 0) });
         });
-        //szűrés névre, vagy cikkszámra
-        $("#txt_filterbynameorpartnumber").live('focus', function () {
-            if ('név vagy cikkszám szűrése' === $(this).val()) {
-                $(this).val('');
-            }
-        }).live('blur', function () {
-            var $this = $(this),
-                text = $.trim($this.val());
-            if (!text) {
-                $this.val('név vagy cikkszám szűrése');
-            }
-            //                        else {
-            //                        if ($this.is('h1')) {
-            //                            // it is the title
-            //                            localStorage.setItem('title', text);
-            //                        } else {
-            //                            // save it
-            //                            app.trigger('save', {
-            //                                type: $this.attr('data-type'),
-            //                                id: $this.attr('data-id'),
-            //                                name: text
-            //                            });
-            //                        }
-            //                    }
-        });
-        //        .live('keypress', function (event) {
-        //            // save on enter
-        //            if (event.which === 13) {
-        //                //this.blur();
-        //                return false;
-        //            }
-        //        });
+        //keresés névre, vagy cikkszámra
         $("#txt_globalsearch").live('focus', function () {
             if ('keresés a termékek között' === $(this).val()) {
                 $(this).val('');
@@ -189,12 +158,12 @@ companyGroup.webshop = $.sammy(function () {
                     processData: true,
                     success: function (result) {
                         if (result) {
-                            var resultObject = result.Items;
-                            var suggestions = [];
-                            $.each(resultObject, function (i, val) {
-                                suggestions.push(val);
+                            var arr_suggestions = [];
+                            $.each(result.Items, function (i, val) {
+                                var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + ' alt="" /></a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '">' + val.ProductName + '</a></div></td></tr></table></div>';
+                                arr_suggestions.push({ label: inner_html, value: val.ProductName });
                             });
-                            response(suggestions);
+                            response(arr_suggestions);
                         }
                         else {
                             console.log(result);
@@ -205,53 +174,21 @@ companyGroup.webshop = $.sammy(function () {
                     }
                 });
             },
-            minLength: 2
-        })
-        .data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
-            var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a href="#/details/' + item.ProductId + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.PictureId) + ' alt=\"\" /></a></div></td><td><div class="label"><strong><a href="#/details/' + item.ProductId + '">' + item.ProductId + '</a></strong></div><div class="description"><a href="#/details/' + item.ProductId + '">' + item.ProductName + '<a></div></td></tr></table></div>';
-            return $("<li></li>")
-            .data("item.autocomplete", item)
-            .append(inner_html)
-            .appendTo(ul);
-        };
-        $("#txt_filterbynameorpartnumber").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    type: "GET",
-                    url: companyGroup.utils.instance().getCompletionListBaseProductUrl(),
-                    data: { Prefix: request.term },
-                    contentType: "application/json; charset=utf-8",
-                    timeout: 10000,
-                    dataType: "json",
-                    processData: true,
-                    success: function (result) {
-                        if (result) {
-                            var resultObject = result.Items;
-                            var suggestions = [];
-                            $.each(resultObject, function (i, val) {
-                                suggestions.push(val);
-                            });
-                            response(suggestions);
-                        }
-                        else {
-                            console.log(result);
-                        }
-                    },
-                    error: function () {
-                        console.log('CompletionListServiceUrl failed');
-                    }
-                });
-            },
-            minLength: 2
-        }).data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
-            var inner_html = '<div class="list_item_container"><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
-            return $("<li></li>")
-            .data("item.autocomplete", item)
-            .append(inner_html)
-            .appendTo(ul);
-        };
+            //            select: function (event, ui) {
+            //                console.log(ui.item);
+            //                //window.location.href = ui.item.ProductId;
+            //            },
+            minLength: 2,
+            html: 'html'
+        });
+        //        .data("autocomplete")._renderItem = function (ul, item) {
+        //            console.log(item);
+        //            var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.PictureId) + ' alt="" /></a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + item.ProductId + '/' + item.DataAreaId + '">' + item.ProductName + '</a></div></td></tr></table></div>';
+        //            return $("<li></li>")
+        //            .data("item.autocomplete", item)
+        //            .append(inner_html)
+        //            .appendTo(ul);
+        //        };
         //fizetési mód beállítás
         $("input[name='radio_payment']").live('change', function () {
             console.log($(this).val());
@@ -515,9 +452,33 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
     });
     this.get('#/expandall', function (context) {
-        $(".toggle_container").slideToggle("slow");
-        context.title('terméklista kinyitás \ bezárás');
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getWebshopApiUrl('SaveCatalogueOpenStatus'),
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                if (result === true) {
+                    $(".toggle_container").show();
+                } else {
+                    $(".toggle_container").hide();
+                }
+                context.redirect('#/catalogueopenedstatus/' + result);
+            },
+            error: function () {
+                alert('saveCatalogueOpenStatus call failed');
+            }
+        });
     });
+
+    this.get('#/catalogueopenedstatus/:status', function (context) {
+        var status_msg = context['status'] ? 'bővített nézet' : 'alapértelmezett nézet';
+        context.title('terméklista - ' + status_msg);
+    });
+
     //vissza a terméklistára
     this.get('#/backtolist', function (context) {
         showProductList(true);
@@ -1664,6 +1625,7 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result) {
+                    //var loadedManufacturer = false; var loadedCategory1 = false; var loadedCategory2 = false; var loadedCategory3 = false;
                     if (loadManufacturer) {
                         var manufacturer = $('#manufacturerList').val()
                         $("#manufacturerList").empty();
@@ -1675,6 +1637,7 @@ companyGroup.webshop = $.sammy(function () {
                             $("#manufacturerList").val(manufacturer);
                         }
                         $("#manufacturerList").trigger("liszt:updated");
+                        //loadedManufacturer = true;
                     }
                     if (loadCategory1) {
                         var selectList = $("#category1List");
@@ -1688,6 +1651,7 @@ companyGroup.webshop = $.sammy(function () {
                             selectList.val(categories);
                         }
                         $("#category1List").trigger("liszt:updated");
+                        //loadedCategory1 = true;
                     }
                     if (loadCategory2) {
                         var selectList = $("#category2List");
@@ -1701,6 +1665,7 @@ companyGroup.webshop = $.sammy(function () {
                             selectList.val(categories);
                         }
                         $("#category2List").trigger("liszt:updated");
+                        //loadedCategory2 = true;
                     }
                     if (loadCategory3) {
                         var selectList = $("#category3List");
@@ -1714,6 +1679,7 @@ companyGroup.webshop = $.sammy(function () {
                             selectList.val(categories);
                         }
                         $("#category3List").trigger("liszt:updated");
+                        //loadedCategory3 = true;
                     }
                 }
                 else {

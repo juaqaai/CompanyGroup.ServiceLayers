@@ -74,8 +74,14 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         public int SalesDeliverNow { set; get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int RemainSalesPhysical { set; get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public StatusIssue StatusIssue { set; get; }
 
         /// <summary>

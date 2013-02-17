@@ -167,7 +167,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.WebshopModule.Products products = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.Products>().Result : new CompanyGroup.Dto.WebshopModule.Products();
 
-            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, this.GetVisitor(visitorData));
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor, visitorData.IsCatalogueOpened);
         }
 
         /// <summary>
@@ -506,6 +508,42 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList list = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList>().Result : new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList();
 
             return list;
+        }
+
+        [HttpPost]
+        [ActionName("SaveCatalogueOpenStatus")]
+        public HttpResponseMessage SaveCatalogueOpenStatus()
+        {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                visitorData.IsCatalogueOpened = !visitorData.IsCatalogueOpened;
+
+                this.WriteCookie(visitorData);
+
+                return Request.CreateResponse<Boolean>(HttpStatusCode.OK, visitorData.IsCatalogueOpened);
+            }
+            catch(Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
+
+        [HttpPost]
+        [ActionName("ReadCatalogueOpenStatus")]
+        public HttpResponseMessage ReadCatalogueOpenStatus()
+        {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                return Request.CreateResponse<Boolean>(HttpStatusCode.OK, visitorData.IsCatalogueOpened);
+            }
+            catch(Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         //// GET api/webshop/5

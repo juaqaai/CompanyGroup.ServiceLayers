@@ -13,8 +13,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// részletes vevőrendelés sorok listája
         /// </summary>
         /// <param name="customerId"></param>
-        /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId, string dataAreaId);
+        List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId);
     }
 }

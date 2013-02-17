@@ -103,7 +103,7 @@ GRANT EXECUTE ON InternetUser.StructureSelect TO InternetUser
 GO
 /* EXEC InternetUser.StructureSelect @DataAreaId = '',
 									 @Manufacturers = '',
-									 @Category1 = '',													      
+									 @Category1 = 'B008',													      
 									 @Category2 = '',
 									 @Category3 = '',
 									 @Discount = 0,      
@@ -113,4 +113,16 @@ GO
 									 @FindText = '', 
 									 @PriceFilter = '',
 									 @PriceFilterRelation = 0;
+
+SELECT ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
+			Category1Id, Category1Name, Category1EnglishName, 
+			Category2Id, Category2Name, Category2EnglishName, 
+			Category3Id, Category3Name, Category3EnglishName 
+FROM InternetUser.Catalogue 
+WHERE Category1Id = 'B008' --AND Category2Id = 'C230'	
+GROUP BY ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
+			Category1Id, Category1Name, Category1EnglishName, 
+			Category2Id, Category2Name, Category2EnglishName, 
+			Category3Id, Category3Name, Category3EnglishName
+
 */

@@ -1,4 +1,4 @@
-USE WebDb_Test
+USE ExtractInterface
 GO
 /****** Object:  StoredProcedure [InternetUser].[web_GetSales]    Script Date: 2012.09.18. 20:55:53 ******/
 SET ANSI_NULLS ON
@@ -6,10 +6,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE [InternetUser].[cms_InvoiceList];
+DROP PROCEDURE [InternetUser].[InvoiceList];
 GO
-CREATE PROCEDURE [InternetUser].[cms_InvoiceList]( @CustomerId NVARCHAR(10) = '',	--vevokod
-												   @DataAreaId NVARCHAR(3) = 'Hrp')	--vallalat kod
+CREATE PROCEDURE [InternetUser].[InvoiceList]( @CustomerId NVARCHAR(10) = '',	--vevokod
+											   @DataAreaId NVARCHAR(3) = 'Hrp')	--vallalat kod
 											   --@bDebit BIT = 0,					--0: mind, <>0 kifizetetlen
 											   --@bOverDue BIT = 0,					--0: mind, <>0 lejart 
 											   --@dtDateFrom DATETIME = NULL, 
@@ -137,8 +137,8 @@ DECLARE @bDebit BIT = 0; --0: mind, <>0 kifizetetlen
 RETURN
 GO
 
--- exec [InternetUser].[cms_InvoiceList] 'V000787', 'hrp';
--- exec [InternetUser].[cms_InvoiceList] '', 'hrp';
+-- exec [InternetUser].[InvoiceList] 'V000787', 'hrp';
+-- exec [InternetUser].[InvoiceList] '', 'hrp';
 
 -- select top 100 * from AxDb.dbo.CUSTINVOICEJOUR
 

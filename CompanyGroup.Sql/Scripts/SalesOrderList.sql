@@ -20,7 +20,7 @@ CREATE PROCEDURE InternetUser.GetSalesOrders( @CustomerID NVARCHAR(10),
 AS
 SET NOCOUNT ON
 
-	SELECT H.SALESID as SalesID, 
+	SELECT H.SALESID as SalesId, 
 		   H.CreatedDate as CreatedDate, 
 		   -- H.INVENTLOCATIONID as InventLocationID,
 		   Pt.[Description] as Payment, 
@@ -31,7 +31,7 @@ SET NOCOUNT ON
 		   C.Txt as Currency,
 		   CONVERT( INT, D.LineNum )as LineNum, --CONVERT( INT, D.LineNum )
 		   D.SalesStatus as SalesStatus, -- rendelés tétel állapota a szállításra és a számlázásra vonatkozóan
-		   D.ItemID as ProductID, 
+		   D.ItemID as ProductId, 
 		   D.Name as ProductName, 
 		   SUM( CONVERT( INT, ABS( it.Qty ) ) ) as Quantity, 
 		   CONVERT( INT, D.SalesPrice ) as SalesPrice, 
@@ -39,7 +39,7 @@ SET NOCOUNT ON
 		   CONVERT( INT, D.SalesDeliverNow ) as SalesDeliverNow, 
 		   CONVERT( INT, D.RemainSalesPhysical ) as RemainSalesPhysical, 
 		   it.StatusIssue as StatusIssue, 
-		   MAX( it.RecID ) as RecID,
+		   --MAX( it.RecID ) as RecID,
 		   InventDim.InventLocationID as ItemInventLocationID  
 	FROM axdb_20120614.dbo.SALESTABLE AS H 
 		 INNER JOIN axdb_20120614.dbo.SALESLINE AS D ON H.SALESID = D.SALESID AND H.DataAreaID = D.DataAreaID
@@ -73,7 +73,7 @@ RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[GetSalesOrders] TO InternetUser;
 
--- exec [InternetUser].[GetSalesOrders] 'V000787', 'hrp';
+-- exec [InternetUser].[GetSalesOrders] 'V001446', 'hrp';
 
 --select SalesHeaderType from Axdb.dbo.updSalesType where dataAreaID = 'hrp' group by SalesHeaderType;
 -- select * from Axdb.dbo.PaymTerm
@@ -103,14 +103,22 @@ END
 GO
 DROP PROCEDURE InternetUser.SalesOrderList
 GO
-CREATE PROCEDURE InternetUser.SalesOrderList( @CustomerId NVARCHAR(10),
-											  @DataAreaId NVARCHAR(3) = 'hrp' )
+CREATE PROCEDURE InternetUser.SalesOrderList( @CustomerId NVARCHAR(10) )
 AS
 SET NOCOUNT ON;
-with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId, Name, SalesPrice, CurrencyCode, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, InventLocationId)
-	 AS  ( select sl.SalesId, 
+
+/*
+    /// SalesId	    CreatedDate	            Payment	        SalesHeaderType	SalesSource	HeaderSalesStatus	ShippingDateRequested	Currency
+    /// VR414179	2010-12-21 00:00:00.000	Átutalás 8 nap	Csereigazolás	0	        1	                2010-12-28 00:00:00.000	Forint
+    /// LineNum	SalesStatus	ProductID	    ProductName	                                                                                        Quantity	SalesPrice	LineAmount	SalesDeliverNow	RemainSalesPhysical	StatusIssue	RecID	    ItemInventLocationID
+    /// 9	    1	        Csereigazolas	Cikk: GENSSWV21250 Cs.ig.Sz: MR1025857/002 Genius  hangfal SW-V2 1250 , 2.1 Gysz: mr1025857/002	    1	        7730	    -7730	    0	            -1	                0	        5643388855	HASZNALT
+*/
+
+	with SalesLineCTE (SalesId, CreatedDate, LineNum, SalesStatus, ShippingDateRequested, ProductId, ProductName, SalesPrice, CurrencyCode, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, InventLocationId)
+	AS  ( select sl.SalesId, 
 				  sl.CreatedDate, 
 				  CONVERT( INT, sl.LineNum )as LineNum,
+				  sl.SalesStatus, 
 				  sl.ShippingDateRequested as ShippingDateRequested,
 				  sl.ItemId,
 				  sl.Name,
@@ -130,12 +138,14 @@ with SalesLineCTE (SalesId, CreatedDate, LineNum, ShippingDateRequested, ItemId,
 						id.InventLocationId IN ( 'BELSO', 'KULSO', '1000', '7000', 'HASZNALT', '2100' ) and 
 						it.StatusIssue IN (4, 5, 6)	-- 0 none, 1 sold, 2 deducted (eladva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
 				  ), 
-	SalesHeaderCTE (SalesId, Payment) AS (select st.SalesId, Pt.[Description] from AxDb.dbo.SalesTable as st 
-		 inner join AxDb.dbo.PAYMTERM AS pt ON st.Payment = pt.PaymTermId AND Pt.DATAAREAID = 'mst'
-		 where st.CustAccount = @CustomerId
-		 )
+	SalesHeaderCTE (SalesId, Payment, SalesHeaderType, HeaderSalesStatus, DataAreaId) AS (
+		select st.SalesId, Pt.[Description], st.SalesHeaderType, st.SalesStatus, st.DataAreaId
+		from AxDb.dbo.SalesTable as st 
+		inner join AxDb.dbo.PAYMTERM AS pt ON st.Payment = pt.PaymTermId AND Pt.DATAAREAID = 'mst'
+		where st.CustAccount = @CustomerId
+	)
 
-	select cte1.*, cte2.Payment 
+	select cte1.*, cte2.Payment, cte2.SalesHeaderType, cte2.HeaderSalesStatus, cte2.DataAreaId
 	from SalesLineCTE as cte1 
 	     inner join SalesHeaderCTE as cte2 on cte1.SalesId = cte2.SalesId
 	order by cte1.CreatedDate desc, cte1.SalesId asc, cte1.LineNum asc;
