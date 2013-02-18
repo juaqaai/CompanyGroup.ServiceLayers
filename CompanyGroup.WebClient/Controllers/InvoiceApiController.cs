@@ -14,18 +14,13 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [ActionName("GetList")]
-        public CompanyGroup.WebClient.Models.InvoiceInfoList GetList(int id)
+        public HttpResponseMessage GetList(CompanyGroup.WebClient.Models.GetInvoiceInfoRequest request)
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
             CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
-
-            //if (!visitor.IsValidLogin)
-            //{
-            //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Unauthorized));
-            //}
 
             try
             {
@@ -33,7 +28,8 @@ namespace CompanyGroup.WebClient.Controllers
                 {
                     LanguageId = visitorData.Language,
                     VisitorId = visitorData.VisitorId,
-                    PaymentType = id
+                    Debit = request.Debit, 
+                    Overdue = request.Overdue
                 };
 
                 List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetList", req);
@@ -47,11 +43,11 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList, visitor);
 
-                return model;
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.InvoiceInfoList>(HttpStatusCode.OK, model);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+                return ThrowHttpError(ex);
             }
         }
 

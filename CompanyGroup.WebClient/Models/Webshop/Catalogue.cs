@@ -16,6 +16,7 @@ namespace CompanyGroup.WebClient.Models
                          List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> storedItems,
                          bool shoppingCartOpenStatus, 
                          bool catalogueOpenStatus, 
+                         int sequence,
                          CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
                          CompanyGroup.Dto.WebshopModule.BannerList bannerList, 
                          CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
@@ -31,6 +32,8 @@ namespace CompanyGroup.WebClient.Models
             this.OpenedItems = openedItems;
 
             this.StoredItems = storedItems;
+
+            this.Sequence = sequence;
 
             this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
 
@@ -58,6 +61,8 @@ namespace CompanyGroup.WebClient.Models
         public bool ShoppingCartOpenStatus { get; set; }
 
         public bool CatalogueOpenStatus { get; set; }
+
+        public int Sequence { get; set; }
 
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses DeliveryAddresses { get; set; }
 

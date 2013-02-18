@@ -59,7 +59,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IFinanceRepository, CompanyGroup.Data.WebshopModule.FinanceRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.INewsletterRepository, CompanyGroup.Data.WebshopModule.NewsletterRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.RegistrationModule.IRegistrationRepository, CompanyGroup.Data.RegistrationModule.RegistrationRepository>();
-            unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IInvoiceRepository, CompanyGroup.Data.MaintainModule.InvoiceRepository>();
+            //unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.IInvoiceRepository, CompanyGroup.Data.MaintainModule.InvoiceRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();
 
             //unityContainer.Configure<InjectedMembers>().

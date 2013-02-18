@@ -476,7 +476,6 @@
 			            <div id="div_pager_top">
 			            </div>
 		            </div>
-		
                     <script id="pagerTemplateTop" type="text/x-jquery-tmpl">
                     <table width="100%" align="center" border="0" cellpadding="3" cellspacing="1">
 				        <tr>
@@ -488,8 +487,8 @@
                             <td align="left" nowrap="nowrap">Eredmény: <b>${Products.ListCount}</b></td>
                             <td align="left" nowrap="nowrap">
                             {{if Visitor.IsValidLogin}}
-							  <select class="select2" name="catalogueSequence" value="Rendezés">
-                                <option value="">Rendezés</option>
+							  <select class="select2" name="catalogueSequence">
+                                <option value="0">Rendezés</option>
                                 <option value="14"><strong>Legnépszerűbb elöl</strong></option>
                                 <option value="15"><strong>Újdonság</strong></option>
                                 <option value="16"><strong>Akciós</strong></option>
@@ -505,8 +504,8 @@
                                 <option value="13">Garancia: <strong>csökkenő</strong></option>
                               </select>
                             {{else}}
-                            <select class="select2" name="catalogueSequence" value="Rendezés">
-                              <option value="">Rendezés</option>
+                            <select class="select2" name="catalogueSequence">
+                              <option value="0">Rendezés</option>
                               <option value="2">Cikkszám: <strong>növekvő</strong></option>
                               <option value="3">Cikkszám: <strong>csökkenő</strong></option>
                               <option value="4">Név: <strong>növekvő</strong></option>

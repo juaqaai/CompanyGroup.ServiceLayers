@@ -10,9 +10,11 @@ namespace CompanyGroup.WebClient.Models
     {
         public OrderInfo(CompanyGroup.Dto.PartnerModule.OrderInfo invoiceInfo)
         { 
-            CreatedDate = invoiceInfo.CreatedDate;
-            SalesId = invoiceInfo.SalesId;
-            Lines = invoiceInfo.Lines.ConvertAll(x => new OrderLineInfo(x));      
+            this.CreatedDate = invoiceInfo.CreatedDate;
+
+            this.SalesId = invoiceInfo.SalesId;
+
+            this.Lines = invoiceInfo.Lines.ConvertAll(x => new OrderLineInfo(x));      
         }
 
         public string SalesId { set; get; }

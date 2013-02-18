@@ -10,34 +10,70 @@ companyGroup.partnerinfo = $.sammy(function () {
 
     this.setTitle('Partnerinfo -');
 
+    //kezdőállapot
+    this.get('#/', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_container').empty();
+                var html = Mustache.to_html($('#dashboardTemplate').html(), response);
+                $('#main_container').html(html);
+            },
+            error: function () {
+                console.log('GetVisitorInfo call failed');
+            }
+        });
+        this.title('Partnerinformáció - dashboard');
+    });
     //események
     this.bind('run', function (e, data) {
         var context = this;
-
+        //szűrés azonnal elvihetőre
+        $("#chk_rightaway").live('change', function () {
+            context.trigger('filterByReserved', { Checked: $(this).is(':checked') });
+        });
+        //szűrés áttárolás utánira
+        $("#chk_afteroverstore").live('change', function () {
+            context.trigger('filterByReservedOrdered', { Checked: $(this).is(':checked') });
+        });
+        //szűrés beszerzés utánira
+        $("#chk_afterpurchasing").live('change', function () {
+            context.trigger('filterByOnOrder', { Checked: $(this).is(':checked') });
+        });
         $("input[name='radio_paymenttype']").live('change', function () {
             context.redirect('#/invoiceinfo/' + $(this).val());
             //context.trigger('invoiceinfo', { PaymentType: parseInt($(this).val(), 0) });
         });
-
-        //azonnal elvihető
-        $("#chk_rightaway").live('change', function () {
-            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
-            context.redirect('#/salesorderinfo');
-        });
-        //áttárolás után elvihető
-        $("#chk_afteroverstore").live('change', function () {
-            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
-            context.redirect('#/salesorderinfo');
-        });
-        //beszerzés után elvihető
-        $("#chk_afterpurchasing").live('change', function () {
-            //context.trigger('filterByAction', { Checked: $(this).is(':checked') });
-            context.redirect('#/salesorderinfo');  
-        });
+    });
+    this.bind('filterByReservedOrdered', function (e, data) {
+        salesOrderRequest.ReservedOrdered = data.Checked;
+        loadOrderInfo();
+        this.title('Szűrés azonnal elvihető rendelésekre');
+    });
+    this.bind('filterByReserved', function (e, data) {
+        salesOrderRequest.Reserved = data.Checked;
+        loadOrderInfo();
+        this.title('Szűrés áttárolás utáni rendelésekre');
+    });
+    this.bind('filterByOnOrder', function (e, data) {
+        salesOrderRequest.OnOrder = data.Checked;
+        loadOrderInfo();
+        this.title('Szűrés beszerzés alatt lévő rendelésekre');
     });
 
     //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
         var data = {
             OldPassword: context.params['txt_oldpassword'],
             NewPassword: context.params['txt_newpassword'],
@@ -77,6 +113,8 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //jelszócsere view
     this.get('#/changepassword', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
         context.title('Jelszó módosítás - ');
         $.ajax({
             //console.log(context);
@@ -88,9 +126,9 @@ companyGroup.partnerinfo = $.sammy(function () {
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                $('#main_content').empty();
+                $('#main_container').empty();
                 var html = Mustache.to_html($('#changePasswordTemplate').html(), response);
-                $('#main_content').html(html);
+                $('#main_container').html(html);
             },
             error: function () {
                 console.log('GetVisitorInfo call failed');
@@ -99,6 +137,8 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //elfelejtett jelszó kérés
     this.post('#/forgetpassword', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
         var data = {
             UserName: context.params['txt_username']
         };
@@ -133,6 +173,8 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //elfelejtett jelszó view
     this.get('#/forgetpassword', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
         context.title('ELFELEJTETT JELSZÓ - ');
         $.ajax({
             //console.log(context);
@@ -144,9 +186,9 @@ companyGroup.partnerinfo = $.sammy(function () {
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                $('#main_content').empty();
+                $('#main_container').empty();
                 var html = Mustache.to_html($('#forgetPasswordTemplate').html(), response);
-                $('#main_content').html(html);
+                $('#main_container').html(html);
             },
             error: function () {
                 console.log('GetVisitorInfo call failed');
@@ -155,6 +197,8 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //jelszómódosítás csere visszavonása  
     this.get('#/undochangepassword:token', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').hide();
         context.title('Jelszó módosítás visszavonás - ');
         $.ajax({
             //console.log(context);
@@ -166,9 +210,9 @@ companyGroup.partnerinfo = $.sammy(function () {
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                $('#main_content').empty();
+                $('#main_container').empty();
                 var html = Mustache.to_html($('#undoChangePasswordTemplate').html(), response);
-                $('#main_content').html(html);
+                $('#main_container').html(html);
             },
             error: function () {
                 console.log('UndoChagePassword call failed');
@@ -177,21 +221,27 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //számla info
     this.get('#/invoiceinfo/:paymenttype', function (context) {
+        $('#salesOrderMain').hide();
+        $('#szamlaszuro').show();
         console.log(context.params['paymenttype']);
-        var paymenttype = context.params['paymenttype']
+        var paymenttype = parseInt(context.params['paymenttype']);
+        var data = {
+            Debit: (paymenttype === 1) ? true : false,
+            Overdue: (paymenttype === 2) ? true : false
+        };
         $.ajax({
             //console.log(context);
-            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList/' + paymenttype),
-            data: {},
-            type: "GET",
+            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
+            data: JSON.stringify(data),
+            type: "POST",
             contentType: "application/json;charset=utf-8",
             timeout: 10000,
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                $('#main_content').empty();
+                $('#main_container').empty();
                 var html = Mustache.to_html($('#invoiceTemplate').html(), response);
-                $('#main_content').html(html);
+                $('#main_container').html(html);
             },
             error: function () {
                 console.log('GetVisitorInfo call failed');
@@ -199,48 +249,37 @@ companyGroup.partnerinfo = $.sammy(function () {
         });
         context.title('Számla információ - ');
     });
-    //megrendelés info
+    //megrendelés info 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt)
     this.get('#/salesorderinfo', function (context) {
         //console.log(context);
-        $.ajax({
-            url: companyGroup.utils.instance().getSalesOrderApiUrl('GetOrderInfo'),
-            data: {},
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            success: function (response) {
-                //console.log(response);
-                $('#main_content').empty();
-                var html = Mustache.to_html($('#salesorderTemplate').html(), response);
-                $('#main_content').html(html);
-            },
-            error: function () {
-                console.log('GetVisitorInfo call failed');
-            }
-        });
+        $('#salesOrderMain').show();
+        $('#szamlaszuro').hide();
+        loadOrderInfo();
         context.title('Megrendelés információ - ');
     });
-    //kezdőállapot
-    this.get('#/', function (context) {
+    var loadOrderInfo = function () {
         $.ajax({
-            //console.log(context);
-            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
-            data: {},
-            type: "GET",
+            url: companyGroup.utils.instance().getSalesOrderApiUrl('GetOrderInfo'),
+            data: JSON.stringify(salesOrderRequest),
+            type: "POST",
             contentType: "application/json;charset=utf-8",
-            timeout: 10000,
+            timeout: 0,
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                $('#main_content').empty();
-                var html = Mustache.to_html($('#dashboardTemplate').html(), response);
-                $('#main_content').html(html);
+                $('#main_container').empty();
+                var html = Mustache.to_html($('#salesorderTemplate').html(), response);
+                $('#main_container').html(html);
             },
             error: function () {
-                console.log('GetVisitorInfo call failed');
+                console.log('LoadOrderInfo call failed');
             }
         });
-        this.title('Partnerinformáció - dashboard');
-    });
+    };
+    //kérés paramétereit összefogó objektum
+    var salesOrderRequest = {
+        OnOrder: true,
+        Reserved: true,
+        ReservedOrdered: true
+    };
 });

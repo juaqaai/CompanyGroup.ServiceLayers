@@ -256,17 +256,17 @@ CompanyGroupCms.Catalogue = (function () {
                             response(suggestions);
                         }
                         else {
-                            console.log(result);
+                            //console.log(result);
                         }
                     },
                     error: function () {
-                        console.log('CompletionListServiceUrl failed');
+                        //console.log('CompletionListServiceUrl failed');	
                     }
                 });
             },
             minLength: 2
         }).data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
+            //console.log(item);
             var inner_html = '<div class="list_item_container"><div class="image"><img src="' + CompanyGroupCms.Constants.Instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
@@ -295,11 +295,11 @@ CompanyGroupCms.Catalogue = (function () {
                             response(suggestions);
                         }
                         else {
-                            console.log(result);
+                            //console.log(result);
                         }
                     },
                     error: function () {
-                        console.log('CompletionListServiceUrl failed');
+                        //console.log('CompletionListServiceUrl failed');
                     }
                 });
             },
@@ -332,7 +332,7 @@ CompanyGroupCms.Catalogue = (function () {
             */
         })
         .data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
+            //console.log(item);
             var inner_html = '<div class="list_item_container"><div class="image"><img src="' + CompanyGroupCms.Constants.Instance().getThumbnailPictureUrl(item.ProductId, item.RecId, item.DataAreaId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
@@ -373,7 +373,7 @@ CompanyGroupCms.Catalogue = (function () {
         });
     };
     var downloadPriceList = function () {
-        console.log('downloadPriceList');
+        //console.log('downloadPriceList');
         window.location = CompanyGroupCms.Constants.Instance().getDownloadPriceListServiceUrl() + '?' + $.param(CompanyGroupCms.CatalogueListRequest);
         //        var dataString = $.toJSON(CompanyGroupCms.CatalogueListRequest);
         //        $.ajax({

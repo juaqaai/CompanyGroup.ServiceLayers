@@ -209,6 +209,8 @@
     <Compile Include="Models\PartnerInfo\AddressZipCodes.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordRequest.cs" />
     <Compile Include="Models\PartnerInfo\ForgetPasswordRequest.cs" />
+    <Compile Include="Models\PartnerInfo\GetInvoiceInfoRequest.cs" />
+    <Compile Include="Models\PartnerInfo\GetOrderInfoRequest.cs" />
     <Compile Include="Models\Registration\BankAccount.cs" />
     <Compile Include="Models\Registration\BankAccounts.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordResponse.cs" />

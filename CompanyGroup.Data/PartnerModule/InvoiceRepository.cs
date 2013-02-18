@@ -9,51 +9,50 @@ namespace CompanyGroup.Data.PartnerModule
     /// <summary>
     /// számlaműveleteket végző osztály
     /// </summary>
-    public class InvoiceRepository : CompanyGroup.Data.NoSql.Repository<CompanyGroup.Domain.PartnerModule.InvoiceInfo>, CompanyGroup.Domain.PartnerModule.IInvoiceRepository
+    public class InvoiceRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.IInvoiceRepository
     {
-        public InvoiceRepository(CompanyGroup.Data.NoSql.ISettings settings) : base(settings) { }
-
-        private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("InvoiceCollectionName", "InvoiceList");
+        /// <summary>
+        /// vevőrendeléshez kapcsolódó műveletek 
+        /// </summary>
+        /// <param name="session"></param>
+        public InvoiceRepository() { }
 
         /// <summary>
-        /// számlalista kiolvasása vevőazonosító és vállalatkód alapján
+        /// nhibernate extract interface session
+        /// </summary>
+        private NHibernate.ISession Session
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
+
+        /// <summary>
+        /// számlalista kiolvasása vevőazonosító alapján
+        /// [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	--vevokod
+		///									     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
+		///									     @OverDue BIT = 0 )				--0: mind, 1 lejart 
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> GetList(string customerId, string dataAreaId)
+        public List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue)
         {
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
-
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
-
             try
             {
-                this.ReConnect();
+                CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
 
-                MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.InvoiceSelect")
+                                                .SetString("CustomerId", customerId)
+                                                .SetBoolean("Debit", debit)
+                                                .SetBoolean("Overdue", overdue)
+                                                .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo).GetConstructors()[0]));
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("CustomerId", MongoDB.Bson.BsonString.Create(customerId)),
-                                                                      MongoDB.Driver.Builders.Query.EQ("DataAreaId", MongoDB.Bson.BsonString.Create(dataAreaId)));
+                return query.List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>() as List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>;
 
-                MongoCursor<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = collection.Find(query).SetSortOrder(MongoDB.Driver.Builders.SortBy.Descending("InvoiceId"));
-
-                List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> result = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
-
-                foreach(CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo in invoiceInfoList)
-                {
-                    result.Add(invoiceInfo);
-                }
-
-                return result;
             }
             catch (Exception ex)
             {
                 throw (ex);
-            }
-            finally
-            {
-                this.Disconnect();
             }
         }
 
@@ -61,135 +60,65 @@ namespace CompanyGroup.Data.PartnerModule
         /// összes számlainfo elem kiolvasása
         /// </summary>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> GetAll()
-        {
-            try
-            {
-                this.ReConnect();
+        //public List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> GetAll()
+        //{
+        //    try
+        //    {
+        //        this.ReConnect();
 
-                MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
+        //        MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
 
-                MongoCursor<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = collection.FindAll().SetSortOrder(MongoDB.Driver.Builders.SortBy.Descending("InvoiceId"));
+        //        MongoCursor<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = collection.FindAll().SetSortOrder(MongoDB.Driver.Builders.SortBy.Descending("InvoiceId"));
 
-                List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> result = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
+        //        List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> result = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
 
-                foreach (CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo in invoiceInfoList)
-                {
-                    result.Add(invoiceInfo);
-                }
+        //        foreach (CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo in invoiceInfoList)
+        //        {
+        //            result.Add(invoiceInfo);
+        //        }
 
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-            finally
-            {
-                this.Disconnect();
-            }        
-        }
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw (ex);
+        //    }
+        //    finally
+        //    {
+        //        this.Disconnect();
+        //    }        
+        //}
 
         /// <summary>
         /// számlainfo elem kiolvasása
         /// </summary>
         /// <param name="invoiceId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.InvoiceInfo GetById(string invoiceId)
-        {
-            try
-            {
-                this.ReConnect();
+        //public CompanyGroup.Domain.PartnerModule.InvoiceInfo GetById(string invoiceId)
+        //{
+        //    try
+        //    {
+        //        this.ReConnect();
 
-                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(invoiceId), "The invoiceId parameter cannot be null!");
+        //        CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(invoiceId), "The invoiceId parameter cannot be null!");
 
-                MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
+        //        MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
 
-                MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("InvoiceId", MongoDB.Bson.BsonString.Create(invoiceId)));
+        //        MongoDB.Driver.IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("InvoiceId", MongoDB.Bson.BsonString.Create(invoiceId)));
 
-                CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = collection.FindOne(query);
+        //        CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = collection.FindOne(query);
 
-                return invoiceInfo;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                Disconnect();
-            }        
-        }
+        //        return invoiceInfo;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        Disconnect();
+        //    }        
+        //}
 
-        /// <summary>
-        /// számlalista beillesztése
-        /// </summary>
-        /// <param name="products"></param>
-        public void InsertList(List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList)
-        {
-            try
-            {
-                this.ReConnect();
-
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
-
-                collection.InsertBatch(invoiceInfoList);
-
-                return;
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// összes számla eltávolítása a cache-ből
-        /// </summary>
-        public override void RemoveAllItemsFromCollection()
-        {
-            try
-            {
-                this.ReConnect();
-
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection(InvoiceRepository.CollectionName);
-
-                collection.RemoveAll();
-
-                return;
-            }
-            catch
-            {
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
-
-        public override void CreateIndexes()
-        {
-            try
-            {
-                MongoDB.Driver.MongoCollection<CompanyGroup.Domain.PartnerModule.InvoiceInfo> collection = this.GetCollection();
-
-                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Ascending("DataAreaId", "CustomerId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_DataAreaId_CustomerId"));
-                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Ascending("IvoiceId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_IvoiceId_Asc"));
-                collection.EnsureIndex(new MongoDB.Driver.Builders.IndexKeysBuilder().Descending("IvoiceId"), MongoDB.Driver.Builders.IndexOptions.SetName("Idx_IvoiceId_Desc"));
-
-                return;
-            }
-            catch
-            {
-                return;
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
     }
 }

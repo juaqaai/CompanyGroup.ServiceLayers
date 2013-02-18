@@ -14,9 +14,9 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
-        [HttpGet]
+        [HttpPost]
         [ActionName("GetOrderInfo")]
-        public HttpResponseMessage GetOrderInfo()
+        public HttpResponseMessage GetOrderInfo(CompanyGroup.WebClient.Models.GetOrderInfoRequest request)
         {
             try
             {
@@ -24,18 +24,11 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
-                CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language);
+                CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, request.OnOrder, request.Reserved, request.ReservedOrdered);
 
                 HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest>("SalesOrder", "GetOrderInfo", req);
 
                 List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfos = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>().Result : new List<CompanyGroup.Dto.PartnerModule.OrderInfo>();
-
-                //List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
-
-                //if (response != null)
-                //{
-                //    orderInfoList.AddRange(orderInfos.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
-                //}
 
                 CompanyGroup.WebClient.Models.OrderInfoList viewModel = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfos, visitor);
 

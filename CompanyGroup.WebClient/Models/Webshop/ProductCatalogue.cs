@@ -11,7 +11,7 @@ namespace CompanyGroup.WebClient.Models
         /// <param name="products"></param>
         /// <param name="visitor"></param>
         /// <param name="isCatalogueOpenStatus"></param>
-        public ProductCatalogue(CompanyGroup.Dto.WebshopModule.Products products, CompanyGroup.WebClient.Models.Visitor visitor, bool catalogueOpenStatus)
+        public ProductCatalogue(CompanyGroup.Dto.WebshopModule.Products products, CompanyGroup.WebClient.Models.Visitor visitor, bool catalogueOpenStatus, int sequence)
         {
             this.Products = products;
 
@@ -20,6 +20,8 @@ namespace CompanyGroup.WebClient.Models
             this.Visitor = visitor;
 
             this.CatalogueOpenStatus = catalogueOpenStatus;
+
+            this.Sequence = sequence;
         }
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
@@ -32,6 +34,8 @@ namespace CompanyGroup.WebClient.Models
         /// terméklista nyitott állapotú-e, vagy nem
         /// </summary>
         public bool CatalogueOpenStatus { get; set; }
+
+        public int Sequence { get; set; }
 
     }
 }

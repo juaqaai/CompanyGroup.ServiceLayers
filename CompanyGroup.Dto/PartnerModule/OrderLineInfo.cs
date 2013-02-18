@@ -64,5 +64,23 @@ namespace CompanyGroup.Dto.PartnerModule
         /// fizetési mód
         /// </summary>
         public string Payment { set; get; }
+
+        public bool StatusIssueIsReservPhysical
+        {
+            get { return this.StatusIssue.Equals(4); }
+            set {}
+        }
+
+        public bool StatusIssueIsReservOrdered 
+        { 
+            get { return this.StatusIssue.Equals(5); }
+            set {}
+        }
+
+        public bool StatusIssueIsOnOrder 
+        { 
+            get { return this.StatusIssue.Equals(6); }
+            set {}
+        }
     }
 }

@@ -133,7 +133,7 @@ namespace CompanyGroup.WebClient.Controllers
                 deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
             }
 
-            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, deliveryAddresses, bannerList, leasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, allProduct.Sequence, deliveryAddresses, bannerList, leasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             if (activeCart.Id > 0)
@@ -169,7 +169,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor, visitorData.IsCatalogueOpened);
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor, visitorData.IsCatalogueOpened, request.Sequence);
         }
 
         /// <summary>

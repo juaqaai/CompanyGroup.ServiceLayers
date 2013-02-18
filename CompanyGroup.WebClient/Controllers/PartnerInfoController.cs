@@ -41,7 +41,8 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 LanguageId = visitorData.Language,
                 VisitorId = visitorData.VisitorId,
-                PaymentType = 1
+                Debit = true, 
+                Overdue = true
             };
 
             List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Customer", "GetInvoiceInfo", request);
@@ -67,7 +68,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language);
+            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, true, true, true);
 
             List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
 

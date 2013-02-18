@@ -127,6 +127,8 @@ SET NOCOUNT ON
 		  Valid = 1 AND
 		  1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
 		  1 = CASE WHEN @Stock = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND
+		  1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
+		  1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
 		  ( Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Name END OR 
 		    ProductId LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ProductId END OR 
@@ -173,19 +175,19 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.CatalogueSelect TO InternetUser
 /*
-EXEC InternetUser.CatalogueSelect @DataAreaId = '',
-								  @Manufacturers = 'A098,A142',
-								  @Category1 = 'B004,B021',													      
+EXEC InternetUser.CatalogueSelect @DataAreaId = '',		
+								  @Manufacturers = '',			-- A098,A142
+								  @Category1 = '',				--  B004,B021									      
 								  @Category2 = '',
 								  @Category3 = '',
 								  @Discount = 0,      
 								  @SecondHand = 0,     
-								  @New = 0,         
+								  @New = 1,         
 								  @Stock = 0,     
 								  @Sequence = 0,	
 								  @FindText = '', 
-								  @PriceFilter = '',
-								  @PriceFilterRelation = 0,	
+								  @PriceFilter = '10000',
+								  @PriceFilterRelation = 2,	
 								  @CurrentPageIndex = 1, 
 								  @ItemsOnPage = 50
 

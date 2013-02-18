@@ -51,8 +51,24 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 //látogató alapján kikeresett vevő rendelések listája
                 List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId);
 
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfosFiltered = new List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>();
+
+                //4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt)
+                if (request.OnOrder)
+                {
+                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.OnOrder)));
+                }
+                if (request.Reserved)
+                {
+                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.ReservPhysical)));
+                }
+                if (request.ReservedOrdered)
+                {
+                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.ReservOrdered)));
+                }
+
                 //megrendelés info aggregátum elkészítése
-                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfos.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
+                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfosFiltered.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
 
                 List<CompanyGroup.Domain.PartnerModule.OrderInfo> orderInfoList = new List<CompanyGroup.Domain.PartnerModule.OrderInfo>();
 

@@ -414,40 +414,40 @@ companyGroup.webshop = $.sammy(function () {
         catalogueRequest.CurrentPageIndex = 1;
         loadCatalogue();
         if (data.Sequence === 6) {
-            context.title('rendezés ár szerint növekvőleg');
+            this.title('rendezés ár szerint növekvőleg');
         }
         else if (data.Sequence === 7) {
-            context.title('rendezés ár szerint csökkenőleg');
+            this.title('rendezés ár szerint csökkenőleg');
         }
         else if (data.Sequence === 2) {
-            context.title('rendezés cikkszám szerint növekvőleg');
+            this.title('rendezés cikkszám szerint növekvőleg');
         }
         else if (data.Sequence === 3) {
-            context.title('rendezés cikkszám szerint csökkenőleg');
+            this.title('rendezés cikkszám szerint csökkenőleg');
         }
         else if (data.Sequence === 4) {
-            context.title('rendezés név szerint növekvőleg');
+            this.title('rendezés név szerint növekvőleg');
         }
         else if (data.Sequence === 5) {
-            context.title('rendezés név szerint csökkenőleg');
+            this.title('rendezés név szerint csökkenőleg');
         }
         else if (data.Sequence === 8) {
-            context.title('rendezés készlet szerint növekvőleg');
+            this.title('rendezés készlet szerint növekvőleg');
         }
         else if (data.Sequence === 9) {
-            context.title('rendezés készlet szerint csökkenőleg');
+            this.title('rendezés készlet szerint csökkenőleg');
         }
         else if (data.Sequence === 12) {
-            context.title('rendezés garancia szerint növekvőleg');
+            this.title('rendezés garancia szerint növekvőleg');
         }
         else if (data.Sequence === 13) {
-            context.title('rendezés garancia szerint csökkenőleg');
+            this.title('rendezés garancia szerint csökkenőleg');
         }
         else if (data.Sequence === 14) {
-            context.title('rendezés leértékelt szerint');
+            this.title('rendezés leértékelt szerint');
         }
         else if (data.Sequence === 15) {
-            context.title('rendezés újdonság szerint');
+            this.title('rendezés újdonság szerint');
         }
         showProductList(true);
     });
@@ -1717,6 +1717,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#div_catalogue").empty();
                     $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
                     //$('.number').spin();
+                    $('.select2').val(result.Sequence);
                     $('.select2').skinner({ 'type': 'left' });
                 }
                 else {

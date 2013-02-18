@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dynamics\Repository.cs" />
-    <Compile Include="MaintainModule\InvoiceRepository.cs" />
     <Compile Include="NHibernateSessionModule.cs" />
     <Compile Include="NoSql\MongoHelper.cs" />
     <Compile Include="NoSql\ISettings.cs" />
@@ -80,7 +79,9 @@
     <Compile Include="WebshopModule\ProductRepository.cs" />
     <Compile Include="WebshopModule\StructureRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MaintainModule\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
   </ItemGroup>

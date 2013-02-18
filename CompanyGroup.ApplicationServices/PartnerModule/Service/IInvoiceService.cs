@@ -14,7 +14,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="invoiceId"></param>
         /// <returns></returns>
-        CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId);
+        //CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId);
 
         /// <summary>
         /// vevőhöz tartozó számla lista kiolvasása
@@ -28,7 +28,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// összes számla kiolvasása
         /// </summary>
         /// <returns></returns>
-        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll();
+        //List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll();
 
     }
 }

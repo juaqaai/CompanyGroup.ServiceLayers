@@ -57,41 +57,41 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="invoiceId"></param>
         /// <returns></returns>
-        [ActionName("GetById")]
-        [HttpGet]
-        public HttpResponseMessage GetById(string invoiceId)
-        {
-            try
-            {
-                CompanyGroup.Dto.PartnerModule.InvoiceInfo response = service.GetById(invoiceId);
+        //[ActionName("GetById")]
+        //[HttpGet]
+        //public HttpResponseMessage GetById(string invoiceId)
+        //{
+        //    try
+        //    {
+        //        CompanyGroup.Dto.PartnerModule.InvoiceInfo response = service.GetById(invoiceId);
 
-                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfo>(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                return ThrowHttpError(ex);
-            }
-        }
+        //        return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfo>(HttpStatusCode.OK, response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ThrowHttpError(ex);
+        //    }
+        //}
 
         /// <summary>
         /// összes számla kiolvasása (mindkét vállalatból)
         /// </summary>
         /// <returns></returns>
-        [ActionName("GetAll")]
-        [HttpGet]
-        public HttpResponseMessage GetAll()
-        {
-            try
-            {
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetAll();
+        //[ActionName("GetAll")]
+        //[HttpGet]
+        //public HttpResponseMessage GetAll()
+        //{
+        //    try
+        //    {
+        //        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetAll();
 
-                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                return ThrowHttpError(ex);
-            }
-        }
+        //        return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ThrowHttpError(ex);
+        //    }
+        //}
     }
 
 }

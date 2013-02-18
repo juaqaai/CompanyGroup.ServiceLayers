@@ -64,7 +64,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.ISalesOrderRepository repository = new CompanyGroup.Data.PartnerModule.SalesOrderRepository();
 
-            List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> orders = repository.GetOrderDetailedLineInfo("V001446", "hrp");
+            List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> orders = repository.GetOrderDetailedLineInfo("V001446");
 
             Assert.IsTrue(orders.Count > 0);
         }

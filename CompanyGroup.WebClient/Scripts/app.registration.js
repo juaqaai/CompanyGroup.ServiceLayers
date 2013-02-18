@@ -16,14 +16,14 @@ companyGroup.registration = $.sammy(function () {
             contentType: "application/json;charset=utf-8",
             timeout: 10000
         }).then(function (response) {
-            //console.log(response);
+            ////console.log(response);
             initRegistrationData(response);
             setTabsVisibility(1);
         });                                       
     });
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
-        //console.log(context);
+        ////console.log(context);
         $.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getRegistrationApiUrl('AddNew'),
@@ -38,11 +38,11 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kitöltő adatai');
                 }
                 else {
-                    console.log('addNew result failed');
+                    //console.log('addNew result failed');
                 }
             },
             error: function () {
-                console.log('addNew call failed');
+                //console.log('addNew call failed');
             }
         });
     });
@@ -67,7 +67,7 @@ companyGroup.registration = $.sammy(function () {
     });
     //adatrögzítő adatainak mentése, cégregisztrációs adatlap betöltése
     this.post('#/registrationdata', function (context) {
-        //console.log(context);$('form').serialize()
+        ////console.log(context);$('form').serialize()
         var data = {
             Email: $("#txtDataRecordingEmail").val(),
             Name: $("#txtDataRecordingName").val(),
@@ -91,11 +91,11 @@ companyGroup.registration = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('updateDataRecording result failed');
+                    //console.log('updateDataRecording result failed');
                 }
             },
             error: function () {
-                console.log('updateDataRecording call failed');
+                //console.log('updateDataRecording call failed');
             }
         });
     });
@@ -143,7 +143,7 @@ companyGroup.registration = $.sammy(function () {
     });
     //webadmin adatainak betöltése, cégregisztrációs adatlap mentése
     this.post('#/webadministrator', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             CompanyData: {
                 RegistrationNumber: $("#txtRegistrationNumber").val(),
@@ -188,11 +188,11 @@ companyGroup.registration = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('updateRegistrationData result failed');
+                    //console.log('updateRegistrationData result failed');
                 }
             },
             error: function () {
-                console.log('updateRegistrationData call failed');
+                //console.log('updateRegistrationData call failed');
             }
         });
     });
@@ -225,7 +225,7 @@ companyGroup.registration = $.sammy(function () {
     });
     //kapcsolattartó adatainak betöltése, webadmin adatainak mentése 
     this.post('#/contactperson', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             AllowOrder: $("#chkWebAdminAllowOrder").val(),
             AllowReceiptOfGoods: $("#chkWebAdminAllowReceiptOfGoods").val(),
@@ -269,31 +269,31 @@ companyGroup.registration = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('updateWebAdministrator result failed');
+                    //console.log('updateWebAdministrator result failed');
                 }
             },
             error: function () {
-                console.log('updateWebAdministrator call failed');
+                //console.log('updateWebAdministrator call failed');
             }
         });
     });
     //előnézet betöltése, (kapcsolattartó adatainak mentése nem szükséges)
     this.post('#/preview', function (context) {
-        //console.log(context);
+        ////console.log(context);
         setTabsVisibility(6);
         context.title('Regisztráció - lezárás, szerződés nyomtatás');
 
     });
     //regisztrációs adatok nyomtatása
     this.post('#/print', function (context) {
-        //console.log(context);
+        ////console.log(context);
 
         setTabsVisibility(7);
         context.title('Regisztráció eredménye');
     });
 
     this.get('#/addbankaccount', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             Part1: $('#txtBankAccountPart1').val(),
             Part2: $('#txtBankAccountPart2').val(),
@@ -323,17 +323,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
                 }
                 else {
-                    console.log('removeDeliveryAddress result failed');
+                    //console.log('removeDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('removeDeliveryAddress call failed');
+                //console.log('removeDeliveryAddress call failed');
             }
         });
     });
 
     this.get('#/selectforupdatebankaccount/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = { SelectedId: id };
         $.ajax({
             type: "POST",
@@ -352,17 +352,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
                 }
                 else {
-                    console.log('selectForUpdateBankAccount result failed');
+                    //console.log('selectForUpdateBankAccount result failed');
                 }
             },
             error: function () {
-                console.log('selectForUpdateBankAccount call failed');
+                //console.log('selectForUpdateBankAccount call failed');
             }
         });
     });
 
     this.get('#/updatebankaccount/:id/:recId', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var part1 = '#txtBankAccountPart1_' + id;
         var part2 = '#txtBankAccountPart2_' + id;
         var part3 = '#txtBankAccountPart3_' + id;
@@ -390,17 +390,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
                 }
                 else {
-                    console.log('removeDeliveryAddress result failed');
+                    //console.log('removeDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('removeDeliveryAddress call failed');
+                //console.log('removeDeliveryAddress call failed');
             }
         });
 
     });
     this.get('#/removebankaccount/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             Id: id
         };
@@ -421,18 +421,18 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
                 }
                 else {
-                    console.log('removeDeliveryAddress result failed');
+                    //console.log('removeDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('removeDeliveryAddress call failed');
+                //console.log('removeDeliveryAddress call failed');
             }
         });
 
     });
 
     this.get('#/adddeliveryaddress', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             RecId: 0,
             City: $('#txtDeliveryAddressCity').val(),
@@ -462,17 +462,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - szállítási cím hozzáadás');
                 }
                 else {
-                    console.log('addDeliveryAddress result failed');
+                    //console.log('addDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('addDeliveryAddress call failed');
+                //console.log('addDeliveryAddress call failed');
             }
         });
     });
 
     this.get('#/selectforupdatedeliveryaddress/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             SelectedId: id
         };
@@ -494,18 +494,18 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - szállítási cím kiválasztás');
                 }
                 else {
-                    console.log('selectForUpdateDeliveryAddress result failed');
+                    //console.log('selectForUpdateDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('selectForUpdateDeliveryAddress call failed');
+                //console.log('selectForUpdateDeliveryAddress call failed');
             }
         });
 
     });
 
     this.get('#/updatedeliveryaddress', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var city = '#txtDeliveryAddressCity_' + id;
         var street = '#txtDeliveryAddressStreet_' + id;
         var zipCode = '#txtDeliveryAddressZipCode_' + id;
@@ -536,17 +536,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - szállítási cím módosítás');
                 }
                 else {
-                    console.log('addDeliveryAddress result failed');
+                    //console.log('addDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('addDeliveryAddress call failed');
+                //console.log('addDeliveryAddress call failed');
             }
         });
     });
 
     this.get('#/removedeliveryaddress/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             Id: id
         };
@@ -568,18 +568,18 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - szállítási cím törlés');
                 }
                 else {
-                    console.log('removeDeliveryAddress result failed');
+                    //console.log('removeDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('removeDeliveryAddress call failed');
+                //console.log('removeDeliveryAddress call failed');
             }
         });
 
     });
 
     this.get('#/addcontactperson', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             Id: '',
             AllowOrder: $("#chkContactPersonAllowOrder").val(),
@@ -622,17 +622,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
                 }
                 else {
-                    console.log('addContactPerson result failed');
+                    //console.log('addContactPerson result failed');
                 }
             },
             error: function () {
-                console.log('addContactPerson call failed');
+                //console.log('addContactPerson call failed');
             }
         });
     });
 
     this.get('#/selectforupdatecontactperson/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             selectedId: id
         };
@@ -653,11 +653,11 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó kiválasztás');
                 }
                 else {
-                    console.log('selectForUpdateContactPerson result failed');
+                    //console.log('selectForUpdateContactPerson result failed');
                 }
             },
             error: function () {
-                console.log('selectForUpdateContactPerson call failed');
+                //console.log('selectForUpdateContactPerson call failed');
             }
         });
 
@@ -704,17 +704,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó módosítás');
                 }
                 else {
-                    console.log('removeDeliveryAddress result failed');
+                    //console.log('removeDeliveryAddress result failed');
                 }
             },
             error: function () {
-                console.log('removeDeliveryAddress call failed');
+                //console.log('removeDeliveryAddress call failed');
             }
         });
     });
 
     this.get('#/removecontactperson/:id', function (context) {
-        //console.log(context);
+        ////console.log(context);
         var data = {
             Id: id
         };
@@ -735,17 +735,17 @@ companyGroup.registration = $.sammy(function () {
                     context.title('Regisztráció - kapcsolattartó törlés');
                 }
                 else {
-                    console.log('removeContactPerson result failed');
+                    //console.log('removeContactPerson result failed');
                 }
             },
             error: function () {
-                console.log('removeContactPerson call failed');
+                //console.log('removeContactPerson call failed');
             }
         });
     });
     //regisztrációs adatok mentése
     this.post('#/saveregistration', function (context) {
-        //console.log(context);
+        ////console.log(context);
         $.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getRegistrationApiUrl('Post'),
@@ -764,11 +764,11 @@ companyGroup.registration = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('post result failed');
+                    //console.log('post result failed');
                 }
             },
             error: function () {
-                console.log('post call failed');
+                //console.log('post call failed');
             }
         });
     });
