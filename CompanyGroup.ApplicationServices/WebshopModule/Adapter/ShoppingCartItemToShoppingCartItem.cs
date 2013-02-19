@@ -14,10 +14,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             return new CompanyGroup.Dto.WebshopModule.ShoppingCartItem()
             {
+                ConfigId = from.ConfigId, 
                 Currency = currency,
                 CustomerPrice = from.CustomerPrice,
                 DataAreaId = from.DataAreaId,
                 Id = from.LineId,
+                InventLocationId = from.InventLocationId, 
                 ItemState = (int)from.ItemState,
                 ItemTotal = from.ItemTotal,
                 PartNumber = from.PartNumber,

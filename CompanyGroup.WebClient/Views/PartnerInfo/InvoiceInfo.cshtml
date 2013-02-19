@@ -42,7 +42,8 @@
     <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="2" />
     <strong>Lejárt számlák</strong></td>
     <td nowrap="nowrap">&nbsp;</td>
-    <td colspan="2" align="right" nowrap="nowrap"><input type="submit" name="button" id="button" value="Keresés">      <input name="button2" type="button" id="button2" value="Letőltés Excelfileba"></td>
+    <td colspan="2" align="right" nowrap="nowrap"><input type="submit" name="button" id="button" value="Keresés">      
+    <input name="button2" type="button" id="button2" value="Letőltés Excelfileba"></td>
   </tr>
   <tr>
     <td colspan="6" align="right">&nbsp;</td>
@@ -58,10 +59,7 @@
 
 
 
-<table style="background:#09F; -webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;" width="910" height="34" border="0
-" cellpadding="2" cellspacing="2">
+<table style="background:#09F; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;" width="910" height="34" border="0" cellpadding="2" cellspacing="2">
   <tr>
     <td width="170"><strong>Számla száma:</strong> ${item.InvoiceId}</td>
     <td width="182"><strong>Számla kelte:</strong> ${item.InvoiceDate}</td>
@@ -75,24 +73,24 @@ border-radius: 3px;" width="910" height="34" border="0
     <script id="invoiceInfoListTemplate" type="text/x-jquery-tmpl">
     {{if Items.length > 0}}
     {{each( i, item ) Items}}
-<div class="toggle_container">
-<div class="invoice_item_template">
-<div class="expand_heading">
-				            <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
-				                <tr>
-				                    <td width="55%" valign="top" class="cus_prod_header_middle_cell">
-				                    <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
-                                    <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span> 
-				                    </td>
-				                    <td width="40%" align="right" valign="top" nowrap="nowrap"><table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
-                                  <tr>
+        <div class="toggle_container">
+            <div class="invoice_item_template">
+                <div class="expand_heading">
+				    <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
+				        <tr>
+				            <td width="55%" valign="top" class="cus_prod_header_middle_cell">
+				            <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
+                            <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span> 
+				            </td>
+				            <td width="40%" align="right" valign="top" nowrap="nowrap"><table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
+                            <tr>
 				                            
-											<td class="price" style="text-align:right"><!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a--><strong>Összesen:</strong><span style="text-align: right; padding: 5px;">${line.LineAmount} ${line.CurrencyCode}</span></td>
-    		                            </tr>
-				                        </table></td>
-				                </tr>
-				            </table>
-</div>
+									<td class="price" style="text-align:right"><!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a--><strong>Összesen:</strong><span style="text-align: right; padding: 5px;">${line.LineAmount} ${line.CurrencyCode}</span></td>
+    		                    </tr>
+				                </table></td>
+				        </tr>
+				    </table>
+                </div>
 				        <div class="box">
 				                <table width="695" border="0" cellspacing="0" cellpadding="0">
 				                    <tr>
@@ -121,7 +119,7 @@ border-radius: 3px;" width="910" height="34" border="0
                                         </td>
 				                    </tr>
 				                </table>
-                                					            </div>
+                                </div>
                             		        
                                 <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
 			                    <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">

@@ -308,7 +308,9 @@ nav ul
 .zone-asidefirst {}
 .zone-messages {}
 .zone-beforecontent {}
-.zone-content {background:transparent;}
+.zone-content {
+	background-color: #FFF;
+}
 .zone-aftercontent {}
 .zone-asidesecond {}
 .zone-aftermain {}

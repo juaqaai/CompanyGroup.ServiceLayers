@@ -14,7 +14,7 @@
 @*	<div id="layout-content" class="group">*@
 
     <div id="content" class="group">
-		<div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left"  id="main_content" class="zone zone-content">
+	  <div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left"  id="main_content" class="zone zone-content">
 <h2><strong>Tisztelt leendő Partnerünk!</strong></h2>
 <p>
   Köszönjük, hogy viszonteladónkká kíván válni.<br />
@@ -144,7 +144,7 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
       <tr>
         <td colspan="2"><p>
           <input type="submit" value="Tovább" id="go_on_1" />
- <a id="nyomtatas" href="#nyomtatas_ablak">Regiszrtáció Nyomtatása (Teszt link)</a></td>
+ </td>
       </tr>
       <tr>
         <td colspan="2"><span style="color:#F00" id="spanDataRecordingError"></span></td>
@@ -534,8 +534,7 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
     <td><div id="tabs-4"><form action="#/contactperson" method="post">
       <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
                             <tr>
-                              <td height="26"><strong style="font-size:16px">Cégadminisztrátor </strong></td>
-                              <td height="26"><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A Cégadminisztrátor az a személy, aki felvehet, törölhet és módosíthat felhasználókat valamint beállíthatja azok jogosultságait. Figyelem, a Cégadminisztrátor személyét a szerződés aláírását követően csak cégszerűen aláírva írásban lehet megváltozatni!</span></a></td>
+                              <td height="26" colspan="2"><strong style="font-size:16px">Cégadminisztrátor </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A Cégadminisztrátor az a személy, aki felvehet, törölhet és módosíthat felhasználókat valamint beállíthatja azok jogosultságait.<br> <strong>Figyelem, a Cégadminisztrátor személyét a szerződés aláírását követően csak cégszerűen aláírva írásban lehet megváltozatni!</strong></span></a></td>
                             </tr>
                             <tr>
                               <td height="21" colspan="2" style="color: #0159B1; font-size:12px"></td>
@@ -582,50 +581,77 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
                               <input type="text" id="txtWebAdminPhone" class="regfields" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap">Rendelhet?</td>
-                              <td><input type="checkbox" id="chkWebAdminAllowOrder" /></td>
+                              <td nowrap="nowrap">&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap">Árut átvehet?</td>
-                              <td><input type="checkbox" id="chkWebAdminAllowReceiptOfGoods" /></td>
+                              <td colspan="2" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
                             </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árubeérkezésről?</td>
-                              <td><input type="checkbox" id="chkWebAdminEmailArriveOfGoods" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
-                              <td><input type="checkbox" id="chkWebAdminEmailOfDelivery" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Email értesítés rendelésről?</td>
-                              <td><input type="checkbox" id="chkWebAdminEmailOfOrderConfirm" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Számlainformáció?</td>
-                              <td><input type="checkbox" id="chkWebAdminInvoiceInfo" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Hírlevél?</td>
-                              <td><input type="checkbox" id="chkWebAdminNewsletter" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Árlistát letölthet?</td>
-                              <td><input type="checkbox" id="chkWebAdminPriceListDownload" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árubeérkezésről?</td>
-                              <td><input type="checkbox" id="chkWebAdminSmsArriveOfGoods" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms árukiszállításról?</td>
-                              <td><input type="checkbox" id="chkWebAdminSmsOfDelivery" /></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap">Sms rendelésről?</td>
-                              <td><input type="checkbox" id="chkWebAdminSmsOrderConfirm" /></td>
-                            </tr>
-							<tr><td colspan="2">&nbsp;</td></tr>
+							<tr>
+							  <td colspan="2"><table width="486" border="0" cellspacing="1" cellpadding="2">
+							    <tr>
+							      <td height="24">&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+						        </tr>
+							    <tr>
+							      <td width="188" height="24">Árut Rendelhet? <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre
+</span></a></td>
+							      <td width="20"><input type="checkbox" id="chkWebAdminAllowOrder" /></td>
+							      <td width="24">&nbsp;</td>
+							      <td width="139">Számlainformáció? <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.
+</span></a></td>
+							      <td width="89"><input type="checkbox" id="chkWebAdminInvoiceInfo" /></td>
+						        </tr>
+							    <tr>
+							      <td>Árut átvehet? <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében
+</span></a>                                  </td>
+							      <td><input type="checkbox" id="chkWebAdminAllowReceiptOfGoods" /></td>
+							      <td>&nbsp;</td>
+							      <td>Árlistát letölthet? <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
+							      <td><input type="checkbox" id="chkWebAdminPriceListDownload" /></td>
+						        </tr>
+							    <tr>
+							      <td>Hírlevél? <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
+    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
+    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
+							      <td>&nbsp;</td>
+							      <td colspan="3">&nbsp;</td>
+						        </tr>
+							    <tr>
+							      <td colspan="5">&nbsp;</td>
+						        </tr>
+							    <tr>
+							      <td>Email értesítés árukiszállításról?                                  </td>
+							      <td><input type="checkbox" id="chkWebAdminEmailOfDelivery" /></td>
+							      <td>&nbsp;</td>
+							      <td>Sms árubeérkezésről?</td>
+							      <td><input type="checkbox" id="chkWebAdminSmsArriveOfGoods" /></td>
+						        </tr>
+							    <tr>
+							      <td>Email értesítés rendelésről?                                  </td>
+							      <td><input type="checkbox" id="chkWebAdminEmailOfOrderConfirm" /></td>
+							      <td>&nbsp;</td>
+							      <td> Sms árukiszállításról?</td>
+							      <td><input type="checkbox" id="chkWebAdminSmsOfDelivery" /></td>
+						        </tr>
+							    <tr>
+							      <td>Email értesítés árubeérkezésről? </td>
+							      <td><input type="checkbox" id="chkWebAdminEmailArriveOfGoods" /></td>
+							      <td>&nbsp;</td>
+							      <td>Sms rendelésről?</td>
+							      <td><input type="checkbox" id="chkWebAdminSmsOrderConfirm" /></td>
+						        </tr>
+							    <tr>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+							      <td>&nbsp;</td>
+						        </tr>
+			      </table></td></tr>
                             <tr><td colspan="2"><span style="color:#F00">
                               <input type="submit" value="Tovább" id="go_on_3"/>
                             </span></td></tr>
@@ -635,11 +661,19 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
   </tr>
   <tr>
     <td><hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px">
-    <h2>5. Kapcsolattartók<img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/></h2></a></td>
+    <h2>5. Kapcsolattartók<img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/>
+    </h2>    </a></td>
   </tr>
   <tr>
-    <td><div id="tabs-5"><form action="#/preview" method="post">
-                             <table id="contactPersonContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
+    <td><div id="tabs-5">
+     <input type="checkbox" name="chk_contactperson" id="chk_contactperson" />
+        <strong>Kapcsolattartók hozzáadása</strong> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong><a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Kapcsolattartó hozzáadása nem kötelező, de javasolt az alábbi személyek felvétele:
+          - ügyvezető, - pénzügyi vezető, - kereskedelmi vezető, - áruátvevő, - árut rendelhet</span></a></p>
+          
+          <div id="contactperson">
+          
+          <form action="#/preview" method="post">
+			<table id="contactPersonContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
                              </table>
 		<script id="contactPersonTemplate" type="text/html">
                                 {{#Items}}
@@ -879,6 +913,7 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
                               <td nowrap="nowrap">Email értesítés árukiszállításról?</td>
                               <td><input type="checkbox" id="chkContactPersonEmailOfDelivery" /></td>
                             </tr>
+
                             <tr>
                               <td nowrap="nowrap">Email értesítés rendelésről?</td>
                               <td><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" /></td>
@@ -912,14 +947,26 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
                               <td><input type="checkbox" id="chkContactSmsOrderConfirm2" /></td>
                             </tr>
                             <tr>
-                              <td colspan="2" nowrap="nowrap"><a class="tooltip" href="#/addcontactperson"><img style="cursor:pointer;" id="tabs-2-button2" src="@Url.Content("~/content/media/images/new.png")" width="18" height="18"/><span><strong>Kapcsolattartó hozzáadása</strong></span></a></td>
+                              <td colspan="2" nowrap="nowrap"><a class="tooltip" href="#/addcontactperson"><img style="cursor:pointer;" id="tabs-2-button2" src="/CompanyGroup.WebClient/content/media/images/new.png" width="18" height="18"/><span><strong>Kapcsolattartó hozzáadása</strong></span></a></td>
                             </tr>
                             <tr><td colspan="2"><hr />
-                              <input type="submit" value="Tovább" id="go_on_4" />
                               <hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px"></td></tr>
                             </table>                    
-                            </form></div>
-    
+                            </form>
+          
+          
+          
+          
+          
+     </div>
+          
+        
+        <br>
+          
+        
+        <a style="text-decoration:none" id="nyomtatas" href="#nyomtatas_ablak"><input type="submit" value="Tovább" id="go_on_4" /></a>
+</div>
+
     						<div id="just1" style="display:none">
     						<div align="center" id="nyomtatas_ablak">
 							<h2>Szerződés nyomtatása</h2>
@@ -943,7 +990,8 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
 
 
 
-        </table>
+            <hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px">
+    </table>
 </div>
 
 	</div>
@@ -968,14 +1016,20 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
 
 			$("#mail_address").hide();
             $("#del_address").hide();
+            $("#contactperson").hide();
             
             
             $("#chk_mail_address").change(function () {
 			$('#mail_address').toggle("slow");
 			
 		});
-                    $("#chk_del_address").change(function () {
+              $("#chk_del_address").change(function () {
 			$('#del_address').toggle("slow");
+			
+		});
+        
+            $("#chk_contactperson").change(function () {
+			$('#contactperson').toggle("slow");
 			
 		});
 

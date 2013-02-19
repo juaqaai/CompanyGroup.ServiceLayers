@@ -862,39 +862,49 @@ companyGroup.registration = $.sammy(function () {
 
 var setTabsVisibility = function (i) {
 		if (i == 1) { 
-		$('#tabs-1').show(); 
-		$('#tabs-1-button').hide();
+		$('#tabs-1').hide(); 
+		$('#tabs-1-button').show(500);
+		$('#tab_1_ok').hide(500);
  		} else { 
 		$("#tabs-1").hide(500);
+		$('#tab_1_ok').show(500);
 		}
 
 		if (i == 2) { 
 			$('#tabs-2').show(500); 
 			$('#tabs-1-button').show(500);
+			$('#tab_1_ok').show(500);
 		} else { 
 			$("#tabs-2").hide(500);
-			$('#tabs-2-button').hide();
+			
+			$('#tab_1_ok').hide(500);
 		}
 		if (i == 3) {
             $('#tabs-3').show(500);
 			$('#tabs-2-button').show(500);
+			$('#tab_2_ok').show(500);
         } else {
             $("#tabs-3").hide(500);
-			$('#tabs-3-button').hide();
+			$('#tabs-3-button').hide(500);
+			$('#tab_2_ok').hide(500);
         }
         if (i == 4) {
             $("#tabs-4").show(500);
 			$('#tabs-3-button').show(500);
+			$('#tab_3_ok').show(500);
         } else {
             $("#tabs-4").hide(500);
-			$('#tabs-4-button').hide();
+			$('#tabs-4-button').hide(500);
+			$('#tab_3_ok').hide(500);
         }
         if (i == 5) {
             $("#tabs-5").show(500);
 			$('#tabs-4-button').show(500);
+
         } else {
             $("#tabs-5").hide(500);
-			$('#tabs-5-button').hide();
+			$('#tabs-5-button').hide(500);
+
         }
         if (i == 6) {
             $("#tabs-6").show(500);
