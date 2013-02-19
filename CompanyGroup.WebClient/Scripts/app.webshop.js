@@ -166,11 +166,11 @@ companyGroup.webshop = $.sammy(function () {
                             response(arr_suggestions);
                         }
                         else {
-                            console.log(result);
+                            //console.log(result);
                         }
                     },
                     error: function () {
-                        console.log('CompletionListServiceUrl failed');
+                        //console.log('CompletionListServiceUrl failed');
                     }
                 });
             },
@@ -191,17 +191,17 @@ companyGroup.webshop = $.sammy(function () {
         //        };
         //fizetési mód beállítás
         $("input[name='radio_payment']").live('change', function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             context.trigger('changePayment', { Payment: parseInt($(this).val(), 0) });
         });
         //szállítási mód beállítás
         $("input[name='radio_delivery']").live('change', function () {
-            console.log($(this).val());
+            //console.log($(this).val());
             context.trigger('changeDelivery', { Delivery: parseInt($(this).val(), 0) });
         });
         //rendelés form alapértelmezettre állítása
         $("input[name='resetOrderForm']").live('click', function () {
-            console.log('resetOrderForm');
+            //console.log('resetOrderForm');
             context.trigger('resetOrderForm');
         });
         $('.tabs a').live('click', function () {
@@ -405,7 +405,7 @@ companyGroup.webshop = $.sammy(function () {
     //oldal tetejére ugrás    
     this.bind('scrollToTop', function (e, data) {
         e.preventDefault();
-        console.log(e);
+        //console.log(e);
         //e.scrollTo(0, 300);
     });
     //terméklista sorrend
@@ -689,7 +689,7 @@ companyGroup.webshop = $.sammy(function () {
                 if (result.Visitor.IsValidLogin) {
                     $.fancybox.close();
 
-                    console.log(result);
+                    //console.log(result);
 
                     $("#cus_header1").empty();
                     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
@@ -747,7 +747,7 @@ companyGroup.webshop = $.sammy(function () {
 
     });
     this.get('#/authenticated', function (context) {
-        console.log('authenticated');
+        //console.log('authenticated');
     });
     //bejelentkezés panel megmutatása
     this.get('#/showSignInPanel', function (context) {
@@ -804,13 +804,13 @@ companyGroup.webshop = $.sammy(function () {
                 loadCatalogue();
             },
             error: function () {
-                console.log('ChangeCurrency call failed');
+                //console.log('ChangeCurrency call failed');
             }
         });
     });
 
     this.post('#/searchByTextFilter', function (context) {
-        console.log('searchByTextFilter');
+        //console.log('searchByTextFilter');
         catalogueRequest.TextFilter = $('#txt_globalsearch').val();
         catalogueRequest.CurrentPageIndex = 1;
         loadStructure(true, true, true, true);
@@ -833,7 +833,7 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result) {
-                    console.log(result);
+                    //console.log(result);
                     if (result.ForgetPassword.Succeeded) {
                         $('#forgetPasswordSucceededResult').show();
                         $('#forgetpassword_succeededmessage').html(result.ForgetPassword.Message);
@@ -849,11 +849,11 @@ companyGroup.webshop = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('ForgetPassword result failed');
+                    //console.log('ForgetPassword result failed');
                 }
             },
             error: function () {
-                console.log('ForgetPassword call failed');
+                //console.log('ForgetPassword call failed');
             }
         });
     });
@@ -893,11 +893,11 @@ companyGroup.webshop = $.sammy(function () {
                     //$('.cartnumber').spin();
                 }
                 else {
-                    console.log('Nincs eleme a listának.');
+                    //console.log('Nincs eleme a listának.');
                 }
             },
             error: function () {
-                console.log('saveCart call failed');
+                //console.log('saveCart call failed');
             }
         });
     });
@@ -1084,13 +1084,15 @@ companyGroup.webshop = $.sammy(function () {
         });
     });
     //kosár sor hozzáadás 
-    this.post('#/addLineToShoppingCart/:productId/:dataAreaId', function (context) {
-        console.log(context.params['productId'] + ' ' + context.params['dataAreaId']);
+    this.post('#/addLineToShoppingCart/:productId/:dataAreaId/:secondHand', function (context) {
+        //console.log(context.params['productId'] + ' ' + context.params['dataAreaId']);
+        var isSecondHand = (context.params['secondHand'] == 1) ? true : false;
         var data = {
             CartId: parseInt($("input#hidden_cartId").val()),   //alert($('input#foo').val());
             ProductId: context.params['productId'],
             Quantity: context.params['txt_quantity'],
-            DataAreaId: context.params['dataAreaId']
+            DataAreaId: context.params['dataAreaId'],
+            SecondHand: isSecondHand 
         };
         $.ajax({
             type: "POST",
@@ -1227,7 +1229,7 @@ companyGroup.webshop = $.sammy(function () {
                         'height': '150%',
                         'autoScale': true
                     });
-                    console.log(result);
+                    //console.log(result);
                     $("#basket_open_button").empty();
                     $("#shoppingCartSummaryTemplate").tmpl(result).appendTo("#basket_open_button");
                     $("#cus_basket_menu").empty();
@@ -1493,7 +1495,7 @@ companyGroup.webshop = $.sammy(function () {
                 showProductList(false);
             },
             error: function () {
-                console.log('Service call failed: GetDetails');
+                //console.log('Service call failed: GetDetails');
             }
         });
 
@@ -1510,10 +1512,10 @@ companyGroup.webshop = $.sammy(function () {
             dataType: "json",
             processData: true,
             success: function (result) {
-                console.log(result);
+                //console.log(result);
             },
             error: function () {
-                console.log('Service call failed: GetCatalogueDetailsLogList');
+                //console.log('Service call failed: GetCatalogueDetailsLogList');
             }
         });
     });
@@ -1534,7 +1536,7 @@ companyGroup.webshop = $.sammy(function () {
     });
     //árlista letöltés
     this.get('#/downloadPriceList', function (context) {
-        console.log('downloadPriceList');
+        //console.log('downloadPriceList');
         window.location = companyGroup.utils.instance().getDownloadPriceListUrl() + '?' + $.param(catalogueRequest);
         //        $.ajax({
         //            type: "GET",
@@ -1683,11 +1685,11 @@ companyGroup.webshop = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('LoadStructure call failed!');
+                    //console.log('LoadStructure call failed!');
                 }
             },
             error: function () {
-                console.log('LoadStructure call failed!');
+                //console.log('LoadStructure call failed!');
             }
         });
     };
@@ -1721,11 +1723,11 @@ companyGroup.webshop = $.sammy(function () {
                     $('.select2').skinner({ 'type': 'left' });
                 }
                 else {
-                    console.log('loadCatalogueList result failed');
+                    //console.log('loadCatalogueList result failed');
                 }
             },
             error: function () {
-                console.log('loadCatalogueList call failed');
+                //console.log('loadCatalogueList call failed');
             }
         });
     };
@@ -1744,7 +1746,7 @@ companyGroup.webshop = $.sammy(function () {
                 $("#catalogueDetailsLogTemplate").tmpl(result).appendTo("#container_2");
             },
             error: function () {
-                console.log('Service call failed: GetCatalogueDetailsLogList');
+                //console.log('Service call failed: GetCatalogueDetailsLogList');
             }
         });
     };
@@ -1831,17 +1833,17 @@ companyGroup.autocomplete = (function () {
                             response(suggestions);
                         }
                         else {
-                            console.log(result);
+                            //console.log(result);
                         }
                     },
                     error: function () {
-                        console.log('CompletionListServiceUrl failed');
+                        //console.log('CompletionListServiceUrl failed');
                     }
                 });
             },
             minLength: 2
         }).data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
+            //console.log(item);
             var inner_html = '<div class="list_item_container"><div class="image"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.PictureId) + ' alt=\"\" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
@@ -1870,18 +1872,18 @@ companyGroup.autocomplete = (function () {
                             response(suggestions);
                         }
                         else {
-                            console.log(result);
+                            //console.log(result);
                         }
                     },
                     error: function () {
-                        console.log('CompletionListServiceUrl failed');
+                        //console.log('CompletionListServiceUrl failed');
                     }
                 });
             },
             minLength: 2
         })
         .data("autocomplete")._renderItem = function (ul, item) {
-            console.log(item);
+            //console.log(item);
             var inner_html = '<div class="list_item_container"><div class="image"><a style="color:#FFF; text-decoration:none; font-size:12px;" href="#/details/' + item.ProductId + '" title="' + item.ProductName + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(item.ProductId) + '" alt="" /></div><div class="label">' + item.ProductId + '</div><div class="description">' + item.ProductName + '</div></div>';
             return $("<li></li>")
             .data("item.autocomplete", item)
@@ -1922,7 +1924,7 @@ companyGroup.autocomplete = (function () {
     //        });
     //    };
     var downloadPriceList = function () {
-        console.log('downloadPriceList');
+        //console.log('downloadPriceList');
         window.location = CompanyGroupCms.Constants.Instance().getDownloadPriceListServiceUrl() + '?' + $.param(catalogueRequest);
     };
     //    var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {

@@ -2,15 +2,6 @@
 @{
     ViewBag.Title = "Webáruház";
 }
-@*	<div id="layout-content" class="group">*@
-        @*cms Messages
-		<div id="messages">
-			Messages
-		</div>*@
-        @*cms BeforeContent
-		<div id="before-content">
-			BeforeContent
-		</div>*@
 		<div id="preloader">
 			loadnig...
 		</div>
@@ -20,19 +11,19 @@
                 <input type="hidden" id="hidden_cartopen" value="" />
                 <div id="basket_open_button"></div>
 				<script id="shoppingCartSummaryTemplate" type="text/x-jquery-tmpl">
-                    {{if Visitor.IsValidLogin}}
-                    <table align="right" id="active_basket" border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-							<td><img src="@Url.Content("~/Content/Media/images/basket.png")" alt=""/></td>
-							<td class="active_basket_middle_cell" nowrap="nowrap">
-							<a href="#/saveShoppingCartOpenStatus" class="btn_basket_slide">
-                                <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></a>
-                            </td>
-							 <td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}"><div id="modify_btn"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">{{if ShoppingCartOpenStatus}}összezárás{{else}}modosítás{{/if}}</span></span><img src="@Url.Content("~/Content/Media/images/edit.png")" width="15px" height="15px" alt=""/></div></a></td>
-                            <td><a style="text-decoration:none;" href="#/showCreateOrder"><div id="checkout_btn">Vásárlás <img src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></div></a></td> 
-                        </tr>
-                    </table>
-                    {{/if}}
+                {{if Visitor.IsValidLogin}}
+                <table align="right" id="active_basket" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+						<td><img src="@Url.Content("~/Content/Media/images/basket.png")" alt=""/></td>
+						<td class="active_basket_middle_cell" nowrap="nowrap">
+						<a href="#/saveShoppingCartOpenStatus" class="btn_basket_slide">
+                            <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} </span></a>
+                        </td>
+							<td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}"><div id="modify_btn"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">{{if ShoppingCartOpenStatus}}összezárás{{else}}modosítás{{/if}}</span></span><img src="@Url.Content("~/Content/Media/images/edit.png")" width="15px" height="15px" alt=""/></div></a></td>
+                        <td><a style="text-decoration:none;" href="#/showCreateOrder"><div id="checkout_btn">Megrendelés <img src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></div></a></td> 
+                    </tr>
+                </table>
+                {{/if}}
 				</script>
 				<div id="basket_panel">
                     <div id="cus_basket_menu"></div>
@@ -78,7 +69,7 @@
                     <div id="cus_basket"></div>
                     <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
-                   <table width="974" border="0" cellspacing="1" cellpadding="3">
+                    <table width="974" border="0" cellspacing="1" cellpadding="3">
                         <thead>
                             <tr>
                                 <td><strong>Termék neve</strong></td>
@@ -120,7 +111,7 @@
                         </tbody>
                     </table>
                     {{/if}}
-                </script>
+                    </script>
 
                     <div id="cus_checkout_menu">
                         <table width="974" border="0" cellpadding="3" cellspacing="1">
@@ -131,8 +122,8 @@
                                         <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/chck.png")" alt="" /></td>
                                         <td nowrap="nowrap"><a href="#/showCreateOrder"><strong>  Megrendelés </strong></a></td>
                                         <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" /></td>
-                            <!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
-                                         <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td>-->
+                                        <!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
+                                        <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td>-->
                                         <td nowrap="nowrap" width="100%">
                                         <a style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése </strong></a>
                                         <a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.gif")" alt="Help" height="12" width="12"/><span><strong>HRP Finance árajánlat</strong><br/>Online adatszolgáltatás és ügyintézés, gyorsított minősítés!</span></a>
@@ -185,14 +176,10 @@
                           <td style="font-size:20px; color: rgb(8, 67, 133);" ><strong>3. Fizetési mód</strong></td>
                         </tr>
                         <tr>
-                          <td class="transfer"><input id="transfer" type="radio" name="radio_payment" value="1" />
-                            Átutalásos fizetés</td>
-                          <td class="cash"><input id="cash" type="radio" name="radio_payment" value="2" />
-                            Készpénzes fizetés</td>
-                          <td class="payadvance" ><input id="payadvance" type="radio" name="radio_payment" value="3" />
-                            Előreutalás</td>
-                          <td class="payafter"><input id="payafter" type="radio" name="radio_payment" value="4" />
-                            Utánvét</td>
+                          <td class="transfer"><input id="transfer" type="radio" name="radio_payment" value="1" />Átutalásos fizetés</td>
+                          <td class="cash"><input id="cash" type="radio" name="radio_payment" value="2" />Készpénzes fizetés</td>
+                          <td class="payadvance" ><input id="payadvance" type="radio" name="radio_payment" value="3" />Előreutalás</td>
+                          <td class="payafter"><input id="payafter" type="radio" name="radio_payment" value="4" />Utánvét</td>
                         </tr>
                         </table>
                         <hr class="hr2" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px" />
@@ -214,11 +201,6 @@
                           </tr>
                         </table>
                     </div>
-                    <table width="100%" heaight="20px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
-                      <tr>
-                        <td></td>
-                      </tr>
-                    </table>
                     </form>
                     </div>
 
@@ -333,11 +315,6 @@
                           </ul>      </td>
                       </tr>
                     </table>                
-                        <table width="100%" height="30px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
-                          <tr>
-                            <td></td>
-                          </tr>
-                        </table>
                         <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
                         {{if Message.length > 0}}
                             <strong>${Message}</strong>
@@ -357,6 +334,11 @@
                         {{/if}}
                         </script>
                     </div>
+                    <table width="100%" heaight="20px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
+                      <tr>
+                        <td></td>
+                      </tr>
+                    </table>
                 </div>
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
@@ -512,6 +494,14 @@
                               <option value="5">Név: <strong>csökkenő</strong></option>
                             </select>
                             {{/if}}</td>
+							<td align="left">
+                                <a href="#/clearFilters"><img src="@Url.Content("~/Content/Media/images/filter_delete.png")" border="0" hspace="0" title="Szűrés tőrlése" alt="Szűrés tőrlése" /></a>
+							</td>
+                            <td align="left">
+                        	{{if Visitor.IsValidLogin}}
+                                <a href="#/downloadPriceList"><img src="@Url.Content("~/Content/Media/images/list_download.png")" border="0" hspace="0" title="Szűrt lista mentése excel fájlba" alt="Szűrt lista mentése excel fájlba" /></a>
+                            {{/if}}
+							</td> 
 					        <td nowrap="nowrap"><table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
 					          <tr>
 					            <td> {{if Products.Pager.FirstEnabled}} <a href="#/firstPage">&lt;&lt;</a> {{else}} <span style="color: #999;">&lt;&lt;</span> {{/if}} </td>
@@ -530,8 +520,10 @@
 					            <td align="right"> {{if Products.Pager.NextEnabled}} <a href="#/nextPage/${Products.Pager.NextPageIndex}">&gt;</a> {{else}} <span>&gt;</span> {{/if}} </td>
 					            <td align="right"> {{if Products.Pager.LastEnabled}} <a href="#/lastPage">&gt;&gt;</a> {{else}} <span>&gt;&gt;</span> {{/if}} </td>
 				              </tr>
-				            </table></td>
-							<td align="right">Elemek száma:
+				            </table>
+                            </td>
+	                        <td align="right">Elemek száma:</td>
+							<td align="right">
                             <select id="select_visibleitemlist_top">
                             {{each( i, visibleitem ) Products.Pager.VisibleItemList}}
                             {{if visibleitem.Selected }}
@@ -563,7 +555,7 @@
                         <script id="productTemplate" type="text/x-jquery-tmpl">
 				        {{each( i, item ) Products.Items}}
                         {{if item.Available}}
-                      <div class="expand_heading">
+                        <div class="expand_heading">
 				            <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                <tr>
 				                    <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
@@ -652,121 +644,120 @@
 				                </table>
                                 </div>
                             </div>			        
-                                <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}" method="post"> 
-			                    <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-				                <tr>
-				                    <td nowrap="nowrap">
-				                        <div class="cus_prod_table_morelink">
-				                            <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
-				                        </div>
-                                    </td>
-                                    <td>
-                                    {{if Visitor.IsValidLogin && item.Discount}}
-                                    <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
-                                        <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
-                                    </div>
-                                    {{/if}}
-                                    </td>
-                                    <td width="100%">
-                                    {{if Visitor.IsValidLogin && item.New}}
-                                    <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>ÚJDONSÁG!</b></span>
-                                        <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
-                                    </div>
-                                    {{/if}}
-                                    </td>
-                                    <td nowrap="nowrap">
-                                        <div class="cus_prod_table_quantity">
+                            <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/0" method="post"> 
+			                <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
+				            <tr>
+				                <td nowrap="nowrap">
+				                    <div class="cus_prod_table_morelink">
+				                        <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
+				                    </div>
+                                </td>
+                                <td>
+                                {{if Visitor.IsValidLogin && item.Discount}}
+                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
+                                    <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
+                                </div>
+                                {{/if}}
+                                </td>
+                                <td>
+                                {{if Visitor.IsValidLogin && item.New}}
+                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>ÚJDONSÁG!</b></span>
+                                    <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
+                                </div>
+                                {{/if}}
+                                </td>
+                                <td width="100%" nowrap="nowrap">
+                                    <div class="cus_prod_table_quantity">
 
-                                        {{if Visitor.IsValidLogin}}
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
-                                        {{/if}}
-                                        </div>
-                                    </td>
-                                    <td align="right" nowrap="nowrap">
-                                        <div class="cus_prod_table_basket">
-                                        <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
-                                        {{if Visitor.IsValidLogin}}
-                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /> 
-                                        kosárba
-                                        {{/if}}
-                                        </div>
-                                    </td>
-                                </tr>
-                                </table>
-                                </form>
+                                    {{if Visitor.IsValidLogin}}
+                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                    {{/if}}
+                                    </div>
+                                </td>
+                                <td align="right" nowrap="nowrap">
+                                    <div class="cus_prod_table_basket">
+                                    <input type="hidden" name="hidden_productid" value="${item.ProductId}" />
+                                    {{if Visitor.IsValidLogin}}
+                                    <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /> 
+                                    kosárba
+                                    {{/if}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </table>
+                            </form>
                         {{else}}
-                            @*hasznalt*@
-							 <div class="expand_heading">
-				            <table  width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
-				                <tr>
-				                    <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
-				                    <td width="100%" valign="top" class="cus_prod_header_middle_cell">
-				                    <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
-                                    <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span>
-				                    </td>
-				                    <td align="right" valign="top" nowrap="nowrap">
-                                        {{if Visitor.IsValidLogin}}
-                                        <table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
-	                                    <tr>
-				                            <td class="price_used" style="text-align:right">
-										    {{if item.SecondHandList.Items.length > 0}}
-				                            <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b></a>
-				                            {{/if}}
-                                          </td>
-    		                            </tr>
-				                        </table>
-                                        
-                                        {{/if}}
-				                    </td>
-				                </tr>
-				            </table>
-				        </div>
-
-				        <div class="toggle_container" {{if CatalogueOpenStatus}} style="display:block;" {{else}} style="display:none;" {{/if}}>
-				            <div class="box">
-				                <table width="695" border="0" cellspacing="0" cellpadding="0">
+                        @*hasznalt*@
+						    <div class="expand_heading">
+				                <table  width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                    <tr>
-				                        <td valign="top">
-				                            <div class="cus_termekkep">
-                                            {{if item.PictureId > 0}}
-				                            <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" /></a>
-				                            {{else}}
-				                            <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
-                                            {{/if}}
-				                            </div>
-                                        </td>
-				                        <td valign="top" class="cus_prod_table_middle_cell">
-				                            <div class="cus_prod_table_desc">
-											<b>Leírás:</b>${item.Description}
-											</br> 
-											</br>
-											<b>Állapot:</b>${item.StatusDescription}
-											</div>
-                                        </td>
-				                        <td align="right" valign="top" >
-				                            <table width="200" border="0" cellspacing="1" cellpadding="2">
-				                            <tr>
-				                                <td valign="top">
-                                                {{if Visitor.IsValidLogin}}
-				                                    <div class="cus_teteladatok_2">
-                                                    <strong>Ez a termék újonnan<br/>már nem rendelhető.</strong>
-													<br/>
-													<br/>
-													Készleten: <strong>${item.Quantity} db</strong>
-												 </div>
-                                                    <div class="cus_teteladatok">
-				                                    </div>
-                                                {{/if}}
-
-				                                </td>
-				                            </tr>
+				                        <td valign="top"><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" /></td>
+				                        <td width="100%" valign="top" class="cus_prod_header_middle_cell">
+				                        <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${item.ProductId}</span><br /><span class="cus_prod_table_item_name">${item.ItemName}</span>
+                                        <br /><span class="cus_prod_table_item_code">${item.PartNumber}</span>
+				                        </td>
+				                        <td align="right" valign="top" nowrap="nowrap">
+                                            {{if Visitor.IsValidLogin}}
+                                            <table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
+	                                        <tr>
+				                                <td class="price_used" style="text-align:right">
+										        {{if item.SecondHandList.Items.length > 0}}
+				                                <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} Ft-tól</b></a>
+				                                {{/if}}
+                                              </td>
+    		                                </tr>
 				                            </table>
-                                        </td>
+                                        
+                                            {{/if}}
+				                        </td>
 				                    </tr>
 				                </table>
-                               </div>
-                            </div>			        
-                                <form action="#/addLineToShoppingCart/${item.ProductId}" method="post"> 
+				            </div>
+				            <div class="toggle_container" {{if CatalogueOpenStatus}} style="display:block;" {{else}} style="display:none;" {{/if}}>
+				                <div class="box">
+				                    <table width="695" border="0" cellspacing="0" cellpadding="0">
+				                        <tr>
+				                            <td valign="top">
+				                                <div class="cus_termekkep">
+                                                {{if item.PictureId > 0}}
+				                                <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" /></a>
+				                                {{else}}
+				                                <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
+                                                {{/if}}
+				                                </div>
+                                            </td>
+				                            <td valign="top" class="cus_prod_table_middle_cell">
+				                                <div class="cus_prod_table_desc">
+											    <b>Leírás:</b>${item.Description}
+											    </br> 
+											    </br>
+											    <b>Állapot:</b>${item.StatusDescription}
+											    </div>
+                                            </td>
+				                            <td align="right" valign="top" >
+				                                <table width="200" border="0" cellspacing="1" cellpadding="2">
+				                                <tr>
+				                                    <td valign="top">
+                                                    {{if Visitor.IsValidLogin}}
+				                                        <div class="cus_teteladatok_2">
+                                                        <strong>Ez a termék újonnan<br/>már nem rendelhető.</strong>
+													    <br/>
+													    <br/>
+													    Készleten: <strong>${item.Quantity} db</strong>
+												     </div>
+                                                        <div class="cus_teteladatok">
+				                                        </div>
+                                                    {{/if}}
+
+				                                    </td>
+				                                </tr>
+				                                </table>
+                                            </td>
+				                        </tr>
+				                    </table>
+                                   </div>
+                                </div>			        
+                                <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post"> 
 			                    <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				                <tr>
                                     <td>
@@ -776,14 +767,14 @@
                                     </div>
                                     {{/if}}
                                     </td>
-                                    <td width="100%">
+                                    <td>
                                     {{if Visitor.IsValidLogin && item.New}}
                                     <div class="cus_prod_table_morelink" style="margin-left:15px;">ÚJDONSÁG
                                         <!-- <a href="javascript:void(0)" onclick=""><img class="basketicon" src="@Url.Content("~/Content/Media/images/compare.png")" border="0" align="absmiddle" /> Összehasonlító listához ad</a> -->
                                     </div>
                                     {{/if}}
                                     </td>
-                                    <td nowrap="nowrap">
+                                    <td align="right" nowrap="nowrap">
                                         <div class="cus_prod_table_quantity">
                                         {{if Visitor.IsValidLogin}}
                                         <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
@@ -822,11 +813,9 @@
 						    {{else}} 
                                 <span style="color: #999;">&lt;&lt;</span> 
                             {{/if}}
-
                             </td>
 						    <td>
                             {{if Pager.PreviousEnabled}}
-
                                 <a href="#/previousPage/${Pager.PreviousPageIndex}">&lt;</a> 
                             {{else}}
                                 <span style="color: #999;">&lt;</span>
@@ -925,22 +914,20 @@
 										<span>Ár:</span> <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)} ${Product.Currency}</strong>
 										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br><span style="color:#ffc000; text-decoration: none; font-size:14px;" >Használt:<strong> ${Product.SecondHandList.MinimumPrice} Ft-tól</span></strong></a>{{/if}}
 										</td>
-										
 									</tr>
                                     <tr>
 										<td>&nbsp;</td>
 									</tr>
                                     <tr>
 									<td>
-											{{if Product.Discount}}<div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
-
-                                    </div> 
-
-{{/if}}{{if Product.New}}<div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>ÚJDONSÁG!</b></span></div>{{/if}}										
-									
+											{{if Product.Discount}}
+                                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span></div> 
+                                            {{/if}}
+                                            {{if Product.New}}
+                                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>ÚJDONSÁG!</b></span></div>
+                                            {{/if}}										
                                     </td>
 									</tr>
-						
 									<tr>
 										<td nowrap="nowrap">
                                             <p>{{if Product.IsInStock}} <span>Készleten:</span><span style="color:green"><strong> ${Product.InnerStock +Product.OuterStock} db</strong></span><br />
@@ -953,23 +940,22 @@
                                                 {{/if}}                                       
                                         {{/if}}</p></td>
 									</tr>
-</table>
-
-									<form action="#/addLineToShoppingCart/${Product.ProductId}" method="post">
-								<table width="100%" border="0" cellspacing="1" cellpadding="5">
+                                    </table>
+									<form action="#/addLineToShoppingCart/${Product.ProductId}/${Product.DataAreaId}/0" method="post">
+								    <table width="100%" border="0" cellspacing="1" cellpadding="5">
 									<tr>
-									<td width="87%" nowrap="nowrap">
-                                    <div class="cus_prod_table_quantity">
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
-                                    </div>
+									    <td width="87%" nowrap="nowrap">
+                                        <div class="cus_prod_table_quantity">
+                                            <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                        </div>
                                     </td>
                                     <td width="13%" align="right" nowrap="nowrap">
                                         <div class="cus_prod_table_basket">
                                         <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /> kosárba</div>
                                     </td>
 									</tr>
-								</table>
-                                </form>
+								    </table>
+                                    </form>
                                {{/if}}
                             </td>
 							</tr>
@@ -977,7 +963,7 @@
                                 <td><a style="text-decoration:none" href="#/backtolist">&laquo; vissza a listára</a></td>
                             </tr>
 						</table>
-						<br>
+						<br/>
 						@*tabok*@
 						<div id="wrapper">
 							<ul class="tabs">
@@ -990,8 +976,6 @@
 								<li>
 									<a href="#" rel="tabs3">Legnépszerűbb párosítások</a>
 								</li>
-
-
                                 {{if Product.SecondHandList.Items.length > 0}}
                                 <li>
 									<a href="#" {{if Product.SecondHandList.Items.length > 0}}class="defaulttab"{{/if}} rel="tabs4">Használt</a>
@@ -1011,7 +995,6 @@
                                 <br />
 							</div>
 							<div class="tab-content" id="tabs2">
-
                                 {{each( i, item ) ReverseCompatibleProducts}}
 								<a href="#/details/${item.ProductId}/${item.DataAreaId}">- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
 								<br />
@@ -1038,76 +1021,65 @@
                                         <td width="240"><strong>Ár:</strong></td>
                                         <td width="102"><strong>&nbsp;</strong></td>
                                       </tr>
+                                      </table>
                                       {{each( i, item ) Product.SecondHandList.Items}}
-                                      <tr>
-                                        <td width="101">${item.Quantity} db</td>
-                                        <td width="293">${item.StatusDescription}</td>
-                                        <td width="240"><strong>${item.Price} Ft</strong></td>
-                                        <td width="102">
-                                        <input type="hidden" value="${item.ConfigId}">
-                                        {{if Visitor.IsValidLogin}}
-                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" />db <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" />
-                                        {{/if}}
-                                        </td>
-                                      </tr>
+                                        <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td width="101">${item.Quantity} db</td>
+                                            <td width="293">${item.StatusDescription}</td>
+                                            <td width="240"><strong>${item.Price} Ft</strong></td>
+                                            <td width="102">
+                                            <input type="hidden" value="${item.ConfigId}">
+                                            {{if Visitor.IsValidLogin}}
+                                            <input type="text" name="txt_quantity" class="number" size="2" value="1" />db 
+                                            <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" />
+                                            {{/if}}
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        </form>
                                       {{/each}}
-                                     </table>
+                                     
 								</div>
 							</div>
 						</div>			
                     </script>
-
 			        @* ajánlott termékek*@
                     @{Html.RenderPartial("_ProductListBanner", Model.BannerList);}
 	            </div>
             </div>
 		</div>
-        @*cms AfterContent
-		<div id="after-content">
-			AfterContent
-		</div>*@
-@*	</div>*@
-    @*cms AsideSecond
-    <aside id="aside-second" class="aside-second">
-		AsideSecond
-	</aside>*@
+        @section ScriptFiles {
+        head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/webshop")');
 
-@section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/webshop")');
+        head.js('@Scripts.Url("~/bundles/easypaginate")');
+        }
+        @section ScriptOnReady {
+        //console.log('ScriptOnReady section');
 
-    head.js('@Scripts.Url("~/bundles/easypaginate")');
-}
-@section ScriptOnReady {
-    console.log('ScriptOnReady section');
+        var model = @(Html.Raw(Json.Encode(Model)));
+        //console.log(model);
 
-    var model = @(Html.Raw(Json.Encode(Model)));
-    console.log(model);
+        companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
 
-    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+        companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
 
-    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+        companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructureApi/")');
 
-    companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructureApi/")');
+        companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
 
-    companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
+        companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi/")');
 
-    companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi/")');
-
-    companyGroup.webshop.run('#/');
+        companyGroup.webshop.run('#/');
     
-
-		
-
-
             $('#price1').priceFormat({
             prefix: 'R$ ',
             centsSeparator: ',',
             thousandsSeparator: '.'
             });
-
-
 			
-@*			$(function(){						
+            @*$(function(){						
 			$('.select2').skinner({'type':'left'});			
 			});*@
 

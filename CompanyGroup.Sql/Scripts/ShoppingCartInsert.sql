@@ -69,6 +69,8 @@ CREATE PROCEDURE [InternetUser].[ShoppingCartLineInsert]( @CartId INT = 0,						
 														  @Quantity INT = 1,					-- mennyiseg
 														  @Price INT = 1,						-- ár
 														  @DataAreaId NVARCHAR(3) = '',			-- hrp; bsc; ahonnan a termék származik
+														  @ConfigId NVARCHAR(20) = '',
+														  @InventLocationId NVARCHAR(20) = '',
 														  @Status INT = 0 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
 														  )			
 AS
@@ -80,8 +82,8 @@ SET NOCOUNT ON
 		WHERE CartId = @CartId AND ProductId = @ProductId AND DataAreaId = @DataAreaId AND Status IN (1, 2)
 	ELSE
 	BEGIN
-		INSERT INTO InternetUser.ShoppingCartLine (CartId, ProductId, Quantity, Price, DataAreaId, Status, CreatedDate) VALUES 
-												  (@CartId, @ProductId, @Quantity, @Price, @DataAreaId, @Status, @CreatedDate);
+		INSERT INTO InternetUser.ShoppingCartLine (CartId, ProductId, Quantity, Price, DataAreaId, ConfigId, InventLocationId, Status, CreatedDate) VALUES 
+												  (@CartId, @ProductId, @Quantity, @Price, @DataAreaId, @ConfigId, @InventLocationId, @Status, @CreatedDate);
 		SET @LineId = @@IDENTITY;
 	END
 	SELECT @LineId as LineId;
@@ -97,5 +99,9 @@ EXEC [InternetUser].[ShoppingCartLineInsert] 1, 'CR180', 1, 660700, 'hrp', 1, @L
 SELECT  @LineId as LineId;
 select * from InternetUser.ShoppingCartLine
 
+update InternetUser.ShoppingCartLine set ConfigId = 'ALAP', InventLocationId = CASE WHEN DataAreaId = 'hrp' THEN 'KULSO' ELSE '7000' END 
+
 select * from InternetUser.Catalogue
+
+select * from InternetUser.SecondHand
 */

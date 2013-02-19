@@ -8,16 +8,23 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class AddLineRequest
     {
-        public AddLineRequest() : this(0, String.Empty, String.Empty, String.Empty, 0, String.Empty) { }
+        public AddLineRequest() : this(0, String.Empty, String.Empty, String.Empty, 0, String.Empty, false) { }
 
-        public AddLineRequest(int cartId, string productId, string language, string dataAreaId, int quantity, string visitorId)
+        public AddLineRequest(int cartId, string productId, string language, string dataAreaId, int quantity, string visitorId, bool secondHand)
         { 
-            CartId = cartId;
-            ProductId = productId;
-            Language = language;
-            DataAreaId = dataAreaId;
-            Quantity = quantity;
-            VisitorId = visitorId;
+            this.CartId = cartId;
+
+            this.ProductId = productId;
+
+            this.Language = language;
+
+            this.DataAreaId = dataAreaId;
+
+            this.Quantity = quantity;
+
+            this.VisitorId = visitorId;
+
+            this.SecondHand = secondHand;
         }
 
         /// <summary>
@@ -49,5 +56,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// látogató azonosítója
         /// </summary>
         public string VisitorId { get; set; }
+
+        /// <summary>
+        /// használt-e a termék?
+        /// </summary>
+        public bool SecondHand { get; set; }
     }
 }

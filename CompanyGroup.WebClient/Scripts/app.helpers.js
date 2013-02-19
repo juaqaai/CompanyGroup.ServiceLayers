@@ -12,7 +12,9 @@
                     autoScale: false,
                     transitionIn: 'fade',
                     transitionOut: 'fade',
-                    beforeClose: function () { console.log('signin panel closed'); }
+                    beforeClose: function () { 
+                    //console.log('signin panel closed'); 
+                    }
                 });
             },
             beforeSignIn: function () {
@@ -70,11 +72,11 @@
                                 callback(result);
                         }
                         else {
-                            console.log('SignOut result failed');
+                            //console.log('SignOut result failed');
                         }
                     },
                     error: function () {
-                        console.log('SignOut call failed');
+                        //console.log('SignOut call failed');
                     }
                 });                              
             },
@@ -96,7 +98,7 @@
                         $('#cus_header1').html(visitorInfoHtml);
                     },
                     error: function () {
-                        console.log('ChangeLanguage call failed');
+                        //console.log('ChangeLanguage call failed');
                     }
                 });
             },
@@ -132,7 +134,7 @@
                         //                        }
                     },
                     error: function () {
-                        console.log('ChangeCurrency call failed');
+                        //console.log('ChangeCurrency call failed');
                     }
                 });
             }

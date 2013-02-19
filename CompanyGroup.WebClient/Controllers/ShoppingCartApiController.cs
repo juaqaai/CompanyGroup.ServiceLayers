@@ -226,7 +226,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.WebshopModule.AddLineRequest req = new CompanyGroup.Dto.WebshopModule.AddLineRequest(request.CartId, request.ProductId, visitorData.Language, request.DataAreaId, request.Quantity, visitorData.VisitorId);
+            CompanyGroup.Dto.WebshopModule.AddLineRequest req = new CompanyGroup.Dto.WebshopModule.AddLineRequest(request.CartId, request.ProductId, visitorData.Language, request.DataAreaId, request.Quantity, visitorData.VisitorId, request.Secondhand);
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions shoppingCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AddLineRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions>("ShoppingCart", "AddLine", req);
 

@@ -13,7 +13,7 @@ companyGroup.carreer = $.sammy(function () {
     });
 
     this.get('#/authenticated', function (context) {
-        console.log('authenticated');
+        //console.log('authenticated');
     });
     //bejelentkezés panel megmutatása
     this.get('#/showSignInPanel', function (context) {

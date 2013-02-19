@@ -239,11 +239,11 @@
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');
 }
 @section ScriptOnReady {
-    console.log('ScriptOnReady section');
+    //console.log('ScriptOnReady section');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     
-    console.log(model);
+    //console.log(model);
 
     companyGroup.carreer.run('#/');
 

@@ -29,6 +29,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.ConfigId = String.Empty;
 
+            this.InventLocationId = String.Empty;
+
             this.CustomerPrice = 0;
 
             this.Stock = new Stock(0, 0);
@@ -78,6 +80,11 @@ namespace CompanyGroup.Domain.WebshopModule
         /// konfiguráció, ahonnan a termék származik (ALAP, XX)
         /// </summary>
         public string ConfigId { set; get; }
+
+        /// <summary>
+        /// raktárkód (KULSO, vagy 7000, HASZNALT)
+        /// </summary>
+        public string InventLocationId { set; get; }
 
         /// <summary>
         /// vevő ára forintban
@@ -144,6 +151,41 @@ namespace CompanyGroup.Domain.WebshopModule
             this.Quantity = 1;
 
             this.ConfigId = product.StandardConfigId;
+
+            this.InventLocationId = product.DataAreaId.ToLower().Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp) ? CompanyGroup.Domain.Core.Constants.OuterStockHrp : CompanyGroup.Domain.Core.Constants.OuterStockBsc;
+        }
+
+        /// <summary>
+        /// használt cikk beállítása
+        /// </summary>
+        /// <param name="secondHand"></param>
+        /// <param name="productName"></param>
+        /// <param name="productNameEnglish"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="itemState"></param>
+        public void SetSecondHandProduct(SecondHand secondHand, string productName, string productNameEnglish, string partNumber, ItemState itemState)
+        {
+            this.ProductId = secondHand.ProductId;
+
+            this.ProductName = productName;
+
+            this.ProductNameEnglish = productNameEnglish;
+
+            this.PartNumber = partNumber;
+
+            this.CustomerPrice = secondHand.Price;
+
+            this.Stock = new WebshopModule.Stock();         // secondHand.Quantity;
+
+            this.ItemState = itemState;
+
+            this.DataAreaId = secondHand.DataAreaId;
+
+            this.ConfigId = secondHand.ConfigId;
+
+            this.InventLocationId = secondHand.InventLocationId;
+
+            this.Quantity = 1;          
         }
 
         ///// <summary>

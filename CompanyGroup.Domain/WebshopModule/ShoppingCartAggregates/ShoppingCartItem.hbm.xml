@@ -9,10 +9,11 @@
     <property name="ProductName" />
     <property name="ProductNameEnglish" />
     <property name="PartNumber" />
-    <property name="ConfigId" />
     <property name="CustomerPrice" />
     <property name="ItemState" />
-    <property name="DataAreaId" />    
+    <property name="DataAreaId" />
+    <property name="ConfigId" />
+    <property name="InventLocationId" />    
     <property name="Quantity" />
     <property name="Status" />
     <property name="CreatedDate" />
@@ -32,9 +33,11 @@
     <query-param name="Quantity" type="System.Int32"/>
     <query-param name="Price" type="System.Int32"/>
     <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="ConfigId" type="System.String"/>
+    <query-param name="InventLocationId" type="System.String"/>
     <query-param name="Status" type="System.Int32"/>
     <return-scalar column="LineId" type="System.Int32"/>
-    exec InternetUser.ShoppingCartLineInsert @CartId=:CartId, @ProductId=:ProductId, @Quantity=:Quantity, @Price=:Price, @DataAreaId=:DataAreaId, @Status=:Status
+    exec InternetUser.ShoppingCartLineInsert @CartId=:CartId, @ProductId=:ProductId, @Quantity=:Quantity, @Price=:Price, @DataAreaId=:DataAreaId, @ConfigId=:ConfigId, @InventLocationId=:InventLocationId, @Status=:Status
   </sql-query>
   <sql-query name="InternetUser.ShoppingCartLineUpdate">
     <query-param name="LineId" type="System.Int32"/>

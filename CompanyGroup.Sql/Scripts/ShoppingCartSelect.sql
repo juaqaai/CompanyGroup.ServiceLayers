@@ -34,10 +34,11 @@ SET NOCOUNT ON
 		ISNULL(Catalogue.Name, '') as ProductName,
 		ISNULL(Catalogue.EnglishName, '') as ProductNameEnglish,
 		ISNULL(Catalogue.PartNumber, '') as PartNumber,
-		ISNULL(Catalogue.StandardConfigId, '') as ConfigId,
 		ISNULL(Line.Price, 0) as CustomerPrice,
 		ISNULL(Catalogue.ItemState, 0) as ItemState,
 		ISNULL(Line.DataAreaId, '') as DataAreaId,
+		ISNULL(Line.ConfigId, '') as ConfigId,
+		ISNULL(Line.InventLocationId, '') as InventLocationId,
 		ISNULL(Line.Quantity, 0) as Quantity,
 		ISNULL(Line.Status, 0) as Status, 
 		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
@@ -50,7 +51,7 @@ SET NOCOUNT ON
 		  (Line.Status IN (1, 2) OR Line.Status IS NULL) AND 
 		  (Cart.Id = @CartId);
 RETURN
--- EXEC [InternetUser].[GetShoppingCart] 34;
+-- EXEC [InternetUser].[GetShoppingCart] 106;
 GO
 GRANT EXECUTE ON [InternetUser].[GetShoppingCart] TO InternetUser
 GO
@@ -87,6 +88,8 @@ SET NOCOUNT ON
 		ISNULL(Line.Price, 0) as CustomerPrice,
 		ISNULL(Catalogue.ItemState, 0) as ItemState,
 		ISNULL(Line.DataAreaId, '') as DataAreaId,
+		ISNULL(Line.ConfigId, '') as ConfigId,
+		ISNULL(Line.InventLocationId, '') as InventLocationId,
 		ISNULL(Line.Quantity, 0) as Quantity,
 		ISNULL(Line.Status, 0) as Status, 
 		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
@@ -136,6 +139,8 @@ SET NOCOUNT ON
 		Line.Price as CustomerPrice,
 		Catalogue.ItemState,
 		Line.DataAreaId,
+		Line.ConfigId,
+		Line.InventLocationId,
 		Line.Quantity,
 		Line.Status, 
 		Line.CreatedDate, 

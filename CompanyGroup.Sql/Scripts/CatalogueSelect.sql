@@ -186,14 +186,16 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @Stock = 0,     
 								  @Sequence = 0,	
 								  @FindText = '', 
-								  @PriceFilter = '10000',
-								  @PriceFilterRelation = 2,	
+								  @PriceFilter = '0',
+								  @PriceFilterRelation = 0,	
 								  @CurrentPageIndex = 1, 
 								  @ItemsOnPage = 50
 
 EXEC InternetUser.CatalogueSelect @Sequence = 0
 
-SELECT * FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
+update InternetUser.Catalogue set New = 1 WHERE Description like '%new%' Category1Id = 'B011'
+
+
 */
 
 GO

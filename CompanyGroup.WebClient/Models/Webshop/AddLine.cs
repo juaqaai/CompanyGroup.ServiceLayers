@@ -14,6 +14,8 @@ namespace CompanyGroup.WebClient.Models
             this.Quantity = 0;
 
             this.DataAreaId = String.Empty;
+
+            this.Secondhand = false;
         }
 
         /// <summary>
@@ -35,5 +37,10 @@ namespace CompanyGroup.WebClient.Models
         /// kosárhoz hozzáadni kívánt termék vállalata ('hrp', 'bsc')
         /// </summary>
         public string DataAreaId { get; set; }
+
+        /// <summary>
+        /// használt cikk rendelés?
+        /// </summary>
+        public bool Secondhand { get; set; }
     }
 }

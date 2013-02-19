@@ -76,6 +76,8 @@ CREATE TABLE InternetUser.ShoppingCartLine
 	Quantity		INT NOT NULL DEFAULT 1,						-- mennyiseg
 	Price			INT NOT NULL DEFAULT 1,						-- ár
 	DataAreaId		NVARCHAR(3) NOT NULL DEFAULT '',			-- hrp; bsc; ahonnan a termék származik
+	ConfigId		NVARCHAR(20) NOT NULL DEFAULT '',			-- ALAP, vagy XX
+	InventLocationId NVARCHAR(20) NOT NULL DEFAULT '',			-- KULSO, vagy HASZNALT
 	[Status]		INT  NOT NULL DEFAULT 0, 					-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
 	CreatedDate		DATETIME NOT NULL DEFAULT GETDATE(),		-- datum, ido
 )

@@ -29,7 +29,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('GetVisitorInfo call failed');
+                //console.log('GetVisitorInfo call failed');
             }
         });
         this.title('Partnerinformáció - dashboard');
@@ -89,7 +89,7 @@ companyGroup.partnerinfo = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result) {
-                    console.log(result);
+                    //console.log(result);
                     if (result.ChangePassword.OperationSucceeded) {
                         context.title('"Password change succeeded!" - ');
                         context.partial(viewPath('changepassword_succeeded'), result.ChangePassword);
@@ -103,11 +103,11 @@ companyGroup.partnerinfo = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('changePassword result failed');
+                    //console.log('changePassword result failed');
                 }
             },
             error: function () {
-                console.log('changePassword call failed');
+                //console.log('changePassword call failed');
             }
         });
     });
@@ -131,7 +131,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('GetVisitorInfo call failed');
+                //console.log('GetVisitorInfo call failed');
             }
         });
     });
@@ -152,7 +152,7 @@ companyGroup.partnerinfo = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result) {
-                    console.log(result);
+                    //console.log(result);
                     if (result.ForgetPassword.OperationSucceeded) {
                         context.title('"Password change succeeded!" - ');
                         context.partial(viewPath('forgetpassword_succeeded'), result.ForgetPassword);
@@ -163,11 +163,11 @@ companyGroup.partnerinfo = $.sammy(function () {
                     }
                 }
                 else {
-                    console.log('ForgetPassword result failed');
+                    //console.log('ForgetPassword result failed');
                 }
             },
             error: function () {
-                console.log('ForgetPassword call failed');
+                //console.log('ForgetPassword call failed');
             }
         });
     });
@@ -191,7 +191,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('GetVisitorInfo call failed');
+                //console.log('GetVisitorInfo call failed');
             }
         });
     });
@@ -215,7 +215,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('UndoChagePassword call failed');
+                //console.log('UndoChagePassword call failed');
             }
         });
     });
@@ -223,7 +223,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     this.get('#/invoiceinfo/:paymenttype', function (context) {
         $('#salesOrderMain').hide();
         $('#szamlaszuro').show();
-        console.log(context.params['paymenttype']);
+        //console.log(context.params['paymenttype']);
         var paymenttype = parseInt(context.params['paymenttype']);
         var data = {
             Debit: (paymenttype === 1) ? true : false,
@@ -244,7 +244,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('GetVisitorInfo call failed');
+                //console.log('GetVisitorInfo call failed');
             }
         });
         context.title('Számla információ - ');
@@ -272,7 +272,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').html(html);
             },
             error: function () {
-                console.log('LoadOrderInfo call failed');
+                //console.log('LoadOrderInfo call failed');
             }
         });
     };

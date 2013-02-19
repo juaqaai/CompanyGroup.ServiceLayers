@@ -418,6 +418,8 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                                           .SetInt32("Quantity", item.Quantity)
                                                                                                           .SetInt32("Price", item.CustomerPrice)
                                                                                                           .SetString("DataAreaId", item.DataAreaId)
+                                                                                                          .SetString("ConfigId", item.ConfigId)
+                                                                                                          .SetString("InventLocationId", item.InventLocationId)
                                                                                                           .SetEnum("Status", item.Status);
                     int lineId = query.UniqueResult<int>();
 

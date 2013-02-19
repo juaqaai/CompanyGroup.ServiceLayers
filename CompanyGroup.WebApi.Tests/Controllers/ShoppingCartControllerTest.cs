@@ -132,7 +132,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void AddLineTest()
         {
-            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest(1, "ZYWALL5", "hu", "hrp", 2, "alma");
+            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest(106, "3GTLA001300W", "hu", "hrp", 2, "3AC042B955814049A145A7D3A78ECEA0", true);
 
             Uri requestUri = null;
 

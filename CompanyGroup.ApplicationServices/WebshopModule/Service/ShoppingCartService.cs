@@ -463,7 +463,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-                Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService AddLine visitor must be logged in!");   
+                Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService AddLine visitor must be logged in!");
 
                 //termék lekérdezés, vizsgálat
                 CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(request.ProductId, request.DataAreaId);
@@ -473,16 +473,28 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //új shoppingCartItem létrehozása, inicializálás
                 CompanyGroup.Domain.WebshopModule.ShoppingCartItem shoppingCartItem = new Domain.WebshopModule.ShoppingCartItem();
 
-                shoppingCartItem.SetProduct(product);
+                //ha használt rendelés történik    
+                if (request.SecondHand)
+                {
+                    CompanyGroup.Domain.WebshopModule.SecondHand secondHand = this.GetSecondHand(request.ProductId);
+
+                    shoppingCartItem.SetSecondHandProduct(secondHand, product.ProductName, product.ProductNameEnglish, product.PartNumber, product.ItemState);
+                }
+                else
+                {
+                    shoppingCartItem.SetProduct(product);
+
+                    //ár beállítás csak akkor, ha kereskedelmi készletről történik az értékesítés
+                    shoppingCartItem.CustomerPrice = Convert.ToInt32(visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
+                                                                                                    product.Structure.Manufacturer.ManufacturerId, product.Structure.Category1.CategoryId, product.Structure.Category2.CategoryId, product.Structure.Category3.CategoryId));
+
+                }
 
                 shoppingCartItem.CartId = request.CartId;
 
                 shoppingCartItem.Quantity = request.Quantity;
 
-                shoppingCartItem.CustomerPrice = Convert.ToInt32( visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5, 
-                                                                                                 product.Structure.Manufacturer.ManufacturerId, product.Structure.Category1.CategoryId, product.Structure.Category2.CategoryId, product.Structure.Category3.CategoryId));
-
-                //ha létezik a termék a kosárban, akkor a cikk mennyisége frissítésre kerül, ha nem létezik akkor hozzáadás kosárhoz
+                 //ha létezik a termék a kosárban, akkor a cikk mennyisége frissítésre kerül, ha nem létezik akkor hozzáadás kosárhoz
                 shoppingCartRepository.AddLine(shoppingCartItem);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
@@ -509,6 +521,48 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw ex;
             }
         }
+
+        #region "SecondHand"
+
+        private const string CACHEKEY_SECONDHAND = "secondhand";
+
+        private const double CACHE_EXPIRATION_SECONDHAND = 1d;
+
+        /// <summary>
+        /// lekérdezi a SecondHand listát és kiveszi belőle a keresett értéket
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        private CompanyGroup.Domain.WebshopModule.SecondHand GetSecondHand(string productId)
+        {
+            Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "ShoppingCartService GetSecondHand productId parameter cannot be null, or empty!");
+
+            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
+
+            //ha nincs a cache-ben
+            if (secondHandList == null)
+            {
+                secondHandList = productRepository.GetSecondHandList();
+
+                //cache-be mentés
+                CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+            }
+
+            //ha nincs min dolgozni, akkor üres elemet adunk vissza
+            if (secondHandList == null)
+            {
+                return new CompanyGroup.Domain.WebshopModule.SecondHand();
+            }
+
+            //a termékazonosítóval rendelkező listát kell szűrni
+            IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+            CompanyGroup.Domain.WebshopModule.SecondHand secondHand = resultList.ToList().FirstOrDefault();
+
+            return secondHand == null ? new CompanyGroup.Domain.WebshopModule.SecondHand() : secondHand;
+        }
+
+        #endregion
 
         /// <summary>
         /// elem törlése meglévő kosárból
