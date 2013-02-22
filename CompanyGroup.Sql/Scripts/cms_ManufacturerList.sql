@@ -23,8 +23,8 @@ SET NOCOUNT ON
 			   m.GyartoNev as ManufacturerName,
 			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.GyartoNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish,
 			   @DataAreaId as DataAreaId
-		FROM axdb_20120614.dbo.updGyartok as m WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN axdb_20120614.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
+		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = @VirtualDataAreaId AND m.GYARTOID <> '' AND m.GyartoNev <> ''
 		ORDER BY ManufacturerId, ManufacturerName;
 	END
@@ -34,8 +34,8 @@ SET NOCOUNT ON
 			   m.MegJelenitesiNev as ManufacturerName,
 			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.MegJelenitesiNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish,
 			   @DataAreaId as DataAreaId
-		FROM axdb_20120614.dbo.updGyartokLng as m WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN axdb_20120614.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
+		FROM Axdb_20130131.dbo.updGyartokLng as m WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE m.LanguageId = 'en-ca' AND m.GYARTOID <> '' AND m.MegJelenitesiNev <> ''
 		ORDER BY ManufacturerId, ManufacturerName;
 	END

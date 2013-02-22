@@ -14,8 +14,8 @@ SET NOCOUNT ON
 	SELECT inventlng.ITEMID as ItemId,
 			inventlng.MEGJELENITESINEV as ItemName,
 			@DataAreaId as DataAreaId
-	FROM axdb_20120614.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
-	INNER JOIN axdb_20120614.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
+	FROM Axdb_20130131.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
+	INNER JOIN Axdb_20130131.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
 	WHERE Invent.DataAreaID = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE Invent.DataAreaID END AND 
 		Invent.DataAreaID <> CASE WHEN @DataAreaId <> '' THEN 'Axapta' ELSE 'srv' END AND 
 		Invent.WEBARUHAZ = 1 AND 

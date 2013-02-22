@@ -22,8 +22,8 @@ SET NOCOUNT ON
 	CONVERT(INT, Purch.RemainPurchPhysical) as RemainPurchPhysical,		-- fennmaradó szállítása
 	--( SELECT SUM(Qty) FROM Axdb.dbo.InventTrans WHERE InventTransId = Purch.InventTransId AND StatusReceipt = 5 ) as Ordered,	-- rendelt
 	Purch.DataAreaId
-	FROM axdb_20120614.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
-	INNER JOIN axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
+	FROM Axdb_20130131.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
+	INNER JOIN Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
 	WHERE Purch.ConfirmedDlv > '1900-01-01' AND 
 		Purch.BrEngedelyezes = 2 AND			-- engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
 		Purch.PURCHASETYPE = 3 AND	

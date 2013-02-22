@@ -108,5 +108,25 @@ namespace CompanyGroup.WebClient.Controllers
             //    return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture list not found"));
             //}
         }
+
+        [HttpGet]
+        [ActionName("GetInvoicePicture")]
+        public HttpResponseMessage GetInvoicePicture(string recId, string maxWidth, string maxHeight)
+        {
+            byte[] picture = this.DownloadData(String.Format("Picture/GetInvoicePicture/{0}/{1}/{2}", recId, maxWidth, maxHeight));
+
+            if (picture == null)
+            {
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture not found"));
+            }
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new ByteArrayContent(picture);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+            return result;
+        }
     }
 }

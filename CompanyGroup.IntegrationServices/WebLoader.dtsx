@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="WebLoader"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{A919E5E1-15BE-451A-A4BA-3CE8C4B7F3AF}">
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{49A52F61-464F-4D0F-91CE-BF2FED2E5244}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables>
@@ -136,6 +136,27 @@
             <ExecutePackageTask>
               <UseProjectReference>True</UseProjectReference>
               <PackageName>Compatibility.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>JobLogKey</ParameterName>
+                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Web staging sequence container\Invoice"
+          DTS:CreationName="SSIS.ExecutePackageTask.3"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{7a1edd6b-cfb2-440c-a638-77c635fc9e96}"
+          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Invoice"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>Invoice.dtsx</PackageName>
               <ParameterAssignment>
                 <ParameterName>JobLogKey</ParameterName>
                 <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
@@ -307,7 +328,7 @@
         <NodeLayout
           Size="140,51"
           Id="Package\JobLog close"
-          TopLeft="259,532" />
+          TopLeft="249,570" />
         <NodeLayout
           Size="138,42"
           Id="Package\JobLog start"
@@ -317,26 +338,30 @@
           Id="Package\Web staging sequence container\Catalogue"
           TopLeft="35,17" />
         <NodeLayout
+          Size="156,42"
+          Id="Package\Web staging sequence container\Compatibility"
+          TopLeft="204,97" />
+        <NodeLayout
           Size="135,42"
           Id="Package\Web staging sequence container\Picture"
           TopLeft="185,22" />
         <NodeLayout
-          Size="168,42"
+          Size="158,42"
           Id="Package\Web staging sequence container\Representative"
-          TopLeft="34,97" />
+          TopLeft="33,97" />
         <NodeLayout
           Size="139,42"
           Id="Package\Web staging sequence container\SecondHand"
           TopLeft="355,20" />
         <NodeLayout
           Size="156,42"
-          Id="Package\Web staging sequence container\Compatibility"
-          TopLeft="251,94" />
+          Id="Package\Web staging sequence container\Invoice"
+          TopLeft="374,96" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="556,296"
-          Size="556,339"
+          PanelSize="556,307"
+          Size="556,350"
           Id="Package\Web staging sequence container"
           TopLeft="47,161" />
         <EdgeLayout
@@ -375,18 +400,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="327,500">
+          TopLeft="322,511">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,32"
+              EndConnector="0,59"
               Start="0,0"
-              End="0,24.5">
+              End="0,51.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.5" />
+                    End="0,51.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

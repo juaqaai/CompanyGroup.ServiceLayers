@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Catalogue"
   DTS:PackageType="5"
-  DTS:VersionBuild="46"
-  DTS:VersionGUID="{D813453E-BBEA-4DB0-B4C8-9F31956E5623}">
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{3127A953-1956-46A0-9BD6-AADF7DE79ACB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -738,6 +738,10 @@
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PackageLogKey]"
                       dataType="i4"
                       name="PackageLogKey" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      dataType="i4"
+                      name="Sequence0" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2481,6 +2485,10 @@
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PackageLogKey]"
                       dataType="i4"
                       name="PackageLogKey" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      dataType="i4"
+                      name="Sequence0" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -3496,6 +3504,23 @@
         </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateCatalogueSequence"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9ed1de67-fca0-4f6d-8594-23b0538d8573}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateCatalogueSequence"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0F29169F-F018-4105-906F-BD516B87959E}"
+          SQLTask:SqlStatementSource="EXEC  InternetUser.UpdateCatalogueSequence" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -3536,9 +3561,17 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{6D4BF8B6-1AA8-4E21-A220-9021B0D1D93D}"
+      DTS:DTSID="{543AA695-99F9-491B-8EC6-8EB55F94DF73}"
       DTS:From="Package\Secondhand catalogue extract"
+      DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
+      DTS:To="Package\UpdateCatalogueSequence" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{B30832AB-D55A-4195-8970-0F0218D03573}"
+      DTS:From="Package\UpdateCatalogueSequence"
+      DTS:ObjectName="Constraint 5"
       DTS:To="Package\PackageLog close" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
@@ -3623,7 +3656,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="179,42"
           Id="Package\Catalogue extract"
@@ -3631,11 +3664,15 @@
         <NodeLayout
           Size="163,42"
           Id="Package\PackageLog close"
-          TopLeft="113,507" />
+          TopLeft="108,639" />
         <NodeLayout
           Size="241,45"
           Id="Package\PackageLog start"
           TopLeft="71,62" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\Secondhand catalogue extract"
+          TopLeft="212,405" />
         <NodeLayout
           Size="170,42"
           Id="Package\Truncate table"
@@ -3677,38 +3714,60 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="324.25,356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="152.666666666667,107">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="16,400"
+              EndConnector="11,532"
               Start="0,0"
-              End="16,392.5">
+              End="11,524.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,195.221770472176" />
+                    End="0,260.964954727994" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,195.221770472176"
-                    Point2="0,199.221770472176"
-                    Point3="4,199.221770472176" />
+                    Point1="0,260.964954727994"
+                    Point2="0,264.964954727994"
+                    Point3="4,264.964954727994" />
                   <mssgle:LineSegment
-                    End="12,199.221770472176" />
+                    End="7,264.964954727994" />
                   <mssgle:CubicBezierSegment
-                    Point1="12,199.221770472176"
-                    Point2="16,199.221770472176"
-                    Point3="16,203.221770472176" />
+                    Point1="7,264.964954727994"
+                    Point2="11,264.964954727994"
+                    Point3="11,268.964954727994" />
                   <mssgle:LineSegment
-                    End="16,392.5" />
+                    End="11,524.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0,204.221770472176,16,16"
+              BoundingBox="-2.5,269.964954727994,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -3747,39 +3806,46 @@
           FontInfo="{assembly:Null}"
           Size="193,106"
           Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
-          TopLeft="369,475" />
+          TopLeft="434,615" />
         <AnnotationLayout
           Text="EXEC [InternetUser].[SecondHandCatalogueExtract];"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="302,60"
+          Size="302,42"
           Id="31cf1f0c-88e7-4580-b04a-6173fb489917"
           TopLeft="461,397" />
-        <NodeLayout
-          Size="222,42"
-          Id="Package\Secondhand catalogue extract"
-          TopLeft="212,405" />
         <AnnotationLayout
           Text="EXEC [InternetUser].[CatalogueExtract];"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="283,60"
+          Size="283,42"
           Id="d9e5a58f-6c86-457e-a80f-7fd68cded854"
           TopLeft="468,315" />
+        <AnnotationLayout
+          Text="EXEC  [InternetUser].[UpdateCatalogueSequence]"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="290,60"
+          Id="73a1e93f-8df5-432c-a2c1-d6e775fa52c9"
+          TopLeft="484,504" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\UpdateCatalogueSequence"
+          TopLeft="216,510" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="324.25,356">
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="321,447">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,49"
+              EndConnector="0,63"
               Start="0,0"
-              End="0,41.5">
+              End="0,55.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,41.5" />
+                    End="0,55.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3789,31 +3855,31 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="323,447">
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="319,552">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-102.666666666667,60"
+              EndConnector="-103.666666666667,87"
               Start="0,0"
-              End="-102.666666666667,52.5">
+              End="-103.666666666667,79.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.6500607533414" />
+                    End="0,47.6925880923451" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,31.6500607533414"
-                    Point2="0,35.6500607533414"
-                    Point3="-4,35.6500607533414" />
+                    Point1="0,47.6925880923451"
+                    Point2="0,51.6925880923451"
+                    Point3="-4,51.6925880923451" />
                   <mssgle:LineSegment
-                    End="-98.6666666666667,35.6500607533414" />
+                    End="-99.6666666666667,51.6925880923451" />
                   <mssgle:CubicBezierSegment
-                    Point1="-98.6666666666667,35.6500607533414"
-                    Point2="-102.666666666667,35.6500607533414"
-                    Point3="-102.666666666667,39.6500607533414" />
+                    Point1="-99.6666666666667,51.6925880923451"
+                    Point2="-103.666666666667,51.6925880923451"
+                    Point3="-103.666666666667,55.6925880923451" />
                   <mssgle:LineSegment
-                    End="-102.666666666667,52.5" />
+                    End="-103.666666666667,79.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3838,7 +3904,7 @@
           Text="[dbo].[usp_MDSPackageLogOnError] &#xA;@PackageLogKey INT = -1,&#xA;@RowCount INT = 0, &#xA;@ErrorCode INT = 0, &#xA;@ErrorDesc VARCHAR(4000) = '', &#xA;@ErrorSource VARCHAR(100) = '' )"
           ParentId="Package.EventHandlers[OnError]"
           FontInfo="{assembly:Null}"
-          Size="212,154"
+          Size="212,NaN"
           Id="67de0c63-b7f1-4c3a-82d8-93b14919d762"
           TopLeft="448,35" />
       </GraphLayout>
@@ -3854,17 +3920,17 @@
           Id="Package\Catalogue extract\Row Count"
           TopLeft="193,212" />
         <NodeLayout
-          Size="172,42"
-          Id="Package\Catalogue extract\OLE DB Destination"
-          TopLeft="192,458" />
+          Size="155,42"
+          Id="Package\Catalogue extract\Derived Column"
+          TopLeft="202,334" />
         <NodeLayout
           Size="151,42"
           Id="Package\Catalogue extract\OLE DB Source"
           TopLeft="196,76" />
         <NodeLayout
-          Size="155,42"
-          Id="Package\Catalogue extract\Derived Column"
-          TopLeft="202,334" />
+          Size="172,42"
+          Id="Package\Catalogue extract\OLE DB Destination"
+          TopLeft="192,458" />
         <EdgeLayout
           Id="Package\Catalogue extract.Paths[Derived Column Output]"
           TopLeft="278.75,376">
@@ -3935,6 +4001,14 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+    design-time-name="Package\Catalogue extract\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Catalogue extract\OLE DB Destination">
     <Properties>
       <Property>
@@ -3944,14 +4018,6 @@
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Catalogue extract\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -3965,10 +4031,6 @@
           Id="Package\Secondhand catalogue extract\Row Count"
           TopLeft="193,212" />
         <NodeLayout
-          Size="172,42"
-          Id="Package\Secondhand catalogue extract\OLE DB Destination"
-          TopLeft="192,458" />
-        <NodeLayout
           Size="155,42"
           Id="Package\Secondhand catalogue extract\Derived Column"
           TopLeft="202,334" />
@@ -3976,6 +4038,10 @@
           Size="151,42"
           Id="Package\Secondhand catalogue extract\OLE DB Source"
           TopLeft="196,76" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Secondhand catalogue extract\OLE DB Destination"
+          TopLeft="192,458" />
         <EdgeLayout
           Id="Package\Secondhand catalogue extract.Paths[Derived Column Output]"
           TopLeft="278.75,376">
@@ -3990,28 +4056,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,74.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Secondhand catalogue extract.Paths[OLE DB Source Output]"
-          TopLeft="272.25,118">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,94"
-              Start="0,0"
-              End="0,86.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,86.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4042,11 +4086,33 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Secondhand catalogue extract.Paths[OLE DB Source Output]"
+          TopLeft="272.25,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94"
+              Start="0,0"
+              End="0,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4054,7 +4120,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

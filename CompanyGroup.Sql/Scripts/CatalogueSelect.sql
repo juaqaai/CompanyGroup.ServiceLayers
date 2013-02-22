@@ -232,7 +232,7 @@ GO
 GRANT EXECUTE ON InternetUser.UpdateCatalogueSequence TO InternetUser
 GO
 -- EXEC  [InternetUser].[UpdateCatalogueSequence]
--- SELECT * FROM InternetUser.Catalogue where Sequence0 is null ORDER BY Sequence0
+-- SELECT * FROM InternetUser.Catalogue where Sequence0 IS NULL ORDER BY Sequence0
 	
 /*
 

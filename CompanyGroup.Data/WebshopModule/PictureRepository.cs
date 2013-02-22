@@ -70,5 +70,29 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
+        //[InternetUser].[InvoicePictureSelect]( @RecId BIGINT = 0 )	
+        public CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(long recId)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require((recId > 0), "The PictureId parameter cannot be null!");
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.InvoicePictureSelect")
+                                                .SetInt64("RecId", recId)
+                                                .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
+
+                CompanyGroup.Domain.WebshopModule.Picture picture = query.UniqueResult<CompanyGroup.Domain.WebshopModule.Picture>();
+
+                if (picture == null) return new Domain.WebshopModule.Picture();
+
+                return picture;
+            }
+            catch
+            {
+                return new CompanyGroup.Domain.WebshopModule.Picture();
+            }
+        }
+
     }
 }

@@ -10,91 +10,57 @@ namespace CompanyGroup.Domain.PartnerModule
     public class InvoiceLineInfo
     {
         public InvoiceLineInfo(DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
-                               int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode)
+                               int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode,
+                               string description, long recId)
         {
-            ItemDate = itemDate;
-            LineNum = lineNum;
-            ItemId = itemId;
-            Name = name;
-            Quantity = quantity;
-            SalesPrice = salesPrice;
-            LineAmount = lineAmount;
-            QuantityPhysical = quantityPhysical;
-            Remain = remain;
-            DeliveryType = deliveryType;
-            TaxAmount = taxAmount;
-            LineAmountMst = lineAmountMst;
-            TaxAmountMst = taxAmountMst;
+            this.ItemDate = itemDate;
+            this.LineNum = lineNum;
+            this.ItemId = itemId;
+            this.Name = name;
+            this.Quantity = quantity;
+            this.SalesPrice = salesPrice;
+            this.LineAmount = lineAmount;
+            this.QuantityPhysical = quantityPhysical;
+            this.Remain = remain;
+            this.DeliveryType = deliveryType;
+            this.TaxAmount = taxAmount;
+            this.LineAmountMst = lineAmountMst;
+            this.TaxAmountMst = taxAmountMst;
             this.CurrencyCode = currencyCode;
+            this.Description = description;
+            this.RecId = recId;
         }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ItemDate")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public DateTime ItemDate { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("LineNum")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         public int LineNum { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("ItemId")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string ItemId { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Name")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string Name { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Quantity")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         public int Quantity	{ set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("SalesPrice")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         public decimal SalesPrice { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("LineAmount")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         public decimal LineAmount { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("QuantityPhysical")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]              
         public int QuantityPhysical	{ set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Remain")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]  
         public int Remain { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("DeliveryType")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)] 
         public int DeliveryType { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("TaxAmount")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)] 
         public decimal TaxAmount { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("LineAmountMst")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)] 
         public decimal LineAmountMst { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("TaxAmountMst")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(0)]
         public decimal TaxAmountMst { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CurrencyCode")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         public string CurrencyCode { set; get; }
+
+        public string Description { set; get; }
+
+        public long RecId { set; get; }
     }
 }

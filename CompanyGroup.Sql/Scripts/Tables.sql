@@ -157,7 +157,8 @@ CREATE TABLE InternetUser.CustomerPriceGroup
 	[Order]			INT NOT NULL DEFAULT 1
 )
 GO
--- 
+
+-- select * from InternetUser.Representative;
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Representative') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Representative;
 GO
@@ -174,6 +175,7 @@ CREATE TABLE InternetUser.Representative
 GO
 
 -- termekkatalogus tabla
+-- select * from InternetUser.Catalogue
 /*
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Catalogue') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Catalogue;
@@ -323,7 +325,7 @@ CREATE TABLE InternetUser.SecondHand
 	Valid				BIT NOT NULL DEFAULT 1	
 )
 
-
+-- select * from InternetUser.Picture;
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Picture') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Picture;
 GO
@@ -340,6 +342,7 @@ CREATE TABLE InternetUser.Picture
     [PackageLogKey]			int not null default 0
 )
 
+-- select * from InternetUser.Compatibility
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Compatibility') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Compatibility;
 GO
@@ -354,6 +357,7 @@ CREATE TABLE InternetUser.Compatibility
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )
 
+-- select * from InternetUser.Invoice
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Invoice') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Invoice;
 GO
@@ -361,15 +365,15 @@ CREATE TABLE InternetUser.Invoice
 (
 	Id					INT IDENTITY NOT NULL PRIMARY KEY,
 	CustomerId			NVARCHAR(20) NOT NULL DEFAULT '',
-	DataAreaId			NVARCHAR(3) NOT NULL DEFAULT '',
-	SalesId				NVARCHAR(20) NOT NULL DEFAULT '',
+	DataAreaId			NVARCHAR(3) NOT NULL DEFAULT '',	
+	SalesId				NVARCHAR(20) NOT NULL DEFAULT '',	-- BVR, VR
 	InvoiceDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 	
 	DueDate				DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 
 	InvoiceAmount		decimal(20,2) NOT NULL DEFAULT 0, 
 	InvoiceCredit		decimal(20,2) NOT NULL DEFAULT 0,
 	CurrencyCode		NVARCHAR(20) NOT NULL DEFAULT '',
 	InvoiceId			NVARCHAR(20) NOT NULL DEFAULT '', 
-	Payment				NVARCHAR(60) NOT NULL DEFAULT '', 
+	Payment				NVARCHAR(60) NOT NULL DEFAULT '',	-- Átutalás 8 nap
 	SalesType			INT NOT NULL DEFAULT 0,				-- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet
 	CusomerRef			NVARCHAR(300) NOT NULL DEFAULT '',
 	InvoicingName		NVARCHAR(80) NOT NULL DEFAULT '',
@@ -382,16 +386,20 @@ CREATE TABLE InternetUser.Invoice
 	ItemId				NVARCHAR(20) NOT NULL DEFAULT '',
 	ItemName			NVARCHAR(300) NOT NULL DEFAULT '',
 	Quantity			INT NOT NULL DEFAULT 0,
-	SalesPrice			decimal(20,2) NOT NULL DEFAULT 0, 
-	LineAmount			decimal(20,2) NOT NULL DEFAULT 0, 
-	QuantityPhysical	INT NOT NULL DEFAULT 0, 
-	Remain				INT NOT NULL DEFAULT 0,
+	SalesPrice			decimal(20,2) NOT NULL DEFAULT 0,	-- egysegar
+	LineAmount			decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg
+	QuantityPhysical	INT NOT NULL DEFAULT 0,				-- mennyiseg
+	Remain				INT NOT NULL DEFAULT 0,				-- fennmarado mennyiseg
 	DeliveryType		INT NOT NULL DEFAULT 0,	
 	TaxAmount			decimal(20,2) NOT NULL DEFAULT 0,
-	LineAmountMst		decimal(20,2) NOT NULL DEFAULT 0,
-	TaxAmountMst		decimal(20,2) NOT NULL DEFAULT 0,
+	LineAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg az alapertelmezett penznemben
+	TaxAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- afa osszege az alapertelmezett penznemben
 	DetailCurrencyCode  NVARCHAR(20) NOT NULL DEFAULT '',
 	Debit				BIT NOT NULL DEFAULT 0, 
+	[Description]		NVARCHAR(4000) NOT NULL DEFAULT '',
+	[FileName]			NVARCHAR(300) NOT NULL DEFAULT '',
+	RecId				BIGINT NOT NULL DEFAULT 0, 
+	CreatedDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0),
     [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )

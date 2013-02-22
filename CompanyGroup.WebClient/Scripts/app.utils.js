@@ -89,6 +89,9 @@ companyGroup.utils = (function () {
             },
             getBigPictureUrl: function (pictureId) {
                 return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=500&MaxHeight=500';
+            },    
+            getInvoicePictureUrl: function (recId) {
+                return _pictureBaseApiUrl + 'GetInvoicePicture/?RecId=' + recId + '&MaxWidth=500&MaxHeight=500';
             },
             getRegistrationApiUrl: function (url) {
                 return _registrationBaseApiUrl + url;

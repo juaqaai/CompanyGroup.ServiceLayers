@@ -132,6 +132,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             catch { return null; }
         }
 
+        /// <summary>
+        /// képtartalom kiolvasása számla elem rekordazonosító alapján
+        /// </summary>
+        /// <param name="recId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public Stream GetInvoicePicture(long recId, string maxWidth, string maxHeight)
+        {
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((recId > 0), "The PictureService GetInvoicePicture request recId parameter can not be null!");
+
+                CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetInvoicePicture(recId);
+
+                if (picture == null) { return null; }
+
+                byte[] buffer = this.ReadFileContent(picture);
+
+                int w = 0;
+                int h = 0;
+
+                if (!Int32.TryParse(maxWidth, out w)) { w = 0; }
+                if (!Int32.TryParse(maxHeight, out h)) { h = 0; }
+
+                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(new MemoryStream(buffer), w, h, "image/jpeg");
+            }
+            catch { return null; }
+        }
+
         private byte[] ReadFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
         {
             byte[] buffer;

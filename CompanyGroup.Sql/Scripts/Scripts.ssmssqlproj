@@ -55,6 +55,12 @@
           <AssociatedConnUserName />
           <FullPath>CatalogueCompletionSelect.sql</FullPath>
         </FileNode>
+        <FileNode Name="CatalogueDetailsLog.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CatalogueDetailsLog.sql</FullPath>
+        </FileNode>
         <FileNode Name="CatalogueInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -145,12 +151,6 @@
           <AssociatedConnUserName />
           <FullPath>cms_InventNameEnglish.sql</FullPath>
         </FileNode>
-        <FileNode Name="cms_InvoiceList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_InvoiceList.sql</FullPath>
-        </FileNode>
         <FileNode Name="cms_MailAddress.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -180,12 +180,6 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>cms_ProductDescriptionList.sql</FullPath>
-        </FileNode>
-        <FileNode Name="cms_ProductItemOrderCheck.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_ProductItemOrderCheck.sql</FullPath>
         </FileNode>
         <FileNode Name="cms_ProductList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -295,6 +289,12 @@
           <AssociatedConnUserName />
           <FullPath>FinanceOfferUpdate.sql</FullPath>
         </FileNode>
+        <FileNode Name="InvoiceSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InvoiceSelect.sql</FullPath>
+        </FileNode>
         <FileNode Name="ItemSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
@@ -330,6 +330,12 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>PriceListSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ProductItemOrderCheck.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>ProductItemOrderCheck.sql</FullPath>
         </FileNode>
         <FileNode Name="ProductListCount.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>

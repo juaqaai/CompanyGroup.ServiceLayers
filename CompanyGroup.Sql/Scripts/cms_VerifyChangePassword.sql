@@ -15,10 +15,10 @@ CREATE PROCEDURE InternetUser.cms_VerifyChangePassword
 AS
 	DECLARE @Code nvarchar(32) = '';
 
-	IF ( NOT EXISTS( SELECT * FROM axdb_20120614.dbo.WebShopUserInfo WHERE (ContactPersonId = @ContactPersonId) AND (WebLoginName = @UserName) AND (Pwd = @OldPassword) AND (RightHrp = 1  OR RightBsc = 1) AND (@DataAreaId IN ('hrp', 'bsc')) ) )
+	IF ( NOT EXISTS( SELECT * FROM Axdb_20130131.dbo.WebShopUserInfo WHERE (ContactPersonId = @ContactPersonId) AND (WebLoginName = @UserName) AND (Pwd = @OldPassword) AND (RightHrp = 1  OR RightBsc = 1) AND (@DataAreaId IN ('hrp', 'bsc')) ) )
 		SET @Code = 'UserNamePasswordNotFound';
 
-	IF ( EXISTS( SELECT * FROM axdb_20120614.dbo.WebShopUserInfo WHERE (WebLoginName = @UserName) AND (Pwd = @NewPassword) ) )
+	IF ( EXISTS( SELECT * FROM Axdb_20130131.dbo.WebShopUserInfo WHERE (WebLoginName = @UserName) AND (Pwd = @NewPassword) ) )
 		SET @Code = 'PasswordAleradyExists';
 		
 	IF (@Code = '')

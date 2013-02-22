@@ -16,8 +16,8 @@ AS
 SET NOCOUNT ON
 
 	SELECT Pic.RecId, CONVERT( BIT, Pic.ElsodlegesKep ) as [Primary], [FileName], Pic.ItemId, DataAreaId
-	FROM axdb_20120614.dbo.updKepek as Pic WITH (READUNCOMMITTED)
-	INNER JOIN axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED)
+	FROM Axdb_20130131.dbo.updKepek as Pic WITH (READUNCOMMITTED)
+	INNER JOIN Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED)
 	ON Pic.ItemId = Invent.ItemId
 	WHERE Invent.DataAreaID = @DataAreaId AND 
 			Invent.WEBARUHAZ = 1 AND 

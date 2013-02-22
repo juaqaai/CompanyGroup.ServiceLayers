@@ -35,6 +35,8 @@
     <return-scalar column="LineAmountMst" type="System.Decimal"/>
     <return-scalar column="TaxAmountMst" type="System.Decimal"/>
     <return-scalar column="DetailCurrencyCode" type="System.String"/>
+    <return-scalar column="Description" type="System.String"/>
+    <return-scalar column="RecId" type="System.Int64"/>
     exec InternetUser.InvoiceSelect @CustomerId=:CustomerId, @Debit=:Debit, @OverDue=:Overdue
   </sql-query>
 </hibernate-mapping>

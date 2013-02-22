@@ -23,8 +23,8 @@ AS
 SET NOCOUNT ON
 
 	SELECT DISTINCT MAX(P.RecId) as RecId, P.ItemId as ProductId, P.[FileName], Convert(bit, P.ElsodlegesKep) as [Primary], GetDate() as CreatedDate, Convert(bit, 1) as Valid
-	FROM axdb_20120614.dbo.UPDKEPEK as P 
-	INNER JOIN axdb_20120614.dbo.InventTable as C WITH(READUNCOMMITTED) ON C.ItemId = P.ItemId
+	FROM Axdb_20130131.dbo.UPDKEPEK as P 
+	INNER JOIN Axdb_20130131.dbo.InventTable as C WITH(READUNCOMMITTED) ON C.ItemId = P.ItemId
 	WHERE C.DataAreaId IN ('bsc', 'hrp') AND 
 		  C.WEBARUHAZ = 1 AND 
 		  C.ITEMSTATE IN ( 0, 1 ) AND 

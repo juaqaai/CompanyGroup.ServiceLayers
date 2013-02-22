@@ -110,5 +110,46 @@ namespace CompanyGroup.WebApi.Controllers
                 return ThrowHttpError(ex);
             }
         }
+
+        /// <summary>
+        /// számla listaelemhez tartozó kép kiolvasása stream-ként
+        /// </summary>
+        /// <param name="recId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        [ActionName("GetInvoicePicture")]
+        [HttpGet]
+        public HttpResponseMessage GetInvoicePicture(string recId, string maxWidth, string maxHeight)
+        {
+            try
+            {
+                long id = 0;
+
+                if (!Int64.TryParse(recId, out id))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                Stream stream = this.service.GetInvoicePicture(id, maxWidth, maxHeight);
+
+                if (stream == null)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+                result.Content = new System.Net.Http.StreamContent(stream);
+
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
     }
 }

@@ -18,5 +18,12 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="pictureId"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Picture GetItemById(int pictureId);
+
+        /// <summary>
+        /// számlasorhoz tartozó termékkép kiolvasás
+        /// </summary>
+        /// <param name="recId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(long recId);
     }
 }

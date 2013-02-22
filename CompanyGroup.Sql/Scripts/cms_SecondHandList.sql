@@ -28,8 +28,8 @@ SET NOCOUNT ON
 		   0 as Price,
 		   cfg.Name,
 	       cfg.DataAreaId
-		FROM axdb_20120614.dbo.ConfigTable as cfg 
-		INNER JOIN axdb_20120614.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+		FROM Axdb_20130131.dbo.ConfigTable as cfg 
+		INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
 												 cfg.dataAreaId = idim.dataAreaId AND 
 												 cfg.ConfigId like 'xx%' AND 
 												 idim.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END
@@ -45,8 +45,8 @@ SET NOCOUNT ON
 	INSERT INTO @StockTable
 	SELECT c.ConfigId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), c.DataAreaId
 	FROM @SecondHandTable as c 
-	INNER JOIN axdb_20120614.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
-	INNER JOIN axdb_20120614.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+	INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
+	INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
 	WHERE ins.Closed = 0 
 	GROUP BY c.ConfigId, c.ProductId, c.DataAreaId;
 
@@ -67,7 +67,7 @@ RETURN
 --BEGIN
 --	DECLARE @Stock INT = 0;
 
---	SET @Stock = ISNULL((SELECT SUM(AvailPhysical) FROM axdb_20120614.dbo.InventSum WHERE InventDimId = @inventDimId AND 
+--	SET @Stock = ISNULL((SELECT SUM(AvailPhysical) FROM Axdb_20130131.dbo.InventSum WHERE InventDimId = @inventDimId AND 
 --																	 DataAreaId = @dataAreaId AND 
 --																	 ItemId = @productId AND 
 --																	 Closed = 0), 0);
@@ -88,8 +88,8 @@ SET NOCOUNT ON
 	WITH XXConfig_CTE(ConfigId, ProductId, DataAreaId)
 	AS (
 		SELECT cfg.configId, cfg.ItemId, cfg.dataAreaId 
-		FROM axdb_20120614.dbo.ConfigTable as cfg 
-		INNER JOIN axdb_20120614.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+		FROM Axdb_20130131.dbo.ConfigTable as cfg 
+		INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
 														cfg.dataAreaId = idim.dataAreaId AND 
 														cfg.ConfigId like 'xx%' AND 
 														idim.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END 
@@ -100,8 +100,8 @@ SET NOCOUNT ON
 	(
 		SELECT c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.DataAreaId
 		FROM XXConfig_CTE as c 
-		INNER JOIN axdb_20120614.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
-		INNER JOIN axdb_20120614.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+		INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId = CASE WHEN @DataAreaId = 'hrp' THEN 'HASZNALT' ELSE '2100' END )
+		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
 		WHERE ins.Closed = 0 
 		GROUP BY c.ProductId, c.ConfigId, c.DataAreaId
 	)
@@ -133,10 +133,10 @@ SET NOCOUNT ON
 				    Invent.ModifiedDate, 
 					Invent.ModifiedTime, 
 					Invent.DataAreaId
-	FROM axdb_20120614.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
+	FROM Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
 	INNER JOIN Stock_CTE as cte ON cte.ProductId = Invent.ItemId AND cte.DataAreaId = Invent.DataAreaId
-    LEFT OUTER JOIN axdb_20120614.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND gt.DATAAREAID = Invent.DATAAREAID
-	LEFT OUTER JOIN axdb_20120614.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND gm.DATAAREAID = Invent.DATAAREAID	
+    LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND gt.DATAAREAID = Invent.DATAAREAID
+	LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND gm.DATAAREAID = Invent.DATAAREAID	
 	WHERE Invent.DataAreaID = @DataAreaId AND 
 		  cte.Quantity > 0 AND 
 		  cte.Price > 0 

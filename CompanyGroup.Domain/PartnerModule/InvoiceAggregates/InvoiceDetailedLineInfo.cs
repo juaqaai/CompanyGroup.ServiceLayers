@@ -4,15 +4,14 @@ using System.Collections.Generic;
 namespace CompanyGroup.Domain.PartnerModule
 {
     /// <summary>
-    /// SalesId	    InvoiceDate	            DueDate	                InvoiceAmount	InvoiceCredit	CurrencyCode	InvoiceId	Payment	    SalesType	CusomerRef	    InvoicingName	                InvoicingAddress	                    ContactPersonId	Printed	ReturnItemId	ItemDate	            LineNum	ItemId	Name	                                Quantity	SalesPrice	LineAmount	QuantityPhysical	Remain	DeliveryType	TaxAmount	LineAmountMst	TaxAmountMst	DetailCurrencyCode
-    /// VR421801	2012-11-23 00:00:00.000	2012-11-23 00:00:00.000	15276	        15276	        HUF	            HI002399/11	készpénz	3		                    CARRIER CR MAGYARORSZÁG Kft.	5123 Jászárokszállás Jászberényi út 2.		            0		                2012-11-23 00:00:00.000	0	    ATFTBIZ	Acer TFT pixelhiba-mentesség biztosítás	1	        12222	    12222	    1	                0	    0	            3055	    12222	        3055	        HUF
     /// </summary>
     public class InvoiceDetailedLineInfo
     {
         public InvoiceDetailedLineInfo(string customerId, string dataAreaId, string salesId, DateTime invoiceDate, DateTime dueDate, decimal invoiceAmount, decimal invoiceCredit, string currencyCode, string invoiceId, 
                                        string payment, int salesType, string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId,
                                        bool printed, string returnItemId, DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
-                                       int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string detailCurrencyCode)
+                                       int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string detailCurrencyCode, 
+                                       string description, long recId)
         {
             this.CustomerId = customerId;
             this.DataAreaId = dataAreaId;
@@ -45,6 +44,8 @@ namespace CompanyGroup.Domain.PartnerModule
             this.LineAmountMst = lineAmountMst;
             this.TaxAmountMst = taxAmountMst;
             this.DetailCurrencyCode = detailCurrencyCode;
+            this.Description = description;
+            this.RecId = recId;
         }
 
         public string CustomerId { set; get; }
@@ -109,5 +110,10 @@ namespace CompanyGroup.Domain.PartnerModule
 
         public string DetailCurrencyCode { set; get; }
 
+        public string Description { set; get; }
+
+		public string FileName { set; get; }
+
+        public long RecId { set; get; }
     }
 }

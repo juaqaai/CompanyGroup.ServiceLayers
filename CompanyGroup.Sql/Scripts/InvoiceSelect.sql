@@ -1,6 +1,6 @@
+/*
 USE ExtractInterface
 GO
-/****** Object:  StoredProcedure [InternetUser].[web_GetSales]    Script Date: 2012.09.18. 20:55:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,7 +140,7 @@ GO
 
 -- exec [InternetUser].[InvoiceList] 'V000787', 'hrp';
 -- exec [InternetUser].[InvoiceList] '', 'hrp';
-
+*/
 -- select top 100 * from AxDb.dbo.CUSTINVOICEJOUR
 USE Web
 GO
@@ -185,7 +185,10 @@ SET NOCOUNT ON
 		   TaxAmount,  --
 		   LineAmountMst,  -- osszeg az alapertelmezett penznemben
 		   TaxAmountMst, -- afa osszege az alapertelmezett penznemben
-		   DetailCurrencyCode
+		   DetailCurrencyCode, 
+		   ISNULL([Description], '') as [Description],
+		   ISNULL([FileName], '' ) as [FileName],
+		   ISNULL(RecId, 0) as RecId
 
 	FROM InternetUser.Invoice 
 	WHERE CustomerId = @CustomerId 
@@ -200,3 +203,16 @@ GRANT EXECUTE ON InternetUser.InvoiceSelect TO InternetUser
 GO
 
 -- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1;
+
+DROP PROCEDURE [InternetUser].[InvoicePictureSelect];
+GO
+CREATE PROCEDURE [InternetUser].[InvoicePictureSelect]( @RecId BIGINT = 0 )										
+AS
+SET NOCOUNT ON
+	SELECT Id, [FileName], CONVERT(BIT, 1) as [Primary], RecId
+	FROM InternetUser.Invoice
+	WHERE RecId = @RecId;
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.InvoicePictureSelect TO InternetUser
+GO

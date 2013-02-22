@@ -15,7 +15,7 @@ SET NOCOUNT ON
 
 	INSERT INTO InternetUser.Picture
 	SELECT DISTINCT MAX(RecId), ItemId, [FileName], Convert(bit, ElsodlegesKep), GetDate(), Convert(bit, 1)
-	FROM axdb_20120614.dbo.UPDKEPEK as P 
+	FROM Axdb_20130131.dbo.UPDKEPEK as P 
 	INNER JOIN InternetUser.Catalogue as C ON C.ProductId = P.ItemId
 	GROUP BY ItemId, [FileName], Convert(bit, ElsodlegesKep);
 

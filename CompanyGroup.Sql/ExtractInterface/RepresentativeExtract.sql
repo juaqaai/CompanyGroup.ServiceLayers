@@ -28,7 +28,7 @@ SET NOCOUNT ON
 				   CellularPhone as Mobile, 
 				   PhoneLocal as Extension, 
 				   Email
-			FROM axdb_20120614.dbo.EmplTable 
+			FROM Axdb_20130131.dbo.EmplTable 
 			WHERE DataAreaId = 'HUN'
 RETURN
 GO

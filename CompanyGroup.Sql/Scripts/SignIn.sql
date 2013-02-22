@@ -79,7 +79,7 @@ DECLARE @RecId bigint,
 		SELECT @RecId = RecId,
 			   @CompanyId = CustAccount, 
 			   @PersonId = ContactPersonId 
-		FROM axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
+		FROM Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
 											( Pwd = @Password ) AND 
 											( RightHrp = 1 OR RightBsc = 1 OR RightSzerviz = 1 ) AND 
 											( DataAreaId = @VirtualDataAreaId );
@@ -104,8 +104,8 @@ DECLARE @RecId bigint,
 				   @PriceGroup = Cust.PriceGroup, 
 				   @RepresentativeId = Cust.Kepviselo, 
 				   @LoginType = 2
-			FROM axdb_20120614.dbo.ContactPerson as Cp 
-				 INNER JOIN axdb_20120614.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
+			FROM Axdb_20130131.dbo.ContactPerson as Cp 
+				 INNER JOIN Axdb_20130131.dbo.CustTable as Cust ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID
 			WHERE Cp.LeftCompany = 0 AND Cust.StatisticsGroup <> 'Arhív' AND Cust.StatisticsGroup <> 'Archív' AND
 				  Cust.DataAreaID = @DataAreaId AND 
 				  cp.ContactPersonId = @PersonId AND 
@@ -126,7 +126,7 @@ DECLARE @RecId bigint,
 					   @LanguageId = LanguageId, 
 					   @PriceGroup = PriceGroup, 
 					   @RepresentativeId = Kepviselo
-				FROM axdb_20120614.dbo.CustTable
+				FROM Axdb_20130131.dbo.CustTable
 				WHERE StatisticsGroup <> 'Arhív' AND 
 					  StatisticsGroup <> 'Archív' AND 
 					  DataAreaID = @DataAreaId AND 
@@ -192,7 +192,7 @@ GO
 -- exec InternetUser.SignIn 'elektroplaza', '58915891', 'bsc';
 -- exec InternetUser.SignIn 'ipon', 'gild4MAX19', 'hrp';
 -- exec InternetUser.SignIn 'plorinczy', 'pikolo', 'hrp';
--- select * from axdb_20120614.dbo.WebShopUserInfo WHERE ( WebLoginName = 'ipon' )	gild4MAX19
+-- select * from Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = 'ipon' )	gild4MAX19
 -- select * from AxDb.dbo.EmplTable
 
 DROP FUNCTION InternetUser.CalculatePartnerModel

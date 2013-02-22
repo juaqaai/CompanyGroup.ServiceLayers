@@ -47,7 +47,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            Name = from.Name,
                            Quantity = from.Quantity,
                            SalesPrice = String.Format("{0}", from.SalesPrice),
-                           TaxAmount = String.Format("{0}", from.TaxAmount)
+                           TaxAmount = String.Format("{0}", from.TaxAmount), 
+                           Description = from.Description, 
+                           RecId = from.RecId
                        };
         }
     }
