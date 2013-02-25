@@ -34,15 +34,19 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository;
 
+        private CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository;
+
         /// <summary>
         /// konstruktor repository interfész paraméterrel
         /// </summary>
         /// <param name="productRepository"></param>
         /// <param name="shoppingCartRepository"></param>
+        /// <param name="pictureRepository"></param>
         /// <param name="financeRepository"></param>
         /// <param name="visitorRepository"></param>
         public ProductService(CompanyGroup.Domain.WebshopModule.IProductRepository productRepository,
                               CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository,
+                              CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository,  
                               CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository,
                               CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(financeRepository, visitorRepository)
         {
@@ -56,9 +60,16 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw new ArgumentNullException("ShoppingCartRepository");
             }
 
+            if (pictureRepository == null)
+            {
+                throw new ArgumentNullException("PictureRepository");
+            }
+
             this.productRepository = productRepository;
 
             this.shoppingCartRepository = shoppingCartRepository;
+
+            this.pictureRepository = pictureRepository;
         }
 
         /// <summary>
@@ -309,8 +320,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
             if (request.StockFilter)
             {
-                predicate = predicate.And(p => p.Stock.Inner > 0);
-                predicate = predicate.Or(p => p.Stock.Outer > 0);
+                predicate = predicate.And(p => p.Stock > 0);
             }
 
             if (!String.IsNullOrEmpty(request.TextFilter))
@@ -357,8 +367,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 predicate = predicate.And(p => p.DataAreaId.Equals(dataAreaId));
             }
 
-            predicate = predicate.And(p => p.Stock.Inner > 0);
-            predicate = predicate.Or(p => p.Stock.Outer > 0);
+            predicate = predicate.And(p => p.Stock > 0);
 
             predicate = predicate.And(p => p.Discount.Equals(request.ActionFilter));
 
@@ -604,6 +613,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             product.SecondHandList = (product.SecondHand) ? this.GetSecondHandList(product.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
 
+            product.Pictures = pictureRepository.GetListByProduct(product.ProductId);
+
             CompanyGroup.Dto.WebshopModule.Product result = new ProductToProduct().Map(product);
 
             return result;
@@ -757,7 +768,20 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog> result = productRepository.CatalogueDetailsLogList(request.VisitorId);
 
-                return new CatalogueDetailsLogToCatalogueDetailsLog().Map(result);
+                //ne legyen ugyanaz a termék egymás alatt
+                List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog> filteredList = new List<CompanyGroup.Domain.WebshopModule.CatalogueDetailsLog>();
+
+                string tmp = String.Empty;
+
+                result.ForEach( x => {
+                    if (!x.ProductId.Equals(tmp))
+                    {
+                        filteredList.Add(x);
+                    }
+                    tmp = x.ProductId;
+                });
+
+                return new CatalogueDetailsLogToCatalogueDetailsLog().Map(filteredList);
             }
             catch(Exception ex)
             {

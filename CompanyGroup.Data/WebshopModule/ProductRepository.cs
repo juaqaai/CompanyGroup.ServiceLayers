@@ -587,6 +587,36 @@ namespace CompanyGroup.Data.WebshopModule
                 throw (ex);
             }            
         }
+
+        /// <summary>
+        /// készlet databszám befrissítése    
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="productId"></param>
+        /// <param name="stock"></param>
+        public void StockUpdate(string dataAreaId, string productId, int stock)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(dataAreaId), "The dataAreaId cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(productId), "The productId cannot be null!");
+
+                using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                {
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueStockUpdate").SetString("DataAreaId", dataAreaId)
+                                                                                                        .SetString("ProductId", productId)
+                                                                                                        .SetInt32("Stock", stock);
+                    query.UniqueResult<int>();
+
+                    transaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }         
+        }
     }
 
 }

@@ -501,7 +501,10 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request = new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest() { VisitorId = visitorData.VisitorId };
+            //ha a visitorId üres, akkor a permanent visitorId kerül a lekérdezés paraméterébe
+            string visitorId = String.IsNullOrEmpty(visitorData.VisitorId) ? visitorData.PermanentId : visitorData.VisitorId;
+
+            CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request = new CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest() { VisitorId = visitorId };
 
             HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest>("Product", "GetCatalogueDetailsLogList", request);
 

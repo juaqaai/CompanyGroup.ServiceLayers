@@ -3,20 +3,29 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    //[Serializable]
-    //[System.Runtime.Serialization.DataContract(Name = "Products", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// terméklista
+    /// </summary>
     public class Products
     {
-        //[System.Runtime.Serialization.DataMember(Name = "Items", Order = 1)]
+        /// <summary>
+        /// terméklista
+        /// </summary>
         public List<Product> Items { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Pager", Order = 2)]
+        /// <summary>
+        /// lapozó
+        /// </summary>
         public Pager Pager { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ListCount", Order = 3)]
+        /// <summary>
+        /// elemek száma
+        /// </summary>
         public long ListCount { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Currency", Order = 4)]
+        /// <summary>
+        /// pénznem
+        /// </summary>
         public string Currency { get; set; }
     }
 }

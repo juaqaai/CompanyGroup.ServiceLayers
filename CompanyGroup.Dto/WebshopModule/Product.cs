@@ -3,105 +3,155 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-
-    //[Serializable]
-    //[System.Runtime.Serialization.DataContract(Name = "Product", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// termék DTO
+    /// </summary>
     public class Product
     {
-        //[System.Runtime.Serialization.DataMember(Name = "Manufacturer", Order = 1)]
+        /// <summary>
+        /// gyártó
+        /// </summary>
         public Manufacturer Manufacturer { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "FirstLevelCategory", Order = 2)]
+        /// <summary>
+        /// jelleg1
+        /// </summary>
         public Category FirstLevelCategory { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "SecondLevelCategory", Order = 3)]
+        /// <summary>
+        /// jelleg2
+        /// </summary>
         public Category SecondLevelCategory { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ThirdLevelCategory", Order = 4)]
+        /// <summary>
+        /// jelleg3
+        /// </summary>
         public Category ThirdLevelCategory { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ProductId", Order = 5)]
+        /// <summary>
+        /// termékazonosító
+        /// </summary>
         public string ProductId { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "PartNumber", Order = 6)]
+        /// <summary>
+        /// cikkszám
+        /// </summary>
         public string PartNumber { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ItemName", Order = 7)]
+        /// <summary>
+        /// cikk neve
+        /// </summary>
         public string ItemName { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ItemNameEnglish", Order = 8)]
+        /// <summary>
+        /// cikk neve angolul
+        /// </summary>
         public string ItemNameEnglish { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "InnerStock", Order = 9)]
-        public int InnerStock { get; set; }
+        /// <summary>
+        /// készlet
+        /// </summary>
+        public int Stock { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "OuterStock", Order = 10)]
-        public int OuterStock { get; set; }
-
-        //[System.Runtime.Serialization.DataMember(Name = "Price", Order = 11)]
+        /// <summary>
+        /// termék ára
+        /// </summary>
         public string Price { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Currency", Order = 12)]
+        /// <summary>
+        /// pénznem
+        /// </summary>
         public string Currency { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "GarantyTime", Order = 13)]
+        /// <summary>
+        /// garancia ideje
+        /// </summary>
         public string GarantyTime { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "GarantyMode", Order = 14)]
+        /// <summary>
+        /// garancia módja 
+        /// </summary>
         public string GarantyMode { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ShippingDate", Order = 15)]
+        /// <summary>
+        /// várhetó szállítás időpontja
+        /// </summary>
         public string ShippingDate { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "EndOfSales", Order = 16)]
+        /// <summary>
+        /// kifutó
+        /// </summary>
         public bool EndOfSales { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "New", Order = 17)]
+        /// <summary>
+        /// új
+        /// </summary>
         public bool New { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Discount", Order = 18)]
+        /// <summary>
+        /// akciós
+        /// </summary>
         public bool Discount { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "IsInNewsletter", Order = 19)]
+        /// <summary>
+        /// hírlevélben van-e a termék?
+        /// </summary>
         public bool IsInNewsletter { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "IsInCart", Order = 20)]
+        /// <summary>
+        /// kosárban van-e a termék
+        /// </summary>
         public bool IsInCart { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Comparable", Order = 21)]
+        /// <summary>
+        /// összehasonlítható-e a termék
+        /// </summary>
         public bool Comparable { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "CannotCancel", Order = 22)]
         //public bool CannotCancel { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "PrimaryPicture", Order = 23)]
+        /// <summary>
+        /// elsődleges termékazonosító
+        /// </summary>
         public int PictureId { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Pictures", Order = 24)]
-        //public Pictures Pictures { get; set; }
+        /// <summary>
+        /// Képeket tartalmazó lista (csak a termék adatlap lekérdezésekor tartalmaz elemeket)
+        /// </summary>
+        public Pictures Pictures { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "Description", Order = 25)]
+        /// <summary>
+        /// termékleírás
+        /// </summary>
         public string Description { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "DescriptionEnglish", Order = 26)]
+        /// <summary>
+        /// angol termékleírás
+        /// </summary>
         public string DescriptionEnglish { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "ProductManager", Order = 27)]
         //public CompanyGroup.Dto.PartnerModule.ProductManager ProductManager { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "DataAreaId", Order = 28)]
+        /// <summary>
+        /// vállalatkód (ahonnan a terméket meg lehet vásárolni)
+        /// </summary>
         public string DataAreaId { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "IsInStock", Order = 29)]
+        /// <summary>
+        /// készleten van-e
+        /// </summary>
         public bool IsInStock { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "SequenceNumber", Order = 30)]
         //public int SequenceNumber { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "PurchaseInProgress", Order = 31)]
+        /// <summary>
+        /// beszerzési rendelés folyamatban
+        /// </summary>
         public bool PurchaseInProgress { get; set; }
 
-        //[System.Runtime.Serialization.DataMember(Name = "SecondHandList", Order = 32)]
+        /// <summary>
+        /// használt lista
+        /// </summary>
         public SecondHandList SecondHandList { get; set; }
 
         /// <summary>

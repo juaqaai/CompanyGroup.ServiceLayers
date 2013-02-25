@@ -36,6 +36,9 @@ namespace CompanyGroup.Domain.Core
         public const string OuterStockHrp = "KULSO";
         public const string OuterStockBsc = "1000";
 
+        public const string SecondhandStoreBsc = "2100";
+        public const string SecondhandStoreHrp = "HASZNALT";
+
         public const string StockSerbia = "SER";
 
         public const string CompanyBasePhoneNumber = "+36 1 452 4600";

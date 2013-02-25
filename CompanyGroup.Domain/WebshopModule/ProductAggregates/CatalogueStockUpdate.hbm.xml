@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.CatalogueStockUpdate" callable="true">
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="Stock" type="System.Int32"/>
+    <return-scalar column="Ret" type="System.Int32"/>
+    exec InternetUser.CatalogueStockUpdate @DataAreaId=:DataAreaId, @ProductId=:ProductId, @Stock=:Stock
+  </sql-query>
+</hibernate-mapping>

@@ -1,0 +1,473 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+		<!-- [if IE]>
+        <meta http-equiv="imagetoolbar" content="no" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<![endif]-->
+
+		<meta name="viewport" content="width=device-width" />
+
+        @Styles.Render("~/Content/css")
+
+        @Scripts.Render("~/bundles/head")
+        @Scripts.Render("~/bundles/modernizr")
+		
+
+
+        @RenderSection("ScriptsInHead", required: false)
+    </head>
+    <body>
+    <a name="top" id="top"></a>
+    <div class="aside-1" id="layout-wrapper">
+		<header id="layout-header" class="group">
+			<div id="header">
+				<div class="zone zone-header"></div>
+			</div>
+		</header>
+        <!-- alsó felnyíló panel div -->
+@*		<div id="bottom_button_open">
+			<div id="cus_bottom_content_on">
+				<div id="openclose_button"><img style="border-style:none;" src="/Cms/Media/images/openclose.png" alt=""/>
+				</div>
+				<table align="center" width="970" border="0" cellspacing="1" cellpadding="2">
+					<tr>
+						<td width="290" nowrap="nowrap" ><strong>###<span style="color:#900;">###</span></strong></td>
+						<td width="290" nowrap="nowrap" ><strong>###</strong></td>
+						<td width="290" nowrap="nowrap" ><strong>###</strong></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="cus_bottom_panel_on"></div>*@
+		<!-- *** alsó felnyíló panel div vége *** -->
+		<div id="cus_header1"></div>
+        <div id="cus_background"></div>
+
+        <script id="visitorInfoTemplate" type="text/html">
+			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="100%">
+                    {{#IsValidLogin}}
+                        <span>Bejelentkezve:</span> 
+                        <strong><span>{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
+                        <span>Képviselő:</span>
+                        <strong><span>{{Representative.Name}}</span></strong> 
+                        <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>
+                        <strong><span>{{Representative.Phone}}</span></strong>
+                        <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
+                    {{/IsValidLogin}}
+                    {{^IsValidLogin}}
+                        <img style="border-style:none;" src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
+                    {{/IsValidLogin}}
+                    </td>
+					<td nowrap="nowrap">&nbsp;</td>
+					<!--<td nowrap="nowrap">Nyelv&nbsp;</td-->
+					<td nowrap="nowrap">
+                        <!--<strong><a href="#/changeLanguage/{{InverseLanguageId}}"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{InverseLanguageId}}</span></a></strong-->
+                        {{#IsValidLogin}}
+                            Pénznem <strong><a href="#/changeCurrency/HUF">
+                            {{#CurrencyIsHuf}}
+                            <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
+                            {{/CurrencyIsHuf}}
+                            {{^CurrencyIsHuf}}
+                            <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span>
+                            {{/CurrencyIsHuf}}
+                            </a></strong>
+                            <strong><a href="#/changeCurrency/EUR">
+                            {{#CurrencyIsEur}}
+                            <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px;">EUR</span>
+                            {{/CurrencyIsEur}}
+                            {{^CurrencyIsEur}}
+                            <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span>
+                            {{/CurrencyIsEur}}
+                            </a></strong><strong><a href="#/changeCurrency/USD">
+                            {{#CurrencyIsUsd}}
+                            <span id="currency_usd" style="background: #900; padding: 2px;">USD</span>
+                            {{/CurrencyIsUsd}}
+                            {{^CurrencyIsUsd}}
+                            <span id="currency_usd" style="background: #666; padding: 2px;">USD</span>
+                            {{/CurrencyIsUsd}}
+                            </a></strong>
+                        {{/IsValidLogin}}
+                    </td>
+				</tr>
+			</table>
+        </script>
+
+		</div>
+        <div id="cus_header2"></div>
+		<div id="cus_content_container">
+			<div id="cus_header_navigation_b">
+			<table border="0" cellspacing="0" cellpadding="4">
+					<tr id="cus_header_navigation_b_table">
+						
+						<td id="usermenuContainer">
+						</td>
+                        <script id="usermenuTemplate" type="text/html">
+                        {{#IsValidLogin}}
+                        <ul id="usermenu">
+							<li>
+								<div id="cus_usermenu_text">
+									Adatkezelő
+								</div>
+								<ul>
+									<li>
+										<a href="@Url.Content("~/Registration/")">Adatlap / módosítás</a>
+									</li>
+									<li>
+										<a href="@Url.Content("~/PartnerInfo/#/invoiceinfo/1")">Számlák</a>
+									</li>
+									<li>
+										<a href="@Url.Content("~/PartnerInfo/#/salesorderinfo")">Megrendelések</a>
+									</li>
+									<li>
+										<a href="@Url.Content("~/PartnerInfo/ForgetPassword")">Jelszó módosítás</a>
+									</li>
+									<li>
+										<a href="@Url.Content("~/PartnerInfo/")">Egyéb</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+                        {{/IsValidLogin}}
+                        </script>
+						<td >
+                            <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
+                            <div class="inputwrapper">
+							<select class="select1">
+  							<option value="#">Név vagy cikkszám</option>
+							</select> 
+                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
+                            <input type="submit" value="" class="imgClass" />
+                            </div>
+                            </form>
+						</td>
+					</tr>
+				</table>
+	
+			</div>
+			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>
+        	    <a title="" id="top-link">Top of Page</a>
+			    <div id="cus_ax_nav">
+					 <ul id="menu-bar">
+					    <li>
+						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
+					    </li>
+			    <li id="becomePartnerContainer1">
+                        </li>
+					    <li>
+						    <a href="@Url.Content("~/Company/Index")">Céginformáció</a>
+							<ul>
+							    <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Contact")">Elérhetőségünk</a> 
+							    </li>
+								<li>
+								   <a href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
+							    </li>
+						    </ul>
+					    </li> 
+						<li id="becomePartnerContainer">
+					    </li>
+						
+						 <li>
+						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
+					    </li>
+					    <li>
+						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
+					    </li>
+				    </ul>
+					<script id="becomePartnerTemplate" type="text/html">
+					{{#IsValidLogin}}
+					{{/IsValidLogin}}
+						   {{^IsValidLogin}} <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>{{/IsValidLogin}}
+						   </script>
+                    <script id="becomePartnerTemplateNews" type="text/html">
+					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
+				    {{^IsValidLogin}}
+                    {{/IsValidLogin}}
+						   </script>
+			    </div>
+			</div>
+			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
+			<div id="cus_catalogue_container">
+                @* cms Featured
+				<div id="layout-featured" class="group">
+					Featured
+				</div>*@
+                @*cms BeforeMain
+				<div id="layout-before-main" class="group">
+					BeforeMain
+				</div>*@
+
+				<div id="layout-main-container">
+					<div id="layout-main" class="group">
+                        @RenderBody()
+					</div>
+				</div>
+
+				<div id="layout-after-main" class="group">
+					@*cms AfterMain*@
+					<table id="cus_copyright" border="0" cellpadding="0" cellspacing="0" width="990" align="center">
+						<tbody>
+							<tr>
+								<td class="cus_copyright_table_small_text" colspan="2" align="center"><a href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a> &bull; 
+                                                                                                      <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+                @*cms Tripel
+				<div id="layout-tripel-container">
+					<div id="layout-tripel" class="group">
+						<div id="tripel-first">
+							Tripel
+						</div>
+						<div id="tripel-second">
+							Tripel
+						</div>
+						<div id="tripel-third">
+							Tripel
+						</div>
+					</div>
+				</div>*@
+
+				<div id="layout-footer" class="group">
+					<footer id="footer">
+@*                        cms FooterQuad
+						<div id="footer-quad" class="group">
+                            <div id="footer-quad-first">
+								FooterQuadFirst
+							</div>
+                            <div id="footer-quad-second">
+								FooterQuadSecond
+							</div>
+							<div id="footer-quad-third">
+								FooterQuadThird
+							</div>
+							<div id="footer-quad-fourth">
+								FooterQuadFourth
+							</div>
+						</div>*@
+						<div id="footer-sig" class="group">
+							<div class="zone zone-footer">   
+                                <div class="user-display">
+                                    <span class="user-actions"></span>
+                                </div>
+                            </div>
+						</div>
+					</footer>
+				</div>
+			</div>
+			<!-- Kosár impor ablak -->
+			<div style="display: none;">
+                <div id="import_basket_list_win">
+				<form id="basketlist_import" name="basketlist_import" enctype="multipart/form-data" method="post" action="#/importShoppingCart">
+				  <strong>Lista fájl importálása kosárba</strong><br /><br />
+				  <table border="0" cellspacing="3" cellpadding="10">
+				    <tr>
+				      <td>Fájl kiválasztása</td>
+				      <td><input type="file" name="import_basket_file" id="import_basket_file" /></td>
+				    </tr>
+				    <tr>
+				      <td>Kosár elnevezése</td>
+				      <td><input type="text" size="32" name="import_basket_name" id="import_basket_name" disabled="disabled" /></td>
+				    </tr>
+				    <tr>
+				      <td>&nbsp;</td>
+				      <td><input type="submit" name="button" id="button" value="Feltöltés indítása" /></td>
+				    </tr>
+				  </table>
+				</form>
+			    </div>
+			</div>
+
+			<!-- új telephely hozzáadása ablak -->
+			<div style="display: none;">
+                <div id="add_new_site">
+				    <form id="form_add_site" action="#/addSite" enctype="multipart/form-data" method="post" >
+				      <strong>Telephely hozzáadása</strong><br /><br />
+                      <div id="add_site_errors"></div>
+				      <table border="0" cellspacing="3" cellpadding="10">
+				        <tr>
+				          <td>Irányítószám</td>
+				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_zipcode" />
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az irányítószám megadása kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>Ország</td>
+				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_country" />
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az ország megadása kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>Város</td>
+				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_city" />
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">A város megadása kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>Utca</td>
+				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_street" />
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">Az utca megadása kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>Házszám</td>
+				          <td><input type="text" size="32" name="txt_site_irsz" id="txt_site_house" />
+                          <label class="error" for="txt_site_irsz" style="display:none; color:#900;">A házszám megadása kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>&nbsp;</td>
+				          <td><input type="submit" value="Telephely mentése" /></td>
+				        </tr>
+				      </table>
+				    </form>
+			    </div>
+			</div>
+			
+			<!-- kosár mentése ablak -->
+			<div style="display: none;">
+                <div id="save_basket_win">
+				    <form id="form_savecart" enctype="multipart/form-data" method="post" action="#/saveShoppingCart">
+				      <strong>Kosár mentése</strong><br /><br />
+                      <div id="savecart_errors"></div>
+				      <table border="0" cellspacing="3" cellpadding="10">
+				        <tr>
+				          <td>Kosár elnevezése</td>
+				          <td><input type="text" size="32" name="txt_cartname" id="txt_cartname" />
+                          <label class="error" for="txt_cartname" style="display:none; color:#900;">A kosárnév kitöltése kötelező</label>
+                          </td>
+				        </tr>
+				        <tr>
+				          <td>&nbsp;</td>
+				          <td><input type="submit" value="Kosár mentése" /></td>
+				        </tr>
+				      </table>
+				    </form>
+			    </div>
+			</div>
+			
+			<!-- bejelentkezés ablak -->
+			<div style="display: none;">
+				<div id="div_login">
+                    <form action="#/signin" id="form_login" method="post"> 
+                        <H2>Bejelentkezés</H2>
+                        <br />
+                        Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni.
+                        <br />
+                        <br />
+
+                        <div id="login-box-name" style="margin-top:20px;"><strong>Felhasználónév:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_username" class="form-login" title="Username" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></div>
+
+                        <div id="login-box-name"><strong>Jelszó:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></div>
+                        <p><br />
+                          <span class="login-box-options">
+                          <input type="checkbox" name="1" value="1">
+                            Emlékezzen rám
+                          <a href="#/forgetPassword" style="margin-left:30px;">Elfelejtett jelszó?</a></span>
+                          <br />
+                          <br />
+                          <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
+                        <br />
+                        <p>Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#084385; text-decoration: none;"><strong>Regisztráljon!</strong></a></p>
+                        <div id="login_errors"></div>
+                        @Html.AntiForgeryToken() 
+                        </form>	
+                </div>
+
+            </div>
+
+    <script type="text/javascript">
+        head.js('@Scripts.Url("~/bundles/jquery")', function() {
+            head.js('@Scripts.Url("~/bundles/jqueryui")')
+                //.js('@Scripts.Url("~/bundles/jqueryval")')
+                .js('@Scripts.Url("~/bundles/chosen")')
+                .js('@Scripts.Url("~/bundles/fileupload")')
+                .js('@Scripts.Url("~/bundles/floatingmessage")')
+                .js('@Scripts.Url("~/bundles/fancybox")')
+                //.js('@Scripts.Url("~/bundles/json2")')
+                .js('@Scripts.Url("~/bundles/tmpl")')
+                //.js('@Scripts.Url("~/bundles/vegas")')
+                .js('@Scripts.Url("~/bundles/mustache")')
+//                .js('@Scripts.Url("~/bundles/amplify")')
+                //.js('@Scripts.Url("~/bundles/smarttab")')
+                .js('@Scripts.Url("~/bundles/scrollto")')
+				.js('@Scripts.Url("~/bundles/toastr")')
+				.js('@Scripts.Url("~/bundles/prettynumber")')
+				.js('@Scripts.Url("~/bundles/skinner")');
+						              
+
+            @RenderSection("ScriptFiles", false)
+        });
+
+        head.ready(function() {
+
+            companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
+            companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
+
+
+
+            $('#preloader').ajaxStart(function () {
+                $('#preloader').show();
+            }).ajaxStop(function () {
+                $('#preloader').hide();
+            });
+			
+			$(function(){						
+			$('.select1').skinner({'type':'left'});				
+			});
+			
+
+            (function( $ ) {
+            var proto = $.ui.autocomplete.prototype,
+                initSource = proto._initSource;
+
+            function filter( array, term ) {
+                var matcher = new RegExp( $.ui.autocomplete.escapeRegex(term), "i" );
+                return $.grep( array, function(value) {
+                    return matcher.test( $( "<div>" ).html( value.label || value.value || value ).text() );
+                });
+            }
+
+            $.extend( proto, {
+                _initSource: function() {
+                    if ( this.options.html && $.isArray(this.options.source) ) {
+                        this.source = function( request, response ) {
+                            response( filter( this.options.source, request.term ) );
+                        };
+                    } else {
+                        initSource.call( this );
+                    }
+                },
+
+                _renderItem: function( ul, item) {
+                    return $( "<li></li>" )
+                        .data( "item.autocomplete", item )
+                        .append( $( "<a></a>" )[ this.options.html ? "html" : "text" ]( item.label ) )
+                        .appendTo( ul );
+                }
+            });
+            })( jQuery );		
+
+			@*Cufon.replace('p');*@
+            @RenderSection("ScriptOnReady", false)
+        }); 
+
+        @RenderSection("ScriptsInBottom", false)
+    </script>
+    </body>
+</html>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="WebLoader"
   DTS:PackageType="5"
-  DTS:VersionBuild="17"
-  DTS:VersionGUID="{49A52F61-464F-4D0F-91CE-BF2FED2E5244}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{C21C983E-1EAA-4AC4-95E1-F9B1B8049082}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables>
@@ -92,20 +92,20 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Web staging sequence container"
+      DTS:refId="Package\Web staging container"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
-      DTS:DTSID="{4A0DB068-859B-4B58-BC0B-A1C641A808C2}"
+      DTS:DTSID="{D97FA7CC-2C1B-4430-BE85-2FDFB2DDB30D}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Web staging sequence container">
+      DTS:ObjectName="Web staging container">
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
-          DTS:refId="Package\Web staging sequence container\Catalogue"
+          DTS:refId="Package\Web staging container\Catalogue"
           DTS:CreationName="SSIS.ExecutePackageTask.3"
           DTS:Description="Execute Package Task"
-          DTS:DTSID="{675280A5-0F6E-4A88-A967-66EA4C36EDAA}"
+          DTS:DTSID="{3b667b9d-a603-4cb9-883d-d57da4baa65e}"
           DTS:ExecutableType="SSIS.ExecutePackageTask.3"
           DTS:LocaleID="-1"
           DTS:ObjectName="Catalogue"
@@ -122,6 +122,18 @@
             </ExecutePackageTask>
           </DTS:ObjectData>
         </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Web staging sequence container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{4A0DB068-859B-4B58-BC0B-A1C641A808C2}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Web staging sequence container">
+      <DTS:Variables />
+      <DTS:Executables>
         <DTS:Executable
           DTS:refId="Package\Web staging sequence container\Compatibility"
           DTS:CreationName="SSIS.ExecutePackageTask.3"
@@ -147,6 +159,7 @@
           DTS:refId="Package\Web staging sequence container\Invoice"
           DTS:CreationName="SSIS.ExecutePackageTask.3"
           DTS:Description="Execute Package Task"
+          DTS:Disabled="True"
           DTS:DTSID="{7a1edd6b-cfb2-440c-a638-77c635fc9e96}"
           DTS:ExecutableType="SSIS.ExecutePackageTask.3"
           DTS:LocaleID="-1"
@@ -234,11 +247,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{673B9378-4852-45A8-9C6A-A6B83B78E063}"
+      DTS:DTSID="{D1235B06-D026-439E-9118-05CFA2743329}"
       DTS:From="Package\JobLog start"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Web staging sequence container" />
+      DTS:To="Package\Web staging container" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
@@ -247,6 +260,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\JobLog close" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{23929769-8AA8-4A81-9314-D100F3908644}"
+      DTS:From="Package\Web staging container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Web staging sequence container" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
     <DTS:EventHandler
@@ -326,25 +347,36 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="140,51"
+          Size="140,59"
           Id="Package\JobLog close"
-          TopLeft="249,570" />
+          TopLeft="233,731" />
         <NodeLayout
           Size="138,42"
           Id="Package\JobLog start"
-          TopLeft="139,46" />
+          TopLeft="241,50" />
         <NodeLayout
           Size="127,42"
-          Id="Package\Web staging sequence container\Catalogue"
-          TopLeft="35,17" />
+          Id="Package\Web staging container\Catalogue"
+          TopLeft="38,21" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="527,105"
+          Size="527,148"
+          Id="Package\Web staging container"
+          TopLeft="48,201" />
         <NodeLayout
           Size="156,42"
           Id="Package\Web staging sequence container\Compatibility"
           TopLeft="204,97" />
         <NodeLayout
+          Size="156,42"
+          Id="Package\Web staging sequence container\Invoice"
+          TopLeft="374,96" />
+        <NodeLayout
           Size="135,42"
           Id="Package\Web staging sequence container\Picture"
-          TopLeft="185,22" />
+          TopLeft="39,17" />
         <NodeLayout
           Size="158,42"
           Id="Package\Web staging sequence container\Representative"
@@ -352,44 +384,28 @@
         <NodeLayout
           Size="139,42"
           Id="Package\Web staging sequence container\SecondHand"
-          TopLeft="355,20" />
-        <NodeLayout
-          Size="156,42"
-          Id="Package\Web staging sequence container\Invoice"
-          TopLeft="374,96" />
+          TopLeft="384,21" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="556,307"
-          Size="556,350"
+          PanelSize="551,194"
+          Size="551,237"
           Id="Package\Web staging sequence container"
-          TopLeft="47,161" />
+          TopLeft="33,428" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="208,88">
+          TopLeft="310.75,92">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="117,73"
+              EndConnector="0,109"
               Start="0,0"
-              End="117,65.5">
+              End="0,101.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,32.5"
-                    Point2="0,36.5"
-                    Point3="4,36.5" />
-                  <mssgle:LineSegment
-                    End="113,36.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="113,36.5"
-                    Point2="117,36.5"
-                    Point3="117,40.5" />
-                  <mssgle:LineSegment
-                    End="117,65.5" />
+                    End="0,101.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -400,18 +416,40 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="322,511">
+          TopLeft="305.75,665">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,59"
+              EndConnector="0,66"
               Start="0,0"
-              End="0,51.5">
+              End="0,58.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,51.5" />
+                    End="0,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="310,349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79"
+              Start="0,0"
+              End="0,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -426,14 +464,14 @@
           FontInfo="{assembly:Null}"
           Size="177,138"
           Id="ab428f44-598b-4479-8707-e43f5e14cce5"
-          TopLeft="389,26" />
+          TopLeft="477,34" />
         <AnnotationLayout
           Text="[dbo].[usp_JobLog_Close] &#xA;input: @JobLogKey INT&#xA;output:"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="167,74"
           Id="2e1ca605-6266-46e5-b3a2-24a1cd7fe615"
-          TopLeft="455,532" />
+          TopLeft="446,731" />
       </GraphLayout>
     </LayoutInfo>
   </Package>

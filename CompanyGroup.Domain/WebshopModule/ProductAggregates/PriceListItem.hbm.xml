@@ -34,8 +34,7 @@
     <return-scalar column="Category3Id" type="System.String"/>
     <return-scalar column="Category3Name" type="System.String"/>
     <return-scalar column="Category3EnglishName" type="System.String"/>
-    <return-scalar column="InnerStock" type="System.Int32"/>
-    <return-scalar column="OuterStock" type="System.Int32"/>
+    <return-scalar column="Stock" type="System.Int32"/>
     <return-scalar column="AverageInventory" type="System.Int32"/>
     <return-scalar column="Price1" type="System.Int32"/>
     <return-scalar column="Price2" type="System.Int32"/>

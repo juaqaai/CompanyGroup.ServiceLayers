@@ -833,6 +833,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
 
+            bool isValidated = false;
+
             try
             {
                 //látogató kiolvasása
@@ -844,6 +846,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCartToAdd = shoppingCartRepository.GetShoppingCart(request.CartId);
 
                 Helpers.DesignByContract.Require((shoppingCartToAdd != null), "ShoppinCart cannot be null!");
+
+                if (shoppingCartToAdd.Items.Count.Equals(0) || shoppingCartToAdd.Items[0] == null)
+                {
+                    response.Message = "A rendelés nem teljesíthető, mert nincs a kosárban termék!";
+
+                    response.IsValidated = isValidated;
+
+                    return response;
+                }
 
                 List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddressList = customerRepository.GetDeliveryAddress(visitor.CustomerId, visitor.DataAreaId);
 
@@ -918,6 +929,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
                 );
 
+                #region "HRP - BSC rendelés feladása"
+
                 int year = request.DeliveryDate.Year == 1 ? DateTime.Now.Year : request.DeliveryDate.Year;
 
                 int month = request.DeliveryDate.Month == 1 ? DateTime.Now.Month : request.DeliveryDate.Month;
@@ -943,7 +956,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
-                        InventLocationId = request.DeliveryRequest ? CompanyGroup.Domain.Core.Constants.OuterStockHrp : CompanyGroup.Domain.Core.Constants.OuterStockHrp,
+                        InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockHrp,
                         Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
@@ -969,7 +982,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     {
                         ContactPersonId = visitor.PersonId,
                         CustomerId = visitor.CustomerId,
-                        DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
+                        DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc, //visitor.DataAreaId
                         DeliveryCity = deliveryAddress.City,
                         DeliveryCompanyName = "",
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
@@ -979,7 +992,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
-                        InventLocationId = request.DeliveryRequest ? CompanyGroup.Domain.Core.Constants.OuterStockBsc : CompanyGroup.Domain.Core.Constants.InnerStockBsc,
+                        InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockBsc,
                         Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
@@ -995,6 +1008,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     //összeállított rendelés elküldése AX-be
                     salesOrderCreateResultBsc = salesOrderRepository.Create(salesOrderCreate);
                 }
+
+                #endregion
+
+                //ha volt mit rendelni
+                isValidated = salesOrderLineCreateRequest.Count > 0;
 
                 //TODO:   
                 CompanyGroup.Domain.WebshopModule.Shipping shipping = new CompanyGroup.Domain.WebshopModule.Shipping() 
@@ -1040,17 +1058,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
-                response = new CompanyGroup.Dto.WebshopModule.OrderFulFillment()
-                {
-                    ActiveCart = new ShoppingCartToShoppingCart().Map(shoppingCart),
-                    OpenedItems = storedOpenedShoppingCarts.OpenedItems,
-                    StoredItems = storedOpenedShoppingCarts.StoredItems,
-                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                    Created = true,
-                    WaitForAutoPost = true,
-                    Message = String.Format( "HRP {0}  BSC {1}", (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.Message : "", (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.Message : "" ),
-                    LineMessages = new List<string>()
-                };
+                response.ActiveCart = new ShoppingCartToShoppingCart().Map(shoppingCart);
+                response.OpenedItems = storedOpenedShoppingCarts.OpenedItems;
+                response.StoredItems = storedOpenedShoppingCarts.StoredItems;
+                response.LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions);
+                response.Created = true;
+                response.WaitForAutoPost = false;
+                response.Message = String.Format( "HRP {0}  BSC {1}", (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.Message : "", (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.Message : "" );
+                response.IsValidated = (salesOrderCreateResultHrp != null) || (salesOrderCreateResultBsc != null);
 
                 return response;
             }

@@ -16,8 +16,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 CompanyGroup.Dto.WebshopModule.Pictures result = new CompanyGroup.Dto.WebshopModule.Pictures();
 
-                result.Items = new List<CompanyGroup.Dto.WebshopModule.Picture>();
-
                 result.Items.AddRange(pictures.ConvertAll(x => new PictureToPicture().Map(x)));
 
                 return result;

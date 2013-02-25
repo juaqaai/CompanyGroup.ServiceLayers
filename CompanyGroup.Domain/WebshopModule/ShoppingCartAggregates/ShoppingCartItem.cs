@@ -33,7 +33,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.CustomerPrice = 0;
 
-            this.Stock = new Stock(0, 0);
+            this.Stock = 0;
 
             this.ItemState = ItemState.Active;
 
@@ -99,7 +99,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// készlet - hrp, bsc, külső, belső
         /// </summary>
-        public Stock Stock { get; set; }
+        public int Stock { get; set; }
 
         /// <summary>
         /// cikk státusza (aktív, passzív, kifutó)
@@ -175,7 +175,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.CustomerPrice = secondHand.Price;
 
-            this.Stock = new WebshopModule.Stock();         // secondHand.Quantity;
+            this.Stock = 0;         // secondHand.Quantity;
 
             this.ItemState = itemState;
 
@@ -188,14 +188,23 @@ namespace CompanyGroup.Domain.WebshopModule
             this.Quantity = 1;          
         }
 
-        ///// <summary>
-        ///// készleten van-e?
-        ///// </summary>
+        /// <summary>
+        /// használt konfigon van-e a cikk?
+        /// </summary>
+        public bool IsInSecondHand
+        {
+            get { return (this.ConfigId.ToUpper().StartsWith("XX")) && (this.InventLocationId.Equals(CompanyGroup.Domain.Core.Constants.SecondhandStoreBsc) || 
+                                                                        this.InventLocationId.Equals(CompanyGroup.Domain.Core.Constants.SecondhandStoreHrp)); }
+        }
+
+        /// <summary>
+        /// készleten van-e?
+        /// </summary>
         public bool IsInStock
         {
             get
             {
-                return (this.Stock.Inner + this.Stock.Outer > 0);
+                return (this.Stock > 0);
             }
         }
 

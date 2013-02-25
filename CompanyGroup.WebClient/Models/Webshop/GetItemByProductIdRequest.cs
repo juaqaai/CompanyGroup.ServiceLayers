@@ -5,6 +5,9 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
+    /// <summary>
+    /// termékelem lekérdezése termékazonosító és vállalatkód alapján
+    /// </summary>
     public class GetItemByProductIdRequest
     {
         public GetItemByProductIdRequest() : this("", "") { }

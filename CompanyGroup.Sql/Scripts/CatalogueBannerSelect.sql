@@ -65,7 +65,7 @@ SET NOCOUNT ON
 		   Category1Id, Category1Name, Category1EnglishName, 
 		   Category2Id, Category2Name, Category2EnglishName, 
 		   Category3Id, Category3Name, Category3EnglishName,
-		   InnerStock, OuterStock, 
+		   Stock, 
 		   Price1, Price2, Price3, Price4, Price5, 
 		   PictureId, Picture.[FileName], Picture.[Primary], Picture.RecId
 	FROM InternetUser.Catalogue as Catalogue
@@ -75,10 +75,10 @@ SET NOCOUNT ON
 	      (Catalogue.Category2Id IN (SELECT SUBSTRING(@Category2, C2i, COALESCE(NULLIF(C2j, 0), LEN(@Category2) + 1) - C2i) FROM Category2_CTE) OR (@Category2 = '')) AND
 		  (Catalogue.Category3Id IN (SELECT SUBSTRING(@Category3, C3i, COALESCE(NULLIF(C3j, 0), LEN(@Category3) + 1) - C3i) FROM Category3_CTE) OR (@Category3 = '')) AND
 		Catalogue.Valid = 1 AND
-		1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
+		1 = CASE WHEN ItemState = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND 
 		DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
 		PictureId > 0 AND 
-		( InnerStock + OuterStock ) > 0
+		Stock > 0
 	ORDER BY Discount DESC, AverageInventory DESC;
 			
 RETURN

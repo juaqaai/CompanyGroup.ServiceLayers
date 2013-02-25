@@ -203,5 +203,13 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="dataAreaId"></param>
         /// <param name="productId"></param>
         void AddCatalogueDetailsLog(string visitorId, string customerId, string personId, string dataAreaId, string productId);
+
+        /// <summary>
+        /// készlet darabszám befrissítése   
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <param name="productId"></param>
+        /// <param name="stock"></param>
+        void StockUpdate(string dataAreaId, string productId, int stock);
     }
 }

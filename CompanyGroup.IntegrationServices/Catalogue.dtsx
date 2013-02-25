@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Catalogue"
   DTS:PackageType="5"
-  DTS:VersionBuild="49"
-  DTS:VersionGUID="{3127A953-1956-46A0-9BD6-AADF7DE79ACB}">
+  DTS:VersionBuild="53"
+  DTS:VersionGUID="{536A9ADF-ABA0-4186-B4F9-EE71D7642EE8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -91,6 +91,26 @@
                   refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input]"
                   description="Input to the Derived Column Transformation"
                   name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Name"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[PartNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PartNumber"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[ProductId]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="ProductId"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]" />
+                  </inputColumns>
                   <externalMetadataColumns />
                 </input>
               </inputs>
@@ -144,6 +164,51 @@
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
                           name="FriendlyExpression">@[User::PackageLogKey]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="126"
+                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]"
+                      name="SearchContent"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]} + " | " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]} + " | " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Name + " | " + PartNumber + " | " + ProductId</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]"
+                      name="Sequence"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">0</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -396,12 +461,6 @@
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GarantyMode]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[GarantyMode]" />
                     <inputColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InnerStock]"
-                      cachedDataType="i4"
-                      cachedName="InnerStock"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InnerStock]"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]" />
-                    <inputColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemState]"
                       cachedDataType="i4"
                       cachedName="ItemState"
@@ -434,12 +493,6 @@
                       cachedName="New"
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[New]" />
-                    <inputColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OuterStock]"
-                      cachedDataType="i4"
-                      cachedName="OuterStock"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OuterStock]"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]" />
                     <inputColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PackageLogKey]"
                       cachedDataType="i4"
@@ -533,6 +586,25 @@
                       cachedName="Valid"
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Valid]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
+                      cachedDataType="i4"
+                      cachedName="Sequence"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SearchContent]"
+                      cachedDataType="wstr"
+                      cachedLength="126"
+                      cachedName="SearchContent"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
+                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Stock]"
+                      cachedDataType="i4"
+                      cachedName="Stock"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -636,14 +708,6 @@
                       length="80"
                       name="Category3EnglishName" />
                     <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InnerStock]"
-                      dataType="i4"
-                      name="InnerStock" />
-                    <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OuterStock]"
-                      dataType="i4"
-                      name="OuterStock" />
-                    <externalMetadataColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AverageInventory]"
                       dataType="i4"
                       name="AverageInventory" />
@@ -742,6 +806,14 @@
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
                       dataType="i4"
                       name="Sequence0" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
+                      dataType="nText"
+                      name="SearchContent" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      dataType="i4"
+                      name="Stock" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1002,24 +1074,6 @@
                       name="Category3EnglishName"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InnerStock]"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]"
-                      name="InnerStock"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OuterStock]"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]"
-                      name="OuterStock"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[AverageInventory]"
                       dataType="i4"
                       errorOrTruncationOperation="Conversion"
@@ -1232,6 +1286,15 @@
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[AxStructCode]"
                       name="AxStructCode"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                      name="Stock"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1320,14 +1383,6 @@
                       dataType="wstr"
                       length="80"
                       name="Category3EnglishName" />
-                    <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InnerStock]"
-                      dataType="i4"
-                      name="InnerStock" />
-                    <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OuterStock]"
-                      dataType="i4"
-                      name="OuterStock" />
                     <externalMetadataColumn
                       refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AverageInventory]"
                       dataType="i4"
@@ -1426,6 +1481,10 @@
                       dataType="wstr"
                       length="16"
                       name="AxStructCode" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                      dataType="i4"
+                      name="Stock" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1548,15 +1607,10 @@
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category3EnglishName]"
                       name="Category3EnglishName" />
                     <outputColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InnerStock]"
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
                       dataType="i4"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InnerStock]"
-                      name="InnerStock" />
-                    <outputColumn
-                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OuterStock]"
-                      dataType="i4"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OuterStock]"
-                      name="OuterStock" />
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
+                      name="Stock" />
                     <outputColumn
                       refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AverageInventory]"
                       dataType="i4"
@@ -1838,6 +1892,26 @@
                   refId="Package\Secondhand catalogue extract\Derived Column.Inputs[Derived Column Input]"
                   description="Input to the Derived Column Transformation"
                   name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Name"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[PartNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PartNumber"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[ProductId]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="ProductId"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]" />
+                  </inputColumns>
                   <externalMetadataColumns />
                 </input>
               </inputs>
@@ -1891,6 +1965,51 @@
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
                           name="FriendlyExpression">@[User::PackageLogKey]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="126"
+                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]"
+                      name="SearchContent"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]} + " | " + #{Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]} + " | " + #{Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Name + " | " + PartNumber + " | " + ProductId</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]"
+                      name="Sequence"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">0</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2143,12 +2262,6 @@
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GarantyMode]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[GarantyMode]" />
                     <inputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InnerStock]"
-                      cachedDataType="i4"
-                      cachedName="InnerStock"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InnerStock]"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]" />
-                    <inputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemState]"
                       cachedDataType="i4"
                       cachedName="ItemState"
@@ -2181,12 +2294,6 @@
                       cachedName="New"
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[New]" />
-                    <inputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OuterStock]"
-                      cachedDataType="i4"
-                      cachedName="OuterStock"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OuterStock]"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]" />
                     <inputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PackageLogKey]"
                       cachedDataType="i4"
@@ -2280,6 +2387,25 @@
                       cachedName="Valid"
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Valid]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
+                      cachedDataType="i4"
+                      cachedName="Sequence"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SearchContent]"
+                      cachedDataType="wstr"
+                      cachedLength="126"
+                      cachedName="SearchContent"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
+                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Stock]"
+                      cachedDataType="i4"
+                      cachedName="Stock"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2383,14 +2509,6 @@
                       length="80"
                       name="Category3EnglishName" />
                     <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InnerStock]"
-                      dataType="i4"
-                      name="InnerStock" />
-                    <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OuterStock]"
-                      dataType="i4"
-                      name="OuterStock" />
-                    <externalMetadataColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AverageInventory]"
                       dataType="i4"
                       name="AverageInventory" />
@@ -2489,6 +2607,14 @@
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
                       dataType="i4"
                       name="Sequence0" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
+                      dataType="nText"
+                      name="SearchContent" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      dataType="i4"
+                      name="Stock" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2749,24 +2875,6 @@
                       name="Category3EnglishName"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InnerStock]"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[InnerStock]"
-                      name="InnerStock"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OuterStock]"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[OuterStock]"
-                      name="OuterStock"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[AverageInventory]"
                       dataType="i4"
                       errorOrTruncationOperation="Conversion"
@@ -2979,6 +3087,15 @@
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[AxStructCode]"
                       name="AxStructCode"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                      name="Stock"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -3067,14 +3184,6 @@
                       dataType="wstr"
                       length="80"
                       name="Category3EnglishName" />
-                    <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InnerStock]"
-                      dataType="i4"
-                      name="InnerStock" />
-                    <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OuterStock]"
-                      dataType="i4"
-                      name="OuterStock" />
                     <externalMetadataColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AverageInventory]"
                       dataType="i4"
@@ -3173,6 +3282,10 @@
                       dataType="wstr"
                       length="16"
                       name="AxStructCode" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                      dataType="i4"
+                      name="Stock" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -3295,15 +3408,10 @@
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category3EnglishName]"
                       name="Category3EnglishName" />
                     <outputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InnerStock]"
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
                       dataType="i4"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InnerStock]"
-                      name="InnerStock" />
-                    <outputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OuterStock]"
-                      dataType="i4"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OuterStock]"
-                      name="OuterStock" />
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
+                      name="Stock" />
                     <outputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AverageInventory]"
                       dataType="i4"
@@ -3677,6 +3785,10 @@
           Size="170,42"
           Id="Package\Truncate table"
           TopLeft="247,214" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\UpdateCatalogueSequence"
+          TopLeft="216,510" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="230.333333333333,107">
@@ -3793,45 +3905,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <AnnotationLayout
-          Text="[dbo].[usp_PackageLogStart] &#xA;input:&#xA;@PackageName   NVARCHAR(255),&#xA;@InteractiveMode  BIT = 0,&#xA;@JobLogKey   INT = -1, &#xA;@ServerExecutionID BIGINT )&#xA;output:&#xA;@PackageLogKey AS PackageLogKey, &#xA;@RunDecision AS RunDecision;"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="233,170"
-          Id="be93a6b7-99b5-4996-87d6-6662586eaab2"
-          TopLeft="469,59" />
-        <AnnotationLayout
-          Text="[dbo].[usp_PackageLog_Close] &#xA;input: &#xA;@PackageLogKey INT, &#xA;@RowCount INT &#xA;output:"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="193,106"
-          Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
-          TopLeft="434,615" />
-        <AnnotationLayout
-          Text="EXEC [InternetUser].[SecondHandCatalogueExtract];"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="302,42"
-          Id="31cf1f0c-88e7-4580-b04a-6173fb489917"
-          TopLeft="461,397" />
-        <AnnotationLayout
-          Text="EXEC [InternetUser].[CatalogueExtract];"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="283,42"
-          Id="d9e5a58f-6c86-457e-a80f-7fd68cded854"
-          TopLeft="468,315" />
-        <AnnotationLayout
-          Text="EXEC  [InternetUser].[UpdateCatalogueSequence]"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="290,60"
-          Id="73a1e93f-8df5-432c-a2c1-d6e775fa52c9"
-          TopLeft="484,504" />
-        <NodeLayout
-          Size="206,42"
-          Id="Package\UpdateCatalogueSequence"
-          TopLeft="216,510" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="321,447">
@@ -3888,6 +3961,41 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <AnnotationLayout
+          Text="[dbo].[usp_PackageLogStart] &#xA;input:&#xA;@PackageName   NVARCHAR(255),&#xA;@InteractiveMode  BIT = 0,&#xA;@JobLogKey   INT = -1, &#xA;@ServerExecutionID BIGINT )&#xA;output:&#xA;@PackageLogKey AS PackageLogKey, &#xA;@RunDecision AS RunDecision;"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="233,170"
+          Id="be93a6b7-99b5-4996-87d6-6662586eaab2"
+          TopLeft="469,59" />
+        <AnnotationLayout
+          Text="[dbo].[usp_PackageLog_Close] &#xA;input: &#xA;@PackageLogKey INT, &#xA;@RowCount INT &#xA;output:"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="193,106"
+          Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
+          TopLeft="434,615" />
+        <AnnotationLayout
+          Text="EXEC [InternetUser].[SecondHandCatalogueExtract];"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="302,42"
+          Id="31cf1f0c-88e7-4580-b04a-6173fb489917"
+          TopLeft="461,397" />
+        <AnnotationLayout
+          Text="EXEC [InternetUser].[CatalogueExtract];"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="283,42"
+          Id="d9e5a58f-6c86-457e-a80f-7fd68cded854"
+          TopLeft="468,315" />
+        <AnnotationLayout
+          Text="EXEC  [InternetUser].[UpdateCatalogueSequence]"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="290,42"
+          Id="73a1e93f-8df5-432c-a2c1-d6e775fa52c9"
+          TopLeft="484,504" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -3916,21 +4024,43 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="160,42"
-          Id="Package\Catalogue extract\Row Count"
-          TopLeft="193,212" />
-        <NodeLayout
           Size="155,42"
           Id="Package\Catalogue extract\Derived Column"
           TopLeft="202,334" />
         <NodeLayout
-          Size="151,42"
-          Id="Package\Catalogue extract\OLE DB Source"
-          TopLeft="196,76" />
-        <NodeLayout
           Size="172,42"
           Id="Package\Catalogue extract\OLE DB Destination"
           TopLeft="192,458" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Catalogue extract\Row Count"
+          TopLeft="193,212" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Catalogue extract\OLE DB Source"
+          TopLeft="196,76" />
+        <EdgeLayout
+          Id="Package\Catalogue extract.Paths[OLE DB Source Output]"
+          TopLeft="272.25,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94"
+              Start="0,0"
+              End="0,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Catalogue extract.Paths[Derived Column Output]"
           TopLeft="278.75,376">
@@ -3975,8 +4105,53 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Catalogue extract\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Catalogue extract\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Secondhand catalogue extract">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Secondhand catalogue extract\Derived Column"
+          TopLeft="202,334" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Secondhand catalogue extract\OLE DB Destination"
+          TopLeft="192,458" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Secondhand catalogue extract\Row Count"
+          TopLeft="193,212" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Secondhand catalogue extract\OLE DB Source"
+          TopLeft="196,76" />
         <EdgeLayout
-          Id="Package\Catalogue extract.Paths[OLE DB Source Output]"
+          Id="Package\Secondhand catalogue extract.Paths[OLE DB Source Output]"
           TopLeft="272.25,118">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -3997,51 +4172,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Catalogue extract\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Catalogue extract\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Secondhand catalogue extract">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="160,42"
-          Id="Package\Secondhand catalogue extract\Row Count"
-          TopLeft="193,212" />
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Secondhand catalogue extract\Derived Column"
-          TopLeft="202,334" />
-        <NodeLayout
-          Size="151,42"
-          Id="Package\Secondhand catalogue extract\OLE DB Source"
-          TopLeft="196,76" />
-        <NodeLayout
-          Size="172,42"
-          Id="Package\Secondhand catalogue extract\OLE DB Destination"
-          TopLeft="192,458" />
         <EdgeLayout
           Id="Package\Secondhand catalogue extract.Paths[Derived Column Output]"
           TopLeft="278.75,376">
@@ -4086,33 +4216,11 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Secondhand catalogue extract.Paths[OLE DB Source Output]"
-          TopLeft="272.25,118">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,94"
-              Start="0,0"
-              End="0,86.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,86.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4120,7 +4228,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

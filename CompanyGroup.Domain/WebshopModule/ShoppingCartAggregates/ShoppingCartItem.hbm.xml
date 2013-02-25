@@ -17,10 +17,7 @@
     <property name="Quantity" />
     <property name="Status" />
     <property name="CreatedDate" />
-    <component name="Stock" class="Stock">
-      <property name="Inner" />
-      <property name="Outer" />
-    </component>    
+    <property name="Stock" /> 
   </class>
   <sql-query name="InternetUser.GetShoppingCartLine">
     <query-param name="LineId" type="System.Int32"/>

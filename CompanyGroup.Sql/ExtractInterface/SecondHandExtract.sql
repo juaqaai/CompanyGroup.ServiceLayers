@@ -23,30 +23,39 @@ AS
 SET NOCOUNT ON
 	-- XX konfiguráción HASZNALT, vagy 2100 raktárban lévõ termékek
 	;
-	WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
-	AS (
-		SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
+	--WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
+	--AS (
+	--	SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
+	--	FROM Axdb_20130131.dbo.ConfigTable as cfg 
+	--	INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+	--													cfg.dataAreaId = idim.dataAreaId AND 
+	--													cfg.ConfigId like 'xx%' AND 
+	--													idim.InventLocationId IN ('HASZNALT', '2100')
+	--	WHERE cfg.dataareaid IN ('bsc', 'hrp')
+	--), 
+	-- készletek, árral, konfigurációnként és cikkenként, elérhetõ mennyiségre aggregálva
+	WITH SecondHandStock_CTE(ConfigId, InventLocationId, ProductId, Quantity, Price, StatusDescription, DataAreaId) AS
+	(
+		--SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
+		--FROM XXConfig_CTE as c 
+		--INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
+		--INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+		--WHERE ins.Closed = 0 
+		--GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
+
+		SELECT cfg.ConfigId, idim.InventLocationId, cfg.ItemId, CONVERT(INT, ins.AvailPhysical), InternetUser.GetSecondHandPrice( cfg.DataAreaId, cfg.ItemId, cfg.ConfigId ), cfg.Name, cfg.dataAreaId
 		FROM Axdb_20130131.dbo.ConfigTable as cfg 
 		INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
-														cfg.dataAreaId = idim.dataAreaId AND 
-														cfg.ConfigId like 'xx%' AND 
-														idim.InventLocationId IN ('HASZNALT', '2100')
-		WHERE cfg.dataareaid IN ('bsc', 'hrp')
-	), 
-	-- készletek, árral, konfigurációnként és cikkenként, elérhetõ mennyiségre aggregálva
-	SecondHandStock_CTE(ConfigId, InventLocationId, ProductId, Quantity, Price, StatusDescription, DataAreaId) AS
-	(
-		SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
-		FROM XXConfig_CTE as c 
-		INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
-		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
-		WHERE ins.Closed = 0 
-		GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
+														cfg.dataAreaId = idim.dataAreaId 
+		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND ins.DataAreaId = idim.DataAreaId AND ins.ItemId = cfg.ItemId )
+		WHERE cfg.dataareaid IN ('bsc', 'hrp') and ins.Closed = 0 AND ins.AvailPhysical > 0 AND   
+			  cfg.ConfigId like 'xx%' AND idim.InventLocationId IN ('HASZNALT', '2100')
 	)
 
 	SELECT DataAreaId, ProductId, ConfigId, InventLocationId, Quantity, Price, StatusDescription, GetDate() as CreatedDate, Convert(bit, 1) as Valid
 	FROM SecondHandStock_CTE 
-	WHERE Quantity > 0 AND Price > 0;
+	WHERE Quantity > 0 AND Price > 0
+	ORDER BY ProductId;
 
 RETURN
 GO

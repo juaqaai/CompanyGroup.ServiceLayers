@@ -1033,10 +1033,10 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
 
 }
 @section ScriptOnReady {
-    console.log('ScriptOnReady section');
+    //console.log('ScriptOnReady section');
 
     var model = @(Html.Raw(Json.Encode(Model)));
-    console.log(model);
+    //console.log(model);
 
     companyGroup.utils.instance().setRegistrationBaseApiUrl('@Url.Content("~/api/RegistrationApi/")');
 

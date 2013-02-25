@@ -61,6 +61,12 @@
           <AssociatedConnUserName />
           <FullPath>CreateDb.sql</FullPath>
         </FileNode>
+        <FileNode Name="InvoiceExtract.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InvoiceExtract.sql</FullPath>
+        </FileNode>
         <FileNode Name="PictureExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>

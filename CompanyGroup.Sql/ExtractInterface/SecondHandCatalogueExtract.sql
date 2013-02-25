@@ -1,5 +1,6 @@
 /* =============================================
 	description	   : AXDB\HRPAXDB ExtractInterface adatbázisban SecondHand tábla szerinti lekérdezés
+					 azokat a kereskedelmi forgalomban már nem kapható cikkeket tartalmazza, melyeket csak használtan lehet megvenni
 	running script : InternetUser, Acetylsalicilum91 nevében
 	version		   : 1.0
 	created by	   : JUHATT
@@ -23,26 +24,48 @@ AS
 SET NOCOUNT ON
 	;
 	-- XX konfiguráción HASZNALT, vagy 2100 raktárban lévõ termékek
-	WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
-	AS (
-		SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
+	-- WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
+	--AS (
+	--	SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
+	--	FROM Axdb_20130131.dbo.ConfigTable as cfg 
+	--	INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+	--													  cfg.dataAreaId = idim.dataAreaId AND 
+	--													  cfg.ConfigId like 'xx%' AND 
+	--													  idim.InventLocationId IN ('HASZNALT', '2100')
+	--	--INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND 
+	--	--												   ins.DataAreaId = idim.DataAreaId AND 
+	--	--												   ins.ItemId = cfg.ItemId )
+	--	WHERE cfg.dataareaid IN ('bsc', 'hrp') -- AND ins.Closed = 0 
+	--), 
+	-- készletek, árral, konfigurációnként és cikkenként, elérhetõ mennyiségre aggregálva
+/*
+	insert into @StockTable
+	select c.sConfigID, c.sProductID, CONVERT( INT, SUM(ins.AvailPhysical) ), c.sDataAreaID
+	from InternetUser.web_CatalogueSecondHand as c 
+	inner join AxDb.dbo.InventDim AS ind on ( ind.configId = c.sConfigID and ind.dataAreaId = c.sDataAreaId )
+	inner join AxDb.dbo.InventSum AS ins on ( ins.inventDimId = ind.inventDimId and ins.dataAreaId = ind.DataAreaID AND ins.ItemId = c.sProductID )
+	where ins.Closed = 0 
+	group by c.sConfigID, c.sProductID, c.sDataAreaID;
+*/
+	WITH SecondHandStock_CTE(ConfigId, InventLocationId, ProductId, Quantity, Price, StatusDescription, DataAreaId) AS
+	(
+		--SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
+		--FROM XXConfig_CTE as c 
+		--INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
+		--INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+		--WHERE ins.Closed = 0 
+		--GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
+
+		SELECT cfg.ConfigId, idim.InventLocationId, cfg.ItemId, CONVERT(INT, ins.AvailPhysical), InternetUser.GetSecondHandPrice( cfg.DataAreaId, cfg.ItemId, cfg.ConfigId ), cfg.Name, cfg.dataAreaId
 		FROM Axdb_20130131.dbo.ConfigTable as cfg 
 		INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
-														cfg.dataAreaId = idim.dataAreaId AND 
-														cfg.ConfigId like 'xx%' AND 
-														idim.InventLocationId IN ('HASZNALT', '2100')
-		WHERE cfg.dataareaid IN ('bsc', 'hrp')
-	), 
-	-- készletek, árral, konfigurációnként és cikkenként, elérhetõ mennyiségre aggregálva
-	SecondHandStock_CTE(ConfigId, InventLocationId, ProductId, Quantity, Price, StatusDescription, DataAreaId) AS
-	(
-		SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
-		FROM XXConfig_CTE as c 
-		INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
-		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
-		WHERE ins.Closed = 0 
-		GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
+														cfg.dataAreaId = idim.dataAreaId 
+														
+		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND ins.DataAreaId = idim.DataAreaId AND ins.ItemId = cfg.ItemId )
+		WHERE cfg.dataareaid IN ('bsc', 'hrp') and ins.Closed = 0 AND ins.AvailPhysical > 0 AND   
+			  cfg.ConfigId like 'xx%' AND idim.InventLocationId IN ('HASZNALT', '2100')
 	),
+	-- magyar termékleírás
 	Description_CTE(ProductId, Txt, LanguageId)
 	AS (
 		SELECT ItemId, 
@@ -53,6 +76,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.INVENTTXT
 		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
 	), 
+	-- angol termékleírás 
 	EnglishProductName_CTE(ProductId, ProductName)
 	AS (
 	SELECT inventlng.ITEMID,
@@ -67,6 +91,7 @@ SET NOCOUNT ON
 		Invent.AMOUNT3 > 0 AND
 		Invent.AMOUNT4 > 0 AND
 		Invent.AMOUNT5 > 0 ), 
+	-- gyártó lekérdezése
 	Manufacturer_CTE(ManufacturerId, ManufacturerName, ManufacturerEnglishName)
 	AS (
 		SELECT m.GYARTOID,
@@ -75,6 +100,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND m.GYARTOID <> '' AND m.GyartoNev <> '' ),
+	-- termékkategória 1 lekérdezése
 	Category1_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg1Id, 
@@ -83,6 +109,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg1id <> '' AND c.jellegNev <> '' ), 
+	-- termékkategória 2 lekérdezése
 	Category2_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg2Id, 
@@ -91,6 +118,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg2Id <> '' AND c.jellegNev <> '' ), 
+	-- termékkategória 3 lekérdezése
 	Category3_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg3Id, 
@@ -101,7 +129,6 @@ SET NOCOUNT ON
 		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' )
 
 	SELECT DISTINCT Invent.ItemId as ProductId, 
-
 					Invent.AXSTRUKTKOD as AxStructCode, 
 					Invent.DataAreaId, 
 					Invent.StandardConfigId, 
@@ -120,9 +147,7 @@ SET NOCOUNT ON
 					JELLEG3ID as Category3Id, 
 					ISNULL(Category3.CategoryName, '') as Category3Name,  
 					ISNULL(Category3.CategoryNameEnglish, '') as Category3EnglishName, 
-
-					0 as InnerStock, 
-					0 as OuterStock,
+					0 as Stock,
 					Invent.AtlagosKeszletkor_Szamitott as AverageInventory, 
 					CONVERT( INT, Invent.AMOUNT1 ) as Price1,
 					CONVERT( INT, Invent.AMOUNT2 ) as Price2,

@@ -27,6 +27,8 @@ namespace CompanyGroup.Dto.WebshopModule
             this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
 
             this.LineMessages = new List<string>();
+
+            this.IsValidated = false;
         }
 
         /// <summary>
@@ -58,5 +60,10 @@ namespace CompanyGroup.Dto.WebshopModule
 
         [System.Runtime.Serialization.DataMember(Name = "LineMessages", Order = 8)]
         public List<string> LineMessages { get; set; }
+
+        /// <summary>
+        /// validált a kosár, vagy nem. (üzenet a Message-ben)
+        /// </summary>
+        public bool IsValidated { get; set; }
     }
 }

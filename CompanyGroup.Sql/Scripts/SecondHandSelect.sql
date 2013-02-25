@@ -19,3 +19,5 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.SecondHandSelect TO InternetUser
 -- EXEC [InternetUser].[SecondHandSelect];
+
+-- SELECT * FROM InternetUser.SecondHand where ProductId = 'T110-11J'

@@ -16,7 +16,7 @@ namespace CompanyGroup.Domain.WebshopModule
 		                     string category1Id, string category1Name, string category1EnglishName, 
 		                     string category2Id, string category2Name, string category2EnglishName,
                              string category3Id, string category3Name, string category3EnglishName,
-                             int innerStock, int outerStock, int price1, int price2, int price3, int price4, int price5, 
+                             int stock, int price1, int price2, int price3, int price4, int price5, 
                              int pictureId, string fileName, bool primary, long recId)
         {
             this.Id = id;
@@ -36,7 +36,7 @@ namespace CompanyGroup.Domain.WebshopModule
                                category2Id, category2Name, category2EnglishName,
                                category3Id, category3Name, category3EnglishName);   
 
-            this.Stock = new Stock(innerStock, outerStock);
+            this.Stock = stock;
 
             this.Prices = new Prices(price1, price2, price3, price4, price5, "HUF");
 
@@ -76,9 +76,9 @@ namespace CompanyGroup.Domain.WebshopModule
         public Structure Structure { get; set; }
 
         /// <summary>
-        /// készletek, inner - outer
+        /// készlet 
         /// </summary>
-        public Stock Stock { get; set; }
+        public int Stock { get; set; }
 
         /// <summary>
         /// árak 1-5 és a valutanem, melyben értelmezve van

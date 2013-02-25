@@ -22,6 +22,14 @@
         @RenderSection("ScriptsInHead", required: false)
     </head>
     <body>
+	<div id="preloader_site">
+
+	<div align="center" id="status">
+	<img src="@Url.Content("~/Content/Media/images/ajax-loader.gif")" alt="" /><br><br>
+	<img src="@Url.Content("~/Content/Media/images/loading_logos.jpg")" alt="" />
+	</div>
+
+</div>
     <a name="top" id="top"></a>
     <div class="aside-1" id="layout-wrapper">
 		<header id="layout-header" class="group">
@@ -53,16 +61,17 @@
 				<tr>
 					<td width="100%">
                     {{#IsValidLogin}}
-                        <span>Bejelentkezve:</span> 
+                        <span >Bejelentkezve:</span> 
                         <strong><span>{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
                         <span>Képviselő:</span>
                         <strong><span>{{Representative.Name}}</span></strong> 
                         <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>
                         <strong><span>{{Representative.Phone}}</span></strong>
-                        <a id="anchor_signout" href="#/signOut"><strong>&nbsp;|&nbsp;Kijelentkezés</strong></a>
+                        <a style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" id="anchor_signout" href="#/signOut"><strong>Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
-                        <img style="border-style:none;" src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" style="margin-right: 5px;" alt="" /><a id="loginwin" href="#/showSignInPanel"><strong>Bejelentkezés </strong></a>
+                        <a id="loginwin"  style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" href="#/showSignInPanel"><img  src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" alt="" /><strong> Bejelentkezés </strong></a>
+						<a id="loginwin"  style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" href="@Url.Content("~/Registration/Index")"><strong> Regisztráció </strong></a>
                     {{/IsValidLogin}}
                     </td>
 					<td nowrap="nowrap">&nbsp;</td>
@@ -72,25 +81,25 @@
                         {{#IsValidLogin}}
                             Pénznem <strong><a href="#/changeCurrency/HUF">
                             {{#CurrencyIsHuf}}
-                            <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px;">HUF</span>
+                            <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             {{^CurrencyIsHuf}}
-                            <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px;">HUF</span>
+                            <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             </a></strong>
                             <strong><a href="#/changeCurrency/EUR">
                             {{#CurrencyIsEur}}
-                            <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px;">EUR</span>
+                            <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px; border-radius:3px;">EUR</span>
                             {{/CurrencyIsEur}}
                             {{^CurrencyIsEur}}
-                            <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px;">EUR</span>
+                            <span id="currency_eur" style="background: #666; padding: 2px; margin-right: 2px; border-radius:3px;">EUR</span>
                             {{/CurrencyIsEur}}
                             </a></strong><strong><a href="#/changeCurrency/USD">
                             {{#CurrencyIsUsd}}
-                            <span id="currency_usd" style="background: #900; padding: 2px;">USD</span>
+                            <span id="currency_usd" style="background: #900; padding: 2px border-radius:3px;;">USD</span>
                             {{/CurrencyIsUsd}}
                             {{^CurrencyIsUsd}}
-                            <span id="currency_usd" style="background: #666; padding: 2px;">USD</span>
+                            <span id="currency_usd" style="background: #666; padding: 2px; border-radius:3px;">USD</span>
                             {{/CurrencyIsUsd}}
                             </a></strong>
                         {{/IsValidLogin}}
@@ -117,7 +126,7 @@
 								</div>
 								<ul>
 									<li>
-										<a href="@Url.Content("~/Registration/")">Adatlap / módosítás</a>
+										<a href="@Url.Content("~/Registration/")">Adatlap / Módosítás</a>
 									</li>
 									<li>
 										<a href="@Url.Content("~/PartnerInfo/#/invoiceinfo/1")">Számlák</a>
@@ -127,9 +136,6 @@
 									</li>
 									<li>
 										<a href="@Url.Content("~/PartnerInfo/ForgetPassword")">Jelszó módosítás</a>
-									</li>
-									<li>
-										<a href="@Url.Content("~/PartnerInfo/")">Egyéb</a>
 									</li>
 								</ul>
 							</li>
@@ -162,13 +168,16 @@
 			    <li id="becomePartnerContainer1">
                         </li>
 					    <li>
-						    <a href="@Url.Content("~/Company/Index")">Céginformáció</a>
+						    <a href="@Url.Content("#")">Céginformáció</a>
 							<ul>
 							    <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Index")">Cégcsoportunkról</a> 
+							    </li>
+								<li>
 								   <a rel="nofollow" href="@Url.Content("~/Company/Contact")">Elérhetőségünk</a> 
 							    </li>
 								<li>
-								   <a href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
+								   <a rel="nofollow" href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
 							    </li>
 						    </ul>
 					    </li> 
@@ -178,14 +187,40 @@
 						 <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
+						    
 					    <li>
 						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
+						<li>
+						    <a rel="nofollow" href="@Url.Content("#")">Tájékoztató</a>
+							<ul>
+							    <li>
+								   <a rel="nofollow"  href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> 
+							    </li>
+                                <li>
+								   <a rel="nofollow"  href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a>
+							    </li>
+								 <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> 
+							    </li>
+								<li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a>
+							    </li>
+                                <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a>
+							    </li>
+                                <li>
+								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
+							    </li>
+						    </ul>
+					    </li> 
 				    </ul>
 					<script id="becomePartnerTemplate" type="text/html">
 					{{#IsValidLogin}}
 					{{/IsValidLogin}}
-						   {{^IsValidLogin}} <a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>{{/IsValidLogin}}
+						   {{^IsValidLogin}}
+						   <!--<a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>-->
+						   {{/IsValidLogin}}
 						   </script>
                     <script id="becomePartnerTemplateNews" type="text/html">
 					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
@@ -213,20 +248,7 @@
 
 				<div id="layout-after-main" class="group">
 					@*cms AfterMain*@
-					<table id="cus_copyright" border="0" cellpadding="0" cellspacing="0" width="990" align="center">
-						<tbody>
-							<tr>
-								<td class="cus_copyright_table_small_text" colspan="2" align="center"><a href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> &bull; 
-                                                                                                      <a href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> &bull; 
-                                                                                                      <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a> &bull; 
-                                                                                                      <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a> &bull; 
-                                                                                                      <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a> &bull; 
-                                                                                                      <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
-								</td>
-
-							</tr>
-						</tbody>
-					</table>
+					
 				</div>
                 @*cms Tripel
 				<div id="layout-tripel-container">
@@ -419,8 +441,6 @@
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 
-
-
             $('#preloader').ajaxStart(function () {
                 $('#preloader').show();
             }).ajaxStop(function () {
@@ -465,6 +485,9 @@
 
 			@*Cufon.replace('p');*@
             @RenderSection("ScriptOnReady", false)
+			
+			$("#status").fadeOut(); // will first fade out the loading animation
+            $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.
         }); 
 
         @RenderSection("ScriptsInBottom", false)

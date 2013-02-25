@@ -17,7 +17,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// Id	ProductId	AxStructCode	DataAreaId	StandardConfigId	Name	EnglishName	PartNumber	
         /// ManufacturerId	ManufacturerName	ManufacturerEnglishName	Category1Id	Category1Name	Category1EnglishName	Category2Id	Category2Name	Category2EnglishName	Category3Id	Category3Name	Category3EnglishName	
-        /// InnerStock	OuterStock	AverageInventory	Price1	Price2	Price3	Price4	Price5	Garanty	GarantyMode	Discount	New	ItemState	Description	EnglishDescription	ProductManagerId	
+        /// Stock	AverageInventory	Price1	Price2	Price3	Price4	Price5	Garanty	GarantyMode	Discount	New	ItemState	Description	EnglishDescription	ProductManagerId	
         /// ShippingDate	CreatedDate	Updated	Available	PictureId	SecondHand	Valid
         /// </summary> 
         public Product(int id, string productId, string axStructCode, string dataAreaId, string standardConfigId, string name, string englishName, string partNumber, 	
@@ -25,7 +25,7 @@ namespace CompanyGroup.Domain.WebshopModule
                        string category1Id, string category1Name, string category1EnglishName, 
                        string category2Id, string category2Name, string category2EnglishName, 
                        string category3Id, string category3Name, string category3EnglishName,	
-                       int innerStock, int outerStock, int averageInventory, int price1, int price2, int price3, int price4, int price5, 
+                       int stock, int averageInventory, int price1, int price2, int price3, int price4, int price5, 
                        string garantyTime, string garantyMode, 
                        bool discount, bool newItem, int itemState, string description, string englishDescription, int productManagerId,
                        DateTime shippingDate, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid)
@@ -52,7 +52,7 @@ namespace CompanyGroup.Domain.WebshopModule
                                            category2Id, category2Name, category2EnglishName,
                                            category3Id, category3Name, category3EnglishName);
 
-            this.Stock = new Stock(innerStock, outerStock);
+            this.Stock = stock;
 
             this.AverageInventory = averageInventory;
 
@@ -100,7 +100,7 @@ namespace CompanyGroup.Domain.WebshopModule
                                    String.Empty, String.Empty, String.Empty,
                                    String.Empty, String.Empty, String.Empty,
                                    String.Empty, String.Empty, String.Empty,
-                                   0, 0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0,
                                    String.Empty, String.Empty,
                                    false, false, 0, String.Empty, String.Empty, 0,
                                    DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, false, 0, false, false) { }
@@ -153,9 +153,9 @@ namespace CompanyGroup.Domain.WebshopModule
         public Structure Structure { set; get; }
 
         /// <summary>
-        /// készletek, inner - outer
+        /// készlet
         /// </summary>
-        public Stock Stock { get; set; }
+        public int Stock { get; set; }
 
         /// <summary>
         /// átlagos készletkor
@@ -225,8 +225,13 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// elsődleges kép azonosítója a Picture táblából
         /// </summary>
-        public int PictureId { get; set; }	
-        
+        public int PictureId { get; set; }
+
+        /// <summary>
+        /// képek lista
+        /// </summary>
+        public List<Picture> Pictures { get; set; }
+
         /// <summary>
         /// igaz, ha van a cikkből használt (SecondHand tábla), egyébként hamis
         /// </summary>
@@ -243,15 +248,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// vevőre érvényes ár, kalkulált érték
         /// </summary>
         public decimal CustomerPrice { get; set; }
-
-        /// <summary>
-        /// azért van, hogy listában lehessen elkérni a képeket
-        /// </summary>
-        //public List<Picture> Pictures 
-        //{ 
-        //    get { return this.PictureArray.ToList(); }
-        //    set { this.PictureArray = value.ToArray(); } 
-        //}
 
         /// <summary>
         /// képek tárolása tömbben
@@ -287,10 +283,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public bool IsInStock
         {
-            get
-            {
-                return (this.Stock.Inner + this.Stock.Outer > 0);
-            }
+            get { return (this.Stock > 0); }
         }
 
         /// <summary>

@@ -22,8 +22,9 @@ CREATE PROCEDURE [InternetUser].[CatalogueInsert]
 AS
 SET NOCOUNT ON
 
-	TRUNCATE TABLE InternetUser.Catalogue;
+	-- TRUNCATE TABLE InternetUser.Catalogue;
 
+	-- angol terméknév kikeresése
 	WITH EnglishProductName_CTE(ProductId, ProductName)
 	AS (
 	SELECT inventlng.ITEMID,
@@ -38,6 +39,7 @@ SET NOCOUNT ON
 		Invent.AMOUNT3 > 0 AND
 		Invent.AMOUNT4 > 0 AND
 		Invent.AMOUNT5 > 0 ), 
+	-- angol gyártónév kikeresése
 	Manufacturer_CTE(ManufacturerId, ManufacturerName, ManufacturerEnglishName)
 	AS (
 		SELECT m.GYARTOID,
@@ -46,6 +48,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND m.GYARTOID <> '' AND m.GyartoNev <> '' ),
+	-- angol jelleg1 név kikeresése
 	Category1_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg1Id, 
@@ -54,6 +57,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg1id <> '' AND c.jellegNev <> '' ), 
+	-- angol jelleg2 név kikeresése
 	Category2_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg2Id, 
@@ -62,6 +66,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg2Id <> '' AND c.jellegNev <> '' ), 
+	-- angol jelleg3 név kikeresése
 	Category3_CTE(CategoryId, CategoryName, CategoryNameEnglish)
 	AS (
 		SELECT c.jelleg3Id, 
@@ -70,6 +75,7 @@ SET NOCOUNT ON
 		FROM Axdb_20130131.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' ), 
+	-- készletérték kikeresése
 	Stock_CTE ( StandardConfigId, ProductId, Quantity, InventLocationId, DataAreaId )
 	AS (
 			SELECT invent.StandardConfigId, invent.ItemId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ), 
@@ -77,7 +83,7 @@ SET NOCOUNT ON
 			FROM Axdb_20130131.dbo.InventTable as invent
 			INNER JOIN Axdb_20130131.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 															ind.dataAreaId = invent.DataAreaId and 
-															ind.InventLocationId in ( '1000', '7000', '2100', 'BELSO', 'KULSO', 'HASZNALT' ) 
+															ind.InventLocationId in ( '7000', '2100', 'KULSO', 'HASZNALT' )		--'1000', 'BELSO', 
 			INNER JOIN Axdb_20130131.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 															ins.inventDimId = ind.inventDimId and 
 															ins.ItemId = invent.ItemId and 
@@ -86,6 +92,7 @@ SET NOCOUNT ON
 				  invent.ITEMSTATE in ( 0, 1 ) AND 
 				  invent.DataAreaID IN ('bsc', 'hrp')
 			GROUP BY invent.StandardConfigId, invent.ItemId, ind.InventLocationId, invent.DataAreaId ),
+	-- várható beérkezés értékének kikeresése
 	PurchaseOrderLine_CTE (ProductId, PurchQty, DeliveryDate, ConfirmedDlv, QtyOrdered, RemainInventPhysical, RemainPurchPhysical, DataAreaId)
 	AS (
 		SELECT  
@@ -115,6 +122,7 @@ SET NOCOUNT ON
 			Invent.AMOUNT3 > 0 AND
 			Invent.AMOUNT4 > 0 AND
 			Invent.AMOUNT5 > 0 ), 
+	-- termékleírások kikeresése
 	Description_CTE(ProductId, Txt, LanguageId)
 	AS (
 		SELECT ItemId, 
@@ -146,7 +154,6 @@ SET NOCOUNT ON
 					JELLEG3ID, 
 					ISNULL(Category3.CategoryName, ''),  
 					ISNULL(Category3.CategoryNameEnglish, ''), 
-					ISNULL(StockInner.Quantity, 0), 
 					ISNULL(StockOuter.Quantity, 0),
 					Invent.AtlagosKeszletkor_Szamitott, 
 					CONVERT( INT, Invent.AMOUNT1 ),
@@ -175,9 +182,9 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN Category1_CTE as Category1 ON Category1.CategoryId = Invent.JELLEG1ID
 	LEFT OUTER JOIN Category2_CTE as Category2 ON Category2.CategoryId = Invent.JELLEG2ID
 	LEFT OUTER JOIN Category3_CTE as Category3 ON Category3.CategoryId = Invent.JELLEG3ID
-	LEFT OUTER JOIN Stock_CTE as StockInner ON StockInner.ProductId = Invent.ItemId AND 
-										  StockInner.DataAreaId = Invent.DataAreaId AND 
-										  StockInner.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'BELSO' ELSE '1000' END
+	--LEFT OUTER JOIN Stock_CTE as StockInner ON StockInner.ProductId = Invent.ItemId AND 
+	--									  StockInner.DataAreaId = Invent.DataAreaId AND 
+	--									  StockInner.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'BELSO' ELSE '1000' END
 	LEFT OUTER JOIN Stock_CTE as StockOuter ON StockOuter.ProductId = Invent.ItemId AND 
 										  StockOuter.DataAreaId = Invent.DataAreaId AND 
 										  StockOuter.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'KULSO' ELSE '7000' END
@@ -194,7 +201,7 @@ SET NOCOUNT ON
 	WHERE Invent.DataAreaId IN ('bsc', 'hrp') AND 
 		  Invent.WEBARUHAZ = 1 AND 
 		  Invent.ITEMSTATE IN ( 0, 1 ) AND 
-		  --1 = CASE WHEN Invent.ItemState = 1 AND ( @InnerStock + @OuterStock ) > 0 THEN 1 ELSE 0 END AND
+		  1 = CASE WHEN Invent.ItemState = 1 AND ISNULL(StockOuter.Quantity, 0) > 0 THEN 1 ELSE 0 END AND
 		  Invent.AMOUNT1 > 0 AND
 		  Invent.AMOUNT2 > 0 AND
 		  Invent.AMOUNT3 > 0 AND

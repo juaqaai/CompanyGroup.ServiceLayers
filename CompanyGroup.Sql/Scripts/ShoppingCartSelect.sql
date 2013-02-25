@@ -42,8 +42,7 @@ SET NOCOUNT ON
 		ISNULL(Line.Quantity, 0) as Quantity,
 		ISNULL(Line.Status, 0) as Status, 
 		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
-		ISNULL(Catalogue.InnerStock, 0) as [Inner], 
-		ISNULL(Catalogue.OuterStock, 0) as [Outer]
+		ISNULL(Catalogue.Stock, 0) as [Stock]
 	FROM InternetUser.ShoppingCart as Cart
 	LEFT OUTER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
 	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
@@ -93,8 +92,7 @@ SET NOCOUNT ON
 		ISNULL(Line.Quantity, 0) as Quantity,
 		ISNULL(Line.Status, 0) as Status, 
 		ISNULL(Line.CreatedDate, CONVERT(DateTime, 0)) as CreatedDate, 
-		ISNULL(Catalogue.InnerStock, 0) as [Inner], 
-		ISNULL(Catalogue.OuterStock, 0) as [Outer]
+		ISNULL(Catalogue.Stock, 0) as [Stock]
 	FROM InternetUser.ShoppingCart as Cart
 	LEFT OUTER JOIN InternetUser.ShoppingCartLine as Line ON Cart.Id = Line.CartId
 	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
@@ -144,8 +142,7 @@ SET NOCOUNT ON
 		Line.Quantity,
 		Line.Status, 
 		Line.CreatedDate, 
-		Catalogue.InnerStock as [Inner], 
-		Catalogue.OuterStock as [Outer]
+		ISNULL(Catalogue.Stock, 0) as [Stock]
 	FROM InternetUser.ShoppingCartLine as Line
 	LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = Line.ProductId AND Line.DataAreaId = Catalogue.DataAreaId
 	WHERE Line.Status IN (1, 2) AND 

@@ -202,7 +202,8 @@ GO
 GRANT EXECUTE ON InternetUser.InvoiceSelect TO InternetUser
 GO
 
--- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1;
+-- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
+-- select * from InternetUser.Invoice 
 
 DROP PROCEDURE [InternetUser].[InvoicePictureSelect];
 GO

@@ -155,7 +155,7 @@ namespace CompanyGroup.Domain.WebshopModule
                     this.Items.ToList().ForEach(x =>
                     {
 
-                        total += (x != null) && (x.Status.Equals(CartItemStatus.Created)) || (x.Status.Equals(CartItemStatus.Stored)) ? x.CustomerPrice : 0;
+                        total += (x != null) && (x.Status.Equals(CartItemStatus.Created)) || (x.Status.Equals(CartItemStatus.Stored)) ? (x.CustomerPrice * x.Quantity) : 0;
                     });
 
                     return total;

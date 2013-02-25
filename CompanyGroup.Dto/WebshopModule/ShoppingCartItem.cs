@@ -39,9 +39,9 @@ namespace CompanyGroup.Dto.WebshopModule
         public string Currency { get; set; }
 
         ///// <summary>
-        ///// készletek
+        ///// készletérték
         ///// </summary>
-        public Stock Stock { get; set; }
+        public int Stock { get; set; }
 
         /// <summary>
         /// elem státusza
@@ -67,6 +67,11 @@ namespace CompanyGroup.Dto.WebshopModule
         /// raktárkód (KULSO, vagy 7000, HASZNALT)
         /// </summary>
         public string InventLocationId { set; get; }
+
+        /// <summary>
+        /// használt konfigon van-e a termék?
+        /// </summary>
+        public bool IsInSecondHand { set; get; }
 
         ///// <summary>
         ///// garancia ideje, módja

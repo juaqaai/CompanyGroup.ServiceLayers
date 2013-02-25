@@ -16,28 +16,28 @@ CREATE PROCEDURE [InternetUser].[CatalogueRecentSelect] (@DataAreaId nvarchar(4)
 AS
 SET NOCOUNT ON
 
-	DECLARE @ManufacturerCount INT;
+	--DECLARE @ManufacturerCount INT;
 
-	DECLARE @Category1Count INT;
+	--DECLARE @Category1Count INT;
 
-	DECLARE @Xml Xml = CONVERT(Xml, @StructureXml);
+	--DECLARE @Xml Xml = CONVERT(Xml, @StructureXml);
 
-	SET ROWCOUNT 50;
+	--SET ROWCOUNT 50;
 
-	WITH Manufacturers_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Manufacturer.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Manufacturer/Id') as Manufacturer(Id)
-	),
-	Category1_CTE(Id)
-	AS(
-		SELECT CONVERT(nvarchar(4), Category1.Id.query('./text()'))
-		FROM @Xml.nodes('/Structure/Category1/Id') as Category1(Id)
-	)
+	--WITH Manufacturers_CTE(Id)
+	--AS(
+	--	SELECT CONVERT(nvarchar(4), Manufacturer.Id.query('./text()'))
+	--	FROM @Xml.nodes('/Structure/Manufacturer/Id') as Manufacturer(Id)
+	--),
+	--Category1_CTE(Id)
+	--AS(
+	--	SELECT CONVERT(nvarchar(4), Category1.Id.query('./text()'))
+	--	FROM @Xml.nodes('/Structure/Category1/Id') as Category1(Id)
+	--)
 
-	SELECT @ManufacturerCount = COUNT(*) FROM Manufacturers_CTE;
+	--SELECT @ManufacturerCount = COUNT(*) FROM Manufacturers_CTE;
 	 
-	SELECT @Category1Count = COUNT(*) FROM Category1_CTE;
+	--SELECT @Category1Count = COUNT(*) FROM Category1_CTE;
 
 	--(@ManufacturerCount > 0) AND (@Category1Count > 0)
 
@@ -46,17 +46,17 @@ SET NOCOUNT ON
 		   Category1Id, Category1Name, Category1EnglishName, 
 		   Category2Id, Category2Name, Category2EnglishName, 
 		   Category3Id, Category3Name, Category3EnglishName,
-		   InnerStock, OuterStock, 
+		   Stock, 
 		   Price1, Price2, Price3, Price4, Price5, 
 		   PictureId 
 	FROM InternetUser.Catalogue as Catalogue 
-	WHERE Catalogue.ManufacturerId NOT IN (Manufacturers_CTE.Id) AND 
-		  Catalogue.Category1Id IN (SELECT Category1_CTE.Id FROM Category1_CTE) AND
+	WHERE --Catalogue.ManufacturerId NOT IN (Manufacturers_CTE.Id) AND 
+		  --Catalogue.Category1Id IN (SELECT Category1_CTE.Id FROM Category1_CTE) AND
 		  Catalogue.Valid = 1 AND
-		  1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
+		  1 = CASE WHEN ItemState = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND 
 		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
 		  PictureId > 0 AND 
-		  ( InnerStock + OuterStock ) > 0
+		  Stock > 0
 	ORDER BY Discount DESC, AverageInventory DESC;
 
 RETURN

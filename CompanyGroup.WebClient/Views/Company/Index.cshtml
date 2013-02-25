@@ -1,23 +1,14 @@
 ﻿@model CompanyGroup.WebClient.Models.Visitor
 @{
-    ViewBag.Title = "Útmutató";
+    ViewBag.Title = "Cégcsoportunkról";
 }
 
-@*	<aside id="aside-first" class="aside-first group">
-		<div class="zone zone-aside-first">
-            <article class="widget-html-widget widget">
-                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
-                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
-            </article>
-        </div>
-	</aside>*@
 @*	<div  id="layout-content" class="group">*@
-
     <div id="content" class="group">
-		<div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content"> <div >
+<div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content"> <div >
                           <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="63%"><h2 class="focim"><strong>Céginformáció</strong></h2>
+      <td width="63%"><h2 class="focim"><strong>Cégcsoportunkról</strong></h2>
         <p><strong>A HRP cégcsoport a magyar IT disztribúciós szektor  meghatározó, dinamikusan fejlődő szereplője, amely számítástechnikai eszközök  valamint szoftverek nagykereskedelmével illetve szervizszolgáltatással  foglalkozik.</strong> 
           <strong>Az egész országra kiterjedő ügyfélkörével jelenleg a hazai  informatikai piac közel 90%-át fedi le.</strong></p>
 <p><img src="~/Content/Media/images/diagram_uj.jpg" width="465" height="304" /></p>
@@ -35,42 +26,8 @@
         <p>A HRP Hungary Kft. saját brandet vezetett be az  általa gyártott desktop PC-ihez Intensa márkanévvel. A HRP direkt gyártói  kapcsolatokra épülő közvetlen beszerzései - minőségi komponensek  felhasználásával - segítették az Intensa sikerét, aminek eredményeként az  Intensa 2007 óta jelentős szerepet vállal a központosított közbeszerzésekben  is.</p>
       <p>A kínálat felöleli az IT piac minden jelentős  ágát: jelenleg több mint 55  gyártó több ezer terméke szerepel a palettán. A széles termékválaszték a  vevői igényeknek megfelelően folyamatosan változik, hogy a partnerek számára  mindig versenyképes portfolió álljon rendelkezésre. <br />
         <br />
-      </p>
-      <hr />
-      <p><strong>Elérhetőségeink:</strong> </p>
-      <table cellpadding="0" cellspacing="0" width="100%">
-        <tbody>
-          <tr>
-            <td><strong>Cégnév:</strong></td>
-            <td><strong>Adószám:</strong></td>
-            <td><strong>Cégjegyzékszám:</strong></td>
-            <td><strong>E-mail:</strong></td>
-          </tr>
-          <tr>
-            <td>HRP Hungary Kft.</td>
-            <td>10490811-2-44</td>
-            <td>Cg.01-09-073874</td>
-            <td><a href="mailto:info@hrp.hu">info@hrp.hu</a></td>
-          </tr>
-          <tr>
-            <td>BSC Kft.</td>
-            <td>11087120-2-41</td>
-            <td>Cg. 01-09-663082</td>
-            <td><a href="mailto:info@bsc.hu">info@bsc.hu</a></td>
-          </tr>
-          <tr>
-            <td>FixDirect Kft.</td>
-            <td>11776693-2-41</td>
-            <td>Cg.   01-09-676167</td>
-            <td><a href="mailto:szerviz@fixdirect.hu">szerviz@fixdirect.hu</a></td>
-          </tr>
-        </tbody>
-      </table>
-      <p> 
-        1033 Budapest, Huszti út 34.<br />
-        Telefon: (+36 1) 452-4600<br />
-        Fax: (+36 1) 350-1351</p></td>
-      <td width="2%">&nbsp;</td>
+
+<td width="2%">&nbsp;</td>
       <td width="35%" valign="top" style="font-size:12px;"><h3 align="left">beszállítók és termékek:</h3>
         <p><img src="~/Content/Media/images/hrp_logo.jpg" width="125" height="68" /></p>
         <p><strong>Notebook/PC<br />
@@ -116,18 +73,16 @@ Tel.: (1) 452-4627 </p>
 
 
         </div>
-	</div>
-
-	@*	</div>*@
+</div>
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/guide")');
-
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/company")');
 }
 @section ScriptOnReady {
     //console.log('ScriptOnReady section');
 
     var model = @(Html.Raw(Json.Encode(Model)));
+    
     //console.log(model);
 
     companyGroup.company.run('#/');
@@ -137,6 +92,19 @@ Tel.: (1) 452-4627 </p>
 
     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
   	$('#usermenuContainer').html(usermenuHtml);
+    
 
+	
 
+	$("#myDiv").hide();
+    $("#myDiv2").hide();
+  
+	$(".button1").click(function () {
+	$("#myDiv").toggle("fast");
+	});
+    
+    $(".button2").click(function () {
+	$("#myDiv2").toggle("fast");
+	});
+	
 }

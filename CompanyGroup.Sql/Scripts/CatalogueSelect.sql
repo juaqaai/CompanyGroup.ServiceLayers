@@ -32,7 +32,7 @@ EXEC sp_xml_preparedocument @handle OUTPUT, @XMLDoc
 		 
 EXEC sp_xml_removedocument @handle
 
-SELECT * FROM InternetUser.Catalogue where StandardConfigId <> 'ALAP'
+SELECT * FROM InternetUser.Catalogue where ProductId = 'T110-11J'
 
 */
 
@@ -110,7 +110,7 @@ SET NOCOUNT ON
 
 	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
-			InnerStock, OuterStock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
+			Stock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
 			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
 	FROM InternetUser.Catalogue as Catalogue
 	--LEFT OUTER JOIN Manufacturers_CTE as Manufacturers ON Catalogue.ManufacturerId = Manufacturers.Id
@@ -125,20 +125,12 @@ SET NOCOUNT ON
 		  SecondHand = CASE WHEN @SecondHand = 1 THEN 1 ELSE SecondHand END AND 
 		  New = CASE WHEN @New = 1 THEN 1 ELSE New END AND  
 		  Valid = 1 AND
-		  1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
-		  1 = CASE WHEN @Stock = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND
+		  1 = CASE WHEN ItemState = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND 
+		  1 = CASE WHEN @Stock = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
-		  ( Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Name END OR 
-		    ProductId LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ProductId END OR 
-		    PartNumber LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE PartNumber END OR
-		    Description LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Description END OR
-		    ManufacturerName LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ManufacturerName END OR
-		    Category1Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category1Name END OR
-		    Category2Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category2Name END OR 
-		    Category3Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category3Name END
-		  )
+		  SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END
 	ORDER BY 
 	CASE WHEN @Sequence =  0 THEN --átlagos életkor csökkenõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
 		Sequence0 END ASC,
@@ -157,13 +149,9 @@ SET NOCOUNT ON
 	CASE WHEN @Sequence = 7 THEN  
 		Price5 END DESC, 
 	CASE WHEN @Sequence = 8 THEN   
-		InnerStock END ASC, 
+		Stock END ASC, 
 	CASE WHEN @Sequence = 9 THEN    
-		InnerStock END DESC, 
-	CASE WHEN @Sequence = 10 THEN 
-		OuterStock END ASC, 
-	CASE WHEN @Sequence = 11 THEN 
-		OuterStock END DESC, 
+		Stock END DESC, 
 	CASE WHEN @Sequence = 12 THEN  
 		Garanty END ASC, 
 	CASE WHEN @Sequence = 13 THEN  
@@ -194,8 +182,6 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 EXEC InternetUser.CatalogueSelect @Sequence = 0
 
 update InternetUser.Catalogue set New = 1 WHERE Description like '%new%' Category1Id = 'B011'
-
-
 */
 
 GO
@@ -214,7 +200,7 @@ AS
 		FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
 	)
 	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Sequence0_CTE WHERE InternetUser.Catalogue.Id = Sequence0_CTE.Id)
-	WHERE Discount = 1 AND AverageInventory > 0 AND InnerStock + OuterStock > 0;
+	WHERE Discount = 1 AND AverageInventory > 0 AND Stock > 0;
 
 	DECLARE @RowNumber INT = (SELECT MAX(Sequence0) FROM InternetUser.Catalogue);  
 

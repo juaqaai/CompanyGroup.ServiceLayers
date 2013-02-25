@@ -68,7 +68,7 @@ SET NOCOUNT ON
 
 	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
-			InnerStock, OuterStock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
+			Stock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
 			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
 	FROM InternetUser.Catalogue as Catalogue
 	WHERE (Catalogue.ManufacturerId IN (SELECT SUBSTRING(@Manufacturers, Mi, COALESCE(NULLIF(Mj, 0), LEN(@Manufacturers) + 1) - Mi) FROM Manufacturers_CTE) OR (@Manufacturers = '')) AND
@@ -79,8 +79,8 @@ SET NOCOUNT ON
 		SecondHand = CASE WHEN @SecondHand = 1 THEN 1 ELSE SecondHand END AND 
 		New = CASE WHEN @New = 1 THEN 1 ELSE New END AND  
 		Valid = 1 AND
-		1 = CASE WHEN ItemState = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND 
-		1 = CASE WHEN @Stock = 1 AND InnerStock + OuterStock <= 0 THEN 0 ELSE 1 END AND
+		1 = CASE WHEN ItemState = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND 
+		1 = CASE WHEN @Stock = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND
 		DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
 	( Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Name END OR 
 	ProductId LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ProductId END OR 
@@ -109,13 +109,9 @@ SET NOCOUNT ON
 	CASE WHEN @Sequence = 7 THEN  
 		Price5 END DESC, 
 	CASE WHEN @Sequence = 8 THEN   
-		InnerStock END ASC, 
+		Stock END ASC, 
 	CASE WHEN @Sequence = 9 THEN    
-		InnerStock END DESC, 
-	CASE WHEN @Sequence = 10 THEN 
-		OuterStock END ASC, 
-	CASE WHEN @Sequence = 11 THEN 
-		OuterStock END DESC, 
+		Stock END DESC, 
 	CASE WHEN @Sequence = 12 THEN  
 		Garanty END ASC, 
 	CASE WHEN @Sequence = 13 THEN  

@@ -36,11 +36,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 to.FirstLevelCategory = new CategoryToCategory().Map(from.Structure.Category1);
                 to.GarantyMode = from.Garanty.Mode;
                 to.GarantyTime = from.Garanty.Time;
-                to.InnerStock = from.Stock.Inner;
                 to.ItemName = from.ProductName;
                 to.Manufacturer = new ManufacturerToManufacturer().Map(from.Structure.Manufacturer);
                 to.New = from.New;
-                to.OuterStock = from.Stock.Outer;
+                to.Stock = from.Stock;
                 to.PartNumber = from.PartNumber;
                 to.Price = from.CustomerPrice;
                 to.ProductId = from.ProductId;

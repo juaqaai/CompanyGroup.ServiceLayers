@@ -20,13 +20,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 DataAreaId = from.DataAreaId,
                 Id = from.LineId,
                 InventLocationId = from.InventLocationId, 
+                IsInSecondHand = from.IsInSecondHand,
                 ItemState = (int)from.ItemState,
                 ItemTotal = from.ItemTotal,
                 PartNumber = from.PartNumber,
                 ProductId = from.ProductId,
                 Quantity = from.Quantity, 
                 ProductName = from.ProductName,
-                Stock = new StockToStock().Map(from.Stock)
+                Stock = from.Stock   
             };
         }
     }

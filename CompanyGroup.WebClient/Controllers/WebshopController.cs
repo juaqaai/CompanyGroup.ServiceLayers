@@ -252,7 +252,7 @@ namespace CompanyGroup.WebClient.Controllers
                 System.Data.DataTable dt = CreateDataTable(priceList); 
 
                 //Merging cells and create a center heading for out table
-                ws.Cells[1, 1].Value = "Sample DataTable Export";
+                ws.Cells[1, 1].Value = "Terméklista excel export";
                 ws.Cells[1, 1, 1, dt.Columns.Count].Merge = true;
                 ws.Cells[1, 1, 1, dt.Columns.Count].Style.Font.Bold = true;
                 ws.Cells[1, 1, 1, dt.Columns.Count].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -328,7 +328,7 @@ namespace CompanyGroup.WebClient.Controllers
                 border.Bottom.Style = border.Top.Style = border.Left.Style = border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
                 //Setting Value in cell
-                cell.Value = "Heading " + dc.ColumnName;
+                cell.Value = dc.ColumnName;
 
                 colIndex++;
             }
@@ -384,57 +384,43 @@ namespace CompanyGroup.WebClient.Controllers
         {
             System.Data.DataTable dt = new System.Data.DataTable();
 
-            dt.Columns.Add("Currency", typeof(string));
-            dt.Columns.Add("DataAreaId", typeof(string));
-            dt.Columns.Add("Description", typeof(string));
-            dt.Columns.Add("EndOfSales", typeof(bool));
-            dt.Columns.Add("FirstLevelCategoryId", typeof(string));
-            dt.Columns.Add("FirstLevelCategoryName", typeof(string));
-            dt.Columns.Add("GarantyMode", typeof(string));
-            dt.Columns.Add("GarantyTime", typeof(string));
-            dt.Columns.Add("InnerStock", typeof(int));
-            dt.Columns.Add("ItemName", typeof(string));
-            dt.Columns.Add("ManufacturerId", typeof(string));
-            dt.Columns.Add("ManufacturerName", typeof(string));
-            dt.Columns.Add("New", typeof(bool));
-            dt.Columns.Add("OuterStock", typeof(int));
-            dt.Columns.Add("PartNumber", typeof(string));
-            dt.Columns.Add("Price", typeof(int));
-            dt.Columns.Add("ProductId", typeof(string));
-            dt.Columns.Add("PurchaseInProgress", typeof(bool));
-            dt.Columns.Add("SecondLevelCategoryId", typeof(string));
-            dt.Columns.Add("SecondLevelCategoryName", typeof(string));
-            dt.Columns.Add("ShippingDate", typeof(DateTime));
-            dt.Columns.Add("ThirdLevelCategoryId", typeof(string));
-            dt.Columns.Add("ThirdLevelCategoryName", typeof(string));
+            dt.Columns.Add("Termékazonosító", typeof(string));
+            dt.Columns.Add("Termék neve", typeof(string));
+            dt.Columns.Add("Készlet", typeof(int));
+            dt.Columns.Add("Nettó ár", typeof(int));
+            dt.Columns.Add("Pénznem", typeof(string));
+            dt.Columns.Add("Leírás", typeof(string));
+            dt.Columns.Add("Disztibútor", typeof(string));
+            dt.Columns.Add("Gyártó", typeof(string));
+            dt.Columns.Add("Jelleg 1", typeof(string));
+            dt.Columns.Add("Jelleg 2", typeof(string));
+            dt.Columns.Add("Jelleg 3", typeof(string));
+            dt.Columns.Add("Gyártói cikkszám", typeof(string));
+            dt.Columns.Add("Garancia módja", typeof(string));
+            dt.Columns.Add("Garancia ideje", typeof(string));
+            dt.Columns.Add("Újdonság", typeof(bool));
+            dt.Columns.Add("Szállítási infó", typeof(DateTime));
 
             foreach (CompanyGroup.Dto.WebshopModule.PriceListItem item in priceList.Items)
             {
                 System.Data.DataRow row = dt.NewRow();
 
-                row["Currency"] = item.Currency;
-                row["DataAreaId"] = item.DataAreaId;
-                row["Description"] = item.Description;
-                row["EndOfSales"] = item.EndOfSales;
-                row["FirstLevelCategoryId"] = item.FirstLevelCategory.Id;
-                row["FirstLevelCategoryName"] = item.FirstLevelCategory.Name;
-                row["GarantyMode"] = item.GarantyMode;
-                row["GarantyTime"] = item.GarantyTime;
-                row["InnerStock"] = item.InnerStock;
-                row["ItemName"] = item.ItemName;
-                row["ManufacturerId"] = item.Manufacturer.Id;
-                row["ManufacturerName"] = item.Manufacturer.Name;
-                row["New"] = item.New;
-                row["OuterStock"] = item.OuterStock;
-                row["PartNumber"] = item.PartNumber;
-                row["Price"] = item.Price;
-                row["ProductId"] = item.ProductId;
-                row["PurchaseInProgress"] = item.PurchaseInProgress;
-                row["SecondLevelCategoryId"] = item.SecondLevelCategory.Id;
-                row["SecondLevelCategoryName"] = item.SecondLevelCategory.Name;
-                row["ShippingDate"] = item.ShippingDate;
-                row["ThirdLevelCategoryId"] = item.ThirdLevelCategory.Id;
-                row["ThirdLevelCategoryName"] = item.ThirdLevelCategory.Name;
+                row["Termékazonosító"] = item.ProductId;
+                row["Termék neve"] = item.ItemName;
+                row["Készlet"] = item.Stock;
+                row["Nettó ár"] = item.Price;
+                row["Pénznem"] = item.Currency;
+                row["Leírás"] = item.Description;
+                row["Disztibútor"] = item.DataAreaId;
+                row["Gyártó"] = item.Manufacturer.Name;
+                row["Jelleg 1"] = item.FirstLevelCategory.Name;
+                row["Jelleg 2"] = item.SecondLevelCategory.Name;
+                row["Jelleg 3"] = item.ThirdLevelCategory.Name;
+                row["Gyártói cikkszám"] = item.PartNumber;
+                row["Garancia módja"] = item.GarantyMode;
+                row["Garancia ideje"] = item.GarantyTime;
+                row["Újdonság"] = item.New;
+                row["Szállítási infó"] = item.PurchaseInProgress ? item.ShippingDate : DateTime.MinValue;
 
                 dt.Rows.Add(row);
             }
@@ -446,62 +432,7 @@ namespace CompanyGroup.WebClient.Controllers
 
         private System.Data.DataSet CreateDataSet(CompanyGroup.Dto.WebshopModule.PriceList from)
         {
-            System.Data.DataTable dt = new System.Data.DataTable();
-
-            dt.Columns.Add("Currency", typeof(string));
-            dt.Columns.Add("DataAreaId", typeof(string));
-            dt.Columns.Add("Description", typeof(string));
-            dt.Columns.Add("EndOfSales", typeof(bool));
-            dt.Columns.Add("FirstLevelCategoryId", typeof(string));
-            dt.Columns.Add("FirstLevelCategoryName", typeof(string));
-            dt.Columns.Add("GarantyMode", typeof(string));
-            dt.Columns.Add("GarantyTime", typeof(string));
-            dt.Columns.Add("InnerStock", typeof(int));
-            dt.Columns.Add("ItemName", typeof(string));
-            dt.Columns.Add("ManufacturerId", typeof(string));
-            dt.Columns.Add("ManufacturerName", typeof(string));
-            dt.Columns.Add("New", typeof(bool));
-            dt.Columns.Add("OuterStock", typeof(int));
-            dt.Columns.Add("PartNumber", typeof(string));
-            dt.Columns.Add("Price", typeof(int));
-            dt.Columns.Add("ProductId", typeof(string));
-            dt.Columns.Add("PurchaseInProgress", typeof(bool));
-            dt.Columns.Add("SecondLevelCategoryId", typeof(string));
-            dt.Columns.Add("SecondLevelCategoryName", typeof(string));
-            dt.Columns.Add("ShippingDate", typeof(DateTime));
-            dt.Columns.Add("ThirdLevelCategoryId", typeof(string));
-            dt.Columns.Add("ThirdLevelCategoryName", typeof(string));
-
-            foreach (CompanyGroup.Dto.WebshopModule.PriceListItem item in from.Items)
-            {
-                System.Data.DataRow row = dt.NewRow();
-
-                row["Currency"] = item.Currency;
-                row["DataAreaId"] = item.DataAreaId;
-                row["Description"] = item.Description;
-                row["EndOfSales"] = item.EndOfSales;
-                row["FirstLevelCategoryId"] = item.FirstLevelCategory.Id;
-                row["FirstLevelCategoryName"] = item.FirstLevelCategory.Name;
-                row["GarantyMode"] = item.GarantyMode;
-                row["GarantyTime"] = item.GarantyTime;
-                row["InnerStock"] = item.InnerStock;
-                row["ItemName"] = item.ItemName;
-                row["ManufacturerId"] = item.Manufacturer.Id;
-                row["ManufacturerName"] = item.Manufacturer.Name;
-                row["New"] = item.New;
-                row["OuterStock"] = item.OuterStock;
-                row["PartNumber"] = item.PartNumber;
-                row["Price"] = item.Price;
-                row["ProductId"] = item.ProductId;
-                row["PurchaseInProgress"] = item.PurchaseInProgress;
-                row["SecondLevelCategoryId"] = item.SecondLevelCategory.Id;
-                row["SecondLevelCategoryName"] = item.SecondLevelCategory.Name;
-                row["ShippingDate"] = item.ShippingDate;
-                row["ThirdLevelCategoryId"] = item.ThirdLevelCategory.Id;
-                row["ThirdLevelCategoryName"] = item.ThirdLevelCategory.Name;
-
-                dt.Rows.Add(row);
-            }
+            System.Data.DataTable dt = CreateDataTable(from);
 
             System.Data.DataSet ds = new System.Data.DataSet();
 

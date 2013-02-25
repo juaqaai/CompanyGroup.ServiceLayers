@@ -33,7 +33,7 @@ companyGroup.newsletter = $.sammy(function () {
     });
     //bejelentkezés
     this.post('#/signin', function (context) {
-        this.signIn(context.params['txt_username'], context.params['txt_password'], companyGroup.utils.instance().getCustomerApiUrl('SignIn'), function (result) {
+        this.signIn(context.params['txt_username'], context.params['txt_password'], companyGroup.utils.instance().getVisitorApiUrl('SignIn'), function (result) {
             $.fancybox.close();
 
             $("#cus_header1").empty();
@@ -50,7 +50,7 @@ companyGroup.newsletter = $.sammy(function () {
     });
     //kilépés
     this.get('#/signOut', function (context) {
-        this.signOut(companyGroup.utils.instance().getCustomerApiUrl('SignOut'), function (result) {
+        this.signOut(companyGroup.utils.instance().getVisitorApiUrl('SignOut'), function (result) {
             $("#cus_header1").empty();
             $("#visitorInfoTemplate").tmpl(result.Visitor).appendTo("#cus_header1");
             $("#usermenuContainer").empty();

@@ -183,11 +183,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
+            CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetProducts(request);
+            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository).GetProducts(request);
 
             Assert.IsNotNull(products);
 
@@ -236,11 +238,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
+            CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository).GetPriceList(request);
+            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository).GetPriceList(request);
 
             Assert.IsNotNull(priceList);
 
@@ -266,11 +270,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
 
+            CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, financeRepository, visitorRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository);
 
             CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
 

@@ -217,6 +217,7 @@ CREATE TABLE InternetUser.Catalogue
 	ItemState				int not null default 0,					-- axapta ItemState mezo 0 : aktiv, 1 : kifuto, 2 : passziv	
 	[Description]			nvarchar(max) not null default '',		-- axapta inventtxt txt dbo.INVENTTXT.TXT
 	EnglishDescription		nvarchar(max) not null default '',
+	SearchContent 			nvarchar(max) not null default '',
 	ProductManagerId		int not null default 0,					-- termekhez kapcsolt termekmanager
 	ShippingDate			SmallDateTime not null default GetDate(),
 	CreatedDate				SmallDateTime not null default GetDate(),		
@@ -226,7 +227,8 @@ CREATE TABLE InternetUser.Catalogue
 	SecondHand				bit not null default 0,					-- elerheto-e a termek hasznalt konfig-on,
 	Valid					bit not null default 1, 
     [ExtractDate] datetime2 NOT NULL DEFAULT GetDate(), 		
-    [PackageLogKey]			int not null default 0
+    [PackageLogKey]			int not null default 0, 
+	Sequence				int not null default 0
 )
 GO
 */
