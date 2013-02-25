@@ -144,5 +144,22 @@ namespace CompanyGroup.WebApi.Tests.Controllers
                 TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
             }
         }
+
+        [TestMethod]
+        public void StockUpdate()
+        {
+            CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request = new CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest("hrp", "", 3);
+
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/StockUpdate", request).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                Assert.IsNotNull(response);
+            }
+            else
+            {
+                TestContext.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+        }
     }
 }
