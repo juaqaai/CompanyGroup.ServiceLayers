@@ -79,6 +79,7 @@
     <Compile Include="PartnerModule\GetContactPersonByIdRequest.cs" />
     <Compile Include="WebshopModule\CatalogueDetailsLog.cs" />
     <Compile Include="WebshopModule\CatalogueDetailsLogListRequest.cs" />
+    <Compile Include="WebshopModule\CatalogueStockUpdateRequest.cs" />
     <Compile Include="WebshopModule\ProductListComplationRequest.cs" />
     <Compile Include="PartnerModule\UndoChangePasswordRequest.cs" />
     <Compile Include="WebshopModule\GetNewsletterCollectionRequest.cs" />

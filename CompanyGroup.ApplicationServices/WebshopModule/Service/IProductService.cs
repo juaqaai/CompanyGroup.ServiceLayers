@@ -41,5 +41,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="request"></param>
         /// <returns></returns>
         CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogList GetCatalogueDetailsLogList(CompanyGroup.Dto.WebshopModule.CatalogueDetailsLogListRequest request);
+
+        /// <summary>
+        /// készlet databszám befrissítése
+        /// </summary>
+        /// <param name="request"></param>
+        void StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request);
     }
 }

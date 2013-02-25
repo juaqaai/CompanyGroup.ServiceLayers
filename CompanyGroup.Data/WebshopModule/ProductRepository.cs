@@ -594,19 +594,21 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="dataAreaId"></param>
         /// <param name="productId"></param>
         /// <param name="stock"></param>
-        public void StockUpdate(string dataAreaId, string productId, int stock)
+        public void StockUpdate(CompanyGroup.Domain.WebshopModule.CatalogueStockUpdate request)
         {
             try
             {
-                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(dataAreaId), "The dataAreaId cannot be null!");
+                CompanyGroup.Domain.Utils.Check.Require((request != null), "The request cannot be null!");
 
-                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(productId), "The productId cannot be null!");
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(request.DataAreaId), "The dataAreaId cannot be null!");
+
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrEmpty(request.ProductId), "The productId cannot be null!");
 
                 using (NHibernate.ITransaction transaction = Session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
                 {
-                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueStockUpdate").SetString("DataAreaId", dataAreaId)
-                                                                                                        .SetString("ProductId", productId)
-                                                                                                        .SetInt32("Stock", stock);
+                    NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueStockUpdate").SetString("DataAreaId", request.DataAreaId)
+                                                                                                        .SetString("ProductId", request.ProductId)
+                                                                                                        .SetInt32("Stock", request.Stock);
                     query.UniqueResult<int>();
 
                     transaction.Commit();

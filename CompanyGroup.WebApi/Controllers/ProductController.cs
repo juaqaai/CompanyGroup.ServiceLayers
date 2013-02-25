@@ -169,5 +169,26 @@ namespace CompanyGroup.WebApi.Controllers
                 return ThrowHttpError(ex);
             }
         }
+
+        /// <summary>
+        /// készlet databszám befrissítése 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [ActionName("StockUpdate")]
+        [HttpPost]
+        public HttpResponseMessage StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request)
+        {
+            try
+            {
+                this.service.StockUpdate(request);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }        
+        }
     }
 }

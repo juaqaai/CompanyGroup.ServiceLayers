@@ -788,5 +788,25 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw(ex);
             }
         }
+
+        /// <summary>
+        /// készlet databszám befrissítése  
+        /// </summary>
+        /// <param name="request"></param>
+        public void StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request)
+        {
+            Helpers.DesignByContract.Require((request != null), "ProductService StockUpdate request cannot be null, or empty!");
+
+            try
+            {
+                CompanyGroup.Domain.WebshopModule.CatalogueStockUpdate req = new Domain.WebshopModule.CatalogueStockUpdate(request.DataAreaId, request.ProductId, request.Stock);
+
+                productRepository.StockUpdate(req);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }      
+        }
     }
 }
