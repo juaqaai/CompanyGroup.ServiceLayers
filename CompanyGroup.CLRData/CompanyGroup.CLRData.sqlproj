@@ -66,9 +66,6 @@
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CatalogueStockUpdate.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CompanyGroup.Dto\CompanyGroup.Dto.csproj">
       <Name>CompanyGroup.Dto</Name>
       <Project>{68a772c3-c742-4282-a5b3-2a11c17fc867}</Project>

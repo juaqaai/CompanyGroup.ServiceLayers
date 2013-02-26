@@ -46,6 +46,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// készlet databszám befrissítése
         /// </summary>
         /// <param name="request"></param>
-        void StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request);
+        //  void StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request);
     }
 }

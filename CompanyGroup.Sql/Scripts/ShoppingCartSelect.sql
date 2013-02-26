@@ -153,3 +153,4 @@ GRANT EXECUTE ON [InternetUser].[GetShoppingCartLine] TO InternetUser
 GO
 
 -- EXEC [InternetUser].[GetShoppingCartLine] 1
+-- select * from InternetUser.ShoppingCartLine

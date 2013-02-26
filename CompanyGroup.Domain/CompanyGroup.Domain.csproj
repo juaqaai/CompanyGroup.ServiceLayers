@@ -54,6 +54,7 @@
     <Compile Include="Core\INoSqlEntity.cs" />
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
+    <Compile Include="MaintainModule\ProductAggregates\ISyncRepository.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\VisitorInsertResult.cs" />
     <Compile Include="WebshopModule\FinanceAggregates\OfferStatus.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CatalogueDetailsLog.cs" />

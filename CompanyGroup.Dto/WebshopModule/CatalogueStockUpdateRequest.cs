@@ -3,22 +3,25 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
+    /// <summary>
+    /// készletváltozás értesítés a web adatbázis felé
+    /// </summary>
     public class CatalogueStockUpdateRequest
     {
-        public CatalogueStockUpdateRequest(string dataAreaId, string productId, int stock)
+        public CatalogueStockUpdateRequest(string dataAreaId, string inventLocationId, string productId)
         {
-            this.Stock = stock;
+            this.DataAreaId = dataAreaId;
+
+            this.InventLocationId = inventLocationId;
 
             this.ProductId = productId;
-
-            this.DataAreaId = dataAreaId;
         }
 
-        public CatalogueStockUpdateRequest() : this("", "", 0)
+        public CatalogueStockUpdateRequest() : this("", "", "")
         { 
         }
 
-        public int Stock { get; set; }
+        public string InventLocationId{ get; set; }
 
         public string ProductId { get; set; }
 

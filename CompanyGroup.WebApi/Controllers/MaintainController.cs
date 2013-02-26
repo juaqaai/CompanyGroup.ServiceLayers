@@ -10,50 +10,42 @@ namespace CompanyGroup.WebApi.Controllers
     /// <summary>
     /// terméklista cache karbantartó műveletek
     /// </summary>
-    public class MaintainController : ApiController
+    public class MaintainController : ApiBaseController
     {
-        private CompanyGroup.ApplicationServices.MaintainModule.IProductService service;
+        private CompanyGroup.ApplicationServices.MaintainModule.ISyncService service;
 
         /// <summary>
         /// konstruktor terméklista cache karbantartó interfészt megvalósító példánnyal
         /// </summary>
         /// <param name="service"></param>
-        public MaintainController(CompanyGroup.ApplicationServices.MaintainModule.IProductService service)
+        public MaintainController(CompanyGroup.ApplicationServices.MaintainModule.ISyncService service)
         {
+            if (service == null)
+            {
+                throw new ArgumentNullException("MaintainService");
+            }
+
             this.service = service;
         }
 
         /// <summary>
         /// terméklista cache újra töltése
         /// </summary>
-        [ActionName("FillProductCache")]
-        [HttpGet]
-        public bool FillProductCache(string id)
+        [ActionName("StockUpdate")]
+        [HttpPost]
+        public HttpResponseMessage StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request)
         {
-            return service.FillProductCache(id);
+            try
+            {
+                service.StockUpdate(request);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
-        /// <summary>
-        /// terméklista cache törlése
-        /// </summary>
-        /// <returns></returns>
-        [ActionName("ClearProductCache")]
-        [HttpGet]
-        public bool ClearProductCache()
-        {
-            return service.ClearProductCache();
-        }
-
-        /// <summary>
-        /// terméklista cache törlése, betöltése
-        /// </summary>
-        /// <param name="dataAreaId"></param>
-        /// <returns></returns>
-        [ActionName("RefillProductCache")]
-        [HttpGet]
-        public bool RefillProductCache(string id)
-        {
-            return service.RefillProductCache(id);
-        }
     }
 }

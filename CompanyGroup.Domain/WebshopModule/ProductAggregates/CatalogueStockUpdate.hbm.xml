@@ -7,4 +7,11 @@
     <return-scalar column="Ret" type="System.Int32"/>
     exec InternetUser.CatalogueStockUpdate @DataAreaId=:DataAreaId, @ProductId=:ProductId, @Stock=:Stock
   </sql-query>
+  <sql-query name="InternetUser.StockExtract" callable="true">
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="InventLocationId" type="System.String"/>
+    <query-param name="ProductId" type="System.String"/>
+    <return-scalar column="Stock" type="System.Int32"/>
+    exec InternetUser.StockExtract @DataAreaId=:DataAreaId, @InventLocationId=:InventLocationId, @ProductId=:ProductId
+  </sql-query>
 </hibernate-mapping>

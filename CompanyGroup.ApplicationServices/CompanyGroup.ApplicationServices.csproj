@@ -74,6 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaintainModule\Service\ISyncService.cs" />
+    <Compile Include="MaintainModule\Service\SyncService.cs" />
     <Compile Include="PartnerModule\Adapter\InvoiceInfoToInvoiceInfo.cs" />
     <Compile Include="PartnerModule\Adapter\OrderInfoToOrderInfo.cs" />
     <Compile Include="PartnerModule\Service\ContactPersonService.cs" />
@@ -167,7 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MaintainModule\Adapter\" />
-    <Folder Include="MaintainModule\Service\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompanyGroup.Data\CompanyGroup.Data.csproj">

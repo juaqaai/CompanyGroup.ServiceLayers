@@ -175,20 +175,20 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [ActionName("StockUpdate")]
-        [HttpPost]
-        public HttpResponseMessage StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request)
-        {
-            try
-            {
-                this.service.StockUpdate(request);
+        //[ActionName("StockUpdate")]
+        //[HttpPost]
+        //public HttpResponseMessage StockUpdate(CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request)
+        //{
+        //    try
+        //    {
+        //        this.service.StockUpdate(request);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            catch (Exception ex)
-            {
-                return ThrowHttpError(ex);
-            }        
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ThrowHttpError(ex);
+        //    }        
+        //}
     }
 }
