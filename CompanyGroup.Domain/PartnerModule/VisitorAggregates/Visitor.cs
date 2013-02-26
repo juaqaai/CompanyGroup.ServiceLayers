@@ -251,17 +251,17 @@ namespace CompanyGroup.Domain.PartnerModule
                                               string manufacturerId, string category1Id, string category2Id, string category3Id)
         {
             //Amiből nincs 2-es ára a vevőnek, azok a belépéskor a profil-ba kerülnek. Ebből a listából ki kell keresni a termékhez tartozó elemet.
-            this.CustomerPriceGroups.Where(x =>
-                                    (x.ManufacturerId == manufacturerId || String.IsNullOrEmpty(x.ManufacturerId)) &&
-                                    (x.Category1Id == category1Id || String.IsNullOrEmpty(x.Category1Id)) &&
-                                    (x.Category2Id == category2Id || String.IsNullOrEmpty(x.Category2Id)) &&
-                                    (x.Category3Id == category3Id || String.IsNullOrEmpty(x.Category3Id)));
+            IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x =>
+                                                                                        (x.ManufacturerId == manufacturerId || String.IsNullOrEmpty(x.ManufacturerId)) &&
+                                                                                        (x.Category1Id == category1Id || String.IsNullOrEmpty(x.Category1Id)) &&
+                                                                                        (x.Category2Id == category2Id || String.IsNullOrEmpty(x.Category2Id)) &&
+                                                                                        (x.Category3Id == category3Id || String.IsNullOrEmpty(x.Category3Id)));
 
             //sorba rendezés 1..n -ig
-            this.CustomerPriceGroups.OrderBy(x => x.Order);
+            priceGroups.OrderBy(x => x.Order);
 
             //legkisebb árcsoport szerinti kiválasztás történik. Az AX szöveges formában tárolja az árcsoportokat
-            string priceGroup = this.CustomerPriceGroups.Select(x => x.PriceGroupId).FirstOrDefault();
+            string priceGroup = priceGroups.Select(x => x.PriceGroupId).FirstOrDefault();
 
             //decimal priceGroup = 0;
 

@@ -954,15 +954,15 @@ companyGroup.webshop = $.sammy(function () {
     //kosár állapotát menti
     this.get('#/saveShoppingCartOpenStatus/:status', function (context) {
 
-        //        var isOpen = ($('#hidden_cartopen').val() === '1');
-        //        isOpen = !isOpen;
-        //        if (isOpen) {
-        //            $('#hidden_cartopen').val('1');
-                      $("#checkout_btn").hide();
-        //        } else {
-        //            $('#hidden_cartopen').val('');
-                      $("#checkout_btn").show();
-        //        }
+                var isOpen = ($('#hidden_cartopen').val() === '1');
+                isOpen = !isOpen;
+                if (isOpen) {
+                    $('#hidden_cartopen').val('1');
+                    //$("#checkout_btn").hide();
+                } else {
+                    $('#hidden_cartopen').val('');
+                    //$("#checkout_btn").show();
+                }
         var data = {
             IsOpen: context.params['status'] == 1 ? true : false
         };
@@ -979,7 +979,7 @@ companyGroup.webshop = $.sammy(function () {
 		$("#cus_rendeles_feladas").hide();
                 $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
-                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása' : 'bezárása');
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása / Megrendelés');
                 context.redirect('#/shoppingcartopenedstatus');
             },
             error: function () {
@@ -1808,7 +1808,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#productTemplate").tmpl(result).appendTo("#div_catalogue");
                     //$('.number').spin();
                     $('.select2').val(result.Sequence);
-                    $('.select2').skinner({ 'type': 'left' });
+                    //$('.select2').skinner({ 'type': 'left' });//
                 }
                 else {
                     //console.log('loadCatalogueList result failed');

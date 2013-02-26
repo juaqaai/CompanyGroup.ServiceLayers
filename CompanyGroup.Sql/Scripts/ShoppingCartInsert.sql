@@ -77,7 +77,13 @@ AS
 SET NOCOUNT ON
 	DECLARE @CreatedDate DateTime = GetDate(), @LineId INT = -1 ;
 
-	IF (EXISTS(SELECT * FROM InternetUser.ShoppingCartLine WHERE CartId = @CartId AND ProductId = @ProductId AND DataAreaId = @DataAreaId AND Status IN (1, 2)))
+	IF (EXISTS(SELECT * FROM InternetUser.ShoppingCartLine WHERE CartId = @CartId AND 
+																 ProductId = @ProductId AND 
+																 DataAreaId = @DataAreaId AND 
+																 ConfigId = @ConfigId AND 
+																 InventLocationId = @InventLocationId AND 
+																 Status IN (1, 2)))
+
 		UPDATE InternetUser.ShoppingCartLine SET Quantity = Quantity + @Quantity 
 		WHERE CartId = @CartId AND ProductId = @ProductId AND DataAreaId = @DataAreaId AND Status IN (1, 2)
 	ELSE

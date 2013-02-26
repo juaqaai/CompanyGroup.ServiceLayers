@@ -22,8 +22,8 @@ SET NOCOUNT ON
 		   StructPriceGroup.Jelleg2Id as Category2Id, 
 		   StructPriceGroup.Jelleg3Id as Category3Id, --TOP 1 PriceGroupID
 		   PriceDiscGroup.Sorrend as [Order]
-	FROM axdb_20120614.dbo.updStrukturaArcsoport as StructPriceGroup
-	INNER JOIN axdb_20120614.dbo.PriceDiscGroup as PriceDiscGroup ON StructPriceGroup.PriceGroupID = PriceDiscGroup.GroupID AND 
+	FROM Axdb_20130131.dbo.updStrukturaArcsoport as StructPriceGroup
+	INNER JOIN Axdb_20130131.dbo.PriceDiscGroup as PriceDiscGroup ON StructPriceGroup.PriceGroupID = PriceDiscGroup.GroupID AND 
 															PriceDiscGroup.DataAreaID = StructPriceGroup.DataAreaID
 	WHERE StructPriceGroup.DataAreaID IN ( 'hrp', 'bsc' )
 		  AND StructPriceGroup.PriceGroupID	IN ( '1', '2', '3', '4', '5', '6', 'H', 'B' ) 

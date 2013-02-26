@@ -56,5 +56,7 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             this.AddRange(secondHandList);
         }
+
+        public SecondHandList() { }
     }
 }
