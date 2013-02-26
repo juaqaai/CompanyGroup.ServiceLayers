@@ -378,32 +378,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList(string productId)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "ProductService GetSecondHandList productId parameter cannot be null, or empty!");
-
-            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
-
-            //ha nincs a cache-ben
-            if (secondHandList == null)
+            try
             {
-                secondHandList = productRepository.GetSecondHandList();
+                Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "ProductService GetSecondHandList productId parameter cannot be null, or empty!");
 
-                //cache-be mentés
-                if (ProductService.CatalogueCacheEnabled)
+                CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
+
+                //ha nincs a cache-ben
+                if (secondHandList == null)
                 {
-                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                    secondHandList = productRepository.GetSecondHandList();
+
+                    //cache-be mentés
+                    if (ProductService.CatalogueCacheEnabled)
+                    {
+                        CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                    }
                 }
+
+                //ha nincs min dolgozni, akkor üres listát adunk vissza
+                if (secondHandList == null)
+                {
+                    return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
+                }
+
+                //a termékazonosítóval rendelkező listát kell szűrni
+                IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+                return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
             }
-
-            //ha nincs min dolgozni, akkor üres listát adunk vissza
-            if (secondHandList == null)
-            {
-                return new CompanyGroup.Domain.WebshopModule.SecondHandList(new List<CompanyGroup.Domain.WebshopModule.SecondHand>());
-            }
-
-            //a termékazonosítóval rendelkező listát kell szűrni
-            IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
-
-            return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
+            catch { return new CompanyGroup.Domain.WebshopModule.SecondHandList(); }
         }
 
         /// <summary>

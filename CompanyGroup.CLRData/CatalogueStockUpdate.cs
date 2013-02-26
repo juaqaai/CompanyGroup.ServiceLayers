@@ -15,12 +15,13 @@ using System.Web.Http;
 using System.Net.Http.Headers;
 
 public partial class StoredProcedures
-{
-    private static readonly string ServiceBaseAddress = "http://1Juhasza/CompanyGroup.WebApi/api/";
+{   
 
     [Microsoft.SqlServer.Server.SqlProcedure]
     public static void CatalogueStockUpdate (SqlString dataAreaId, SqlString productId, SqlInt32 stock)
     {
+        string ServiceBaseAddress = "http://1Juhasza/CompanyGroup.WebApi/api/";
+
         try
         {
             if (String.IsNullOrWhiteSpace(dataAreaId.Value)) { throw new ApplicationException("DataAreaId name can not be null or empty!"); }
@@ -28,8 +29,6 @@ public partial class StoredProcedures
             if (String.IsNullOrWhiteSpace(productId.Value)) { throw new ApplicationException("ProductId name can not be null or empty!"); }
 
             CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request = new CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest(dataAreaId.Value, productId.Value, stock.Value);
-
-            if (request == null) { throw new ApplicationException("Request can not be null!"); };
 
             System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
 

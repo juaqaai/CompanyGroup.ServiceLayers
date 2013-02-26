@@ -161,22 +161,22 @@ namespace CompanyGroup.ApplicationServices.Test
             CompanyGroup.Dto.WebshopModule.GetAllProductRequest request = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
                                                                         {
                                                                             ActionFilter = false,
-                                                                            BargainFilter = false, 
-                                                                            BscFilter = false, 
+                                                                            BargainFilter = false,
+                                                                            BscFilter = false,
                                                                             Category1IdList = new List<string>() { "B011" },
                                                                             Category2IdList = new List<string>(),
                                                                             Category3IdList = new List<string>(),
-                                                                            Currency = "HUF", 
-                                                                            HrpFilter = false, 
-                                                                            IsInNewsletterFilter = false, 
-                                                                            ManufacturerIdList = new List<string>(),
+                                                                            Currency = "HUF",
+                                                                            HrpFilter = false,
+                                                                            IsInNewsletterFilter = false,
+                                                                            ManufacturerIdList = new List<string>() { "A132" },
                                                                             NewFilter = false,
                                                                             StockFilter = false,
                                                                             TextFilter = "",
-                                                                            CurrentPageIndex = 0,
+                                                                            CurrentPageIndex = 1,
                                                                             ItemsOnPage = 20,
                                                                             Sequence = 0,
-                                                                            VisitorId = ""
+                                                                            VisitorId = "F1832E403BED4C9D975C620CC4DBF7BC"
                                                                         };
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
