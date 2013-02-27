@@ -107,10 +107,10 @@ SET NOCOUNT ON
 		Purch.DataAreaId
 		FROM Axdb_20130131.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
 		INNER JOIN Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
-		WHERE Purch.ConfirmedDlv > '1900-01-01' AND 
-			Purch.BrEngedelyezes = 2 AND			-- engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
-			Purch.PURCHASETYPE = 3 AND	
-			Purch.PurchStatus IN (1, 2) AND	
+		WHERE -- Purch.ConfirmedDlv > '1900-01-01' AND 
+			Purch.BrEngedelyezes IN (2, 3) AND			-- engedélyezés státusz, 0: nyitott, 1: engedelyezesre var, 2: Engedelyezve, 3: Nemkellengedelyezni, 4: engedelyezesre var retail, 5:engedelyezesre var vezeto 
+			Purch.PURCHASETYPE = 3 AND				-- beszerzesi rendeles	
+			Purch.PurchStatus IN (1, 2) AND			-- none, nyitott, fogadott, szamlazva, ervenytelenitve	
 			CONVERT(INT, Purch.RemainPurchPhysical) > 0 AND
 			Invent.DataAreaId IN ('bsc', 'hrp') AND 
 			Invent.WEBARUHAZ = 1 AND 

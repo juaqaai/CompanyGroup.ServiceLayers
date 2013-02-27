@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Web.Http;
 
-namespace CompanyGroup.Msmq
+namespace CompanyGroup.Sync.Msmq
 {
-    public class MsmqReceiver
+    public class Receiver
     {
 
         private System.Messaging.MessageQueue queue = null;
@@ -60,6 +61,8 @@ namespace CompanyGroup.Msmq
             }
         }
 
+        private static string BaseAddress = CompanyGroup.Helpers.ConfigSettingsParser.GetString( "WebApiBaseAddress", "http://1Juhasza/CompanyGroup.WebApi/api/");
+
         /// <summary>
         /// üzenetfeldolgozás
         /// </summary>
@@ -79,20 +82,16 @@ namespace CompanyGroup.Msmq
 
                 if (msg.Label.Equals("Stock"))
                 {
-                //    SyncEntity entity = ConstructSyncEntity(Shared.Web.Helpers.ConvertData.ConvertObjectToString(msg.Body));
+                    CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest request = ConstructCatalogueStockUpdateRequest(CompanyGroup.Helpers.ConvertData.ConvertObjectToString(msg.Body));
 
-                //    //visszasorosított parancsobjektummal nosql adatbázis frissítése    
-                //    Shared.Web.DataAccess.IAdapter adapter = new Shared.Web.DataAccess.Adapter();
+                    HttpClient client = new HttpClient();
 
-                //    //insert:1, update:2, delete:3
-                //    if (entity.SyncOperation.Equals(1) || entity.SyncOperation.Equals(2))
-                //    {
-                //        adapter.InsertOrUpdateCatalogueItem(entity.ItemId, entity.DataAreaId, entity.SyncOperation);
-                //    }
-                //    else if (entity.SyncOperation.Equals(3))
-                //    {
-                //        adapter.DeleteCatalogueItem(entity.ItemId, entity.DataAreaId);
-                //    }
+                    client.BaseAddress = new Uri(BaseAddress);
+
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = client.PostAsJsonAsync("Maintain/StockUpdate", request).Result;
+                    //insert:1, update:2, delete:3
                 }
 
                 queue.BeginReceive();
@@ -104,7 +103,7 @@ namespace CompanyGroup.Msmq
         }
 
         /// <summary>
-        /// Stock létrehozása
+        /// Stock request létrehozása
         /// <?xml version="1.0"?>
         /// <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Stock&gt;
         /// &lt;SyncOperation&gt;4&lt;/SyncOperation&gt;
@@ -115,21 +114,30 @@ namespace CompanyGroup.Msmq
         /// </summary>
         /// <param name="xml"></param>
         /// <returns></returns>
-        //private static SyncEntity ConstructSyncEntity(string xml)
-        //{
-        //    if (String.IsNullOrEmpty(xml)) { return new SyncEntity(); }
+        private static CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest ConstructCatalogueStockUpdateRequest(string xml)
+        {
+            if (String.IsNullOrEmpty(xml)) { return new CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest(); }
 
-        //    System.Xml.Linq.XDocument xmlDoc = System.Xml.Linq.XDocument.Parse(xml);
+            System.Xml.Linq.XDocument xmlDoc = System.Xml.Linq.XDocument.Parse(xml);
 
-        //    SyncEntity entity = (from element in xmlDoc.Elements()
-        //                         select new SyncEntity
-        //                         {
-        //                             DataAreaId = element.Element("DataAreaId").Value,
-        //                             ItemId = element.Element("ItemId").Value,
-        //                             SyncOperation = Shared.Web.Helpers.ConvertData.ConvertStringToInt(element.Element("SyncOperation").Value)
-        //                         }).FirstOrDefault();
+            CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest entity = xmlDoc.Elements().Select( x => 
+            {
+                return new CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest(
+                    ReadXmlElementValue(x, "DataAreaId"),
+                    ReadXmlElementValue(x, "InventLocationId"),
+                    ReadXmlElementValue(x, "ItemId"));
+            }).FirstOrDefault();
 
-        //    return (entity != null) ? entity : new SyncEntity();
-        //}
+            return (entity != null) ? entity : new CompanyGroup.Dto.WebshopModule.CatalogueStockUpdateRequest();
+        }
+
+        private static string ReadXmlElementValue(System.Xml.Linq.XElement element, string name)
+        {
+            try
+            {
+                return element.Element(name).Value;
+            }
+            catch { return String.Empty; }
+        }
     }
 }

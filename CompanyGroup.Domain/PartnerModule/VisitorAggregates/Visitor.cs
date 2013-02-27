@@ -246,35 +246,96 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category1Id"></param>
         /// <param name="category2Id"></param>
         /// <param name="category3Id"></param>
+        /// <![CDATA[
+        ///     Id	VisitorId	ManufacturerId	Category1Id	Category2Id	Category3Id	PriceGroupId	Order
+        ///    2370	247					                                                        3	150
+        ///    2371	247					                                                        2	170
+        ///    2372	247	        A010				                                            4	150
+        ///    2373	247	        A017				                                            4	150
+        ///    2374	247	        A029				                                            4	150
+        ///    2375	247	        A036				                                            5	140
+        ///    2376	247	        A040				                                            4	150
+        ///    2377	247	        A044				                                            5	140
+        ///    2378	247	        A052	           B007			                                5	140
+        ///    2379	247	        A057				                                            4	150
+        ///    2380	247	        A058				                                            3	160
+        ///    2381	247	        A075				                                            4	150
+        ///    2382	247	        A083	____	____	____	                                3	150
+        ///    2383	247	        A090				                                            4	150
+        ///    2384	247	        A093				                                            4	150
+        ///    2385	247	        A098				                                            4	150
+        ///    2386	247	        A102	____	____	____	                                3	150
+        ///    2387	247	        A122				                                            5	140
+        ///    2388	247	        A125				                                            3	160
+        ///    2389	247	        A133				                                            4	150
+        ///    2390	247	        A142				                                            4	150
+        /// ]]>
         /// <returns></returns>
         public decimal CalculateCustomerPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
                                               string manufacturerId, string category1Id, string category2Id, string category3Id)
         {
-            //Amiből nincs 2-es ára a vevőnek, azok a belépéskor a profil-ba kerülnek. Ebből a listából ki kell keresni a termékhez tartozó elemet.
+            CustomerPriceGroup priceGroup;
+
             IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x =>
-                                                                                        (x.ManufacturerId == manufacturerId || String.IsNullOrEmpty(x.ManufacturerId)) &&
-                                                                                        (x.Category1Id == category1Id || String.IsNullOrEmpty(x.Category1Id)) &&
-                                                                                        (x.Category2Id == category2Id || String.IsNullOrEmpty(x.Category2Id)) &&
-                                                                                        (x.Category3Id == category3Id || String.IsNullOrEmpty(x.Category3Id)));
+                                                                                        ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
+                                                                                        ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
+                                                                                        ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
+                                                                                        ((x.Category3Id == category3Id) || (String.IsNullOrEmpty(x.Category3Id) && String.IsNullOrEmpty(category3Id))) );
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
 
-            //sorba rendezés 1..n -ig
-            priceGroups.OrderBy(x => x.Order);
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
 
-            //legkisebb árcsoport szerinti kiválasztás történik. Az AX szöveges formában tárolja az árcsoportokat
-            string priceGroup = priceGroups.Select(x => x.PriceGroupId).FirstOrDefault();
+            priceGroups = this.CustomerPriceGroups.Where(x =>
+                                                        ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
+                                                        ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
+                                                        ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) );
 
-            //decimal priceGroup = 0;
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
 
-            //if (Decimal.TryParse(s, out priceGroup))
-            //{
-                if (priceGroup.Equals("1")) { return price1; }
-                if (priceGroup.Equals("2")) { return price2; }
-                if (priceGroup.Equals("3")) { return price3; }
-                if (priceGroup.Equals("4")) { return price4; }
-                if (priceGroup.Equals("5")) { return price5; }
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
 
-                //return price2;
-            //}
+            priceGroups = this.CustomerPriceGroups.Where(x =>
+                                                        ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
+                                                        ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) );
+
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))));
+
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            priceGroup = this.CustomerPriceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+            return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+        }
+
+        private decimal LookupPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5, string priceGroup)
+        {
+            if (priceGroup.Equals("1")) { return price1; }
+            if (priceGroup.Equals("2")) { return price2; }
+            if (priceGroup.Equals("3")) { return price3; }
+            if (priceGroup.Equals("4")) { return price4; }
+            if (priceGroup.Equals("5")) { return price5; }
 
             return price2;
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CompanyGroup.Msmq.Test
+namespace CompanyGroup.Sync.MsmqTest
 {
     /// <summary>
     /// Summary description for UnitTest1
@@ -62,7 +62,7 @@ namespace CompanyGroup.Msmq.Test
         [TestMethod]
         public void StartTest()
         {
-            new CompanyGroup.Msmq.MsmqReceiver().Start();
+            new CompanyGroup.Sync.Msmq.Receiver().Start();
         }
     }
 }

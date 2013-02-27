@@ -197,6 +197,26 @@ namespace CompanyGroup.ApplicationServices.Test
         }
 
         [TestMethod]
+        public void ProductPrice()
+        {
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
+
+            CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("52E75B6E1D6A452FACEAA31C1D856E58");
+
+            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("C9465A", "hrp");
+
+            decimal price = visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
+                                                           product.Structure.Manufacturer.ManufacturerId, 
+                                                           product.Structure.Category1.CategoryId, 
+                                                           product.Structure.Category2.CategoryId, 
+                                                           product.Structure.Category3.CategoryId);
+
+            Assert.IsTrue(price > 0);
+        }
+
+        [TestMethod]
         public void ProductGetAllRest()
         {
             //http://localhost/CompanyGroup.ServicesHost/ProductService.svc/GetAll             

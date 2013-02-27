@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CompanyGroup.Msmq")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CompanyGroup.Sync.Msmq")]
+[assembly: AssemblyDescription("CompanyGroup.Sync.Msmq")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HRP Hungary Kft")]
-[assembly: AssemblyProduct("CompanyGroup.Msmq")]
+[assembly: AssemblyProduct("CompanyGroup.Sync.Msmq")]
 [assembly: AssemblyCopyright("Copyright © HRP Hungary Kft 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
