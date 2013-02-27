@@ -149,7 +149,7 @@
   							<option value="#">Név vagy cikkszám</option>
 							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
-                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="25"/>
+                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" id="txt_globalsearch" value="keresés a termékek között" size="27"/>
                             <input type="submit" value="" class="imgClass" />
                             </div>
                             </form>
@@ -158,14 +158,14 @@
 				</table>
 	
 			</div>
-			<div id="cus_logo_and_pages_menu"><a href="~/Webshop/Index"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>
-        	    <a title="" id="top-link">Top of Page</a>
+			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>
+        	    <a title="" href="#top" id="top-link">Lap tetejére</a>
 			    <div id="cus_ax_nav">
 					 <ul id="menu-bar">
 					    <li>
 						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
-			    <li id="becomePartnerContainer1">
+			            <li id="newsletterContainer">
                         </li>
 					    <li>
 						    <a href="@Url.Content("#")">Céginformáció</a>
@@ -183,7 +183,6 @@
 					    </li> 
 						<li id="becomePartnerContainer">
 					    </li>
-						
 						 <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
@@ -217,16 +216,15 @@
 				    </ul>
 					<script id="becomePartnerTemplate" type="text/html">
 					{{#IsValidLogin}}
+                        <a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok módosítása">Adatmódosítás</a>
 					{{/IsValidLogin}}
-						   {{^IsValidLogin}}
-						   <!--<a href="@Url.Content("~/Registration/Index")">Partnerré válás</a>-->
-						   {{/IsValidLogin}}
-						   </script>
-                    <script id="becomePartnerTemplateNews" type="text/html">
+					{{^IsValidLogin}}
+					    <a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok megadása">Partnerré válás</a>
+					{{/IsValidLogin}}
+					</script>
+                    <script id="newsletterTemplate" type="text/html">
 					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
-				    {{^IsValidLogin}}
-                    {{/IsValidLogin}}
-						   </script>
+				   </script>
 			    </div>
 			</div>
 			<!-- ez a div kezdő tag a shop mudul eleje. a catalogue/index.cshtml fájlban van a záró tag -->
@@ -400,7 +398,7 @@
                           <span class="login-box-options">
                           <input type="checkbox" name="1" value="1">
                             Emlékezzen rám
-                          <a href="#/forgetPassword" style="margin-left:30px;">Elfelejtett jelszó?</a></span>
+                          <a id="forget_password" href="#forgetpassword" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
                           <br />
                           <br />
                           <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
@@ -412,6 +410,25 @@
                 </div>
 
             </div>
+<div style="display:none;">
+<div style="width:250px; padding:15px;" id="forgetpassword">
+<span style="font-size:24px; color:#084385;" ><strong>Jelszóváltoztatás</strong></span><br><br>
+Kérem adja meg felhasználó nevét és az Ön új jelszó igénylési kérelmét elküldtük a rendszerünkben regisztrált e-mail címre.<br><br>
+<strong>Felhasználónév:</strong><br><br>
+<form action="#/forget_password" method="post">
+<input type="text" size="24" id="txtContactPersonUserName" class="regfields" />
+<input name="" type="submit" value="Küldés">
+</form>
+<span style="color:#F00" id="forgetPaswordDataError"></span><br><br>
+Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:<br><br>
+<strong>Balogh Zsolt</strong><br>
+ Email: zsbalogh@hrp.hu<br>
+Telefon: 452-4627<br><br>
+<em>Köszönjük.
+
+HRP Hungary Kft. </em>
+</div>
+</div>
 
     <script type="text/javascript">
         head.js('@Scripts.Url("~/bundles/jquery")', function() {
@@ -447,11 +464,19 @@
                 $('#preloader').hide();
             });
 			
+			$('#forget_password').fancybox({
+	    	transitionIn: 'fade',
+	    	transitionOut: 'fade'
+			  });
+			  
+			$("a#nyomtatas").fancybox({
+		        'hideOnContentClick': false
+	        });
+			
 			$(function(){						
-			$('.select1').skinner({'type':'left'});				
+			    $('.select1').skinner({'type':'left'});				
 			});
 			
-
             (function( $ ) {
             var proto = $.ui.autocomplete.prototype,
                 initSource = proto._initSource;
@@ -483,11 +508,13 @@
             });
             })( jQuery );		
 
-			@*Cufon.replace('p');*@
+			
             @RenderSection("ScriptOnReady", false)
 			
 			$("#status").fadeOut(); // will first fade out the loading animation
             $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.
+
+
         }); 
 
         @RenderSection("ScriptsInBottom", false)

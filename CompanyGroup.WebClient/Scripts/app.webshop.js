@@ -642,6 +642,10 @@ companyGroup.webshop = $.sammy(function () {
                     var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), result.Visitor);
                     $('#becomePartnerContainer').html(becomePartnerHtml);
 
+                    $("#newsletterContainer").empty();
+                    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), result.Visitor);
+                    $('#newsletterContainer').html(newsletterHtml);
+
                     $("#div_pager_top").empty();
                     $("#pagerTemplateTop").tmpl(result).appendTo("#div_pager_top");
 
@@ -731,6 +735,10 @@ companyGroup.webshop = $.sammy(function () {
                     $("#becomePartnerContainer").empty();
                     var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), result.Visitor);
                     $('#becomePartnerContainer').html(becomePartnerHtml);
+
+                    $("#newsletterContainer").empty();
+                    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), result.Visitor);
+                    $('#newsletterContainer').html(newsletterHtml);
 
                     $("#div_pager_top").empty();
                     $("#pagerTemplateTop").tmpl(result).appendTo("#div_pager_top");

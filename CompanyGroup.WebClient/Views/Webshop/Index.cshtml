@@ -1158,6 +1158,14 @@
                 $('#basket_panel').hide();
             }
 
+            $("#becomePartnerContainer").empty();
+            var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model.Visitor);
+            $('#becomePartnerContainer').html(becomePartnerHtml);
+
+            $("#newsletterContainer").empty();
+            var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model.Visitor);
+            $('#newsletterContainer').html(newsletterHtml);
+
             //$('body').trigger('selectedPageIndexChanged', {msg: 'hello world!'});
 
 @*            $('.number').spin();
