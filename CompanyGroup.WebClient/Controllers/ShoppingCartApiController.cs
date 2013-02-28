@@ -190,7 +190,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.CreateOrder req = new CompanyGroup.Dto.ServiceRequest.CreateOrder()
+            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest req = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest()
             {
                 CartId = request.CartId,
                 CustomerOrderId = request.CustomerOrderId,
@@ -199,14 +199,15 @@ namespace CompanyGroup.WebClient.Controllers
                 DeliveryDate = request.DeliveryDate,
                 DeliveryRequest = request.DeliveryRequest,
                 DeliveryTerm = request.DeliveryTerm,
+                Language = visitorData.Language, 
                 PaymentTerm = request.PaymentTerm,
                 VisitorId = visitorData.VisitorId
             };
 
-            CompanyGroup.Dto.WebshopModule.OrderFulFillment response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.CreateOrder, CompanyGroup.Dto.WebshopModule.OrderFulFillment>("ShoppingCart", "CreateOrder", req);
+            CompanyGroup.Dto.WebshopModule.OrderFulFillment response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest, CompanyGroup.Dto.WebshopModule.OrderFulFillment>("ShoppingCart", "CreateOrder", req);
 
             //aktív kosár azonosítójának mentése http cookie-ba
-            visitorData.CartId = response.ActiveCart.Id;
+            visitorData.CartId = response.ActiveCart.Id > 0 ? response.ActiveCart.Id : visitorData.CartId;
 
             this.WriteCookie(visitorData);
 

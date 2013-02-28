@@ -46,7 +46,9 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.WebshopModule.NewsletterCollection response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest, CompanyGroup.Dto.WebshopModule.NewsletterCollection>("Newsletter", "GetCollection", request);
 
-            CompanyGroup.WebClient.Models.NewsletterCollection viewModel = new CompanyGroup.WebClient.Models.NewsletterCollection(response);
+            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+
+            CompanyGroup.WebClient.Models.Newsletter viewModel = new CompanyGroup.WebClient.Models.Newsletter(response, visitor);
 
             return View(viewModel);
         }

@@ -1,4 +1,4 @@
-﻿@model CompanyGroup.WebClient.Models.NewsletterCollection
+﻿@model CompanyGroup.WebClient.Models.Newsletter
 @{
     ViewBag.Title = "Newsletter";
 }
@@ -44,11 +44,19 @@
 
     companyGroup.newsletter.run('#/');
 
-    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model.Visitor);
   	$('#cus_header1').html(visitorInfoHtml);
 
-    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
   	$('#usermenuContainer').html(usermenuHtml);
+
+    $("#becomePartnerContainer").empty();
+    var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model.Visitor);
+    $('#becomePartnerContainer').html(becomePartnerHtml);
+
+    $("#newsletterContainer").empty();
+    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model.Visitor);
+    $('#newsletterContainer').html(newsletterHtml);
 
     $("#div_newsletter_container").empty();
     $("#newsletter_template").tmpl(model).appendTo("#div_newsletter_container");

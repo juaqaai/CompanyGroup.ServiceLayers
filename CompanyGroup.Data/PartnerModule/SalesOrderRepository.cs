@@ -75,7 +75,49 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult response = this.DeSerialize<CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult>(xml);
 
-            return new CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult(response.ResultCode, response.Message);
+            return response;
+        }
+
+        public string CreateSecondHandOrder(CompanyGroup.Domain.PartnerModule.SalesOrderCreate request)
+        {
+            //rendeles tetelek felvitele a kosar tartalma alapjan
+            string lineString = String.Empty;
+
+            request.Lines.ForEach( x => {
+
+                lineString += !String.IsNullOrEmpty(lineString) ? "$" : "";
+
+                lineString += ConvertOrderLineItemToSeparatedString(x); 
+            
+            });
+
+            string orderHeaderString = ConvertOrderHeaderToSeparatedString(request);
+
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         "updWebControl");
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createSecondHandOrder", orderHeaderString, lineString);    //deSerializeTest
+
+            string response = Helpers.ConvertData.ConvertObjectToString(result);
+
+            object salesId = null;
+
+            if (response.Equals("1"))
+            {
+                //rendeles rogzites hivasa
+                salesId = dynamics.CallMethod("getSecondHandSalesId");
+            }
+
+            dynamics.Disconnect();
+
+            return Helpers.ConvertData.ConvertObjectToString(salesId);
         }
 
         /// <summary>
@@ -93,6 +135,42 @@ namespace CompanyGroup.Data.PartnerModule
                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo).GetConstructors()[0]));
 
             return query.List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>() as List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>;
+        }
+
+        private static string ConvertOrderHeaderToSeparatedString(CompanyGroup.Domain.PartnerModule.SalesOrderCreate request)
+        {
+            return AddBraketsToInstance(request.CustomerId) + '|' +
+                   AddBraketsToInstance(Helpers.ConvertData.ConvertIntToString(Helpers.ConvertData.ConvertBoolToInt(request.RequiredDelivery), "0")) + '|' +
+                   AddBraketsToInstance(request.DeliveryDate) + '|' +
+                   AddBraketsToInstance(Helpers.ConvertData.ConvertIntToString(Helpers.ConvertData.ConvertBoolToInt(request.PartialDelivery))) + '|' +
+                   AddBraketsToInstance(request.DeliveryId) + '|' +
+                   AddBraketsToInstance(request.DeliveryCompanyName) + '|' +
+                   AddBraketsToInstance(request.DeliveryZip) + '|' +
+                   AddBraketsToInstance(request.DeliveryCity) + '|' +
+                   AddBraketsToInstance(request.DeliveryStreet) + '|' +
+                   AddBraketsToInstance(request.DeliveryPhone) + '|' +
+                   AddBraketsToInstance(request.DeliveryEmail) + '|' +
+                   AddBraketsToInstance(String.Format("{0} {1} {2}", request.DeliveryZip, request.DeliveryCity, request.DeliveryStreet) ) + '|' +
+                   AddBraketsToInstance(Helpers.ConvertData.ConvertIntToString((int)request.SalesSource, "0")) + '|' +
+                   AddBraketsToInstance(request.ContactPersonId) + '|' +
+                   AddBraketsToInstance(request.InventLocationId);
+        }
+
+        /// <summary>
+        /// rendeles sor elemet egy pipline-al hatarolt karakterlancba fuzi ossze
+        /// </summary>
+        /// <param name="oItem"></param>
+        /// <returns></returns>
+        private static string ConvertOrderLineItemToSeparatedString(CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate request)
+        {
+            return AddBraketsToInstance(request.ItemId) + "|" +
+                   AddBraketsToInstance(Helpers.ConvertData.ConvertIntToString(request.Qty, "0")) + "|" +
+                   AddBraketsToInstance(request.ConfigId);
+        }
+
+        private static string AddBraketsToInstance(string s)
+        {
+            return "[" + s + "]";
         }
     }
 }

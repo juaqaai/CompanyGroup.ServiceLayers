@@ -867,6 +867,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 List<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate> salesOrderLineCreateRequest = new List<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>();
 
+                //végig a kosár elemeken
                 shoppingCartToAdd.Items.ToList().ForEach(x =>
                 {
                     CompanyGroup.Domain.PartnerModule.ProductOrderCheck check = salesOrderRepository.GetProductOrderCheck(x.ProductId, x.DataAreaId, x.Quantity);
@@ -939,8 +940,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult salesOrderCreateResultHrp = null;
 
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> hrpLines = shoppingCartToAdd.GetItemsByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
                 //HRP AX rendelés összeállítás
-                if (shoppingCartToAdd.ItemCountByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp) > 0)
+                if (hrpLines.Count > 0)
                 {
                     CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreate = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
                     {
@@ -957,7 +960,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockHrp,
-                        Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        Lines = hrpLines.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
                         }
@@ -975,8 +978,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult salesOrderCreateResultBsc = null;
 
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> bscLines = shoppingCartToAdd.GetItemsByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+
                 //BSC AX rendelés összeállítás
-                if (shoppingCartToAdd.ItemCountByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc) > 0)
+                if (bscLines.Count > 0)
                 {
                     CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreate = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
                     {
@@ -993,7 +998,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockBsc,
-                        Lines = shoppingCartToAdd.Items.ToList().ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        Lines = bscLines.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
                         }
@@ -1010,6 +1015,82 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
 
                 #endregion
+
+                string salesOrderCreateSecondHandResultHrp = String.Empty;
+
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> secondHandItemsHrp = shoppingCartToAdd.GetSecondHandItemsByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                if (secondHandItemsHrp.Count > 0)
+                {
+                    CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateSecondHandHrp = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
+                    {
+                        ContactPersonId = visitor.PersonId,
+                        CustomerId = visitor.CustomerId,
+                        DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
+                        DeliveryCity = deliveryAddress.City,
+                        DeliveryCompanyName = "",
+                        DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
+                        DeliveryEmail = "",
+                        DeliveryId = "",
+                        DeliveryPersonName = "",
+                        DeliveryPhone = "",
+                        DeliveryStreet = deliveryAddress.Street,
+                        DeliveryZip = deliveryAddress.ZipCode,
+                        InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockHrp,
+                        Lines = secondHandItemsHrp.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        {
+                            return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
+                        }
+                        ),
+                        Message = "",
+                        PartialDelivery = true,
+                        RequiredDelivery = request.DeliveryRequest,
+                        SalesSource = 1,
+                        Transporter = ""
+                    };
+
+                    //összeállított rendelés elküldése AX-be
+                    salesOrderCreateSecondHandResultHrp = salesOrderRepository.CreateSecondHandOrder(salesOrderCreateSecondHandHrp);
+
+                }
+
+                string salesOrderCreateSecondHandResultBsc = String.Empty;
+
+                List<CompanyGroup.Domain.WebshopModule.ShoppingCartItem> secondHandItemsBsc = shoppingCartToAdd.GetSecondHandItemsByDataAreaId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+
+                if (secondHandItemsBsc.Count > 0)
+                {
+                    CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateSecondHandBsc = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
+                    {
+                        ContactPersonId = visitor.PersonId,
+                        CustomerId = visitor.CustomerId,
+                        DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
+                        DeliveryCity = deliveryAddress.City,
+                        DeliveryCompanyName = "",
+                        DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
+                        DeliveryEmail = "",
+                        DeliveryId = "",
+                        DeliveryPersonName = "",
+                        DeliveryPhone = "",
+                        DeliveryStreet = deliveryAddress.Street,
+                        DeliveryZip = deliveryAddress.ZipCode,
+                        InventLocationId = CompanyGroup.Domain.Core.Constants.OuterStockHrp,
+                        Lines = secondHandItemsBsc.ConvertAll<CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate>(x =>
+                        {
+                            return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
+                        }
+                        ),
+                        Message = "",
+                        PartialDelivery = true,
+                        RequiredDelivery = request.DeliveryRequest,
+                        SalesSource = 1,
+                        Transporter = ""
+                    };
+
+                    //összeállított rendelés elküldése AX-be
+                    salesOrderCreateSecondHandResultBsc = salesOrderRepository.CreateSecondHandOrder(salesOrderCreateSecondHandBsc);
+
+                }
 
                 //ha volt mit rendelni
                 isValidated = salesOrderLineCreateRequest.Count > 0;
@@ -1064,8 +1145,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 response.LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions);
                 response.Created = true;
                 response.WaitForAutoPost = false;
-                response.Message = String.Format( "HRP {0}  BSC {1}", (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.Message : "", (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.Message : "" );
-                response.IsValidated = (salesOrderCreateResultHrp != null) || (salesOrderCreateResultBsc != null);
+                response.Message = String.Format("HRP: {0}  BSC: {1} HRP használt: {2} BSC használt: {3}", (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.SalesId : "", (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.SalesId : "", !String.IsNullOrEmpty(salesOrderCreateSecondHandResultHrp) ? salesOrderCreateSecondHandResultHrp : "", !String.IsNullOrEmpty(salesOrderCreateSecondHandResultBsc) ? salesOrderCreateSecondHandResultBsc : "");
+                response.IsValidated = (salesOrderCreateResultHrp != null) || (salesOrderCreateResultBsc != null) || (!String.IsNullOrEmpty(salesOrderCreateSecondHandResultHrp)) || (!String.IsNullOrEmpty(salesOrderCreateSecondHandResultBsc));
 
                 return response;
             }

@@ -216,7 +216,7 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
-        /// üres-e a kosár?
+        /// üres-e a kosár? Vállalatkódonként megszámolja a kosárban lévő darabszámot
         /// </summary>
         public int ItemCountByDataAreaId(string dataAreaId)
         {
@@ -250,6 +250,10 @@ namespace CompanyGroup.Domain.WebshopModule
             });
         }
 
+        /// <summary>
+        /// elemek kiolvasása
+        /// </summary>
+        /// <returns></returns>
         public List<ShoppingCartItem> GetItems()
         {
             try
@@ -259,6 +263,40 @@ namespace CompanyGroup.Domain.WebshopModule
                 return (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null) ? new List<ShoppingCartItem>() : this.Items.ToList();
             }
             catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// adott vállalatban lévő elemek kiolvasása (nem használt)
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        public List<ShoppingCartItem> GetItemsByDataAreaId(string dataAreaId)
+        {
+            try
+            {
+                return this.Items.Where(x => (x != null || x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.DataAreaId.ToLower().Equals(dataAreaId)) && (!x.IsInSecondHand) ).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// adott vállalatban lévő használt elemek kiolvasása
+        /// </summary>
+        /// <param name="dataAreaId"></param>
+        /// <returns></returns>
+        public List<ShoppingCartItem> GetSecondHandItemsByDataAreaId(string dataAreaId)
+        {
+            try
+            {
+                return this.Items.Where(x => (x != null || x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.DataAreaId.ToLower().Equals(dataAreaId)) && (x.IsInSecondHand)).ToList();
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }

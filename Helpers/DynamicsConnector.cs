@@ -179,7 +179,28 @@ namespace CompanyGroup.Helpers
             }
             return _AxaptaObject.Call(methodName, param);
         }
-        
+
+        public object CallMethod(string methodName, string param1, string param2)
+        {
+            if (_AxaptaObject == null)
+            {
+                CreateAxaptaObject();
+            }
+            if (String.IsNullOrEmpty(methodName))
+            {
+                throw new ArgumentException("methodName argument not set");
+            }
+            if (String.IsNullOrEmpty(param1))
+            {
+                throw new ArgumentException("param1 argument not set");
+            }
+            if (String.IsNullOrEmpty(param2))
+            {
+                throw new ArgumentException("param2 argument not set");
+            }
+            return _AxaptaObject.Call(methodName, param1, param2);
+        }        
+
         /// <summary>
         /// metodus hivasa parameterlista nelkul
         /// </summary>

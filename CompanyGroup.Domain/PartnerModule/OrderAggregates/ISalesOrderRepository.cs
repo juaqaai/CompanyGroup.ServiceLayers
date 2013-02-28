@@ -9,6 +9,8 @@ namespace CompanyGroup.Domain.PartnerModule
 
         CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult Create(CompanyGroup.Domain.PartnerModule.SalesOrderCreate request);
 
+        string CreateSecondHandOrder(CompanyGroup.Domain.PartnerModule.SalesOrderCreate request);
+
         /// <summary>
         /// részletes vevőrendelés sorok listája
         /// </summary>
