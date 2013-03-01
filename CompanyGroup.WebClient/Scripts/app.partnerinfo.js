@@ -240,8 +240,11 @@ companyGroup.partnerinfo = $.sammy(function () {
             success: function (response) {
                 //console.log(response);
                 $('#main_container').empty();
-                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
-                $('#main_container').html(html);
+
+                $("#invoiceInfoListTemplate").tmpl(response).appendTo("#main_container");
+
+//                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
+//                $('#main_container').html(html);
             },
             error: function () {
                 //console.log('GetVisitorInfo call failed');

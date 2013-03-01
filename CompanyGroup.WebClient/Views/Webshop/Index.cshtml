@@ -1067,9 +1067,7 @@
             thousandsSeparator: '.'
             });
 			
-            @*$(function(){						
-			$('.select2').skinner({'type':'left'});			
-			});*@
+
 
 			@*kosár toggle*@
 			
@@ -1146,8 +1144,6 @@
             $("#leasingOptionsTemplate").tmpl(model.LeasingOptions).appendTo("#leasingOptionsContainer");            
 
             $("input#hidden_cartId").val(model.ActiveCart.Id);
-
-            $('.select2').skinner({'type':'left'});
 
             $('#hidden_cartopen').val('');
 
