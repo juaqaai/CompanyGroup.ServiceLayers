@@ -6,7 +6,12 @@ companyGroup.company = $.sammy(function () {
 
     this.use(companyGroupHelpers);
 
-    this.setTitle('Céginformáció - ');
+    this.setTitle('HRP/BSC Céginformáció - ');
+	
+			this.get('#/closed', function (context) {
+        //console.log(context);
+		$.fancybox.close()
+    });
 
     this.get('#/', function (context) {
         context.title('kezdőoldal');

@@ -62,6 +62,11 @@ namespace CompanyGroup.WebClient.Models
 
         public bool CatalogueOpenStatus { get; set; }
 
+        /// <summary>
+        /// van-e aktív szűrési feltétel beállítva, vagy nincs beállítva
+        /// </summary>
+        public bool IsActiveFilter { get; set; }
+
         public int Sequence { get; set; }
 
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses DeliveryAddresses { get; set; }
@@ -69,6 +74,7 @@ namespace CompanyGroup.WebClient.Models
         public CompanyGroup.Dto.WebshopModule.BannerList BannerList { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
+
     }
 
 }

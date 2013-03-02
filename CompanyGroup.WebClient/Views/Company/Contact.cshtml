@@ -96,6 +96,16 @@
 
     companyGroup.guide.run('#/');
 
+	$('a[rel=galeria]').fancybox({
+    transitionIn: 'none',
+    transitionOut: 'none',
+    titlePosition: 'over',
+	closeBtn:'true',
+    titleFormat: function(title, currentArray, currentIndex, currentOpts){
+      return '<span id="fancybox-title-over">Kép: ' + (currentIndex + 1) + ' / ' + currentArray.length +
+	      (title.length ? '<br>' + title : '') + '</span>';
+    }
+  	});
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
   	$('#cus_header1').html(visitorInfoHtml);
 

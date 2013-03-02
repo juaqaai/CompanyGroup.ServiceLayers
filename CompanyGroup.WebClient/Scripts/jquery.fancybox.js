@@ -67,7 +67,7 @@
 
 			autoResize  : true,
 			autoCenter  : !isTouch,
-			fitToView   : true,
+			fitToView   : false,
 			aspectRatio : false,
 			topRatio    : 0.5,
 			leftRatio   : 0.5,
@@ -76,7 +76,7 @@
 			wrapCSS   : '',
 
 			arrows     : true,
-			closeBtn   : true,
+			closeBtn   : false,
 			closeClick : false,
 			nextClick  : false,
 			mouseWheel : true,
@@ -123,7 +123,7 @@
 				prev : 'right'
 			},
 
-			scrollOutside  : true,
+			scrollOutside  : false,
 
 			// Override some properties
 			index   : 0,
@@ -138,7 +138,7 @@
 				image    : '<img class="fancybox-image" src="{href}" alt="" />',
 				iframe   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + ($.browser.msie ? ' allowtransparency="true"' : '') + '></iframe>',
 				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
-				closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
+				closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="#/closed"></a>',
 				next     : '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
 				prev     : '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
 			},
@@ -1691,7 +1691,7 @@
 
 	F.helpers.overlay = {
 		defaults : {
-			closeClick : true,  // if true, fancyBox will be closed when user clicks on the overlay
+			closeClick : false,  // if true, fancyBox will be closed when user clicks on the overlay
 			speedOut   : 200,   // duration of fadeOut animation
 			showEarly  : true,  // indicates if should be opened immediately or wait until the content is ready
 			css        : {},    // custom CSS properties

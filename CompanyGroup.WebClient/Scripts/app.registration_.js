@@ -8,7 +8,7 @@ companyGroup.registration = $.sammy(function () {
 
     //szerződési feltételek betöltése (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/', function (context) {
-        context.title(' HRP/BSC Regisztráció - szerződési feltételek');
+        context.title('Regisztráció - szerződési feltételek');
         $.ajax({
             url: companyGroup.utils.instance().getRegistrationApiUrl('GetRegistrationData'),
             data: {},
@@ -35,7 +35,7 @@ companyGroup.registration = $.sammy(function () {
             success: function (response) {
                 if (response) {
                     setTabsVisibility(2);
-                    context.title('HRP/BSC Regisztráció - kitöltő adatai');
+                    context.title('Regisztráció - kitöltő adatai');
                 }
                 else {
                     //console.log('addNew result failed');
@@ -263,7 +263,7 @@ companyGroup.registration = $.sammy(function () {
                 if (result) {
                     if (result.Successed) {
                         setTabsVisibility(5);
-                        context.title('HRP/BSC Regisztráció - kapcsolattartó');
+                        context.title('Regisztráció - kapcsolattartó');
                     } else {
                         alert(result.Message);
                     }
@@ -876,7 +876,8 @@ var setTabsVisibility = function (i) {
 			$('#tab_1_ok').show(500);
 		} else { 
 			$("#tabs-2").hide(500);
-			$('#tabs-2-button').hide(500);
+			
+			$('#tab_1_ok').hide(500);
 		}
 		if (i == 3) {
             $('#tabs-3').show(500);
@@ -899,138 +900,23 @@ var setTabsVisibility = function (i) {
         if (i == 5) {
             $("#tabs-5").show(500);
 			$('#tabs-4-button').show(500);
-			$('#tab_4_ok').show(500);
 
         } else {
             $("#tabs-5").hide(500);
 			$('#tabs-5-button').hide(500);
-			$('#tab_4_ok').hide(500);
 
         }
         if (i == 6) {
             $("#tabs-6").show(500);
-			$("#tabs-5").show(500);
-			$("#tabs-4").show(500);
-			$("#tabs-3").show(500);
-			$("#tabs-2").show(500);
 			$('#tabs-5-button').show(500);
-			$('#tab_5_ok').show(500);
-			
         } else {
             $("#tabs-6").hide(500);
-			$('#tab_5_ok').hide(500);
-			;
         }
         if (i == 7) {
             $("#tabs-7").show(500);
-			
         } else {
             $("#tabs-7").hide(500);
         }
     }
-	
-	
-			$("#mail_address").hide();
-            $("#del_address").hide();
-            $("#contactperson").hide();
-			$("#finish_reg").hide()
-			$("#tabs-7").hide();
-            
-            
-               
-				$("#chk_checkdata").change(function () {
-					$("#tabs-1").toggle(500);
-					$("#tabs-2").toggle(500);
-					$("#tabs-3").toggle(500);
-					$("#tabs-4").toggle(500);
-					$("#tabs-5").toggle(500);
-					$("#finish_reg").toggle(500);
-					$("#check_span").toggle(500);
-					$("#tabs-7").show(500);
-					
-				});
-			
-			$("#chk_mail_address").change(function () {
-			$('#mail_address').toggle("slow");
-			
-		});
-		
-		$("#chk_mail_address").change(function () {
-			$('#mail_address').toggle("slow");
-			
-		});
-              $("#chk_del_address").change(function () {
-			$('#del_address').toggle("slow");
-			
-		});
-        
-            $("#chk_contactperson").change(function () {
-			$('#contactperson').toggle("slow");
-			
-		});
-
-	
-	$("#chk_accept").change(function () {
-        if ($('#chk_accept').is(':checked')) {
-            document.location.hash = '/datarecording';
-
-
-            
-        }
-        else {
-           document.location.hash = '/';
-           $('#tabs-2').hide(500);
-		   
-        }
-    });
-	
-				$("#tabs-1-button").click(function () {
-			$('#tabs-1').toggle("slow");
-		});
-        		$("#tabs-2-button").click(function () {
-			 $('#tabs-2').toggle("slow");
-		});
-	
-            	$("#tabs-3-button").click(function () {
-			$('#tabs-3').toggle("slow");
-		});
-                $("#tabs-4-button").click(function () {
-			$('#tabs-4').toggle("slow");
-		});
-                $("#tabs-5-button").click(function () {
-			$('#tabs-5').toggle("slow");
-		});
-		         $("#tabs-6-button").click(function () {
-			$('#tabs-6').toggle("slow");
-		});
-		
-		$(function(){
-      $("#chk_print").click(function(){
-			if ($(this).is(':checked'))
-                  $('a#nyomtatas').trigger('click');
-				  $("#tabs-7").hide(500);
-      });
-});
-
-			  $("a#nyomtatas").fancybox({
-		'hideOnContentClick': false
-	});
-        
-	
-	
-	  function displayVals() {
-      var singleValues = $("#selectCountry").val();
-     if(singleValues == "2") {
-   $("#foreign_vat").show(500);  
-   $("#hun_vat").hide(500);
-   } else {
-   $("#foreign_vat").hide(500);  
-   $("#hun_vat").show(500);
-   } 
-    }
-$("select").change(displayVals);
-    displayVals();
-	 
-	
 
 });

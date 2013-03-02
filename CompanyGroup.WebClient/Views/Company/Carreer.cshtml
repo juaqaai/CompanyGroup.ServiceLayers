@@ -104,6 +104,7 @@
            </tr>
          </table>
          <p>&nbsp;</p>
+ <div id="jelentkezesi_lap">
          <h2 id="hrp">Jelentkezési lap</h2>
          <p>Örülünk, hogy úgy döntött megtisztel minket bizalmával és jelentkezik cégünkhöz. Kérem, töltse ki az alábbi jelentkezési lap mezőit, majd küldje el részünkre.<br />
          <strong>Figyelem: a csillaggal megjelölt mezők kitöltése kötelező, ezek hiányában nem fogadhatjuk el jelentkezését!</strong></p>
@@ -245,6 +246,7 @@
 <p>&nbsp;</p>
         </div>
 </div>
+</div>
 
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');
@@ -274,6 +276,7 @@
 
 	$("#myDiv").hide();
     $("#myDiv2").hide();
+    $("#jelentkezesi_lap").hide();
   
 	$(".button1").click(function () {
 	$("#myDiv").toggle("fast");

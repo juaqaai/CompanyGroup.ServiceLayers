@@ -8,6 +8,7 @@
         <meta http-equiv="imagetoolbar" content="no" />
         <meta name="MSSmartTagsPreventParsing" content="true" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1" />
 		<![endif]-->
 
 		<meta name="viewport" content="width=device-width" />
@@ -158,8 +159,9 @@
 				</table>
 	
 			</div>
-			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>
-        	    <a title="" href="#top" id="top-link">Lap tetejére</a>
+			<div id="szlogen" >…több, mint <strong>disztribúció</strong></div>
+			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>    
+				<a title="" href="#top" id="top-link">Lap tetejére</a>
 			    <div id="cus_ax_nav">
 					 <ul id="menu-bar">
 					    <li>
@@ -183,6 +185,7 @@
 					    </li> 
 						<li id="becomePartnerContainer">
 					    </li>
+						
 						 <li>
 						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
@@ -191,39 +194,41 @@
 						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
 						<li>
-						    <a rel="nofollow" href="@Url.Content("#")">Tájékoztató</a>
+						    <a rel="nofollow" href="@Url.Content("#/")">Tájékoztató</a>
 							<ul>
 							    <li>
-								   <a rel="nofollow"  href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> 
+								   <a href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> 
 							    </li>
                                 <li>
-								   <a rel="nofollow"  href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a>
+								   <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a>
 							    </li>
 								 <li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> 
+								   <a href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> 
 							    </li>
 								<li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a>
+								   <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a>
 							    </li>
                                 <li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a>
+								   <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a>
 							    </li>
                                 <li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
+								   <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
 							    </li>
 						    </ul>
 					    </li> 
 				    </ul>
 					<script id="becomePartnerTemplate" type="text/html">
 					{{#IsValidLogin}}
-                        <a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok módosítása">Adatmódosítás</a>
+                        <!--a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok módosítása">Adatmódosítás</a-->
 					{{/IsValidLogin}}
 					{{^IsValidLogin}}
-					    <a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok megadása">Partnerré válás</a>
-				{{/IsValidLogin}}
-				</script>
+					    <!--a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok megadása">Partnerré válás</a-->
+					{{/IsValidLogin}}
+					</script>
                     <script id="newsletterTemplate" type="text/html">
 					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
+
+
 				   </script>
 			    </div>
 			</div>
@@ -384,21 +389,22 @@
 			<!-- bejelentkezés ablak -->
 			<div style="display: none;">
 				<div id="div_login">
+				<a class="fancybox-close" href="#/closed"></a>
                     <form action="#/signin" id="form_login" method="post"> 
-                        <H2>Bejelentkezés</H2>
+                        <h2>Bejelentkezés</h2>
                         <br />
                         Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni.
                         <br />
                         <br />
 
-                        <div id="login-box-name" style="margin-top:20px;"><strong>Felhasználónév:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_username" class="form-login" title="Username" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></div>
+                        <div style="margin-top:20px;"><strong>Felhasználónév:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_username" name="txt_username" class="form-login" title="felhasználónév" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></div>
 
-                        <div id="login-box-name"><strong>Jelszó:</strong></div><div id="login-box-field" style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" /></br><label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></div>
-                        <p><br />
+                        <div><strong>Jelszó:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="jelszó" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></div>
+                        <p></p><br />
                           <span class="login-box-options">
-                          <input type="checkbox" name="1" value="1">
+                          <input type="checkbox" name="1" value="1" />
                             Emlékezzen rám
-                          <a id="forget_password" href="#forgetpassword" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
+                          <a id="forget_password" href="#/forgetpassword" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
                           <br />
                           <br />
                           <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
@@ -412,6 +418,7 @@
             </div>
 <div style="display:none;">
 <div style="width:250px; padding:15px;" id="forgetpassword">
+<a class="fancybox-close" href="#/closed"></a>
 <span style="font-size:24px; color:#084385;" ><strong>Jelszóváltoztatás</strong></span><br><br>
 Kérem adja meg felhasználó nevét és az Ön új jelszó igénylési kérelmét elküldtük a rendszerünkben regisztrált e-mail címre.<br><br>
 <strong>Felhasználónév:</strong><br><br>
@@ -435,14 +442,14 @@ HRP Hungary Kft. </em>
             head.js('@Scripts.Url("~/bundles/jqueryui")')
                 //.js('@Scripts.Url("~/bundles/jqueryval")')
                 .js('@Scripts.Url("~/bundles/chosen")')
-                .js('@Scripts.Url("~/bundles/fileupload")')
+                //.js('@Scripts.Url("~/bundles/fileupload")')
                 .js('@Scripts.Url("~/bundles/floatingmessage")')
                 .js('@Scripts.Url("~/bundles/fancybox")')
                 //.js('@Scripts.Url("~/bundles/json2")')
                 .js('@Scripts.Url("~/bundles/tmpl")')
                 //.js('@Scripts.Url("~/bundles/vegas")')
                 .js('@Scripts.Url("~/bundles/mustache")')
-//                .js('@Scripts.Url("~/bundles/amplify")')
+			   // .js('@Scripts.Url("~/bundles/amplify")')
                 //.js('@Scripts.Url("~/bundles/smarttab")')
                 .js('@Scripts.Url("~/bundles/scrollto")')
 				.js('@Scripts.Url("~/bundles/toastr")')
@@ -457,26 +464,32 @@ HRP Hungary Kft. </em>
 
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
+			
+			        //oldal tetejére ugrás link
+        $('#top-link').topLink({
+            min: 1,
+            fadeSpeed: 500
+        });
 
-            $('#preloader').ajaxStart(function () {
+
+			
+			$('#preloader').ajaxStart(function () {
                 $('#preloader').show();
             }).ajaxStop(function () {
                 $('#preloader').hide();
             });
 			
-			$('#forget_password').fancybox({
+			  $('#forget_password').fancybox({
 	    	transitionIn: 'fade',
 	    	transitionOut: 'fade'
 			  });
 			  
-			$("a#nyomtatas").fancybox({
-		        'hideOnContentClick': false
-	        });
 			
 			$(function(){						
-			    $('.select1').skinner({'type':'left'});				
+			$('.select1').skinner({'type':'left'});				
 			});
 			
+
             (function( $ ) {
             var proto = $.ui.autocomplete.prototype,
                 initSource = proto._initSource;
@@ -513,8 +526,6 @@ HRP Hungary Kft. </em>
 			
 			$("#status").fadeOut(); // will first fade out the loading animation
             $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.
-
-
         }); 
 
         @RenderSection("ScriptsInBottom", false)

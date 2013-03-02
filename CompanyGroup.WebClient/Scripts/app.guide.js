@@ -6,10 +6,15 @@ companyGroup.guide = $.sammy(function () {
 
     this.use(companyGroupHelpers);
 
-    this.setTitle('Útmutató - ');
+    this.setTitle('HRP/BSC Útmutató - ');
 
     this.get('#/', function (context) {
         context.title('felhasználási feltételek');
+    });
+	
+		this.get('#/closed', function (context) {
+        //console.log(context);
+		$.fancybox.close()
     });
 
     this.get('#/termOfUse', function (context) {
@@ -88,34 +93,35 @@ companyGroup.guide = $.sammy(function () {
             $("#usermenuTemplate").tmpl(result.Visitor).appendTo("#usermenuContainer");
         });
     });
-
-    var setVisibility = function (controlId) {
-        if (controlId == "termOfUse") { $("#termOfUse").show(); }
+    
+    	 var setVisibility = function (controlId) {
+        if (controlId == "termOfUse") { $("#termOfUse").fadeIn('slow'); }
         else { $("#termOfUse").hide(); }
 
-        if (controlId == "dataProtection") { $("#dataProtection").show(); }
+        if (controlId == "dataProtection") { $("#dataProtection").fadeIn('slow'); }
         else { $("#dataProtection").hide(); }
 
         if (controlId == "deliveryAndPaymentOptions") {
-            $("#deliveryAndPaymentOptions").show();
+            $("#deliveryAndPaymentOptions").fadeIn('slow');
         } else {
             $("#deliveryAndPaymentOptions").hide();
         }
         if (controlId == "returnItemConditions") {
-            $("#returnItemConditions").show();
+            $("#returnItemConditions").fadeIn('slow');
         } else {
             $("#returnItemConditions").hide();
         }
         if (controlId == "garantyValidation") {
-            $("#garantyValidation").show();
+            $("#garantyValidation").fadeIn('slow');
         } else {
             $("#garantyValidation").hide();
         }
         if (controlId == "shoppingInTheWebshop") {
-            $("#shoppingInTheWebshop").show();
+            $("#shoppingInTheWebshop").fadeIn('slow');
         } else {
             $("#shoppingInTheWebshop").hide();
         }
     }
 
+   
 });

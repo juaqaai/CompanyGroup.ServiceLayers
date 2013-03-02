@@ -19,7 +19,12 @@ companyGroup.webshop = $.sammy(function () {
 
     this.use(companyGroupHelpers);
 
-    this.setTitle('Webshop -');
+    this.setTitle('HRP/BSC Webáruház -');
+	
+	this.get('#/closed', function (context) {
+        //console.log(context);
+		$.fancybox.close()
+    });
 
     this.get('#/', function (context) {
         //console.log(context);
@@ -234,7 +239,7 @@ companyGroup.webshop = $.sammy(function () {
         });
         //oldal tetejére ugrás link
         $('#top-link').topLink({
-            min: 400,
+            min: 1,
             fadeSpeed: 500
         });
         //szállítási dátum, idő
@@ -307,17 +312,18 @@ companyGroup.webshop = $.sammy(function () {
             this.title('szűrés hardware termékekre');
             showProductList(true);
         } else {
-            $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>', {
+            $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>',{
                 'autoDimensions': true,
-
                 'transitionIn': 'elastic',
                 'transitionOut': 'elastic',
+				'closeBtn': 'true',
                 'changeFade': 0,
                 'speedIn': 300,
                 'speedOut': 300,
                 'width': '150%',
                 'height': '150%',
-                'autoScale': true
+                'autoScale': true,
+                beforeClose: function () { $('#chk_filterByHrp').attr('checked', true); }
             });
         }
     });
@@ -329,17 +335,18 @@ companyGroup.webshop = $.sammy(function () {
             this.title('szűrés szoftver termékekre');
             showProductList(true);
         } else {
-            $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>', {
+            $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>',{
                 'autoDimensions': true,
-
                 'transitionIn': 'elastic',
                 'transitionOut': 'elastic',
+                'closeBtn': 'true',
                 'changeFade': 0,
                 'speedIn': 300,
                 'speedOut': 300,
                 'width': '150%',
                 'height': '150%',
-                'autoScale': true
+                'autoScale': true,
+                beforeClose: function () { $('#chk_filterByBsc').attr('checked', true); }
             });
         }
     });
@@ -480,9 +487,13 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result === true) {
-                    $(".toggle_container").show();
+                    $(".toggle_container").show('slow');
+
+					
                 } else {
-                    $(".toggle_container").hide();
+                    $(".toggle_container").hide('slow');
+
+						
                 }
                 context.redirect('#/catalogueopenedstatus/' + result);
             },
@@ -983,7 +994,7 @@ companyGroup.webshop = $.sammy(function () {
                 $("#cus_rendeles_feladas").hide();
                 $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
-                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása / Megrendelés');
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása');
                 context.redirect('#/shoppingcartopenedstatus');
             },
             error: function () {
@@ -1122,6 +1133,7 @@ companyGroup.webshop = $.sammy(function () {
     this.get('#/showSaveCartPanel', function (context) {
         $.fancybox({
             href: '#save_basket_win',
+			closeBtn: true,
             autoDimensions: true,
             autoScale: false,
             transitionIn: 'fade',
@@ -1683,6 +1695,7 @@ companyGroup.webshop = $.sammy(function () {
                                 'transitionIn': 'elastic',
                                 'transitionOut': 'elastic',
                                 'type': 'image',
+								'closeBtn': 'true',
                                 'changeFade': 0,
                                 'speedIn': 300,
                                 'speedOut': 300,
@@ -1793,11 +1806,12 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 if (result.Products.ListCount == 0) {
                     $('list_item_container').show();
-                    $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>Nincs megjelenitendő elem!</H2><p>Próbálja keresési jellegek használatával szűrni a találatokat bizonyos feltételek alapján.<p></div>', {
+			$.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>Nincs megjelenitendő elem!</H2><p>Próbálja keresési jellegek használatával szűrni a találatokat bizonyos feltételek alapján.<p></div>',{
                         'autoDimensions': true,
 
                         'transitionIn': 'elastic',
                         'transitionOut': 'elastic',
+						'closeBtn': 'true',
                         'changeFade': 0,
                         'speedIn': 300,
                         'speedOut': 300,

@@ -12,8 +12,10 @@
                     autoScale: false,
                     transitionIn: 'fade',
                     transitionOut: 'fade',
-                    beforeClose: function () { 
-                    //console.log('signin panel closed'); 
+                    afterLoad: function () {
+                        //console.log('signin panel loaded');
+                        $("#txt_password").val('');
+                        $('#txt_username').val('');
                     }
                 });
             },
@@ -78,7 +80,7 @@
                     error: function () {
                         //console.log('SignOut call failed');
                     }
-                });                              
+                });
             },
             changeLanguage: function (language) {
                 var data = {
