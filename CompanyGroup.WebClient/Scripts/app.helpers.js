@@ -12,10 +12,11 @@
                     autoScale: false,
                     transitionIn: 'fade',
                     transitionOut: 'fade',
-                    afterLoad: function () {
+                    afterShow: function () {
                         //console.log('signin panel loaded');
                         $("#txt_password").val('');
                         $('#txt_username').val('');
+                        $('#txt_username').focus();
                     }
                 });
             },
@@ -139,7 +140,11 @@
                         //console.log('ChangeCurrency call failed');
                     }
                 });
+            },
+            searchByText: function (searchText) {
+                window.location.href = companyGroup.utils.instance().getWebshopBaseUrl('Index/?q=' + searchText);
             }
+
         });
     };
 

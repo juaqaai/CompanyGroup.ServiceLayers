@@ -15,6 +15,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            string searchText = CompanyGroup.Helpers.QueryStringParser.GetString("q");
+
             ViewBag.Message = "Webshop view";
 
             CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
@@ -37,7 +39,7 @@ namespace CompanyGroup.WebClient.Controllers
                 ManufacturerIdList = new List<string>(),
                 NewFilter = false,
                 StockFilter = false,
-                TextFilter = String.Empty,
+                TextFilter = searchText,
                 PriceFilter = "0",
                 PriceFilterRelation = "0"
             };
@@ -62,7 +64,7 @@ namespace CompanyGroup.WebClient.Controllers
                 NewFilter = false,
                 Sequence = 0,
                 StockFilter = false,
-                TextFilter = String.Empty,
+                TextFilter = searchText,
                 PriceFilter = "0",
                 PriceFilterRelation = "0",
                 VisitorId = visitor.Id

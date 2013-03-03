@@ -30,8 +30,14 @@ namespace CompanyGroup.WebClient.Models
 
         public CompanyGroup.Dto.WebshopModule.Product Product { get; set; }
 
+        /// <summary>
+        /// kompatibilitás lista - mibe jó?
+        /// </summary>
         public List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> CompatibleProducts { get; set; }
 
+        /// <summary>
+        /// kompatibilitás lista - mi jó hozzá?
+        /// </summary>
         public List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> ReverseCompatibleProducts { get; set; }
 
         public CompanyGroup.WebClient.Models.Visitor Visitor { get; set; }

@@ -974,47 +974,44 @@
                                 {{/if}}
 							</ul>
 							<div class="tab-content" id="tabs1">
-                           {{if CompatibleProducts.length > 0}}
-
-                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                      <tr>
-                                        <td width="333"><strong>Azonosító név</strong></td>
-                                        <td width="115"><strong>Készlet</strong></td>
-                                        <td width="114">{{if Visitor.IsValidLogin}}<strong>Ár:</strong>{{/if}}</td>
-                                        <td width="90"><strong>&nbsp;</strong></td>
+                            {{if CompatibleProducts.length > 0}}
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="333"><strong>Azonosító név</strong></td>
+                                    <td width="115">{{if Visitor.IsValidLogin}}<strong>Készlet</strong>{{/if}}</td>
+                                    <td width="114">{{if Visitor.IsValidLogin}}<strong>Ár:</strong>{{/if}}</td>
+                                    <td width="90"><strong>&nbsp;</strong></td>
                                 </tr>
-  </table>
-								  <br>
-                                      {{each( i, item ) CompatibleProducts}}
-  <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}">${item.ProductId} ${item.PartNumber} ${item.ItemName}</a></td>
-                                          <td width="115">${Product.Stock} db</td>
-                                            <td width="115">{{if Visitor.IsValidLogin}}<strong>${item.Price} Ft</strong>{{/if}}</td>
-                                            <td width="90">
-                                            <input type="hidden" value="${item.ConfigId}">
-                                            {{if Visitor.IsValidLogin}}
-                                            <input type="text" name="txt_quantity" class="number" size="2" value="1" />db 
-                                            <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket_2.png")" alt="kosár" border="0" align="absmiddle" />
-                                            {{/if}}
-                                            </td>
-                                        </tr>
-                                        </table>
-                              </form>
-                                     
+                                </table>
+								<br/>
+                                {{each( i, item ) CompatibleProducts}}
+                                <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}">${item.ProductId} ${item.ItemName}</a></td>
+                                    <td width="115">{{if Visitor.IsValidLogin}}${Product.Stock} db{{/if}}</td>
+                                    <td width="115">{{if Visitor.IsValidLogin}}<strong>${item.Price} Ft</strong>{{/if}}</td>
+                                    <td width="90">
+                                    <input type="hidden" value="${item.ConfigId}">
+                                    {{if Visitor.IsValidLogin}}
+                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" />db 
+                                    <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket_2.png")" alt="kosár" border="0" align="absmiddle" />
+                                    {{/if}}
+                                    </td>
+                                </tr>
+                                </table>
+                                </form>
                                 {{/each}}
-                                {{else}}
+                            {{else}}
 							
                              <span>Nincs megjelenítendő kellékanyag.</span>{{/if}}</div>
-							<div class="tab-content" id="tabs2">
+							 <div class="tab-content" id="tabs2">
                                 {{each( i, item ) ReverseCompatibleProducts}}
-								<a href="#/details/${item.ProductId}/${item.DataAreaId}" target="_blank" >- ${item.ProductId} ${item.PartNumber} ${item.ItemName} </a>
+								<a href="#/details/${item.ProductId}/${item.DataAreaId}" target="_blank" >- ${item.ProductId} ${item.ItemName} </a>
 								<br />
                                     {{if Visitor.IsValidLogin}}
                                         <span>Ár</span>${item.Price} <br /><br />
-                                        <span>Belső készlet:</span>${item.InnerStock}<br />
-                                        <span>Külső készlet:</span>${item.OuterStock}<br />
+                                        <span>Készlet:</span>${item.Stock}<br />
                                     {{/if}}
                                 {{/each}}
                                 <br />
@@ -1034,26 +1031,25 @@
                                         <td width="102"><strong>&nbsp;</strong></td>
                                       </tr>
                                   </table>
-								  <br>
-                                      {{each( i, item ) Product.SecondHandList.Items}}
-                                        <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td width="101">${item.Quantity} db</td>
-                                            <td width="293">${item.StatusDescription}</td>
-                                            <td width="240">{{if Visitor.IsValidLogin}}<strong>${item.Price} Ft</strong>{{/if}}</td>
-                                            <td width="102">
-                                            <input type="hidden" value="${item.ConfigId}">
-                                            {{if Visitor.IsValidLogin}}
-                                            <input type="text" name="txt_quantity" class="number" size="2" value="1" />db 
-                                            <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket_2.png")" alt="kosár" border="0" align="absmiddle" />
-                                            {{/if}}
-                                            </td>
-                                        </tr>
-                                        </table>
-                                        </form>
-                                      {{/each}}
-                                     
+								  <br/>
+                                {{each( i, item ) Product.SecondHandList.Items}}
+                                    <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/1" method="post">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="101">${item.Quantity} db</td>
+                                        <td width="293">${item.StatusDescription}</td>
+                                        <td width="240">{{if Visitor.IsValidLogin}}<strong>${item.Price} Ft</strong>{{/if}}</td>
+                                        <td width="102">
+                                        <input type="hidden" value="${item.ConfigId}">
+                                        {{if Visitor.IsValidLogin}}
+                                        <input type="text" name="txt_quantity" class="number" size="2" value="1" />db 
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket_2.png")" alt="kosár" border="0" align="absmiddle" />
+                                        {{/if}}
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    </form>
+                                {{/each}}
 								</div>
 							</div>
 						</div>	
@@ -1094,6 +1090,10 @@
         var model = @(Html.Raw(Json.Encode(Model)));
         console.log(model);
 
+        var searhText = companyGroup.utils.instance().getQuerystringParam('q');
+        $('#txt_globalsearch').val(searhText);
+
+        companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
         companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
 
         companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');

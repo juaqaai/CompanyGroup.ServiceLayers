@@ -6,8 +6,8 @@
     <query-param name="Reverse" type="System.Boolean"/>
     <return-scalar column="ProductId" type="System.String"/>
     <return-scalar column="DataAreaId" type="System.String"/>
+    <return-scalar column="CompatibleProductId" type="System.String"/>
     <return-scalar column="CompatibilityType" type="System.Int32"/>
     exec InternetUser.CompatibilityList @ProductId=:ProductId, @DataAreaId=:DataAreaId, @Reverse=:Reverse
   </sql-query>
 </hibernate-mapping>
-

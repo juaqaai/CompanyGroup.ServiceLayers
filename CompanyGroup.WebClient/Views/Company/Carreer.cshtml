@@ -252,7 +252,7 @@
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');
 }
 @section ScriptOnReady {
-    //console.log('ScriptOnReady section');
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     

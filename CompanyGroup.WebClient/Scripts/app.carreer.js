@@ -60,4 +60,8 @@ companyGroup.carreer = $.sammy(function () {
 
         });
     });
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
 });
