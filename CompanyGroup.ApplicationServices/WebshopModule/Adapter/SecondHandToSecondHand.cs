@@ -14,23 +14,30 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
+                CompanyGroup.Domain.WebshopModule.SecondHand minimumPrice = secondHandList.OrderBy( x => x.Price ).FirstOrDefault();
+
                 return new CompanyGroup.Dto.WebshopModule.SecondHandList()
                 {
                     Items = secondHandList.ConvertAll<CompanyGroup.Dto.WebshopModule.SecondHand>(x => MapItem(x)),
 
-                    MinimumPrice = String.Format( "{0}", secondHandList.Min( x => x.Price ) )
+                    MinimumPrice = String.Format("{0}", minimumPrice.CustomerPrice)
                 };
             }
             catch { return new CompanyGroup.Dto.WebshopModule.SecondHandList() { Items = new List<Dto.WebshopModule.SecondHand>(), MinimumPrice = "0" }; }
         }
 
+        /// <summary>
+        /// domain CompanyGroup.Domain.WebshopModule.SecondHand -> CompanyGroup.Dto.WebshopModule.SecondHand DTO. 
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         private CompanyGroup.Dto.WebshopModule.SecondHand MapItem(CompanyGroup.Domain.WebshopModule.SecondHand from)
         {
             return new CompanyGroup.Dto.WebshopModule.SecondHand()
             {
                 ConfigId = from.ConfigId, 
-                InventLocationId = from.InventLocationId, 
-                Price = from.Price, 
+                InventLocationId = from.InventLocationId,
+                Price = String.Format("{0}", from.CustomerPrice),
                 Quantity = from.Quantity, 
                 StatusDescription = from.StatusDescription, 
                 DataAreaId = from.DataAreaId,

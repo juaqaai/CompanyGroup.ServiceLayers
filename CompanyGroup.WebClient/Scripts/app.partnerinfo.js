@@ -53,6 +53,20 @@ companyGroup.partnerinfo = $.sammy(function () {
             context.redirect('#/invoiceinfo/' + $(this).val());
             //context.trigger('invoiceinfo', { PaymentType: parseInt($(this).val(), 0) });
         });
+        //keresés névre, vagy cikkszámra
+        $("#txt_globalsearch").live('focus', function () {
+            context.globalSearchOnFocus($(this));
+        }).live('blur', function () {
+            context.globalSearchLostFocus($(this));
+        });
+        //keresés autocomplete
+        $("#txt_globalsearch").autocomplete({
+            source: function (request, response) {
+                context.globalSearchAutoComplete(request, response);
+            },
+            minLength: 2,
+            html: 'html'
+        });
     });
     this.bind('filterByReservedOrdered', function (e, data) {
         salesOrderRequest.ReservedOrdered = data.Checked;
@@ -285,4 +299,8 @@ companyGroup.partnerinfo = $.sammy(function () {
         Reserved: true,
         ReservedOrdered: true
     };
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
 });

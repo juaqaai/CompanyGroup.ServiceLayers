@@ -50,7 +50,7 @@ namespace CompanyGroup.ApplicationServices
         /// <returns></returns>
         protected decimal ChangePrice(decimal price, string currency)
         {
-            if (CompanyGroup.Domain.Core.Constants.CurrencyHuf.Equals(currency) || String.IsNullOrEmpty(currency))
+            if (CompanyGroup.Domain.Core.Constants.CurrencyHuf.Equals(currency.ToUpper()) || String.IsNullOrEmpty(currency))
             {
                 return Math.Round(price, 2, MidpointRounding.AwayFromZero);
             }
@@ -63,14 +63,16 @@ namespace CompanyGroup.ApplicationServices
 
                 int day = DateTime.Now.Day;
 
+                //olvasás a cache-ből. Csak akkor van a cache-ben az átváltási ráta, ha ugyanazon a napon vitték fel, mint a lekérdezés napja   
                 List<CompanyGroup.Domain.WebshopModule.ExchangeRate> exchangeRates = CompanyGroup.Helpers.CacheHelper.Get<List<CompanyGroup.Domain.WebshopModule.ExchangeRate>>(ServiceBase.ExchangeRateCacheKey);
 
                 if (exchangeRates == null)
                 {
-                    exchangeRates = GetExchangeRatesFromRepository();
+                    exchangeRates = this.GetExchangeRatesFromRepository();
                 }
 
-                CompanyGroup.Domain.WebshopModule.ExchangeRate exchangeRate = exchangeRates.Find(x => x.CurrencyCode.Equals(currency));
+                //átváltás pénzneme
+                CompanyGroup.Domain.WebshopModule.ExchangeRate exchangeRate = exchangeRates.Find(x => x.CurrencyCode.ToUpper().Equals(currency.ToUpper()));
 
                 if (exchangeRate == null)
                 {
@@ -88,6 +90,13 @@ namespace CompanyGroup.ApplicationServices
         /// <summary>
         /// átváltási ráta kiolvasása adatbázisból
         /// </summary>
+        /// <example>
+        ///  FromDate	                    CurrencyCode	Rate	            DataAreaId
+        ///  2013-03-01 00:00:00.0000000	EUR	            29511.000000000000	mst
+        ///  2013-03-01 00:00:00.0000000	GBP	            34003.000000000000	mst
+        ///  2013-03-01 00:00:00.0000000	RSD	            265.000000000000	mst
+        ///  2013-03-01 00:00:00.0000000	USD	            22631.000000000000	mst
+        /// </example>
         /// <returns></returns>
         private List<CompanyGroup.Domain.WebshopModule.ExchangeRate> GetExchangeRatesFromRepository()
         {
@@ -101,7 +110,7 @@ namespace CompanyGroup.ApplicationServices
 
                 int day = DateTime.Now.Day;
 
-                //csak akkor rakjuk cache-be, ha friss az adat
+                //csak akkor rakjuk cache-be, ha friss az adat (ha nem a mai napon vitték fel, akkor nem mentjük cache-be)
                 CompanyGroup.Domain.WebshopModule.ExchangeRate exchangeRate = exchangeRates.Find(x => x.FromDate.Year.Equals(year) && x.FromDate.Month.Equals(month) && x.FromDate.Day.Equals(day));
 
                 if (exchangeRate != null)

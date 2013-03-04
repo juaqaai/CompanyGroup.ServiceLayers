@@ -186,7 +186,7 @@
         <tr>
           <td nowrap="nowrap" bgcolor="#FFFFCC">File kiválasztása<span style="color: rgb(255, 0, 0)">*</span></td>
           <td nowrap="nowrap" bgcolor="#FFFFCC"><label for="fileField"></label>
-          <input type="file" name="fileField" id="txt_upload" /><input type="submit" id="btn_upload" value="Feltöltés" /></td>
+          <input type="file" name="txt_upload" id="txt_upload" /><input type="submit" id="btn_upload" value="Feltöltés" /></td>
         </tr>
         <tr>
           <td nowrap="nowrap">&nbsp;</td>
@@ -253,6 +253,8 @@
 }
 @section ScriptOnReady {
     companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     

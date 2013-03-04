@@ -11,8 +11,25 @@ companyGroup.guide = $.sammy(function () {
     this.get('#/', function (context) {
         context.title('felhasználási feltételek');
     });
-	
-		this.get('#/closed', function (context) {
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+        //keresés névre, vagy cikkszámra
+        $("#txt_globalsearch").live('focus', function () {
+            context.globalSearchOnFocus($(this));
+        }).live('blur', function () {
+            context.globalSearchLostFocus($(this));
+        });
+        //keresés autocomplete
+        $("#txt_globalsearch").autocomplete({
+            source: function (request, response) {
+                context.globalSearchAutoComplete(request, response);
+            },
+            minLength: 2,
+            html: 'html'
+        });
+    });	
+	this.get('#/closed', function (context) {
         //console.log(context);
 		$.fancybox.close()
     });
@@ -122,6 +139,8 @@ companyGroup.guide = $.sammy(function () {
             $("#shoppingInTheWebshop").hide();
         }
     }
-
-   
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
 });

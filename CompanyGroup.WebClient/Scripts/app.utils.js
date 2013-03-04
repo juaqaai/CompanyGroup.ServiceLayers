@@ -157,8 +157,10 @@ companyGroup.utils = (function () {
                     return def;
                 else
                     return qs[1];
+            },
+            toUpperCase: function (text) {
+                return text.toUpperCase();
             }
-
         }
     }
     return {

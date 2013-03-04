@@ -851,6 +851,11 @@ companyGroup.webshop = $.sammy(function () {
                 var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
                 $('#cus_header1').html(visitorInfoHtml);
                 loadCatalogue();
+                var productId = $('#hidden_product_id').val();
+                var dataAreaId = $('#hidden_product_dataareaid').val();
+                if (productId && dataAreaId) {
+                    context.redirect('#/refreshdetails/' + productId + '/' + dataAreaId);
+                }
             },
             error: function () {
                 //console.log('ChangeCurrency call failed');

@@ -143,6 +143,44 @@
             },
             searchByText: function (searchText) {
                 window.location.href = companyGroup.utils.instance().getWebshopBaseUrl('Index/?q=' + searchText);
+            },
+            globalSearchOnFocus: function (self) {
+                if ('keresés a termékek között' === self.val()) {
+                    self.val('');
+                }
+            },
+            globalSearchLostFocus: function (self) {
+                var text = $.trim(self.val());
+                if (!text) {
+                    self.val('keresés a termékek között');
+                }
+            },
+            globalSearchAutoComplete: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: companyGroup.utils.instance().getCompletionListAllProductUrl(),
+                    data: { Prefix: request.term },
+                    contentType: "application/json; charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    processData: true,
+                    success: function (result) {
+                        if (result) {
+                            var arr_suggestions = [];
+                            $.each(result.Items, function (i, val) {
+                                var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + ' alt="" /></a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '">' + val.ProductName + '</a></div></td></tr></table></div>';
+                                arr_suggestions.push({ label: inner_html, value: val.ProductName });
+                            });
+                            response(arr_suggestions);
+                        }
+                        else {
+                            //console.log(result);
+                        }
+                    },
+                    error: function () {
+                        //console.log('CompletionListServiceUrl failed');
+                    }
+                });
             }
 
         });

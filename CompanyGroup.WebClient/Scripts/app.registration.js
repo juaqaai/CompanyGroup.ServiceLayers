@@ -19,7 +19,25 @@ companyGroup.registration = $.sammy(function () {
             ////console.log(response);
             initRegistrationData(response);
             setTabsVisibility(1);
-        });                                       
+        });
+    });
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+        //keresés névre, vagy cikkszámra
+        $("#txt_globalsearch").live('focus', function () {
+            context.globalSearchOnFocus($(this));
+        }).live('blur', function () {
+            context.globalSearchLostFocus($(this));
+        });
+        //keresés autocomplete
+        $("#txt_globalsearch").autocomplete({
+            source: function (request, response) {
+                context.globalSearchAutoComplete(request, response);
+            },
+            minLength: 2,
+            html: 'html'
+        });
     });
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {

@@ -39,6 +39,10 @@
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/newsletter")');
 }
 @section ScriptOnReady {
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+
     var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);
 

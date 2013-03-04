@@ -19,10 +19,12 @@ namespace CompanyGroup.WebClient.Controllers
 
             ViewBag.Message = "Webshop view";
 
+            //látogatóhoz nyilvántartott adatok kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
 
             if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
 
+            //bejelentkezett felhasználó adatainak kiolvasása
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
             //struktúrák lekérdezése

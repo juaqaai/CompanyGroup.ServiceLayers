@@ -89,7 +89,9 @@
 
 }
 @section ScriptOnReady {
-    //console.log('ScriptOnReady section');
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);

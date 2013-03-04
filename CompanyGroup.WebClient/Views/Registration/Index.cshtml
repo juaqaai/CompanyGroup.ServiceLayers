@@ -1018,7 +1018,7 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
     						<div style="width:300px; padding:12px;" align="center" id="nyomtatas_ablak">
                             <span style="font-size:24px; color:#084385;"><strong>Regisztráció eredménye</strong></span><br>
   <p>Az Ön által megadott regisztrációs adatok rendszerünkben rögzítésre kerültek.                              
-                             <p>A regisztrációs igényeket kollégáink ellenőrzik és hagyják jóvá, mely néhány napot igénybe vehet.                       <br>
+                             <p>A regisztrációs igényeket kollégáink ellenőrzik és hagyják jóvá, mely néhány napot igénybe vehet.                       <br/>
 							<br>
 							<a style="text-decoration:none" id="rendszeruzenet" href="../Webshop/Index/"><input name="befejezes" value="Befejezés" type="button"></a>
 							</div>
@@ -1032,12 +1032,13 @@ A szerződés létrejöttének feltétele,   hogy a Viszonteladó az aláírt sz
 
 }
 @section ScriptOnReady {
-    //console.log('ScriptOnReady section');
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+    companyGroup.utils.instance().setRegistrationBaseApiUrl('@Url.Content("~/api/RegistrationApi/")');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);
-
-    companyGroup.utils.instance().setRegistrationBaseApiUrl('@Url.Content("~/api/RegistrationApi/")');
 
     companyGroup.registration.run('#/');
 

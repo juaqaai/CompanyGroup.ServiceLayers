@@ -8,15 +8,31 @@ companyGroup.company = $.sammy(function () {
 
     this.setTitle('HRP/BSC Céginformáció - ');
 	
-			this.get('#/closed', function (context) {
-        //console.log(context);
-		$.fancybox.close()
-    });
-
     this.get('#/', function (context) {
         context.title('kezdőoldal');
     });
-
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+        //keresés névre, vagy cikkszámra
+        $("#txt_globalsearch").live('focus', function () {
+            context.globalSearchOnFocus($(this));
+        }).live('blur', function () {
+            context.globalSearchLostFocus($(this));
+        });
+        //keresés autocomplete
+        $("#txt_globalsearch").autocomplete({
+            source: function (request, response) {
+                context.globalSearchAutoComplete(request, response);
+            },
+            minLength: 2,
+            html: 'html'
+        });
+    });
+    this.get('#/closed', function (context) {
+        //console.log(context);
+        $.fancybox.close()
+    });
     this.get('#/authenticated', function (context) {
         //console.log('authenticated');
     });
@@ -64,5 +80,8 @@ companyGroup.company = $.sammy(function () {
             $('#usermenuContainer').html(usermenuHtml);
         });
     });
-
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
 });
