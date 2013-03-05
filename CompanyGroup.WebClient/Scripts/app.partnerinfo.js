@@ -159,7 +159,7 @@ companyGroup.partnerinfo = $.sammy(function () {
         $.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getContactPersonApiUrl('ForgetPwd'),
-            data: data,
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             timeout: 10000,
             dataType: "json",

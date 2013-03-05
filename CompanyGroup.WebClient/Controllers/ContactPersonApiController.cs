@@ -53,11 +53,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest req = new CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest()
-            {
-                Language = visitorData.Language,
-                UserName = request.UserName
-            };
+            CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest req = new CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest(visitorData.Language, request.UserName);
 
             CompanyGroup.Dto.PartnerModule.ForgetPassword response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest, CompanyGroup.Dto.PartnerModule.ForgetPassword>("ContactPerson", "ForgetPassword", req);
 

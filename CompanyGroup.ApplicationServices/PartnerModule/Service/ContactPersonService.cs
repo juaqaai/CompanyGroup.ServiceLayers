@@ -383,62 +383,47 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull);
             }
 
-            string dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp;
+            //lehetséges-e a megadott adatokkal az elfelejtett jelszó művelet? Van-e ilyen felhasználó?
+            CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword = contactPersonRepository.GetForgetPassword(request.UserName);
 
-            //lehetséges-e a megadott adatokkal az elfelejtett jelszó művelet?
-            CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify verify = contactPersonRepository.VerifyForgetPassword(request.UserName, dataAreaId);
-
-            //vizsgálat a bsc-re
-            if (!verify.Success)
-            {
-                dataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc;
-
-                verify = contactPersonRepository.VerifyForgetPassword(request.UserName, dataAreaId);
-            }
+            string message = forgetPassword.GetMessage(request.Language);
 
             //ha nem, akkor kilépés hibaüzenettel
-            if (!verify.Success)
+            if (!forgetPassword.Succeedeed)
             {
-                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, verify.Message);
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, message);
             }
 
-            //elfelejtett jelszó művelet előkészítése
-            CompanyGroup.Domain.PartnerModule.ForgetPasswordCreate forgetPasswordCreate = new CompanyGroup.Domain.PartnerModule.ForgetPasswordCreate()
-            {
-                DataAreaId = dataAreaId,
-                WebLoginName = request.UserName
-            };
-            //elfelejtett jelszó AX
-            CompanyGroup.Domain.PartnerModule.ForgetPasswordCreateResult forgetPasswordCreateResult = forgetPasswordRepository.Forget(forgetPasswordCreate);
-
-            //elfelejtett jelszó log hozzáadás
-            CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword = new CompanyGroup.Domain.PartnerModule.ForgetPassword()
-            {
-                CreatedDate = DateTime.Now,
-                DataAreaId = dataAreaId,
-                UserName = request.UserName,
-                Status = forgetPasswordCreateResult.Succeeded ? Domain.PartnerModule.ForgetPasswordStatus.Active : Domain.PartnerModule.ForgetPasswordStatus.Failed,
-                Id = MongoDB.Bson.ObjectId.GenerateNewId()
-            };
-
-            forgetPasswordRepository.Add(forgetPassword);
+            bool sent = false; 
 
             //levél elküldése dbManagers-nek sikertelen esetben
-            if (!forgetPasswordCreateResult.Succeeded)
+            if (!forgetPassword.Succeedeed)
             {
-                this.SendForgetPasswordFailedMail(forgetPassword, forgetPasswordCreateResult);
+                this.SendForgetPasswordFailedMail(forgetPassword, message);
+            }
+            else
+            {
+                sent = this.SendForgetPasswordMail(forgetPassword);
+
+                if (!sent) { message = (request.Language.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish)) ? "Sending email failed!" : "Az email küldés nem sikerült!"; }
             }
 
-            return new CompanyGroup.Dto.PartnerModule.ForgetPassword(forgetPasswordCreateResult.Succeeded, forgetPasswordCreateResult.Message);
+            return new CompanyGroup.Dto.PartnerModule.ForgetPassword((forgetPassword.Succeedeed && sent), message);
         }
 
         #region "Elfelejtett jelszó email küldés"
 
         private static readonly string ForgetPasswordFailedMailSubject = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailSubject", "Hibás elfelejtett jelszó művelet értesítő üzenet");
 
+        private static readonly string ForgetPasswordMailSubject = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailSubject", "HRP - BSC elfelejtett jelszó művelet értesítő üzenet");
+
         private static readonly string ForgetPasswordFailedMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailHtmlTemplateFile", "forgetpasswordfailed.html");
 
+        private static readonly string ForgetPasswordMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailHtmlTemplateFile", "forgetpassword.html");
+
         private static readonly string ForgetPasswordFailedMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordFailedMailTextTemplateFile", "forgetpasswordfailed.txt");
+
+        private static readonly string ForgetPasswordMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailTextTemplateFile", "forgetpassword.txt");
 
         private static readonly string ForgetPasswordMailFromAddress = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailFromAddress", "webadmin@hrp.hu");
 
@@ -454,14 +439,59 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
         private static readonly string ForgetPasswordMailSmtpHost = Helpers.ConfigSettingsParser.GetString("ForgetPasswordMailSmtpHost", "195.30.7.14");
 
+        private bool SendForgetPasswordMail(CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword)
+        {
+            try
+            {
+                string tmpHtml = ContactPersonService.HtmlText(ContactPersonService.ForgetPasswordMailHtmlTemplateFile);
+                string html = tmpHtml.Replace("$RecipientName$", String.Format("{0} {1}", forgetPassword.CompanyName, forgetPassword.PersonName))
+                                     .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                     .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                     .Replace("$UserName$", forgetPassword.UserName)
+                                     .Replace("$Password$", forgetPassword.Password)
+                                     .Replace("$Email$", forgetPassword.Email);
+
+                string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ForgetPasswordMailTextTemplateFile);
+                string plain = tmpPlain.Replace("$RecipientName$", String.Format("{0} {1}", forgetPassword.CompanyName, forgetPassword.PersonName))
+                                     .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+                                     .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                     .Replace("$UserName$", forgetPassword.UserName)
+                                     .Replace("$Password$", forgetPassword.Password)
+                                     .Replace("$Email$", forgetPassword.Email);
+
+                string toAddress = ContactPersonService.TestMode ? ContactPersonService.ForgetPasswordMailBCcAddress : forgetPassword.Email;
+
+                string toName = ContactPersonService.TestMode ? ContactPersonService.ForgetPasswordMailBCcName : String.Format("{0} {1}", forgetPassword.CompanyName, forgetPassword.PersonName);
+
+                CompanyGroup.Domain.Core.MailSettings mailSettings = new CompanyGroup.Domain.Core.MailSettings(ContactPersonService.ForgetPasswordMailSmtpHost,
+                                                                                                               ContactPersonService.ForgetPasswordMailSubject,
+                                                                                                               plain,
+                                                                                                               html,
+                                                                                                               ContactPersonService.ForgetPasswordMailFromName,
+                                                                                                               ContactPersonService.ForgetPasswordMailFromAddress);
+
+                mailSettings.BccAddressList.Add(ContactPersonService.ForgetPasswordMailBCcName, ContactPersonService.ForgetPasswordMailBCcAddress);
+
+                mailSettings.ToAddressList.Add(toAddress, toName);
+
+                return this.SendMail(mailSettings);
+
+            }
+            catch (Exception ex)
+            {
+                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// elfelejtett jelszó email küldés, sikertelen művelet esetére
         /// </summary>
         /// <param name="forgetPassword"></param>
-        /// <param name="forgetPasswordCreateResult"></param>
+        /// <param name="message"></param>
         /// <returns></returns>
-        private bool SendForgetPasswordFailedMail(CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword,
-                                                  CompanyGroup.Domain.PartnerModule.ForgetPasswordCreateResult forgetPasswordCreateResult)
+        private bool SendForgetPasswordFailedMail(CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword, string message)
         {
             try
             {
@@ -469,15 +499,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 string html = tmpHtml.Replace("$WebLoginName$", forgetPassword.UserName)
                                      .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                      .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                     .Replace("$ErrorCode$", String.Format("{0}", forgetPasswordCreateResult.ResultCode))
-                                     .Replace("$ErrorMessage$", forgetPasswordCreateResult.Message);
+                                     .Replace("$ErrorMessage$", message);
 
                 string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ForgetPasswordFailedMailTextTemplateFile);
                 string plain = tmpPlain.Replace("$WebLoginName$", forgetPassword.UserName)
                                      .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                      .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                     .Replace("$ErrorCode$", String.Format("{0}", forgetPasswordCreateResult.ResultCode))
-                                     .Replace("$ErrorMessage$", forgetPasswordCreateResult.Message);
+                                     .Replace("$ErrorMessage$", message);
 
                 string toAddress = ContactPersonService.TestMode ? ContactPersonService.ForgetPasswordMailBCcAddress : ContactPersonService.ForgetPasswordFailedMailToAddress;
 

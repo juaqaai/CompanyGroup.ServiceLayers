@@ -232,7 +232,11 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="forgetpassword.txt" />
+    <Content Include="forgetpassword.html" />
     <Content Include="favicon.ico" />
+    <Content Include="forgetpasswordfailed.html" />
+    <Content Include="forgetpasswordfailed.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />

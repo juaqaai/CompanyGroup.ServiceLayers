@@ -1,12 +1,12 @@
-USE WebDb_Test;
+USE ExtractInterface;
 GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE InternetUser.cms_VerifyChangePassword;
+DROP PROCEDURE InternetUser.VerifyChangePassword;
 GO
-CREATE PROCEDURE InternetUser.cms_VerifyChangePassword
+CREATE PROCEDURE InternetUser.VerifyChangePassword
 	@ContactPersonId nvarchar(32) = '',
 	@UserName nvarchar(32) = '',
 	@OldPassword nvarchar(32) = '',
@@ -27,10 +27,10 @@ AS
 	SELECT @Code as Code;
 RETURN;
 GO
-GRANT EXECUTE ON InternetUser.cms_VerifyChangePassword TO InternetUser
+GRANT EXECUTE ON InternetUser.VerifyChangePassword TO InternetUser
 GO
 
--- EXEC InternetUser.cms_VerifyChangePassword 'KAPCS06943', 'sero', 'sero2000', 'sero2004', 'hrp';
--- EXEC InternetUser.cms_VerifyChangePassword '23614/SZL', 'plorinczy', 'pikolo', 'pikolo2', 'hrp';
+-- EXEC InternetUser.VerifyChangePassword 'KAPCS06943', 'sero', 'sero2000', 'sero2004', 'hrp';
+-- EXEC InternetUser.VerifyChangePassword '23614/SZL', 'plorinczy', 'pikolo', 'pikolo2', 'hrp';
 
 -- SELECT * FROM AxDb.dbo.WebShopUserInfo WHERE (ContactPersonId = '23614/SZL') AND (WebLoginName = 'plorinczy') AND (Pwd = 'pikolo')

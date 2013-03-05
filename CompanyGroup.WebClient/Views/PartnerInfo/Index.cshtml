@@ -541,7 +541,7 @@ RecId*@
             <h2>ELFELEJTETT JELSZÓ</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
                 {{^IsValidLogin}}
         
-                    <form id="form_forgetpassword" action="#/forgetpassword/" method="post">    
+                    <form action="#/forgetpassword" method="post">    
                     <table width="550" border="0" cellpadding="3" cellspacing="2">
                     <tr>
                         <td colspan="4">Kérjük adja meg felhasználónevét, majd válassza az "elküld" parancsot. 
@@ -555,7 +555,7 @@ RecId*@
                     <tr>
                         <td>Felhasználónév: </td>
                         <td>
-                            <input type="text" id="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                            <input type="text" id="txt_username" name="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
                         </td>
                         <td style="color:#900;">*</td>
                         <td>
@@ -788,7 +788,7 @@ RecId*@
 
     companyGroup.utils.instance().setSalesOrderBaseApiUrl('@Url.Content("~/api/SalesOrderApi/")');    
 
-    companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
+    companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
 
     companyGroup.partnerinfo.run('#/');
 

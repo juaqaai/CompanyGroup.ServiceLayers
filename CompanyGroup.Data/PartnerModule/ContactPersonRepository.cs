@@ -47,22 +47,19 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// elfelejtett jelszóhoz tartozó felhasználónév ellenörzése
+        /// bejelentkezési adatok lekérdezése elfelejtett jelszóhoz tartozó felhasználónév alapján  
+        /// InternetUser.ForgetPasswordSelect @UserName nvarchar(32) = ''
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify VerifyForgetPassword(string userName, string dataAreaId)
+        public CompanyGroup.Domain.PartnerModule.ForgetPassword GetForgetPassword(string userName)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(userName), "UserName may not be null or empty");
 
-            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "DataAreaId may not be null or empty");
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ForgetPasswordSelect")
+                                            .SetString("UserName", userName).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.ForgetPassword).GetConstructors()[0]));
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_VerifyForgetPassword")
-                                            .SetString("UserName", userName)
-                                            .SetString("DataAreaId", dataAreaId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify).GetConstructors()[0]));
-
-            CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify>();
+            CompanyGroup.Domain.PartnerModule.ForgetPassword result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.ForgetPassword>();
 
             return result;
         }

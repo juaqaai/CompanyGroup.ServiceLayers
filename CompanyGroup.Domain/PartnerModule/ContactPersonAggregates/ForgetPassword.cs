@@ -5,29 +5,61 @@ using System.ComponentModel.DataAnnotations;
 namespace CompanyGroup.Domain.PartnerModule
 {
     /// <summary>
-    /// jelszómódosítás
+    /// elfelejtett jelszó a kiküldéshez
     /// </summary>
-    public class ForgetPassword : CompanyGroup.Domain.Core.NoSqlEntity, IValidatableObject
+    public class ForgetPassword : IValidatableObject
     {
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("UserName", Order = 2)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        public ForgetPassword(string code, string userName, string password, string email, string companyName, string personName)
+        {
+            this.Code = code;
+
+            this.UserName = userName;
+
+            this.Password = password;
+            
+            this.Email = email;
+
+            this.CompanyName = companyName;
+
+            this.PersonName = personName;
+        }
+
+        /// <summary>
+        /// OK, UserNameNotFound, NotAllowed
+        /// </summary>
+        public string Code { get; set; }
+
         public string UserName { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("Status", Order = 5)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue(1)]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public ForgetPasswordStatus Status { get; set; }
+        public string Password { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("CreatedDate", Order = 6)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("0000.00.00 00:00:00")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public DateTime CreatedDate { set; get; }
+        public string Email { set; get; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("DataAreaId", Order = 7)]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public string DataAreaId { get; set; }
+        public string CompanyName { set; get; }
+
+        public string PersonName { set; get; }
+
+        public string GetMessage(string languageId)
+        {
+            if (this.Code.Equals("OK"))
+            {
+                return languageId.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish) ? "The forget password email message has been sent." : "A jelszóemlékeztető email elküldésre került!";
+            }
+            if (this.Code.Equals("UserNameNotFound"))
+            {
+                return languageId.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish) ? "The user name not found!" : "A felhasználónév nem található!";
+            }
+            if (this.Code.Equals("NotAllowed"))
+            {
+                return languageId.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish) ? "The forget password message has not sent!" : "A jelszóemlékeztetőt nem lehet elküldeni!";
+            }
+            return String.Empty;
+        }
+
+        public bool Succeedeed
+        {
+            get { return this.Code.Equals("OK"); }
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -36,11 +68,6 @@ namespace CompanyGroup.Domain.PartnerModule
             if (String.IsNullOrWhiteSpace(this.UserName))
             {
                 validationResults.Add(new ValidationResult(CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull, new string[] { "UserName" }));
-            }
-
-            if (String.IsNullOrWhiteSpace(this.DataAreaId))
-            {
-                validationResults.Add(new ValidationResult(CompanyGroup.Domain.Resources.Messages.verification_DataAreaIdCannotBeNull, new string[] { "DataAreaId" }));
             }
 
             return validationResults;
