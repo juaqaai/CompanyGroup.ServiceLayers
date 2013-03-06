@@ -20,6 +20,49 @@
                     }
                 });
             },
+            showForgetPasswordPanel: function() {
+                $.fancybox({
+                    href: '#div_forgetpassword',
+                    autoDimensions: true,
+                    autoScale: false,
+                    transitionIn: 'fade',
+                    transitionOut: 'fade',
+                    afterShow: function () {
+                        //console.log('forgetPassword panel loaded');
+                        $("#txt_forgetpassword_username").val('');
+                        $('#txt_forgetpassword_username').focus();
+                    }
+                });
+            },
+            sendForgetPassword: function(userName) {
+                var data = {
+                    UserName: userName
+                };
+                $.ajax({
+                    type: "POST",
+                    url: companyGroup.utils.instance().getContactPersonApiUrl('ForgetPwd'),
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    processData: true,
+                    success: function (result) {
+                        if (result) {
+                            //console.log(result);
+                            $('#forgetPasswordResult').show();
+                            $('#forgetPasswordResult').html(result.Message);
+                        }
+                        else {
+                            $('#forgetPasswordResult').show();
+                            $('#forgetPasswordResult').html('ForgetPassword result failed');
+                        }
+                    },
+                    error: function () {
+                        $('#forgetPasswordResult').show();
+                        $('#forgetPasswordResult').html('ForgetPassword call failed');
+                    }
+                });
+            },
             beforeSignIn: function () {
                 var error_msg = '';
                 if ($("#txt_username").val() === '') {

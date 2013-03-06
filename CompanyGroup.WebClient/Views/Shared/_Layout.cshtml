@@ -31,7 +31,6 @@
 	</div>
 
 </div>
-    <a name="top" id="top"></a>
     <div class="aside-1" id="layout-wrapper">
 		<header id="layout-header" class="group">
 			<div id="header">
@@ -161,7 +160,7 @@
 			</div>
 			<div id="szlogen" >…több, mint <strong>disztribúció</strong></div>
 			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>    
-				<a title="" href="#top" id="top-link">Lap tetejére</a>
+				<a href="#" class="scrollup">Lap tetejére</a>
 			    <div id="cus_ax_nav">
 					 <ul id="menu-bar">
 					    <li>
@@ -404,7 +403,7 @@
                           <span class="login-box-options">
                           <input type="checkbox" name="1" value="1" />
                             Emlékezzen rám
-                          <a id="forget_password" href="@Url.Content("~/PartnerInfo/Index#/forgetpassword")" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
+                          <a id="forget_password" href="#/showForgetPasswordPanel" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
                           <br />
                           <br />
                           <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
@@ -416,26 +415,24 @@
                 </div>
 
             </div>
-<div style="display:none;">
-<div style="width:250px; padding:15px;" id="forgetpassword">
-<a class="fancybox-close" href="#/closed"></a>
-<span style="font-size:24px; color:#084385;" ><strong>Jelszóváltoztatás</strong></span><br><br>
-Kérem adja meg felhasználó nevét és az Ön új jelszó igénylési kérelmét elküldtük a rendszerünkben regisztrált e-mail címre.<br><br>
-<strong>Felhasználónév:</strong><br><br>
-<form action="#/forget_password" method="post">
-<input type="text" size="24" id="txtContactPersonUserName" class="regfields" />
-<input name="" type="submit" value="Küldés">
-</form>
-<span style="color:#F00" id="forgetPaswordDataError"></span><br><br>
-Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:<br><br>
-<strong>Balogh Zsolt</strong><br>
- Email: zsbalogh@hrp.hu<br>
-Telefon: 452-4627<br><br>
-<em>Köszönjük.
-
-HRP Hungary Kft. </em>
-</div>
-</div>
+            <div style="display:none;">
+                <div style="width:250px; padding:15px;" id="div_forgetpassword">
+                <a class="fancybox-close" href="#/closed"></a>
+                <span style="font-size:24px; color:#084385;" ><strong>Jelszóváltoztatás</strong></span><br><br>
+                Kérem adja meg felhasználó nevét. A hozzáférési adatait elküldjük a rendszerünkben regisztrált felhasználónévhez tartozó e-mail címre.<br/><br/>
+                <strong>Felhasználónév:</strong><br/><br/>
+                <form action="#/sendforgetpassword" method="post">
+                <input type="text" size="24" name="txt_forgetpassword_username" class="regfields" />
+                <input type="submit" value="Küldés" />
+                </form>
+                <span style="color:#F00" id="forgetPasswordResult"></span><br/><br/>
+                Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:<br/><br/>
+                <strong>Balogh Zsolt</strong><br/>
+                 Email: zsbalogh@hrp.hu<br/>
+                Telefon: 452-4627<br/><br/>
+                <em>Köszönjük. HRP Hungary Kft. </em>
+                </div>
+            </div>
 
     <script type="text/javascript">
         head.js('@Scripts.Url("~/bundles/jquery")', function() {
@@ -451,7 +448,7 @@ HRP Hungary Kft. </em>
                 .js('@Scripts.Url("~/bundles/mustache")')
 			   // .js('@Scripts.Url("~/bundles/amplify")')
                 //.js('@Scripts.Url("~/bundles/smarttab")')
-                .js('@Scripts.Url("~/bundles/scrollto")')
+                //.js('@Scripts.Url("~/bundles/scrollto")')
 				.js('@Scripts.Url("~/bundles/toastr")')
 				.js('@Scripts.Url("~/bundles/prettynumber")')
 				.js('@Scripts.Url("~/bundles/skinner")');
@@ -464,11 +461,19 @@ HRP Hungary Kft. </em>
 
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
-			
-			        //oldal tetejére ugrás link
-        $('#top-link').topLink({
-            min: 1,
-            fadeSpeed: 500
+			companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
+
+			$(window).scroll(function(){
+        if ($(this).scrollTop() > 100) {
+            $('.scrollup').fadeIn();
+        } else {
+            $('.scrollup').fadeOut();
+        }
+    });
+	
+$('.scrollup').click(function(){
+    $("html, body").animate({ scrollTop: 0 }, 100);
+    return false;
         });
 
 

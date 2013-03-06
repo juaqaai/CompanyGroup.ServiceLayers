@@ -79,6 +79,12 @@
           <AssociatedConnUserName />
           <FullPath>CatalogueSelect.sql</FullPath>
         </FileNode>
+        <FileNode Name="CatalogueStockUpdate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CatalogueStockUpdate.sql</FullPath>
+        </FileNode>
         <FileNode Name="cms_AddressZipCode.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -211,18 +217,6 @@
           <AssociatedConnUserName />
           <FullPath>cms_StockList.sql</FullPath>
         </FileNode>
-        <FileNode Name="cms_VerifyChangePassword.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_VerifyChangePassword.sql</FullPath>
-        </FileNode>
-        <FileNode Name="cms_VerifyForgetPassword.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>cms_VerifyForgetPassword.sql</FullPath>
-        </FileNode>
         <FileNode Name="CompatibilityList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
@@ -242,8 +236,8 @@
           <FullPath>CustomerPriceGroupInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="CustomerPriceGroupSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CustomerPriceGroupSelect.sql</FullPath>
         </FileNode>
@@ -288,6 +282,12 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>FinanceOfferUpdate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ForgetPassword.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>ForgetPassword.sql</FullPath>
         </FileNode>
         <FileNode Name="InvoiceSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
@@ -414,6 +414,18 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Tables.sql</FullPath>
+        </FileNode>
+        <FileNode Name="VerifyChangePassword.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>VerifyChangePassword.sql</FullPath>
+        </FileNode>
+        <FileNode Name="VerifyForgetPassword.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>VerifyForgetPassword.sql</FullPath>
         </FileNode>
         <FileNode Name="VisitorInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
