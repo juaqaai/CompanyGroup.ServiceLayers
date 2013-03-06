@@ -109,7 +109,7 @@
                             </tbody>
                     		</table>
                             <hr / style="width: 99%; margin-left:0px">
-                            <span style="font-size:20px; color: rgb(8, 67, 133);">Fizetendő:&nbsp;</span><strong><span style="color: rgb(8, 67, 133); font-size:20px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)}</span></strong> 
+                            <span style="font-size:20px; color: rgb(8, 67, 133);">Kosár nettó összérték:&nbsp;</span><strong><span style="color: rgb(8, 67, 133); font-size:20px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)}</span></strong> 
 							{{/if}}
                     </script>
 						 <div id="cus_checkout_menu">
@@ -578,7 +578,7 @@
 											{{/if}}
 											</span>
 				                            <br/>
-											<a class="price_used" style=" color:#FFF; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
+											<a class="price_used" style=" color:#FFF; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Leértékelt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
                                             {{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
@@ -717,7 +717,7 @@
 	                                        <tr>
 				                                <td class="price_used" style="text-align:right">
 										        {{if item.SecondHandList.Items.length > 0}}
-				                                <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Használt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
+				                                <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Leértékelt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
                                                 {{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
@@ -891,7 +891,7 @@
                                     <span><strong>Leírás:</strong></span><br>${Product.Description}<br/> 
 									<br />
                                     {{if Visitor.IsValidLogin}}
-                                        {{if Product.SecondHandList.Items.Count > 0}} <span>használt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
+                                        {{if Product.SecondHandList.Items.Count > 0}} <span>Leértékelt</span> <br/> {{/if}}  <!-- ha a cikk van a hasznalt, borze... listaban -->  
                                         {{if Product.IsInNewsletter}} <span>hírlevél akciós</span> <br/>  {{/if}}          <!-- ha a cikk hírlevél akciós -->
                                         <span>Garancia módja:</span><strong> ${Product.GarantyMode} </strong><br/>
                                         <span>Garancia ideje:</span><strong> ${Product.GarantyTime} </strong><br/>
@@ -915,7 +915,7 @@
 											{{/if}}
 											{{if Product.Currency == 'USD'}} $
 											{{/if}}
-										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br><span style="color:#ffc000; text-decoration: none; font-size:14px;" >Használt:<strong> ${Product.SecondHandList.MinimumPrice} </strong>
+										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br><span style="color:#ffc000; text-decoration: none; font-size:14px;" >Leértékelt:<strong> ${Product.SecondHandList.MinimumPrice} </strong>
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
@@ -957,6 +957,7 @@
                                         {{/if}}</p></td>
 									</tr>
                                     </table>
+									{{if Product.Available}}
                                         <form action="#/addLineToShoppingCart/${Product.ProductId}/${Product.DataAreaId}/0" method="post">
                                         <table align="right" border="0" cellpadding="5" cellspacing="1">
 					                    <tr>
@@ -971,7 +972,7 @@
 									    </tr>
 								    </table>
                                     </form>
-									
+									{{/if}}
                                {{/if}}
                             </td>
 							</tr>
@@ -994,7 +995,7 @@
 								</li>-->
                                 {{if Product.SecondHandList.Items.length > 0}}
                                 <li>
-									<a href="#" {{if Product.SecondHandList.Items.length > 0}}class="defaulttab"{{/if}} rel="tabs4">Használt</a>
+									<a href="#" {{if Product.SecondHandList.Items.length > 0}}class="defaulttab"{{/if}} rel="tabs4">Leértékelt</a>
 								</li>
                                 {{/if}}
 							</ul>

@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.Sync.MsmqConso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.Sync.MsmqTest", "CompanyGroup.Sync.MsmqTest\CompanyGroup.Sync.MsmqTest.csproj", "{B4BA415A-FE50-429A-8034-714AEEB4E7A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyGroup.TraceListener", "CompanyGroup.TraceListener\CompanyGroup.TraceListener.csproj", "{D6210432-17AE-41FE-A73A-69D9C9777FA9}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CompanyGroup.vsmdi
@@ -329,6 +331,21 @@ Global
 		{B4BA415A-FE50-429A-8034-714AEEB4E7A0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B4BA415A-FE50-429A-8034-714AEEB4E7A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B4BA415A-FE50-429A-8034-714AEEB4E7A0}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Development|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Development|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Development|x86.ActiveCfg = Debug|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -340,6 +357,7 @@ Global
 		{76887EF8-E695-421A-BD32-8F7C9B3453B6} = {A8DB4073-BEBC-424D-8239-9A45B8B9BC6B}
 		{EA5FD96C-12F8-4234-A5E6-13C01F312843} = {A8DB4073-BEBC-424D-8239-9A45B8B9BC6B}
 		{B4BA415A-FE50-429A-8034-714AEEB4E7A0} = {A8DB4073-BEBC-424D-8239-9A45B8B9BC6B}
+		{D6210432-17AE-41FE-A73A-69D9C9777FA9} = {A8DB4073-BEBC-424D-8239-9A45B8B9BC6B}
 		{68A772C3-C742-4282-A5B3-2A11C17FC867} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
 		{3EF7105F-5854-49AC-8EA2-C6DDECC0864F} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
 		{063AA617-A51A-4A18-8711-A549AF5A3CCF} = {5FF99639-0D11-4903-B819-F9D0DAADEB30}
@@ -351,6 +369,6 @@ Global
 		{CA26C542-B450-4890-9A48-8B03FC18371F} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
 	EndGlobalSection
 EndGlobal
