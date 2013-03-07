@@ -20,7 +20,7 @@
                     }
                 });
             },
-            showForgetPasswordPanel: function() {
+            showForgetPasswordPanel: function () {
                 $.fancybox({
                     href: '#div_forgetpassword',
                     autoDimensions: true,
@@ -34,7 +34,7 @@
                     }
                 });
             },
-            sendForgetPassword: function(userName) {
+            sendForgetPassword: function (userName) {
                 var data = {
                     UserName: userName
                 };
@@ -224,8 +224,40 @@
                         //console.log('CompletionListServiceUrl failed');
                     }
                 });
-            }
+            },
+            invoiceInfoByFilter: function (paymenttype, invoiceid, itemname, itemid, salesorderid, serialnumber, dateintervall) {
+                var data = {
+                    Debit: (paymenttype === 1) ? true : false,
+                    Overdue: (paymenttype === 2) ? true : false,
+                    InvoiceId: invoiceid,
+                    ItemName: itemname,
+                    ItemId: itemid,
+                    SalesOrderid: salesorderid,
+                    SerialNumber: serialnumber,
+                    DateIntervall: dateintervall
+                };
+                $.ajax({
+                    //console.log(context);
+                    url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
+                    data: JSON.stringify(data),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    success: function (response) {
+                        //console.log(response);
+                        $('#main_container').empty();
 
+                        $("#invoiceInfoListTemplate").tmpl(response).appendTo("#main_container");
+
+                        //                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
+                        //                $('#main_container').html(html);
+                    },
+                    error: function () {
+                        //console.log('GetVisitorInfo call failed');
+                    }
+                });
+            }
         });
     };
 

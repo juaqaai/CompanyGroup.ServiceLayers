@@ -4,6 +4,14 @@
     <query-param name="CustomerId" type="System.String"/>
     <query-param name="Debit" type="System.Boolean"/>
     <query-param name="Overdue" type="System.Boolean"/>
+    <query-param name="ItemId" type="System.String"/>
+    <query-param name="ItemName" type="System.String"/>
+    <query-param name="SalesId" type="System.String"/>
+    <query-param name="SerialNumber" type="System.String"/>
+    <query-param name="InvoiceId" type="System.String"/>
+    <query-param name="DateIntervall" type="System.Int32"/>
+    <query-param name="CurrentPageIndex" type="System.Int32"/>
+    <query-param name="ItemsOnPage" type="System.Int32"/>   
     <return-scalar column="CustomerId" type="System.String"/>
     <return-scalar column="DataAreaId" type="System.String"/>
     <return-scalar column="SalesId" type="System.String"/>
@@ -37,6 +45,7 @@
     <return-scalar column="DetailCurrencyCode" type="System.String"/>
     <return-scalar column="Description" type="System.String"/>
     <return-scalar column="RecId" type="System.Int64"/>
-    exec InternetUser.InvoiceSelect @CustomerId=:CustomerId, @Debit=:Debit, @OverDue=:Overdue
+    <return-scalar column="PictureExists" type="System.Boolean"/>
+    exec InternetUser.InvoiceSelect @CustomerId=:CustomerId, @Debit=:Debit, @OverDue=:Overdue, @ItemId=:ItemId, @ItemName=:ItemName, @SalesId=:SalesId, @SerialNumber=:SerialNumber, @InvoiceId=:InvoiceId, @DateIntervall=:DateIntervall, @CurrentPageIndex=:CurrentPageIndex, @ItemsOnPage=:ItemsOnPage
   </sql-query>
 </hibernate-mapping>

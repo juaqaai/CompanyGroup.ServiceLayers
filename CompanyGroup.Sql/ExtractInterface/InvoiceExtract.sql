@@ -54,6 +54,7 @@ SET NOCOUNT ON
 		   CONVERT( INT, ISNULL(D.LINENUM, 0) ) as LineNum,
 		   D.ITEMID as ItemId,  -- cikk
 		   CONVERT(NVARCHAR(300), D.NAME) as Name,  -- cikk neve
+		   '' as SerialNumber,
 		   CONVERT( INT, ISNULL(D.QTY, 0) ) as Quantity,  -- mennyiseg
 		   CONVERT( decimal(20,2), ISNULL(D.SALESPRICE, 0) ) as SalesPrice,  -- egysegar
 		   CONVERT( decimal(20,2), ISNULL(D.LINEAMOUNT, 0) ) as LineAmount,  -- osszeg

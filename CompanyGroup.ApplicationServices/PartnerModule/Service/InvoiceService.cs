@@ -47,27 +47,34 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), "The VisitorId cannot be null!");
-
-            //látogató kiolvasása
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue);
-
-            IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>> groupedLineInfos = invoiceInfoList.GroupBy(x => x.InvoiceId).OrderBy(x => x.Key);  
-
-            List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfo = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
-
-            foreach (var lineInfo in groupedLineInfos)
+            try
             {
-                CompanyGroup.Domain.PartnerModule.InvoiceInfo info = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), "The VisitorId cannot be null!");
 
-                invoiceInfo.Add(info);
+                //látogató kiolvasása
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue,
+                                                                                                                            request.ItemId, request.ItemName, request.SalesId, request.SerialNumber,
+                                                                                                                            request.InvoiceId, request.DateIntervall, request.CurrentPageIndex,
+                                                                                                                            request.ItemsOnPage);
+
+                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>> groupedLineInfos = invoiceInfoList.GroupBy(x => x.InvoiceId).OrderBy(x => x.Key);
+
+                List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfo = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
+
+                foreach (var lineInfo in groupedLineInfos)
+                {
+                    CompanyGroup.Domain.PartnerModule.InvoiceInfo info = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
+
+                    invoiceInfo.Add(info);
+                }
+
+                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfo.ConvertAll(x => new InvoiceInfoToInvoiceInfo().Map(x));
+
+                return result;
             }
-
-            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfo.ConvertAll( x => new InvoiceInfoToInvoiceInfo().Map(x) );
-
-            return result;
+            catch (Exception ex) { throw ex; }
         }
 
         /// <summary>

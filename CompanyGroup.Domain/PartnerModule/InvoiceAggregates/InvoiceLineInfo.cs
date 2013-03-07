@@ -11,7 +11,7 @@ namespace CompanyGroup.Domain.PartnerModule
     {
         public InvoiceLineInfo(DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
                                int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode,
-                               string description, long recId)
+                               string description, long recId, bool pictureExists)
         {
             this.ItemDate = itemDate;
             this.LineNum = lineNum;
@@ -29,6 +29,7 @@ namespace CompanyGroup.Domain.PartnerModule
             this.CurrencyCode = currencyCode;
             this.Description = description;
             this.RecId = recId;
+            this.PictureExists = pictureExists;
         }
 
         public DateTime ItemDate { set; get; }
@@ -62,5 +63,7 @@ namespace CompanyGroup.Domain.PartnerModule
         public string Description { set; get; }
 
         public long RecId { set; get; }
+
+        public bool PictureExists { set; get; }
     }
 }

@@ -26,25 +26,52 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// számlalista kiolvasása vevőazonosító alapján
+        /// számlalista kiolvasása vevőazonosító alapján + egyéb szűrőparaméterek
         /// [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	--vevokod
-		///									     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
-		///									     @OverDue BIT = 0 )				--0: mind, 1 lejart 
+        ///									@Debit BIT = 0,				--0: mind, 1 kifizetetlen
+        ///									@OverDue BIT = 0,				--0: mind, 1 lejart 
+        ///									@ItemId NVARCHAR(20) = '', 
+        ///								    @ItemName NVARCHAR(300) = '',
+        ///								    @SalesId NVARCHAR(20) = '',
+        ///								    @SerialNumber NVARCHAR(40) = '',
+        ///								    @InvoiceId NVARCHAR(20) = '',
+        ///								    @DateIntervall INT = 0,
+        ///								    @CurrentPageIndex INT = 1, 
+        ///								    @ItemsOnPage INT = 30 )
         /// </summary>
         /// <param name="customerId"></param>
-        /// <param name="dataAreaId"></param>
+        /// <param name="debit"></param>
+        /// <param name="overdue"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemName"></param>
+        /// <param name="salesId"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="invoiceId"></param>
+        /// <param name="dateIntervall"></param>
+        /// <param name="currentPageIndex"></param>
+        /// <param name="itemsOnPage"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue)
+        public List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
+                                                                                       string salesId, string serialNumber, string invoiceId, int dateIntervall,
+                                                                                       int currentPageIndex, int itemsOnPage)
         {
             try
             {
                 CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.InvoiceSelect")
-                                                .SetString("CustomerId", customerId)
-                                                .SetBoolean("Debit", debit)
-                                                .SetBoolean("Overdue", overdue)
-                                                .SetResultTransformer(
+                                                 .SetString("CustomerId", customerId)
+                                                 .SetBoolean("Debit", debit)
+                                                 .SetBoolean("Overdue", overdue)
+                                                 .SetString("ItemId", itemId)
+                                                 .SetString("ItemName", itemName)
+                                                 .SetString("SalesId", salesId)
+                                                 .SetString("SerialNumber", serialNumber)
+                                                 .SetString("InvoiceId", invoiceId)
+                                                 .SetInt32("DateIntervall", dateIntervall)
+                                                 .SetInt32("CurrentPageIndex", currentPageIndex)
+                                                 .SetInt32("ItemsOnPage", itemsOnPage)
+                                                 .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo).GetConstructors()[0]));
 
                 return query.List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>() as List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>;

@@ -59,5 +59,7 @@ namespace CompanyGroup.Dto.PartnerModule
         /// kép kikereséshez szükséges rekord azonosító
         /// </summary>
         public long RecId { set; get; }
+
+        public bool PictureExists { set; get; }
     }
 }

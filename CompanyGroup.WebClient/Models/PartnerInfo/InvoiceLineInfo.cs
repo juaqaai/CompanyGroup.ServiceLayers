@@ -19,6 +19,9 @@ namespace CompanyGroup.WebClient.Models
             this.TaxAmount = invoiceLineInfo.TaxAmount;
             this.Quantity = invoiceLineInfo.Quantity;
             this.SalesPrice = invoiceLineInfo.SalesPrice;
+            this.Description = invoiceLineInfo.Description;
+            this.PictureExists = invoiceLineInfo.PictureExists;
+            this.RecId = invoiceLineInfo.RecId;
         }
     }
 }

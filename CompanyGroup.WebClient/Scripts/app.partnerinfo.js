@@ -13,7 +13,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //kezdőállapot
     this.get('#/', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         $.ajax({
             //console.log(context);
             url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
@@ -87,7 +87,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         var data = {
             OldPassword: context.params['txt_oldpassword'],
             NewPassword: context.params['txt_newpassword'],
@@ -128,7 +128,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //jelszócsere view
     this.get('#/changepassword', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         context.title('Jelszó módosítás - ');
         $.ajax({
             //console.log(context);
@@ -152,7 +152,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //elfelejtett jelszó kérés
     this.post('#/forgetpassword', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         var data = {
             UserName: context.params['txt_username']
         };
@@ -188,7 +188,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //elfelejtett jelszó view
     this.get('#/forgetpassword', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         context.title('ELFELEJTETT JELSZÓ - ');
         $.ajax({
             //console.log(context);
@@ -212,7 +212,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     //jelszómódosítás csere visszavonása  
     this.get('#/undochangepassword:token', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         context.title('Jelszó módosítás visszavonás - ');
         $.ajax({
             //console.log(context);
@@ -236,41 +236,30 @@ companyGroup.partnerinfo = $.sammy(function () {
     //számla info
     this.get('#/invoiceinfo/:paymenttype', function (context) {
         $('#salesOrderMain').hide();
-        $('#szamlaszuro').show();
+        $('#invoiceInfoFilter').show();
         //console.log(context.params['paymenttype']);
         var paymenttype = parseInt(context.params['paymenttype']);
-        var data = {
-            Debit: (paymenttype === 1) ? true : false,
-            Overdue: (paymenttype === 2) ? true : false
-        };
-        $.ajax({
-            //console.log(context);
-            url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
-            data: JSON.stringify(data),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            success: function (response) {
-                //console.log(response);
-                $('#main_container').empty();
-
-                $("#invoiceInfoListTemplate").tmpl(response).appendTo("#main_container");
-
-//                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
-//                $('#main_container').html(html);
-            },
-            error: function () {
-                //console.log('GetVisitorInfo call failed');
-            }
-        });
+        this.invoiceInfoByFilter(paymenttype, '', '', '', '', '', 0);
         context.title('Számla információ - ');
+    });
+    //számlainformációk szűrése paraméterek alapján
+    this.post('#/invoiceinfoByFilter', function (context) {
+        $('#salesOrderMain').hide();
+        $('#invoiceInfoFilter').show();
+        var paymenttype = parseInt(context.params['radio_paymenttype']);
+        var dateintervall = parseInt(context.params['select_dateintervall']);
+        var invoiceid = (context.params['txt_invoiceid'] === 'Kattintson ide') ? '' : context.params['txt_invoiceid'];
+        var itemname = (context.params['txt_itemname'] === 'Kattintson ide') ? '' : context.params['txt_itemname'];
+        var itemid = (context.params['txt_itemid'] === 'Kattintson ide') ? '' : context.params['txt_itemid'];
+        var salesorderid = (context.params['txt_salesorderid'] === 'Kattintson ide') ? '' : context.params['txt_salesorderid'];
+        var serialnumber = (context.params['txt_serialnumber'] === 'Kattintson ide') ? '' : context.params['txt_serialnumber'];
+        this.invoiceInfoByFilter(paymenttype, invoiceid, itemname, itemid, salesorderid, serialnumber, dateintervall);
     });
     //megrendelés info 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt)
     this.get('#/salesorderinfo', function (context) {
         //console.log(context);
         $('#salesOrderMain').show();
-        $('#szamlaszuro').hide();
+        $('#invoiceInfoFilter').hide();
         loadOrderInfo();
         context.title('Megrendelés információ - ');
     });

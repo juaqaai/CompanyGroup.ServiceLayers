@@ -111,16 +111,29 @@ namespace CompanyGroup.WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [ActionName("GetInvoicePicture")]
+        public HttpResponseMessage GetInvoicePicture()
+        {
+            string recId = CompanyGroup.Helpers.QueryStringParser.GetString("RecId");
+
+            string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
+
+            string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
+
+            return this.GetInvoicePictureByRecId(recId, maxWidth, maxHeight);
+        }
+
         /// <summary>
-        /// számla listaelemhez tartozó kép kiolvasása stream-ként
+        /// számla listaelemhez tartozó kép kiolvasása stream-ként 		requestUrl	"Picture/GetInvoicePicture/5637928067/500/500"	string
         /// </summary>
         /// <param name="recId"></param>
         /// <param name="maxWidth"></param>
         /// <param name="maxHeight"></param>
         /// <returns></returns>
-        [ActionName("GetInvoicePicture")]
+        [ActionName("GetInvoicePictureByRecId")]
         [HttpGet]
-        public HttpResponseMessage GetInvoicePicture(string recId, string maxWidth, string maxHeight)
+        public HttpResponseMessage GetInvoicePictureByRecId(string recId, string maxWidth, string maxHeight)
         {
             try
             {

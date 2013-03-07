@@ -49,7 +49,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            SalesPrice = String.Format("{0}", from.SalesPrice),
                            TaxAmount = String.Format("{0}", from.TaxAmount), 
                            Description = from.Description, 
-                           RecId = from.RecId
+                           RecId = from.RecId, 
+                           PictureExists = from.PictureExists
                        };
         }
     }

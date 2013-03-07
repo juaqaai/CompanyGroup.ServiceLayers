@@ -148,7 +148,7 @@ namespace CompanyGroup.Domain.PartnerModule
                 }
 
                 InvoiceLineInfo invoiceLineInfo = new InvoiceLineInfo(x.ItemDate, x.LineNum, x.ItemId, x.Name, x.Quantity, x.SalesPrice, x.LineAmount,
-                                                                      x.QuantityPhysical, x.Remain, x.DeliveryType, x.TaxAmount, x.LineAmountMst, x.TaxAmountMst, x.DetailCurrencyCode, x.Description, x.RecId);
+                                                                      x.QuantityPhysical, x.Remain, x.DeliveryType, x.TaxAmount, x.LineAmountMst, x.TaxAmountMst, x.DetailCurrencyCode, x.Description, x.RecId, x.PictureExists);
 
                 invoiceInfo.AddLine(invoiceLineInfo);
             });

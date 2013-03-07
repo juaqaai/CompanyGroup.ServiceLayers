@@ -39,6 +39,12 @@ namespace CompanyGroup.WebApi
                 defaults: new { }
             );
 
+            //config.Routes.MapHttpRoute(
+            //    name: "InvoicePictureApi",
+            //    routeTemplate: "api/{controller}/{action}/{recId}/{maxWidth}/{maxHeight}",
+            //    defaults: new {}
+            //);
+
             config.Routes.MapHttpRoute(
                 name: "PictureApi",
                 routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{maxWidth}/{maxHeight}",

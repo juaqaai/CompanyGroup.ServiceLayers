@@ -387,6 +387,7 @@ CREATE TABLE InternetUser.Invoice
 	LineNum				INT NOT NULL DEFAULT 0,
 	ItemId				NVARCHAR(20) NOT NULL DEFAULT '',
 	ItemName			NVARCHAR(300) NOT NULL DEFAULT '',
+	SerialNumber		NVARCHAR(40) NOT NULL DEFAULT '',
 	Quantity			INT NOT NULL DEFAULT 0,
 	SalesPrice			decimal(20,2) NOT NULL DEFAULT 0,	-- egysegar
 	LineAmount			decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg

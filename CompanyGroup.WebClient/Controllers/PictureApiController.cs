@@ -111,9 +111,22 @@ namespace CompanyGroup.WebClient.Controllers
 
         [HttpGet]
         [ActionName("GetInvoicePicture")]
-        public HttpResponseMessage GetInvoicePicture(string recId, string maxWidth, string maxHeight)
+        public HttpResponseMessage GetInvoicePicture()
         {
-            byte[] picture = this.DownloadData(String.Format("Picture/GetInvoicePicture/{0}/{1}/{2}", recId, maxWidth, maxHeight));
+            string recId = CompanyGroup.Helpers.QueryStringParser.GetString("RecId");
+
+            string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
+
+            string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
+
+            return this.GetInvoicePictureByRecId(recId, maxWidth, maxHeight);
+        }
+
+        [HttpGet]
+        [ActionName("GetInvoicePictureByRecId")]
+        public HttpResponseMessage GetInvoicePictureByRecId(string recId, string maxWidth, string maxHeight)
+        {
+            byte[] picture = this.DownloadData(String.Format("Picture/GetInvoicePicture/?RecId={0}&MaxWidth={1}&MaxHeight={2}", recId, maxWidth, maxHeight));
 
             if (picture == null)
             {
