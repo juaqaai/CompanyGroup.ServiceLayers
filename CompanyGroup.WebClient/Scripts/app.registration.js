@@ -38,7 +38,36 @@ companyGroup.registration = $.sammy(function () {
             minLength: 2,
             html: 'html'
         });
+        //szerződési feltételek elfogadása
+//        $("#chk_accept").change(function () {
+//            if ($('#chk_accept').is(':checked')) {
+//                document.location.hash = '/datarecording';
+//                $("#contract").hide('slow');
+//            }
+//            else {
+//                document.location.hash = '/';
+//                $('#tabs-2').hide(500);
+//                $("#contract").show('slow');
+//            }
+//        });
+        $("#chk_accept").live('change', function () {
+            //console.log($(this).val());
+            context.trigger('acceptContract', { Accepted: $(this).is(':checked') });
+        });
     });
+    //szerződési feltételek elfogadása 
+    this.bind('acceptContract', function (e, data) {
+        var context = this;
+        if (data.Accepted) {
+            $("#contract").hide('slow');
+            context.redirect('#/datarecording');
+        } else {
+            $('#tabs-2').hide(500);
+            $("#contract").show('slow');
+            context.redirect('#/');
+        }
+    });
+
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
         ////console.log(context);
@@ -65,17 +94,17 @@ companyGroup.registration = $.sammy(function () {
         });
     });
     //adatrögzítő adatainak validálása
-    this.before({ only: { verb: 'post', path: '#/registrationdata'} }, function (e) {
+    this.before({ only: { verb: 'post', path: '#/datarecorder'} }, function (e) {
 
         var error_msg = '';
 
-        if ($("#txtDataRecordingName").val() == '') {
+        if ($('#txt_datarecordingname').val() === '') {
             error_msg += 'Az adatrögzítő név kitöltése kötelező! <br/>';
         }
-        if ($("#txtDataRecordingPhone").val() == '') {
+        if ($('#txt_datarecordingphone').val() === '') {
             error_msg += 'Az adatrögzítő telefonszám kitöltése kötelező! <br/>';
         }
-        if ($("#txtDataRecordingEmail").val() == '') {
+        if ($('#txt_datarecordingemail').val() === '') {
             error_msg += 'Az adatrögzítő email cím kitöltése kötelező! <br/>';
         }
 
@@ -84,12 +113,12 @@ companyGroup.registration = $.sammy(function () {
         return (error_msg === '');
     });
     //adatrögzítő adatainak mentése, cégregisztrációs adatlap betöltése
-    this.post('#/registrationdata', function (context) {
+    this.post('#/datarecorder', function (context) {
         ////console.log(context);$('form').serialize()
         var data = {
-            Email: $("#txtDataRecordingEmail").val(),
-            Name: $("#txtDataRecordingName").val(),
-            Phone: $("#txtDataRecordingPhone").val()
+            Email: context.params['txt_datarecordingemail'],
+            Name: context.params['txt_datarecordingname'],
+            Phone: context.params['txt_datarecordingphone']
         };
         $.ajax({
             type: "POST",
@@ -118,7 +147,7 @@ companyGroup.registration = $.sammy(function () {
         });
     });
     //cégregisztráció adatainak validálása
-    this.before({ only: { verb: 'post', path: '#/webadministrator'} }, function (e) {
+    this.before({ only: { verb: 'post', path: '#/companydata'} }, function (e) {
 
         var error_msg = '';
 
@@ -159,8 +188,8 @@ companyGroup.registration = $.sammy(function () {
 
         return (error_msg === '');
     });
-    //webadmin adatainak betöltése, cégregisztrációs adatlap mentése
-    this.post('#/webadministrator', function (context) {
+    //cégregisztrációs adatlap mentése, webadmin adatainak betöltése
+    this.post('#/companydata', function (context) {
         ////console.log(context);
         var data = {
             CompanyData: {
@@ -878,177 +907,165 @@ companyGroup.registration = $.sammy(function () {
         //  $('#chkContactPersonSmsOrderConfirm').val();
     }
 
-var setTabsVisibility = function (i) {
-		if (i == 1) { 
-		$('#tabs-1').hide(); 
-		$('#tabs-1-button').show(500);
-		$('#tab_1_ok').hide(500);
- 		} else { 
-		$("#tabs-1").hide(500);
-		$('#tab_1_ok').show(500);
-		}
-
-		if (i == 2) { 
-			$('#tabs-2').show(500); 
-			$('#tabs-1-button').show(500);
-			$('#tab_1_ok').show(500);
-		} else { 
-			$("#tabs-2").hide(500);
-			$('#tabs-2-button').hide(500);
-		}
-		if (i == 3) {
+    var setTabsVisibility = function (i) {
+        if (i == 1) {
+            $('#tabs-1').hide();
+            $('#tabs-1-button').hide();
+            $('#tab_1_ok').hide(500);
+        } else {
+            $("#tabs-1").hide(500);
+            $('#tab_1_ok').show(500);
+        }
+        if (i == 2) {
+            $('#tabs-2').show(500);
+            $('#tabs-1-button').show(500);
+            $('#tab_1_ok').show(500);
+        } else {
+            $("#tabs-2").hide(500);
+            $('#tabs-2-button').hide(500);
+        }
+        if (i == 3) {
             $('#tabs-3').show(500);
-			$('#tabs-2-button').show(500);
-			$('#tab_2_ok').show(500);
+            $('#tabs-2-button').show(500);
+            $('#tab_2_ok').show(500);
         } else {
             $("#tabs-3").hide(500);
-			$('#tabs-3-button').hide(500);
-			$('#tab_2_ok').hide(500);
+            $('#tabs-3-button').hide(500);
+            $('#tab_2_ok').hide(500);
         }
         if (i == 4) {
             $("#tabs-4").show(500);
-			$('#tabs-3-button').show(500);
-			$('#tab_3_ok').show(500);
+            $('#tabs-3-button').show(500);
+            $('#tab_3_ok').show(500);
         } else {
             $("#tabs-4").hide(500);
-			$('#tabs-4-button').hide(500);
-			$('#tab_3_ok').hide(500);
+            $('#tabs-4-button').hide(500);
+            $('#tab_3_ok').hide(500);
         }
         if (i == 5) {
             $("#tabs-5").show(500);
-			$('#tabs-4-button').show(500);
-			$('#tab_4_ok').show(500);
+            $('#tabs-4-button').show(500);
+            $('#tab_4_ok').show(500);
 
         } else {
             $("#tabs-5").hide(500);
-			$('#tabs-5-button').hide(500);
-			$('#tab_4_ok').hide(500);
-
+            $('#tabs-5-button').hide(500);
+            $('#tab_4_ok').hide(500);
         }
         if (i == 6) {
             $("#tabs-6").show(500);
-			$("#tabs-5").show(500);
-			$("#tabs-4").show(500);
-			$("#tabs-3").show(500);
-			$("#tabs-2").show(500);
-			$('#tabs-5-button').show(500);
-			$('#tab_5_ok').show(500);
-			
+            $("#tabs-5").show(500);
+            $("#tabs-4").show(500);
+            $("#tabs-3").show(500);
+            $("#tabs-2").show(500);
+            $('#tabs-5-button').show(500);
+            $('#tab_5_ok').show(500);
+
         } else {
             $("#tabs-6").hide(500);
-			$('#tab_5_ok').hide(500);
-			;
+            $('#tab_5_ok').hide(500);
+            ;
         }
         if (i == 7) {
             $("#tabs-7").show(500);
-			
+
         } else {
             $("#tabs-7").hide(500);
         }
     }
-	
-	
-			$("#mail_address").hide();
-            $("#del_address").hide();
-            $("#contactperson").hide();
-			$("#finish_reg").hide()
-			$("#tabs-7").hide();
-            
-            
-               
-				$("#chk_checkdata").change(function () {
-					$("#tabs-1").toggle(500);
-					$("#tabs-2").toggle(500);
-					$("#tabs-3").toggle(500);
-					$("#tabs-4").toggle(500);
-					$("#tabs-5").toggle(500);
-					$("#finish_reg").toggle(500);
-					$("#check_span").toggle(500);
-					$("#tabs-7").show(500);
-					
-				});
-			
-			$("#chk_mail_address").change(function () {
-			$('#mail_address').toggle("slow");
-			
-		});
-		
-		$("#chk_mail_address").change(function () {
-			$('#mail_address').toggle("slow");
-			
-		});
-              $("#chk_del_address").change(function () {
-			$('#del_address').toggle("slow");
-			
-		});
-        
-            $("#chk_contactperson").change(function () {
-			$('#contactperson').toggle("slow");
-			
-		});
-
-	
-	$("#chk_accept").change(function () {
-        if ($('#chk_accept').is(':checked')) {
-            document.location.hash = '/datarecording';
 
 
-            
-        }
-        else {
-           document.location.hash = '/';
-           $('#tabs-2').hide(500);
-		   
-        }
+    $("#mail_address").hide();
+    $("#del_address").hide();
+    $("#contactperson").hide();
+    $("#finish_reg").hide()
+    $("#tabs-7").hide();
+
+
+
+    $("#chk_checkdata").change(function () {
+        $("#tabs-1").toggle(500);
+        $("#tabs-2").toggle(500);
+        $("#tabs-3").toggle(500);
+        $("#tabs-4").toggle(500);
+        $("#tabs-5").toggle(500);
+        $("#finish_reg").toggle(500);
+        $("#check_span").toggle(500);
+        $("#tabs-7").show(500);
+
     });
-	
-				$("#tabs-1-button").click(function () {
-			$('#tabs-1').toggle("slow");
-		});
-        		$("#tabs-2-button").click(function () {
-			 $('#tabs-2').toggle("slow");
-		});
-	
-            	$("#tabs-3-button").click(function () {
-			$('#tabs-3').toggle("slow");
-		});
-                $("#tabs-4-button").click(function () {
-			$('#tabs-4').toggle("slow");
-		});
-                $("#tabs-5-button").click(function () {
-			$('#tabs-5').toggle("slow");
-		});
-		         $("#tabs-6-button").click(function () {
-			$('#tabs-6').toggle("slow");
-		});
-		
-		$(function(){
-      $("#chk_print").click(function(){
-			if ($(this).is(':checked'))
-                  $('a#nyomtatas').trigger('click');
-				  $("#tabs-7").hide(500);
-      });
-});
 
-			  $("a#nyomtatas").fancybox({
-		'hideOnContentClick': false
-	});
-        
-	
-	
-	  function displayVals() {
-      var singleValues = $("#selectCountry").val();
-     if(singleValues == "2") {
-   $("#foreign_vat").show(500);  
-   $("#hun_vat").hide(500);
-   } else {
-   $("#foreign_vat").hide(500);  
-   $("#hun_vat").show(500);
-   } 
+
+
+
+    $("#chk_mail_address").change(function () {
+        $('#mail_address').toggle("slow");
+
+    });
+    $("#chk_del_address").change(function () {
+        $('#del_address').toggle("slow");
+
+    });
+
+    $("#chk_contactperson").change(function () {
+        $('#contactperson').toggle("slow");
+
+    });
+
+    $("#contract_btn").click(function () {
+        $('#tabs-1').toggle("slow");
+        $("#contract").hide('slow');
+
+    });
+
+
+    $("#tabs-1-button").click(function () {
+        $('#tabs-1').toggle("slow");
+    });
+    $("#tabs-2-button").click(function () {
+        $('#tabs-2').toggle("slow");
+    });
+
+    $("#tabs-3-button").click(function () {
+        $('#tabs-3').toggle("slow");
+    });
+    $("#tabs-4-button").click(function () {
+        $('#tabs-4').toggle("slow");
+    });
+    $("#tabs-5-button").click(function () {
+        $('#tabs-5').toggle("slow");
+    });
+    $("#tabs-6-button").click(function () {
+        $('#tabs-6').toggle("slow");
+    });
+
+    $(function () {
+        $("#chk_print").click(function () {
+            if ($(this).is(':checked'))
+                $('a#nyomtatas').trigger('click');
+            $("#tabs-7").hide(500);
+        });
+    });
+
+    $("a#nyomtatas").fancybox({
+        'hideOnContentClick': false
+    });
+
+
+
+    function displayVals() {
+        var singleValues = $("#selectCountry").val();
+        if (singleValues == "2") {
+            $("#foreign_vat").show(500);
+            $("#hun_vat").hide(500);
+        } else {
+            $("#foreign_vat").hide(500);
+            $("#hun_vat").show(500);
+        }
     }
-$("select").change(displayVals);
+    $("select").change(displayVals);
     displayVals();
-	 
-	
+
+
 
 });
