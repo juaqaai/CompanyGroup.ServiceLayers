@@ -97,10 +97,13 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             try
             {
+                //bejelentkezett felhasználó lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
 
+                //üres regisztráció létrehozása
                 CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
 
+                //új regisztrációs azonosító létrehozása
                 newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
 
                 newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
@@ -109,15 +112,18 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 newRegistration.VisitorId = visitor.IsValidLogin ? request.VisitorId : String.Empty;
 
+                //új regisztráció mentés 
                 registrationRepository.Add(newRegistration);
 
+                //új regisztráció visszaolvasás
                 CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
 
                 if (registration == null)
                 {
-                    CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                    registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
                 }
 
+                //bankszámlaszámok szétdarabolása
                 registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
                 CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);

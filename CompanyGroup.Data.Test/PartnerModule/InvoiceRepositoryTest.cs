@@ -64,7 +64,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.IInvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository();
 
-            List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoices = repository.GetList("V001446", true, true);
+            List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoices = repository.GetList("V001446", true, true, "", "", "", "", "" , 0, 0, 0);
 
             Assert.IsTrue(invoices.Count > 0);
         }

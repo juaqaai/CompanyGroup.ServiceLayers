@@ -3,7 +3,6 @@
 companyGroup.utils = (function () {
 
     var _pictureBaseUrl = '';
-
     var _webshopBaseUrl = ''
     var _webshopBaseApiUrl = '';
     var _structureBaseApiUrl = '';
@@ -17,11 +16,18 @@ companyGroup.utils = (function () {
     var _visitorBaseApiUrl = '';
     var _downloadPriceListUrl = '';
     var _shoppingCartUrl = '';
+    var _companyUrl = '';
 
     var _instance;
 
     function create() {
         return {
+            setCompanyUrl: function (url) {
+                _companyUrl = url;
+            },
+            getCompanyUrl: function (url) {
+                return _companyUrl + url;
+            },
             setPictureBaseUrl: function (url) {
                 _pictureBaseUrl = url;
             },

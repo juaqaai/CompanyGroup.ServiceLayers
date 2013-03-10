@@ -149,64 +149,68 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("AddNew")]
-        public CompanyGroup.WebClient.Models.RegistrationData AddNew()
+        public HttpResponseMessage AddNew()
         {
-            CompanyGroup.Dto.RegistrationModule.Registration response = null;
-
-            //regisztrációs azonosító kiolvasása sütiből
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
-
-            //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
-            if (!String.IsNullOrEmpty(visitorData.RegistrationId))
+            try
             {
-                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
-            }
+                CompanyGroup.Dto.RegistrationModule.Registration response = null;
 
-            //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
-            if ((response == null) || String.IsNullOrEmpty(response.RegistrationId) || (String.IsNullOrEmpty(response.RegistrationId)))
-            {
-                CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
+                //regisztrációs azonosító kiolvasása sütiből
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
+                //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
+                if (!String.IsNullOrEmpty(visitorData.RegistrationId))
                 {
-                    VisitorId = visitorData.VisitorId,
-                    LanguageId = visitorData.Language
-                };
+                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
 
-                response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddNewRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "AddNew", request);
+                    //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
+                    if ((response == null) || String.IsNullOrEmpty(response.RegistrationId))
+                    {
+                        CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
+                        {
+                            VisitorId = visitorData.VisitorId,
+                            LanguageId = visitorData.Language
+                        };
+
+                        response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddNewRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "AddNew", request);
+                    }
+                }
+
+                //létrehozott regisztrációs azonosító beírása sütibe
+                visitorData.RegistrationId = response.RegistrationId;
+
+                //CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, ApiBaseController.CookieName, visitorData);
+                this.WriteCookie(visitorData);
+
+                //válaszüzenet előállítása
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          response.Visitor,
+                                                                                                                          response.WebAdministrator, 
+                                                                                                                          this.GetCountries());
+
+                HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.OK, model);
+
+                return httpResponseMsg;
             }
-
-            //létrehozott regisztrációs azonosító beírása sütibe
-            visitorData.RegistrationId = response.RegistrationId;
-
-            //CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, ApiBaseController.CookieName, visitorData);
-            this.WriteCookie(visitorData);
-
-            CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
-
-            CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
-
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
-
-            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
-                                                                                                                      response.CompanyData,
-                                                                                                                      contactPersons,
-                                                                                                                      response.DataRecording,
-                                                                                                                      deliveryAddresses,
-                                                                                                                      response.InvoiceAddress,
-                                                                                                                      response.MailAddress,
-                                                                                                                      response.RegistrationId,
-                                                                                                                      response.Visitor,
-                                                                                                                      response.WebAdministrator, 
-                                                                                                                      this.GetCountries());
-
-            //HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
-
-            //string uri = String.Format("/api/GetRegistrationData/{0}", model.RegistrationId);
-
-            //httpResponseMsg.Headers.Location = new Uri(Request.RequestUri, uri);
-
-            return model;
+            catch
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
         }
 
         /// <summary>

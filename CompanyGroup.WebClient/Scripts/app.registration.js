@@ -51,11 +51,11 @@ companyGroup.registration = $.sammy(function () {
 //            }
 //        });
         $("#chk_accept").live('change', function () {
-            //console.log($(this).val());
+            console.log($(this).is(':checked'));
             context.trigger('acceptContract', { Accepted: $(this).is(':checked') });
         });
     });
-    //szerződési feltételek elfogadása 
+    //szerződési feltételek elfogadása (ha elfogadás történt, akkor az adatfeltöltésre irányít a rendszer)
     this.bind('acceptContract', function (e, data) {
         var context = this;
         if (data.Accepted) {
@@ -67,7 +67,6 @@ companyGroup.registration = $.sammy(function () {
             context.redirect('#/');
         }
     });
-
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
         ////console.log(context);
@@ -108,7 +107,7 @@ companyGroup.registration = $.sammy(function () {
             error_msg += 'Az adatrögzítő email cím kitöltése kötelező! <br/>';
         }
 
-        $("#spanDataRecordingError").html(error_msg);
+        $("#span_datarecordingerror").html(error_msg);
 
         return (error_msg === '');
     });
@@ -339,7 +338,7 @@ companyGroup.registration = $.sammy(function () {
         context.title('Regisztráció eredménye');
     });
 
-    this.get('#/addbankaccount', function (context) {
+    this.post('#/addbankaccount', function (context) {
         ////console.log(context);
         var data = {
             Part1: $('#txtBankAccountPart1').val(),

@@ -122,7 +122,7 @@
         <table>
         <tr>
             <td><hr style="border-style: none none dotted; border-width: 2px; width:940px; margin-left:0px"/>
-                <h2>2. Ügyintéző adatai <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="@Url.Content("~/Content/Media/images/checkok.png") width="15px" height="15px alt=""/></h2>
+                <h2>2. Ügyintéző adatai <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="@Url.Content("~/Content/Media/images/checkok.png") width="15px" height="15px" alt=""/></h2>
                 <div id="tabs-2">
                 <form action="#/datarecorder" method="post">                           
                     <table width="100%" border="0" cellpadding="5" cellspacing="2">
@@ -150,7 +150,7 @@
                         <input type="submit" value="Tovább" id="go_on_1" /></td>
                     </tr>
                     <tr>
-                    <td colspan="2"><span style="color:#F00" id="spanDataRecordingError"></span></td>
+                    <td colspan="2"><span style="color:#F00" id="span_datarecordingerror"></span></td>
                     </tr>
                 </table>
                 </form></div>
@@ -165,51 +165,48 @@
                 <table width="100%" border="0" cellspacing="5" cellpadding="2">
                 <tr>
                     <td><strong>Cégnév :</strong></td>
-                    <td colspan="4"><input type="text" id="txtCustomerName" name="txt_customername" class="regfields" style="width:240px" />
+                    <td colspan="4"><input type="text" id="txt_customername" name="txt_customername" class="regfields" style="width:240px" />
                     <input type="hidden" id="hfCustomerId" />
                     <span style="color: rgb(255, 0, 0)">*</span></td>
                 </tr>
                 <tr>
                     <td width="20%"> <strong>Ország :</strong></td>
                     <td width="19%"><select id="selectCountry" name="select_country" class="regfields">
-                                        
-                        <option value="1">Magyarország</option>
-                        <option value="2">Külföld</option>
-                                       
-                            </select>
-                                  
+                                        <option value="1">Magyarország</option>
+                                        <option value="2">Külföld</option>
+                                    </select>
 					<script id="countryTemplate" type="text/html">
-                        <select name="selectCountry" id="selectCountry" class="regfields">
-                            {{#Countries}}
-                            <option value="{{Id}}">{{Name}}</option>
-                            {{/Countries}}
-                            </select>
-                        </script>
+                    <select name="selectCountry" id="selectCountry" class="regfields">
+                        {{#Countries}}
+                        <option value="{{Id}}">{{Name}}</option>
+                        {{/Countries}}
+                    </select>
+                    </script>
 					<span style="color: rgb(255, 0, 0)">*</span></td>
                     <td width="3%">&nbsp;</td>
                     <td width="20%"><strong>Cégjegyzékszám:</strong></td>
-                    <td width="38%"><input type="text" name="txt_registrationnumber" id="txtRegistrationNumber" class="regfields" />
+                    <td width="38%"><input type="text" name="txt_registrationnumber" id="txt_registrationnumber" class="regfields" />
                     <span style="color: rgb(255, 0, 0)">*</span></td>
                 </tr>
                 <tr>
                     <td><strong>Adószám :</strong></td>
-                    <td><label class="error" for="txtCustomerName" style="display:none; color:#900;">( ! )</label>
+                    <td><label class="error" for="txt_customername" style="display:none; color:#900;">( ! )</label>
                     <div id="hun_vat">
-                    <input type="text" name="txtVatNumber" id="txtVatNumber" class="regfields" size="4" maxlength="8" />-
-                    <input type="text" name="txtVatNumber2" id="txtVatNumber2" class="regfields" size="1" maxlength="1" />-
-                    <input type="text" name="txtVatNumber3" id="txtVatNumber3" class="regfields" size="1" maxlength="2" />
+                    <input type="text" name="txt_vatnumber" id="txt_vatnumber" class="regfields" size="4" maxlength="8" />-
+                    <input type="text" name="txt_vatnumber2" id="txt_vatnumber2" class="regfields" size="1" maxlength="1" />-
+                    <input type="text" name="txt_vatnumber3" id="txt_vatnumber3" class="regfields" size="1" maxlength="2" />
                     <span style="color: rgb(255, 0, 0)">*</span></div>
                     <div id="foreign_vat">
-                    <input type="text" name="txtVatNumber4" id="txtVatNumber4" class="regfields" size="8" maxlength="10"/>
+                    <input type="text" name="txt_vatnumber4" id="txt_vatnumber4" class="regfields" size="8" maxlength="10" />
 					<span style="color: rgb(255, 0, 0)">*</span></div></td>
                     <td>&nbsp;</td>
                     <td><strong>Uniós adószám:</strong></td>
-                    <td><input type="text" name="txtEUVatNumber" id="txtEUVatNumber" class="regfields" /></td>
+                    <td><input type="text" name="txt_euvatnumber" id="txt_euvatnumber" class="regfields" /></td>
                 </tr>
                 <tr>
                     <td><strong>Központi email : </strong></td>
-                    <td><label class="error" for="txtRegistrationNumber" style="display:none; color:#900;">( ! )</label>
-                    <input type="text" name="txtMainEmail" id="txtMainEmail" class="regfields" />
+                    <td><label class="error" for="txt_registrationnumber" style="display:none; color:#900;">( ! )</label>
+                    <input type="text" name="txt_mainemail" id="txt_mainemail" class="regfields" />
                     <span style="color: rgb(255, 0, 0)">*</span></td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
@@ -220,7 +217,7 @@
                 </tr>
                 <tr>
                     <td colspan="5" nowrap="nowrap">Hírlevelek a központi e-mailre
-                    <input type="checkbox" name="chkNewsletterToMainEmail" id="chkNewsletterToMainEmail" />
+                    <input type="checkbox" name="chk_newslettertomainemail" id="chk_newslettertomainemail" />
                     <a class="tooltip" href="#"><img src="@Url.Content("~/content/media/images/warning.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span><strong>Figyelem!</strong> A központi e-mail címre küldünk el minden automatikus e-mail visszaigazolást: rendelés, árubeérkezés, kiszállítás</span></a></td>
                 </tr>
                 <tr>
@@ -229,14 +226,14 @@
 			  </table>
               </form>
               <strong style="font-size:16px">Bankszámlaszám</strong>
-              <form action="#/bankaccount" method="post">
+              <form action="#/addbankaccount" method="post">
               <table width="100%" border="0" cellspacing="5" cellpadding="2">
                 <tr>
                     <td height="30" nowrap="nowrap"><p>
-                        <input type="text" class="regfields" id="txtBankAccountPart1" size="8" maxlength="8" />
-                        - <input type="text" class="regfields" id="txtBankAccountPart2" size="8" maxlength="8" />
-                        - <input type="text" class="regfields" id="txtBankAccountPart3" size="8" maxlength="8" />
-                    <a style="text-decoration:none; color: #0159B1;"  href="#/addbankaccount"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/new.png")" width="18" height="18"/><span><strong> Bankszámlaszám hozzáadása</strong></span></a></p></td>
+                        <input type="text" class="regfields" name="txt_bankaccountpart1" id="txt_bankaccountpart1" size="8" maxlength="8" />
+                        - <input type="text" class="regfields" name="txt_bankaccountpart2" id="txt_bankaccountpart2" size="8" maxlength="8" />
+                        - <input type="text" class="regfields" name="txt_bankaccountpart3" id="txt_bankaccountpart3" size="8" maxlength="8" />
+                    <input type="image" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/new.png")" style="width:18px height:18px; cursor:pointer;"/><strong> Bankszámlaszám hozzáadása</strong></p></td>
                   </tr>
 			  </table>
               </form>
@@ -375,15 +372,15 @@
                             </tr>
                             </table>
               </div>
-<table width="100%" border="0" cellspacing="5" cellpadding="2">
-<tr>
-  <td>&nbsp;</td>
-  </tr>
-<tr>
-  <td>
-  <input type="checkbox" name="chk_del_address" id="chk_del_address" />
-  <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
-</tr>
+              <table width="100%" border="0" cellspacing="5" cellpadding="2">
+                <tr>
+                  <td>&nbsp;</td>
+                  </tr>
+                <tr>
+                  <td>
+                  <input type="checkbox" name="chk_del_address" id="chk_del_address" />
+                  <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                </tr>
               </table>
 
                 <div id="del_address">

@@ -48,6 +48,8 @@ namespace CompanyGroup.WebClient
 
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include("~/Scripts/jquery.fileupload.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryform").Include("~/Scripts/jquery.form.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/floatingmessage").Include("~/Scripts/jquery.floatingmessage.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/json2").Include("~/Scripts/jquery.json-2.2.min.js"));

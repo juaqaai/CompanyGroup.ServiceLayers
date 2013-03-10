@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetListTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest("visitorId", "hu", true, true, DateTime.MinValue, DateTime.MinValue);
+            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest("visitorId", "HU", true, true, "", "", "", "", "", 0, 0, 0);
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Invoice/GetList", request).Result;
 

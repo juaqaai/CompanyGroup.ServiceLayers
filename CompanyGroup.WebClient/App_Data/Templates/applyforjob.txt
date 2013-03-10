@@ -1,0 +1,32 @@
+﻿
+Tisztelt Hrp Hungary Carrier!
+
+Üzent érkezett HRP.hu / BSC.hu weboldalról álláshirdetés jelentkezés témakörben, az alábbi adattartalommal: 
+
+	Pozíció: azonosító: $Position$
+		
+	Vezetéknév: $FirstName$	
+		
+	Keresztnév: $LastName$	
+		
+	Születési hely: $PlaceOfBirth$	
+		
+	Születési idő: "$DayfBirth$	
+		
+	Állandó lakcím: $PermanentAddress$	
+		
+	Ideiglenes lakcím: $TemporaryAddress$
+		
+	Telefon: $Phone$	
+		
+	Email: $Email$
+	
+	Megjegyzés: $Message$	
+		
+	Csatolt file: $UploadFileName$
+		
+	Hozzájárulás a referenciák leellenörzésére: $CheckReference$	
+		
+	Küldés időpontja: $SentDate$
+
+    Web adminisztrátor csoport
