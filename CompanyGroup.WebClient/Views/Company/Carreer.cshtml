@@ -340,16 +340,18 @@
     companyGroup.carreer.run('#/');
 
     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+    $('#cus_header1').html(visitorInfoHtml); 
 
-    $('#cus_header1').html(visitorInfoHtml); var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(),model); 
-
-    $('#usermenuContainer').html(usermenuHtml); $("#becomePartnerContainer").empty();
-
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(),model); 
+    $('#usermenuContainer').html(usermenuHtml); 
+    
+    $("#becomePartnerContainer").empty();
     var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model);
-
-    $('#becomePartnerContainer').html(becomePartnerHtml); $("#newsletterContainer").empty();
-
-    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model); $('#newsletterContainer').html(newsletterHtml);
+    $('#becomePartnerContainer').html(becomePartnerHtml); 
+    
+    $("#newsletterContainer").empty();
+    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model); 
+    $('#newsletterContainer').html(newsletterHtml);
 
 
 }

@@ -26,28 +26,85 @@ namespace CompanyGroup.WebClient.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult UploadFile()
+        public JsonResult UploadFile(HttpPostedFileBase signature_entity_file)
         {
             CompanyGroup.WebClient.Models.UploadedFile response = new CompanyGroup.WebClient.Models.UploadedFile();
 
-            foreach (string file in Request.Files)
+            try
             {
-                System.Web.HttpPostedFileBase postedFile = Request.Files[file] as System.Web.HttpPostedFileBase;
-                
-                if (postedFile.ContentLength == 0) continue;
+                string fileName = String.Empty;
 
-                string fileName = String.Format("{0}_{1}{2}{3}", postedFile.FileName, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                string extension = String.Empty;
 
-                string savedFileName = System.IO.Path.Combine(Server.MapPath("~/App_Data/Uploads"), System.IO.Path.GetFileName(fileName));
+                string fileNameGenerated = String.Empty;
 
-                postedFile.SaveAs(savedFileName);
+                if (signature_entity_file.ContentLength > 0)
+                {
+                    DateTime now = DateTime.Now;
 
-                response.Name = fileName;
-                response.Length = postedFile.ContentLength;
-                response.Type = postedFile.ContentType;
+                    fileName = System.IO.Path.GetFileNameWithoutExtension(signature_entity_file.FileName);
+
+                    extension = System.IO.Path.GetExtension(signature_entity_file.FileName);
+
+                    fileNameGenerated = String.Format("{0}_{1}_{2}_{3}_{4}_{5}{6}", fileName, now.Year, now.Month, now.Day, now.Hour, now.Minute, extension);
+
+                    string path = System.IO.Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileNameGenerated);
+
+                    signature_entity_file.SaveAs(path);
+
+                    response.Name = fileNameGenerated;
+
+                    response.Length = signature_entity_file.ContentLength;
+
+                    response.Type = signature_entity_file.ContentType;
+                }
+
+                return Json(response, "application/json; charset=utf-8", System.Text.Encoding.UTF8, JsonRequestBehavior.DenyGet);
             }
+            catch (Exception ex)
+            {
+                response.Name = ex.Message;
 
-            return Json(response, "application/json; charset=utf-8", System.Text.Encoding.UTF8, JsonRequestBehavior.DenyGet);
-        } 
+                return Json(response, "application/json");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UploadApplyDoc(HttpPostedFileBase file)
+        {
+            try
+            {
+                bool result = false;
+                string fileName = String.Empty;
+                string extension = String.Empty;
+                string fileNameGenerated = String.Empty;
+
+                if (file.ContentLength > 0)
+                {
+                    DateTime now = DateTime.Now;
+
+                    fileName = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+
+                    extension = System.IO.Path.GetExtension(file.FileName);
+
+                    fileNameGenerated = String.Format("{0}_{1}_{2}_{3}_{4}_{5}{6}", fileName, now.Year, now.Month, now.Day, now.Hour, now.Minute, extension);
+
+                    string path = System.IO.Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileNameGenerated);
+
+                    file.SaveAs(path);
+
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+                return Json(new { Result = result, FileName = fileNameGenerated }, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = false, FileName = ex.Message }, "application/json");
+            }
+        }
     }
 }

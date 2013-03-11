@@ -97,27 +97,40 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             try
             {
+                CompanyGroup.Domain.RegistrationModule.Registration registration = null;
+
                 //bejelentkezett felhasználó lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
 
-                //üres regisztráció létrehozása
-                CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                
+                if (!String.IsNullOrEmpty(request.RegistrationId))
+                {
+                    registration = registrationRepository.GetByKey(request.RegistrationId);
+                }
 
-                //új regisztrációs azonosító létrehozása
-                newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
+                //ha nincs megkezdett regisztráció 
+                if (registration == null || MongoDB.Bson.ObjectId.Empty.Equals(registration.Id))
+                {
+                    //üres regisztráció létrehozása
+                    CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
 
-                newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
+                    //új regisztrációs azonosító létrehozása
+                    newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
 
-                newRegistration.PersonId = visitor.IsValidLogin ? visitor.PersonId : String.Empty;
+                    newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
 
-                newRegistration.VisitorId = visitor.IsValidLogin ? request.VisitorId : String.Empty;
+                    newRegistration.PersonId = visitor.IsValidLogin ? visitor.PersonId : String.Empty;
 
-                //új regisztráció mentés 
-                registrationRepository.Add(newRegistration);
+                    newRegistration.VisitorId = visitor.IsValidLogin ? request.VisitorId : String.Empty;
 
-                //új regisztráció visszaolvasás
-                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
+                    //új regisztráció mentés 
+                    registrationRepository.Add(newRegistration);
 
+                    //új regisztráció visszaolvasás
+                    registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
+                }
+
+                //ha még mindíg nincs meg a regisztráció, akkor egy új létrehozása szükséges
                 if (registration == null)
                 {
                     registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();

@@ -12,6 +12,8 @@ namespace CompanyGroup.Dto.ServiceRequest
             this.VisitorId = visitorId;
         }
 
+        public GetRegistrationByKey() : this(String.Empty, String.Empty) { }
+
         public string Id { get; set; }
 
         public string VisitorId { get; set; }

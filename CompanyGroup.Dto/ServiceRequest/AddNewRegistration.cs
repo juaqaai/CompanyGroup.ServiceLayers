@@ -17,5 +17,21 @@ namespace CompanyGroup.Dto.ServiceRequest
         /// nyelvi kód
         /// </summary>
         public string LanguageId { get; set; }
+
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
+        public string RegistrationId { get; set; }
+
+        public AddNewRegistration(string visitorId, string languageId, string registrationId)
+        {
+            this.VisitorId = visitorId;
+
+            this.LanguageId = languageId;
+
+            this.RegistrationId = registrationId;
+        }
+
+        public AddNewRegistration() : this("", "", "") { }
     }
 }

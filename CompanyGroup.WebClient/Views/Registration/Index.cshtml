@@ -171,17 +171,75 @@
                 </tr>
                 <tr>
                     <td width="20%"> <strong>Ország :</strong></td>
-                    <td width="19%"><select id="selectCountry" name="select_country" class="regfields">
-                                        <option value="1">Magyarország</option>
-                                        <option value="2">Külföld</option>
-                                    </select>
-					<script id="countryTemplate" type="text/html">
-                    <select name="selectCountry" id="selectCountry" class="regfields">
-                        {{#Countries}}
-                        <option value="{{Id}}">{{Name}}</option>
-                        {{/Countries}}
+                    <td width="19%">
+                    @*<div id="countryContainer"></div>*@
+                        <select name="select_country" id="select_country" class="regfields">
+                            <option value="HU" selected="selected">Magyarország</option>
+                            <option value="AE" >Egyesült Arab Emirátus</option>
+                            <option value="AL" >Albánia</option>
+                            <option value="AT" >AUSZTRIA</option>
+                            <option value="AU" >AUSZTRÁLIA</option>
+                            <option value="AZ" >Azerbajdzsán</option>
+                            <option value="BE" >BELGIUM</option>
+                            <option value="BG" >BULGÁRIA</option>
+                            <option value="BR" >BRAZILIA</option>
+                            <option value="CA" >KANADA</option>
+                            <option value="CH" >SVÁJC</option>
+                            <option value="CN" >KINA</option>
+                            <option value="CY" >CIPRUS</option>
+                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                            <option value="DE" >NÉMETORSZÁG</option>
+                            <option value="DK" >DÁNIA</option>
+                            <option value="EE" >ÉSZTORSZÁG</option>
+                            <option value="ES" >SPANYOLORSZÁG</option>
+                            <option value="EU" >EURÓPAI UNIÓ</option>
+                            <option value="FI" >FINNORSZÁG</option>
+                            <option value="FR" >FRANCIAORSZÁG</option>
+                            <option value="GB" >NAGY-BRITANNIA</option>
+                            <option value="GR" >GÖRÖGORSZÁG</option>
+                            <option value="HK" >HONG KONG</option>
+                            <option value="HR" >HORVÁTORSZÁG</option>
+                            <option value="ID" >INDONÉZIA</option>
+                            <option value="IE" >IRORSZÁG</option>
+                            <option value="IL" >IZRAEL</option>
+                            <option value="IN" >INDIA</option>
+                            <option value="IS" >IZLAND</option>
+                            <option value="IT" >OLASZORSZÁG</option>
+                            <option value="JP" >JAPÁN</option>
+                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                            <option value="LI" >LICHTENSTEIN</option>
+                            <option value="LT" >LITVÁNIA</option>
+                            <option value="LU" >LUXEMBURG</option>
+                            <option value="LV" >LETTORSZÁG</option>
+                            <option value="MD" >MOLDOVA</option>
+                            <option value="MN" >MONGOLIA</option>
+                            <option value="MT" >MÁLTA</option>
+                            <option value="MX" >MEXIKO</option>
+                            <option value="MY" >MALAYSIA</option>
+                            <option value="MZ" >MOZAMBIK</option>
+                            <option value="NL" >HOLLANDIA</option>
+                            <option value="NO" >NORVÉGIA</option>
+                            <option value="NZ" >Új-Zéland</option>
+                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                            <option value="PL" >LENGYELORSZÁG</option>
+                            <option value="PT" >PORTUGÁLIA</option>
+                            <option value="RO" >ROMÁNIA</option>
+                            <option value="RS" >Szerbia</option>
+                            <option value="RU" >Oroszország</option>
+                            <option value="SE" >SVÉDORSZÁG</option>
+                            <option value="SG" >SZINGAPUR</option>
+                            <option value="SI" >SZLOVÉNIA</option>
+                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                            <option value="TH" >THAIFÖLD</option>
+                            <option value="TN" >TUNÉZIA</option>
+                            <option value="TR" >TÖRÖKORSZÁG</option>
+                            <option value="TW" >TAIWAN</option>
+                            <option value="UA" >UKRAJNA</option>
+                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                            <option value="VN" >VIETNAM</option>
+                            <option value="XS" >SZERBIA</option>
                     </select>
-                    </script>
+					@*<script id="countryTemplate" type="text/html"></script>*@
 					<span style="color: rgb(255, 0, 0)">*</span></td>
                     <td width="3%">&nbsp;</td>
                     <td width="20%"><strong>Cégjegyzékszám:</strong></td>
@@ -190,7 +248,7 @@
                 </tr>
                 <tr>
                     <td><strong>Adószám :</strong></td>
-                    <td><label class="error" for="txt_customername" style="display:none; color:#900;">( ! )</label>
+                    <td><label class="error" for="txt_vatnumber" style="display:none; color:#900;">( ! )</label>
                     <div id="hun_vat">
                     <input type="text" name="txt_vatnumber" id="txt_vatnumber" class="regfields" size="4" maxlength="8" />-
                     <input type="text" name="txt_vatnumber2" id="txt_vatnumber2" class="regfields" size="1" maxlength="1" />-
@@ -205,7 +263,7 @@
                 </tr>
                 <tr>
                     <td><strong>Központi email : </strong></td>
-                    <td><label class="error" for="txt_registrationnumber" style="display:none; color:#900;">( ! )</label>
+                    <td><label class="error" for="txt_mainemail" style="display:none; color:#900;">( ! )</label>
                     <input type="text" name="txt_mainemail" id="txt_mainemail" class="regfields" />
                     <span style="color: rgb(255, 0, 0)">*</span></td>
                     <td>&nbsp;</td>
@@ -236,806 +294,1007 @@
                     <input type="image" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/new.png")" style="width:18px height:18px; cursor:pointer;"/><strong> Bankszámlaszám hozzáadása</strong></p></td>
                   </tr>
 			  </table>
+              <span id="span_addbankaccount_error"></span>
               </form>
-                <table id="bankAccountContainer" width="100%" border="0" cellspacing="2" cellpadding="3">
-                </table>
+                <div id="bankAccountContainer">
+                </div>
                 <script id="bankAccountTemplate" type="text/html">
                 {{#Items}}
                 {{#SelectedItem}}
+                <form action="#/updatebankaccount/{{Id}}/{{RecId}}" method="post">
+                <table width="100%" border="0" cellspacing="2" cellpadding="3">
                 <tr>
                     <td nowrap="nowrap"></td>
-                    <td><input type="text" id="txtBankAccountPart1_{{Id}}" class="regfields" value="{{Part1}}" />
-                        - <input type="text" id="txtBankAccountPart2_{{Id}}" class="regfields" value="{{Part2}}" />
-                        - <input type="text" id="txtBankAccountPart3_{{Id}}" class="regfields" value="{{Part3}}" />
-                    <a href="#/updatebankaccount/{{Id}}/{{RecId}}">Mentés</a></td>
+                    <td><input type="text" name="txt_bankaccountpart1" class="regfields" value="{{Part1}}" />
+                        - <input type="text" name="txt_bankaccountpart2" class="regfields" value="{{Part2}}" />
+                        - <input type="text" name="txt_bankaccountpart3" class="regfields" value="{{Part3}}" />
+                    <input type="submit" value="Mentés" /></td>
                 </tr>
+                </table>
+                </form>
                 {{/SelectedItem}}
                 {{^SelectedItem}}
                 <tr>
                 <td nowrap="nowrap"></td>
                     <td>{{Part1}} - {{Part2}} - {{Part3}} 
-                    <a href="#/selectforupdatebankaccount/{{Id}}"><input name="" type="button" value="Módosít"></a>
-                    <a href="#/removebankaccount/{{Id}}"><input name="" type="button" value="Törlés"></a>
+                    <a href="#/selectforupdatebankaccount/{{Id}}">Módosít</a>
+                    <a href="#/removebankaccount/{{Id}}">Törlés</a>
                     </td>
                 </tr>
                 {{/SelectedItem}}
                 {{/Items}}
                 </script>
-                <table width="100%" height="88" border="0" cellpadding="3" cellspacing="2">
-                <tr>
-                <td width="22%" height="47" nowrap="nowrap"><strong style="font-size:16px">Aláírási címpéldány</strong></td>
-                <td width="78%"><span class="fileupload-buttonbar"> <span class="progressbar fileupload-progressbar"></span> <span class="fileinput-button"></span>
-                    <!-- <a href="javascript:void(0)" class="upload-image">feltöltés</a> -->
-                    <input name="uploadSignatureEntityFile" type="file" id="uploadSignatureEntityFile" class="regfields" />
-                    <a class="tooltip" href="#"><img src="@Url.Content("~/content/media/images/warning.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Feltölthető formátumok: .jpg, .jpeg, .pdf, .png, .tiff. Egy dokumentum feltöltése lehetséges!</span></a> </span></td>
-                </tr>
-                <tr>
-                <td height="22" colspan="2" style="color: #0159B1;font-size:12px">A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk.</td>
-                </tr>
-                <tr>
-                <td height="9" colspan="2" style="color: #0159B1;font-size:12px">&nbsp;</td>
-                </tr>
-              </table>
-
-                    <form action="#/webadministrator" method="post">
+                <form id="form_upload" action="@Url.Content("~/Registration/UploadFile")" method="post" enctype="multipart/form-data">
+                    <table width="100%" height="88" border="0" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td width="22%" height="47" nowrap="nowrap"><strong style="font-size:16px">Aláírási címpéldány</strong></td>
+                        <td width="78%"><span class="fileupload-buttonbar"> <span class="progressbar fileupload-progressbar"></span> <span class="fileinput-button"></span>                       
+                        <input name="signature_entity_file" type="file" id="signature_entity_file" class="regfields" /> <input type="submit" id="btn_upload" value="Feltöltés" />
+                        <a class="tooltip" href="#"><img src="@Url.Content("~/content/media/images/warning.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Feltölthető formátumok: .jpg, .jpeg, .pdf, .png, .tiff. Egy dokumentum feltöltése lehetséges!</span></a> </span></td>
+                    </tr>
+                    <tr>
+                    <td height="22" colspan="2" style="color: #0159B1;font-size:12px">A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk.</td>
+                    </tr>
+                    <tr>
+                    <td height="9" colspan="2" style="color: #0159B1;font-size:12px"><span id="span_uploadresult"></span>&nbsp;</td>
+                    </tr>
+                    </table>
+                </form>
+                <form action="#/companydata" method="post">
+                    <table width="100%" border="0" cellspacing="5" cellpadding="2">
+                    <tr>
+                        <td colspan="2"><strong style="font-size:16px">Számlázási cím</strong></td>
+                    </tr>
+                        <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="22%"><strong>Ország :</strong></td>
+                        <td width="78%">
+@*                        <div id="invoiceCountryContainer"></div>
+                        <script id="invoiceCountryTemplate" type="text/html">
+                        <select name="select_invoicecountry" id="select_invoicecountry" class="regfields">
+                            {{#Countries}}
+                            <option value="{{Id}}">{{Name}}</option>
+                            {{/Countries}}
+                        </select>
+                        </script>*@
+                      <select name="select_invoicecountry" id="select_invoicecountry" class="regfields">
+                            <option value="HU" selected="selected">Magyarország</option>
+                            <option value="AE" >Egyesült Arab Emirátus</option>
+                            <option value="AL" >Albánia</option>
+                            <option value="AT" >AUSZTRIA</option>
+                            <option value="AU" >AUSZTRÁLIA</option>
+                            <option value="AZ" >Azerbajdzsán</option>
+                            <option value="BE" >BELGIUM</option>
+                            <option value="BG" >BULGÁRIA</option>
+                            <option value="BR" >BRAZILIA</option>
+                            <option value="CA" >KANADA</option>
+                            <option value="CH" >SVÁJC</option>
+                            <option value="CN" >KINA</option>
+                            <option value="CY" >CIPRUS</option>
+                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                            <option value="DE" >NÉMETORSZÁG</option>
+                            <option value="DK" >DÁNIA</option>
+                            <option value="EE" >ÉSZTORSZÁG</option>
+                            <option value="ES" >SPANYOLORSZÁG</option>
+                            <option value="EU" >EURÓPAI UNIÓ</option>
+                            <option value="FI" >FINNORSZÁG</option>
+                            <option value="FR" >FRANCIAORSZÁG</option>
+                            <option value="GB" >NAGY-BRITANNIA</option>
+                            <option value="GR" >GÖRÖGORSZÁG</option>
+                            <option value="HK" >HONG KONG</option>
+                            <option value="HR" >HORVÁTORSZÁG</option>
+                            <option value="ID" >INDONÉZIA</option>
+                            <option value="IE" >IRORSZÁG</option>
+                            <option value="IL" >IZRAEL</option>
+                            <option value="IN" >INDIA</option>
+                            <option value="IS" >IZLAND</option>
+                            <option value="IT" >OLASZORSZÁG</option>
+                            <option value="JP" >JAPÁN</option>
+                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                            <option value="LI" >LICHTENSTEIN</option>
+                            <option value="LT" >LITVÁNIA</option>
+                            <option value="LU" >LUXEMBURG</option>
+                            <option value="LV" >LETTORSZÁG</option>
+                            <option value="MD" >MOLDOVA</option>
+                            <option value="MN" >MONGOLIA</option>
+                            <option value="MT" >MÁLTA</option>
+                            <option value="MX" >MEXIKO</option>
+                            <option value="MY" >MALAYSIA</option>
+                            <option value="MZ" >MOZAMBIK</option>
+                            <option value="NL" >HOLLANDIA</option>
+                            <option value="NO" >NORVÉGIA</option>
+                            <option value="NZ" >Új-Zéland</option>
+                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                            <option value="PL" >LENGYELORSZÁG</option>
+                            <option value="PT" >PORTUGÁLIA</option>
+                            <option value="RO" >ROMÁNIA</option>
+                            <option value="RS" >Szerbia</option>
+                            <option value="RU" >Oroszország</option>
+                            <option value="SE" >SVÉDORSZÁG</option>
+                            <option value="SG" >SZINGAPUR</option>
+                            <option value="SI" >SZLOVÉNIA</option>
+                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                            <option value="TH" >THAIFÖLD</option>
+                            <option value="TN" >TUNÉZIA</option>
+                            <option value="TR" >TÖRÖKORSZÁG</option>
+                            <option value="TW" >TAIWAN</option>
+                            <option value="UA" >UKRAJNA</option>
+                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                            <option value="VN" >VIETNAM</option>
+                            <option value="XS" >SZERBIA</option>
+                        </select> 
+                        <span style="color: rgb(255, 0, 0)">*</span>ha külföld akkor irszám város manuális?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Irányítószám :</strong></td>
+                        <td><label class="error" for="txt_invoicezipcode" style="display:none; color:#900;">( ! )</label>
+                            <input type="text" name="txt_invoicezipcode" id="txt_invoicezipcode" class="regfields" size="4" /> 
+                        <span style="color: rgb(255, 0, 0)">*</span>autocomplete </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Város :</strong></td>
+                        <td><label class="error" for="txt_invoicecity" style="display:none; color:#900;">( ! )</label>
+                            <input type="text" name="txt_invoicecity" id="txt_invoicecity" class="regfields" /> 
+                        <span style="color: rgb(255, 0, 0)">*</span>autocomplete </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Utca, házszám :</strong></td>
+                        <td><label class="error" for="txt_invoicestreet" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_invoicestreet" id="txt_invoicestreet" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Telefon :</strong></td>
+                        <td><label class="error" for="txt_invoicephone" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_invoicephone" id="txt_invoicephone" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    </table>
+					<table width="100%" border="0" cellspacing="5" cellpadding="2">
+                    <tr>
+                        <td height="28">
+                            <input type="checkbox" name="chk_mail_address" id="chk_mail_address" />
+                        <strong style="font-size:16px">Levelezési cím<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                        </tr>  
+                    </table>
+                    <div id="mail_address">
                         <table width="100%" border="0" cellspacing="5" cellpadding="2">
+                            <tr>
+                            <td colspan="2" nowrap="nowrap">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="22%"><strong>Ország :</strong></td>
+                            <td width="78%">@*<script id="mailCountryTemplate" type="text/html">
+                            <select name="select_mailcountry" id="select_mailcountry" class="regfields">
+                                {{#Countries}}
+                                <option value="{{Id}}">{{Name}}</option>
+                                {{/Countries}}
+                            </select>
+                            </script>*@
+                            <select name="select_mailcountry" id="select_mailcountry" class="regfields">
+                            <option value="HU" selected="selected">Magyarország</option>
+                            <option value="AE" >Egyesült Arab Emirátus</option>
+                            <option value="AL" >Albánia</option>
+                            <option value="AT" >AUSZTRIA</option>
+                            <option value="AU" >AUSZTRÁLIA</option>
+                            <option value="AZ" >Azerbajdzsán</option>
+                            <option value="BE" >BELGIUM</option>
+                            <option value="BG" >BULGÁRIA</option>
+                            <option value="BR" >BRAZILIA</option>
+                            <option value="CA" >KANADA</option>
+                            <option value="CH" >SVÁJC</option>
+                            <option value="CN" >KINA</option>
+                            <option value="CY" >CIPRUS</option>
+                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                            <option value="DE" >NÉMETORSZÁG</option>
+                            <option value="DK" >DÁNIA</option>
+                            <option value="EE" >ÉSZTORSZÁG</option>
+                            <option value="ES" >SPANYOLORSZÁG</option>
+                            <option value="EU" >EURÓPAI UNIÓ</option>
+                            <option value="FI" >FINNORSZÁG</option>
+                            <option value="FR" >FRANCIAORSZÁG</option>
+                            <option value="GB" >NAGY-BRITANNIA</option>
+                            <option value="GR" >GÖRÖGORSZÁG</option>
+                            <option value="HK" >HONG KONG</option>
+                            <option value="HR" >HORVÁTORSZÁG</option>
+                            <option value="ID" >INDONÉZIA</option>
+                            <option value="IE" >IRORSZÁG</option>
+                            <option value="IL" >IZRAEL</option>
+                            <option value="IN" >INDIA</option>
+                            <option value="IS" >IZLAND</option>
+                            <option value="IT" >OLASZORSZÁG</option>
+                            <option value="JP" >JAPÁN</option>
+                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                            <option value="LI" >LICHTENSTEIN</option>
+                            <option value="LT" >LITVÁNIA</option>
+                            <option value="LU" >LUXEMBURG</option>
+                            <option value="LV" >LETTORSZÁG</option>
+                            <option value="MD" >MOLDOVA</option>
+                            <option value="MN" >MONGOLIA</option>
+                            <option value="MT" >MÁLTA</option>
+                            <option value="MX" >MEXIKO</option>
+                            <option value="MY" >MALAYSIA</option>
+                            <option value="MZ" >MOZAMBIK</option>
+                            <option value="NL" >HOLLANDIA</option>
+                            <option value="NO" >NORVÉGIA</option>
+                            <option value="NZ" >Új-Zéland</option>
+                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                            <option value="PL" >LENGYELORSZÁG</option>
+                            <option value="PT" >PORTUGÁLIA</option>
+                            <option value="RO" >ROMÁNIA</option>
+                            <option value="RS" >Szerbia</option>
+                            <option value="RU" >Oroszország</option>
+                            <option value="SE" >SVÉDORSZÁG</option>
+                            <option value="SG" >SZINGAPUR</option>
+                            <option value="SI" >SZLOVÉNIA</option>
+                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                            <option value="TH" >THAIFÖLD</option>
+                            <option value="TN" >TUNÉZIA</option>
+                            <option value="TR" >TÖRÖKORSZÁG</option>
+                            <option value="TW" >TAIWAN</option>
+                            <option value="UA" >UKRAJNA</option>
+                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                            <option value="VN" >VIETNAM</option>
+                            <option value="XS" >SZERBIA</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Irányítószám :</strong></td>
+                            <td><label class="error" for="txt_mailaddresszipcode" style="display:none; color:#900;">( ! )</label>
+                            <input type="text" name="txt_mailaddresszipcode" id="txt_mailaddresszipcode" class="regfields" size="4" /></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Város :</strong></td>
+                            <td><label class="error" for="txt_mailaddresscity" style="display:none; color:#900;">( ! )</label>
+                            <input type="text" name="txt_mailaddresscity" id="txt_mailaddresscity" class="regfields" /></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Utca, házszám :</strong></td>
+                            <td><label class="error" for="txt_mailaddressstreet" style="display:none; color:#900;">( ! )</label>
+                            <input type="text" name="txt_mailaddressstreet" id="txt_mailaddressstreet" class="regfields" /></td>
+                        </tr>
+                        </table>
+                    </div>
+                    <table width="100%" border="0" cellspacing="5" cellpadding="2">
+                    <tr>
+                        <td><span style="color:#F00" id="span_companydataerror"></span></td></tr>
+                    <tr>
+                        <td><input type="submit" value="Tovább" id="go_on_2" /></td>
+                    </tr>
+                    </table>
 
-                            <tr>
-                                <td colspan="2"><strong style="font-size:16px">Számlázási cím</strong></td>
-                            </tr>
-                             <tr>
-                               <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td width="22%"><strong>Ország :</strong></td>
-                                <td width="78%"><script id="invoiceCountryTemplate" type="text/html">
-                                <select name="selectInvoiceCountry" id="selectInvoiceCountry" class="regfields">
-                                    {{#Countries}}
-                                    <option value="{{Id}}">{{Name}}</option>
-                                    {{/Countries}}
-                                    </select>
-                                </script>
-                                  <select name="selectCountry2" id="selectCountry2" class="regfields">
-                                    <option value="#">Magyarország</option>
-                                    <option value="#">Külföld</option>
-                              </select> 
-                              <span style="color: rgb(255, 0, 0)">*</span>ha külföld akkor irszám város manuális?</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Irányítószám :</strong></td>
-                                <td><label class="error" for="txtInvoiceZipCode" style="display:none; color:#900;">( ! )</label>
-                                  <input type="text" id="txtInvoiceZipCode" class="regfields" size="4" /> 
-                                <span style="color: rgb(255, 0, 0)">*</span>autocomplete </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Város :</strong></td>
-                                <td><label class="error" for="txtInvoiceCity" style="display:none; color:#900;">( ! )</label>
-                                  <input type="text" id="txtInvoiceCity" class="regfields" /> 
-                                <span style="color: rgb(255, 0, 0)">*</span>autocomplete </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Utca, házszám :</strong></td>
-                                <td><label class="error" for="txtInvoiceStreet" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtInvoiceStreet" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Telefon :</strong></td>
-                                <td><label class="error" for="txtInvoicePhone" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtInvoicePhone" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                              
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            </table>
-							<table width="100%" border="0" cellspacing="5" cellpadding="2">
-                            <tr>
-                              <td height="28">
-                                  <input type="checkbox" name="chk_mail_address" id="chk_mail_address" />
-                                <strong style="font-size:16px">Levelezési cím<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
-                              </tr>  
-                            </table>
-                            <div id="mail_address">
-                            <table width="100%" border="0" cellspacing="5" cellpadding="2">
-                             <tr>
-                              <td colspan="2" nowrap="nowrap">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td width="22%"><strong>Ország :</strong></td>
-                                <td width="78%"><script id="mailCountryTemplate" type="text/html">
-                                <select name="selectMailCountry" id="selectMailCountry" class="regfields">
-                                    {{#Countries}}
-                                    <option value="{{Id}}">{{Name}}</option>
-                                    {{/Countries}}
-                                </select>
-                                </script>
-                                  <select name="selectCountry3" id="selectCountry3" class="regfields">
-                                    <option value="#">Magyarország</option>
-                                    <option value="#">Külföld</option>
-                              </select></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Irányítószám :</strong></td>
-                                <td><label class="error" for="txtMailAddressZipCode" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtMailAddressZipCode" class="regfields" size="4" /></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Város :</strong></td>
-                                <td><label class="error" for="txtMailAddressCity" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtMailAddressCity" class="regfields" /></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Utca, házszám :</strong></td>
-                                <td><label class="error" for="txtMailAddressStreet" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtMailAddressStreet" class="regfields" /></td>
-                            </tr>
-                            </table>
-              </div>
-              <table width="100%" border="0" cellspacing="5" cellpadding="2">
-                <tr>
-                  <td>&nbsp;</td>
-                  </tr>
-                <tr>
-                  <td>
-                  <input type="checkbox" name="chk_del_address" id="chk_del_address" />
-                  <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                    <table width="100%" border="0" cellspacing="5" cellpadding="2">
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <input type="checkbox" name="chk_del_address" id="chk_del_address" />
+                        <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                    </tr>
+                    </table>
+                </form>
+            </div>
+            <div id="del_address">
+                <form action="#/adddeliveryaddress" method="post">
+                <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2"> <tr>
+                    <td colspan="2" nowrap="nowrap">&nbsp;</td>
                 </tr>
-              </table>
-
-                <div id="del_address">
-                            <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2"> <tr>
-                              <td colspan="2" nowrap="nowrap">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td width="22%"><strong>Ország :</strong></td>
-                                <td width="78%"><script id="deliveryAddressCountryTemplate" type="text/html">
-                                <select name="selectDeliveryAddressCountry" id="selectDeliveryAddressCountry" class="regfields">
-                                    {{#Countries}}
-                                    <option value="{{Id}}">{{Name}}</option>
-                                    {{/Countries}}
-                                </select>
-                                </script>
-                                  <select name="selectCountry4" id="selectCountry4" class="regfields">
-                                    <option value="#">Magyarország</option>
-                                    <option value="#">Külföld</option>
-                              </select></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Irányítószám :</strong></td>
-                                <td><input type="text" id="txtDeliveryAddressZipCode" class="regfields" size="4" /></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Város :</strong></td>
-                                <td><input type="text" id="txtDeliveryAddressCity" class="regfields" /></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Utca, házszám :</strong></td>
-                                <td><input type="text" id="txtDeliveryAddressStreet" class="regfields" size="0" /></td>
-                            </tr>
-                            <tr>
-                                <td><a style="text-decoration:none; color: #0159B1;" href="#/adddeliveryaddress"><img style="cursor:pointer;" id="tabs-2-button3" src="@Url.Content("~/content/media/images/new.png")" width="18" height="18"/> Szállítási cím hozzáadása</a></td>
-                                <td><a class="tooltip" href="#/adddeliveryaddress"><span></span></a></td>
-                            </tr>
-                            </table>
-                </div>
-                <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2"><tr>
-                              <td id="deliveryAddressContainer"></td>
-                              </tr>
-                            <tr>
-                              <td colspan="2"><span style="color:#F00" id="spanCompanyDataError"></span></td></tr>
-                              <tr>
-                              <td colspan="2"><input type="submit" value="Tovább" id="go_on_2" /></td></tr>
+                <tr>
+                    <td width="22%"><strong>Ország :</strong></td>
+                    <td width="78%">@*<script id="deliveryAddressCountryTemplate" type="text/html">
+                    <select name="selectDeliveryAddressCountry" id="selectDeliveryAddressCountry" class="regfields">
+                        {{#Countries}}
+                        <option value="{{Id}}">{{Name}}</option>
+                        {{/Countries}}
+                    </select>
+                    </script>*@
+                        <select name="select_deliveryaddresscountry" id="select_deliveryaddresscountry" class="regfields">
+                            <option value="HU" selected="selected">Magyarország</option>
+                            <option value="AE" >Egyesült Arab Emirátus</option>
+                            <option value="AL" >Albánia</option>
+                            <option value="AT" >AUSZTRIA</option>
+                            <option value="AU" >AUSZTRÁLIA</option>
+                            <option value="AZ" >Azerbajdzsán</option>
+                            <option value="BE" >BELGIUM</option>
+                            <option value="BG" >BULGÁRIA</option>
+                            <option value="BR" >BRAZILIA</option>
+                            <option value="CA" >KANADA</option>
+                            <option value="CH" >SVÁJC</option>
+                            <option value="CN" >KINA</option>
+                            <option value="CY" >CIPRUS</option>
+                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                            <option value="DE" >NÉMETORSZÁG</option>
+                            <option value="DK" >DÁNIA</option>
+                            <option value="EE" >ÉSZTORSZÁG</option>
+                            <option value="ES" >SPANYOLORSZÁG</option>
+                            <option value="EU" >EURÓPAI UNIÓ</option>
+                            <option value="FI" >FINNORSZÁG</option>
+                            <option value="FR" >FRANCIAORSZÁG</option>
+                            <option value="GB" >NAGY-BRITANNIA</option>
+                            <option value="GR" >GÖRÖGORSZÁG</option>
+                            <option value="HK" >HONG KONG</option>
+                            <option value="HR" >HORVÁTORSZÁG</option>
+                            <option value="ID" >INDONÉZIA</option>
+                            <option value="IE" >IRORSZÁG</option>
+                            <option value="IL" >IZRAEL</option>
+                            <option value="IN" >INDIA</option>
+                            <option value="IS" >IZLAND</option>
+                            <option value="IT" >OLASZORSZÁG</option>
+                            <option value="JP" >JAPÁN</option>
+                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                            <option value="LI" >LICHTENSTEIN</option>
+                            <option value="LT" >LITVÁNIA</option>
+                            <option value="LU" >LUXEMBURG</option>
+                            <option value="LV" >LETTORSZÁG</option>
+                            <option value="MD" >MOLDOVA</option>
+                            <option value="MN" >MONGOLIA</option>
+                            <option value="MT" >MÁLTA</option>
+                            <option value="MX" >MEXIKO</option>
+                            <option value="MY" >MALAYSIA</option>
+                            <option value="MZ" >MOZAMBIK</option>
+                            <option value="NL" >HOLLANDIA</option>
+                            <option value="NO" >NORVÉGIA</option>
+                            <option value="NZ" >Új-Zéland</option>
+                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                            <option value="PL" >LENGYELORSZÁG</option>
+                            <option value="PT" >PORTUGÁLIA</option>
+                            <option value="RO" >ROMÁNIA</option>
+                            <option value="RS" >Szerbia</option>
+                            <option value="RU" >Oroszország</option>
+                            <option value="SE" >SVÉDORSZÁG</option>
+                            <option value="SG" >SZINGAPUR</option>
+                            <option value="SI" >SZLOVÉNIA</option>
+                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                            <option value="TH" >THAIFÖLD</option>
+                            <option value="TN" >TUNÉZIA</option>
+                            <option value="TR" >TÖRÖKORSZÁG</option>
+                            <option value="TW" >TAIWAN</option>
+                            <option value="UA" >UKRAJNA</option>
+                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                            <option value="VN" >VIETNAM</option>
+                            <option value="XS" >SZERBIA</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><strong>Irányítószám :</strong></td>
+                    <td><input type="text" name="txt_deliveryaddresszipcode" id="txt_deliveryaddresszipcode" class="regfields" size="4" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Város :</strong></td>
+                    <td><input type="text" name="txt_deliveryaddresscity" id="txt_deliveryaddresscity" class="regfields" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Utca, házszám :</strong></td>
+                    <td><input type="text" name="txt_deliveryaddressstreet" id="txt_deliveryaddressstreet" class="regfields" size="0" /></td>
+                </tr>
+                <tr>
+                    <td><input type="image" style="cursor:pointer;" alt="" id="tabs-2-button3" src="@Url.Content("~/content/media/images/new.png")" width="18" height="18"/> Szállítási cím hozzáadása</td>
+                    <td></td>
+                </tr>
                 </table>
-    </form></div>
+                </form>
+            </div>
+            <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
+            <tr>
+                <td id="deliveryAddressContainer"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span style="color:#F00" id="spanCompanyDataError"></span></td></tr>
+            <tr>
+                <td colspan="2"><input type="button" id="btn_showwebadmin" value="Tovább"/></td>
+            </tr>
+            </table>
 			<script id="deliveryAddressTemplate" type="text/html">
-                            {{#Items}}
-                            {{#SelectedItem}}
-                            <table>
-							<tr>
-                                <td>Ország</td>
-                                <td><select id="selectDeliveryAddressCountry_{{Id}}" class="regfields">
-                                    <option value="HU" selected="selected">Magyarország</option>
-                                    <option value="AE" >Egyesült Arab Emirátus</option>
-                                    <option value="AL" >Albánia</option>
-                                    <option value="AT" >AUSZTRIA</option>
-                                    <option value="AU" >AUSZTRÁLIA</option>
-                                    <option value="AZ" >Azerbajdzsán</option>
-                                    <option value="BE" >BELGIUM</option>
-                                    <option value="BG" >BULGÁRIA</option>
-                                    <option value="BR" >BRAZILIA</option>
-                                    <option value="CA" >KANADA</option>
-                                    <option value="CH" >SVÁJC</option>
-                                    <option value="CN" >KINA</option>
-                                    <option value="CY" >CIPRUS</option>
-                                    <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
-                                    <option value="DE" >NÉMETORSZÁG</option>
-                                    <option value="DK" >DÁNIA</option>
-                                    <option value="EE" >ÉSZTORSZÁG</option>
-                                    <option value="ES" >SPANYOLORSZÁG</option>
-                                    <option value="EU" >EURÓPAI UNIÓ</option>
-                                    <option value="FI" >FINNORSZÁG</option>
-                                    <option value="FR" >FRANCIAORSZÁG</option>
-                                    <option value="GB" >NAGY-BRITANNIA</option>
-                                    <option value="GR" >GÖRÖGORSZÁG</option>
-                                    <option value="HK" >HONG KONG</option>
-                                    <option value="HR" >HORVÁTORSZÁG</option>
-                                    <option value="ID" >INDONÉZIA</option>
-                                    <option value="IE" >IRORSZÁG</option>
-                                    <option value="IL" >IZRAEL</option>
-                                    <option value="IN" >INDIA</option>
-                                    <option value="IS" >IZLAND</option>
-                                    <option value="IT" >OLASZORSZÁG</option>
-                                    <option value="JP" >JAPÁN</option>
-                                    <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
-                                    <option value="LI" >LICHTENSTEIN</option>
-                                    <option value="LT" >LITVÁNIA</option>
-                                    <option value="LU" >LUXEMBURG</option>
-                                    <option value="LV" >LETTORSZÁG</option>
-                                    <option value="MD" >MOLDOVA</option>
-                                    <option value="MN" >MONGOLIA</option>
-                                    <option value="MT" >MÁLTA</option>
-                                    <option value="MX" >MEXIKO</option>
-                                    <option value="MY" >MALAYSIA</option>
-                                    <option value="MZ" >MOZAMBIK</option>
-                                    <option value="NL" >HOLLANDIA</option>
-                                    <option value="NO" >NORVÉGIA</option>
-                                    <option value="NZ" >Új-Zéland</option>
-                                    <option value="PH" >FÜLÖPSZIGETEK</option>
-                                    <option value="PL" >LENGYELORSZÁG</option>
-                                    <option value="PT" >PORTUGÁLIA</option>
-                                    <option value="RO" >ROMÁNIA</option>
-                                    <option value="RS" >Szerbia</option>
-                                    <option value="RU" >Oroszország</option>
-                                    <option value="SE" >SVÉDORSZÁG</option>
-                                    <option value="SG" >SZINGAPUR</option>
-                                    <option value="SI" >SZLOVÉNIA</option>
-                                    <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
-                                    <option value="TH" >THAIFÖLD</option>
-                                    <option value="TN" >TUNÉZIA</option>
-                                    <option value="TR" >TÖRÖKORSZÁG</option>
-                                    <option value="TW" >TAIWAN</option>
-                                    <option value="UA" >UKRAJNA</option>
-                                    <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
-                                    <option value="VN" >VIETNAM</option>
-                                    <option value="XS" >SZERBIA</option>
-                                </select></td>
-                            </tr>
-                            <tr>
-                                <td>Irányítószám</td>
-                                <td><input id="txtDeliveryAddressZipCode_{{Id}}" type="text" value="{{ZipCode}}" class="regfields" size="4" /></td>
-                            </tr>
-                            <tr>
-                                <td>Város</td>
-                                <td><input id="txtDeliveryAddressCity_{{Id}}" type="text" value="{{City}}" class="regfields" /></td>
-                            </tr>
-                            <tr>
-                                <td>Utca, házszám</td>
-                                <td><input id="txtDeliveryAddressStreet_{{Id}}" value="{{Street}}" type="text" class="regfields" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="hidden" value="{{RecId}}" /></td>
-                                <td><a href="#/updatedeliveryaddress/{{Id}}/{{RecId}}">Mentés</a></td>
-                            </tr>
-                            {{/SelectedItem}}
-                            {{^SelectedItem}}
-                            <tr>
-                                <td>Ország</td>
-                                <td>{{CountryRegionId}}</td>
-                            </tr>
-                            <tr>
-                                <td>Irányítószám</td>
-                                <td>{{ZipCode}}</td>
-                            </tr>
-                            <tr>
-                                <td>Város</td>
-                                <td>{{City}}</td>
-                            </tr>
-                            <tr>
-                                <td>Utca, házszám</td>
-                                <td>{{Street}}</td>
-                            </tr>
-                            <tr>
-                                <td nowrap="nowrap"></td>
-                                <td>
-                                <a href="#/selectforupdatedeliveryaddress/{{Id}}">Módosít</a>
-                                <a href="#/removedeliveryaddress/{{Id}}">Törlés</a>              
+                    {{#Items}}
+                    {{#SelectedItem}}
+                    <form action="#/updatedeliveryaddress/{{Id}}/{{RecId}}" method="post">
+                    <table>
+					<tr>
+                        <td>Ország</td>
+                        <td><select name="select_deliveryaddresscountry" class="regfields">
+                            <option value="HU" selected="selected">Magyarország</option>
+                            <option value="AE" >Egyesült Arab Emirátus</option>
+                            <option value="AL" >Albánia</option>
+                            <option value="AT" >AUSZTRIA</option>
+                            <option value="AU" >AUSZTRÁLIA</option>
+                            <option value="AZ" >Azerbajdzsán</option>
+                            <option value="BE" >BELGIUM</option>
+                            <option value="BG" >BULGÁRIA</option>
+                            <option value="BR" >BRAZILIA</option>
+                            <option value="CA" >KANADA</option>
+                            <option value="CH" >SVÁJC</option>
+                            <option value="CN" >KINA</option>
+                            <option value="CY" >CIPRUS</option>
+                            <option value="CZ" >CSEH-KÖZTÁRSASÁG</option>
+                            <option value="DE" >NÉMETORSZÁG</option>
+                            <option value="DK" >DÁNIA</option>
+                            <option value="EE" >ÉSZTORSZÁG</option>
+                            <option value="ES" >SPANYOLORSZÁG</option>
+                            <option value="EU" >EURÓPAI UNIÓ</option>
+                            <option value="FI" >FINNORSZÁG</option>
+                            <option value="FR" >FRANCIAORSZÁG</option>
+                            <option value="GB" >NAGY-BRITANNIA</option>
+                            <option value="GR" >GÖRÖGORSZÁG</option>
+                            <option value="HK" >HONG KONG</option>
+                            <option value="HR" >HORVÁTORSZÁG</option>
+                            <option value="ID" >INDONÉZIA</option>
+                            <option value="IE" >IRORSZÁG</option>
+                            <option value="IL" >IZRAEL</option>
+                            <option value="IN" >INDIA</option>
+                            <option value="IS" >IZLAND</option>
+                            <option value="IT" >OLASZORSZÁG</option>
+                            <option value="JP" >JAPÁN</option>
+                            <option value="KR" >KOREAI KÖZTÁRSASÁG</option>
+                            <option value="LI" >LICHTENSTEIN</option>
+                            <option value="LT" >LITVÁNIA</option>
+                            <option value="LU" >LUXEMBURG</option>
+                            <option value="LV" >LETTORSZÁG</option>
+                            <option value="MD" >MOLDOVA</option>
+                            <option value="MN" >MONGOLIA</option>
+                            <option value="MT" >MÁLTA</option>
+                            <option value="MX" >MEXIKO</option>
+                            <option value="MY" >MALAYSIA</option>
+                            <option value="MZ" >MOZAMBIK</option>
+                            <option value="NL" >HOLLANDIA</option>
+                            <option value="NO" >NORVÉGIA</option>
+                            <option value="NZ" >Új-Zéland</option>
+                            <option value="PH" >FÜLÖPSZIGETEK</option>
+                            <option value="PL" >LENGYELORSZÁG</option>
+                            <option value="PT" >PORTUGÁLIA</option>
+                            <option value="RO" >ROMÁNIA</option>
+                            <option value="RS" >Szerbia</option>
+                            <option value="RU" >Oroszország</option>
+                            <option value="SE" >SVÉDORSZÁG</option>
+                            <option value="SG" >SZINGAPUR</option>
+                            <option value="SI" >SZLOVÉNIA</option>
+                            <option value="SK" >SZLOVÁK KÖZTÁRSASÁG</option>
+                            <option value="TH" >THAIFÖLD</option>
+                            <option value="TN" >TUNÉZIA</option>
+                            <option value="TR" >TÖRÖKORSZÁG</option>
+                            <option value="TW" >TAIWAN</option>
+                            <option value="UA" >UKRAJNA</option>
+                            <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
+                            <option value="VN" >VIETNAM</option>
+                            <option value="XS" >SZERBIA</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>Irányítószám</td>
+                        <td><input name="txt_deliveryaddresszipcode" type="text" value="{{ZipCode}}" class="regfields" size="4" /></td>
+                    </tr>
+                    <tr>
+                        <td>Város</td>
+                        <td><input name="txt_deliveryaddresscity" type="text" value="{{City}}" class="regfields" /></td>
+                    </tr>
+                    <tr>
+                        <td>Utca, házszám</td>
+                        <td><input name="txt_deliveryaddressstreet" value="{{Street}}" type="text" class="regfields" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Mentés"/></td>
+                    </tr>
+                    </table>
+                    </form>
+                    {{/SelectedItem}}
+                    {{^SelectedItem}}
+                    <table>
+                    <tr>
+                        <td>Ország</td>
+                        <td>{{CountryRegionId}}</td>
+                    </tr>
+                    <tr>
+                        <td>Irányítószám</td>
+                        <td>{{ZipCode}}</td>
+                    </tr>
+                    <tr>
+                        <td>Város</td>
+                        <td>{{City}}</td>
+                    </tr>
+                    <tr>
+                        <td>Utca, házszám</td>
+                        <td>{{Street}}</td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"></td>
+                        <td>
+                        <a href="#/selectforupdatedeliveryaddress/{{Id}}">Módosít</a>
+                        <a href="#/removedeliveryaddress/{{Id}}">Törlés</a>              
+                        </td>
+                    </tr>
+					</table>
+                    {{/SelectedItem}}
+                    {{/Items}}            
+					</script>
 
-
-                                </td>
-                            </tr>
-							</table>
-                            {{/SelectedItem}}
-                            {{/Items}}            
-							</script>
-	<hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px">
-    <h2>4. Web adminisztrátor<a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-4-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px alt=""/></h2>
-
-    <div id="tabs-4"><form action="#/contactperson" method="post">
-      <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
+	        <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px"/>
+            <h2>4. Web adminisztrátor<a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-4-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></h2>
+            <div id="tabs-4">
+                <form action="#/webadministrator" method="post">
+                <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td height="26" colspan="5"><strong style="font-size:16px">Web adminisztrátor </strong>
+                        <a class="tooltip" href="#"><img alt="" style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A Cégadminisztrátor az a személy, aki felvehet, törölhet és módosíthat felhasználókat valamint beállíthatja azok jogosultságait.<br/> <strong>Figyelem, a Cégadminisztrátor személyét a szerződés aláírását követően csak cégszerűen aláírva írásban lehet megváltozatni!</strong></span></a></td>
+                    </tr>
+                    <tr>
+                        <td height="21" colspan="5" style="color: #0159B1; font-size:12px"></td>
+                    </tr>
+                    <tr>
+                        <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
+                        <td width="21%"><label class="error" for="txt_webadminusername" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_webadminusername" id="txt_webadminusername" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)"> *</span></td>
+                        <td width="4%">&nbsp;</td>
+                        <td width="12%"><strong>Vezetéknév :</strong></td>
+                        <td width="51%"><input type="text" name="txt_webadminfirstname" id="txt_webadminfirstname" class="regfields"  />
+                        <input type="hidden" id="hiddenWebAdminContactPersonId" />
+                        <input type="hidden" id="hiddenWebAdminRecId" />
+                        <input type="hidden" id="hiddenWebAdminRefRecId" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Jelszó :</strong></td>
+                        <td><label class="error" for="txt_webadminpassword" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_webadminpassword" id="txt_webadminpassword" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                        <td>&nbsp;</td>
+                        <td><strong>Keresztnév :</strong></td>
+                        <td><input type="text" name="txt_webadminlastname" id="txt_webadminlastname" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
+                        <td><label class="error" for="txt_webadminpassword2" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_webadminpassword2" id="txt_webadminpassword2" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                        <td>&nbsp;</td>
+                        <td><strong>E-mail :</strong></td>
+                        <td><input type="text" name="txt_webadminemail" id="txt_webadminemail" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span></td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Telefon :</strong></td>
+                        <td><label class="error" for="txt_webadminphone" style="display:none; color:#900;">( ! )</label>
+                        <input type="text" name="txt_webadminphone" id="txt_webadminphone" class="regfields" />
+                        <span style="color: rgb(255, 0, 0)">*</span> </td>                             
+					    <td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>                                                         
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap">&nbsp;</td>
+                        <td><label class="error" style="display:none; color:#900;">( ! )</label></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
+                    </tr>
+					<tr>
+						<td colspan="5">
+                        <table width="922" border="0" cellspacing="1" cellpadding="2">
+						<tr>
+							<td height="24" nowrap>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre</span></a></td>
+							<td width="20"><input type="checkbox" name="chk_webadminalloworder" id="chk_webadminalloworder" /></td>
+							<td width="18">&nbsp;</td>
+							<td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.</span></a></td>
+							<td width="20"><input type="checkbox" name="chk_webadmininvoiceinfo"  id="chk_webadmininvoiceinfo" /></td>
+							<td width="18">&nbsp;</td>
+							<td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
+							<td width="336"><input type="checkbox" name="chk_webadminemailofdelivery" id="chk_webadminemailofdelivery" /></td>
+						</tr>
+						<tr>
+							<td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében</span></a>                                  </td>
+							<td><input type="checkbox" name="chk_webadminallowreceiptofgoods" id="chk_webadminallowreceiptofgoods" /></td>
+							<td>&nbsp;</td>
+							<td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
+							<td><input type="checkbox" name="chk_webadminpricelistdownload" id="chk_webadminpricelistdownload" /></td>
+							<td>&nbsp;</td>
+							<td><strong>Email értesítés rendelésről? </strong></td>
+							<td><input type="checkbox" name="chk_webadminemailoforderconfirm" id="chk_webadminemailoforderconfirm" /></td>
+						</tr>
+						<tr>
+							<td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
+                            Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
+                            Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
+							<td><input type="checkbox" name="chk_webadminnewsletter2" id="chk_webadminnewsletter2" /></td>
+							<td colspan="2">&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><strong>Email értesítés árubeérkezésről? </strong></td>
+							<td><input type="checkbox" name="chk_webadminemailarriveofgoods" id="chk_webadminemailarriveofgoods" /></td>
+						</tr>
+						<tr>
+							<td colspan="8">&nbsp;</td>
+						</tr>
+			            </table></td></tr>
+                    <tr>
+                        <td colspan="5"><span style="color:#F00"><input type="submit" value="Tovább" id="go_on_3"/></span></td>
+                    </tr> 
+                </table>
+                </form>
+            </div>
+      
+            <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px"/>
+            <h2>5. Kapcsolattartók<a class="tooltip" href="#"><img style="cursor:pointer;" alt="" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+            <img id="tab_5_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
+            
+                <div id="tabs-5">
+                 <input type="checkbox" name="chk_contactperson" id="chk_contactperson" />
+                    <strong>Kapcsolattartók hozzáadása</strong> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong><a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Kapcsolattartó hozzáadása nem kötelező, de javasolt az alábbi személyek felvétele:
+                      - ügyvezető, - pénzügyi vezető, - kereskedelmi vezető, - áruátvevő, - árut rendelhet</span></a></p>
+                      <div id="contactperson">
+                          <form action="#/addcontactperson" method="post">
+                            <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
                             <tr>
-                              <td height="26" colspan="5"><strong style="font-size:16px">Web adminisztrátor </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A Cégadminisztrátor az a személy, aki felvehet, törölhet és módosíthat felhasználókat valamint beállíthatja azok jogosultságait.<br> <strong>Figyelem, a Cégadminisztrátor személyét a szerződés aláírását követően csak cégszerűen aláírva írásban lehet megváltozatni!</strong></span></a></td>
-                            </tr>
-                            <tr>
-                              <td height="21" colspan="5" style="color: #0159B1; font-size:12px"></td>
-                            </tr>
-                            <tr>
-                              <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
-                              <td width="21%"><label class="error" for="txtWebAdminUserName" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtWebAdminUserName" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)"> *</span></td>
-                              <td width="4%">&nbsp;</td>
-                              <td width="12%"><strong>Vezetéknév :</strong></td>
-                              <td width="51%"><input type="text" id="txtWebAdminFirstName" class="regfields"  />
-                                <input type="hidden" id="hiddenWebAdminContactPersonId" />
-                                <input type="hidden" id="hiddenWebAdminRecId" />
-                                <input type="hidden" id="hiddenWebAdminRefRecId" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap"><strong>Jelszó :</strong></td>
-                              <td><label class="error" for="txtWebAdminPassword" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtWebAdminPassword" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                              <td>&nbsp;</td>
-                              <td><strong>Keresztnév :</strong></td>
-                              <td><input type="text" id="txtWebAdminLastName" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
-                              <td><label class="error" for="txtWebAdminPassword2" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtWebAdminPassword2" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                              <td>&nbsp;</td>
-                              <td><strong>E-mail :</strong></td>
-                              <td><input type="text" id="txtWebAdminEmail" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span></td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap"><strong>Telefon :</strong></td>
-                              <td><label class="error" for="txtWebAdminFirstName" style="display:none; color:#900;">( ! )</label>
-                                <input type="text" id="txtWebAdminPhone" class="regfields" />
-                              <span style="color: rgb(255, 0, 0)">*</span>                              
-                              <td>                              
-                              <td>                              
-                              <td>                                                          </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td><label class="error" for="txtWebAdminLastName" style="display:none; color:#900;">( ! )</label></td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
-                            </tr>
-							<tr>
-							  <td colspan="5"><table width="922" border="0" cellspacing="1" cellpadding="2">
-							    <tr>
-							      <td height="24" nowrap>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-						        </tr>
-							    <tr>
-							      <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre
-</span></a></td>
-							      <td width="20"><input type="checkbox" id="chkWebAdminAllowOrder" /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.
-</span></a></td>
-							      <td width="20"><input type="checkbox" id="chkWebAdminInvoiceInfo" /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
-							      <td width="336"><input type="checkbox" id="chkWebAdminEmailOfDelivery" /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében
-</span></a>                                  </td>
-							      <td><input type="checkbox" id="chkWebAdminAllowReceiptOfGoods" /></td>
-							      <td>&nbsp;</td>
-							      <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
-							      <td><input type="checkbox" id="chkWebAdminPriceListDownload" /></td>
-							      <td>&nbsp;</td>
-							      <td><strong>Email értesítés rendelésről? </strong></td>
-							      <td><input type="checkbox" id="chkWebAdminEmailOfOrderConfirm" /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
-    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
-    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
-							      <td><input type="checkbox" id="chkWebAdminNewsletter2" /></td>
-							      <td colspan="2">&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td><strong>Email értesítés árubeérkezésről? </strong></td>
-							      <td><input type="checkbox" id="chkWebAdminEmailArriveOfGoods" /></td>
-						        </tr>
-							    <tr>
-							      <td colspan="8">&nbsp;</td>
-						        </tr>
-			      </table></td></tr>
-                            <tr>
-                              <td colspan="5"><span style="color:#F00">
-                            
-                            <input type="submit" value="Tovább" id="go_on_3"/>
-                              </span></td></tr>
-                            
-              </table>
-    </form>
-
-      </div>
-      <hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px">
-    <h2>5. Kapcsolattartók<a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
-    <img id="tab_5_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px alt=""/></h2></td>
-  </tr>
-  <tr>
-    <td><div id="tabs-5">
-     <input type="checkbox" name="chk_contactperson" id="chk_contactperson" />
-        <strong>Kapcsolattartók hozzáadása</strong> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong><a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Kapcsolattartó hozzáadása nem kötelező, de javasolt az alábbi személyek felvétele:
-          - ügyvezető, - pénzügyi vezető, - kereskedelmi vezető, - áruátvevő, - árut rendelhet</span></a></p>
-          
-          <div id="contactperson">
-          <form action="#/contactperson" method="post">
-      <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
-                            <tr>
-                              <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
-                              <td width="21%"><label class="error" for="txtContactPersonUserName" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtContactPersonnUserName" class="regfields" /></td>
-                              <td width="4%">&nbsp;</td>
-                              <td width="12%"><strong>Vezetéknév :</strong></td>
-                              <td width="51%"><input type="text" id="txtContactPersonFirstName" class="regfields"  />
+                                <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
+                                <td width="21%"><label class="error" for="txt_contactpersonusername" style="display:none; color:#900;">( ! )</label>
+                                <input type="text" name="txt_contactpersonnusername" id="txt_contactpersonnusername" class="regfields" /></td>
+                                <td width="4%">&nbsp;</td>
+                                <td width="12%"><strong>Vezetéknév :</strong></td>
+                                <td width="51%"><input type="text" name="txt_contactpersonfirstname" id="txt_contactpersonfirstname" class="regfields"  />
                                 <input type="hidden" id="hiddenContactPersonContactPersonId" />
                                 <input type="hidden" id="hiddenContactPersonRecId" />
                                 <input type="hidden" id="hiddenContactPersonRefRecId" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Jelszó :</strong></td>
-                              <td><label class="error" for="txtContactPersonPassword" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtContactPersonPassword" class="regfields" /></td>
-                              <td>&nbsp;</td>
-                              <td><strong>Keresztnév :</strong></td>
-                              <td><input type="text" id="txtContactPersonLastName" class="regfields" /></td>
+                                <td nowrap="nowrap"><strong>Jelszó :</strong></td>
+                                <td><label class="error" for="txt_contactpersonpassword" style="display:none; color:#900;">( ! )</label>
+                                <input type="text" name="txt_contactpersonpassword" id="txt_contactpersonpassword" class="regfields" /></td>
+                                <td>&nbsp;</td>
+                                <td><strong>Keresztnév :</strong></td>
+                                <td><input type="text" name="txt_contactpersonlastname" id="txt_contactpersonlastname" class="regfields" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
-                              <td><label class="error" for="txtContactPersonPassword2" style="display:none; color:#900;">( ! )</label>
-                              <input type="text" id="txtContactPersonPassword2" class="regfields" /></td>
-                              <td>&nbsp;</td>
-                              <td><strong>E-mail :</strong></td>
-                              <td><input type="text" id="txtContactPersonEmail" class="regfields" /></td>
+                                <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
+                                <td><label class="error" for="txt_contactpersonpassword2" style="display:none; color:#900;">( ! )</label>
+                                <input type="text" name="txt_contactpersonpassword2" id="txt_contactpersonpassword2" class="regfields" /></td>
+                                <td>&nbsp;</td>
+                                <td><strong>E-mail :</strong></td>
+                                <td><input type="text" name="txt_contactpersonemail" id="txt_contactpersonemail" class="regfields" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Telefon :</strong></td>
-                              <td><label class="error" for="txtContactPersonFirstName" style="display:none; color:#900;">( ! )</label>
-                                <input type="text" id="txtContactPersonPhone" class="regfields" />
-                              <td>                              
-                              <td>                              
-                              <td>                                                          </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td><label class="error" for="txtContactPersonLastName" style="display:none; color:#900;">( ! )</label></td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                                <td nowrap="nowrap"><strong>Telefon :</strong></td>
+                                <td><label class="error" for="txt_contactpersonphone" style="display:none; color:#900;">( ! )</label>
+                                <input type="text" name="txt_contactpersonphone" id="txt_contactpersonphone" class="regfields" />
+                               <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td><label class="error" style="display:none; color:#900;">( ! )</label></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
-							<tr>
-							  <td colspan="5"><table width="922" border="0" cellspacing="1" cellpadding="2">
-							    <tr>
-							      <td height="24" nowrap>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-						        </tr>
-							    <tr>
-							      <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre
-</span></a></td>
-							      <td width="20"><input type="checkbox" id="chkContactPersonAllowOrder" /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.
-</span></a></td>
-							      <td width="20"><input type="checkbox" id="chkContactPersonInvoiceInfo" /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
-							      <td width="336"><input type="checkbox" id="chkContactPersonEmailOfDelivery" /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében
-</span></a>                                  </td>
-							      <td><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" /></td>
-							      <td>&nbsp;</td>
-							      <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
-							      <td><input type="checkbox" id="chkContactPersonPriceListDownload" /></td>
-							      <td>&nbsp;</td>
-
-
-							      <td><strong>Email értesítés rendelésről? </strong></td>
-							      <td><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
-    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
-    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
-							      <td><input type="checkbox" id="chkContactPersonNewsletter2" /></td>
-							      <td colspan="2">&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td><strong>Email értesítés árubeérkezésről? </strong></td>
-							      <td><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" /></td>
-						        </tr>
-							    <tr>
-							      <td colspan="8"><a style="text-decoration:none; color: #0159B1;"   href="#/addcontactperson"><img style="cursor:pointer;" id="tabs-2-button3" src="@Url.Content("~/content/media/images/new.png")" width="18" height="18"/> Kapcsolattartó hozzáadása</a></td>
-						        </tr>
-			      </table></td></tr>
-                            <tr><td colspan="5"><span style="color:#F00">
-                              <input type="submit" value="Tovább" id="go_on_4"/>
+                            <tr>
+                                <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
+                            </tr>
+				            <tr>
+					            <td colspan="5"><table width="922" border="0" cellspacing="1" cellpadding="2">
+					            <tr>
+						            <td height="24" nowrap>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+					            </tr>
+					            <tr>
+						            <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre</span></a></td>
+						            <td width="20"><input type="checkbox" id="chk_contactpersonalloworder" /></td>
+						            <td width="18">&nbsp;</td>
+						            <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.</span></a></td>
+						            <td width="20"><input type="checkbox" id="chk_contactpersoninvoiceinfo" /></td>
+						            <td width="18">&nbsp;</td>
+						            <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
+						            <td width="336"><input type="checkbox" id="chk_contactpersonemailofdelivery" /></td>
+					            </tr>
+					            <tr>
+						            <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében</span></a>                                  </td>
+						            <td><input type="checkbox" id="chk_contactpersonallowreceiptofgoods" /></td>
+						            <td>&nbsp;</td>
+						            <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
+						            <td><input type="checkbox" id="chk_contactpersonpricelistdownload" /></td>
+						            <td>&nbsp;</td>
+						            <td><strong>Email értesítés rendelésről? </strong></td>
+						            <td><input type="checkbox" id="chk_contactpersonemailoforderconfirm" /></td>
+					            </tr>
+					            <tr>
+						            <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
+                                    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
+                                    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
+						            <td><input type="checkbox" id="chk_contactpersonnewsletter2" /></td>
+						            <td colspan="2">&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td>&nbsp;</td>
+						            <td><strong>Email értesítés árubeérkezésről? </strong></td>
+						            <td><input type="checkbox" id="chk_contactpersonemailarriveofgoods" /></td>
+					            </tr>
+					            <tr>
+						            <td colspan="8"><input type="image" style="cursor:pointer;" id="tabs-2-button3" src="@Url.Content("~/content/media/images/new.png")" width="18" height="18"/> Kapcsolattartó hozzáadása</td>
+					            </tr>
+		                        </table></td></tr>
+                                <tr><td colspan="5"><span style="color:#F00">
+                                <input type="submit" value="Tovább" id="go_on_4"/>
                             </span></td></tr>
-                            
-              </table>			
-      </form>
-          
-          <form action="#/preview" method="post">	
-                <table id="contactPersonContainer" width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
-              </table>
-		<script id="contactPersonTemplate" type="text/html">
-                                {{#Items}}
-                                {{#SelectedItem}}
-                              <tr>
-                              <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
-                              <td align="right"><input type="text" id="txtContactPersonUserName_{{Id}}" class="regfields" value="{{UserName}}" /></td>
-                              <td width="4%">&nbsp;</td>
-                              <td width="12%"><strong>Vezetéknév :</strong></td>
-                              <td align="right"><input type="text" id="txtContactPersonFirstName_{{Id}" class="regfields" value="{{FirstName}}" /></td>
+                          </table>			
+                      </form>
+                        <div id="contactPersonContainer" ></div>
+		                <script id="contactPersonTemplate" type="text/html">
+                        {{#Items}}
+                        {{#SelectedItem}}
+                        <form action="#/updatecontactperson/{{Id}}/{{RecId}}" method="post">
+                            <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
+                            <tr>
+                                <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonusername" class="regfields" value="{{UserName}}" /></td>
+                                <td width="4%">&nbsp;</td>
+                                <td width="12%"><strong>Vezetéknév :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonfirstname" class="regfields" value="{{FirstName}}" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Jelszó :</strong></td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword_{{Id}}" class="regfields" value="{{Password}}" /></td>
-                              <td>&nbsp;</td>
-                              <td><strong>Keresztnév :</strong></td>
-                             <td align="right"><input type="text" id="txtContactPersonLastName_{{Id}" class="regfields" value="{{LastName}}" /></td>
+                                <td nowrap="nowrap"><strong>Jelszó :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonpassword" class="regfields" value="{{Password}}" /></td>
+                                <td>&nbsp;</td>
+                                <td><strong>Keresztnév :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonlastname" class="regfields" value="{{LastName}}" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
-                              <td align="right"><input type="text" id="txtContactPersonPassword2_{{Id}" class="regfields" value="{{Password}}" /></td>
-                              <td>&nbsp;</td>
-                              <td><strong>E-mail :</strong></td>
-                                <td align="right"><input type="text" id="txtContactPersonEmail_{{Id}" class="regfields" value="{{Email}}" /></td>
+                                <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonpassword2" class="regfields" value="{{Password}}" /></td>
+                                <td>&nbsp;</td>
+                                <td><strong>E-mail :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonemail" class="regfields" value="{{Email}}" /></td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Telefon :</strong></td>
-                               <td align="right"><input type="text" id="txtContactPersonPhone_{{Id}" class="regfields" value="{{Phone}}" /></td>
-                              <td>                              
-                              <td>                              
-                              <td>                                                          </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                                <td nowrap="nowrap"><strong>Telefon :</strong></td>
+                                <td align="right"><input type="text" name="txt_contactpersonphone" class="regfields" value="{{Phone}}" /></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>                                                          
                             </tr>
                             <tr>
-                              <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
-							<tr>
-							  <td colspan="5"><table width="922" border="0" cellspacing="1" cellpadding="2">
-							    <tr>
-							      <td height="24" nowrap>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-						        </tr>
-							    <tr>
-							      <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre
-</span></a></td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonAllowOrder" {{#AllowOrder}} checked="checked" {{/AllowOrder}} /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.
-</span></a></td>
-							        <td align="right"><input type="checkbox" id="chkContactPersonInvoiceInfo" {{#InvoiceInfo}} checked="checked" {{/InvoiceInfo}} /></td>
-							      <td width="18">&nbsp;</td>
-							      <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonEmailOfDelivery" {{#EmailOfDelivery}} checked="checked" {{/EmailOfDelivery}} /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében
-</span></a>                                  </td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonAllowReceiptOfGoods" {{#AllowReceiptOfGoods}} checked="checked" {{/AllowReceiptOfGoods}} /></td>
-							      <td>&nbsp;</td>
-							      <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonPriceListDownload" {{#PriceListDownload}} checked="checked" {{/PriceListDownload}} /></td>
-							      <td>&nbsp;</td>
+                            <tr>
+                                <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
+                            </tr>
+		                    <tr>
+			                    <td colspan="5">
+                                    <table width="922" border="0" cellspacing="1" cellpadding="2">
+			                        <tr>
+				                        <td height="24" nowrap>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+			                        </tr>
+			                        <tr>
+				                        <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre</span></a></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonalloworder" {{#AllowOrder}} checked="checked" {{/AllowOrder}} /></td>
+				                        <td width="18">&nbsp;</td>
+				                        <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.</span></a></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersoninvoiceinfo" {{#InvoiceInfo}} checked="checked" {{/InvoiceInfo}} /></td>
+				                        <td width="18">&nbsp;</td>
+				                        <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonemailofdelivery" {{#EmailOfDelivery}} checked="checked" {{/EmailOfDelivery}} /></td>
+			                        </tr>
+			                        <tr>
+				                        <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében</span></a>                                  </td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonallowreceiptofgoods" {{#AllowReceiptOfGoods}} checked="checked" {{/AllowReceiptOfGoods}} /></td>
+				                        <td>&nbsp;</td>
+				                        <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonpricelistdownload" {{#PriceListDownload}} checked="checked" {{/PriceListDownload}} /></td>
+				                        <td>&nbsp;</td>
 
-							      <td><strong>Email értesítés rendelésről? </strong></td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonEmailOfOrderConfirm" {{#EmailOfOrderConfirm}} checked="checked" {{/EmailOfOrderConfirm}} /></td>
-						        </tr>
-							    <tr>
-							      <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
-    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
-    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
-							      <td nowrap="nowrap">Hírlevél?</td>
-                                  <td align="right"><input type="checkbox" id="chkContactPersonNewsletter" {{#Newsletter}} checked="checked" {{/Newsletter}} /></td>
-							      <td colspan="2">&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td><strong>Email értesítés árubeérkezésről? </strong></td>
-							      <td align="right"><input type="checkbox" id="chkContactPersonEmailArriveOfGoods" {{#EmailArriveOfGoods}} checked="checked" {{/EmailArriveOfGoods}} /></td>
-						        </tr>
-							    <tr>
-							      <td colspan="8"><a href="#/updatecontactperson/{{Id}}/{{RecId}}">Mentés</a></td>
-						        </tr>
-			      </table></td></tr>
-                            <tr><td colspan="5"><span style="color:#F00">
-                              <input type="submit" value="Tovább" id="go_on_4"/>
-                            </span></td></tr>
-                                {{/SelectedItem}}
-                                {{^SelectedItem}}
-                              <tr>
-                              <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
-                              <td align="right">{{UserName}}</td>
-                              <td width="4%">&nbsp;</td>
-                              <td width="12%"><strong>Vezetéknév :</strong></td>
-                              <td align="right">{{FirstName}}</td>
+				                        <td><strong>Email értesítés rendelésről? </strong></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonemailoforderconfirm" {{#EmailOfOrderConfirm}} checked="checked" {{/EmailOfOrderConfirm}} /></td>
+			                        </tr>
+			                        <tr>
+				                        <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
+                                        Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
+                                        Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
+				                        <td nowrap="nowrap">Hírlevél?</td>
+                                        <td align="right"><input type="checkbox" id="chkcontactpersonnewsletter" {{#Newsletter}} checked="checked" {{/Newsletter}} /></td>
+				                        <td colspan="2">&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td>&nbsp;</td>
+				                        <td><strong>Email értesítés árubeérkezésről? </strong></td>
+				                        <td align="right"><input type="checkbox" id="chkcontactpersonemailarriveofgoods" {{#EmailArriveOfGoods}} checked="checked" {{/EmailArriveOfGoods}} /></td>
+			                        </tr>
+			                        <tr>
+				                        <td colspan="8"><input type="submit" value="Mentés" /></td>
+			                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                             <tr>
-                              <td nowrap="nowrap"><strong>Jelszó :</strong></td>
-                              <td align="right">{{Password}}</td>
-                              <td>&nbsp;</td>
-                              <td><strong>Keresztnév :</strong></td>
-                             <td align="right">{{LastName}}</td>
+                                <td colspan="5"><span style="color:#F00"><input type="submit" value="Tovább" id="go_on_4"/></span></td>
                             </tr>
-                            <tr>
-                              <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
-                              <td align="right">{{Password}}</td>
-                              <td>&nbsp;</td>
-                              <td><strong>E-mail :</strong></td>
-                                <td align="right">{{Email}}</td>
-                            </tr>
-                            <tr>
-                              <td nowrap="nowrap"><strong>Telefon :</strong></td>
-                               <td align="right">{{Phone}}</td>
-                              <td>                              
-                              <td>                              
-                              <td>                                                          </tr>
-                            <tr>
-                              <td nowrap="nowrap">&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="5" nowrap="nowrap"><strong>Ön megadhatja, hogy ez  személy milyen funkciókat tudjon elvégezni.</strong></td>
-                            </tr>
-							<tr>
-							  <td colspan="5"><table width="922" border="0" cellspacing="1" cellpadding="2">
-							    <tr>
-							      <td height="24" nowrap>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-						        </tr>
-							    <tr>
-							      <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre
-</span></a></td>
-							      <td align="right">{{#AllowOrder}} igen {{/AllowOrder}} {{^AllowOrder}} nem {{/AllowOrder}}</td>
-							      <td width="18">&nbsp;</td>
-							      <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.
-</span></a></td>
-							      <td align="right">{{#InvoiceInfo}} igen {{/InvoiceInfo}} {{^InvoiceInfo}} nem {{/InvoiceInfo}}</td>
-							      <td width="18">&nbsp;</td>
-							      <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
-							      <td align="right">{{#EmailOfDelivery}} igen {{/EmailOfDelivery}} {{^EmailOfDelivery}} nem {{/EmailOfDelivery}}</td>
-						        </tr>
-							    <tr>
-							      <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében
-</span></a>                                  </td>
-							      <td align="right">{{#AllowReceiptOfGoods}} igen {{/AllowReceiptOfGoods}} {{^AllowReceiptOfGoods}} nem {{/AllowReceiptOfGoods}}</td>
-							      <td>&nbsp;</td>
-							      <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
-							      <td align="right">{{#PriceListDownload}} igen {{/PriceListDownload}} {{^PriceListDownload}} nem {{/PriceListDownload}}</td>
-							      <td>&nbsp;</td>
+                        </table>
+                    </form>
+                    {{/SelectedItem}}
+                    {{^SelectedItem}}
+                    <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td width="12%" nowrap="nowrap"><strong>Belépési név :</strong></td>
+                        <td align="right">{{UserName}}</td>
+                        <td width="4%">&nbsp;</td>
+                        <td width="12%"><strong>Vezetéknév :</strong></td>
+                        <td align="right">{{FirstName}}</td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Jelszó :</strong></td>
+                        <td align="right">{{Password}}</td>
+                        <td>&nbsp;</td>
+                        <td><strong>Keresztnév :</strong></td>
+                        <td align="right">{{LastName}}</td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Jelszó mégegyszer :</strong></td>
+                        <td align="right">{{Password}}</td>
+                        <td>&nbsp;</td>
+                        <td><strong>E-mail :</strong></td>
+                        <td align="right">{{Email}}</td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap"><strong>Telefon :</strong></td>
+                        <td align="right">{{Phone}}</td>
+                        <td>                              
+                        <td>                              
+                        <td>
+                    </tr>
+                    <tr>
+                        <td nowrap="nowrap">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+		            <tr>
+			            <td colspan="5">
+                            <table width="922" border="0" cellspacing="1" cellpadding="2">
+			                <tr>
+				                <td height="24" nowrap>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+			                </tr>
+			                <tr>
+				                <td width="132" height="24"><strong>Árut Rendelhet? </strong><a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég nevében rendelést leadnia részünkre</span></a></td>
+				                <td align="right">{{#AllowOrder}} igen {{/AllowOrder}} {{^AllowOrder}} nem {{/AllowOrder}}</td>
+				                <td width="18">&nbsp;</td>
+				                <td width="140"><strong>Számlainformáció?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra láthassa e a cég számláit és azok állapotát.</span></a></td>
+				                <td align="right">{{#InvoiceInfo}} igen {{/InvoiceInfo}} {{^InvoiceInfo}} nem {{/InvoiceInfo}}</td>
+				                <td width="18">&nbsp;</td>
+				                <td width="197"><strong>Email értesítés árukiszállításról?</strong></td>
+				                <td align="right">{{#EmailOfDelivery}} igen {{/EmailOfDelivery}} {{^EmailOfDelivery}} nem {{/EmailOfDelivery}}</td>
+			                </tr>
+			                <tr>
+				                <td><strong>Árut átvehet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/help_less.png")" width="18" height="18"/><span>Itt lehet megadni, hogy a személy jogosult-e személyes áruátvételre telephelyeinken a cég nevében</span></a>                                  </td>
+				                <td align="right">{{#AllowReceiptOfGoods}} igen {{/AllowReceiptOfGoods}} {{^AllowReceiptOfGoods}} nem {{/AllowReceiptOfGoods}}</td>
+				                <td>&nbsp;</td>
+				                <td><strong>Árlistát letölthet?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button4" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>A jelszavával belépve weboldalainkra legyen-e joga a cég személyes árait tartalmazó árlista letöltésére </span></a></td>
+				                <td align="right">{{#PriceListDownload}} igen {{/PriceListDownload}} {{^PriceListDownload}} nem {{/PriceListDownload}}</td>
+				                <td>&nbsp;</td>
 
-							      <td><strong>Email értesítés rendelésről? </strong></td>
-							       <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
-						        </tr>
-							    <tr>
-							      <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
-    Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
-    Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
-							      <td nowrap="nowrap">Hírlevél?</td>
-                                  <td align="right">{{#Newsletter}} igen {{/Newsletter}} {{^Newsletter}} nem {{/Newsletter}}</td>
-                                </tr>
-							      <td colspan="2">&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td>&nbsp;</td>
-							      <td><strong>Email értesítés árubeérkezésről? </strong></td>
-							      <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
-						        </tr>
-							    <tr>
-							      <td colspan="8"> <a href="#/selectforupdatecontactperson/{{Id}}">Módosít</a><a href="#/removecontactperson/{{Id}}">Törlés</a></td>
-						        </tr>
-			      </table></td></tr>
-                            <tr><td colspan="5"><span style="color:#F00">
-                              <input type="submit" value="Tovább" id="go_on_4"/>
-                            </span></td></tr>
-                                {{/SelectedItem}}
-                                {{/Items}}
-                            </script>
-          </form>
-          </div>
-    </div>
+				                <td><strong>Email értesítés rendelésről? </strong></td>
+				                <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
+			                </tr>
+			                <tr>
+				                <td><strong>Hírlevél?</strong> <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button5" src="@Url.Content("~/content/media/images/help_less.png")" width="18" height="18"/><span>Ön kiválaszthatja, hogy a központi e-mail címen FELÜL a jelen felhasználóhoz megadott emailcímre is menjenek-e automata értesítések. Megrendelés: automata értesítés készül, ha a cég nevére egy megrendelés kerül rögzítésre a rendszerünkben. A levél rendelés visszaigazolásként funkcionál.
+                                Árubeérkezés: automata értesítés készül, ha az Ön cége által megrendelt áru megérkezett raktárunkba, és az annak átvétele a levélben foglalt átfutási idő után lehetségessé válik.
+                                Kiszállítás: automata értesítés készül, ha Ön által kért árut átadtuk kiszállításra a fuvarozónak.</span></a></td>
+				                <td nowrap="nowrap">{{#Newsletter}} igen {{/Newsletter}} {{^Newsletter}} nem {{/Newsletter}}</td>
+                                <td align="right"></td>
+                            </tr>
+				                <td colspan="2">&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td>&nbsp;</td>
+				                <td><strong>Email értesítés árubeérkezésről? </strong></td>
+				                <td align="right">{{#EmailOfOrderConfirm}} igen {{/EmailOfOrderConfirm}} {{^EmailOfOrderConfirm}} nem {{/EmailOfOrderConfirm}}</td>
+			                </tr>
+			                <tr>
+				                <td colspan="8">
+                                <a href="#/selectforupdatecontactperson/{{Id}}">Módosít</a>
+                                <br/>
+                                <a href="#/removecontactperson/{{Id}}">Törlés</a></td>
+			                </tr>
+		                    </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                    </tr>
+                    </table>
+                    {{/SelectedItem}}
+                    {{/Items}}
+                    </script>
+                      </div>
+                </div>
+
+                <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px" />
+                <h2>6. Adatok ellenőrzése <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-6-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+                <img id="tab_5_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
+                <div id="tabs-6">
+                  <p><span id="check_span" style="font-size:14px; color:#FF0000; font-weight:bold;">Kérem ellenőrizze ujra, hogy minden adata helyes-e.</span></p>
+                    <p><strong>
+                      <input type="checkbox" name="chk_checkdata" id="chk_checkdata" />
+                      Ellenőriztem az adataimat és rendben találtam őket</strong>!</p>
+                    <p> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong></p>
+                </div>
 
     <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px" />
-    <h2>6. Adatok ellenőrzése <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-6-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
-    <img id="tab_5_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px alt=""/></h2><div id="tabs-6">
-      <p><span id="check_span" style="font-size:14px; color:#FF0000; font-weight:bold;">Kérem ellenőrizze ujra, hogy minden adata helyes-e.</span></p>
-        <p><strong>
-          <input type="checkbox" name="chk_checkdata" id="chk_checkdata" />
-          Ellenőriztem az adataimat és rendben találtam őket</strong>!</p>
-        <p> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong>
-    </div>
-    
-    
-    <hr / style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px">
     <h2>7. Szerződés Feldolgozása<!--a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
     <img id="tab_6_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px alt=""/--></h2>
     <div id="tabs-7">
-      <p><span style="font-size:16px; color:#084385;"><strong>A szerződést kérjük két példányban nyomtassa ki!</strong></span><br>
-        <br>
+      <p><span style="font-size:16px; color:#084385;"><strong>A szerződést kérjük két példányban nyomtassa ki!</strong></span><br/>
+        <br/>
         <div align="center" style="float:left; margin-left: 15px;">
         <a style="text-decoration:none; font-size:14px; color:#084385;" href="#/print">
-        <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/print_icon.png")" width="40" height="40"/><br>
-        <strong>Szerződés nyomtatása </strong></a></p></div>
-                <div align="center" style="float:left; margin-left: 15px;">
+        <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/print_icon.png")" width="40" height="40"/><br/>
+        <strong>Szerződés nyomtatása </strong></a></div>
+      </p>
+    </div>
+    <div align="center" style="float:left; margin-left: 15px;">
         <a style="text-decoration:none; font-size:14px; color:#084385;" href="#/save">
-        <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/save_icon.png")" width="40" height="40"/><br>
-        <strong>Szerződés mentése </strong></a></p></div>
-        <br><br><br><br>
+        <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/save_icon.png")" width="40" height="40"/><br/>
+        <strong>Szerződés mentése </strong></a>
+    </div>
+        <br/><br/><br/><br/>
         <p><strong>
           </strong>
-          <label for="checkbox"><strong>
-            <input type="checkbox" name="chk_checkdata" id="chk_print" />
+          <label for="checkbox"><strong><input type="checkbox" name="chk_checkdata" id="chk_print" />
             A jelen szerződést kinyomtattam, avagy lementettem!</strong></label>
-      </p>
+        </p>
         <p><a id="nyomtatas" href="#nyomtatas_ablak"></a></p>
     </div>
 							
-							<div id="just1" style="display:none">
-    						<div style="width:300px; padding:12px;" align="center" id="nyomtatas_ablak">
-                            <span style="font-size:24px; color:#084385;"><strong>Regisztráció eredménye</strong></span><br>
-  <p>Az Ön által megadott regisztrációs adatok rendszerünkben rögzítésre kerültek.                              
-                             <p>A regisztrációs igényeket kollégáink ellenőrzik és hagyják jóvá, mely néhány napot igénybe vehet.                       <br/>
-							<br>
-							<a style="text-decoration:none" id="rendszeruzenet" href="../Webshop/Index/"><input name="befejezes" value="Befejezés" type="button"></a>
-							</div>
-	  </div></div>
-
+	<div id="just1" style="display:none">
+        <div style="width:300px; padding:12px;" align="center" id="nyomtatas_ablak">
+            <span style="font-size:24px; color:#084385;"><strong>Regisztráció eredménye</strong></span><br/>
+            <p>Az Ön által megadott regisztrációs adatok rendszerünkben rögzítésre kerültek.                              
+            <p>A regisztrációs igényeket kollégáink ellenőrzik és hagyják jóvá, mely néhány napot igénybe vehet.<br/>
+		    <br/>
+        </div>
 	</div>
+</div>
         
 
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/registration")');
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/registration")', '@Scripts.Url("~/bundles/jqueryform")');
 
 }
 @section ScriptOnReady {
@@ -1049,5 +1308,19 @@
     //console.log(model);
 
     companyGroup.registration.run('#/');
+
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+    $('#cus_header1').html(visitorInfoHtml); 
+
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(),model); 
+    $('#usermenuContainer').html(usermenuHtml); 
+    
+    $("#becomePartnerContainer").empty();
+    var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model);
+    $('#becomePartnerContainer').html(becomePartnerHtml); 
+    
+    $("#newsletterContainer").empty();
+    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model); 
+    $('#newsletterContainer').html(newsletterHtml);
 
 }

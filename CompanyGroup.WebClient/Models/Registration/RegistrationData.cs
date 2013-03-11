@@ -20,7 +20,7 @@ namespace CompanyGroup.WebClient.Models
                             CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator, 
                             Countries countries)
         {
-            this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts);
+            this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts, "");
 
             this.CompanyData = new CompanyGroup.WebClient.Models.CompanyData(companyData);
 
@@ -28,7 +28,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.DataRecording = new CompanyGroup.WebClient.Models.DataRecording(dataRecording);
 
-            this.DeliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(deliveryAddresses);
+            this.DeliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(deliveryAddresses, "");
 
             this.InvoiceAddress = new CompanyGroup.WebClient.Models.InvoiceAddress(invoiceAddress);
 

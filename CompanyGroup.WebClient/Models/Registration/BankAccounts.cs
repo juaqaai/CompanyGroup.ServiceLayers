@@ -6,30 +6,9 @@ namespace CompanyGroup.WebClient.Models
     public class BankAccounts
     {
 
-        public BankAccounts(CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts)
+        public BankAccounts(CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts, string selectedId)
         {
-            this.Items = bankAccounts.Items.ConvertAll(x => new CompanyGroup.WebClient.Models.BankAccount(x));
-
-            selectedId = String.Empty;
-        }
-
-        private string selectedId = String.Empty;
-
-        /// <summary>
-        /// módosításra kiválasztott bankszámla azonosító
-        /// </summary>
-        public string SelectedId 
-        {
-            get { return selectedId; } 
-            set 
-            {
-                selectedId = value;
-
-                if (!String.IsNullOrEmpty(value))
-                {
-                    this.Items.ForEach(x => x.SelectedItem = x.Id.Equals(value));
-                }
-            } 
+            this.Items = bankAccounts.Items.ConvertAll(x => new CompanyGroup.WebClient.Models.BankAccount(x, selectedId));
         }
 
         public List<CompanyGroup.WebClient.Models.BankAccount> Items { get; set; }
