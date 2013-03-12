@@ -74,5 +74,33 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
         CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId);
+
+        /// <summary>
+        /// vevő létrehozása (regisztráció)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.RegistrationModule.CustomerCreateResult Create(CompanyGroup.Domain.RegistrationModule.CustomerCreate request);
+
+        /// <summary>
+        /// szállítási cím létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        long CreateDeliveryAddress(CompanyGroup.Domain.RegistrationModule.DeliveryAddressCreate request);
+
+        /// <summary>
+        /// kapcsolattartó létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        long CreateContactPerson(CompanyGroup.Domain.RegistrationModule.ContactPersonCreate request);
+
+        /// <summary>
+        /// regisztráció - bankszámlaszám létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        long CreateBankAccount(CompanyGroup.Domain.RegistrationModule.BankAccountCreate request);
     }
 }
