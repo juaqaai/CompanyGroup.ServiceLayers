@@ -24,7 +24,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.CompanyData = new CompanyGroup.WebClient.Models.CompanyData(companyData);
 
-            this.ContactPersons = new CompanyGroup.WebClient.Models.ContactPersons(contactPersons);
+            this.ContactPersons = new CompanyGroup.WebClient.Models.ContactPersons(contactPersons, "");
 
             this.DataRecording = new CompanyGroup.WebClient.Models.DataRecording(dataRecording);
 

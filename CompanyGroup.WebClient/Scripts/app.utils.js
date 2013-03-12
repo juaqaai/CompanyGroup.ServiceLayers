@@ -166,6 +166,24 @@ companyGroup.utils = (function () {
             },
             toUpperCase: function (text) {
                 return text.toUpperCase();
+            }, 
+            sliceVatNumber : function (value) {
+                var result = { Number1: '', Number2: '', Number3: '' };
+                var arr_vatnum = value.split('-');
+                for (var i = 0; i < arr_vatnum.length; i++) {
+                    if (result.Number1 === '') {
+                        result.Number1 = arr_vatnum[i];
+                    } else {
+                        if (result.Number2 === '') {
+                            result.Number2 = arr_vatnum[i];
+                        } else {
+                            if (result.Number3 === '') {
+                                result.Number3 = arr_vatnum[i];
+                            }
+                        }
+                    }
+                }
+                return result;
             }
         }
     }

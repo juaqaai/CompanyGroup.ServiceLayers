@@ -50,6 +50,11 @@ companyGroup.registration = $.sammy(function () {
         //                $("#contract").show('slow');
         //            }
         //        });
+
+        //adatok ellenörzésének megerősítése
+        $("#chk_checkdata").live('change', function () {
+            context.trigger('checkData', { Checked: $(this).is(':checked') });
+        });
         $("#chk_accept").live('change', function () {
             //console.log($(this).is(':checked'));
             context.trigger('acceptContract', { Accepted: $(this).is(':checked') });
@@ -69,18 +74,29 @@ companyGroup.registration = $.sammy(function () {
         });
         $('#form_upload').ajaxForm({
             beforeSubmit: function (formData, jqForm, options) {
-                $('#span_uploadresult').html('Küldés folyamatban...');
+                $('#span_signature_entity_file').html('Küldés folyamatban...');
                 for (var i = 0; i < formData.length; i++) {
                     if (!formData[i].value) {
-                        $('#span_uploadresult').html('File megadása kötelező...');
+                        $('#span_signature_entity_file').html('File megadása kötelező...');
                         return false;
                     }
                 }
             },
             success: function (data) {
-                $('#span_uploadresult').html(data.Name);
+                $('#span_signature_entity_file').html(data.Name);
             }
         });
+    });
+    //adatok ellenörzése
+    this.bind('checkData', function (e, data) {
+        var context = this;
+        if (data.Checked) {
+            context.redirect('#/checked');
+            context.title('HRP/BSC Regisztráció - adatok ellenörzése megtörtént');
+        } else {
+            context.redirect('#/notchecked');
+            context.title('HRP/BSC Regisztráció - adatok ellenörzése nem történt meg');
+        }
     });
     //szerződési feltételek elfogadása (ha elfogadás történt, akkor az adatfeltöltésre irányít a rendszer)
     this.bind('acceptContract', function (e, data) {
@@ -121,6 +137,19 @@ companyGroup.registration = $.sammy(function () {
     this.bind('showWebAdmin', function (e, data) {
         var context = this;
         context.redirect('#/showwebadmin');
+    });
+    this.get('#/checked', function (context) {
+        $("#tabs-1").toggle(500);
+        $("#tabs-2").toggle(500);
+        $("#tabs-3").toggle(500);
+        $("#tabs-4").toggle(500);
+        $("#tabs-5").toggle(500);
+        $("#finish_reg").toggle(500);
+        $("#check_span").toggle(500);
+        $("#tabs-7").show(500);
+    });
+    this.get('#/notchecked', function (context) {
+        $("#tabs-7").hide(500);
     });
     this.get('#/showwebadmin', function (context) {
         setTabsVisibility(4);
@@ -248,13 +277,13 @@ companyGroup.registration = $.sammy(function () {
     //cégregisztrációs adatlap mentése, webadmin adatainak betöltése
     this.post('#/companydata', function (context) {
         ////console.log(context);
-        var vatNumber = $("#txt_vatnumber").val() + $("#txt_vatnumber2").val() + $("#txt_vatnumber3").val();
+        var vatNumber = $("#txt_vatnumber").val() + '-' + $("#txt_vatnumber2").val() + '-' + $("#txt_vatnumber3").val();
         vatNumber = (vatNumber === '') ? $("#txt_vatnumber4").val() : vatNumber;
         var data = {
             CompanyData: {
                 RegistrationNumber: $("#txt_registrationnumber").val(),
                 NewsletterToMainEmail: $('#chk_newslettertomainemail').is(':checked'), //bool
-                SignatureEntityFile: $("#span_uploadresult").html(),
+                SignatureEntityFile: $("#span_signature_entity_file").html(),
                 CustomerId: $("#hfCustomerId").val(),
                 CustomerName: $("#txt_customername").val(),
                 VatNumber: vatNumber,
@@ -864,8 +893,8 @@ companyGroup.registration = $.sammy(function () {
             success: function (result) {
                 if (result) {   //Message, Successed
                     if (result.Successed) {
-                        setTabsVisibility(7);
-                        context.title('Regisztráció - lezárás, adatok mentése');
+                        $('#saveregistration_result').show();
+                        context.title('Regisztráció - lezárás, adatok mentése sikeresen megtörtént');
                     } else {
                         alert(result.Message);
                     }
@@ -887,10 +916,15 @@ companyGroup.registration = $.sammy(function () {
         $('#txt_customername').val(data.CompanyData.CustomerName);
         $('#hfCustomerId').val(data.CompanyData.CustomerId);
         $('#txt_registrationnumber').val(data.CompanyData.RegistrationNumber);
-        $('#txt_vatnumber').val(data.CompanyData.VatNumber);
+
+        var vatNumbers = companyGroup.utils.instance().sliceVatNumber(data.CompanyData.VatNumber);
+        $('#txt_vatnumber').val(vatNumbers.Number1);
+        $('#txt_vatnumber2').val(vatNumbers.Number2);
+        $('#txt_vatnumber3').val(vatNumbers.Number3);
+
         $('#txt_euvatnumber').val(data.CompanyData.EUVatNumber);
         $('#txt_mainemail').val(data.CompanyData.MainEmail);
-        $('#chk_newslettertomainemail').val(data.CompanyData.NewsletterToMainEmail);
+        $('#chk_newslettertomainemail').prop('checked', data.CompanyData.NewsletterToMainEmail);
 
         $('#bankAccountContainer').html(Mustache.render($('#bankAccountTemplate').html(), data.BankAccounts));
 
@@ -898,7 +932,7 @@ companyGroup.registration = $.sammy(function () {
         //$('#txtBankAccountPart2').val();
         //$('#txtBankAccountPart3').val();
 
-        //$('#signatureEntityFile_Name').val();
+        $('#span_signature_entity_file').html(data.CompanyData.SignatureEntityFile);
         //        var countryHtml = Mustache.to_html($('#countryTemplate').html(), data.Countries);
         //        $('#countryContainer').html(countryHtml);
 
@@ -934,17 +968,17 @@ companyGroup.registration = $.sammy(function () {
         $('#txt_webadminlastname').val(data.WebAdministrator.LastName);
         $('#txt_webadminemail').val(data.WebAdministrator.Email);
         $('#txt_webadminphone').val(data.WebAdministrator.Telephone);
-        $('#chk_webadminalloworder').val(data.WebAdministrator.AllowOrder);
-        $('#chk_webadminallowreceiptofgoods').val(data.WebAdministrator.AllowReceiptOfGoods);
-        $('#chk_webadminemailarriveofgoods').val(data.WebAdministrator.EmailArriveOfGoods);
-        $('#chk_webadminemailofdelivery').val(data.WebAdministrator.EmailOfDelivery);
-        $('#chk_webadminemailoforderconfirm').val(data.WebAdministrator.EmailOfOrderConfirm);
-        $('#chk_webadmininvoiceinfo').val(data.WebAdministrator.InvoiceInfo);
-        $('#chk_webadminnewsletter2').val(data.WebAdministrator.Newsletter);
-        $('#chk_webadminpricelistdownload').val(data.WebAdministrator.PriceListDownload);
-        $('#chkWebAdminSmsArriveOfGoods').val(data.WebAdministrator.SmsArriveOfGoods);
-        $('#chkWebAdminSmsOfDelivery').val(data.WebAdministrator.SmsOfDelivery);
-        $('#chkWebAdminSmsOrderConfirm').val(data.WebAdministrator.SmsOrderConfirm);
+        $('#chk_webadminalloworder').prop('checked', data.WebAdministrator.AllowOrder);
+        $('#chk_webadminallowreceiptofgoods').prop('checked', data.WebAdministrator.AllowReceiptOfGoods);
+        $('#chk_webadminemailarriveofgoods').prop('checked', data.WebAdministrator.EmailArriveOfGoods);
+        $('#chk_webadminemailofdelivery').prop('checked', data.WebAdministrator.EmailOfDelivery);
+        $('#chk_webadminemailoforderconfirm').prop('checked', data.WebAdministrator.EmailOfOrderConfirm);
+        $('#chk_webadmininvoiceinfo').prop('checked', data.WebAdministrator.InvoiceInfo);
+        $('#chk_webadminnewsletter2').prop('checked', data.WebAdministrator.Newsletter);
+        $('#chk_webadminpricelistdownload').prop('checked', data.WebAdministrator.PriceListDownload);
+        //$('#chkWebAdminSmsArriveOfGoods').prop('checked', data.WebAdministrator.SmsArriveOfGoods);
+        //$('#chkWebAdminSmsOfDelivery').prop('checked', data.WebAdministrator.SmsOfDelivery);
+        //$('#chkWebAdminSmsOrderConfirm').prop('checked', data.WebAdministrator.SmsOrderConfirm);
 
         $('#contactPersonContainer').html(Mustache.render($('#contactPersonTemplate').html(), data.ContactPersons));
 
@@ -967,6 +1001,8 @@ companyGroup.registration = $.sammy(function () {
         //  $('#chkContactPersonSmsOfDelivery').val();
         //  $('#chkContactPersonSmsOrderConfirm').val();
     }
+
+
 
     var setTabsVisibility = function (i) {
         if (i == 1) {
@@ -1044,17 +1080,6 @@ companyGroup.registration = $.sammy(function () {
 
 
 
-    $("#chk_checkdata").change(function () {
-        $("#tabs-1").toggle(500);
-        $("#tabs-2").toggle(500);
-        $("#tabs-3").toggle(500);
-        $("#tabs-4").toggle(500);
-        $("#tabs-5").toggle(500);
-        $("#finish_reg").toggle(500);
-        $("#check_span").toggle(500);
-        $("#tabs-7").show(500);
-
-    });
 
     $("#contract_btn").click(function () {
         $('#tabs-1').toggle("slow");

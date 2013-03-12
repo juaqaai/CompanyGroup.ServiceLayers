@@ -41,6 +41,7 @@ companyGroup.webshop = $.sammy(function () {
             if ($(this).attr('id') === 'manufacturerList') {
                 var manufacturerIdList = $('#manufacturerList').val();
                 catalogueRequest.ManufacturerIdList = (manufacturerIdList === null || manufacturerIdList === '') ? [] : manufacturerIdList;
+                catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(false, true, true, true);
                 loadCatalogue();
                 showProductList(true);
@@ -49,6 +50,7 @@ companyGroup.webshop = $.sammy(function () {
             } else if ($(this).attr('id') === 'category1List') {
                 var category1IdList = $('#category1List').val();
                 catalogueRequest.Category1IdList = (category1IdList === null || category1IdList === '') ? [] : category1IdList;
+                catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, false, true, true);
                 loadCatalogue();
                 showProductList(true);
@@ -57,6 +59,7 @@ companyGroup.webshop = $.sammy(function () {
             } else if ($(this).attr('id') === 'category2List') {
                 var category2IdList = $('#category2List').val();
                 catalogueRequest.Category2IdList = (category2IdList === null || category2IdList === '') ? [] : category2IdList;
+                catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, true, false, true);
                 loadCatalogue();
                 showProductList(true);
@@ -65,6 +68,7 @@ companyGroup.webshop = $.sammy(function () {
             } else if ($(this).attr('id') === 'category3List') {
                 var category3IdList = $('#category3List').val();
                 catalogueRequest.Category3IdList = (category3IdList === null || category3IdList === '') ? [] : category3IdList;
+                catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, true, true, false);
                 loadCatalogue();
                 showProductList(true);

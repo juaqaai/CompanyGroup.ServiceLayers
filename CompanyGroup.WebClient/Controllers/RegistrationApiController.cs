@@ -223,11 +223,7 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language
-            };
+            CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration(visitorData.RegistrationId, visitorData.Language, visitorData.VisitorId);
 
             CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
 
@@ -598,12 +594,18 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                ContactPerson = request
+                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName, 
+                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods, 
+                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods, 
+                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin, 
+                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName, 
+                                                                         request.Password, request.Newsletter, request.Telephone, request.Email, 
+                                                                         request.LeftCompany, request.Id, request.RecId)
             };
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "AddContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }
@@ -627,7 +629,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "GetContactPersons", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = request.SelectedId };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, request.SelectedId);
 
             return contactPersons;
         }
@@ -647,12 +649,18 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                ContactPerson = request
+                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
+                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
+                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
+                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
+                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName,
+                                                                         request.Password, request.Newsletter, request.Telephone, request.Email,
+                                                                         request.LeftCompany, request.Id, request.RecId)
             };
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "UpdateContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }
@@ -677,7 +685,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "RemoveContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }

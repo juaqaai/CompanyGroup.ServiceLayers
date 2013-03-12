@@ -30,7 +30,7 @@ companyGroup.carreer = $.sammy(function () {
         });
 
         //var options = {
-        //target: '#span_uploadresult'   // target element(s) to be updated with server response 
+        //target: '#span_signature_entity_file'   // target element(s) to be updated with server response 
         //beforeSubmit: showRequest,  // pre-submit callback 
         //success: showResponse  // post-submit callback 
         //url:       url         // override for form's 'action' attribute 
@@ -44,16 +44,16 @@ companyGroup.carreer = $.sammy(function () {
 
         $('#form_upload').ajaxForm({
             beforeSubmit: function (formData, jqForm, options) {
-                $('#span_uploadresult').html('Küldés folyamatban...');
+                $('#span_signature_entity_file').html('Küldés folyamatban...');
                 for (var i = 0; i < formData.length; i++) {
                     if (!formData[i].value) {
-                        $('#span_uploadresult').html('File megadása kötelező...');
+                        $('#span_signature_entity_file').html('File megadása kötelező...');
                         return false;
                     }
                 }
             },
             success: function (data) {
-                $('#span_uploadresult').html(data.FileName);
+                $('#span_signature_entity_file').html(data.FileName);
             }
         });
 
@@ -136,7 +136,7 @@ companyGroup.carreer = $.sammy(function () {
             Position: context.params['select_position'],
             Email: context.params['txt_email'],
             Message: context.params['txt_message'],
-            UploadFileName: $("#span_uploadresult").html(),
+            UploadFileName: $("#span_signature_entity_file").html(),
             CheckReference: context.params['chk_accept']
         };
 

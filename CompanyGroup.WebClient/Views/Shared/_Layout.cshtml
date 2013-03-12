@@ -55,6 +55,7 @@
 		<!-- *** alsó felnyíló panel div vége *** -->
 		<div id="cus_header1"></div>
         <div id="cus_background"></div>
+		<div id="div1"></div>
 
         <script id="visitorInfoTemplate" type="text/html">
 			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -462,6 +463,59 @@
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 			companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
+			
+function changeDivImage()    
+{   
+//change the image path to a string   
+var imgPath = new String();        
+imgPath = document.getElementById("body").style.backgroundImage;  
+
+//get screen res of customer
+var custHeight=screen.height;
+var custWidth=screen.width;
+
+//if their screen width is less than or equal to 640 then use the 640 pic url
+if (custWidth <= 640)
+    {
+    document.getElementById("body").style.backgroundImage = "url(640x480.jpg)";
+    }
+
+else if (custWidth <= 800)
+    {
+    document.getElementById("body").style.backgroundImage = "url(800x600.jpg)";
+    }
+
+else if (custWidth <= 1024)
+    {
+    document.getElementById("body").style.backgroundImage = "url(1024x768.jpg)";
+    }
+
+else if (custWidth <= 1280)
+    {
+    document.getElementById("body").style.backgroundImage = "url(1280x960.jpg)";
+    }
+
+else if (custWidth <= 1600)
+    {
+    document.getElementById("body").style.backgroundImage = "url(1600x1200.jpg)";
+    }
+
+else {
+    document.getElementById("body").style.backgroundImage = "url(graffiti.jpg)";
+     }
+
+    /*if(imgPath == "url(sky.jpg)" || imgPath == "")        
+    {            
+    document.getElementById("bofy").style.backgroundImage = "url(graffiti.jpg)";        
+     }
+    else        
+     {            
+     document.getElementById("body").style.backgroundImage = "url(sky.jpg)";        
+     }*/
+}    
+
+
+
 
 			$(window).scroll(function(){
         if ($(this).scrollTop() > 100) {
@@ -479,9 +533,9 @@ $('.scrollup').click(function(){
 
 			
 			$('#preloader').ajaxStart(function () {
-                $('#preloader').show();
+                $('#preloader').fadeIn('100');
             }).ajaxStop(function () {
-                $('#preloader').hide();
+                $('#preloader').fadeOut('100');
             });
 			
 			  $('#forget_password').fancybox({

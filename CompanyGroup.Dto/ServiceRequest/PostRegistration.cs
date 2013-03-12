@@ -3,13 +3,35 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "PostRegistration", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// regisztrációs adatok mentése
+    /// </summary>
     public class PostRegistration
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 2)]
+        /// <summary>
+        /// nyelv
+        /// </summary>
         public string LanguageId { get; set; }
+
+        /// <summary>
+        /// látogató azonosító (üres, ha nincs belépve)
+        /// </summary>
+        public string VisitorId { get; set; }
+
+        public PostRegistration(string registrationId, string languageId, string visitorId)
+        { 
+            this.RegistrationId = registrationId;
+
+            this.LanguageId = languageId;
+
+            this.VisitorId = visitorId;
+        }
+
+        public PostRegistration() : this("", "", "") { }
     }
 }

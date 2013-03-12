@@ -5,7 +5,7 @@
     ViewBag.Title = "Registration";
 }
 
-    <div id="content" class="group">
+
 	  <div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content">
         <h2><strong>Tisztelt leendő Partnerünk!</strong></h2>
         <p><span id="spnGreeting2">Köszönjük, hogy viszonteladónkká kíván válni. </span></p>
@@ -119,10 +119,8 @@
                 Elismerem, hogy a fenti szerződésben foglaltakat elolvastam és elfogadom.</strong>
             </div>
         </div>
-        <table>
-        <tr>
-            <td><hr style="border-style: none none dotted; border-width: 2px; width:940px; margin-left:0px"/>
-                <h2>2. Ügyintéző adatai <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="@Url.Content("~/Content/Media/images/checkok.png") width="15px" height="15px" alt=""/></h2>
+         <hr style="border-style: none none dotted; border-width: 2px; width:940px; margin-left:0px"/>
+                <h2>2. Ügyintéző adatai <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
                 <div id="tabs-2">
                 <form action="#/datarecorder" method="post">                           
                     <table width="100%" border="0" cellpadding="5" cellspacing="2">
@@ -157,10 +155,10 @@
                 <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px" />
                 <h2>3. Cég adatai <a class="tooltip" href="#">
                 <img style="cursor:pointer;" id="tabs-3-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
-                <img id="tab_3_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2></td>
-        </tr>
-        <tr>
-        <td><div id="tabs-3">
+                <img id="tab_3_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
+        
+       
+        <div id="tabs-3">
             <form action="#/companydata" method="post"> 
                 <table width="100%" border="0" cellspacing="5" cellpadding="2">
                 <tr>
@@ -296,8 +294,7 @@
 			  </table>
               <span id="span_addbankaccount_error"></span>
               </form>
-                <div id="bankAccountContainer">
-                </div>
+                <div id="bankAccountContainer"></div>
                 <script id="bankAccountTemplate" type="text/html">
                 {{#Items}}
                 {{#SelectedItem}}
@@ -336,7 +333,7 @@
                     <td height="22" colspan="2" style="color: #0159B1;font-size:12px">A fenti dokumentum feltöltése akkor nem kötelező, ha vállalja, hogy más módon (személyesen, faxon, postai úton) juttatja el hozzánk.</td>
                     </tr>
                     <tr>
-                    <td height="9" colspan="2" style="color: #0159B1;font-size:12px"><span id="span_uploadresult"></span>&nbsp;</td>
+                    <td height="9" colspan="2" style="color: #0159B1;font-size:12px"><span id="span_signature_entity_file"></span>&nbsp;</td>
                     </tr>
                     </table>
                 </form>
@@ -579,7 +576,7 @@
                     </tr>
                     </table>
                 </form>
-            </div>
+            
             <div id="del_address">
                 <form action="#/adddeliveryaddress" method="post">
                 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2"> <tr>
@@ -812,6 +809,7 @@
                     {{/SelectedItem}}
                     {{/Items}}            
 					</script>
+          </div>
 
 	        <hr style="border-style: none none dotted; border-width: 2px; width: 99%; margin-left:0px"/>
             <h2>4. Web adminisztrátor<a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-4-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></h2>
@@ -1167,7 +1165,7 @@
                     </tr>
                     <tr>
                         <td nowrap="nowrap"><strong>Telefon :</strong></td>
-                        <td align="right">{{Phone}}</td>
+                        <td align="right">{{Telephone}}</td>
                         <td>                              
                         <td>                              
                         <td>
@@ -1267,30 +1265,30 @@
         <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/print_icon.png")" width="40" height="40"/><br/>
         <strong>Szerződés nyomtatása </strong></a></div>
       </p>
-    </div>
+    
     <div align="center" style="float:left; margin-left: 15px;">
-        <a style="text-decoration:none; font-size:14px; color:#084385;" href="#/save">
-        <img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/save_icon.png")" width="40" height="40"/><br/>
+        <a style="text-decoration:none; font-size:14px; color:#084385;" href="#/saveregistration"><img style="cursor:pointer;" src="@Url.Content("~/Content/Media/images/save_icon.png")" alt="" width="40" height="40"/><br/>
         <strong>Szerződés mentése </strong></a>
     </div>
         <br/><br/><br/><br/>
         <p><strong>
           </strong>
-          <label for="checkbox"><strong><input type="checkbox" name="chk_checkdata" id="chk_print" />
+          <label for="checkbox"><strong><input type="checkbox" name="chk_print" id="chk_print" />
             A jelen szerződést kinyomtattam, avagy lementettem!</strong></label>
         </p>
         <p><a id="nyomtatas" href="#nyomtatas_ablak"></a></p>
     </div>
 							
-	<div id="just1" style="display:none">
+	<div id="saveregistration_result" style="display:none">
         <div style="width:300px; padding:12px;" align="center" id="nyomtatas_ablak">
             <span style="font-size:24px; color:#084385;"><strong>Regisztráció eredménye</strong></span><br/>
             <p>Az Ön által megadott regisztrációs adatok rendszerünkben rögzítésre kerültek.                              
             <p>A regisztrációs igényeket kollégáink ellenőrzik és hagyják jóvá, mely néhány napot igénybe vehet.<br/>
+            <input name="befejezes" value="Befejezés" type="button" />
 		    <br/>
         </div>
 	</div>
-</div>
+
         
 
 @section ScriptFiles {

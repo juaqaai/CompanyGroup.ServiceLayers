@@ -8,8 +8,10 @@ namespace CompanyGroup.Data.PartnerModule
     /// <summary>
     /// vevő repository
     /// </summary>
-    public class CustomerRepository : CompanyGroup.Domain.PartnerModule.ICustomerRepository
+    public class CustomerRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.ICustomerRepository
     {
+        private static readonly string ClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("RegistrationServiceClassName", "CustomerService");
+
         /// <summary>
         /// vevőhöz kapcsolódó műveletek konstruktor
         /// </summary>
@@ -195,6 +197,30 @@ namespace CompanyGroup.Data.PartnerModule
             CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
 
             return visitor;
+        }
+
+        public CompanyGroup.Domain.RegistrationModule.CustomerCreateResult CreateRegistration(CompanyGroup.Domain.RegistrationModule.CustomerCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.CustomerCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createCustomer", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            CompanyGroup.Domain.RegistrationModule.CustomerCreateResult response = this.DeSerialize<CompanyGroup.Domain.RegistrationModule.CustomerCreateResult>(xml);
+
+            return response;            
         }
     }
 }
