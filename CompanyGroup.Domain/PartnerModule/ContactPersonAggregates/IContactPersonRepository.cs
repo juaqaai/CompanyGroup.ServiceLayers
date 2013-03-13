@@ -17,12 +17,11 @@ namespace CompanyGroup.Domain.PartnerModule
         CompanyGroup.Domain.PartnerModule.ChangePasswordVerify VerifyChangePassword(string contactPersonId, string userName, string oldPassword, string newPassword, string dataAreaId);
 
         /// <summary>
-        /// elfelejtett jelszó ellenörzése
+        /// bejelentkezési adatok lekérdezése elfelejtett jelszóhoz tartozó felhasználónév alapján  
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.PartnerModule.ForgetPasswordVerify VerifyForgetPassword(string userName, string dataAreaId);
+        CompanyGroup.Domain.PartnerModule.ForgetPassword GetForgetPassword(string userName);
 
         /// <summary>
         /// kapcsolattartó lekérdezés

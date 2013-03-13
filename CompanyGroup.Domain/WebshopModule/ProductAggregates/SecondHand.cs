@@ -26,6 +26,8 @@ namespace CompanyGroup.Domain.WebshopModule
             this.StatusDescription = statusDescription;
 
             this.DataAreaId = dataAreaId;
+
+            this.CustomerPrice = 0;
         }
 
         public SecondHand() : this(0, "", "", "", 0, 0, "", "") { }
@@ -41,6 +43,11 @@ namespace CompanyGroup.Domain.WebshopModule
         public int Quantity { get; set; }
 
         public int Price { get; set; }
+
+        /// <summary>
+        /// vevőre érvényes ár, kalkulált érték
+        /// </summary>
+        public decimal CustomerPrice { get; set; }
 
         public string StatusDescription { get; set; }
 

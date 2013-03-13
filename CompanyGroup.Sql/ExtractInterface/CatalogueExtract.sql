@@ -38,11 +38,12 @@ SET NOCOUNT ON
 		Invent.AMOUNT4 > 0 AND
 		Invent.AMOUNT5 > 0 ), 
 	-- angol gyártónév kikeresése
-	Manufacturer_CTE(ManufacturerId, ManufacturerName, ManufacturerEnglishName)
+	Manufacturer_CTE(ManufacturerId, ManufacturerName, ManufacturerEnglishName, SourceCompany)
 	AS (
 		SELECT m.GYARTOID,
 			   m.GyartoNev,
-			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.GyartoNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish
+			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.GyartoNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish, 
+			   m.SourceCompany
 		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
 		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND m.GYARTOID <> '' AND m.GyartoNev <> '' ),
@@ -134,7 +135,7 @@ SET NOCOUNT ON
 
 	SELECT DISTINCT Invent.ItemId as ProductId, 
 					Invent.AXSTRUKTKOD as AxStructCode, 
-					Invent.DataAreaId, 
+					Manufacturer.SourceCompany as DataAreaId, -- Invent.DataAreaId
 					Invent.StandardConfigId, 
 					Invent.ItemName as [Name],
 					ISNULL(EnglishProductName.ProductName, '') as EnglishName, 
@@ -203,7 +204,8 @@ SET NOCOUNT ON
 		  Invent.AMOUNT2 > 0 AND
 		  Invent.AMOUNT3 > 0 AND
 		  Invent.AMOUNT4 > 0 AND
-		  Invent.AMOUNT5 > 0 
+		  Invent.AMOUNT5 > 0 AND 
+		  ISNULL(Manufacturer.SourceCompany, '') <> '' 
 	ORDER BY CONVERT( bit, AKCIOS ) DESC, Invent.AtlagosKeszletkor_Szamitott DESC, JELLEG1ID, JELLEG2ID, JELLEG3ID, Invent.ItemId;
 
 RETURN

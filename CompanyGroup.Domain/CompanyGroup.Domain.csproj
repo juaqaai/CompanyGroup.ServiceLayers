@@ -269,7 +269,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPerson.hbm.xml" />
-    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPasswordVerify.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ForgetPassword.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\VisitorAggregates\Visitor.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

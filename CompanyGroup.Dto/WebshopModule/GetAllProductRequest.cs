@@ -64,11 +64,11 @@ namespace CompanyGroup.Dto.WebshopModule
             this.NewFilter = false;
             this.StockFilter = false;
             this.TextFilter = String.Empty;
-            this.PriceFilter = String.Empty;
-            this.PriceFilterRelation = String.Empty;
+            this.PriceFilter = "0";
+            this.PriceFilterRelation = "0";
             this.Sequence = 0;
-            this.CurrentPageIndex = 0;
-            this.ItemsOnPage = 0;
+            this.CurrentPageIndex = 1;
+            this.ItemsOnPage = 30;
             this.VisitorId = String.Empty;
             this.Currency = String.Empty;
         }

@@ -16,7 +16,8 @@ namespace CompanyGroup.WebClient.Models
                                  bool shoppingCartOpenStatus, 
                                  bool catalogueOpenStatus, 
                                  CompanyGroup.Dto.PartnerModule.DeliveryAddresses deliveryAddresses,
-                                 CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
+                                 CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, 
+                                 bool isActiveFilter)
         {
             this.Products = products;   
 
@@ -35,6 +36,8 @@ namespace CompanyGroup.WebClient.Models
             this.DeliveryAddresses = deliveryAddresses;
 
             this.LeasingOptions = leasingOptions;
+
+            this.IsActiveFilter = isActiveFilter;
         }
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
@@ -54,6 +57,11 @@ namespace CompanyGroup.WebClient.Models
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses DeliveryAddresses { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
+
+        /// <summary>
+        /// van-e aktív szűrési feltétel beállítva, vagy nincs
+        /// </summary>
+        public bool IsActiveFilter { get; set; }
     }
 
 }

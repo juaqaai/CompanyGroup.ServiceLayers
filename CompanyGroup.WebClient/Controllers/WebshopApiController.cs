@@ -169,7 +169,15 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor, visitorData.IsCatalogueOpened, request.Sequence);
+            return new CompanyGroup.WebClient.Models.ProductCatalogue(products, visitor, visitorData.IsCatalogueOpened, request.Sequence, this.IsActiveFilter(request));
+        }
+
+        private bool IsActiveFilter(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request)
+        { 
+            bool isActiveFilter = request.ActionFilter || request.BargainFilter || !(request.BscFilter) || request.Category1IdList.Count > 0 || request.Category2IdList.Count > 0 || request.Category3IdList.Count > 0 ||
+                                  request.CurrentPageIndex > 1 || !(request.HrpFilter) || request.IsInNewsletterFilter || request.ManufacturerIdList.Count > 0 || request.NewFilter || 
+                                  !(request.PriceFilterRelation.Equals("0")) || request.Sequence > 0 || request.StockFilter || !(String.IsNullOrEmpty(request.TextFilter));
+            return isActiveFilter;
         }
 
         /// <summary>
@@ -302,6 +310,8 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.Dto.WebshopModule.Products products;
                 //CompanyGroup.Dto.WebshopModule.Catalogue catalogue;
 
+                bool isActiveFilter = false;
+
                 //nem sikerült a belépés 
                 if (!visitor.LoggedIn)
                 {
@@ -350,30 +360,15 @@ namespace CompanyGroup.WebClient.Controllers
                     visitor.ErrorMessage = String.Empty;
 
                     //katalógus lekérdezése
-                    CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
-                    {
-                        ActionFilter = false,
-                        BargainFilter = false,
-                        Category1IdList = new List<string>(),
-                        Category2IdList = new List<string>(),
-                        Category3IdList = new List<string>(),
-                        Currency = visitorData.Currency,
-                        CurrentPageIndex = 1,
-                        HrpFilter = true,
-                        BscFilter = true,
-                        IsInNewsletterFilter = false,
-                        ItemsOnPage = 30,
-                        ManufacturerIdList = new List<string>(),
-                        NewFilter = false,
-                        Sequence = 0,
-                        StockFilter = false,
-                        TextFilter = String.Empty,
-                        PriceFilter = "0",
-                        PriceFilterRelation = "0",
-                        VisitorId = visitor.Id
-                    };
+                    CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest();
+                    
+                    allProduct.VisitorId = visitor.Id;
+
+                    allProduct.Currency = visitor.Currency;
 
                     products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
+
+                    isActiveFilter = this.IsActiveFilter(allProduct);
                 }
 
                 catalogueResponse = new CompanyGroup.WebClient.Models.CatalogueResponse(products,
@@ -384,7 +379,8 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                         visitorData.IsShoppingCartOpened,
                                                                                         visitorData.IsCatalogueOpened,
                                                                                         deliveryAddresses,
-                                                                                        leasingOptions);
+                                                                                        leasingOptions, 
+                                                                                        isActiveFilter);
 
                 HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(HttpStatusCode.OK, catalogueResponse);
 
@@ -400,7 +396,7 @@ namespace CompanyGroup.WebClient.Controllers
                     false,
                     false,
                     new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
-                    new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+                    new CompanyGroup.Dto.WebshopModule.LeasingOptions(), false);
 
                 HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.InternalServerError, new CompanyGroup.WebClient.Models.ApiMessage(String.Format("A bejelentkezés nem sikerült! ({0} - {1})", ex.Message, ex.StackTrace)));
 
@@ -432,28 +428,10 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.WebClient.Models.Visitor visitor = new CompanyGroup.WebClient.Models.Visitor();
 
                 //katalógus lekérdezése
-                CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
-                {
-                    ActionFilter = false,
-                    BargainFilter = false,
-                    Category1IdList = new List<string>(),
-                    Category2IdList = new List<string>(),
-                    Category3IdList = new List<string>(),
-                    Currency = visitorData.Currency,
-                    CurrentPageIndex = 1,
-                    HrpFilter = true,
-                    BscFilter = true,
-                    IsInNewsletterFilter = false,
-                    ItemsOnPage = 30,
-                    ManufacturerIdList = new List<string>(),
-                    NewFilter = false,
-                    Sequence = 0,
-                    StockFilter = false,
-                    TextFilter = String.Empty,
-                    PriceFilter = "0",
-                    PriceFilterRelation = "0",
-                    VisitorId = visitor.Id
-                };
+                CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest();
+
+                allProduct.Currency = visitorData.Currency;
+                allProduct.VisitorId = visitor.Id;
 
                 CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllProductRequest, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetProducts", allProduct);
                 //CompanyGroup.Dto.WebshopModule.Products products = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetAllProduct, CompanyGroup.Dto.WebshopModule.Products>("Product", "GetAll", allProduct);
@@ -466,7 +444,8 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                                         false,
                                                                                                                                         false,
                                                                                                                                         new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
-                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions(), 
+                                                                                                                                        false);
 
                 HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.CatalogueResponse>(HttpStatusCode.OK, catalogueResponse);
 
@@ -483,7 +462,8 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                                         false,
                                                                                                                                         false,
                                                                                                                                         new CompanyGroup.Dto.PartnerModule.DeliveryAddresses(),
-                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions());
+                                                                                                                                        new CompanyGroup.Dto.WebshopModule.LeasingOptions(), 
+                                                                                                                                        false);
 
                 HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.InternalServerError, new CompanyGroup.WebClient.Models.ApiMessage(String.Format("A kijelentkezés nem sikerült! ({0} - {1})", ex.Message, ex.StackTrace)));
 

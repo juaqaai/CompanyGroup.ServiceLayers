@@ -951,11 +951,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         CustomerId = visitor.CustomerId,
                         DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
                         DeliveryCity = deliveryAddress.City,
-                        DeliveryCompanyName = "",
+                        DeliveryCompanyName = visitor.CustomerName,
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
                         DeliveryEmail = "",
                         DeliveryId = "",
-                        DeliveryPersonName = "",
+                        DeliveryPersonName = visitor.PersonName,
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
@@ -965,7 +965,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                             return new CompanyGroup.Domain.PartnerModule.SalesOrderLineCreate() { ConfigId = x.ConfigId, InventDimId = "", ItemId = x.ProductId, Qty = x.Quantity, TaxItem = "" };
                         }
                         ),
-                        Message = "",
+                        Message = request.CustomerOrderNote,
                         PartialDelivery = true,
                         RequiredDelivery = request.DeliveryRequest,
                         SalesSource = 1,

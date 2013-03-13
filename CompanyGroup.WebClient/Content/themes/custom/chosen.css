@@ -212,20 +212,8 @@ select.chzn-select {
 #cus_filter_price {z-index: 3400; margin-left:0px; background:#FFF; padding:5px; border-bottom:0px solid #ccc;}
 
 #cus_refresh_icon {
-   width: auto;
-   align: center;
-   height:25px;
-   padding-left:10px;
-   padding-top:-2px;
-   display:block;
-   margin-left:145px;
+	margin-left:205px;
    margin-top:-27px;
-   cursor:pointer;
-   border-radius:3px;
-background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9ImcxNjkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGQUZBRkEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNDOUM5QzkiIG9mZnNldD0iMSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2cxNjkpIiAvPgo8L3N2Zz4=');
-
--webkit-box-shadow: 0px 0px 2px 0px ;
-box-shadow: 0px 0px 2px 0px ; 
 }
 
 /* a négy szűrő egyedi z-indexre emelése */

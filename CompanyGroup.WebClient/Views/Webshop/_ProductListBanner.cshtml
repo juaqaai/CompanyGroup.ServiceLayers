@@ -11,7 +11,7 @@
           <li>
 		        <table  border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td width="100" height="100" align="center" ><a href="@String.Format("#/details/{0}", Url.Encode(banner.ProductId))">
+                    <td width="100" height="100" align="center" ><a href="@String.Format("#/details/{0}/{1}", Url.Encode(banner.ProductId), banner.DataAreaId)">
                     <img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=100&MaxHeight=100", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a>
                     </td>
                 </tr>

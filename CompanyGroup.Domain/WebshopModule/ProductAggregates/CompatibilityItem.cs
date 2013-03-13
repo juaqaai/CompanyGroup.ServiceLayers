@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.WebshopModule
 {
+    /// <summary>
+    /// eredetei termékazonosítóhoz kapcsolt kompatibilis termékkód
+    /// </summary>
     public class CompatibilityItem
     {
-        public CompatibilityItem(string productId, string dataAreaId, int compatibilityType)
-        { 
-            this.ProductId = productId;
+        public CompatibilityItem(string productId, string dataAreaId, string compatibleProductId, int compatibilityType)
+        {
+            this.ProductId = compatibleProductId;
 
             this.DataAreaId = dataAreaId;
 

@@ -104,6 +104,7 @@
            </tr>
          </table>
          <p>&nbsp;</p>
+ <div id="jelentkezesi_lap">
          <h2 id="hrp">Jelentkezési lap</h2>
          <p>Örülünk, hogy úgy döntött megtisztel minket bizalmával és jelentkezik cégünkhöz. Kérem, töltse ki az alábbi jelentkezési lap mezőit, majd küldje el részünkre.<br />
          <strong>Figyelem: a csillaggal megjelölt mezők kitöltése kötelező, ezek hiányában nem fogadhatjuk el jelentkezését!</strong></p>
@@ -185,7 +186,7 @@
         <tr>
           <td nowrap="nowrap" bgcolor="#FFFFCC">File kiválasztása<span style="color: rgb(255, 0, 0)">*</span></td>
           <td nowrap="nowrap" bgcolor="#FFFFCC"><label for="fileField"></label>
-          <input type="file" name="fileField" id="txt_upload" /><input type="submit" id="btn_upload" value="Feltöltés" /></td>
+          <input type="file" name="txt_upload" id="txt_upload" /><input type="submit" id="btn_upload" value="Feltöltés" /></td>
         </tr>
         <tr>
           <td nowrap="nowrap">&nbsp;</td>
@@ -245,12 +246,15 @@
 <p>&nbsp;</p>
         </div>
 </div>
+</div>
 
 @section ScriptFiles {
     head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/carreer")');
 }
 @section ScriptOnReady {
-    //console.log('ScriptOnReady section');
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
 
     var model = @(Html.Raw(Json.Encode(Model)));
     
@@ -274,6 +278,7 @@
 
 	$("#myDiv").hide();
     $("#myDiv2").hide();
+    $("#jelentkezesi_lap").hide();
   
 	$(".button1").click(function () {
 	$("#myDiv").toggle("fast");

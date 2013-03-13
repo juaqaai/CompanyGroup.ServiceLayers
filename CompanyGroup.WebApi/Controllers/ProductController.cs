@@ -34,7 +34,13 @@ namespace CompanyGroup.WebApi.Controllers
         {
             try
             {
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                //logWriter.Write("GetProducts", "Success Category");
+
                 CompanyGroup.Dto.WebshopModule.Products response = this.service.GetProducts(request);
+
+                logWriter.Write("GetProducts", "Success Category");
 
                 return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.Products>(HttpStatusCode.OK, response);
             }

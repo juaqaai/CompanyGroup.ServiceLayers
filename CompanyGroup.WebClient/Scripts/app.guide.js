@@ -6,10 +6,32 @@ companyGroup.guide = $.sammy(function () {
 
     this.use(companyGroupHelpers);
 
-    this.setTitle('Útmutató - ');
+    this.setTitle('HRP/BSC Útmutató - ');
 
     this.get('#/', function (context) {
         context.title('felhasználási feltételek');
+    });
+    //események
+    this.bind('run', function (e, data) {
+        var context = this;
+        //keresés névre, vagy cikkszámra
+        $("#txt_globalsearch").live('focus', function () {
+            context.globalSearchOnFocus($(this));
+        }).live('blur', function () {
+            context.globalSearchLostFocus($(this));
+        });
+        //keresés autocomplete
+        $("#txt_globalsearch").autocomplete({
+            source: function (request, response) {
+                context.globalSearchAutoComplete(request, response);
+            },
+            minLength: 2,
+            html: 'html'
+        });
+    });	
+	this.get('#/closed', function (context) {
+        //console.log(context);
+		$.fancybox.close()
     });
 
     this.get('#/termOfUse', function (context) {
@@ -88,34 +110,37 @@ companyGroup.guide = $.sammy(function () {
             $("#usermenuTemplate").tmpl(result.Visitor).appendTo("#usermenuContainer");
         });
     });
-
-    var setVisibility = function (controlId) {
-        if (controlId == "termOfUse") { $("#termOfUse").show(); }
+    
+    	 var setVisibility = function (controlId) {
+        if (controlId == "termOfUse") { $("#termOfUse").fadeIn('slow'); }
         else { $("#termOfUse").hide(); }
 
-        if (controlId == "dataProtection") { $("#dataProtection").show(); }
+        if (controlId == "dataProtection") { $("#dataProtection").fadeIn('slow'); }
         else { $("#dataProtection").hide(); }
 
         if (controlId == "deliveryAndPaymentOptions") {
-            $("#deliveryAndPaymentOptions").show();
+            $("#deliveryAndPaymentOptions").fadeIn('slow');
         } else {
             $("#deliveryAndPaymentOptions").hide();
         }
         if (controlId == "returnItemConditions") {
-            $("#returnItemConditions").show();
+            $("#returnItemConditions").fadeIn('slow');
         } else {
             $("#returnItemConditions").hide();
         }
         if (controlId == "garantyValidation") {
-            $("#garantyValidation").show();
+            $("#garantyValidation").fadeIn('slow');
         } else {
             $("#garantyValidation").hide();
         }
         if (controlId == "shoppingInTheWebshop") {
-            $("#shoppingInTheWebshop").show();
+            $("#shoppingInTheWebshop").fadeIn('slow');
         } else {
             $("#shoppingInTheWebshop").hide();
         }
     }
-
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
 });

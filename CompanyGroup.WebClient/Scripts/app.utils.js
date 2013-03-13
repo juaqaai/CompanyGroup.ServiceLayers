@@ -4,6 +4,7 @@ companyGroup.utils = (function () {
 
     var _pictureBaseUrl = '';
 
+    var _webshopBaseUrl = ''
     var _webshopBaseApiUrl = '';
     var _structureBaseApiUrl = '';
     var _pictureBaseApiUrl = '';
@@ -26,6 +27,12 @@ companyGroup.utils = (function () {
             },
             getPictureUrl: function (fileName) {
                 return _pictureBaseUrl + fileName;
+            },
+            getWebshopBaseUrl: function (url) {
+                return _webshopBaseUrl + url;
+            },
+            setWebshopBaseUrl: function (url) {
+                _webshopBaseUrl = url;
             },
             getWebshopApiUrl: function (url) {
                 return _webshopBaseApiUrl + url;
@@ -85,11 +92,11 @@ companyGroup.utils = (function () {
                 return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=60&MaxHeight=60';
             },
             getPictureUrl: function (pictureId) {
-                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=180&MaxHeight=134'; 
+                return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=180&MaxHeight=134';
             },
             getBigPictureUrl: function (pictureId) {
                 return _pictureBaseApiUrl + 'GetPictureItem/?PictureId=' + pictureId + '&MaxWidth=500&MaxHeight=500';
-            },    
+            },
             getInvoicePictureUrl: function (recId) {
                 return _pictureBaseApiUrl + 'GetInvoicePicture/?RecId=' + recId + '&MaxWidth=500&MaxHeight=500';
             },
@@ -138,6 +145,21 @@ companyGroup.utils = (function () {
             },
             getShoppingCartApiUrl: function (url) {
                 return _shoppingCartBaseApiUrl + url;
+            },
+            getQuerystringParam: function (key, def) {
+                if (def == null) {
+                    def = '';
+                }
+                key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+                var qs = regex.exec(window.location.href);
+                if (qs == null)
+                    return def;
+                else
+                    return qs[1];
+            },
+            toUpperCase: function (text) {
+                return text.toUpperCase();
             }
         }
     }

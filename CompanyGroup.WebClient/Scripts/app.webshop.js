@@ -19,7 +19,12 @@ companyGroup.webshop = $.sammy(function () {
 
     this.use(companyGroupHelpers);
 
-    this.setTitle('Webshop -');
+    this.setTitle('HRP/BSC Webáruház -');
+
+    this.get('#/closed', function (context) {
+        //console.log(context);
+        $.fancybox.close()
+    });
 
     this.get('#/', function (context) {
         //console.log(context);
@@ -234,7 +239,7 @@ companyGroup.webshop = $.sammy(function () {
         });
         //oldal tetejére ugrás link
         $('#top-link').topLink({
-            min: 400,
+            min: 1,
             fadeSpeed: 500
         });
         //szállítási dátum, idő
@@ -309,15 +314,16 @@ companyGroup.webshop = $.sammy(function () {
         } else {
             $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>', {
                 'autoDimensions': true,
-
                 'transitionIn': 'elastic',
                 'transitionOut': 'elastic',
+                'closeBtn': 'true',
                 'changeFade': 0,
                 'speedIn': 300,
                 'speedOut': 300,
                 'width': '150%',
                 'height': '150%',
-                'autoScale': true
+                'autoScale': true,
+                beforeClose: function () { $('#chk_filterByHrp').attr('checked', true); }
             });
         }
     });
@@ -331,15 +337,16 @@ companyGroup.webshop = $.sammy(function () {
         } else {
             $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>HRP, vagy BSC beállítás kötelező!</H2></div>', {
                 'autoDimensions': true,
-
                 'transitionIn': 'elastic',
                 'transitionOut': 'elastic',
+                'closeBtn': 'true',
                 'changeFade': 0,
                 'speedIn': 300,
                 'speedOut': 300,
                 'width': '150%',
                 'height': '150%',
-                'autoScale': true
+                'autoScale': true,
+                beforeClose: function () { $('#chk_filterByBsc').attr('checked', true); }
             });
         }
     });
@@ -480,9 +487,13 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result === true) {
-                    $(".toggle_container").show();
+                    $(".toggle_container").show('slow');
+
+
                 } else {
-                    $(".toggle_container").hide();
+                    $(".toggle_container").hide('slow');
+
+
                 }
                 context.redirect('#/catalogueopenedstatus/' + result);
             },
@@ -840,6 +851,11 @@ companyGroup.webshop = $.sammy(function () {
                 var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
                 $('#cus_header1').html(visitorInfoHtml);
                 loadCatalogue();
+                var productId = $('#hidden_product_id').val();
+                var dataAreaId = $('#hidden_product_dataareaid').val();
+                if (productId && dataAreaId) {
+                    context.redirect('#/refreshdetails/' + productId + '/' + dataAreaId);
+                }
             },
             error: function () {
                 //console.log('ChangeCurrency call failed');
@@ -848,8 +864,8 @@ companyGroup.webshop = $.sammy(function () {
     });
 
     this.post('#/searchByTextFilter', function (context) {
-        //console.log('searchByTextFilter');
-        catalogueRequest.TextFilter = $('#txt_globalsearch').val();
+        console.log(context.params['txt_globalsearch']);
+        catalogueRequest.TextFilter = context.params['txt_globalsearch'];
         catalogueRequest.CurrentPageIndex = 1;
         loadStructure(true, true, true, true);
         loadCatalogue();
@@ -983,7 +999,7 @@ companyGroup.webshop = $.sammy(function () {
                 $("#cus_rendeles_feladas").hide();
                 $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
-                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása / Megrendelés');
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása');
                 context.redirect('#/shoppingcartopenedstatus');
             },
             error: function () {
@@ -1122,6 +1138,7 @@ companyGroup.webshop = $.sammy(function () {
     this.get('#/showSaveCartPanel', function (context) {
         $.fancybox({
             href: '#save_basket_win',
+            closeBtn: true,
             autoDimensions: true,
             autoScale: false,
             transitionIn: 'fade',
@@ -1683,6 +1700,7 @@ companyGroup.webshop = $.sammy(function () {
                                 'transitionIn': 'elastic',
                                 'transitionOut': 'elastic',
                                 'type': 'image',
+                                'closeBtn': 'true',
                                 'changeFade': 0,
                                 'speedIn': 300,
                                 'speedOut': 300,
@@ -1798,6 +1816,7 @@ companyGroup.webshop = $.sammy(function () {
 
                         'transitionIn': 'elastic',
                         'transitionOut': 'elastic',
+                        'closeBtn': 'true',
                         'changeFade': 0,
                         'speedIn': 300,
                         'speedOut': 300,
@@ -1867,6 +1886,10 @@ companyGroup.webshop = $.sammy(function () {
                 $("#productDetailsTemplate").tmpl(result).appendTo("#cus_productdetails_table");
                 switch_tabs($('.defaulttab'));
                 showProductList(false);
+                //console.log($('#top').offset().top);
+                window.location.hash = '#top';
+
+                //$(document.body).scrollTop($('#top').offset().top);
             },
             error: function () {
                 //console.log('Service call failed: GetDetails');

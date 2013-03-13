@@ -165,10 +165,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                      request.CurrentPageIndex, 
                                                      request.ItemsOnPage, 
                                                      count);
-                //használt lista
+                //használt lista hozzárendelése termékazonosítónként
                 products.ForEach(x =>
                 {
-                    x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+                    x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId, request.Currency) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
                 });
 
                 if (ProductService.CatalogueCacheEnabled)
@@ -376,7 +376,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             return predicate.And(defaultPredicate);       
         }
 
-        private CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList(string productId)
+        /// <summary>
+        /// használt lista kiolvasása a megadott termékazonosító szerint
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        private CompanyGroup.Domain.WebshopModule.SecondHandList GetSecondHandList(string productId, string currency)
         {
             try
             {
@@ -404,6 +409,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 //a termékazonosítóval rendelkező listát kell szűrni
                 IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+                resultList.ToList().ForEach(x => 
+                {
+                    decimal price = Convert.ToDecimal(x.Price);
+
+                    x.CustomerPrice = this.ChangePrice(price, currency);
+                });
 
                 return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
             }
@@ -615,11 +627,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 productRepository.AddCatalogueDetailsLog(visitor.VisitorId, visitor.CustomerId, visitor.PersonId, request.DataAreaId, request.ProductId);
             }
 
-            product.SecondHandList = (product.SecondHand) ? this.GetSecondHandList(product.ProductId) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+            product.SecondHandList = (product.SecondHand) ? this.GetSecondHandList(product.ProductId, request.Currency) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
 
             product.Pictures = pictureRepository.GetListByProduct(product.ProductId);
 
             CompanyGroup.Dto.WebshopModule.Product result = new ProductToProduct().Map(product);
+
+            result.Currency = request.Currency;     
 
             return result;
         }
