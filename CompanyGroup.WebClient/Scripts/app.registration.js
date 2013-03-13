@@ -6,6 +6,8 @@ companyGroup.registration = $.sammy(function () {
 
     this.use(Sammy.Title);
 
+    this.use(companyGroupHelpers);
+
     //szerződési feltételek betöltése (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/', function (context) {
         context.title(' HRP/BSC Regisztráció - szerződési feltételek');
