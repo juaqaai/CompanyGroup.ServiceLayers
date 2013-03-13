@@ -11,7 +11,12 @@ companyGroup.carreer = $.sammy(function () {
     this.get('#/', function (context) {
         context.title('kezdőoldal');
     });
+    //jelentkezés
+    this.post('#/apply', function (context) {
+        //select_position
+        context.params['txt_username'];
 
+    });
     this.get('#/authenticated', function (context) {
         //console.log('authenticated');
     });
