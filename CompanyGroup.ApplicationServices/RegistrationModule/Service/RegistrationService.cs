@@ -14,7 +14,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
     {
         private CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository;
 
+        private CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository;
+
         public RegistrationService(CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository, 
+                                   CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository, 
                                    CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(visitorRepository)
         {
             if (registrationRepository == null)
@@ -23,6 +26,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             }
 
             this.registrationRepository = registrationRepository;
+
+            this.customerRepository = customerRepository;
         }
 
         /// <summary>
@@ -97,27 +102,46 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             try
             {
+                CompanyGroup.Domain.RegistrationModule.Registration registration = null;
+
+                //bejelentkezett felhasználó lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
 
-                CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
-
-                newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
-
-                newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
-
-                newRegistration.PersonId = visitor.IsValidLogin ? visitor.PersonId : String.Empty;
-
-                newRegistration.VisitorId = visitor.IsValidLogin ? request.VisitorId : String.Empty;
-
-                registrationRepository.Add(newRegistration);
-
-                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
-
-                if (registration == null)
+                
+                if (!String.IsNullOrEmpty(request.RegistrationId))
                 {
-                    CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                    registration = registrationRepository.GetByKey(request.RegistrationId);
                 }
 
+                //ha nincs megkezdett regisztráció 
+                if (registration == null || MongoDB.Bson.ObjectId.Empty.Equals(registration.Id))
+                {
+                    //üres regisztráció létrehozása
+                    CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+
+                    //új regisztrációs azonosító létrehozása
+                    newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
+
+                    newRegistration.CompanyId = visitor.IsValidLogin ? visitor.CustomerId : String.Empty;
+
+                    newRegistration.PersonId = visitor.IsValidLogin ? visitor.PersonId : String.Empty;
+
+                    newRegistration.VisitorId = visitor.IsValidLogin ? request.VisitorId : String.Empty;
+
+                    //új regisztráció mentés 
+                    registrationRepository.Add(newRegistration);
+
+                    //új regisztráció visszaolvasás
+                    registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
+                }
+
+                //ha még mindíg nincs meg a regisztráció, akkor egy új létrehozása szükséges
+                if (registration == null)
+                {
+                    registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                }
+
+                //bankszámlaszámok szétdarabolása
                 registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
                 CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
@@ -153,8 +177,195 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         {
             try
             {
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
                 CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
 
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+
+                //vevő felvitel
+                CompanyGroup.Domain.RegistrationModule.CustomerCreate customer = new CompanyGroup.Domain.RegistrationModule.CustomerCreate()
+                {
+                    CompanyCertificateFile = "",
+                    CustomerId = visitor.CustomerId,
+                    CustomerName = registration.CompanyData.CustomerName,
+                    DataAreaId = "hrp", //registration.DataAreaId,
+                    InvoiceCity = registration.InvoiceAddress.City,
+                    InvoiceCountry = registration.InvoiceAddress.Country,
+                    InvoiceCounty = "", //registration.InvoiceAddress.County,
+                    InvoiceEmail = registration.CompanyData.MainEmail,
+                    InvoiceFax = "",
+                    InvoicePhone = registration.InvoiceAddress.Phone,
+                    InvoicePostCode = registration.InvoiceAddress.ZipCode,
+                    InvoiceStreet = registration.InvoiceAddress.Street,
+                    Method = visitor.IsValidLogin ? 2 : 1,
+                    NewsletterSubScription = registration.CompanyData.NewsletterToMainEmail ? 1 : 0,
+                    RecId = 0,
+                    RegEmail = registration.DataRecording.Email,
+                    RegName = registration.DataRecording.Name,
+                    RegNumber = "", //registration.DataRecording.Number,
+                    RegPhone = registration.DataRecording.Phone,
+                    SignatureEntityFile = registration.CompanyData.SignatureEntityFile,
+                    VatNumber = registration.CompanyData.VatNumber,
+                    WebAdministrator = new Domain.RegistrationModule.ContactPersonCreate()
+                    {
+                        AllowOrder = registration.WebAdministrator.AllowOrder ? 1 : 0,
+                        AllowReceiptOfGoods = registration.WebAdministrator.AllowReceiptOfGoods ? 1 : 0,
+                        CellularPhone = registration.WebAdministrator.Telephone,
+                        ContactPersonId = registration.WebAdministrator.ContactPersonId,
+                        DataAreaId = "hrp",
+                        Director = 0,
+                        Email = registration.WebAdministrator.Email,
+                        EmailArriveOfGoods = registration.WebAdministrator.EmailArriveOfGoods ? 1 : 0,
+                        EmailOfDelivery = registration.WebAdministrator.EmailOfDelivery ? 1 : 0,
+                        EmailOfOrderConfirm = registration.WebAdministrator.EmailOfOrderConfirm ? 1 : 0,
+                        Fax = "",
+                        FinanceManager = 0,
+                        FirstName = registration.WebAdministrator.FirstName,
+                        FunctionId = "",
+                        Gender = 0,
+                        InvoiceInfo = registration.WebAdministrator.InvoiceInfo ? 1 : 0,
+                        LastName = registration.WebAdministrator.LastName,
+                        LeftCompany = 0,
+                        Newsletter = registration.WebAdministrator.Newsletter ? 1 : 0,
+                        Phone = registration.WebAdministrator.Telephone,
+                        PhoneLocal = "",
+                        PriceListDownload = registration.WebAdministrator.PriceListDownload ? 1 : 0,
+                        RecId = 0,
+                        RefRecId = 0,   //custTable RecId
+                        SalesManager = 0,
+                        SimpleContact = 0,
+                        SimpleSales = 0,
+                        WebAdmin = 1,
+                        WebLoginName = registration.WebAdministrator.UserName,
+                        WebPassword = registration.WebAdministrator.Password
+                    },
+                    MailAddress = new CompanyGroup.Domain.RegistrationModule.MailAddressCreate()
+                    {
+                        City = registration.MailAddress.City,
+                        Country = registration.MailAddress.Country,
+                        County = "",
+                        PostCode = registration.MailAddress.ZipCode,
+                        Street = registration.MailAddress.Street
+                    }
+                };
+
+                CompanyGroup.Domain.RegistrationModule.CustomerCreateResult customerCreateResult = this.customerRepository.Create(customer);
+
+                //string customerRegXml = this.Serialize<Shared.Web.Dynamics.Entities.CustomerReg>(reg);
+
+                //dynamics = new Shared.Web.Helpers.DynamicsConnector(CreateCustomerRegistrationService.UserName,
+                //                                                    CreateCustomerRegistrationService.Password,
+                //                                                    CreateCustomerRegistrationService.Domain,
+                //                                                    CreateCustomerRegistrationService.DataAreaId,
+                //                                                    CreateCustomerRegistrationService.Language,
+                //                                                    CreateCustomerRegistrationService.ObjectServer,
+                //                                                    CreateCustomerRegistrationService.ClassName);
+
+                //dynamics.Connect();
+
+                //object customerRegResult = dynamics.CallMethod("createCustomer", customerRegXml);
+
+                //Shared.Web.Dynamics.Entities.CustomerRegResult result = CreateCustomerRegResult(customerRegResult.ToString());
+
+                //szállítási címek felvitele
+                registration.DeliveryAddressList.ForEach(delegate(CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddr)
+                {
+                    CompanyGroup.Domain.RegistrationModule.DeliveryAddressCreate deliveryAddress = new CompanyGroup.Domain.RegistrationModule.DeliveryAddressCreate()
+                    {
+                        AddressId = "",
+                        City = deliveryAddr.City,
+                        Country = deliveryAddr.CountryRegionId,
+                        County = "",
+                        DataAreaId = "hrp",
+                        PostCode = deliveryAddr.ZipCode,
+                        RecId = deliveryAddr.RecId,
+                        RefRecId = 0,
+                        Street = deliveryAddr.Street
+                    };
+
+                    long deliveryAddressResult = customerRepository.CreateDeliveryAddress(deliveryAddress);
+                    //string deliveryAddrXml = this.Serialize<Shared.Web.Dynamics.Entities.DeliveryAddrReg>(TranslateDeliveryAddrToDeliveryAddrReg(result.RecId, deliveryAddr));
+
+                    //object resultCreateDeliveryAddr = dynamics.CallMethod("createDeliveryAddress", deliveryAddrXml);
+
+                    //long deliveryAddrRecId = 0;
+
+                    //long.TryParse(resultCreateDeliveryAddr.ToString(), out deliveryAddrRecId);
+                });
+
+                //kapcsolattartók felvitele 
+                registration.ContactPersonList.ForEach(delegate(CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson)
+                {
+                    CompanyGroup.Domain.RegistrationModule.ContactPersonCreate contactPersonCreate = new Domain.RegistrationModule.ContactPersonCreate()
+                    {
+                        AllowOrder = contactPerson.AllowOrder ? 1 : 0,
+                        AllowReceiptOfGoods = contactPerson.AllowReceiptOfGoods ? 1 : 0,
+                        CellularPhone = contactPerson.Telephone,
+                        ContactPersonId = contactPerson.ContactPersonId,
+                        DataAreaId = "hrp",
+                        Director = 0,
+                        Email = contactPerson.Email,
+                        EmailArriveOfGoods = contactPerson.EmailArriveOfGoods ? 1 : 0,
+                        EmailOfDelivery = contactPerson.EmailOfDelivery ? 1 : 0,
+                        EmailOfOrderConfirm = contactPerson.EmailOfOrderConfirm ? 1 : 0,
+                        Fax = "",
+                        FinanceManager = 0,
+                        FirstName = contactPerson.FirstName,
+                        FunctionId = "",
+                        Gender = 0,
+                        InvoiceInfo = contactPerson.InvoiceInfo ? 1 : 0,
+                        LastName = contactPerson.LastName,
+                        LeftCompany = 0,
+                        Method = 1,
+                        Newsletter = contactPerson.Newsletter ? 1 : 0,
+                        Phone = contactPerson.Telephone,
+                        PhoneLocal = "",
+                        PriceListDownload = contactPerson.PriceListDownload ? 1 : 0,
+                        RecId = contactPerson.RecId,
+                        RefRecId = 0,
+                        SalesManager = 0,
+                        SimpleContact = 0,
+                        SimpleSales = 0,
+                        WebAdmin = contactPerson.WebAdmin ? 1 : 0,
+                        WebLoginName = contactPerson.UserName,
+                        WebPassword = contactPerson.Password
+                    };
+
+                    long contactPersonResult = customerRepository.CreateContactPerson(contactPersonCreate);
+
+                    //string contactPersonXml = this.Serialize<Shared.Web.Dynamics.Entities.ContactPersonReg>(TranslateCpRegDataToContactPersonReg(result.RecId, method, contactPerson, request.DataAreaId));
+
+                    //object resultCreateContactPerson = dynamics.CallMethod("createContactPerson", contactPersonXml);
+
+                    //long contactPersonRecId = 0;
+
+                    //long.TryParse(resultCreateContactPerson.ToString(), out contactPersonRecId);
+                });
+                //bankszámlaszámok felvitele 
+                registration.BankAccountList.ForEach(delegate(CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount)
+                {
+                    CompanyGroup.Domain.RegistrationModule.BankAccountCreate bankAccountCreate = new CompanyGroup.Domain.RegistrationModule.BankAccountCreate()
+                    {
+                        AccountNumber = bankAccount.Number,
+                        DataAreaId = "hrp",
+                        Method = 1,
+                        RecId = bankAccount.RecId,
+                        RefRecId = 0
+                    };
+
+                    long bankAccountResult = customerRepository.CreateBankAccount(bankAccountCreate);
+
+                    //string bankAccountXml = this.Serialize<Shared.Web.Dynamics.Entities.BankAccountReg>(TranslateBankAccountToBankAccountReg(result.RecId, method, bankAccount, request.DataAreaId));
+
+                    //object resultCreateBankAccount = dynamics.CallMethod("createBankAccount", bankAccountXml);
+
+                    //long bankAccountRecId = 0;
+
+                    //long.TryParse(resultCreateBankAccount.ToString(), out bankAccountRecId);
+                });
+
+                //sikeres ERP rögzítés után
                 registrationRepository.Post(request.RegistrationId);
 
                 return new CompanyGroup.Dto.ServiceResponse.PostRegistration() { Message = "", Successed = true };
@@ -164,6 +375,186 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 return new CompanyGroup.Dto.ServiceResponse.PostRegistration() { Message = ex.Message, Successed = false };
             }
         }
+
+        #region 
+
+        /// <summary>
+        /// regisztráció elkészítése
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        //private Shared.Web.Service.Entities.CustomerResultMsg CreateCustomerRegistration(CreateCustomerRegistration request)
+        //{
+        //    Shared.Web.Helpers.DynamicsConnector dynamics = null;
+        //    try
+        //    {
+        //        Shared.Web.Service.Entities.LoginInfoData loginInfoData = this.GetLoginInfoData(request.ObjectId, db);
+
+        //        request.CustomerId = loginInfoData.LoginInfoItem.CustAccount;
+
+        //        int method = (loginInfoData.LoginInfoItem.LoggedIn) ? 2 : 1;
+
+        //        if (request.BankAccountList == null || request.BankAccountList.Count == 0) { return ConstructCustomerResultMsg(-5, request.LangId, 0, String.Empty); }
+
+        //        Shared.Web.Dynamics.Entities.CustomerReg reg = new Shared.Web.Dynamics.Entities.CustomerReg()
+        //        {
+        //            CompanyCertificateFile = request.CompanyCertificateFile,
+        //            CustomerId = request.CustomerId,
+        //            CustomerName = request.CustomerName,
+        //            DataAreaId = request.DataAreaId,
+        //            InvoiceCity = request.InvoiceCity,
+        //            InvoiceCountry = request.InvoiceCountry,
+        //            InvoiceCounty = request.InvoiceCounty,
+        //            InvoiceEmail = request.InvoiceEmail,
+        //            InvoiceFax = request.InvoiceFax,
+        //            InvoicePhone = request.InvoicePhone,
+        //            InvoicePostCode = request.InvoicePostCode,
+        //            InvoiceStreet = request.InvoiceStreet,
+        //            Method = method,
+        //            NewsletterSubScription = request.NewsletterSubScription ? 1 : 0,
+        //            RecId = 0,
+        //            RegEmail = request.RegEmail,
+        //            RegName = request.RegName,
+        //            RegNumber = request.RegNumber,
+        //            RegPhone = request.RegPhone,
+        //            SignatureEntityFile = request.SignatureEntityFile,
+        //            VatNumber = request.VatNumber,
+        //            WebAdministrator = new Dynamics.Entities.ContactPersonReg()
+        //            {
+        //                AllowOrder = request.WebAdministrator.AllowOrder ? 1 : 0,
+        //                AllowReceiptOfGoods = request.WebAdministrator.AllowReceiptOfGoods ? 1 : 0,
+        //                CellularPhone = request.WebAdministrator.CellularPhone,
+        //                ContactPersonId = request.WebAdministrator.ContactPersonId,
+        //                DataAreaId = request.DataAreaId,
+        //                Director = request.WebAdministrator.Director ? 1 : 0,
+        //                Email = request.WebAdministrator.Email,
+        //                EmailArriveOfGoods = request.WebAdministrator.EmailArriveOfGoods ? 1 : 0,
+        //                EmailOfDelivery = request.WebAdministrator.EmailOfDelivery ? 1 : 0,
+        //                EmailOfOrderConfirm = request.WebAdministrator.EmailOfOrderConfirm ? 1 : 0,
+        //                Fax = request.WebAdministrator.Fax,
+        //                FinanceManager = request.WebAdministrator.FinanceManager ? 1 : 0,
+        //                FirstName = request.WebAdministrator.FirstName,
+        //                FunctionId = request.WebAdministrator.FunctionId,
+        //                Gender = request.WebAdministrator.Gender,
+        //                InvoiceInfo = request.WebAdministrator.InvoiceInfo ? 1 : 0,
+        //                LastName = request.WebAdministrator.LastName,
+        //                LeftCompany = 0,
+        //                Newsletter = request.WebAdministrator.Newsletter ? 1 : 0,
+        //                Phone = request.WebAdministrator.Phone,
+        //                PhoneLocal = request.WebAdministrator.PhoneLocal,
+        //                PriceListDownload = request.WebAdministrator.PriceListDownload ? 1 : 0,
+        //                RecId = 0,
+        //                RefRecId = 0,   //custTable RecId
+        //                SalesManager = request.WebAdministrator.SalesManager ? 1 : 0,
+        //                SimpleContact = request.WebAdministrator.SimpleContact ? 1 : 0,
+        //                SimpleSales = request.WebAdministrator.SimpleSales ? 1 : 0,
+        //                WebAdmin = 1,
+        //                WebLoginName = request.WebAdministrator.WebLoginName,
+        //                WebPassword = request.WebAdministrator.WebPassword
+        //            },
+        //            MailAddress = new Dynamics.Entities.MailAddrReg()
+        //            {
+        //                City = request.MailCity,
+        //                Country = request.MailCity,
+        //                County = request.MailCounty,
+        //                PostCode = request.MailPostcode,
+        //                Street = request.MailStreet
+        //            }
+        //        };
+
+        //        string customerRegXml = this.Serialize<Shared.Web.Dynamics.Entities.CustomerReg>(reg);
+
+        //        dynamics = new Shared.Web.Helpers.DynamicsConnector(CreateCustomerRegistrationService.UserName,
+        //                                                            CreateCustomerRegistrationService.Password,
+        //                                                            CreateCustomerRegistrationService.Domain,
+        //                                                            CreateCustomerRegistrationService.DataAreaId,
+        //                                                            CreateCustomerRegistrationService.Language,
+        //                                                            CreateCustomerRegistrationService.ObjectServer,
+        //                                                            CreateCustomerRegistrationService.ClassName);
+
+        //        dynamics.Connect();
+
+        //        object customerRegResult = dynamics.CallMethod("createCustomer", customerRegXml);
+
+        //        Shared.Web.Dynamics.Entities.CustomerRegResult result = CreateCustomerRegResult(customerRegResult.ToString());
+
+        //        if (result.RecId > 0)
+        //        {
+        //            //szállítási címek felvitele
+        //            request.DeliveryAddressList.ForEach(delegate(Shared.Web.Service.Entities.DeliveryAddr deliveryAddr)
+        //            {
+        //                string deliveryAddrXml = this.Serialize<Shared.Web.Dynamics.Entities.DeliveryAddrReg>(TranslateDeliveryAddrToDeliveryAddrReg(result.RecId, deliveryAddr));
+
+        //                object resultCreateDeliveryAddr = dynamics.CallMethod("createDeliveryAddress", deliveryAddrXml);
+
+        //                long deliveryAddrRecId = 0;
+
+        //                long.TryParse(resultCreateDeliveryAddr.ToString(), out deliveryAddrRecId);
+        //            });
+
+        //            //kapcsolattartók felvitele 
+        //            request.ContactPersonItems.ForEach(delegate(Shared.Web.Service.Entities.CpRegData contactPerson)
+        //            {
+        //                string contactPersonXml = this.Serialize<Shared.Web.Dynamics.Entities.ContactPersonReg>(TranslateCpRegDataToContactPersonReg(result.RecId, method, contactPerson, request.DataAreaId));
+
+        //                object resultCreateContactPerson = dynamics.CallMethod("createContactPerson", contactPersonXml);
+
+        //                long contactPersonRecId = 0;
+
+        //                long.TryParse(resultCreateContactPerson.ToString(), out contactPersonRecId);
+        //            });
+        //            //bankszámlaszámok felvitele 
+        //            request.BankAccountList.ForEach(delegate(Shared.Web.Service.Entities.CustomerBankAccountItem bankAccount)
+        //            {
+        //                string bankAccountXml = this.Serialize<Shared.Web.Dynamics.Entities.BankAccountReg>(TranslateBankAccountToBankAccountReg(result.RecId, method, bankAccount, request.DataAreaId));
+
+        //                object resultCreateBankAccount = dynamics.CallMethod("createBankAccount", bankAccountXml);
+
+        //                long bankAccountRecId = 0;
+
+        //                long.TryParse(resultCreateBankAccount.ToString(), out bankAccountRecId);
+        //            });
+
+        //            //szerződés file generálása
+        //            if (CreateRegistrationFile(result.RecId, reg, request.BankAccountList, request.DeliveryAddressList, request.ContactPersonItems))
+        //            {
+        //                object resultCustRegFile = dynamics.CallMethod("setCustomerRegistrationFile", result.RecId);
+
+        //                int custRegFileRet = 0;
+
+        //                int.TryParse(resultCustRegFile.ToString(), out custRegFileRet);
+        //            }
+        //        }
+        //        return (result.RecId == 0) ? ConstructCustomerResultMsg(-4, "registration failed", 0, String.Empty) : ConstructCustomerResultMsg(1, "registration completed", result.RecId, result.RegId);
+        //    }
+        //    catch
+        //    {
+        //        return ConstructCustomerResultMsg(-6, "registration failed", 0, String.Empty);
+        //    }
+        //    finally
+        //    {
+        //        if (dynamics != null)
+        //        {
+        //            dynamics.Disconnect();
+        //        }
+        //    }
+        //}
+
+        //private Shared.Web.Service.Entities.CustomerResultMsg ConstructCustomerResultMsg(int code, string msg, long recId, string regId)
+        //{
+        //    return new Shared.Web.Service.Entities.CustomerResultMsg() { Code = code, Msg = msg, RecId = recId, RegId = regId };
+        //}
+
+        //private Shared.Web.Dynamics.Entities.CustomerRegResult CreateCustomerRegResult(string xml)
+        //{
+        //    if (String.IsNullOrEmpty(xml))
+        //    {
+        //        return new Shared.Web.Dynamics.Entities.CustomerRegResult();
+        //    }
+        //    return this.DeSerialize<Shared.Web.Dynamics.Entities.CustomerRegResult>(xml);
+        //}
+
+        #endregion
 
         /// <summary>
         /// adatlapot kitöltő adatainak módosítása
@@ -241,6 +632,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = ex.Message, Successed = false };
             }
         }
+
+        #region "szállítási címek"
 
         /// <summary>
         /// szállítási címek kiolvasása GetDeliveryAddress
@@ -333,6 +726,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             return response;
         }
+
+        #endregion
+
+        #region "bankszámlaszám"
 
         /// <summary>
         /// bankszámlaszám lista
@@ -433,6 +830,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             return response;
         }
 
+        #endregion
+
+        #region "kapcsolattartó"
+
         /// <summary>
         /// kapcsolattartó hozzáadása
         /// </summary>
@@ -526,5 +927,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             return response;
         }
+
+        #endregion
     }
 }

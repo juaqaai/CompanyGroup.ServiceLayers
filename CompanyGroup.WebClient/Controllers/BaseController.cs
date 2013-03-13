@@ -16,6 +16,22 @@ namespace CompanyGroup.WebClient.Controllers
     {
         protected readonly static string CookieName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("CookieName", "companygroup_hrpbsc");
 
+        protected static readonly string CarreerApplyForJobMailSubject = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailSubject", "HRP Hungary álláshirdetés jelentkezés");
+
+        protected static readonly string CarreerApplyForJobMailHtmlTemplateFile = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailHtmlTemplateFile", "carreer.html");
+
+        protected static readonly string CarreerApplyForJobMailTextTemplateFile = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailTextTemplateFile", "carreer.txt");
+
+        protected static readonly string CarreerApplyForJobMailToAddress = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailToAddress", "karrier@hrp.hu");
+
+        protected static readonly string CarreerApplyForJobMailToName = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailToName", "HRP Karrier");
+
+        protected static readonly string CarreerApplyForJobMailBccAddress = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailBccAddress", "ajuhasz@hrp.hu");
+
+        protected static readonly string CarreerApplyForJobMailBccName = Helpers.ConfigSettingsParser.GetString("CarreerApplyForJobMailBccName", "Juhász Attila");
+
+        protected static readonly string MailSmtpHost = Helpers.ConfigSettingsParser.GetString("MailSmtpHost", "195.30.7.14");
+
         /// <summary>
         /// látogató objektum lekérdezése süti objectId alapján
         /// </summary>

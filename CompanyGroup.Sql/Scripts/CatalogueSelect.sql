@@ -218,7 +218,8 @@ GO
 GRANT EXECUTE ON InternetUser.UpdateCatalogueSequence TO InternetUser
 GO
 -- EXEC  [InternetUser].[UpdateCatalogueSequence]
--- SELECT * FROM InternetUser.Catalogue where Sequence0 IS NULL ORDER BY Sequence0
+-- SELECT * FROM InternetUser.Catalogue where ProductId = '45f-00012''0021165103764' order by Partnumber 
+--where Sequence0 IS NULL ORDER BY Sequence0
 	
 /*
 
@@ -233,3 +234,10 @@ GO
 	)
 	SELECT SUBSTRING(@str, i, COALESCE(NULLIF(j, 0), LEN(@str) + 1) - i) as value
 	FROM CTE */
+
+
+	UPDATE InternetUser.Catalogue SET Valid = 0 
+WHERE id IN
+(SELECT Id, ProductId  FROM (SELECT  Id , ProductId, RANK() OVER (PARTITION BY ProductId, DataAreaId, Name, EnglishName, PartNumber, Available ORDER BY Id) AS rank
+FROM InternetUser.Catalogue) AS t
+WHERE rank <> 1)

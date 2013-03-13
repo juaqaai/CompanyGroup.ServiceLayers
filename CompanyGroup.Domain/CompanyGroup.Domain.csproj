@@ -56,6 +56,12 @@
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\ProductAggregates\ISyncRepository.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\VisitorInsertResult.cs" />
+    <Compile Include="RegistrationModule\AddressAggregates\DeliveryAddressCreate.cs" />
+    <Compile Include="RegistrationModule\AddressAggregates\MailAddressCreate.cs" />
+    <Compile Include="RegistrationModule\ContactPersonAggregates\ContactPersonCreate.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\BankAccountCreate.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\CustomerCreate.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\CustomerCreateResult.cs" />
     <Compile Include="WebshopModule\FinanceAggregates\OfferStatus.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CatalogueDetailsLog.cs" />
     <Compile Include="WebshopModule\ProductAggregates\CatalogueStockUpdate.cs" />

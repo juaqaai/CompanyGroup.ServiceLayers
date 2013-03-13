@@ -8,4 +8,12 @@
     <return-scalar column="RecId" type="System.Int64"/>
     exec InternetUser.PictureSelect @ProductId=:ProductId
   </sql-query>
+  <sql-query name="InternetUser.InvoicePictureSelect" callable="true">
+    <query-param name="RecId" type="System.Int64"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="FileName" type="System.String"/>
+    <return-scalar column="Primary" type="System.Boolean"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    exec InternetUser.InvoicePictureSelect @RecId=:RecId
+  </sql-query>  
 </hibernate-mapping>

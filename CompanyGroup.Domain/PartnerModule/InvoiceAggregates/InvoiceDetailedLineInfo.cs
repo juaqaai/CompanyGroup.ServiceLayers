@@ -11,7 +11,7 @@ namespace CompanyGroup.Domain.PartnerModule
                                        string payment, int salesType, string cusomerRef, string invoicingName, string invoicingAddress, string contactPersonId,
                                        bool printed, string returnItemId, DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
                                        int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string detailCurrencyCode, 
-                                       string description, long recId)
+                                       string description, long recId, bool pictureExists)
         {
             this.CustomerId = customerId;
             this.DataAreaId = dataAreaId;
@@ -46,6 +46,7 @@ namespace CompanyGroup.Domain.PartnerModule
             this.DetailCurrencyCode = detailCurrencyCode;
             this.Description = description;
             this.RecId = recId;
+            this.PictureExists = pictureExists;
         }
 
         public string CustomerId { set; get; }
@@ -115,5 +116,7 @@ namespace CompanyGroup.Domain.PartnerModule
 		public string FileName { set; get; }
 
         public long RecId { set; get; }
+
+        public bool PictureExists{ set; get; }
     }
 }

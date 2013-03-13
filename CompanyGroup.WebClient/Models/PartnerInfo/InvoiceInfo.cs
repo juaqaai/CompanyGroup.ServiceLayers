@@ -10,22 +10,22 @@ namespace CompanyGroup.WebClient.Models
     {
         public InvoiceInfo(CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo)
         { 
-                ContactPersonId = invoiceInfo.ContactPersonId;
-                CurrencyCode = invoiceInfo.CurrencyCode;
-                CusomerRef = invoiceInfo.CusomerRef;
-                DueDate = invoiceInfo.DueDate;
-                InvoiceAmount = invoiceInfo.InvoiceAmount;
-                InvoiceCredit = invoiceInfo.InvoiceCredit;
-                InvoiceDate = invoiceInfo.InvoiceDate;
-                InvoiceId = invoiceInfo.InvoiceId;
-                InvoicingAddress = invoiceInfo.InvoicingAddress;
-                InvoicingName = invoiceInfo.InvoicingName;
-                Payment = invoiceInfo.Payment;
-                Printed = invoiceInfo.Printed;
-                ReturnItemId = invoiceInfo.ReturnItemId;
-                SalesType = invoiceInfo.SalesType;
-                SalesId = invoiceInfo.SalesId;
-                Lines = invoiceInfo.Lines.ConvertAll(x => new InvoiceLineInfo(x));      
+                this.ContactPersonId = invoiceInfo.ContactPersonId;
+                this.CurrencyCode = invoiceInfo.CurrencyCode;
+                this.CusomerRef = invoiceInfo.CusomerRef;
+                this.DueDate = invoiceInfo.DueDate;
+                this.InvoiceAmount = invoiceInfo.InvoiceAmount;
+                this.InvoiceCredit = invoiceInfo.InvoiceCredit;
+                this.InvoiceDate = invoiceInfo.InvoiceDate;
+                this.InvoiceId = invoiceInfo.InvoiceId;
+                this.InvoicingAddress = invoiceInfo.InvoicingAddress;
+                this.InvoicingName = invoiceInfo.InvoicingName;
+                this.Payment = invoiceInfo.Payment;
+                this.Printed = invoiceInfo.Printed;
+                this.ReturnItemId = invoiceInfo.ReturnItemId;
+                this.SalesType = invoiceInfo.SalesType;
+                this.SalesId = invoiceInfo.SalesId;
+                this.Lines = invoiceInfo.Lines.ConvertAll(x => new InvoiceLineInfo(x));  
         }
 
         /// <summary>

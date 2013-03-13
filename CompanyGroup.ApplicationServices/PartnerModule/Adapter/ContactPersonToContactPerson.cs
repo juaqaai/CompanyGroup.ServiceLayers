@@ -36,7 +36,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 Telephone = from.Telephone,
                 UserName = from.UserName,
                 WebAdmin = from.WebAdmin, 
-                Id = String.Empty
+                Id = String.Empty, 
+                RecId = 0
             };
         }
 

@@ -9,7 +9,7 @@
 	modify reason  :
  ============================================= */
  
-USE ExtractInterface
+ USE ExtractInterface
 GO
 SET ANSI_NULLS ON
 GO
@@ -23,10 +23,11 @@ AS
 SET NOCOUNT ON
 	;
 	-- angol terméknév kikeresése
-	WITH EnglishProductName_CTE(ProductId, ProductName)
+	WITH EnglishProductName_CTE(ProductId, ProductName, DataAreaId)
 	AS (
 	SELECT inventlng.ITEMID,
-		   inventlng.MEGJELENITESINEV 
+		   inventlng.MEGJELENITESINEV, 
+		   inventlng.DataAreaId
 	FROM Axdb_20130131.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
 	INNER JOIN Axdb_20130131.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
 	WHERE Invent.DataAreaID IN ('hrp', 'bsc') AND 
@@ -36,7 +37,8 @@ SET NOCOUNT ON
 		Invent.AMOUNT2 > 0 AND
 		Invent.AMOUNT3 > 0 AND
 		Invent.AMOUNT4 > 0 AND
-		Invent.AMOUNT5 > 0 ), 
+		Invent.AMOUNT5 > 0
+	GROUP BY inventlng.ITEMID, inventlng.MEGJELENITESINEV, inventlng.DataAreaId ), 
 	-- angol gyártónév kikeresése
 	Manufacturer_CTE(ManufacturerId, ManufacturerName, ManufacturerEnglishName, SourceCompany)
 	AS (
@@ -122,15 +124,19 @@ SET NOCOUNT ON
 			Invent.AMOUNT4 > 0 AND
 			Invent.AMOUNT5 > 0 ), 
 	-- termékleírások kikeresése
-	Description_CTE(ProductId, Txt, LanguageId)
+	Description_CTE(ProductId, Txt, LanguageId, DataAreaId)
 	AS (
 		SELECT ItemId, 
 			   Txt, 
 			   CASE LanguageId WHEN 'HU' THEN 'hun' 
 			   WHEN 'en-gb' THEN 'eng'
-			   ELSE '' END	 	 
+			   ELSE '' END, 
+			   DataAreaId	 	 
 		FROM Axdb_20130131.dbo.INVENTTXT
-		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
+		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> '' 
+		
+		-- and ITEMID = 'T110-11J' AND LanguageId = 'hu' AND DataAreaId = 'hrp'
+
 	)
 
 	SELECT DISTINCT Invent.ItemId as ProductId, 
@@ -175,8 +181,9 @@ SET NOCOUNT ON
 					CONVERT(BIT, 0) as SecondHand,
 					CONVERT(BIT, 1)	as Valid		
 	FROM Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
-	LEFT OUTER JOIN EnglishProductName_CTE as EnglishProductName ON EnglishProductName.ProductId = Invent.ItemId
-	LEFT OUTER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID
+	INNER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID AND Manufacturer.SourceCompany = Invent.DataAreaId
+
+	LEFT OUTER JOIN EnglishProductName_CTE as EnglishProductName ON EnglishProductName.ProductId = Invent.ItemId AND EnglishProductName.DataAreaId = Invent.DataAreaId
 	LEFT OUTER JOIN Category1_CTE as Category1 ON Category1.CategoryId = Invent.JELLEG1ID
 	LEFT OUTER JOIN Category2_CTE as Category2 ON Category2.CategoryId = Invent.JELLEG2ID
 	LEFT OUTER JOIN Category3_CTE as Category3 ON Category3.CategoryId = Invent.JELLEG3ID
@@ -191,9 +198,11 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
 																gm.DATAAREAID = Invent.DATAAREAID	
 	LEFT OUTER JOIN Description_CTE as HunDescription ON HunDescription.ProductId = Invent.ItemId AND 
-														 HunDescription.LanguageId = 'hun'
+														 HunDescription.LanguageId = 'hun' AND
+														 HunDescription.DataAreaId = Invent.DataAreaId
 	LEFT OUTER JOIN Description_CTE as EnglishDescription ON EnglishDescription.ProductId = Invent.ItemId AND 
-															 EnglishDescription.LanguageId = 'eng'	
+															 EnglishDescription.LanguageId = 'eng' AND 
+															 EnglishDescription.DataAreaId = Invent.DataAreaId	
 	LEFT OUTER JOIN PurchaseOrderLine_CTE as PurchaseOrderLine ON PurchaseOrderLine.ProductId = Invent.ItemId							 
 
 	WHERE Invent.DataAreaId IN ('bsc', 'hrp') AND 
@@ -205,7 +214,8 @@ SET NOCOUNT ON
 		  Invent.AMOUNT3 > 0 AND
 		  Invent.AMOUNT4 > 0 AND
 		  Invent.AMOUNT5 > 0 AND 
-		  ISNULL(Manufacturer.SourceCompany, '') <> '' 
+		  --ISNULL(Manufacturer.SourceCompany, '') <> '' AND 
+		  ISNULL(Manufacturer.SourceCompany, '') = Invent.DataAreaId
 	ORDER BY CONVERT( bit, AKCIOS ) DESC, Invent.AtlagosKeszletkor_Szamitott DESC, JELLEG1ID, JELLEG2ID, JELLEG3ID, Invent.ItemId;
 
 RETURN

@@ -5,9 +5,11 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
-    public class DeliveryAddress : CompanyGroup.Dto.RegistrationModule.DeliveryAddress
+    public class DeliveryAddress
     {
-        public DeliveryAddress(CompanyGroup.Dto.RegistrationModule.DeliveryAddress deliveryAddress)
+        public DeliveryAddress() : this(new CompanyGroup.Dto.RegistrationModule.DeliveryAddress(), String.Empty) {}
+
+        public DeliveryAddress(CompanyGroup.Dto.RegistrationModule.DeliveryAddress deliveryAddress, string selectedId)
         {
             this.City = deliveryAddress.City;
 
@@ -21,7 +23,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.ZipCode = deliveryAddress.ZipCode;
 
-            this.SelectedItem = false;
+            this.SelectedItem = (selectedId.Equals(deliveryAddress.Id));
         }
 
         public DeliveryAddress(CompanyGroup.Dto.PartnerModule.DeliveryAddress deliveryAddress)
@@ -30,7 +32,7 @@ namespace CompanyGroup.WebClient.Models
 
             this.CountryRegionId = deliveryAddress.CountryRegionId;
 
-            this.Id = String.Empty; //deliveryAddress.;
+            this.Id = deliveryAddress.Id.ToString();
 
             this.RecId = deliveryAddress.RecId;
 
@@ -40,6 +42,18 @@ namespace CompanyGroup.WebClient.Models
 
             this.SelectedItem = false;
         }
+
+        public long RecId { get; set; }
+
+        public string City { get; set; }
+
+        public string Street { get; set; }
+
+        public string ZipCode { get; set; }
+
+        public string CountryRegionId { get; set; }
+
+        public string Id { set; get; }
 
         public bool SelectedItem { get; set; }
     }

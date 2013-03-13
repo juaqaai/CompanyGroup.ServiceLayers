@@ -148,7 +148,15 @@ DROP PROCEDURE [InternetUser].[InvoiceSelect];
 GO
 CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	--vevokod
 											     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
-											     @OverDue BIT = 0 )				--0: mind, 1 lejart 
+											     @OverDue BIT = 0,				--0: mind, 1 lejart 
+												 @ItemId NVARCHAR(20) = '', 
+												 @ItemName NVARCHAR(300) = '',
+												 @SalesId NVARCHAR(20) = '',
+												 @SerialNumber NVARCHAR(40) = '',
+												 @InvoiceId NVARCHAR(20) = '',
+												 @DateIntervall INT = 0,
+												 @CurrentPageIndex INT = 1, 
+												 @ItemsOnPage INT = 30 )
 											   --@dtDateFrom DATETIME = NULL, 
 											   --@dtDateTo DATETIME = NULL )										
 AS
@@ -188,14 +196,23 @@ SET NOCOUNT ON
 		   DetailCurrencyCode, 
 		   ISNULL([Description], '') as [Description],
 		   ISNULL([FileName], '' ) as [FileName],
-		   ISNULL(RecId, 0) as RecId
-
+		   ISNULL(RecId, 0) as RecId, 
+		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists
 	FROM InternetUser.Invoice 
 	WHERE CustomerId = @CustomerId 
 		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit END
 		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
+		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
+		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
+		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
+		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
+		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
+		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+
 		  -- AND H.INVOICEDATE BETWEEN @dtDateFrom AND @dtDateTo
-	ORDER BY InvoiceDate desc, InvoiceId desc, LineNum;
+	ORDER BY InvoiceDate desc, InvoiceId desc, LineNum
+	OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
+	FETCH NEXT @ItemsOnPage ROWS ONLY;
 
 RETURN
 GO
@@ -203,17 +220,20 @@ GRANT EXECUTE ON InternetUser.InvoiceSelect TO InternetUser
 GO
 
 -- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
--- select * from InternetUser.Invoice 
+-- select top 10 * from InternetUser.Invoice 
+-- update InternetUser.Invoice set SerialNumber = ''
 
 DROP PROCEDURE [InternetUser].[InvoicePictureSelect];
 GO
 CREATE PROCEDURE [InternetUser].[InvoicePictureSelect]( @RecId BIGINT = 0 )										
 AS
 SET NOCOUNT ON
-	SELECT Id, [FileName], CONVERT(BIT, 1) as [Primary], RecId
+	SELECT TOP 1 Id, [FileName], CONVERT(BIT, 1) as [Primary], RecId
 	FROM InternetUser.Invoice
-	WHERE RecId = @RecId;
+	WHERE RecId = @RecId AND [FileName] <> '';
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.InvoicePictureSelect TO InternetUser
 GO
+
+-- exec [InternetUser].[InvoicePictureSelect] 5637928068;

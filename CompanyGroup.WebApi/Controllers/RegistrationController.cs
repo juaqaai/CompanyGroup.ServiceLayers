@@ -23,6 +23,19 @@ namespace CompanyGroup.WebApi.Controllers
             this.service = service;
         }
 
+
+        /// <summary>
+        /// kulcs alapján a megkezdett regisztrációs adatok kiolvasása
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [ActionName("GetRegistrationByKey")]
+        [HttpGet]
+        public HttpResponseMessage GetRegistrationByKey(string id, string visitorId)
+        {
+            return this.GetByKey(new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id, visitorId));
+        }
+
         /// <summary>
         /// kulcs alapján a megkezdett regisztrációs adatok kiolvasása
         /// </summary>
@@ -30,17 +43,16 @@ namespace CompanyGroup.WebApi.Controllers
         /// <returns></returns>
         [ActionName("GetByKey")]
         [HttpGet]
-        public HttpResponseMessage GetByKey(string id, string visitorId)
+        [HttpPost]
+        public HttpResponseMessage GetByKey(CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request)
         {
-            if (String.IsNullOrEmpty(id))
+            if (String.IsNullOrEmpty(request.Id))
             {
                 ThrowSafeException("Id can not be null or empty!", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(id, visitorId);
-
                 CompanyGroup.Dto.RegistrationModule.Registration response = service.GetByKey(request);
 
                 return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.Registration>(HttpStatusCode.OK, response);

@@ -29,12 +29,13 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 Newsletter = from.Newsletter,
                 Password = from.Password,
                 PriceListDownload = from.PriceListDownload,  
+                RecId = from.RecId,
                 SmsArriveOfGoods = from.SmsArriveOfGoods,
                 SmsOfDelivery = from.SmsOfDelivery,
                 SmsOrderConfirm = from.SmsOrderConfirm,
                 Telephone = from.Telephone,
                 UserName = from.UserName,
-                WebAdmin = from.WebAdmin 
+                WebAdmin = from.WebAdmin
             };
         }
 
@@ -62,6 +63,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 Newsletter = from.Newsletter,
                 Password = from.Password,
                 PriceListDownload = from.PriceListDownload,
+                RecId = from.RecId,
+                FullName = String.Format("{0} {1}", from.FirstName, from.LastName),
                 SmsArriveOfGoods = from.SmsArriveOfGoods,
                 SmsOfDelivery = from.SmsOfDelivery,
                 SmsOrderConfirm = from.SmsOrderConfirm,

@@ -252,10 +252,10 @@ nav ul
      
     }*/
 
-#layout-header {}
+#layout-header { background-color:#FFF;}
     #branding 
     {   
-        font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+        font-family:Calibri, Geneva, Arial, Helvetica, sans-serif;
         font-size: 2.9em;
         padding: 0;
         margin: 0;

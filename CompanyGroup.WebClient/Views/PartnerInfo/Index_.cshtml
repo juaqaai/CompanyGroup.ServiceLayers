@@ -1,0 +1,804 @@
+﻿@model CompanyGroup.WebClient.Models.Visitor
+@{
+    ViewBag.Title = "Contact";
+}
+@*	<aside id="aside-first" class="aside-first group">
+		<div class="zone zone-aside-first">
+            <article class="widget-html-widget widget">
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/site_elements/camp-fair.jpg")" alt="" height="400" width="240" /></p>
+                <p style="text-align:center"><img src="@Url.Content("~/Content/Media/Default/HtmlWidget/mogyoro.jpg")" alt="" height="400" width="240" /></p>
+            </article>
+        </div>
+	</aside>
+	<div id="layout-content" class="group">*@
+        @*cms Messages
+		<div id="messages">
+			Messages
+		</div>*@
+        @*cms BeforeContent
+		<div id="before-content">
+			BeforeContent
+		</div>*@
+		<div id="preloader">
+			loadnig...
+		</div>
+		<div id="content" class="group">
+
+            <div id="main_content" class="zone zone-content">
+                <table id="salesOrderMain" border="0" cellspacing="5" cellpadding="2" style="width:100%; background:#333; color:#fff; padding:3px; display:none">
+                <tr>
+                    <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/checkok.png")" alt=""/></td>
+                    <td nowrap="nowrap"><input type="checkbox" name="chk_rightaway" id="chk_rightaway" checked="checked" /></td>
+                    <td nowrap="nowrap">Azonnal elvihető&nbsp;&nbsp;</td>
+                    <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt=""/></td>
+                    <td nowrap="nowrap"><input type="checkbox" name="chk_afteroverstore" id="chk_afteroverstore" checked="checked" /></td>
+                    <td nowrap="nowrap">Raktárközi mozgás után teljesíthető&nbsp;&nbsp;</td>
+                    <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/redx.png")" alt=""/></td>
+                    <td nowrap="nowrap"><input type="checkbox" name="chk_afterpurchasing" id="chk_afterpurchasing" checked="checked" /></td>
+                    <td width="100%" nowrap="nowrap">Beszerzés után elérhető</td>
+                    <td nowrap="nowrap"@*>Kezdő dátum:*@&nbsp;</td>
+                    <td nowrap="nowrap">@*<input name="naptar_kezd_rend" id="naptar_kezd_rend" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" />*@</td>
+      
+                    <td nowrap="nowrap">@*Záró dátum:&nbsp;*@</td>
+                    <td nowrap="nowrap">@*<input name="naptar_zar_rend" id="naptar_zar_rend" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" />*@</td>
+                </tr>
+                </table>
+                <div id="invoiceInfoFilter" class="szamlaszuro">
+                    <form method="post" action="#/invoiceinfoByFilter">
+                    <table width="912" border="0" cellspacing="2" cellpadding="2">
+                      <tr>
+                        <td width="138"><strong>Számlaszám:</strong></td>
+                        <td width="144"><input name="txt_invoiceid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td width="148"><strong>Terméknév:</strong></td>
+                        <td width="144"><input name="txt_itemname" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td width="122"><strong>Termék azonositó</strong>:</td>
+                        <td width="170"><input name="txt_itemid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Vevő rendelés szám:</strong></td>
+                        <td><input name="txt_salesorderid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><strong>Termék sorozattszám:</strong></td>
+                        <td><input name="txt_serialnumber" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><strong>Dátum:</strong></td>
+                        <td><select name="select_dateintervall">
+                          <option>36 napon belüli</option>
+                        </select></td>
+                      </tr>
+                      <tr>
+                        <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="0" />
+                          <strong>Összes számla </strong></td>
+                        <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="1" checked="checked" />
+                        <strong> Kifizetetlen számlák</strong></td>
+                        <td nowrap="nowrap"><input type="radio" name="radio_paymenttype" value="2" />
+                        <strong>Lejárt számlák</strong></td>
+                        <td nowrap="nowrap">&nbsp;</td>
+                        <td colspan="2" align="right" nowrap="nowrap"><input type="submit" value="Keresés" />      
+                        <input name="btn_exceldownload" type="button" value="Letöltés excel fájlba" /></td>
+                      </tr>
+                      <tr>
+                        <td colspan="6" align="right">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td height="23"> <h3 style="margin-left:3px; color: #666;">Elemek száma: <span id="span_invoicecount"></span></h3></td>
+                      </tr>
+                    </table>
+                    </form>
+                </div>
+                  <div id="main_container">
+
+                  </div>
+                </div>
+            <script id="dashboardTemplate" type="text/html">
+            {{#IsValidLogin}} 
+            <table id="dashboardtable" width="350" border="0" cellpadding="0" cellspacing="0">
+                {{#PersonId}}
+                <tr>
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_01.png")" width="46" height="44" alt="" /></td>
+                    <td>
+                        <div id="dashboardtext"><a href="#/registration">ADATLAP / MÓDOSÍTÁS</a></div>
+                    </td>
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
+                    <td>
+                        <div id="dashboardtext"><a href="#/changePassword">JELSZÓVÁLTOZTATÁS</a></div>
+                        <br/>
+                        <div id="changepass"></div>
+                    </td>
+                </tr>
+                {{/PersonId}}
+                {{^PersonId}}
+                <tr>
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_01.png")" width="46" height="44" alt="" /></td>
+                    <td><div id="dashboardtext"><a href="#/registration">ADATLAP / MÓDOSÍTÁS</a></div></td>
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
+                    <td>
+                        <div id="dashboardtext">JELSZÓVÁLTOZTATÁS</div>
+                        <br/>
+                        <div id="changepass">Ön egy cég nevében van bejelentkezve! 
+                        <br/><br/> céges belépéshez tartozó jelszó megváltoztatása csak a regisztrációs folyamat végigvitelével lehetséges.<br/>
+                        Kérjük válassza a regisztráció / cégadat módosítás funkció- adminisztrátori beállításoknál - a jelszó megadását.
+                        </div>
+                    </td>
+                </tr>
+                {{/PersonId}}
+                <tr>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_05.png")" width="46" height="56" alt="" /></td>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_06.png")" width="234" height="56" alt="" /></td>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_07.png")" width="44" height="56" alt="" /></td>
+                    <td>
+                        <!-- <img src="@Url.Content("~/Content/Media/images/dashboard_08.png")" width="246" height="56" alt=""> --></td>
+                </tr>
+                <tr>
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_09.png")" width="46" height="44" alt="" /></td>
+                    {{#Permission.InvoiceInfoEnabled}}
+                    <td><div id="dashboardtext"><a href="#/invoiceinfo/1">SZÁMLÁK</a></div><!-- <img src="@Url.Content("~/Content/Media/images/dashboard_10.png")" width="234" height="44" alt=""> --></td>
+                    {{/Permission.InvoiceInfoEnabled}}
+                    {{^Permission.InvoiceInfoEnabled}}
+                        <td><div id="dashboardtext">A számlák megtekintéséhez nem áll rendelkezésre megfelelő jogosultság!</div></td>
+                    {{/Permission.InvoiceInfoEnabled}}             
+                    <td><img src="@Url.Content("~/Content/Media/images/dashboard_11.png")" width="44" height="44" alt="" /></td>
+            
+                    {{#Permission.InvoiceInfoEnabled}}
+                    <td><div id="dashboardtext"><a href="#/salesorderinfo">MEGRENDELÉSEK</a></div>
+                        <!--  <img src="@Url.Content("~/Content/Media/images/dashboard_12.png")" width="246" height="44" alt=""> --></td>
+                    {{/Permission.InvoiceInfoEnabled}}
+                    {{^Permission.InvoiceInfoEnabled}}
+                    <td><div id="dashboardtext">A megrendelések megtekintéséhez nem áll rendelkezésre megfelelő jogosultság!</div></td>
+                    {{/Permission.InvoiceInfoEnabled}} 
+                </tr>
+                <tr>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_13.png")" width="46" height="52" alt="" /></td>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_14.png")" width="234" height="52" alt="" /></td>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_15.png")" width="44" height="52" alt="" /></td>
+                    <td>
+                        <!-- <img src="@Url.Content("~/Content/Media/images/dashboard_16.png")" width="246" height="52" alt=""> --></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="@Url.Content("~/Content/Media/images/dashboard_17.png")" width="46" height="45" alt="" /></td>
+                    <td>
+                        <div id="dashboardtext"><a href="#">RENDSZERÜZENETEK</a></div>
+                        <!-- <img src="@Url.Content("~/Content/Media/images/dashboard_18.png")" width="234" height="45" alt=""> --></td>
+                    <td>
+                        <!-- <img src="@Url.Content("~/Content/Media/images/dashboard_19.png")" width="44" height="45" alt=""> --></td>
+                    <td>
+                        <!-- <img src="@Url.Content("~/Content/Media/images/dashboard_20.png")" width="246" height="45" alt=""> --></td>
+                </tr>
+            </table>
+            {{/IsValidLogin}}
+            {{^IsValidLogin}}
+            <table width="350" border="0" cellpadding="0" cellspacing="0">
+                <tr>    
+                    <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+                </tr>
+                <tr>    
+                    <td>ACCESS DENIED KÉP...</td>
+                </tr>
+                <tr>    
+                    <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+                </tr>
+            </table>
+            {{/IsValidLogin}}
+            </script>
+
+            <script id="salesorderTemplate" type="text/html">
+            {{#Visitor.IsValidLogin}} 
+            <div id="szamlainfo">
+              <br />
+                {{#Items}}
+                <table width="100%" border="0" cellspacing="1" cellpadding="2">
+                <tr>
+                  <td colspan="7" nowrap="nowrap">
+                  <div id="szamla_header">
+                  <table width="100%" border="0" cellspacing="1" cellpadding="2">
+                    <tr>
+                      <td><strong>Megrendelés száma:</strong> {{SalesId}}</td>
+                      <td><strong>Megrendelés kelte:</strong> {{CreatedDate}}</td>
+                      </tr>
+                  </table>
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7"><hr size="1" noshade="noshade" /></td>
+                </tr>
+                {{#Lines}}
+                <tr>
+                  <td nowrap="nowrap"><strong>Azonosító</strong></td>
+                  <td nowrap="nowrap"><strong>Megnevezés</strong></td>
+                  <td width="100%">&nbsp;</td>
+                  <td nowrap="nowrap"><strong>Mennyiség [ db ]</strong></td>
+                  <td align="right" nowrap="nowrap"><strong>Egységár</strong></td>
+                  <td align="right" nowrap="nowrap"><strong>Raktárkód</strong></td>
+                  <td align="right" nowrap="nowrap"><strong>Státusz</strong></td>
+                </tr>
+                <tr>
+                  <td nowrap="nowrap"> {{ItemId}}</td>
+                  <td nowrap="nowrap">{{Name}}</td>
+                  <td width="100%">&nbsp;</td>
+                  <td align="center" nowrap="nowrap">{{Quantity}}</td>
+                  <td style="text-align: right;" nowrap="nowrap">{{SalesPrice}} {{line.CurrencyCode}}</td>
+                  <td style="text-align: right;" nowrap="nowrap">{{InventLocationId}}</td>
+                  <td style="text-align: center;" nowrap="nowrap">
+                    {{#StatusIssueIsReservPhysical}}    
+                    <img src="@Url.Content("~/Content/Media/images/checkok.png")" alt="{{StatusIssue}} ReservPhysical (foglalt tényleges)" title="{{StatusIssue}} ReservPhysical (foglalt tényleges)" />
+                    {{/StatusIssueIsReservPhysical}}
+                    {{#StatusIssueIsReservOrdered}}
+                    <img src="@Url.Content("~/Content/Media/images/warning.png")" alt="{{StatusIssue}} ReservOrdered (foglalt rendelt)" title="{{StatusIssue}} ReservOrdered (foglalt rendelt)" />
+                    {{/StatusIssueIsReservOrdered}}
+                    {{#StatusIssueIsOnOrder}}
+                    <img src="@Url.Content("~/Content/Media/images/redx.png")" alt="{{StatusIssue}} OnOrder (rendelés alatt)" title="{{StatusIssue}} OnOrder (rendelés alatt)" />
+                    {{/StatusIssueIsOnOrder}}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7"><hr size="1" noshade="noshade" /></td>
+                </tr>
+                {{/Lines}}
+                <tr>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td width="100%">&nbsp;</td>
+                  <td colspan="2" nowrap="nowrap">Netto összesen:</td>
+                  <td align="right" nowrap="nowrap">&nbsp;</td>
+                  <td style="text-align: right;" nowrap="nowrap">4 220 Ft</td>
+                </tr>
+                <tr>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td width="100%">&nbsp;</td>
+                  <td colspan="2" nowrap="nowrap">Brutto összesen:</td>
+                  <td align="right" nowrap="nowrap">&nbsp;</td>
+                  <td style="text-align: right;" nowrap="nowrap">5 275 Ft</td>
+                </tr>
+                <tr>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td colspan="4" nowrap="nowrap"><hr size="1" noshade="noshade" /></td>
+                </tr>
+                </table>
+                {{/Items}}
+                {{^Items}}
+                    Nincs nyitott vevőrendelés!
+                {{/Items}}
+                <table width="100%" border="0" cellspacing="1" cellpadding="2">
+                <tr>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td colspan="3" nowrap="nowrap"><strong>Összes megrendelés netto összesen</strong></td>
+                  <td style="text-align: right;" nowrap="nowrap"><strong>4 220 Ft</strong></td>
+                </tr>
+                <tr>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td nowrap="nowrap">&nbsp;</td>
+                  <td width="100%">&nbsp;</td>
+                  <td colspan="3" style="color: #900;" nowrap="nowrap"><strong>Összes megrendelés brutto összesen</strong></td>
+                  <td style="text-align: right; color: #900;" nowrap="nowrap"><strong>5 275 Ft</strong></td>
+                </tr>
+                </table>
+                </div>
+                {{/Visitor.IsValidLogin}}
+                {{^Visitor.IsValidLogin}}
+                <table width="350" border="0" cellpadding="0" cellspacing="0">
+                    <tr>    
+                        <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+                    </tr>
+                    <tr>    
+                        <td>ACCESS DENIED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+                    </tr>
+                </table>
+                {{/Visitor.IsValidLogin}}
+            </script>
+
+@*SalesId "BVR174781"
+InvoiceDate "2013.1.22"
+DueDate "2013.2.12"
+InvoiceAmount "20682,00"
+InvoiceCredit "20682,00"
+CurrencyCode "HUF"
+InvoiceId "BI000797/13"
+Payment "Átutalás 21 napra"
+SalesType 3
+CusomerRef ""
+InvoicingName "iPon Computer Kft."
+InvoicingAddress "1025 Budapest II.ker\nBúzavirág utca 9."
+ContactPersonId ""
+Printedtrue
+ReturnItemId
+
+ItemDate "2013.1.22"
+ItemId "VSPRX5ULIEMBEU"
+Name "VideoStudio Pro X5 Ultimate Mini-Box English"
+SalesPrice "16285,00"
+CurrencyCode "HUF"
+Quantity 1
+LineAmount "16285,00"
+DeliveryType 0
+TaxAmount "4396,95"
+Description null
+RecId
+*@
+
+
+            <script id="invoiceInfoListTemplate" type="text/x-jquery-tmpl">
+            {{if Items.length > 0}}
+            {{each( i, item ) Items}}
+                <table style="background:#09F; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" width="910" height="34" border="0" cellpadding="2" cellspacing="2">
+                    <tr>
+                    <td width="170"><strong>Számla száma:</strong> ${item.InvoiceId}</td>
+                    <td width="182"><strong>Számla kelte:</strong> ${item.InvoiceDate}</td>
+                    <td width="178"><strong>Fizetési határidő:</strong> ${item.DueDate}</td>
+                    <td width="127"><strong>Bruttó össz. tartozás: </strong><span style="padding: 5px; text-align: right; font-weight: bold; color: #900;">${item.InvoiceCredit} ${item.CurrencyCode}</span></td>
+                    <td width="124"><strong>Számla kibocsájtó:</strong> HRP</td>
+                    <td width="122"><strong><img src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" />Részletes nézet</strong></td>
+                    </tr>
+                </table>
+
+                <div class="toggle_container">
+                    <div class="invoice_item_template">
+                        {{each( j, line ) item.Lines}}
+                        <div class="expand_heading">
+				            <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
+				                <tr>
+				                    <td width="55%" valign="top" class="cus_prod_header_middle_cell">
+				                    <span class="cus_prod_table_item_number">SequenceNumber</span><span class="cus_product_data">${line.ItemId}</span><br /><span class="cus_prod_table_item_name">${line.ItemName}</span>
+                                    <br /><span class="cus_prod_table_item_code">${line.ItemId}</span> 
+				                    </td>
+				                    <td width="40%" align="right" valign="top" nowrap="nowrap">
+                                        <table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
+                                        <tr>
+									        <td class="price" style="text-align:right"><strong>Összesen:</strong><span style="text-align: right; padding: 5px;">${line.LineAmount} ${line.CurrencyCode}</span></td>
+    		                            </tr>
+				                        </table>
+                                    </td>
+				                </tr>
+				            </table>
+                        </div>
+				        <div class="box">
+				            <table width="695" border="0" cellspacing="0" cellpadding="0">
+				                <tr>
+				                    <td width="283" valign="top">
+				                        <div class="cus_termekkep">
+                                        {{if line.PictureExists}}
+				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getInvoicePictureUrl(line.RecId)}" alt="${companyGroup.utils.instance().getInvoicePictureUrl(line.RecId)}" /></a>
+				                        {{else}}
+				                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
+                                        {{/if}}
+				                        </div>
+                                    </td>
+				                    <td width="202" valign="top" class="cus_prod_table_middle_cell">
+				                        <div class="cus_prod_table_desc">${line.Description}</div>
+                                    </td>
+				                    <td width="210" align="right" valign="top" >
+				                        <table width="200" border="0" cellspacing="1" cellpadding="2">
+				                        <tr>
+				                            <td valign="top"><div class="cus_teteladatok_2">
+		                                    <p><strong>Mennyiség [ db ]:</strong><span style="text-align: center; padding: 5px; border-right: 1px solid #999;">${line.Quantity}</span></p>
+				                                    <p><strong>Egységár:</strong><span style="text-align: center; padding: 5px; border-right: 1px solid #999;">${line.SalesPrice} ${line.CurrencyCode}</span></p>
+				                                    <p><strong>Netto összesen:</strong><span style="text-align: right; padding: 5px;">${item.InvoiceAmount} ${item.CurrencyCode}</span></p>
+				                                </div></td>
+				                        </tr>
+				                        </table>
+                                    </td>
+				                </tr>
+				            </table>
+                        </div>
+                            		        
+                        <form action="#/addLineToShoppingCart/${line.ItemId}" method="post"> 
+			            <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
+				        <tr>
+				            <td nowrap="nowrap">
+				                <div class="cus_prod_table_morelink">
+				                    <a href="#/details/${line.ItemId}" title="Részletes termékadatlap ${line.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(line.ItemId)}">[+] Részletes adatlap</a>
+				                </div>
+                            </td>
+                            <td>
+                            </td>
+                            <td width="100%">
+                            {{if line.PictureExists}}
+                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>WEBÁRUZÁZBAN ELÉRHETŐ</b></span></div>
+                            {{else}}
+                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>WEBÁRUZÁZBAN NEM ELÉRHETŐ</b></span></div>
+                            {{/if}}
+                            <p></p>
+                            </td>
+                            <td nowrap="nowrap">
+                                <div class="cus_prod_table_quantity">
+                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span></div>
+                            </td>
+                            <td align="right" nowrap="nowrap">
+                                <div class="cus_prod_table_basket">
+                                <input type="hidden" name="hidden_productid" value="${line.ItemId}" />
+                                <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /> 
+                                kosárba
+                                </div>
+                            </td>
+                        </tr>
+                        </table>
+                        </form> 
+                        {{/each}}   
+                    </div>
+                </div>
+
+                <table align="right">
+                    <tr>
+                    <td nowrap="nowrap">Netto tartozás összesen:</td>
+                    <td style="text-align: right; padding: 5px;" nowrap="nowrap">${item.InvoiceCredit} ${item.CurrencyCode}</td>
+                    </tr>
+                    <tr>
+                    <td nowrap="nowrap"><strong>Netto össz. tartozás:</strong></td>
+                    <td style="padding: 5px; text-align: right; font-weight: bold; color: #900;" nowrap="nowrap">NettoSumCredit Ft</td>
+                    </tr>
+                </table>
+            {{/each}}
+            {{else}}
+                Nem áll rendelkezésre számla információ!
+            {{/if}}
+        </script>
+
+            <script id="invoiceTemplate" type="text/html">
+                {{#Visitor.IsValidLogin}} 
+                <div id="szamlainfo">
+
+                    <h3 style="margin-left:3px; color: #666;">Elemek száma: {{ItemCount}}</h3>
+                    {{#Items}}
+                    <table id="invoiceInfoListContainer" width="100%" border="0" cellspacing="1" cellpadding="2">
+                    <tr>
+                      <td colspan="6" nowrap="nowrap">
+                      <div id="szamla_header">
+                      <table width="100%" border="0" cellspacing="1" cellpadding="2">
+                        <tr>
+                          <td width="50%"><strong>Számla száma:</strong> {{InvoiceId}}</td>
+                          <td width="50%"><strong>Számla kelte:</strong> {{InvoiceDate}}</td>
+                          <td nowrap="nowrap"><strong>Fizetési határidő:</strong> {{DueDate}}</td>
+                        </tr>
+                      </table>
+                      </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="6"><hr size="1" noshade="noshade" /></td>
+                    </tr>
+                    {{#Lines}}
+                    <tr>
+                      <td nowrap="nowrap"><strong>Azonosító</strong></td>
+                      <td nowrap="nowrap"><strong>Cikknév</strong></td>
+                      <td width="100%">&nbsp;</td>
+                      <td style="text-align: left; padding: 0px;" nowrap="nowrap"><strong>Mennyiség [ db ]</strong></td>
+                      <td style="text-align: right; padding: 5px;" nowrap="nowrap"><strong>Egységár</strong></td>
+                      <td style="text-align: right; padding: 5px;" nowrap="nowrap"><strong>Összesen</strong></td>
+                    </tr>
+                    <tr>
+                      <td nowrap="nowrap">{{ItemId}}</td>
+                      <td nowrap="nowrap">{{Name}}</td>
+                      <td width="100%">&nbsp;</td>
+                      <td style="text-align: center; padding: 5px; border-right: 1px solid #999;" nowrap="nowrap">{{Quantity}} </td>
+                      <td style="text-align: center; padding: 5px; border-right: 1px solid #999;" nowrap="nowrap">{{SalesPrice}} {{CurrencyCode}}</td>
+                      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{LineAmount}} {{CurrencyCode}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="6"><hr size="1" noshade="noshade" /></td>
+                    </tr>
+                    {{/Lines}}
+                    <tr>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td width="100%">&nbsp;</td>
+                      <td colspan="2" nowrap="nowrap">Netto összesen:</td>
+                      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{InvoiceAmount}} {{CurrencyCode}}</td>
+                    </tr>
+                    <tr>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td width="100%">&nbsp;</td>
+                      <td colspan="2" nowrap="nowrap">Netto tartozás összesen:</td>
+                      <td style="text-align: right; padding: 5px;" nowrap="nowrap">{{InvoiceCredit}} {{CurrencyCode}}</td>
+                    </tr>
+                    {{/Items}}
+                    <tr>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td nowrap="nowrap">&nbsp;</td>
+                      <td width="100%">&nbsp;</td>
+                      <td colspan="2" nowrap="nowrap"><strong>Netto össz. tartozás:</strong></td>
+                      <td style="padding: 5px; text-align: right; font-weight: bold; color: #900;" nowrap="nowrap">{{NettoSumCredit}} Ft</td>
+                    </tr>
+                    </table>
+                    {{^Items}}
+                        Nem áll rendelkezésre számla információ!
+                    {{/Items}}
+                </div>
+                {{/Visitor.IsValidLogin}}
+                {{^Visitor.IsValidLogin}}
+                <table id="dashboardtable" width="350" border="0" cellpadding="0" cellspacing="0">
+                    <tr>    
+                        <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+                    </tr>
+                    <tr>    
+                        <td>ACCESS DENIED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+                    </tr>
+                </table>
+                {{/Visitor.IsValidLogin}}  
+            </script>
+
+            <script id="forgetPasswordTemplate" type="text/html">
+            <h2>ELFELEJTETT JELSZÓ</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
+                {{^IsValidLogin}}
+        
+                    <form action="#/forgetpassword" method="post">    
+                    <table width="550" border="0" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td colspan="4">Kérjük adja meg felhasználónevét, majd válassza az "elküld" parancsot. 
+                                        A rendszer az adatok ellenőrzését követően elvégzi a felhasználónévhez tartozó jelszó újragenerálását, majd az így létrejött új jelszó elküldésre kerül a felhasználónévhez tartozó email címre.<br/><br/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3"><div id="forgetpassword_errors"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Felhasználónév: </td>
+                        <td>
+                            <input type="text" id="txt_username" name="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                        </td>
+                        <td style="color:#900;">*</td>
+                        <td>
+                            <label class="error" for="txt_username" generated="true" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Elküld" style="border-radius: 5px;" />
+                        </td>
+                        <td></td>
+                        <td>
+                
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_05.png")" width="46" height="56" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_06.png")" width="234" height="56" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_07.png")" width="44" height="56" alt="" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_13.png")" width="46" height="52" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_14.png")" width="234" height="52" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_15.png")" width="44" height="52" alt="" /></td>
+                        <td></td>
+                    </tr>
+                    </table>
+                    </form>
+                {{/IsValidLogin}}
+                {{#IsValidLogin}}
+                <table width="550" border="0" cellpadding="3" cellspacing="2">
+                    <tr>    
+                        <td><h3>Figyelem! Az oldal csak kijelentkezést követően érhető el!</h3></td>
+                    </tr>
+                    <tr>    
+                        <td>ACCESS DENIED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.SignOut()"><strong>Kijelentkezés</strong></a></td>
+                    </tr>
+                </table>
+                {{/IsValidLogin}}
+            </script>
+
+            <script id="undoChangePasswordTemplate" type="text/html">
+                <h2>JELSZÓMÓDOSÍTÁS VISSZAVONÁS</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
+                {{#Succeeded}}
+                <table width="550" border="0" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td>A jelszómódosítás visszavonás sikeresen megtörtént!<br/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>{{Message}}</td>
+                    </tr>
+                    <tr>    
+                        <td>SUCCEEDED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td></td>
+                    </tr>
+                </table>
+                {{/Succeeded}}
+                {{^Succeeded}}
+                <table width="550" border="0" cellpadding="3" cellspacing="2">
+                    <tr>
+                        <td>A jelszómódosítás visszavonás nem sikerült!<br/><br/></td>
+                    </tr>
+                    <tr>
+                        <td>{{Message}}</td>
+                    </tr>
+                    <tr>    
+                        <td>FAILED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td></td>
+                    </tr>
+                </table>
+                {{/Succeeded}}            
+            </script>
+
+            <script id="changePasswordTemplate" type="text/html">
+             <h2>JELSZÓMÓDOSÍTÁS</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
+                 {{#IsValidLogin}}
+                    <form id="form_changepassword" action="#/changepassword/" method="post">     
+                    <table width="550" border="0" cellpadding="3" cellspacing="2">
+                    {{#PersonIdNotNullOrEmpty}}
+                    <tr>
+                        <td colspan="4">Kérjük adja meg felhasználónevét, régi jelszavát és a felhasználni kívánt új jelszavát, majd válassza az "elküld" parancsot. 
+                                        A rendszer az adatok ellenőrzését követően elvégzi a jelszómódosítást, majd annak eredményéről értesítést küld.<br/><br/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3"><div id="changepassword_errors"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Felhasználónév: </td>
+                        <td>
+                            <input type="text" id="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                        </td>
+                        <td style="color:#900;">*</td>
+                        <td>
+                            <label class="error" for="txt_username" generated="true" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Régi jelszó: </td>
+                        <td>
+                            <input type="text" id="txt_oldpassword", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                        </td>
+                        <td style="color:#900;">*</td>
+                        <td>
+                            <label class="error" for="txt_oldpassword" generated="true" style="display:none; color:#900;">A régi jelszó kitöltése kötelező</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Új jelszó: </td>
+                        <td>
+                            <input type="text" id="txt_newpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                        </td>
+                        <td style="color:#900;">*</td>
+                        <td>
+                            <label class="error" for="txt_newpassword" generated="true" style="display:none; color:#900;">Az új jelszó kitöltése kötelező</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jelszó megerősítése: </td>
+                        <td>
+                            <input type="text" id="txt_confirmpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" />
+                        </td>
+                        <td style="color:#900;">*</td>
+                        <td>
+                            <label class="error" for="txt_confirmpassword" generated="true" style="display:none; color:#900;">A jelszó megerősítés kitöltése kötelező</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Elküld" style="border-radius: 5px;" />
+                        </td>
+                        <td></td>
+                        <td>
+                
+                        </td>
+                    </tr>
+                    {{/PersonIdNotNullOrEmpty}}
+                    {{^PersonIdNotNullOrEmpty}}
+                    <tr>
+                        <td><img src="@Url.Content("~/Content/Media/images/dashboard_01.png")" width="46" height="44" alt="" /></td>
+                        <td><div id="dashboardtext"><a href="@Url.Content("~/PartnerInfo/Registration")">ADATLAP / MÓDOSÍTÁS</a></div></td>
+                        <td><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
+                        <td>
+                            <div id="dashboardtext">JELSZÓVÁLTOZTATÁS</div>
+                            <br/>
+                            <div id="changepass">Ön egy cég nevében van bejelentkezve! 
+                            <br/><br/> céges belépéshez tartozó jelszó megváltoztatása csak a regisztrációs folyamat végigvitelével lehetséges.<br/>
+                            Kérjük válassza a regisztráció / cégadat módosítás funkció- adminisztrátori beállításoknál - a jelszó megadását.
+                            </div>
+                        </td>
+                    </tr>
+                    {{/PersonIdNotNullOrEmpty}}
+                    <tr>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_05.png")" width="46" height="56" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_06.png")" width="234" height="56" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_07.png")" width="44" height="56" alt="" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_13.png")" width="46" height="52" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_14.png")" width="234" height="52" alt="" /></td>
+                        <td>
+                            <img src="@Url.Content("~/Content/Media/images/dashboard_15.png")" width="44" height="52" alt="" /></td>
+                        <td></td>
+                    </tr>
+                    </table>
+                </form>
+                {{/IsValidLogin}}
+                {{^IsValidLogin}}
+                <table id="changePasswordtable" width="550" border="0" cellpadding="3" cellspacing="2">
+                    <tr>    
+                        <td><h3>Figyelem! Az oldal csak bejelentkezést követően érhető el!</h3></td>
+                    </tr>
+                    <tr>    
+                        <td>ACCESS DENIED KÉP...</td>
+                    </tr>
+                    <tr>    
+                        <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
+                    </tr>
+                </table>
+                {{/IsValidLogin}}
+
+            </script>
+		</div>
+        @*cms AfterContent
+		<div id="after-content">
+			AfterContent
+		</div>*@
+	@*</div>
+    cms AsideSecond
+    <aside id="aside-second" class="aside-second">
+		AsideSecond
+	</aside>*@
+
+@section ScriptFiles {
+
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/partnerinfo")');
+}
+@section ScriptOnReady {
+    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+
+    var model = @(Html.Raw(Json.Encode(Model)));
+    //console.log(model);
+
+    companyGroup.utils.instance().setInvoiceBaseApiUrl('@Url.Content("~/api/InvoiceApi/")');
+    companyGroup.utils.instance().setSalesOrderBaseApiUrl('@Url.Content("~/api/SalesOrderApi/")');    
+
+    companyGroup.partnerinfo.run('#/');
+
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+  	$('#cus_header1').html(visitorInfoHtml);
+
+    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model);
+  	$('#usermenuContainer').html(usermenuHtml);
+
+    $("#chk_accept").change(function () {
+        if($('#chk_accept').is(':checked')) {
+            //CompanyGroupCms.Registration.AddNew();
+            //$('#regstep2').show();
+        }
+        else {
+            //$('#regstep2').hide();
+        }
+    });
+
+}

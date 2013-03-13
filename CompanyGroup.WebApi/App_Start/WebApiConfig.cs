@@ -9,12 +9,6 @@ namespace CompanyGroup.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
-
             //kontroller/metódus/paraméter (opcionális)
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -39,10 +33,21 @@ namespace CompanyGroup.WebApi
                 defaults: new { }
             );
 
+            //config.Routes.MapHttpRoute(
+            //    name: "InvoicePictureApi",
+            //    routeTemplate: "api/{controller}/{action}/{recId}/{maxWidth}/{maxHeight}",
+            //    defaults: new {}
+            //);
+
             config.Routes.MapHttpRoute(
                 name: "PictureApi",
                 routeTemplate: "api/{controller}/{action}/{productId}/{recId}/{maxWidth}/{maxHeight}",
                 defaults: new { dataAreaId = "hrp" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "RegistrationApi",
+                routeTemplate: "api/{controller}/{action}/{id}/{visitorId}"
             );
         }
     }

@@ -76,19 +76,19 @@
                                 <td nowrap="nowrap">&nbsp;</td>
                                 <td nowrap="nowrap"><strong>Azonosító</strong></td>
                                 <td nowrap="nowrap">&nbsp;</td>
-                                <td width="130px" align="right"nowrap="nowrap"><strong>Egység ár</strong></td>
+                                <td width="130px" align="right"nowrap="nowrap"><strong> Nettó egység ár</strong></td>
                                 <td width="60px" nowrap="nowrap"><strong>Mennyiség</strong></td>
                                 <td nowrap="nowrap">&nbsp;</td>
                                 <td width="60px"><strong>Cég</strong></td>
                            	  	<td nowrap="nowrap">&nbsp;</td>
-                                <td width="120px" align="right"><strong>Összesen</strong></td>
+                                <td width="120px" align="right"><strong>Nettó összesen</strong></td>
                                  <td width="50px">&nbsp;</td>
                             </tr>
                         </thead>
                         <tbody>
                             {{each( i, item ) ActiveCart.Items}}
                             <tr>
-                                <td width="400px"nowrap="nowrap">{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;"><!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->Használt</span>{{/if}}&nbsp;<span style="width:400px; overflow:hidden;" size>${item.ProductName}</span></td>
+                                <td width="400px"nowrap="nowrap">{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;"><!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->Leértékelt</span>{{/if}}&nbsp;<span style="width:400px; overflow:hidden;" size>${item.ProductName}</span></td>
                                 <td nowrap="nowrap">&nbsp;</td>
                               <td nowrap="nowrap">${item.PartNumber}</td>
                                 <td nowrap="nowrap">&nbsp;</td>
@@ -124,8 +124,8 @@
                                       <td nowrap="nowrap">  <img src="@Url.Content("~/Content/Media/images/basketicons/bid.png")" alt="" />&nbsp;</td>
                                           <td nowrap="nowrap"><span id="ajanlat_veg_link"><strong>Végfelhasználói árajánlat készítése</strong></span>&nbsp;&nbsp;</td>-->
                                         <td nowrap="nowrap" width="100%">
-                                        <a id="finance_btn" style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>HRP Finance árajánlat készítése</strong></a>&nbsp;
-                                        <a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.gif")" alt="Help" height="12" width="12"/><span><strong>HRP Finance árajánlat</strong><br/>Online adatszolgáltatás és ügyintézés, gyorsított minősítés!</span></a>
+                                        <a id="finance_btn" style="text-decoration:none;" href="#/showCreateFinanceOffer"><strong>Tartós bérleti ajánlat készítése</strong></a>&nbsp;
+                                        <a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.gif")" alt="Help" height="12" width="12"/><span><strong>NE vedd meg, béreld!</strong><br/>HRP Finance által kínált tartós bérlet finanszírozási ajánlat</span></a>
                                         </td>
                                     </tr>
                                     </table>
@@ -163,7 +163,7 @@
                         </tr>
                         <tr>
                           <td ><strong>Szállítási időpont:</strong></td>
-                          <td >  <input name="naptar" id="naptar" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                          <td >  <input name="naptar" id="naptar" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         </tr>
                         </table>
                         <hr style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px" />
@@ -261,52 +261,64 @@
                 </div>
                 
                     <div id="cus_ajanlat_finance">
-                        <span style="font-size:20px; color: rgb(8, 67, 133);"><strong>HRP Finance árajánlat készítése</strong></span><br/>
-                        <table width="100%" height="163" cellpadding="1" cellspacing="1" style="height:150px">
+                        <p><span style="font-size:20px; color: rgb(8, 67, 133); width:750px;"><strong>HRP Finance által kínált tartós bérlet finanszírozási ajánlat</strong></span></p><div style="float:left"></div>
+                        <div style="width:750px; padding:0px 0px 0px 20px;">
+                          Mi lenne, ha a kosár  értékének csupán egy töredéke befizetésével már el is vihetné a &nbsp;benne  lévő termékeket? </p>
+                          <p><strong>Erre egy tökéletes megoldás a tartós bérleti  konstrukció! </strong></p>
+                          <p>Mi most megmutatjuk Önnek, havonta mekkora összeget kellene  fizetnie, ha ezt a megoldást választaná. Ha tetszik a konstrukció, néhány mező  kitöltésével el is mentheti pdf formátumba az eredményt. Ha felkeltettük  érdeklődését, akkor pontosított árajánlat kérési lehetőséget, és további részleteket  a </strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a> weboldalon talál!</p>
+                          <br>
+                         
+                        </div>
+                      <table width="750px" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-					    <td align="left" id="leasingOptionsContainer"></td>
-                        </tr>
-                        </table>
-                      <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
-                      <table class="financeajanlat" width="0" border="0" cellspacing="4" cellpadding="1">
-                      <tr>
-                        <td width="142"><strong>Bérbevevő Neve:</strong></td>
-                        <td><label for="txt_offername"></label>
-                        @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;"})
-                        <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label></td>
-                      </tr>
-                      <tr>
-                        <td><strong>Címe:</strong></td>
-                        <td><label for="txt_offeraddress"></label>
-                        @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
-                        <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label></td>
-                      </tr>
-                      <tr>
-                        <td><strong>Telefon:</strong></td>
-                        <td><label for="txt_offerphone"></label>
-                        @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" }) 
-                        <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label></td>
-                      </tr>
-                      <tr>
-                        <td><strong>Cégjegyzékszám:</strong></td>
-                        <td><label for="txt_offerstatnumber"></label>          
-                        @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
-                        <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label></td>
-                      </tr>
-                      <tr>
-                        <td><input type="submit" value="Ajánlatkérés" /></td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    </table>
-                    <div id="financeoffer_errors"></div>
-                    </form>
-                      <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="6">
-                      <tr>
-                        <td><ul>
-                          <li>• Ajánlatunkat ajánlati kötöttség nélkül tettük meg, az ügylet megkötéséhez a refinanszírozó jóváhagyása szükséges.
-                          </li>
-                          <li>• HUF alapú finanszírozás, a havi díj az 1 havi BUBOR-hoz kötött. </li>
-                        </ul>
+    <td valign="top"><div align="center" id="leasingOptionsContainer" style="float:left; width:400px; height:150px; padding-left:10px;"></div></td>
+    <td valign="top"><form action="#/createFinanceOffer" method="post" id="form_financeoffer">
+      <table class="financeajanlat" style="background-color:#F5F5F5; border:#999 solid thin; border-radius:3px; padding:3px;" width="0" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+          <td colspan="2"><div align="center"><strong>Hitel ajánlatkérő űrlap</strong></div></td>
+          </tr>
+        <tr>
+          <td width="142"><strong>Bérbevevő Neve:</strong></td>
+          <td><label for="txt_offername"></label>
+            @Html.TextBox("txt_offername", "", new { id = "txt_offername", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;"})
+            <label class="error" for="txt_offername" style="display:none; color:#900;">A név kitöltése kötelező</label></td>
+          </tr>
+        <tr>
+          <td><strong>Címe:</strong></td>
+          <td><label for="txt_offeraddress"></label>
+            @Html.TextBox("txt_offeraddress", "", new { id = "txt_offeraddress", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
+            <label class="error" for="txt_offeraddress" style="display:none; color:#900;">A cím kitöltése kötelező</label></td>
+          </tr>
+        <tr>
+          <td><strong>Telefon:</strong></td>
+          <td><label for="txt_offerphone"></label>
+            @Html.TextBox("txt_offerphone", "", new { id = "txt_offerphone", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
+            <label class="error" for="txt_offerphone" style="display:none; color:#900;">A telefon kitöltése kötelező</label></td>
+          </tr>
+        <tr>
+          <td><strong>Cégjegyzékszám:</strong></td>
+          <td><label for="txt_offerstatnumber"></label>
+            @Html.TextBox("txt_offerstatnumber", "", new { id = "txt_offerstatnumber", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:3px;" })
+            <label class="error" for="txt_offerstatnumber" style="display:none; color:#900;">A cégjegyzékszám kitöltése kötelező</label></td>
+          </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          </tr>
+        </table>
+      <div id="financeoffer_errors"></div>
+      </form></td>
+  </tr>
+</table> 
+<form action="#/createFinanceOffer" method="post" id="form_financeoffer">
+ <div style="padding:40px 20px 20px 20px;"><strong>Az Ön személyre szóló ajánlata PDF  formátumban letölthető. Ehhez válasszon egy futamidőt, töltse ki az űrlapot,  majd klikkeljen ide.</strong> 
+<input name="PDF letőltése" type="image" value="PDF letőltése" src="~/Content/Media/images/pdf_icon.png" alt="PDF letőltése" align="middle" width="50" height="50">
+   </form>
+   <ul>
+              <li>• Ajánlatunkat ajánlati kötöttség nélkül tettük meg, az ügylet megkötéséhez a refinanszírozó jóváhagyása szükséges.
+              </li>
+              <li>• HUF alapú finanszírozás, a havi díj az 1 havi BUBOR-hoz kötött. </li>
+          </ul>
                           <p><strong>A tartós bérlet alapvetői jellemzői</strong></p>
                           <ul>
                             <li>
@@ -314,28 +326,34 @@
                               Az ÁFA a havi díjakat terheli</li>
                             <li> A terméket a bérbeadó aktiválja</li>
                             <li> A havi díj költségként elszámolható</li>
-                          </ul>      </td>
-                      </tr>
-                    </table>                
-                        <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
+                          </ul>
+			      <strong>Ha bármilyen kérdése merülne fel a konstrukciót illetően, forduljon hozzánk bizalommal! további részletek:</strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a></div>                 
+                      <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
                         {{if Message.length > 0}}
-                            <strong>${Message}</strong>
+                            <di<strong>${Message}</strong>
                         {{else}}
-				        <strong>Elérhető hitelkonstrukciók</strong>
-                            <ul>
-                            {{each( i, item ) Items}} 
-                                <li><table style=" border-radius:3px; padding-top: 5px;" width="auto" border="0" cellspacing="5" cellpadding="5">
-                                        <tr>
-                                        <td><input class="radiohitel" id="radiohitel" type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;"/></td>
-                                        <td>futamidő: <strong>${item.NumOfMonth} honap</strong></td>
-                                        <td>összeg: <strong>${item.CalculatedValue} Ft</strong></td>
-                                        </tr>
-                                    </table></li>
-                            {{/each}} 
-                            </ul> 
+<table style="background-color:#F5F5F5; border:#999 solid thin; border-radius:3px;" width="0" border="0" cellspacing="5" cellpadding="5">
+<tr>
+  <td colspan="2" style="background-color:#09F; color:#FFF"><div align="center"><strong>Tartós bérlet</strong></div></td>
+</tr>
+<tr>
+  <td style="background-color:#999; color:#FFF"><div align="center"><strong>futamidő<br>(hónap)</strong></div></td>
+  <td style="background-color:#999; color:#FFF"><div align="center"><strong>havidíj<br>(nettó)</strong></div></td>
+</tr>
+{{each( i, item ) Items}}
+<tr >
+  <td><div align="center"><input class="radiohitel" id="radiohitel" type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;"/>
+    <strong>${item.NumOfMonth} honap</strong></div></td>
+  <td><div align="center"><strong>${item.CalculatedValue} Ft</strong></div></td>
+
+</tr>
+{{/each}}
+</table>
+
+
                         {{/if}}
                         </script>
-                    </div>
+              </div>
                     <table width="100%" heaight="20px" border="0" cellspacing="0" cellpadding="6" class="expand_heading_table2">
                       <tr>
                         <td></td>
@@ -345,28 +363,22 @@
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
     		            <div id="container">
+                            <div id="filters">
                             <div id="kettes_szuro">
-                        	<table cellpadding="1" cellspacing="1">
-						    <tr>
-                                <td><input type="checkbox" id="chk_filterByHrp" checked="checked" /></td><td>HRP termékek</td>
-                                <td><input type="checkbox" id="chk_filterByBsc" checked="checked" /></td><td>BSC termékek</td>
-                            </tr>
-                            </table>
+                        	<div class="onstock_filter"><input type="checkbox" id="chk_filterByHrp" checked="checked" /> HRP termékek</div>
+                                <div class="onstock_filter"><input type="checkbox" id="chk_filterByBsc" checked="checked" /> BSC termékek</div>
+
                             </div>
+                            <div id="negyes_szuro">	
+                                <div class="onstock_filter"><input type="checkbox" id="chk_onstock"/> Készleten</div>
+                                <div class="action_filter"><input type="checkbox" id="chk_onaction"/> Akciós</div>
+                                <div class="used_filter"><input type="checkbox" id="chk_bargain" /> Leértékelt</div>
+                                <div class="new_filter"><input type="checkbox" id="chk_new" /> Új</div>
+                                </div>
+                             </div>
 					        <div id="cus_filter_price">
                                 <form action="#/filterbyprice" method="post" id="form_filterbyprice">
-					            <div id="negyes_szuro">	
-
-						            <table cellpadding="1" cellspacing="1">
-						            <tr>
-                                        <td><input type="checkbox" id="chk_onstock"/></td><td> Készleten</td>
-                                        <td><input type="checkbox" id="chk_onaction"/></td><td>Akciós</td> 
-                                        <td><input type="checkbox" id="chk_bargain" /></td><td> Leértékelt</td> 
-                                        <td><input type="checkbox" id="chk_new" /></td><td> Új</td>                                   
-                                    </tr>
-						            </table>
-					            </div>	
-						        <span>Ár szerinti keresés</span>
+                                <span>Ár szerinti keresés</span>
                                 <label class="error" for="txt_filterbyprice" style="display:none; color:#900;">( ! )</label><br />
 						        <select name="select_filterbyprice" id="select_filterbyprice" style="margin-top:4px; padding:4px; border-radius:3px; font-size:13px; border: #ccc 1px solid; color:#666; width: 50px;">
 							        <option value="1">&gt;=</option>
@@ -377,8 +389,9 @@
 						        <div id="cus_refresh_icon">
                                 <input style="padding:2px;" type="submit" name="button" id="button" value="Frissítés" />
 								</div>
-                                </form>
-					        </div>
+                                </form></div> 
+					       
+
 					        <div id="cus_filter_1">
 						        Gyártók kiválasztása
 						        <br />
@@ -428,10 +441,10 @@
 					 </div>
   					</div>
                 
-                <div align="center" style=" width:275px; position:absolute; padding-top:370px; padding-left:5px;">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div>
+                <div align="center" style="width:275px; position:absolute; padding-top:350px; padding-left:5px;">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div>
 
                 @*terméklista*@
-                <div id="cus_catalogue_right">
+          <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
 			            <table style = "display:none" border="0" cellspacing="0" cellpadding="0">
@@ -567,34 +580,33 @@
                                         {{if Visitor.IsValidLogin}}
                                         <table border="0" cellspacing="" cellpadding="5" style="color:blue; border:0px; text-align:right;">                                       
 	                                    <tr>
-											<td class="price" style="text-align:right">
+											<td style="text-align:right">
 											{{if item.SecondHandList.Items.length > 0}}
-											<span> Ár:<strong >${companyGroup.utils.instance().formatNumber(item.Price)}</strong> 
+											<div style="margin:0px 0px 8px 0px"><span class="price" style="font-size:14px; padding:3px; margin_bottom:3px;">Ár:<strong >${companyGroup.utils.instance().formatNumber(item.Price)}</strong> 
 											{{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Products.Currency == 'USD'}} $
-											{{/if}}
-											</span>
-				                            <br/>
-											<a class="price_used" style=" color:#FFF; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Leértékelt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
+											{{/if}}</span>
+											</div>
+											<div><span class="price_used" style=" color:#FFF; padding:3px; ">Leértékelt: <b>${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
                                             {{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Products.Currency == 'USD'}} $
 											{{/if}} -tól</b>
-											</a>
+											</div></span>
 											{{else}}
-											<span style="font-size:18px;"> Ár: <b>${companyGroup.utils.instance().formatNumber(item.Price)}</b>
+											<div><span class="price" style="font-size:18px; padding:5px;"> Ár: <b>${companyGroup.utils.instance().formatNumber(item.Price)}</b>
 											{{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Products.Currency == 'USD'}} $
-											{{/if}}
-											</span>							
+											{{/if}}</span>
+											</div>							
 				                            {{/if}}
                                             <!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a-->
                                           </td>
@@ -630,8 +642,13 @@
                                                 {{if Visitor.IsValidLogin}}
 				                                    <div class="cus_teteladatok_2">
                                                     {{if item.IsInStock}}
-				                          	            Készleten:<span style="color:green;" ><b> ${item.Stock} db</b></span>
+													{{if item.Stock > 20}}
+													 Készleten:<span style="color:green;"><strong> > 20 db</strong></span>
+													{{else}}
+													Készleten:<span style="color:green;"><strong> ${item.Stock} db</strong></span>{{/if}}
                                                     {{else}}
+													
+	
                                                         {{if item.PurchaseInProgress}}
 				                                            <span>Várható érkezés: <b>${item.ShippingDate}</b></span>
                                                         {{else}}
@@ -660,7 +677,7 @@
                             </div>			        
                             <form action="#/addLineToShoppingCart/${item.ProductId}/${item.DataAreaId}/0" method="post"> 
 			                <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-				            <tr>
+			              <tr>
 				                <td nowrap="nowrap">
 				                    <div class="cus_prod_table_morelink">
 				                        <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
@@ -680,7 +697,7 @@
                                 </div>
                                 {{/if}}
                                 </td>
-                                <td width="100%" >&nbsp;</td>
+                                <td width="100%" >{{if item.SecondHandList.Items.length > 0}}<div id="price_used"> <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a> </div>{{/if}}</td>
                                 <td nowrap="nowrap" align="right">
                                     <div class="cus_prod_table_quantity">
 
@@ -777,11 +794,14 @@
 				                    </table>
                                    </div>
                                 </div>
-                                			                <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
+<table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
 				            <tr>
 				                <td nowrap="nowrap">
 				                    <div style="float:left;" class="cus_prod_table_morelink">
 				                        <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
+				                    </div>
+                                    				                    <div id="price_used">
+				                        <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a>
 				                    </div>
                                 </td>
                                 </tr>
@@ -789,6 +809,7 @@
                         {{/if}}
                         {{/each}}
                         </script>
+
                     </div>
                     @*</div>*@
 
@@ -865,6 +886,7 @@
 					<table style="padding:8px; font-size: 18px;" width="100%" border="0">
                     <tr>
                         <td valign="top" id="cus_prod_table_middle_cell"><span class="cus_prod_table_item_name">${Product.ItemName}</span><span class="cus_prod_table_item_code"> <br/>  ${Product.ProductId}</span></td>
+
                       </tr>
                     </table>
                         <table width="100%" border="0" cellspacing="1" cellpadding="1">
@@ -907,15 +929,21 @@
                                 {{if Visitor.IsValidLogin}}
 								<table width="130" border="0" cellspacing="1" cellpadding="2">
 								  <tr>
-										<td nowrap="nowrap" class="cus_prod_table_price">
-										<span>Ár:</span> <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)}</strong>
+										<td nowrap="nowrap">
+										<span style="font-size:24px; padding:5px;" class="price">Ár: <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)}</strong>
                                         	{{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Product.Currency == 'USD'}} $
 											{{/if}}
-										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}<br><span style="color:#ffc000; text-decoration: none; font-size:14px;" >Leértékelt:<strong> ${Product.SecondHandList.MinimumPrice} </strong>
+											</span>
+											<br><br>
+											
+										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}
+                                        <span class="price_used" style=" text-decoration: none; font-size:14px; color:#FFF; padding:3px;" >Leértékelt:<strong> ${Product.SecondHandList.MinimumPrice} </strong>
+
+                                        
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
@@ -928,6 +956,7 @@
                                     <tr>
 										<td>&nbsp;</td>
 									</tr>
+
                                     <tr>
 									<td>
                                     <table align="left" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -946,7 +975,13 @@
 									</tr>
 									<tr>
 										<td nowrap="nowrap">
-                                            <p>{{if Product.IsInStock}} <span>Készleten:</span><span style="color:green"><strong> ${Product.Stock} db</strong></span><br />
+                                            <p>{{if Product.IsInStock}}
+											{{if Product.Stock > 20}}
+													 Készleten:<span style="color:green;"><strong> > 20 db</strong></span>
+													{{else}}
+													Készleten:<span style="color:green;"><strong> ${Product.Stock} db</strong></span>
+													{{/if}}
+
                                             <br />
                                         {{else}} 
                                                {{if Product.PurchaseInProgress}}
@@ -959,7 +994,7 @@
                                     </table>
 									{{if Product.Available}}
                                         <form action="#/addLineToShoppingCart/${Product.ProductId}/${Product.DataAreaId}/0" method="post">
-                                        <table align="right" border="0" cellpadding="5" cellspacing="1">
+                                        <table align="left" border="0" cellpadding="5" cellspacing="1">
 					                    <tr>
                                             <td align="right">
                                             <div class="cus_prod_table_quantity">
@@ -1127,7 +1162,7 @@
         //console.log('ScriptOnReady section');
 
         var model = @(Html.Raw(Json.Encode(Model)));
-        console.log(model);
+        //console.log(model);
 
         var searhText = companyGroup.utils.instance().getQuerystringParam('q');
         $('#txt_globalsearch').val(searhText);
@@ -1146,7 +1181,7 @@
 
         companyGroup.webshop.run('#/');
     
-            $('#price1').priceFormat({
+            $('#berlet').priceFormat({
             prefix: 'R$ ',
             centsSeparator: ',',
             thousandsSeparator: '.'
@@ -1214,9 +1249,12 @@
 
             if (!model.Visitor.IsValidLogin){
                 $("#cus_filter_price").hide();
+                $("#negyes_szuro").hide();
+                
             }
             else {
-                $("#cus_checkout_menu").show();            
+                $("#cus_checkout_menu").show();
+                $("#negyes_szuro").show();            
             }
 
             $("#shoppingCartHeaderTemplate").tmpl(model).appendTo("#cus_basket_menu");

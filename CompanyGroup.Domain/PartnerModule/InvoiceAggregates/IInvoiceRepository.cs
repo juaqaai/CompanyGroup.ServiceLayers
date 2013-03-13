@@ -21,7 +21,9 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="customerId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        List<InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue);
+        List<InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
+                                              string salesId, string serialNumber, string invoiceId, int dateIntervall,
+                                              int currentPageIndex, int itemsOnPage);
 
         /// <summary>
         /// összes számlalista kiolvasása

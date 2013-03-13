@@ -3,13 +3,35 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "AddNewRegistration", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// új regisztráció hozzáadása kérés adatai
+    /// </summary>
     public class AddNewRegistration
     {
-        [System.Runtime.Serialization.DataMember(Name = "VisitorId", Order = 1)]
+        /// <summary>
+        /// látogató azonosítója (lehet üres)
+        /// </summary>
         public string VisitorId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 2)]
+        /// <summary>
+        /// nyelvi kód
+        /// </summary>
         public string LanguageId { get; set; }
+
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
+        public string RegistrationId { get; set; }
+
+        public AddNewRegistration(string visitorId, string languageId, string registrationId)
+        {
+            this.VisitorId = visitorId;
+
+            this.LanguageId = languageId;
+
+            this.RegistrationId = registrationId;
+        }
+
+        public AddNewRegistration() : this("", "", "") { }
     }
 }

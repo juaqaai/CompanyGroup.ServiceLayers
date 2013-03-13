@@ -105,10 +105,14 @@ namespace CompanyGroup.WebClient.Controllers
                 {
                     response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.VisitorId, RegistrationApiController.DataAreaId)); ;
                 }
-                else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
+                //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
+                else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     
                 {
-                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
+                    CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
+
+                    response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
                 }
+                //ha nincs belépve, és nincs megkezdett regisztrációja sem, akkor üreset kell visszaadni
                 else
                 {
                     response = new CompanyGroup.Dto.RegistrationModule.Registration();
@@ -149,64 +153,63 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("AddNew")]
-        public CompanyGroup.WebClient.Models.RegistrationData AddNew()
+        public HttpResponseMessage AddNew()
         {
-            CompanyGroup.Dto.RegistrationModule.Registration response = null;
-
-            //regisztrációs azonosító kiolvasása sütiből
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
-
-            //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
-            if (!String.IsNullOrEmpty(visitorData.RegistrationId))
+            try
             {
-                response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", visitorData.RegistrationId);
-            }
+                CompanyGroup.Dto.RegistrationModule.Registration response = null;
 
-            //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
-            if ((response == null) || String.IsNullOrEmpty(response.RegistrationId) || (String.IsNullOrEmpty(response.RegistrationId)))
-            {
-                CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration()
-                {
-                    VisitorId = visitorData.VisitorId,
-                    LanguageId = visitorData.Language
-                };
+                //regisztrációs azonosító kiolvasása sütiből
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                //ha volt már regisztrációs azonosító, akkor a regisztráció kiolvasása történik a cacheDb-ből     
+                //if (!String.IsNullOrEmpty(visitorData.RegistrationId))
+                //{
+                //    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetRegistrationByKey", String.Format("{0}/{1}", visitorData.RegistrationId, visitorData.VisitorId));
+
+                //    //ha nem volt korábban regisztráció, vagy volt, de nem érvényes a státusz flag, akkr új regisztráció hozzáadása történik
+                //    if ((response == null) || String.IsNullOrEmpty(response.RegistrationId))
+                //    {
+
+                //    }
+                //}
+
+                CompanyGroup.Dto.ServiceRequest.AddNewRegistration request = new CompanyGroup.Dto.ServiceRequest.AddNewRegistration(visitorData.VisitorId, visitorData.Language, visitorData.RegistrationId);
 
                 response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddNewRegistration, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "AddNew", request);
+
+                //létrehozott regisztrációs azonosító sütibe írása
+                visitorData.RegistrationId = response.RegistrationId;
+
+                this.WriteCookie(visitorData);
+
+                //válaszüzenet előállítása
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          response.Visitor,
+                                                                                                                          response.WebAdministrator, 
+                                                                                                                          this.GetCountries());
+
+                HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.OK, model);
+
+                return httpResponseMsg;
             }
-
-            //létrehozott regisztrációs azonosító beírása sütibe
-            visitorData.RegistrationId = response.RegistrationId;
-
-            //CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, ApiBaseController.CookieName, visitorData);
-            this.WriteCookie(visitorData);
-
-            CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
-
-            CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
-
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
-
-            CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
-                                                                                                                      response.CompanyData,
-                                                                                                                      contactPersons,
-                                                                                                                      response.DataRecording,
-                                                                                                                      deliveryAddresses,
-                                                                                                                      response.InvoiceAddress,
-                                                                                                                      response.MailAddress,
-                                                                                                                      response.RegistrationId,
-                                                                                                                      response.Visitor,
-                                                                                                                      response.WebAdministrator, 
-                                                                                                                      this.GetCountries());
-
-            //HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.RegistrationData>(HttpStatusCode.Created, model);
-
-            //string uri = String.Format("/api/GetRegistrationData/{0}", model.RegistrationId);
-
-            //httpResponseMsg.Headers.Location = new Uri(Request.RequestUri, uri);
-
-            return model;
+            catch
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
         }
 
         /// <summary>
@@ -220,11 +223,7 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language
-            };
+            CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration(visitorData.RegistrationId, visitorData.Language, visitorData.VisitorId);
 
             CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
 
@@ -331,7 +330,11 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                WebAdministrator = request
+                WebAdministrator = new Dto.RegistrationModule.WebAdministrator(request.AllowOrder, request.AllowReceiptOfGoods, request.ContactPersonId, request.Email, request.EmailArriveOfGoods, 
+                                                                               request.EmailOfDelivery, request.EmailOfOrderConfirm, request.FirstName, request.InvoiceInfo, request.LastName, 
+                                                                               request.LeftCompany, request.Newsletter, request.Password, request.PriceListDownload, request.RecId, 
+                                                                               request.RefRecId, request.SmsArriveOfGoods, request.SmsOfDelivery, request.SmsOrderConfirm, request.Telephone, 
+                                                                               request.UserName)
             };
 
             CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateWebAdministrator, CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator>("Registration", "UpdateWebAdministrator", req);
@@ -358,7 +361,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// </returns>
         [HttpPost]
         [ActionName("AddDeliveryAddress")]
-        public CompanyGroup.WebClient.Models.DeliveryAddresses AddDeliveryAddress(CompanyGroup.WebClient.Models.DeliveryAddress request)
+        public HttpResponseMessage AddDeliveryAddress(CompanyGroup.WebClient.Models.DeliveryAddress request)
         {
             request.Id = String.Empty;
 
@@ -369,19 +372,21 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                DeliveryAddress = request
+                DeliveryAddress = new Dto.RegistrationModule.DeliveryAddress(request.RecId, request.City, request.Street, request.ZipCode, request.CountryRegionId, request.Id)
             };
 
             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddDeliveryAddress, CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>("Registration", "AddDeliveryAddress", req);
 
-            CompanyGroup.WebClient.Models.DeliveryAddresses deliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(response) { SelectedId = request.Id };
+            CompanyGroup.WebClient.Models.DeliveryAddresses model = new CompanyGroup.WebClient.Models.DeliveryAddresses(response, request.Id);
 
-            return deliveryAddresses;
+            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.DeliveryAddresses>(HttpStatusCode.OK, model);
+
+            return httpResponseMsg;
         }
 
         [HttpPost]
         [ActionName("SelectForUpdateDeliveryAddress")]
-        public CompanyGroup.WebClient.Models.DeliveryAddresses SelectForUpdateDeliveryAddress(CompanyGroup.WebClient.Models.SelectForUpdateDeliveryAddress request)
+        public HttpResponseMessage SelectForUpdateDeliveryAddress(CompanyGroup.WebClient.Models.SelectForUpdateDeliveryAddress request)
         {
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
@@ -394,9 +399,11 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetDeliveryAddress, CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>("Registration", "GetDeliveryAddresses", req);
 
-            CompanyGroup.WebClient.Models.DeliveryAddresses deliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(response) { SelectedId = request.SelectedId };
+            CompanyGroup.WebClient.Models.DeliveryAddresses model = new CompanyGroup.WebClient.Models.DeliveryAddresses(response, request.SelectedId);
 
-            return deliveryAddresses;
+            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.DeliveryAddresses>(HttpStatusCode.OK, model);
+
+            return httpResponseMsg;
         }
 
         /// <summary>
@@ -408,7 +415,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// </returns>
         [HttpPost]
         [ActionName("UpdateDeliveryAddress")]
-        public CompanyGroup.WebClient.Models.DeliveryAddresses UpdateDeliveryAddress(CompanyGroup.WebClient.Models.DeliveryAddress request)
+        public HttpResponseMessage UpdateDeliveryAddress(CompanyGroup.WebClient.Models.DeliveryAddress request)
         {
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
@@ -417,14 +424,16 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                DeliveryAddress = request
+                DeliveryAddress = new Dto.RegistrationModule.DeliveryAddress(request.RecId, request.City, request.Street, request.ZipCode, request.CountryRegionId, request.Id)
             };
 
             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateDeliveryAddress, CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>("Registration", "UpdateDeliveryAddress", req);
 
-            CompanyGroup.WebClient.Models.DeliveryAddresses deliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(response) { SelectedId = request.Id };
+            CompanyGroup.WebClient.Models.DeliveryAddresses model = new CompanyGroup.WebClient.Models.DeliveryAddresses(response, request.Id);
 
-            return deliveryAddresses;
+            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.DeliveryAddresses>(HttpStatusCode.OK, model);
+
+            return httpResponseMsg;
         }
 
         /// <summary>
@@ -436,7 +445,7 @@ namespace CompanyGroup.WebClient.Controllers
         /// </returns>
         [HttpPost]
         [ActionName("RemoveDeliveryAddress")]
-        public CompanyGroup.WebClient.Models.DeliveryAddresses RemoveDeliveryAddress(CompanyGroup.WebClient.Models.RemoveDeliveryAddress request)
+        public HttpResponseMessage RemoveDeliveryAddress(CompanyGroup.WebClient.Models.RemoveDeliveryAddress request)
         {
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
@@ -450,9 +459,11 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveDeliveryAddress, CompanyGroup.Dto.RegistrationModule.DeliveryAddresses>("Registration", "RemoveDeliveryAddress", req);
 
-            CompanyGroup.WebClient.Models.DeliveryAddresses deliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.DeliveryAddresses model = new CompanyGroup.WebClient.Models.DeliveryAddresses(response, "");
 
-            return deliveryAddresses;
+            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.DeliveryAddresses>(HttpStatusCode.OK, model);
+
+            return httpResponseMsg;
         }
 
         #endregion
@@ -477,12 +488,12 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                BankAccount = request
+                BankAccount = new Dto.RegistrationModule.BankAccount(request.Part1, request.Part2, request.Part3, request.RecId, request.Id)
             };
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddBankAccount, CompanyGroup.Dto.RegistrationModule.BankAccounts>("Registration", "AddBankAccount", req);
 
-            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response, "");
 
             return bankAccounts;
         }
@@ -501,7 +512,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetBankAccounts, CompanyGroup.Dto.RegistrationModule.BankAccounts>("Registration", "GetBankAccounts", req);
 
-            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response) { SelectedId = request.SelectedId };
+            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response, request.SelectedId);
 
             return bankAccounts;
         }
@@ -521,12 +532,12 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                BankAccount = request
+                BankAccount = new Dto.RegistrationModule.BankAccount(request.Part1, request.Part2, request.Part3, request.RecId, request.Id)
             };
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateBankAccount, CompanyGroup.Dto.RegistrationModule.BankAccounts>("Registration", "UpdateBankAccount", req);
 
-            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response, "");
 
             return bankAccounts;
         }
@@ -551,7 +562,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.BankAccounts response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveBankAccount, CompanyGroup.Dto.RegistrationModule.BankAccounts>("Registration", "RemoveBankAccount", req);
 
-            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.BankAccounts bankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(response, "");
 
             return bankAccounts;
         }
@@ -583,12 +594,18 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                ContactPerson = request
+                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName, 
+                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods, 
+                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods, 
+                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin, 
+                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName, 
+                                                                         request.Password, request.Newsletter, request.Telephone, request.Email, 
+                                                                         request.LeftCompany, request.Id, request.RecId)
             };
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "AddContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }
@@ -612,7 +629,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "GetContactPersons", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = request.SelectedId };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, request.SelectedId);
 
             return contactPersons;
         }
@@ -632,12 +649,18 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                ContactPerson = request
+                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
+                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
+                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
+                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
+                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName,
+                                                                         request.Password, request.Newsletter, request.Telephone, request.Email,
+                                                                         request.LeftCompany, request.Id, request.RecId)
             };
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "UpdateContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }
@@ -662,7 +685,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "RemoveContactPerson", req);
 
-            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response) { SelectedId = String.Empty };
+            CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
         }

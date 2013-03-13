@@ -20,6 +20,49 @@
                     }
                 });
             },
+            showForgetPasswordPanel: function () {
+                $.fancybox({
+                    href: '#div_forgetpassword',
+                    autoDimensions: true,
+                    autoScale: false,
+                    transitionIn: 'fade',
+                    transitionOut: 'fade',
+                    afterShow: function () {
+                        //console.log('forgetPassword panel loaded');
+                        $("#txt_forgetpassword_username").val('');
+                        $('#txt_forgetpassword_username').focus();
+                    }
+                });
+            },
+            sendForgetPassword: function (userName) {
+                var data = {
+                    UserName: userName
+                };
+                $.ajax({
+                    type: "POST",
+                    url: companyGroup.utils.instance().getContactPersonApiUrl('ForgetPwd'),
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    processData: true,
+                    success: function (result) {
+                        if (result) {
+                            //console.log(result);
+                            $('#forgetPasswordResult').show();
+                            $('#forgetPasswordResult').html(result.Message);
+                        }
+                        else {
+                            $('#forgetPasswordResult').show();
+                            $('#forgetPasswordResult').html('ForgetPassword result failed');
+                        }
+                    },
+                    error: function () {
+                        $('#forgetPasswordResult').show();
+                        $('#forgetPasswordResult').html('ForgetPassword call failed');
+                    }
+                });
+            },
             beforeSignIn: function () {
                 var error_msg = '';
                 if ($("#txt_username").val() === '') {
@@ -181,8 +224,40 @@
                         //console.log('CompletionListServiceUrl failed');
                     }
                 });
-            }
+            },
+            invoiceInfoByFilter: function (paymenttype, invoiceid, itemname, itemid, salesorderid, serialnumber, dateintervall) {
+                var data = {
+                    Debit: (paymenttype === 1) ? true : false,
+                    Overdue: (paymenttype === 2) ? true : false,
+                    InvoiceId: invoiceid,
+                    ItemName: itemname,
+                    ItemId: itemid,
+                    SalesOrderid: salesorderid,
+                    SerialNumber: serialnumber,
+                    DateIntervall: dateintervall
+                };
+                $.ajax({
+                    //console.log(context);
+                    url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
+                    data: JSON.stringify(data),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    success: function (response) {
+                        //console.log(response);
+                        $('#main_container').empty();
 
+                        $("#invoiceInfoListTemplate").tmpl(response).appendTo("#main_container");
+
+                        //                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
+                        //                $('#main_container').html(html);
+                    },
+                    error: function () {
+                        //console.log('GetVisitorInfo call failed');
+                    }
+                });
+            }
         });
     };
 

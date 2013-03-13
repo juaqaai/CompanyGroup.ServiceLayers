@@ -8,8 +8,10 @@ namespace CompanyGroup.Data.PartnerModule
     /// <summary>
     /// vevő repository
     /// </summary>
-    public class CustomerRepository : CompanyGroup.Domain.PartnerModule.ICustomerRepository
+    public class CustomerRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.ICustomerRepository
     {
+        private static readonly string ClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("RegistrationServiceClassName", "CustomerService");
+
         /// <summary>
         /// vevőhöz kapcsolódó műveletek konstruktor
         /// </summary>
@@ -195,6 +197,128 @@ namespace CompanyGroup.Data.PartnerModule
             CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
 
             return visitor;
+        }
+
+        /// <summary>
+        /// regisztráció - új vevő létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.RegistrationModule.CustomerCreateResult Create(CompanyGroup.Domain.RegistrationModule.CustomerCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.CustomerCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createCustomer", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            CompanyGroup.Domain.RegistrationModule.CustomerCreateResult response = this.DeSerialize<CompanyGroup.Domain.RegistrationModule.CustomerCreateResult>(xml);
+
+            return response;            
+        }
+
+        /// <summary>
+        /// regisztráció - szállítási cím létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public long CreateDeliveryAddress(CompanyGroup.Domain.RegistrationModule.DeliveryAddressCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.DeliveryAddressCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createDeliveryAddress", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            long deliveryAddrRecId = 0;
+
+            long.TryParse(xml, out deliveryAddrRecId);
+
+            return deliveryAddrRecId;             
+        }
+
+        /// <summary>
+        /// regisztráció - kapcsolattartó létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public long CreateContactPerson(CompanyGroup.Domain.RegistrationModule.ContactPersonCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.ContactPersonCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createContactPerson", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            long contactPersonRecId = 0;
+
+            long.TryParse(xml, out contactPersonRecId);
+
+            return contactPersonRecId;         
+        }
+
+        /// <summary>
+        /// regisztráció - bankszámlaszám létrehozása
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public long CreateBankAccount(CompanyGroup.Domain.RegistrationModule.BankAccountCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.BankAccountCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(SalesOrderRepository.UserName,
+                                                                                                         SalesOrderRepository.Password,
+                                                                                                         SalesOrderRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         SalesOrderRepository.Language,
+                                                                                                         SalesOrderRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("createBankAccount", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            long bankAccountRecId = 0;
+
+            long.TryParse(xml, out bankAccountRecId);
+
+            return bankAccountRecId;            
         }
     }
 }
