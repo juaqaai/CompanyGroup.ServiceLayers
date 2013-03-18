@@ -46,9 +46,14 @@
     <Compile Include="PartnerModule\BankAccount.cs" />
     <Compile Include="PartnerModule\ChangePassword.cs" />
     <Compile Include="PartnerModule\ContactPerson.cs" />
+    <Compile Include="PartnerModule\GetDetailedInvoiceInfoRequest.cs" />
     <Compile Include="PartnerModule\ForgetPassword.cs" />
+    <Compile Include="PartnerModule\Invoice.cs" />
+    <Compile Include="PartnerModule\InvoiceHeader.cs" />
+    <Compile Include="PartnerModule\InvoiceLine.cs" />
+    <Compile Include="PartnerModule\Pager.cs" />
     <Compile Include="PartnerModule\UndoChangePassword.cs" />
-    <Compile Include="PartnerModule\InvoiceLineInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceInfoDetailed.cs" />
     <Compile Include="PartnerModule\InvoiceInfo.cs" />
     <Compile Include="PartnerModule\OrderLineInfo.cs" />
     <Compile Include="PartnerModule\OrderInfo.cs" />

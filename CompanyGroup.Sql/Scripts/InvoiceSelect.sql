@@ -143,7 +143,143 @@ GO
 */
 -- select top 100 * from AxDb.dbo.CUSTINVOICEJOUR
 USE Web
+
 GO
+DROP PROCEDURE [InternetUser].[InvoiceDetailsSelect];
+GO
+CREATE PROCEDURE [InternetUser].[InvoiceDetailsSelect]( @Id INT = 0 )										
+AS
+SET NOCOUNT ON
+
+	--SELECT CustomerId, 
+	--	   DataAreaId,
+	--	   SalesId,  -- rendelesszam, azonosito
+	--	   InvoiceDate,  -- szamla datuma
+	--	   DueDate,  -- esedekesseg
+	--	   InvoiceAmount,  -- szamla vegosszege
+    --     InvoiceCredit,  -- szamla tartozas
+	--	   CurrencyCode,  
+	--	   InvoiceId,  -- szla. szama
+	--	   Payment,	-- fizetesi feltetelek
+	--	   SalesType,  -- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet	
+	--	   CusomerRef,  -- vevo hivatkozas
+	--	   InvoicingName,  -- szla. nev
+	--	   InvoicingAddress,  -- szla. cim
+	--	   ContactPersonId,  -- kapcsolattarto
+	--	   Printed,  --
+	--	   ReturnItemId, --
+	DECLARE @InvoiceId nvarchar(30) = ISNULL((SELECT InvoiceId FROM InternetUser.Invoice  WHERE Id = @Id), '');
+
+		   SELECT Id, InvoiceId, 
+		   ItemDate,  -- datum
+		   LineNum,
+		   ItemId,  -- cikk
+		   ItemName,  -- cikk neve
+		   Quantity,  -- mennyiseg
+		   SalesPrice,  -- egysegar
+		   LineAmount,  -- osszeg
+		   QuantityPhysical,  -- mennyiseg
+		   Remain,  -- fennmarado mennyiseg
+		   DeliveryType, -- 
+		   TaxAmount,  --
+		   LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   DetailCurrencyCode as CurrencyCode, 
+		   ISNULL([Description], '') as [Description],
+		   ISNULL([FileName], '' ) as [FileName],
+		   ISNULL(RecId, 0) as RecId, 
+		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists
+	FROM InternetUser.Invoice 
+	WHERE InvoiceId = @InvoiceId
+	ORDER BY LineNum;
+
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.InvoiceDetailsSelect TO InternetUser
+GO
+
+-- exec InternetUser.InvoiceDetailsSelect 3012
+
+-- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
+/*
+EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',	
+									@Debit = 0,				--0: mind, 1 kifizetetlen
+									@OverDue = 0,				--0: mind, 1 lejart 
+									@ItemId = '', 
+									@ItemName = '',
+									@SalesId = '',
+									@SerialNumber = '',
+									@InvoiceId = 'HI0040',
+									@DateIntervall = 0,
+									@Sequence = 0, 
+									@CurrentPageIndex = 1, 
+									@ItemsOnPage = 30;
+*/
+
+-- select top 10 * from InternetUser.Invoice 
+-- update InternetUser.Invoice set SerialNumber = ''
+
+GO
+DROP PROCEDURE [InternetUser].[InvoiceCount];
+GO
+CREATE PROCEDURE [InternetUser].[InvoiceCount]( @CustomerId NVARCHAR(10) = '',	--vevokod
+											    @Debit BIT = 0,				--0: mind, 1 kifizetetlen
+											    @OverDue BIT = 0,				--0: mind, 1 lejart 
+												@ItemId NVARCHAR(20) = '', 
+												@ItemName NVARCHAR(300) = '',
+												@SalesId NVARCHAR(20) = '',
+												@SerialNumber NVARCHAR(40) = '',
+												@InvoiceId NVARCHAR(20) = '',
+												@DateIntervall INT = 0 )
+											    --@dtDateFrom DATETIME = NULL, 
+											    --@dtDateTo DATETIME = NULL )										
+AS
+SET NOCOUNT ON
+
+	SELECT COUNT(DISTINCT InvoiceId) as [Count]
+	FROM InternetUser.Invoice 
+	WHERE CustomerId = @CustomerId 
+		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
+		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
+		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
+		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
+		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
+		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
+		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
+		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+	--GROUP BY InvoiceId
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.InvoiceCount TO InternetUser
+GO
+
+/* EXEC InternetUser.InvoiceCount @CustomerId = 'V001446',	
+									@Debit = 0,				--0: mind, 1 kifizetetlen
+									@OverDue = 0,				--0: mind, 1 lejart 
+									@ItemId = '', 
+									@ItemName = 'monitor',
+									@SalesId = '',
+									@SerialNumber = '',
+									@InvoiceId = '',
+									@DateIntervall = 0
+									*/
+
+-- számla listához tartozó kép
+DROP PROCEDURE [InternetUser].[InvoicePictureSelect];
+GO
+CREATE PROCEDURE [InternetUser].[InvoicePictureSelect]( @Id INT = 0 )										
+AS
+SET NOCOUNT ON
+	SELECT TOP 1 Id, [FileName], CONVERT(BIT, 1) as [Primary], RecId
+	FROM InternetUser.Invoice
+	WHERE Id = @Id AND [FileName] <> '';
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.InvoicePictureSelect TO InternetUser
+GO
+
+-- exec [InternetUser].[InvoicePictureSelect] 30014;
+
 DROP PROCEDURE [InternetUser].[InvoiceSelect];
 GO
 CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	--vevokod
@@ -155,6 +291,7 @@ CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	
 												 @SerialNumber NVARCHAR(40) = '',
 												 @InvoiceId NVARCHAR(20) = '',
 												 @DateIntervall INT = 0,
+												 @Sequence int = 0,	
 												 @CurrentPageIndex INT = 1, 
 												 @ItemsOnPage INT = 30 )
 											   --@dtDateFrom DATETIME = NULL, 
@@ -162,45 +299,23 @@ CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	
 AS
 SET NOCOUNT ON
 
-	SELECT CustomerId, 
-		   DataAreaId,
-		   SalesId,  -- rendelesszam, azonosito
+	SELECT MIN(Id) as Id, 
 		   InvoiceDate,  -- szamla datuma
+		   DataAreaId as SourceCompany,  
 		   DueDate,  -- esedekesseg
 		   InvoiceAmount,  -- szamla vegosszege
            InvoiceCredit,  -- szamla tartozas
 		   CurrencyCode,  
 		   InvoiceId,  -- szla. szama
-		   Payment,	-- fizetesi feltetelek
-		   SalesType,  -- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet	
-		   CusomerRef,  -- vevo hivatkozas
-		   InvoicingName,  -- szla. nev
-		   InvoicingAddress,  -- szla. cim
-		   ContactPersonId,  -- kapcsolattarto
-		   Printed,  --
-		   ReturnItemId, --
-		   ItemDate,  -- datum
-		   LineNum,
-		   ItemId,  -- cikk
-		   ItemName,  -- cikk neve
-		   Quantity,  -- mennyiseg
-		   SalesPrice,  -- egysegar
-		   LineAmount,  -- osszeg
-		   QuantityPhysical,  -- mennyiseg
-		   Remain,  -- fennmarado mennyiseg
-
-		   DeliveryType, -- 
-		   TaxAmount,  --
-		   LineAmountMst,  -- osszeg az alapertelmezett penznemben
-		   TaxAmountMst, -- afa osszege az alapertelmezett penznemben
-		   DetailCurrencyCode, 
-		   ISNULL([Description], '') as [Description],
-		   ISNULL([FileName], '' ) as [FileName],
-		   ISNULL(RecId, 0) as RecId, 
-		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists
+		   SUM(LineAmount) as LineAmount,
+		   SUM(TaxAmount) as TaxAmount,  --
+		   SUM(LineAmountMst) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   SUM(TaxAmountMst) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   --DetailCurrencyCode
+		   CASE WHEN DATEDIFF(d, GETDATE(), DueDate) > 0 THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as OverDue
 	FROM InternetUser.Invoice 
 	WHERE CustomerId = @CustomerId 
-		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit END
+		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
 		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
 		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
@@ -208,9 +323,14 @@ SET NOCOUNT ON
 		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
 		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
 		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+	GROUP BY InvoiceDate, DataAreaId, DueDate, InvoiceAmount, InvoiceCredit, CurrencyCode, InvoiceId
 
 		  -- AND H.INVOICEDATE BETWEEN @dtDateFrom AND @dtDateTo
-	ORDER BY InvoiceDate desc, InvoiceId desc, LineNum
+	ORDER BY 
+	CASE WHEN @Sequence =  0 THEN --,
+		InvoiceDate END DESC,
+	CASE WHEN @Sequence =  1 THEN -- ,
+		InvoiceDate END ASC
 	OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
 	FETCH NEXT @ItemsOnPage ROWS ONLY;
 
@@ -218,22 +338,61 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.InvoiceSelect TO InternetUser
 GO
-
+/* BI001213/13,  BC001256/10 */
 -- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
--- select top 10 * from InternetUser.Invoice 
--- update InternetUser.Invoice set SerialNumber = ''
-
-DROP PROCEDURE [InternetUser].[InvoicePictureSelect];
+/*
+EXEC [InternetUser].[InvoiceSelect] @CustomerId = 'V001446',	
+									@Debit = 0,				--0: mind, 1 kifizetetlen
+									@OverDue = 0,				--0: mind, 1 lejart 
+									@ItemId = '', 
+									@ItemName = 'monitor',
+									@SalesId = '',
+									@SerialNumber = '',
+									@InvoiceId = '',	--HI057773
+									@DateIntervall = 0,
+									@Sequence = 0, 
+									@CurrentPageIndex = 1, 
+									@ItemsOnPage = 30;
+*/
+DROP PROCEDURE [InternetUser].[InvoiceSelect3];
 GO
-CREATE PROCEDURE [InternetUser].[InvoicePictureSelect]( @RecId BIGINT = 0 )										
+CREATE PROCEDURE [InternetUser].[InvoiceSelect3]( @CustomerId NVARCHAR(10) = '',	--vevokod
+											     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
+											     @OverDue BIT = 0,				--0: mind, 1 lejart 
+												 @ItemId NVARCHAR(20) = '', 
+												 @ItemName NVARCHAR(300) = '',
+												 @SalesId NVARCHAR(20) = '',
+												 @SerialNumber NVARCHAR(40) = '',
+												 @InvoiceId NVARCHAR(20) = '',
+												 @DateIntervall INT = 0 )									
 AS
 SET NOCOUNT ON
-	SELECT TOP 1 Id, [FileName], CONVERT(BIT, 1) as [Primary], RecId
-	FROM InternetUser.Invoice
-	WHERE RecId = @RecId AND [FileName] <> '';
+
+	SELECT InvoiceId  -- szla. szama
+	FROM InternetUser.Invoice 
+	WHERE CustomerId = @CustomerId 
+		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
+		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
+		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
+		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
+		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
+		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
+		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
+		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+	GROUP BY InvoiceId
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.InvoicePictureSelect TO InternetUser
+GRANT EXECUTE ON InternetUser.InvoiceSelect3 TO InternetUser
 GO
 
--- exec [InternetUser].[InvoicePictureSelect] 5637928068;
+/*
+EXEC [InternetUser].[InvoiceSelect3] @CustomerId = 'V001446',	
+									@Debit = 0,				--0: mind, 1 kifizetetlen
+									@OverDue = 0,				--0: mind, 1 lejart 
+									@ItemId = '', 
+									@ItemName = '',
+									@SalesId = '',
+									@SerialNumber = '',
+									@InvoiceId = 'HI057773',
+									@DateIntervall = 0;
+*/

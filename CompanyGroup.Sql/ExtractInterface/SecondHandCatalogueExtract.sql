@@ -166,6 +166,7 @@ SET NOCOUNT ON
 					ISNULL(EnglishDescription.Txt, '' ) as EnglishDescription,				
 				    0 as ProductManagerId,
 					CONVERT(datetime, 0) as ShippingDate,
+					CONVERT(BIT, 1)	as IsPurchaseOrdered, 
 			        GetDate() as CreatedDate,		-- Invent.CREATEDTIME
 				    GetDate() as Updated, -- Invent.ModifiedTime
 					CONVERT(BIT, 0) as Available, 

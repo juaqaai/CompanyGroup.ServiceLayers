@@ -47,7 +47,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                PurchaseInProgress = product.PurchaseInProgress(), 
                                SecondLevelCategory = new CategoryToCategory().Map(product.Structure.Category2),
                                SecondHandList = new SecondHandToSecondHand().Map(product.SecondHandList),
-                               ShippingDate = String.Format("{0}.{1}.{2}", product.ShippingDate.Year, product.ShippingDate.Month, product.ShippingDate.Day),
+                               ShippingInfo = product.ShippingInfo(),
+                               StockInfo = product.StockInfo(), 
                                ThirdLevelCategory = new CategoryToCategory().Map(product.Structure.Category3), 
                            };
             }

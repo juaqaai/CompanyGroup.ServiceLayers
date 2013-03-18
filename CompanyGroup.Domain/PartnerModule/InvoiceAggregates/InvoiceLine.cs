@@ -7,16 +7,18 @@ namespace CompanyGroup.Domain.PartnerModule
     /// SalesId	    InvoiceDate	            DueDate	                InvoiceAmount	InvoiceCredit	InvoiceId	Payment	        SalesType	CusomerRef	InvoicingName	InvoicingAddress	        ContactPersonId	Printed	VisszaruId	ItemDate	            LineNum	ItemId	    Name	                                                            Quantity	SalesPrice	LineAmount	QuantityPhysical	Remain	DeliveryType	TaxAmount	LineAmountMst	TaxAmountMst
     /// VR605656	2012-10-04 00:00:00.000	2012-11-03 00:00:00.000	193345	        193345	        HI043793/12	Átutalás 30 nap	3		                SERCO KFT.	    1037 Budapest Bécsi út 314.		            1		            2012-10-04 00:00:00.000	0	    ESPP400-9	Fujitsu Esprimo P400 PC, Intel Core i5-2320, 2GB, 500GB, W7Prof.	1	        132230	    132230	    1	                0	    0	            35702	    132230	        35702
     /// </summary>
-    public class InvoiceLineInfo
+    public class InvoiceLine
     {
-        public InvoiceLineInfo(DateTime itemDate, int lineNum, string itemId, string name, int quantity, decimal salesPrice, decimal lineAmount,
-                               int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode,
-                               string description, long recId, bool pictureExists)
+        public InvoiceLine(int id, string invoiceId, DateTime itemDate, int lineNum, string itemId, string itemName, int quantity, decimal salesPrice, decimal lineAmount,
+                           int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode,
+                           string description, long recId, bool pictureExists)
         {
+            this.Id = id;
+            this.InvoiceId = invoiceId;
             this.ItemDate = itemDate;
             this.LineNum = lineNum;
             this.ItemId = itemId;
-            this.Name = name;
+            this.ItemName = itemName;
             this.Quantity = quantity;
             this.SalesPrice = salesPrice;
             this.LineAmount = lineAmount;
@@ -32,13 +34,17 @@ namespace CompanyGroup.Domain.PartnerModule
             this.PictureExists = pictureExists;
         }
 
+        public int Id { get; set; }	
+
+        public string InvoiceId { get; set; }	
+
         public DateTime ItemDate { set; get; }
 
         public int LineNum { set; get; }
 
         public string ItemId { set; get; }
 
-        public string Name { set; get; }
+        public string ItemName { set; get; }
 
         public int Quantity	{ set; get; }
 

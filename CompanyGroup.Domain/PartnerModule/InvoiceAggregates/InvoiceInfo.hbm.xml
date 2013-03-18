@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.InvoiceSelect" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <query-param name="Debit" type="System.Boolean"/>
+    <query-param name="Overdue" type="System.Boolean"/>
+    <query-param name="ItemId" type="System.String"/>
+    <query-param name="ItemName" type="System.String"/>
+    <query-param name="SalesId" type="System.String"/>
+    <query-param name="SerialNumber" type="System.String"/>
+    <query-param name="InvoiceId" type="System.String"/>
+    <query-param name="DateIntervall" type="System.Int32"/>
+    <query-param name="Sequence" type="System.Int32"/>
+    <query-param name="CurrentPageIndex" type="System.Int32"/>
+    <query-param name="ItemsOnPage" type="System.Int32"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="InvoiceDate" type="System.DateTime"/>
+    <return-scalar column="SourceCompany" type="System.String"/>
+    <return-scalar column="DueDate" type="System.DateTime"/>
+    <return-scalar column="InvoiceAmount" type="System.Decimal"/>
+    <return-scalar column="InvoiceCredit" type="System.Decimal"/>
+    <return-scalar column="CurrencyCode" type="System.String"/>
+    <return-scalar column="InvoiceId" type="System.String"/>
+    <return-scalar column="LineAmount" type="System.Decimal"/>
+    <return-scalar column="TaxAmount" type="System.Decimal"/>
+    <return-scalar column="LineAmountMst" type="System.Decimal"/>
+    <return-scalar column="TaxAmountMst" type="System.Decimal"/>
+    <return-scalar column="OverDue" type="System.Boolean"/>   
+    exec InternetUser.InvoiceSelect @CustomerId=:CustomerId, @Debit=:Debit, @OverDue=:Overdue, @ItemId=:ItemId, @ItemName=:ItemName, @SalesId=:SalesId, @SerialNumber=:SerialNumber, @InvoiceId=:InvoiceId, @DateIntervall=:DateIntervall, @Sequence=:Sequence, @CurrentPageIndex=:CurrentPageIndex, @ItemsOnPage=:ItemsOnPage
+  </sql-query>
+  <sql-query name="InternetUser.InvoiceCount" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <query-param name="Debit" type="System.Boolean"/>
+    <query-param name="Overdue" type="System.Boolean"/>
+    <query-param name="ItemId" type="System.String"/>
+    <query-param name="ItemName" type="System.String"/>
+    <query-param name="SalesId" type="System.String"/>
+    <query-param name="SerialNumber" type="System.String"/>
+    <query-param name="InvoiceId" type="System.String"/>
+    <query-param name="DateIntervall" type="System.Int32"/>
+    <query-param name="Sequence" type="System.Int32"/>
+    <query-param name="CurrentPageIndex" type="System.Int32"/>
+    <query-param name="ItemsOnPage" type="System.Int32"/>
+    <return-scalar column="Count" type="System.Int32"/>
+    exec InternetUser.InvoiceCount @CustomerId=:CustomerId, @Debit=:Debit, @OverDue=:Overdue, @ItemId=:ItemId, @ItemName=:ItemName, @SalesId=:SalesId, @SerialNumber=:SerialNumber, @InvoiceId=:InvoiceId, @DateIntervall=:DateIntervall
+  </sql-query>
+  <sql-query name="InternetUser.InvoiceDetailsSelect" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="InvoiceId" type="System.String"/>
+    <return-scalar column="ItemDate" type="System.DateTime"/>
+    <return-scalar column="LineNum" type="System.Int32"/>
+    <return-scalar column="ItemId" type="System.String"/>
+    <return-scalar column="ItemName" type="System.String"/>
+    <return-scalar column="Quantity" type="System.Int32"/>
+    <return-scalar column="SalesPrice" type="System.Decimal"/>
+    <return-scalar column="LineAmount" type="System.Decimal"/>
+    <return-scalar column="QuantityPhysical" type="System.Int32"/>
+    <return-scalar column="Remain" type="System.Int32"/>
+    <return-scalar column="DeliveryType" type="System.Int32"/>
+    <return-scalar column="TaxAmount" type="System.Decimal"/>
+    <return-scalar column="LineAmountMst" type="System.Decimal"/>
+    <return-scalar column="TaxAmountMst" type="System.Decimal"/>
+    <return-scalar column="CurrencyCode" type="System.String"/>
+    <return-scalar column="Description" type="System.String"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    <return-scalar column="PictureExists" type="System.Boolean"/>
+    exec InternetUser.InvoiceDetailsSelect @Id=:Id
+  </sql-query>
+</hibernate-mapping>

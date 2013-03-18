@@ -166,11 +166,11 @@ companyGroup.registration = $.sammy(function () {
             $.fancybox.close();
 
             $("#cus_header1").empty();
-            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
             $('#cus_header1').html(visitorInfoHtml);
 
             $("#usermenuContainer").empty();
-            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
             $('#usermenuContainer').html(usermenuHtml);
 
             context.redirect('#/authenticated');
@@ -182,9 +182,9 @@ companyGroup.registration = $.sammy(function () {
         this.signOut(companyGroup.utils.instance().getVisitorApiUrl('SignOut'), function (result) {
             $("#cus_header1").empty();
             $("#usermenuContainer").empty();
-            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
             $('#cus_header1').html(visitorInfoHtml);
-            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
             $('#usermenuContainer').html(usermenuHtml);
 
         });
@@ -1138,7 +1138,7 @@ companyGroup.registration = $.sammy(function () {
 
 
     $("#contract_btn").click(function () {
-        $('#tabs-1').toggle("slow");
+        $('#tabs-1').show("slow");
         $("#contract").hide('slow');
 
     });
@@ -1180,7 +1180,7 @@ companyGroup.registration = $.sammy(function () {
 
     function displayVals() {
         var singleValues = $("#selectCountry").val();
-        if (singleValues == "2") {
+        if (singleValues != "HU") {
             $("#foreign_vat").show(500);
             $("#hun_vat").hide(500);
         } else {

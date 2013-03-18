@@ -10,6 +10,10 @@ companyGroup.carreer = $.sammy(function () {
 
     this.get('#/', function (context) {
         context.title('kezdőoldal');
+		$("#div_applyform").hide();
+		$("#actual").show();
+		$("#Kereskedő").show();
+		$("#Termékmenedzser").show();
     });
     //események
     this.bind('run', function (e, data) {
@@ -30,7 +34,7 @@ companyGroup.carreer = $.sammy(function () {
         });
 
         //var options = {
-        //target: '#span_signature_entity_file'   // target element(s) to be updated with server response 
+        //target: '#span_uploadresult'   // target element(s) to be updated with server response 
         //beforeSubmit: showRequest,  // pre-submit callback 
         //success: showResponse  // post-submit callback 
         //url:       url         // override for form's 'action' attribute 
@@ -44,16 +48,16 @@ companyGroup.carreer = $.sammy(function () {
 
         $('#form_upload').ajaxForm({
             beforeSubmit: function (formData, jqForm, options) {
-                $('#span_signature_entity_file').html('Küldés folyamatban...');
+                $('#span_uploadresult').html('Küldés folyamatban...');
                 for (var i = 0; i < formData.length; i++) {
                     if (!formData[i].value) {
-                        $('#span_signature_entity_file').html('File megadása kötelező...');
+                        $('#span_uploadresult').html('File megadása kötelező...');
                         return false;
                     }
                 }
             },
             success: function (data) {
-                $('#span_signature_entity_file').html(data.FileName);
+                $('#span_uploadresult').html(data.FileName);
             }
         });
 
@@ -118,10 +122,22 @@ companyGroup.carreer = $.sammy(function () {
     this.get('#/applyform/:jobtitle', function (context) {
         var div = '#' + context.params['jobtitle'];
         $(div).toggle("fast");
+		$("#div_applyform").hide();
+		
     });
     this.get('#/showapplyform/:jobtitle', function (context) {
         $("#select_position").val(context.params['jobtitle']);
         $("#div_applyform").show();
+		 var div = '#' + context.params['jobtitle'];
+ 		$("#actual").hide("fast");
+		$("html, body").animate({ scrollTop: 0 }, 100);
+	
+    });
+	    this.get('#/vissza', function (context) {
+		$("#div_applyform").hide();
+ 		$("#actual").show();
+		$("html, body").animate({ scrollTop: 0 }, 100);
+		
     });
     //jelentkezési lap elküldése
     this.post('#/applyforjob', function (context) {
@@ -136,7 +152,7 @@ companyGroup.carreer = $.sammy(function () {
             Position: context.params['select_position'],
             Email: context.params['txt_email'],
             Message: context.params['txt_message'],
-            UploadFileName: $("#span_signature_entity_file").html(),
+            UploadFileName: $("#span_uploadresult").html(),
             CheckReference: context.params['chk_accept']
         };
 

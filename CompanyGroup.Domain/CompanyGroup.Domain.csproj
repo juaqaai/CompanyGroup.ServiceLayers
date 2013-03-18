@@ -55,6 +55,10 @@
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\ProductAggregates\ISyncRepository.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\Invoice.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceHeader.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\Pager.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\VisitorInsertResult.cs" />
     <Compile Include="RegistrationModule\AddressAggregates\DeliveryAddressCreate.cs" />
     <Compile Include="RegistrationModule\AddressAggregates\MailAddressCreate.cs" />
@@ -96,9 +100,7 @@
     <Compile Include="PartnerModule\CustomerAggregates\BankAccount.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\IInvoiceRepository.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoicePaymentType.cs" />
-    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
-    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceLineInfo.cs" />
-    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceLine.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceSalesType.cs" />
     <Compile Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.cs" />
     <Compile Include="PartnerModule\OrderAggregates\ISalesOrderRepository.cs" />
@@ -270,7 +272,7 @@
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPersonList.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
-    <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.hbm.xml">
+    <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceInfo.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePasswordVerify.hbm.xml" />

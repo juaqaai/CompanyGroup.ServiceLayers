@@ -139,9 +139,8 @@ color:#F6F6F6;
 
 .saved_basket_list_icon {
     
-    background:#333;
-    background-image: url('../../Media/images/floppy.png');
-    background-repeat: no-repeat;
+    background:#FFF;
+	background-repeat: no-repeat;
     background-position: 2px;
     padding-top:2px;
     padding-bottom:2px;

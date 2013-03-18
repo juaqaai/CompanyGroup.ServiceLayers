@@ -4,108 +4,59 @@ using System.Collections.Generic;
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// számla info
+    /// számla info lista
     /// </summary>
-    public class InvoiceInfo 
+    public class InvoiceInfo
     {
-        public InvoiceInfo(CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo)
-        { 
-                this.ContactPersonId = invoiceInfo.ContactPersonId;
-                this.CurrencyCode = invoiceInfo.CurrencyCode;
-                this.CusomerRef = invoiceInfo.CusomerRef;
-                this.DueDate = invoiceInfo.DueDate;
-                this.InvoiceAmount = invoiceInfo.InvoiceAmount;
-                this.InvoiceCredit = invoiceInfo.InvoiceCredit;
-                this.InvoiceDate = invoiceInfo.InvoiceDate;
-                this.InvoiceId = invoiceInfo.InvoiceId;
-                this.InvoicingAddress = invoiceInfo.InvoicingAddress;
-                this.InvoicingName = invoiceInfo.InvoicingName;
-                this.Payment = invoiceInfo.Payment;
-                this.Printed = invoiceInfo.Printed;
-                this.ReturnItemId = invoiceInfo.ReturnItemId;
-                this.SalesType = invoiceInfo.SalesType;
-                this.SalesId = invoiceInfo.SalesId;
-                this.Lines = invoiceInfo.Lines.ConvertAll(x => new InvoiceLineInfo(x));  
+        public InvoiceInfo(List<CompanyGroup.Dto.PartnerModule.Invoice> items, 
+                           CompanyGroup.Dto.PartnerModule.Pager pager, 
+                           long listCount, 
+                           string totalNettoCredit, 
+                           string allOverdueDebts, 
+                           Visitor visitor)
+        {
+            this.Items = items;
+
+            this.Pager = pager;
+
+            this.ListCount = listCount;
+
+            this.Visitor = visitor;
+
+            this.TotalNettoCredit = totalNettoCredit;
+
+            this.AllOverdueDebts = allOverdueDebts;
         }
 
         /// <summary>
-        /// VR, vagy BR azonosító
+        /// számla fejléc lista
         /// </summary>
-        public string SalesId { set; get; }
+        public List<CompanyGroup.Dto.PartnerModule.Invoice> Items { get; set; }
 
         /// <summary>
-        /// bizonylat elkészülte
+        /// lapozó
         /// </summary>
-        public string InvoiceDate { set; get; }
+        public CompanyGroup.Dto.PartnerModule.Pager Pager { get; set; }
 
         /// <summary>
-        /// bizonylat lejárati ideje
+        /// elemek száma
         /// </summary>
-        public string DueDate { set; get; }
+        public long ListCount { get; set; }
 
         /// <summary>
-        /// számla végösszege
+        /// összes tartozás
         /// </summary>
-        public string InvoiceAmount { set; get; }
+        public string TotalNettoCredit { get; set; }
 
         /// <summary>
-        /// számlán lévő tartozás
+        /// összes lejárt tartozás
         /// </summary>
-        public string InvoiceCredit { set; get; }
+        public string AllOverdueDebts { get; set; }
 
         /// <summary>
-        /// pénznem
+        /// látogató
         /// </summary>
-        public string CurrencyCode { set; get; }
-
-        /// <summary>
-        /// számla azonosító
-        /// </summary>
-        public string InvoiceId { set; get; }
-
-        /// <summary>
-        /// fizetési feltétel
-        /// </summary>
-        public string Payment { set; get; }
-
-        /// <summary>
-        /// számla típusa (0 napló, 1 árajánlat, 2 előfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet)
-        /// </summary>
-        public int SalesType { set; get; }
-
-        /// <summary>
-        /// vevői hivatkozás
-        /// </summary>
-        public string CusomerRef { set; get; }
-
-        /// <summary>
-        /// számlán szereplő név
-        /// </summary>
-        public string InvoicingName { set; get; }
-
-        /// <summary>
-        /// számlázási cím
-        /// </summary>
-        public string InvoicingAddress { set; get; }
-
-        /// <summary>
-        /// kapcsolattartó
-        /// </summary>
-        public string ContactPersonId { set; get; }
-
-        /// <summary>
-        /// nyomtatva
-        /// </summary>
-        public bool Printed { set; get; }
-
-        /// <summary>
-        /// visszáru 
-        /// </summary>
-        public string ReturnItemId { set; get; }
-
-        /// <summary>
-        /// számla sorok     
-        /// </summary>
-        public List<CompanyGroup.WebClient.Models.InvoiceLineInfo> Lines { get; set; }
+        public Visitor Visitor { get; set; }
     }
+
 }

@@ -15,8 +15,8 @@ namespace CompanyGroup.WebClient.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [ActionName("GetList")]
-        public HttpResponseMessage GetList(CompanyGroup.WebClient.Models.GetInvoiceInfoRequest request)
+        [ActionName("GetInvoiceInfo")]
+        public HttpResponseMessage GetInvoiceInfo(CompanyGroup.WebClient.Models.GetInvoiceInfoRequest request)
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
@@ -24,26 +24,26 @@ namespace CompanyGroup.WebClient.Controllers
 
             try
             {
-                CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest()
-                {
-                    LanguageId = visitorData.Language,
-                    VisitorId = visitorData.VisitorId,
-                    Debit = request.Debit, 
-                    Overdue = request.Overdue
-                };
+                CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest( visitorData.VisitorId, 
+                                                                                                                                     visitorData.Language, 
+                                                                                                                                     request.Debit, 
+                                                                                                                                     request.Overdue, 
+                                                                                                                                     request.ItemId, 
+                                                                                                                                     request.ItemName, 
+                                                                                                                                     request.SalesId, 
+                                                                                                                                     request.SerialNumber,
+                                                                                                                                     request.InvoiceId,  
+                                                                                                                                     request.DateIntervall,  
+                                                                                                                                     request.Sequence, 
+                                                                                                                                     request.CurrentPageIndex, 
+                                                                                                                                     request.ItemsOnPage, 
+                                                                                                                                     request.Items);
 
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>("Invoice", "GetList", req);
+                CompanyGroup.Dto.PartnerModule.InvoiceInfo response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, CompanyGroup.Dto.PartnerModule.InvoiceInfo>("Invoice", "GetInvoiceInfo", req);
 
-                List<CompanyGroup.WebClient.Models.InvoiceInfo> invoiceInfoList = new List<CompanyGroup.WebClient.Models.InvoiceInfo>();
+                CompanyGroup.WebClient.Models.InvoiceInfo model = new CompanyGroup.WebClient.Models.InvoiceInfo(response.Items, response.Pager, response.ListCount, response.TotalNettoCredit, response.AllOverdueDebts, visitor);
 
-                if (response != null)
-                {
-                    invoiceInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.InvoiceInfo(x)));
-                }
-
-                CompanyGroup.WebClient.Models.InvoiceInfoList model = new CompanyGroup.WebClient.Models.InvoiceInfoList(invoiceInfoList, visitor);
-
-                return Request.CreateResponse<CompanyGroup.WebClient.Models.InvoiceInfoList>(HttpStatusCode.OK, model);
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.InvoiceInfo>(HttpStatusCode.OK, model);
             }
             catch(Exception ex)
             {
@@ -51,5 +51,30 @@ namespace CompanyGroup.WebClient.Controllers
             }
         }
 
+        /// <summary>
+        /// összes számla kiolvasása (mindkét vállalatból)
+        /// </summary>
+        /// <returns></returns>
+        [ActionName("GetDetails")]
+        [HttpGet]
+        public HttpResponseMessage GetDetails(int id)
+        {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
+                CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request = new Dto.PartnerModule.GetDetailedInvoiceInfoRequest(visitorData.VisitorId, visitorData.Language, id);
+
+                CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest, CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>("Invoice", "GetDetails", request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
     }
 }

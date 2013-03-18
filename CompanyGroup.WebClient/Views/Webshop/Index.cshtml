@@ -272,7 +272,7 @@
                       <table width="750px" border="0" cellspacing="0" cellpadding="0">
                         <tr>
     <td valign="top"><div align="center" id="leasingOptionsContainer" style="float:left; width:400px; height:150px; padding-left:10px;"></div></td>
-    <td valign="top"><form action="#/createFinanceOffer" method="post" id="form_financeoffer">
+    <!--td valign="top"><form action="#/createFinanceOffer" method="post" id="form_financeoffer">
       <table class="financeajanlat" style="background-color:#F5F5F5; border:#999 solid thin; border-radius:3px; padding:3px;" width="0" border="0" cellspacing="0" cellpadding="2">
         <tr>
           <td colspan="2"><div align="center"><strong>Hitel ajánlatkérő űrlap</strong></div></td>
@@ -307,9 +307,10 @@
           </tr>
         </table>
       <div id="financeoffer_errors"></div>
-      </form></td>
+      </form</td-->
   </tr>
 </table> 
+<br></br>
 <form action="#/createFinanceOffer" method="post" id="form_financeoffer">
  <div style="padding:40px 20px 20px 20px;"><strong>Az Ön személyre szóló ajánlata PDF  formátumban letölthető. Ehhez válasszon egy futamidőt, töltse ki az űrlapot,  majd klikkeljen ide.</strong> 
 <input name="PDF letőltése" type="image" value="PDF letőltése" src="~/Content/Media/images/pdf_icon.png" alt="PDF letőltése" align="middle" width="50" height="50">
@@ -327,7 +328,9 @@
                             <li> A terméket a bérbeadó aktiválja</li>
                             <li> A havi díj költségként elszámolható</li>
                           </ul>
-			      <strong>Ha bármilyen kérdése merülne fel a konstrukciót illetően, forduljon hozzánk bizalommal! további részletek:</strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a></div>                 
+		              <p><strong>Ha bármilyen kérdése merülne fel a konstrukciót illetően, forduljon hozzánk bizalommal! további részletek:</strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a></p>
+		              <a style="text-decoration:none" href="#/finance_close"><input name="close" type="button" value="Bezárás"></a>
+                  </div>  
                       <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
                         {{if Message.length > 0}}
                             <di<strong>${Message}</strong>
@@ -642,15 +645,10 @@
                                                 {{if Visitor.IsValidLogin}}
 				                                    <div class="cus_teteladatok_2">
                                                     {{if item.IsInStock}}
-													{{if item.Stock > 20}}
-													 Készleten:<span style="color:green;"><strong> > 20 db</strong></span>
-													{{else}}
-													Készleten:<span style="color:green;"><strong> ${item.Stock} db</strong></span>{{/if}}
+													    Készleten:<span style="color:green;"><strong> ${item.StockInfo} db</strong></span>
                                                     {{else}}
-													
-	
                                                         {{if item.PurchaseInProgress}}
-				                                            <span>Várható érkezés: <b>${item.ShippingDate}</b></span>
+				                                            <span>Várható érkezés: <b>${item.ShippingInfo}</b></span>
                                                         {{else}}
 				                                            <span><b>Rendelhető</b></span>
                                                         {{/if}}
@@ -920,9 +918,6 @@
  
                                          {{if Product.EndOfSales}} <span><strong>Kifutó termék</strong></span><br/>  {{/if}}                        
                                          {{if Product.New}} <span><strong>Új</strong></span><br/>   {{/if}}                                  
-                                         {{if !Product.IsInStock}}
-                                            <span>Várható beérkezés dátuma:</span><strong>  ${Product.ShippingDate} </strong><br/>
-                                         {{/if}}
                                     {{/if}} 
    								</div></td>
 								<td valign="top" nowrap="nowrap">
@@ -976,20 +971,16 @@
 									<tr>
 										<td nowrap="nowrap">
                                             <p>{{if Product.IsInStock}}
-											{{if Product.Stock > 20}}
-													 Készleten:<span style="color:green;"><strong> > 20 db</strong></span>
-													{{else}}
-													Készleten:<span style="color:green;"><strong> ${Product.Stock} db</strong></span>
-													{{/if}}
-
-                                            <br />
-                                        {{else}} 
-                                               {{if Product.PurchaseInProgress}}
-				                                    <span>Várható érkezés:<strong> ${Product.ShippingDate}</strong></span>
+											        Készleten:<span style="color:green;"><strong> ${Product.StockInfo} db</strong></span>
                                                 {{else}}
-				                                    <span><strong>Rendelhető</strong></span>
-                                                {{/if}}                                       
-                                        {{/if}}</p></td>
+                                                    {{if Product.PurchaseInProgress}}
+				                                        <span>Várható érkezés: <b>${Product.ShippingInfo}</b></span>
+                                                    {{else}}
+				                                        <span><b>Rendelhető</b></span>
+                                                    {{/if}}
+                                                {{/if}}                                            
+                                                </p>
+                                            </td>
 									</tr>
                                     </table>
 									{{if Product.Available}}
@@ -1139,7 +1130,7 @@
             <p><div align="center"><h2>Rendelés visszaigazolás</h2></div></p><br />
             <p><strong>Tisztelt Partnerünk!</strong></p>
             <p>Megrendelésüket a következő számú bizonylaton iktattuk :</p>
-            <h3>Megrendelés azonosító: <span>00001</span></h3>
+            <h3><span id="span_createorder_message"> </span></h3>
             <p><strong>Fontos tudnivaló!</strong></p>
             <p>Rendszerünk az Interneten érkező megrendelések iktatásakor külön bizonylatra rögzíti a termékeket aszerint, hogy a megrendelt termékből a megrendelés pillanatában volt-e szabad raktárkészletünk vagy sem!</p>
             <p>Eszerint megkülönböztetünk:</p>

@@ -25,6 +25,10 @@ companyGroup.webshop = $.sammy(function () {
         //console.log(context);
         $.fancybox.close()
     });
+	    this.get('#/finance_close', function (context) {
+        //console.log(context);
+        $("#cus_ajanlat_finance").hide('slow');
+    });
 
     this.get('#/', function (context) {
         //console.log(context);
@@ -1572,14 +1576,18 @@ companyGroup.webshop = $.sammy(function () {
         $("#category2List").trigger("liszt:updated");
         $("#category3List").empty();
         $("#category3List").trigger("liszt:updated");
+        $('#chk_filterByBsc').attr('checked', true);
+        $('#chk_filterByHrp').attr('checked', true);
         catalogueRequest.clear();
         loadStructure(true, true, true, true);
         loadCatalogue();
-        context.title('szűrőfeltételek törlése');
         showProductList(true);
         $("#txt_globalsearch").val('');
         $("#txt_filterbyprice").val('');
         context.redirect('#/clearedFilters');
+    });
+    this.get('#/clearedFilters', function (context) {
+        context.title('szűrőfeltételek törlése');
     });
     //használtcikk lista
     this.get('#/showSecondHandList/:productId/:dataAreaId', function (context) {

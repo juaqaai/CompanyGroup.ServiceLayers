@@ -78,9 +78,11 @@
     <Compile Include="MaintainModule\Service\SyncService.cs" />
     <Compile Include="PartnerModule\Adapter\InvoiceInfoToInvoiceInfo.cs" />
     <Compile Include="PartnerModule\Adapter\OrderInfoToOrderInfo.cs" />
+    <Compile Include="PartnerModule\Adapter\PagerToPager.cs" />
     <Compile Include="PartnerModule\Service\ContactPersonService.cs" />
     <Compile Include="PartnerModule\Service\IContactPersonService.cs" />
     <Compile Include="PartnerModule\Service\IInvoiceService.cs" />
+    <Compile Include="PartnerModule\Adapter\InvoiceLineToInvoiceLine.cs" />
     <Compile Include="PartnerModule\Service\InvoiceService.cs" />
     <Compile Include="RegistrationModule\Adapter\BankAccountToBankAccount.cs" />
     <Compile Include="RegistrationModule\Adapter\ContactPersonToContactPerson.cs" />

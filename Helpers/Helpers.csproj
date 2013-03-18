@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Dynamics.BusinessConnectorNet">
+    <Reference Include="Microsoft.Dynamics.BusinessConnectorNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Binaries\Microsoft.Dynamics.BusinessConnectorNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />

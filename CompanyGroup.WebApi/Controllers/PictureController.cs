@@ -115,36 +115,36 @@ namespace CompanyGroup.WebApi.Controllers
         [ActionName("GetInvoicePicture")]
         public HttpResponseMessage GetInvoicePicture()
         {
-            string recId = CompanyGroup.Helpers.QueryStringParser.GetString("RecId");
+            string id = CompanyGroup.Helpers.QueryStringParser.GetString("Id");
 
             string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
 
             string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
 
-            return this.GetInvoicePictureByRecId(recId, maxWidth, maxHeight);
+            return this.GetInvoicePictureByRecId(id, maxWidth, maxHeight);
         }
 
         /// <summary>
         /// számla listaelemhez tartozó kép kiolvasása stream-ként 		requestUrl	"Picture/GetInvoicePicture/5637928067/500/500"	string
         /// </summary>
-        /// <param name="recId"></param>
+        /// <param name="id"></param>
         /// <param name="maxWidth"></param>
         /// <param name="maxHeight"></param>
         /// <returns></returns>
         [ActionName("GetInvoicePictureByRecId")]
         [HttpGet]
-        public HttpResponseMessage GetInvoicePictureByRecId(string recId, string maxWidth, string maxHeight)
+        public HttpResponseMessage GetInvoicePictureByRecId(string id, string maxWidth, string maxHeight)
         {
             try
             {
-                long id = 0;
+                int invoiceLineId = 0;
 
-                if (!Int64.TryParse(recId, out id))
+                if (!Int32.TryParse(id, out invoiceLineId))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
 
-                Stream stream = this.service.GetInvoicePicture(id, maxWidth, maxHeight);
+                Stream stream = this.service.GetInvoicePicture(invoiceLineId, maxWidth, maxHeight);
 
                 if (stream == null)
                 {

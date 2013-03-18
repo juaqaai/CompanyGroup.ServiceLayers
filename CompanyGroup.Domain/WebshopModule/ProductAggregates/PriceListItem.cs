@@ -13,7 +13,7 @@ namespace CompanyGroup.Domain.WebshopModule
                        int stock, int averageInventory, int price1, int price2, int price3, int price4, int price5, 
                        string garantyTime, string garantyMode, 
                        bool discount, bool newItem, int itemState, string description, string englishDescription, int productManagerId,
-                       DateTime shippingDate, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid) : base(id, productId, axStructCode, dataAreaId, standardConfigId, name, englishName, partNumber, 	
+                       DateTime shippingDate, bool isPurchaseOrdered, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid) : base(id, productId, axStructCode, dataAreaId, standardConfigId, name, englishName, partNumber, 	
                        manufacturerId, manufacturerName, manufacturerEnglishName, 
                        category1Id, category1Name, category1EnglishName, 
                        category2Id, category2Name, category2EnglishName, 
@@ -21,7 +21,7 @@ namespace CompanyGroup.Domain.WebshopModule
                        stock, averageInventory, price1, price2, price3, price4, price5, 
                        garantyTime, garantyMode, 
                        discount, newItem, itemState, description, englishDescription, productManagerId,
-                       shippingDate, createdDate, updated, available, pictureId, secondHand, valid) {}
+                       shippingDate, isPurchaseOrdered, createdDate, updated, available, pictureId, secondHand, valid) { }
     }
 
     /// <summary>

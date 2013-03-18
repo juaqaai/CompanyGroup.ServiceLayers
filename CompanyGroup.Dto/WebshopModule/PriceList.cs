@@ -32,7 +32,20 @@ namespace CompanyGroup.Dto.WebshopModule
 
         public string GarantyMode { get; set; }
 
-        public DateTime ShippingDate { get; set; }
+        /// <summary>
+        /// készleten van-e
+        /// </summary>
+        public bool IsInStock { get; set; }
+
+        /// <summary>
+        /// szállítási info 
+        /// </summary>
+        public string ShippingInfo { get; set; }
+
+        /// <summary>
+        /// készlet info
+        /// </summary>
+        public string StockInfo { get; set; }
 
         public bool EndOfSales { get; set; }
 

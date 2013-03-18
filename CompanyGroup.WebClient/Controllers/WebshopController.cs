@@ -390,7 +390,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             dt.Columns.Add("Termékazonosító", typeof(string));
             dt.Columns.Add("Termék neve", typeof(string));
-            dt.Columns.Add("Készlet", typeof(int));
+            dt.Columns.Add("Készlet", typeof(string));
             dt.Columns.Add("Nettó ár", typeof(int));
             dt.Columns.Add("Pénznem", typeof(string));
             dt.Columns.Add("Leírás", typeof(string));
@@ -403,7 +403,7 @@ namespace CompanyGroup.WebClient.Controllers
             dt.Columns.Add("Garancia módja", typeof(string));
             dt.Columns.Add("Garancia ideje", typeof(string));
             dt.Columns.Add("Újdonság", typeof(bool));
-            dt.Columns.Add("Szállítási infó", typeof(DateTime));
+            dt.Columns.Add("Szállítási infó", typeof(string));
 
             foreach (CompanyGroup.Dto.WebshopModule.PriceListItem item in priceList.Items)
             {
@@ -411,7 +411,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 row["Termékazonosító"] = item.ProductId;
                 row["Termék neve"] = item.ItemName;
-                row["Készlet"] = item.Stock;
+                row["Készlet"] = item.StockInfo;
                 row["Nettó ár"] = item.Price;
                 row["Pénznem"] = item.Currency;
                 row["Leírás"] = item.Description;
@@ -424,7 +424,7 @@ namespace CompanyGroup.WebClient.Controllers
                 row["Garancia módja"] = item.GarantyMode;
                 row["Garancia ideje"] = item.GarantyTime;
                 row["Újdonság"] = item.New;
-                row["Szállítási infó"] = item.PurchaseInProgress ? item.ShippingDate : DateTime.MinValue;
+                row["Szállítási infó"] = item.IsInStock ? "készleten" : item.ShippingInfo;
 
                 dt.Rows.Add(row);
             }

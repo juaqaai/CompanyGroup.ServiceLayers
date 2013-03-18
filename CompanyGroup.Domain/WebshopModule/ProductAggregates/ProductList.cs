@@ -9,5 +9,6 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class ProductList : List<Product> 
     {
+
     }
 }

@@ -10,30 +10,6 @@ companyGroup.partnerinfo = $.sammy(function () {
 
     this.setTitle('Partnerinfo -');
 
-    //kezdőállapot
-    this.get('#/', function (context) {
-        $('#salesOrderMain').hide();
-        $('#invoiceInfoFilter').hide();
-        $.ajax({
-            //console.log(context);
-            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
-            data: {},
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            timeout: 10000,
-            dataType: "json",
-            success: function (response) {
-                //console.log(response);
-                $('#main_container').empty();
-                var html = Mustache.to_html($('#dashboardTemplate').html(), response);
-                $('#main_container').html(html);
-            },
-            error: function () {
-                //console.log('GetVisitorInfo call failed');
-            }
-        });
-        this.title('Partnerinformáció - dashboard');
-    });
     //események
     this.bind('run', function (e, data) {
         var context = this;
@@ -67,6 +43,14 @@ companyGroup.partnerinfo = $.sammy(function () {
             minLength: 2,
             html: 'html'
         });
+        //számlalista kiválasztott oldalindex változás
+        $("#select_pageindex_top").live('change', function () {
+            context.trigger('selectedPageIndexChanged', { PageIndex: parseInt($("#select_pageindex_top").val(), 0) });
+        });
+        //számlalista látható elemek száma változás
+        $("#select_visibleitemlist_top").live('change', function () {
+            context.trigger('visibleItemListChanged', { Orientation: 'top', Index: parseInt($("#select_visibleitemlist_top").val(), 0) });
+        });
     });
     this.bind('filterByReservedOrdered', function (e, data) {
         salesOrderRequest.ReservedOrdered = data.Checked;
@@ -84,9 +68,80 @@ companyGroup.partnerinfo = $.sammy(function () {
         this.title('Szűrés beszerzés alatt lévő rendelésekre');
     });
 
+
+    //kezdőállapot
+    this.get('#/', function (context) {
+        $('#orderInfoFilter').hide();
+        $('#invoiceInfoFilter').hide();
+        $.ajax({
+            //console.log(context);
+            url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+            data: {},
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            timeout: 10000,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                $('#main_container').empty();
+                var html = Mustache.to_html($('#dashboardTemplate').html(), response);
+                $('#main_container').html(html);
+            },
+            error: function () {
+                //console.log('GetVisitorInfo call failed');
+            }
+        });
+        this.title('Partnerinformáció - dashboard');
+    });
+    this.get('#/authenticated', function (context) {
+        //console.log('authenticated');
+    });
+    //bejelentkezés panel megmutatása
+    this.get('#/showSignInPanel', function (context) {
+        this.showSignInPanel();
+    });
+    //belépési adatok ellenörzése
+    this.before({ only: { verb: 'post', path: '#/signin'} }, function (e) {
+        return this.beforeSignIn();
+    });
+    //bejelentkezés (Visitor + Products objektummal tér vissza)
+    this.post('#/signin', function (context) {
+        return this.signIn(context.params['txt_username'], context.params['txt_password'], companyGroup.utils.instance().getVisitorApiUrl('SignIn'), function (result) {
+            $.fancybox.close();
+
+            $("#cus_header1").empty();
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+            $('#cus_header1').html(visitorInfoHtml);
+
+            $("#usermenuContainer").empty();
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
+            $('#usermenuContainer').html(usermenuHtml);
+
+            context.redirect('#/authenticated');
+        });
+    });
+    //kilépés
+    this.get('#/signOut', function (context) {
+        this.signOut(companyGroup.utils.instance().getVisitorApiUrl('SignOut'), function (result) {
+            $("#cus_header1").empty();
+            $("#visitorInfoTemplate").tmpl(result).appendTo("#cus_header1");
+            $("#usermenuContainer").empty();
+            $("#usermenuTemplate").tmpl(result).appendTo("#usermenuContainer");
+        });
+    });
+    //keresés
+    this.post('#/searchByTextFilter', function (context) {
+        this.searchByText(context.params['txt_globalsearch']);
+    });
+    this.get('#/showForgetPasswordPanel', function (context) {
+        this.showForgetPasswordPanel();
+    });
+    this.post('#/sendforgetpassword', function (context) {
+        this.sendForgetPassword(context.params['txt_forgetpassword_username']);
+    });
     //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').hide();
         var data = {
             OldPassword: context.params['txt_oldpassword'],
@@ -127,7 +182,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //jelszócsere view
     this.get('#/changepassword', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').hide();
         context.title('Jelszó módosítás - ');
         $.ajax({
@@ -151,7 +206,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //elfelejtett jelszó kérés
     this.post('#/forgetpassword', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').hide();
         var data = {
             UserName: context.params['txt_username']
@@ -187,7 +242,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //elfelejtett jelszó view
     this.get('#/forgetpassword', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').hide();
         context.title('ELFELEJTETT JELSZÓ - ');
         $.ajax({
@@ -211,7 +266,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //jelszómódosítás csere visszavonása  
     this.get('#/undochangepassword:token', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').hide();
         context.title('Jelszó módosítás visszavonás - ');
         $.ajax({
@@ -235,34 +290,121 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //számla info
     this.get('#/invoiceinfo/:paymenttype', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').show();
-        //console.log(context.params['paymenttype']);
         var paymenttype = parseInt(context.params['paymenttype']);
-        this.invoiceInfoByFilter(paymenttype, '', '', '', '', '', 0);
+        invoiceInfoRequest.Debit = (paymenttype === 1);
+        invoiceInfoRequest.Overdue = (paymenttype === 2);
+        this.invoiceInfoByFilter(invoiceInfoRequest);
         context.title('Számla információ - ');
+    });
+    //számla info részletek 
+    this.get('#/invoice_details/:id', function (context) {
+        $('#orderInfoFilter').hide();
+        $('#invoiceInfoFilter').show();
+        invoiceInfoRequest.Items.push(parseInt(context.params['id']));
+        this.invoiceInfoByFilter(invoiceInfoRequest);
+        context.title('Számla információ - részletek');
     });
     //számlainformációk szűrése paraméterek alapján
     this.post('#/invoiceinfoByFilter', function (context) {
-        $('#salesOrderMain').hide();
+        $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').show();
-        var paymenttype = parseInt(context.params['radio_paymenttype']);
-        var dateintervall = parseInt(context.params['select_dateintervall']);
-        var invoiceid = (context.params['txt_invoiceid'] === 'Kattintson ide') ? '' : context.params['txt_invoiceid'];
-        var itemname = (context.params['txt_itemname'] === 'Kattintson ide') ? '' : context.params['txt_itemname'];
-        var itemid = (context.params['txt_itemid'] === 'Kattintson ide') ? '' : context.params['txt_itemid'];
-        var salesorderid = (context.params['txt_salesorderid'] === 'Kattintson ide') ? '' : context.params['txt_salesorderid'];
-        var serialnumber = (context.params['txt_serialnumber'] === 'Kattintson ide') ? '' : context.params['txt_serialnumber'];
-        this.invoiceInfoByFilter(paymenttype, invoiceid, itemname, itemid, salesorderid, serialnumber, dateintervall);
+        var paymenttype = parseInt(context.params['paymenttype']);
+        invoiceInfoRequest.Debit = (paymenttype === 1);
+        invoiceInfoRequest.Overdue = (paymenttype === 2);
+        invoiceInfoRequest.DateIntervall = parseInt(context.params['select_dateintervall']);
+        invoiceInfoRequest.InvoiceId = (context.params['txt_invoiceid'] === 'Kattintson ide') ? '' : context.params['txt_invoiceid'];
+        invoiceInfoRequest.ItemName = (context.params['txt_itemname'] === 'Kattintson ide') ? '' : context.params['txt_itemname'];
+        invoiceInfoRequest.ItemId = (context.params['txt_itemid'] === 'Kattintson ide') ? '' : context.params['txt_itemid'];
+        invoiceInfoRequest.SalesId = (context.params['txt_salesorderid'] === 'Kattintson ide') ? '' : context.params['txt_salesorderid'];
+        invoiceInfoRequest.SerialNumber = (context.params['txt_serialnumber'] === 'Kattintson ide') ? '' : context.params['txt_serialnumber'];
+        invoiceInfoRequest.CurrentPageIndex = 1;
+        this.invoiceInfoByFilter(invoiceInfoRequest);
     });
+    //kiválasztott sorszámú lapra ugrás
+    this.bind('selectedPageIndexChanged', function (e, data) {
+        //console.log('selectedPageIndexChanged: ' + data.PageIndex);
+        invoiceInfoRequest.CurrentPageIndex = parseInt(data.PageIndex, 0);
+        this.invoiceInfoByFilter(invoiceInfoRequest);
+        this.title('kiválasztott sorszámú lapra ugrás');
+    });
+    //ugrás az első oldalra
+    this.get('#/firstInvoiceInfoPage', function (context) {
+        $("html, body").animate({ scrollTop: 0 }, 100);
+        //console.log(context);
+        var currentPageIndex = invoiceInfoRequest.CurrentPageIndex;
+        if (currentPageIndex > 1) {
+            invoiceInfoRequest.CurrentPageIndex = 1;
+            this.invoiceInfoByFilter(invoiceInfoRequest);
+            context.title('Első oldal');
+        }
+    });
+    //ugrás az utolsó oldalra
+    this.get('#/lastInvoiceInfoPage', function (context) {
+        $("html, body").animate({ scrollTop: 0 }, 100);
+        //console.log(context);
+        var currentPageIndex = invoiceInfoRequest.CurrentPageIndex;
+        var lastPageIndex = parseInt($("#spanTopLastPageIndex").text(), 0);
+        if (currentPageIndex < (lastPageIndex)) {
+            invoiceInfoRequest.CurrentPageIndex = lastPageIndex;
+            this.invoiceInfoByFilter(invoiceInfoRequest);
+            context.title('Utolsó oldal');
+        }
+    });
+    //ugrás a következő oldalra
+    this.get('#/nextInvoiceInfoPage/:index', function (context) {
+        $("html, body").animate({ scrollTop: 0 }, 100);
+        //console.log(context.params['index']);
+        var currentPageIndex = invoiceInfoRequest.CurrentPageIndex;
+        var lastPageIndex = parseInt($("#spanTopLastPageIndex").text(), 0);
+        if (currentPageIndex < (lastPageIndex)) {
+            currentPageIndex = currentPageIndex + 1;
+            invoiceInfoRequest.CurrentPageIndex = currentPageIndex;
+            this.invoiceInfoByFilter(invoiceInfoRequest);
+            context.title('Következő oldal');
+        }
+    });
+    //ugrás az előző oldalra
+    this.get('#/previousInvoiceInfoPage/:index', function (context) {
+        $("html, body").animate({ scrollTop: 0 }, 100);
+        //console.log(context.params['index']);
+        var currentPageIndex = invoiceInfoRequest.CurrentPageIndex;
+        if (currentPageIndex > 1) {
+            currentPageIndex = currentPageIndex - 1;
+            invoiceInfoRequest.CurrentPageIndex = currentPageIndex;
+            this.invoiceInfoByFilter(invoiceInfoRequest);
+            context.title('Előző oldal');
+        }
+    });
+    //megjelenített elemek száma változás
+    this.bind('visibleItemListChanged', function (e, data) {
+        //console.log(context);
+        invoiceInfoRequest.CurrentPageIndex = 1;
+        if (data.Orientation === 'top') {
+            invoiceInfoRequest.ItemsOnPage = parseInt(data.Index, 0);
+        }
+        else {
+            invoiceInfoRequest.ItemsOnPage = parseInt(data.Index, 0);
+        }
+        this.invoiceInfoByFilter(invoiceInfoRequest);
+        this.title('megjelenített elemek száma változás');
+    });
+
+
     //megrendelés info 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt)
     this.get('#/salesorderinfo', function (context) {
         //console.log(context);
-        $('#salesOrderMain').show();
+        $('#orderInfoFilter').show();
         $('#invoiceInfoFilter').hide();
         loadOrderInfo();
         context.title('Megrendelés információ - ');
     });
+    this.get('#/orderInfoByFilter', function (context) {
+
+        context.title('Megrendelés információ - ');
+    });
+
     var loadOrderInfo = function () {
         $.ajax({
             url: companyGroup.utils.instance().getSalesOrderApiUrl('GetOrderInfo'),
@@ -273,9 +415,9 @@ companyGroup.partnerinfo = $.sammy(function () {
             dataType: "json",
             success: function (response) {
                 //console.log(response);
+                $('#span_ordercount').html(response.Items.length);
                 $('#main_container').empty();
-                var html = Mustache.to_html($('#salesorderTemplate').html(), response);
-                $('#main_container').html(html);
+                $("#salesorderTemplate").tmpl(response).appendTo("#main_container");
             },
             error: function () {
                 //console.log('LoadOrderInfo call failed');
@@ -288,8 +430,18 @@ companyGroup.partnerinfo = $.sammy(function () {
         Reserved: true,
         ReservedOrdered: true
     };
-    //keresés
-    this.post('#/searchByTextFilter', function (context) {
-        this.searchByText(context.params['txt_globalsearch']);
-    });
+    var invoiceInfoRequest = {
+        Debit: true,
+        Overdue: false,
+        SalesId: '',
+        ItemName: '',
+        ItemId: '',
+        InvoiceId: '',
+        SerialNumber: '',
+        DateIntervall: 0,
+        Sequence: 0,
+        CurrentPageIndex: 1,
+        ItemsOnPage: 30,
+        Items: []
+    };
 });

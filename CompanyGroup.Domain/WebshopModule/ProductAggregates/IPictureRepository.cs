@@ -22,8 +22,8 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// számlasorhoz tartozó termékkép kiolvasás
         /// </summary>
-        /// <param name="recId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(long recId);
+        CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(int id);
     }
 }

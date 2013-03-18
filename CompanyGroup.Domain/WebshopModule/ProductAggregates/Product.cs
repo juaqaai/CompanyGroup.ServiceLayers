@@ -28,7 +28,7 @@ namespace CompanyGroup.Domain.WebshopModule
                        int stock, int averageInventory, int price1, int price2, int price3, int price4, int price5, 
                        string garantyTime, string garantyMode, 
                        bool discount, bool newItem, int itemState, string description, string englishDescription, int productManagerId,
-                       DateTime shippingDate, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid)
+                       DateTime shippingDate, bool isPurchaseOrdered, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid)
         {
 
             this.Id = id;
@@ -74,6 +74,8 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.ShippingDate = shippingDate;
 
+            this.IsPurchaseOrdered = isPurchaseOrdered;
+
             this.CreatedDate = createdDate;
 
             this.ModifiedDate = updated;
@@ -103,7 +105,7 @@ namespace CompanyGroup.Domain.WebshopModule
                                    0, 0, 0, 0, 0, 0, 0,
                                    String.Empty, String.Empty,
                                    false, false, 0, String.Empty, String.Empty, 0,
-                                   DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, false, 0, false, false) { }
+                                   DateTime.MinValue, false, DateTime.MinValue, DateTime.MinValue, false, 0, false, false) { }
 
         /// <summary>
         /// egyedi azonosító
@@ -208,6 +210,11 @@ namespace CompanyGroup.Domain.WebshopModule
         public DateTime ShippingDate { get; set; }
 
         /// <summary>
+        /// van-e a cikkre beszerzési rendelés?
+        /// </summary>
+        public bool IsPurchaseOrdered { get; set; }
+
+        /// <summary>
         /// adatbázis bejegyzés keletkezésének dátuma
         /// </summary>
         public DateTime CreatedDate { get; set; }
@@ -302,12 +309,72 @@ namespace CompanyGroup.Domain.WebshopModule
         public bool IsInNewsletter { get; set; }
 
         /// <summary>
-        /// beszerzési rendelés van-e a cikkre, vagy nincs?
+        /// ha nincs készleten a cikk, akkor beszerzési rendelés van-e a cikkre, vagy nincs?
         /// </summary>
         /// <returns></returns>
         public bool PurchaseInProgress() 
         {
-            return !(this.ShippingDate.Equals(DateTime.MinValue)); //!(this.ShippingDate.Year.Equals(1) && this.ShippingDate.Month.Equals(1) && this.ShippingDate.Day.Equals(1));
+            return (!this.IsInStock) && (this.IsPurchaseOrdered); //!(this.ShippingDate.Equals(DateTime.MinValue)); //!(this.ShippingDate.Year.Equals(1) && this.ShippingDate.Month.Equals(1) && this.ShippingDate.Day.Equals(1));
+        }
+
+        /// <summary>
+        /// beérkezés információ
+        /// </summary>
+        /// <returns></returns>
+        public string ShippingInfo()
+        {
+            string result = "Több mint négy hét";
+
+            //nincs készlet, de van beszerzési rendelés
+            if (this.PurchaseInProgress())
+            { 
+                DateTime now = DateTime.Now;
+
+                double substract = (this.ShippingDate - now).TotalDays;
+
+                if (substract > 0 && substract < 4)
+                {
+                    result = "3 napon belül";
+                }
+                else if (substract > 4 && substract < 8)
+                {
+                    result = "1 héten belül";
+                }
+                else if (substract > 7 && substract < 15)
+                {
+                    result = "2 héten belül";
+                }
+                else if (substract > 14 && substract < 22)
+                {
+                    result = "3 héten belül";
+                }
+                else if (substract > 21 && substract < 29)
+                {
+                    result = "4 héten belül";
+                }
+                else
+                {
+                    result = "több mint 4 hét";
+                }
+
+            }
+            else  //nincs beszerzési rendelés 
+            {
+                result = this.StockInfo();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// készletinformáció
+        /// </summary>
+        /// <returns></returns>
+        public string StockInfo()
+        {
+            string tmp = (this.Stock > 19) ? "> 20" : String.Format("{0}", this.Stock);
+
+            return (!this.IsInStock) ? "Rendelhető" : tmp;
         }
 
         /// <summary>

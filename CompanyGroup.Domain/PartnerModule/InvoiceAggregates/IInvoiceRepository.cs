@@ -8,27 +8,48 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public interface IInvoiceRepository
     {
-        /// <summary>
-        /// számla kiolvasása azonosító alapján
-        /// </summary>
-        /// <param name="invoiceId"></param>
-        /// <returns></returns>
-        //InvoiceInfo GetById(string invoiceId);
 
         /// <summary>
-        /// számlalista kiolvasása vevőazonosító alapján
+        /// számlalista elemszám kiolvasása
         /// </summary>
         /// <param name="customerId"></param>
-        /// <param name="dataAreaId"></param>
+        /// <param name="debit"></param>
+        /// <param name="overdue"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemName"></param>
+        /// <param name="salesId"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="invoiceId"></param>
+        /// <param name="dateIntervall"></param>
         /// <returns></returns>
-        List<InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
-                                              string salesId, string serialNumber, string invoiceId, int dateIntervall,
-                                              int currentPageIndex, int itemsOnPage);
+        int GetListCount(string customerId, bool debit, bool overdue, string itemId, string itemName,
+                         string salesId, string serialNumber, string invoiceId, int dateIntervall);
 
         /// <summary>
-        /// összes számlalista kiolvasása
+        /// számlalista kiolvasása paraméterek alapján
         /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="debit"></param>
+        /// <param name="overdue"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemName"></param>
+        /// <param name="invoiceId"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="salesId"></param>
+        /// <param name="dateIntervall"></param>
+        /// <param name="sequence"></param>
+        /// <param name="currentPageIndex"></param>
+        /// <param name="itemsOnPage"></param>
         /// <returns></returns>
-        //List<InvoiceInfo> GetAll();
+        List<CompanyGroup.Domain.PartnerModule.InvoiceHeader> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
+                                                                      string invoiceId, string serialNumber, string salesId, int dateIntervall,
+                                                                      int sequence, int currentPageIndex, int itemsOnPage);
+
+        /// <summary>
+        /// számla listaelemek kiolvasása 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.PartnerModule.InvoiceLine> GetDetails(int id);
     }
 }

@@ -74,9 +74,14 @@ namespace CompanyGroup.Dto.WebshopModule
         public string GarantyMode { get; set; }
 
         /// <summary>
-        /// várhetó szállítás időpontja
+        /// szállítási info 
         /// </summary>
-        public string ShippingDate { get; set; }
+        public string ShippingInfo { get; set; }
+
+        /// <summary>
+        /// készlet info
+        /// </summary>
+        public string StockInfo { get; set; }
 
         /// <summary>
         /// kifutó

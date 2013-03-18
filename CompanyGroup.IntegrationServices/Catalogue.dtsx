@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Catalogue"
   DTS:PackageType="5"
-  DTS:VersionBuild="53"
-  DTS:VersionGUID="{536A9ADF-ABA0-4186-B4F9-EE71D7642EE8}">
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{C3EAA8FB-3E4B-4B49-A1AA-DF807D982FF7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -605,6 +605,12 @@
                       cachedName="Stock"
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
+                      cachedDataType="bool"
+                      cachedName="IsPurchaseOrdered"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -814,6 +820,10 @@
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1295,6 +1305,15 @@
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
                       name="Stock"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]"
+                      name="IsPurchaseOrdered"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1485,6 +1504,10 @@
                       refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1690,6 +1713,11 @@
                       dataType="dbTimeStamp"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShippingDate]"
                       name="ShippingDate" />
+                    <outputColumn
+                      refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsPurchaseOrdered]"
+                      name="IsPurchaseOrdered" />
                     <outputColumn
                       refId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CreatedDate]"
                       dataType="dbTimeStamp"
@@ -2406,6 +2434,12 @@
                       cachedName="Stock"
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
+                    <inputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
+                      cachedDataType="bool"
+                      cachedName="IsPurchaseOrdered"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2615,6 +2649,10 @@
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -3096,6 +3134,15 @@
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
                       name="Stock"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]"
+                      name="IsPurchaseOrdered"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -3286,6 +3333,10 @@
                       refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -3491,6 +3542,11 @@
                       dataType="dbTimeStamp"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShippingDate]"
                       name="ShippingDate" />
+                    <outputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsPurchaseOrdered]"
+                      name="IsPurchaseOrdered" />
                     <outputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CreatedDate]"
                       dataType="dbTimeStamp"
@@ -4024,21 +4080,43 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="151,42"
+          Id="Package\Catalogue extract\OLE DB Source"
+          TopLeft="196,76" />
+        <NodeLayout
           Size="155,42"
           Id="Package\Catalogue extract\Derived Column"
           TopLeft="202,334" />
-        <NodeLayout
-          Size="172,42"
-          Id="Package\Catalogue extract\OLE DB Destination"
-          TopLeft="192,458" />
         <NodeLayout
           Size="160,42"
           Id="Package\Catalogue extract\Row Count"
           TopLeft="193,212" />
         <NodeLayout
-          Size="151,42"
-          Id="Package\Catalogue extract\OLE DB Source"
-          TopLeft="196,76" />
+          Size="172,42"
+          Id="Package\Catalogue extract\OLE DB Destination"
+          TopLeft="192,458" />
+        <EdgeLayout
+          Id="Package\Catalogue extract.Paths[Row Count Output 1]"
+          TopLeft="276.25,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Catalogue extract.Paths[OLE DB Source Output]"
           TopLeft="272.25,118">
@@ -4083,8 +4161,53 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Catalogue extract\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Catalogue extract\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Secondhand catalogue extract">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Secondhand catalogue extract\OLE DB Source"
+          TopLeft="196,76" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Secondhand catalogue extract\Derived Column"
+          TopLeft="202,334" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Secondhand catalogue extract\Row Count"
+          TopLeft="193,212" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Secondhand catalogue extract\OLE DB Destination"
+          TopLeft="192,458" />
         <EdgeLayout
-          Id="Package\Catalogue extract.Paths[Row Count Output 1]"
+          Id="Package\Secondhand catalogue extract.Paths[Row Count Output 1]"
           TopLeft="276.25,254">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -4105,51 +4228,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Catalogue extract\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Catalogue extract\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Secondhand catalogue extract">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Secondhand catalogue extract\Derived Column"
-          TopLeft="202,334" />
-        <NodeLayout
-          Size="172,42"
-          Id="Package\Secondhand catalogue extract\OLE DB Destination"
-          TopLeft="192,458" />
-        <NodeLayout
-          Size="160,42"
-          Id="Package\Secondhand catalogue extract\Row Count"
-          TopLeft="193,212" />
-        <NodeLayout
-          Size="151,42"
-          Id="Package\Secondhand catalogue extract\OLE DB Source"
-          TopLeft="196,76" />
         <EdgeLayout
           Id="Package\Secondhand catalogue extract.Paths[OLE DB Source Output]"
           TopLeft="272.25,118">
@@ -4194,33 +4272,11 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Secondhand catalogue extract.Paths[Row Count Output 1]"
-          TopLeft="276.25,254">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4228,7 +4284,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Secondhand catalogue extract\OLE DB Source">
+    design-time-name="Package\Secondhand catalogue extract\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

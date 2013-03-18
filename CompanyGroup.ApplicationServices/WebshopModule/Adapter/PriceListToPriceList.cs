@@ -43,9 +43,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 to.PartNumber = from.PartNumber;
                 to.Price = from.CustomerPrice;
                 to.ProductId = from.ProductId;
+                to.IsInStock = from.IsInStock;
                 to.PurchaseInProgress = from.PurchaseInProgress();
                 to.SecondLevelCategory = new CategoryToCategory().Map(from.Structure.Category2);
-                to.ShippingDate = from.ShippingDate;
+                to.ShippingInfo = from.ShippingInfo();
+                to.StockInfo = from.StockInfo(); 
                 to.ThirdLevelCategory = new CategoryToCategory().Map(from.Structure.Category3);
                 return to;
             }

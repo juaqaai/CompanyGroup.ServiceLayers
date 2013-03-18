@@ -4,13 +4,12 @@ select.chzn-select {
     min-height: 20px !important;
 }
 .chzn-container {
-    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-family: Calibri, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 14px;
 	font-weight:normal;
     position: relative;
     display: inline-block;
     zoom: 1;
-    *
     display: inline;
     -moz-border-radius: 6px 6px 0px 0px;
     -webkit-border-radius: 6px 6px 0px 0px;

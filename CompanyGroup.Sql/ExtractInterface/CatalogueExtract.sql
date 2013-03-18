@@ -93,15 +93,18 @@ SET NOCOUNT ON
 				  invent.ITEMSTATE in ( 0, 1 ) AND 
 				  invent.DataAreaID IN ('bsc', 'hrp')
 			GROUP BY invent.StandardConfigId, invent.ItemId, ind.InventLocationId, invent.DataAreaId ),
-	-- várható beérkezés értékének kikeresése
+	-- várható beérkezés értékének kikeresése : beszerzési rendelés sor visszaigazolva mezõ - ha értéke <> 1900-01-01 00:00:00.000, akkor ezt kell figyelembe venni
+	-- beszerzési rendelés sor kért szállítási idõpont mezõ - ha a visszaigazolva mezõ értéke 1900-01-01 00:00:00.000, akkor ezt kell figyelembe venni
+	-- ha nincs DeliveryDate és ConfirmedDlv sem, akkor beszállítás alatt kell legyen a státusz, 
+	-- ha nincs DeliveryDate és ConfirmedDlv és beszerzési rendelés sem, akkor rendelhetõ kell legyen a státusz
 	PurchaseOrderLine_CTE (ProductId, PurchQty, DeliveryDate, ConfirmedDlv, QtyOrdered, RemainInventPhysical, RemainPurchPhysical, DataAreaId)
 	AS (
 		SELECT  
 		--Purch.BrEngedelyezes,			-- Engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
 		Purch.ItemId, 
 		CONVERT(INT, Purch.PurchQty) as PurchQty,					-- mennyiség
-		Purch.DeliveryDate,				-- kért szállítási idõpont
-		Purch.ConfirmedDlv,				-- visszaigazolva
+		Purch.DeliveryDate,				-- beszerzési rendelés sor kért szállítási idõpont mezõ - ha a visszaigazolva mezõ értéke 1900-01-01 00:00:00.000, akkor ezt kell figyelembe venni
+		Purch.ConfirmedDlv,				-- beszerzési rendelés sor visszaigazolva mezõ - ha értéke <> 1900-01-01 00:00:00.000, akkor ezt kell figyelembe venni
 		--Purch.PurchStatus,				-- sor állpota (1:nyitott rendelés, 2:fogadott, 3:szamlazva, 4:ervenytelenitve)
 		CONVERT(INT, Purch.QtyOrdered) as QtyOrdered,				-- mennyiség
 		CONVERT(INT, Purch.RemainInventPhysical) as RemainInventPhysical,		-- fennmaradó szállítása
@@ -173,7 +176,8 @@ SET NOCOUNT ON
 					ISNULL(HunDescription.Txt, '' ) as [Description], 
 					ISNULL(EnglishDescription.Txt, '' ) as EnglishDescription,				
 				    0 as ProductManagerId,
-					ISNULL(PurchaseOrderLine.DeliveryDate, CONVERT(datetime, 0)) as ShippingDate,
+					InternetUser.CalculateShippingDate(PurchaseOrderLine.DeliveryDate, PurchaseOrderLine.ConfirmedDlv) as ShippingDate,	-- 1900-01-01 00:00:00.000
+					CASE WHEN (PurchaseOrderLine.ProductId IS NULL) THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as IsPurchaseOrdered,  
 			        GetDate() as CreatedDate,		-- Invent.CREATEDTIME
 				    GetDate() as Updated, -- Invent.ModifiedTime
 					CONVERT(BIT, 1) as Available, 
@@ -229,3 +233,25 @@ GRANT EXECUTE ON [InternetUser].[CatalogueExtract] TO InternetUser
 -- 2. SecondHandCatalogueInsert
 -- 3. SecondHandInsert
 -- 4. PictureInsert
+GO
+DROP FUNCTION InternetUser.CalculateShippingDate
+GO
+CREATE FUNCTION InternetUser.CalculateShippingDate( @DeliveryDate DateTime, @ConfirmedDlv DateTime )
+RETURNS DateTime
+AS
+BEGIN
+	DECLARE @Result DateTime;
+
+	IF (@ConfirmedDlv IS NOT NULL)
+		SET @Result = @ConfirmedDlv;	
+	ELSE
+		IF (@DeliveryDate IS NOT NULL)  
+			SET @Result = @DeliveryDate;
+		ELSE
+			SET @Result = CONVERT(datetime, 0);
+
+	RETURN @Result;
+END
+GO
+GRANT EXECUTE ON InternetUser.CalculateShippingDate TO InternetUser
+GO

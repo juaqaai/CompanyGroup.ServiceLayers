@@ -71,14 +71,14 @@ namespace CompanyGroup.Data.WebshopModule
         }
 
         //[InternetUser].[InvoicePictureSelect]( @RecId BIGINT = 0 )	
-        public CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(long recId)
+        public CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(int id)
         {
             try
             {
-                CompanyGroup.Domain.Utils.Check.Require((recId > 0), "The PictureId parameter cannot be null!");
+                CompanyGroup.Domain.Utils.Check.Require((id > 0), "The PictureId parameter cannot be null!");
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.InvoicePictureSelect")
-                                                .SetInt64("RecId", recId)
+                                                .SetInt32("Id", id)
                                                 .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CompanyGroup.ApplicationServices.PartnerModule;
 
 namespace CompanyGroup.ApplicationServices.PartnerModule
 {
@@ -28,24 +29,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="invoiceId"></param>
         /// <returns></returns>
-        //public CompanyGroup.Dto.PartnerModule.InvoiceInfo GetById(string invoiceId)
-        //{
-        //    CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(invoiceId), "The invoiceId cannot be null!");
-
-        //    CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = invoiceRepository.GetById(invoiceId);
-
-        //    CompanyGroup.Dto.PartnerModule.InvoiceInfo result = new InvoiceInfoToInvoiceInfo().Map(invoiceInfo);
-
-        //    return result;
-        //}
-
-        /// <summary>
-        /// vevőhöz tartozó számla lista kiolvasása
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <param name="dataAreaId"></param>
-        /// <returns></returns>
-        public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
+        public CompanyGroup.Dto.PartnerModule.InvoiceInfo GetInvoiceInfo(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
             try
             {
@@ -54,23 +38,46 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-                List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoiceInfoList = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue,
-                                                                                                                            request.ItemId, request.ItemName, request.SalesId, request.SerialNumber,
-                                                                                                                            request.InvoiceId, request.DateIntervall, request.CurrentPageIndex,
-                                                                                                                            request.ItemsOnPage);
+                CompanyGroup.Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "The visitor must be logged in!");
 
-                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>> groupedLineInfos = invoiceInfoList.GroupBy(x => x.InvoiceId).OrderBy(x => x.Key);
+                //számla fejléc elemek lista
+                List<CompanyGroup.Domain.PartnerModule.InvoiceHeader> invoiceHeaders = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue,
+                                                                                                                 request.ItemId, request.ItemName, request.InvoiceId, request.SerialNumber,
+                                                                                                                 request.SalesId, request.DateIntervall, request.Sequence,
+                                                                                                                 request.CurrentPageIndex, request.ItemsOnPage);
 
-                List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfo = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
+                List<CompanyGroup.Domain.PartnerModule.InvoiceLine> invoiceLines = new List<Domain.PartnerModule.InvoiceLine>();
 
-                foreach (var lineInfo in groupedLineInfos)
+                request.Items.ForEach(x =>
                 {
-                    CompanyGroup.Domain.PartnerModule.InvoiceInfo info = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
+                    invoiceLines.AddRange(invoiceRepository.GetDetails(x));
+                });
 
-                    invoiceInfo.Add(info);
-                }
 
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfo.ConvertAll(x => new InvoiceInfoToInvoiceInfo().Map(x));
+                List<CompanyGroup.Domain.PartnerModule.Invoice> invoices = new List<CompanyGroup.Domain.PartnerModule.Invoice>();
+
+                invoiceHeaders.ForEach(x =>
+                {
+                    IEnumerable<CompanyGroup.Domain.PartnerModule.InvoiceLine> lines = invoiceLines.Where(y => y.InvoiceId.Equals(x.InvoiceId));
+
+                    CompanyGroup.Domain.PartnerModule.Invoice invoice = new Domain.PartnerModule.Invoice(x, lines);
+
+                    invoices.Add(invoice);
+
+                });
+
+                //elemek száma
+                int count = invoiceRepository.GetListCount(visitor.CustomerId, request.Debit, request.Overdue,
+                                                           request.ItemId, request.ItemName, request.SalesId, request.SerialNumber,
+                                                           request.InvoiceId, request.DateIntervall);
+
+                CompanyGroup.Domain.PartnerModule.Pager pager = new Domain.PartnerModule.Pager(request.CurrentPageIndex, count, request.ItemsOnPage);
+
+                CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = new CompanyGroup.Domain.PartnerModule.InvoiceInfo(count, pager, 0, false);
+
+                invoiceInfo.AddRange(invoices);
+
+                CompanyGroup.Dto.PartnerModule.InvoiceInfo result = new InvoiceInfoToInvoiceInfo().Map(invoiceInfo, request.ItemsOnPage);
 
                 return result;
             }
@@ -78,18 +85,38 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         }
 
         /// <summary>
-        /// összes számla kiolvasása (mindkét vállalatból)
+        /// vevőhöz tartozó számla lista kiolvasása
         /// </summary>
-        /// <param name="dataAreaId"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        //public List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> GetAll()
-        //{
-        //    List<CompanyGroup.Domain.PartnerModule.InvoiceInfo> invoiceInfoList = invoiceRepository.GetAll();
+        public CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request)
+        {
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request.Id > 0), "The id cannot be null!");
 
-        //    List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> result = invoiceInfoList.ConvertAll(x => new InvoiceInfoToInvoiceInfo().Map(x));
+                //látogató kiolvasása
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-        //    return result;
-        //}
+                List<CompanyGroup.Domain.PartnerModule.InvoiceLine> invoiceLines = invoiceRepository.GetDetails(request.Id);
+
+                //List<CompanyGroup.Domain.PartnerModule.Invoice> invoiceInfo = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
+
+                //foreach (var lineInfo in groupedLineInfos)
+                //{
+                //    CompanyGroup.Domain.PartnerModule.InvoiceInfo info = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
+
+                //    invoiceInfo.Add(info);
+                //}
+
+                List<CompanyGroup.Dto.PartnerModule.InvoiceLine> lines = invoiceLines.ConvertAll(x => new InvoiceLineToInvoiceLine().Map(x));
+
+                CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed result = new Dto.PartnerModule.InvoiceInfoDetailed(lines);
+
+                return result;
+            }
+            catch (Exception ex) { throw ex; }
+        }
 
     }
 }

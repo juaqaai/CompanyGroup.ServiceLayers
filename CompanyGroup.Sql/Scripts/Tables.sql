@@ -220,6 +220,7 @@ CREATE TABLE InternetUser.Catalogue
 	SearchContent 			nvarchar(max) not null default '',
 	ProductManagerId		int not null default 0,					-- termekhez kapcsolt termekmanager
 	ShippingDate			SmallDateTime not null default GetDate(),
+	IsPurchaseOrdered		bit not null default 0,	
 	CreatedDate				SmallDateTime not null default GetDate(),		
 	Updated					SmallDateTime not null default GetDate(),
 	Available				bit not null default 1,					-- kereskedelmi forgalomban elerheto-e a termek

@@ -25,7 +25,7 @@ namespace CompanyGroup.WebApi.Controllers
         {
             if (service == null)
             {
-                throw new ArgumentNullException("PartnerService");
+                throw new ArgumentNullException("InvoiceService");
             }
 
             this.service = service;
@@ -36,15 +36,15 @@ namespace CompanyGroup.WebApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [ActionName("GetList")]
+        [ActionName("GetInvoiceInfo")]
         [HttpPost]
-        public HttpResponseMessage GetList(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
+        public HttpResponseMessage GetInvoiceInfo(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request)
         {
             try
             {
-                List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetList(request);
+                CompanyGroup.Dto.PartnerModule.InvoiceInfo response = service.GetInvoiceInfo(request);
 
-                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfo>(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
@@ -53,45 +53,24 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// számla kiolvasása azonosító alapján
-        /// </summary>
-        /// <param name="invoiceId"></param>
-        /// <returns></returns>
-        //[ActionName("GetById")]
-        //[HttpGet]
-        //public HttpResponseMessage GetById(string invoiceId)
-        //{
-        //    try
-        //    {
-        //        CompanyGroup.Dto.PartnerModule.InvoiceInfo response = service.GetById(invoiceId);
-
-        //        return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfo>(HttpStatusCode.OK, response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ThrowHttpError(ex);
-        //    }
-        //}
-
-        /// <summary>
-        /// összes számla kiolvasása (mindkét vállalatból)
+        /// számla elem kiolvasása 
         /// </summary>
         /// <returns></returns>
-        //[ActionName("GetAll")]
-        //[HttpGet]
-        //public HttpResponseMessage GetAll()
-        //{
-        //    try
-        //    {
-        //        List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> response = service.GetAll();
+        [ActionName("GetDetails")]
+        [HttpPost]
+        public HttpResponseMessage GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request)
+        {
+            try
+            {
+                CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed response = service.GetDetails(request);
 
-        //        return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>(HttpStatusCode.OK, response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ThrowHttpError(ex);
-        //    }
-        //}
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
     }
 
 }

@@ -111,7 +111,7 @@ SET NOCOUNT ON
 	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
 			Stock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
-			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
+			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, IsPurchaseOrdered, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
 	FROM InternetUser.Catalogue as Catalogue
 	--LEFT OUTER JOIN Manufacturers_CTE as Manufacturers ON Catalogue.ManufacturerId = Manufacturers.Id
 	--LEFT OUTER JOIN Category1_CTE as Category1 ON Catalogue.Category1Id = Category1.Id
@@ -240,4 +240,7 @@ GO
 WHERE id IN
 (SELECT Id, ProductId  FROM (SELECT  Id , ProductId, RANK() OVER (PARTITION BY ProductId, DataAreaId, Name, EnglishName, PartNumber, Available ORDER BY Id) AS rank
 FROM InternetUser.Catalogue) AS t
-WHERE rank <> 1)
+WHERE rank <> 1 order by ProductId)
+
+select * from InternetUser.Catalogue where ShippingDate <> Convert(DateTime, 0)
+select * from InternetUser.Catalogue where IsPurchaseOrdered = 1

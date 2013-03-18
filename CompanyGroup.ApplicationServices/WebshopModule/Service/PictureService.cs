@@ -135,17 +135,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <summary>
         /// képtartalom kiolvasása számla elem rekordazonosító alapján
         /// </summary>
-        /// <param name="recId"></param>
+        /// <param name="id"></param>
         /// <param name="maxWidth"></param>
         /// <param name="maxHeight"></param>
         /// <returns></returns>
-        public Stream GetInvoicePicture(long recId, string maxWidth, string maxHeight)
+        public Stream GetInvoicePicture(int id, string maxWidth, string maxHeight)
         {
             try
             {
-                CompanyGroup.Helpers.DesignByContract.Require((recId > 0), "The PictureService GetInvoicePicture request recId parameter can not be null!");
+                CompanyGroup.Helpers.DesignByContract.Require((id > 0), "The PictureService GetInvoicePicture request recId parameter can not be null!");
 
-                CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetInvoicePicture(recId);
+                CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetInvoicePicture(id);
 
                 if (picture == null) { return null; }
 

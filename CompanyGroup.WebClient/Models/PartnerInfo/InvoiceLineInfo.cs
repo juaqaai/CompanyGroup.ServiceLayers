@@ -6,9 +6,9 @@ namespace CompanyGroup.WebClient.Models
     /// <summary>
     /// számla sor info
     /// </summary>
-    public class InvoiceLineInfo : CompanyGroup.Dto.PartnerModule.InvoiceLineInfo
+    public class InvoiceLineInfo : CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed
     {
-        public InvoiceLineInfo(CompanyGroup.Dto.PartnerModule.InvoiceLineInfo invoiceLineInfo)
+        public InvoiceLineInfo(CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed invoiceLineInfo)
         { 
             this.CurrencyCode = invoiceLineInfo.CurrencyCode;
             this.DeliveryType = invoiceLineInfo.DeliveryType;

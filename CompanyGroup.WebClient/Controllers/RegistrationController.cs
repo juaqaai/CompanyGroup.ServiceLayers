@@ -106,5 +106,15 @@ namespace CompanyGroup.WebClient.Controllers
                 return Json(new { Result = false, FileName = ex.Message }, "application/json");
             }
         }
+
+        /// <summary>
+        /// szerződés nyomtatása
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Print()
+        {
+            return Redirect("~/Reports/Print.aspx");
+        }
     }
 }

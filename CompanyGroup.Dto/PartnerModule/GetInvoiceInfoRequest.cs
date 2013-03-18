@@ -10,11 +10,11 @@ namespace CompanyGroup.Dto.PartnerModule
     {
         public GetInvoiceInfoRequest() : this(String.Empty, String.Empty, true, true, String.Empty, String.Empty,
                                               String.Empty, String.Empty, String.Empty, 0,
-                                              1, 30) { }
+                                              0, 1, 30, new List<int>()) { }
 
         public GetInvoiceInfoRequest(string visitorId, string languageId, bool debit, bool overdue, 
                                      string itemId, string itemName, string salesId, string serialNumber, string invoiceId, int dateIntervall,
-                                     int currentPageIndex, int itemsOnPage)
+                                     int sequence, int currentPageIndex, int itemsOnPage, List<int> items)
         {
             this.VisitorId = visitorId;
 
@@ -26,7 +26,7 @@ namespace CompanyGroup.Dto.PartnerModule
 
             this.ItemId = itemId;
 
-            this.ItemName = itemId;
+            this.ItemName = itemName;
 
             this.SalesId = salesId;
             
@@ -36,9 +36,13 @@ namespace CompanyGroup.Dto.PartnerModule
             
             this.DateIntervall = dateIntervall;
 
+            this.Sequence = sequence;
+
             this.CurrentPageIndex = currentPageIndex;
             
             this.ItemsOnPage = itemsOnPage;
+
+            this.Items = items;
         }
 
         public string VisitorId { get; set; }
@@ -61,8 +65,12 @@ namespace CompanyGroup.Dto.PartnerModule
         
         public int DateIntervall { get; set; }
 
+        public int Sequence { get; set; }
+
         public int CurrentPageIndex { get; set; } 
         
         public int ItemsOnPage { get; set; }
+
+        public List<int> Items { get; set; }
     }
 }

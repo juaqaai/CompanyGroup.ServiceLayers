@@ -225,21 +225,11 @@
                     }
                 });
             },
-            invoiceInfoByFilter: function (paymenttype, invoiceid, itemname, itemid, salesorderid, serialnumber, dateintervall) {
-                var data = {
-                    Debit: (paymenttype === 1) ? true : false,
-                    Overdue: (paymenttype === 2) ? true : false,
-                    InvoiceId: invoiceid,
-                    ItemName: itemname,
-                    ItemId: itemid,
-                    SalesOrderid: salesorderid,
-                    SerialNumber: serialnumber,
-                    DateIntervall: dateintervall
-                };
+            invoiceInfoByFilter: function (request) {
                 $.ajax({
                     //console.log(context);
-                    url: companyGroup.utils.instance().getInvoiceApiUrl('GetList'),
-                    data: JSON.stringify(data),
+                    url: companyGroup.utils.instance().getInvoiceApiUrl('GetInvoiceInfo'),
+                    data: JSON.stringify(request),
                     type: "POST",
                     contentType: "application/json;charset=utf-8",
                     timeout: 10000,
@@ -247,9 +237,13 @@
                     success: function (response) {
                         //console.log(response);
                         $('#main_container').empty();
+                        $('#span_invoicecount').html(response.ListCount);
+                        $('#span_AllOverdueDebts').html(response.AllOverdueDebts);
+                        $('#span_TotalNettoCredit').html(response.TotalNettoCredit);
+                        $("#invoiceInfoTemplate").tmpl(response).appendTo("#main_container");
 
-                        $("#invoiceInfoListTemplate").tmpl(response).appendTo("#main_container");
-
+                        $('#invoicePagerContainer').empty();
+                        $("#invoicePagerTemplate").tmpl(response).appendTo("#invoicePagerContainer");
                         //                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
                         //                $('#main_container').html(html);
                     },

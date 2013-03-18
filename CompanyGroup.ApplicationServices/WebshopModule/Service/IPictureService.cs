@@ -19,10 +19,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <summary>
         /// képtartalom kiolvasása számla elem rekordazonosító alapján
         /// </summary>
-        /// <param name="recId"></param>
+        /// <param name="id"></param>
         /// <param name="maxWidth"></param>
         /// <param name="maxHeight"></param>
         /// <returns></returns>
-        System.IO.Stream GetInvoicePicture(long recId, string maxWidth, string maxHeight);
+        System.IO.Stream GetInvoicePicture(int id, string maxWidth, string maxHeight);
     }
 }
