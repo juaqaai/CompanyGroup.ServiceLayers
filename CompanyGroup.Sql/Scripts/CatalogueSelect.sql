@@ -242,5 +242,10 @@ WHERE id IN
 FROM InternetUser.Catalogue) AS t
 WHERE rank <> 1 order by ProductId)
 
+/*
 select * from InternetUser.Catalogue where ShippingDate <> Convert(DateTime, 0)
 select * from InternetUser.Catalogue where IsPurchaseOrdered = 1
+select * from InternetUser.Catalogue where ProductId = 'MBSPAGAEU'
+
+select * from [InternetUser].[CustomerPriceGroup] where VisitorId = 475 ManufacturerId = 'A113' and  
+*/

@@ -58,6 +58,7 @@
     <Compile Include="PartnerModule\InvoiceAggregates\Invoice.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceHeader.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceSumAmount.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\Pager.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\VisitorInsertResult.cs" />
     <Compile Include="RegistrationModule\AddressAggregates\DeliveryAddressCreate.cs" />

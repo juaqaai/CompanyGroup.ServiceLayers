@@ -8,15 +8,17 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class RemoveCartRequest
     {
-        public RemoveCartRequest() : this(0, "", "") { }
+        public RemoveCartRequest() : this(0, "", "", "") { }
 
-        public RemoveCartRequest(int cartId, string language, string visitorId)
+        public RemoveCartRequest(int cartId, string language, string visitorId, string currency)
         {
-            CartId = cartId;
+            this.CartId = cartId;
 
-            Language = language;
+            this.Language = language;
 
-            VisitorId = visitorId;
+            this.VisitorId = visitorId;
+
+            this.Currency = currency;
         }
 
         /// <summary>
@@ -33,5 +35,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// látogató azonosítója
         /// </summary>
         public string VisitorId { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

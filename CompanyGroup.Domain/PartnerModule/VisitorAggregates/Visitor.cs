@@ -276,11 +276,13 @@ namespace CompanyGroup.Domain.PartnerModule
         {
             CustomerPriceGroup priceGroup;
 
+            //vizsgálat teljes egyezésre, gyártó - jelleg1 - jelleg2 - jelleg3, vagy üres gyártó - jelleg1 - jelleg2 - jelleg3
             IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x =>
                                                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
                                                                                         ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
                                                                                         ((x.Category3Id == category3Id) || (String.IsNullOrEmpty(x.Category3Id) && String.IsNullOrEmpty(category3Id))) );
+            
             if (priceGroups.Count() > 0)
             {
                 //sorba rendezés 1..n -ig
@@ -289,6 +291,7 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
+            //vizsgálat gyártó - jelleg1 - jelleg2 egyezésre, vagy üres gyártó - jelleg1 - jelleg2
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
@@ -302,6 +305,7 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
+            //vizsgálat gyártó - jelleg1 - egyezésre, vagy üres gyártó - jelleg1
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) );
@@ -314,6 +318,7 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
+            //vizsgálat gyártó - egyezésre, vagy üres gyártó
             priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))));
 
             if (priceGroups.Count() > 0)
@@ -324,9 +329,19 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            priceGroup = this.CustomerPriceGroups.OrderBy(x => x.Order).FirstOrDefault();
+            //vizsgálat üres gyártó, jelleg1, jelleg2, jelleg3 -ra
+            priceGroups = this.CustomerPriceGroups.Where(x => (x.ManufacturerId == "" && x.Category1Id == "" && x.Category2Id == "" && x.Category3Id == ""));
 
-            return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            //alapártelmezett 2-es árat kell visszaadni
+            return LookupPrice(price1, price2, price3, price4, price5, "2");
         }
 
         private decimal LookupPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5, string priceGroup)

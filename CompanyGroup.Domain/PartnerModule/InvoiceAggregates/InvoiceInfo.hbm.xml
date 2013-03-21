@@ -67,4 +67,11 @@
     <return-scalar column="PictureExists" type="System.Boolean"/>
     exec InternetUser.InvoiceDetailsSelect @Id=:Id
   </sql-query>
+  <sql-query name="InternetUser.InvoiceSumValues" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <return-scalar column="AmountCredit" type="System.Decimal"/>
+    <return-scalar column="AmountOverdue" type="System.Decimal"/>
+    <return-scalar column="CurrencyCode" type="System.String"/>
+    exec InternetUser.InvoiceSumValues @CustomerId=:CustomerId
+  </sql-query>
 </hibernate-mapping>

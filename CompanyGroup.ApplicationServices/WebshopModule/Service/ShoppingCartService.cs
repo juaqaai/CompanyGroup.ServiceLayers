@@ -111,6 +111,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(newCartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //felhasználóhoz tartozó kosár fejlécek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
@@ -135,8 +142,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart), 
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
-
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch (Exception ex)
@@ -178,6 +185,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 shoppingCart = shoppingCartRepository.GetShoppingCart(newCartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //felhasználóhoz tartozó kosár fejléccek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
@@ -202,7 +216,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems, 
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch (Exception ex)
@@ -259,6 +274,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //felhasználóhoz tartozó kosár fejléccek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
@@ -283,7 +305,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch (Exception ex)
@@ -323,6 +346,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(newCartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //felhasználóhoz tartozó kosár fejlécek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
@@ -347,7 +377,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch (Exception ex)
@@ -383,6 +414,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //felhasználóhoz tartozó kosár fejléccek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
@@ -407,7 +445,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch(Exception ex)
@@ -499,6 +538,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //finanszírozandó összeg
                 int financedAmount = shoppingCart.SumTotal;
 
@@ -513,6 +559,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.ValidateAmount();
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
+
+                response.Currency = request.Currency;  
 
                 return response;
             }
@@ -590,6 +638,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //kosár olvasása
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //finanszírozandó összeg
                 int financedAmount = shoppingCart.SumTotal;
 
@@ -604,6 +659,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.ValidateAmount();
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
+
+                response.Currency = request.Currency;  
 
                 return response;
             }
@@ -639,6 +696,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //finanszírozandó összeg
                 int financedAmount = shoppingCart.SumTotal;
 
@@ -653,6 +717,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.ValidateAmount();
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
+
+                response.Currency = request.Currency;  
 
                 return response;
             }
@@ -685,7 +751,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Invariant(visitor.IsValidLogin, "ShoppingCartService GetShoppingCartInfo visitor must be logged in!");
 
-                //felhasználóhoz tartozó kosár fejléccek lekérdezése 
+                //felhasználóhoz tartozó kosár fejlécek lekérdezése 
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCartHeader> shoppingCartHeaders = shoppingCartRepository.GetShoppingCartHeaders(request.VisitorId);
 
                 //válaszüzenet előállítása
@@ -693,6 +759,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
+
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach( x => { 
+                        decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                        x.CustomerPrice = (int) price;
+                    });
 
                 //finanszírozandó összeg
                 int financedAmount = Convert.ToInt32(shoppingCart.SumTotal);
@@ -712,7 +784,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions),
+                                                                                                                               request.Currency);
                 return response;
             }
             catch(Exception ex)
@@ -759,9 +832,18 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
-                CompanyGroup.Dto.WebshopModule.ShoppingCart result = new ShoppingCartToShoppingCart().Map(shoppingCart);
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
 
-                return result;
+                CompanyGroup.Dto.WebshopModule.ShoppingCart response = new ShoppingCartToShoppingCart().Map(shoppingCart);
+
+                //response.Currency = request.Currency;
+
+                return response;
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCart(); }
         }
@@ -792,6 +874,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //aktív kosár frissítése kiolvasással
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(shoppingCartHeaderCollection.ActiveCartId);
 
+                //valutanem szerinti összeg beállítás
+                shoppingCart.GetItems().ForEach(x =>
+                {
+                    decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
+                    x.CustomerPrice = (int)price;
+                });
+
                 //finanszírozandó összeg
                 int financedAmount = Convert.ToInt32(shoppingCart.SumTotal);
 
@@ -810,7 +899,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
                                                                                                                                storedOpenedShoppingCarts.OpenedItems,
                                                                                                                                new ShoppingCartToShoppingCart().Map(shoppingCart),
-                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions));
+                                                                                                                               new LeasingOptionsToLeasingOptions().Map(leasingOptions), 
+                                                                                                                               request.Currency);
                 return response;
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(); }

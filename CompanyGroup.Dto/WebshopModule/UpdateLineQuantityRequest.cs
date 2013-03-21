@@ -8,15 +8,21 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class UpdateLineQuantityRequest
     {
-        public UpdateLineQuantityRequest() : this(0, 0, String.Empty, String.Empty, 0, String.Empty) { }
+        public UpdateLineQuantityRequest() : this(0, 0, String.Empty, String.Empty, 0, String.Empty, String.Empty) { }
 
-        public UpdateLineQuantityRequest(int cartId, int lineId, string language, string dataAreaId, int quantity, string visitorId)
-        { 
-            CartId = cartId;
-            LineId = lineId;
-            Language = language;
-            Quantity = quantity;
-            VisitorId = visitorId;
+        public UpdateLineQuantityRequest(int cartId, int lineId, string language, string dataAreaId, int quantity, string visitorId, string currency)
+        {
+            this.CartId = cartId;
+
+            this.LineId = lineId;
+
+            this.Language = language;
+
+            this.Quantity = quantity;
+
+            this.VisitorId = visitorId;
+
+            this.Currency = currency;
         }
 
         /// <summary>
@@ -43,5 +49,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// látogató azonosítója
         /// </summary>
         public string VisitorId { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

@@ -71,6 +71,27 @@ namespace CompanyGroup.WebApi.Controllers
                 return ThrowHttpError(ex);
             }
         }
+
+        /// <summary>
+        /// összes tartozás, lejárt tartozás, pénznem lista
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        [ActionName("InvoiceSumValues")]
+        [HttpGet]
+        public HttpResponseMessage InvoiceSumValues(string id)
+        {
+            try
+            {
+                List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount> response = service.InvoiceSumValues(id);
+
+                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount>>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }        
+        }
     }
 
 }

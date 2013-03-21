@@ -24,14 +24,14 @@ namespace CompanyGroup.Dto.PartnerModule
         public long ListCount { get; set; }
 
         /// <summary>
-        /// 
+        /// összes tartozás
         /// </summary>
-        public string TotalNettoCredit { get; set; }
+        //public string TotalNettoCredit { get; set; }
 
         /// <summary>
         /// összes lejárt tartozás
         /// </summary>
-        public string AllOverdueDebts { get; set; }
+        //public string AllOverdueDebts { get; set; }
     }
 
     /// <summary>

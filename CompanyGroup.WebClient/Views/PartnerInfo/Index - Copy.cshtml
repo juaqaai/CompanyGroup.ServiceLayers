@@ -56,30 +56,18 @@
                         <td>
                             <div id="invoiceSumValuesContainer"></div>
                             <script id="invoiceSumValuesTemplate" type="text/x-jquery-tmpl">
-							{{if (AmountOverdue == "00,00") }}
-							<table id="no_dept" align="right">
-                            <tr>
-                                <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/checkok.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;"><strong>Önnek nincs ${CurrencyCode} tartozása</strong></td>
-                            </tr>
-                            </table>
-							{{else}}
-                            <table id="dept_price" align="right">
+                            <table align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
                                 <td nowrap="nowrap" style=" text-align: right;">Ebből határidőn túli  tartozás: ${AmountOverdue} ${CurrencyCode}</strong></td>
                             </tr>
                             </table>
-							{{/if}}
-							{{if (AmountCredit == "00,00") }}{{else}}
-                            <table id="open_order" align="right">
+                            <table align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
                                 <td nowrap="nowrap" style=" text-align: right;">Önnek<strong> ${AmountCredit} ${CurrencyCode}</strong> tartozása van. </td>
                             </tr>
                             </table>
-							
-							{{/if}}
                             </script>
                         </td>
                       </tr>
@@ -348,10 +336,10 @@ StatusIssueIsOnOrder*@
             </script>
 
             <script id="invoicePagerTemplate" type="text/x-jquery-tmpl">
-               <table style="font-size:10px" width="100px" border="0" align="center" cellpadding="2" cellspacing="0">
+                <table style="font-size:10px" width="87%" border="0" align="center" cellpadding="2" cellspacing="0">
 			    <tr>
-			        <td width="15%"> {{if Pager.FirstEnabled}} <a style="text-decoration:none; color:#999;" href="#/firstInvoiceInfoPage">◄◄</a> {{else}}{{/if}} </td>
-			        <td width="16%"> {{if Pager.PreviousEnabled}} <a style="text-decoration:none; color:#999;" href="#/previousInvoiceInfoPage/${Pager.PreviousPageIndex}">◄</a> {{else}} {{/if}} </td>
+			        <td width="15%"> {{if Pager.FirstEnabled}} <a href="#/firstInvoiceInfoPage">◄◄</a> {{else}}{{/if}} </td>
+			        <td width="16%"> {{if Pager.PreviousEnabled}} <a href="#/previousInvoiceInfoPage/${Pager.PreviousPageIndex}">◄</a> {{else}} {{/if}} </td>
 			        <td width="9%" align="center"><select name="select_pageindex_top" id="select_pageindex_top">
 			        {{each( i, item ) Pager.PageItemList}}
 			        {{if item.Selected }}
@@ -363,11 +351,10 @@ StatusIssueIsOnOrder*@
    			        </select></td>
 			        <td width="1%" align="center">/</td>
 			        <td width="17%" align="center"><span style="font-size:12px;" id="spanTopLastPageIndex"><b>${Pager.LastPageIndex}</b></span></td>
-			        <td width="15%" align="right"> {{if Pager.NextEnabled}} <a style="text-decoration:none; color:#999;" href="#/nextInvoiceInfoPage/${Pager.NextPageIndex}">►</a> {{else}}{{/if}} </td>
-			        <td width="27%" align="right"> {{if Pager.LastEnabled}} <a style="text-decoration:none; color:#999;" href="#/lastInvoiceInfoPage">►►</a> {{else}}{{/if}} </td>
+			        <td width="15%" align="right"> {{if Pager.NextEnabled}} <a href="#/nextInvoiceInfoPage/${Pager.NextPageIndex}">►</a> {{else}}{{/if}} </td>
+			        <td width="27%" align="right"> {{if Pager.LastEnabled}} <a href="#/lastInvoiceInfoPage">►►</a> {{else}}{{/if}} </td>
 			        </tr>
 	            </table>
-				<br>
                 </script>
 
             <script id="invoiceInfoTemplate" type="text/x-jquery-tmpl">
@@ -389,7 +376,7 @@ StatusIssueIsOnOrder*@
                     <td align="left" >${item.Header.DueDate}</td>
                     <td align="left" >${item.Header.SourceCompany}</td>
                     <td >${item.Header.InvoiceAmount} ${item.Header.CurrencyCode}</td>
-                    <td >{{if (item.Header.InvoiceCredit <= "00,00") }}<span style="background-color:Green; padding:1px; border-radius:2px;"> ${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}</span>{{else}}<span style="background-color:#FF0032; padding:1px; border-radius:2px;">${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}{{/if}}</span></td>
+                    <td >{{if (item.Header.InvoiceCredit <= "0,00") }}<span style="background-color:Green; padding:1px; border-radius:2px;"> ${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}</span>{{else}}<span style="background-color:#FF0032; padding:1px; border-radius:2px;">${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}{{/if}}</span></td>
                     </tr>
                 </table>
                 {{if item.Lines.length > 0}}
@@ -808,11 +795,10 @@ StatusIssueIsOnOrder*@
 	</aside>*@
     
     <!---->
-@Scripts.Render("~/bundles/partnerinfo")
+
 @section ScriptFiles {
 
-
-
+    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/partnerinfo")');
 }
 @section ScriptOnReady {
     companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');

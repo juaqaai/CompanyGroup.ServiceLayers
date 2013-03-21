@@ -114,7 +114,72 @@ namespace CompanyGroup.WebClient.Controllers
         [HttpGet]
         public ActionResult Print()
         {
-            return Redirect("~/Reports/Print.aspx");
+            //return Redirect("~/Reports/Print.aspx");
+            try
+            {
+                CompanyGroup.WebClient.Models.RegistrationData model = this.GetRegistration();
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private CompanyGroup.WebClient.Models.RegistrationData GetRegistration()
+        {
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.Registration response = null;
+
+                //regisztrációs azonosító kiolvasása sütiből
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
+
+                //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
+                //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
+                if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
+                {
+                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>(String.Format("{0}/{1}/{2}", "Customer", "GetCustomerRegistration", RegistrationController.DataAreaId)); ;
+                }
+                //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
+                else if (!String.IsNullOrEmpty(visitorData.RegistrationId))
+                {
+                    CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
+
+                    response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
+                }
+                //ha nincs belépve, és nincs megkezdett regisztrációja sem, akkor üreset kell visszaadni
+                else
+                {
+                    response = new CompanyGroup.Dto.RegistrationModule.Registration();
+                }
+
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          response.Visitor,
+                                                                                                                          response.WebAdministrator,
+                                                                                                                          new CompanyGroup.WebClient.Models.Countries());
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

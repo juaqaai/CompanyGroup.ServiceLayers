@@ -48,17 +48,11 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// összes tartozás
         /// </summary>
-        public decimal TotalNettoCredit 
-        {
-            get { return this.Sum(x => x.Header.InvoiceCredit); } 
-        }
+        //public decimal TotalNettoCredit { get; set; }
 
         /// <summary>
         /// összes lejárt tartozás
         /// </summary>
-        public decimal AllOverdueDebts
-        {
-            get { return this.Where(x => x.Header.OverDue).Sum(x => x.Header.InvoiceCredit); }
-        }
+        //public decimal AllOverdueDebts { get; set; }
     }
 }

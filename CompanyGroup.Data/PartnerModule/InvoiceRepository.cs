@@ -158,6 +158,28 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
+        /// [InternetUser].[InvoiceSumValues](@CustomerId NVARCHAR(10) = '')
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.PartnerModule.InvoiceSumAmount> InvoiceSumValues(string customerId)
+        {
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.InvoiceSumValues").SetString("CustomerId", customerId)
+                                                                                                .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.InvoiceSumAmount).GetConstructors()[0]));
+
+                return query.List<CompanyGroup.Domain.PartnerModule.InvoiceSumAmount>() as List<CompanyGroup.Domain.PartnerModule.InvoiceSumAmount>;
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        /// <summary>
         /// összes számlainfo elem kiolvasása
         /// </summary>
         /// <returns></returns>

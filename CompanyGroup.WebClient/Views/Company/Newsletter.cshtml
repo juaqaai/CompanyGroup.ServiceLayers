@@ -35,8 +35,9 @@
     <aside id="aside-second" class="aside-second">
 		AsideSecond
 	</aside>*@
+@Scripts.Render("~/bundles/newsletter")
 @section ScriptFiles {
-    head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/newsletter")');
+
 }
 @section ScriptOnReady {
     companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');

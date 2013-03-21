@@ -24,5 +24,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request);
 
+        /// <summary>
+        /// összes tartozás, lejárt tartozás, pénznem lista
+        /// </summary>
+        /// <param name="visitorId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount> InvoiceSumValues(string visitorId);
     }
 }

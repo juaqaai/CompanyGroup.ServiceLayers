@@ -54,11 +54,11 @@ companyGroup.registration = $.sammy(function () {
         //        });
 
         //adatok ellenörzésének megerősítése
-        $("#chk_checkdata").live('change', function () {
+
+		$("#chk_checkdata").live('change', function () {
             context.trigger('checkData', { Checked: $(this).is(':checked') });
         });
         $("#chk_accept").live('change', function () {
-            //console.log($(this).is(':checked'));
             context.trigger('acceptContract', { Accepted: $(this).is(':checked') });
         });
         $("#chk_mail_address").live('change', function () {
@@ -68,11 +68,13 @@ companyGroup.registration = $.sammy(function () {
             context.trigger('setDeliveryAddress', { Checked: $(this).is(':checked') });
         });
         $("#chk_contactperson").live('change', function () {
-            //$('#contactperson').toggle("slow");
-            context.trigger('setContactPerson', { Checked: $(this).is(':checked') });
+			context.trigger('setContactPerson', { Checked: $(this).is(':checked') });
+        });
+        $("#btn_showdatacheck").live('click', function () {
+            context.trigger('showDataCheck');
         });
         $("#btn_showwebadmin").live('click', function () {
-            context.trigger('showWebAdmin');
+            context.trigger('showwebadmin');
         });
         $('#form_upload').ajaxForm({
             beforeSubmit: function (formData, jqForm, options) {
@@ -90,6 +92,12 @@ companyGroup.registration = $.sammy(function () {
         });
     });
     //adatok ellenörzése
+	  this.get('#/allowdatacheck', function (context) {
+        $("#tabs-5").show(500);
+            $("#tabs-4").show(500);
+            $("#tabs-3").show(500);
+            $("#tabs-2").show(500);
+    });
     this.bind('checkData', function (e, data) {
         var context = this;
         if (data.Checked) {
@@ -136,11 +144,14 @@ companyGroup.registration = $.sammy(function () {
             $('#contactperson').hide("slow");
         }
     });
-    this.bind('showWebAdmin', function (e, data) {
+    this.bind('showDataCheck', function (e, data) {
         var context = this;
-        context.redirect('#/showwebadmin');
+        context.redirect('#/showdatacheck');
     });
-
+    this.bind('showwebadmin', function (e, data) {
+        var context = this;
+        context.redirect('#/companydata');
+    });
     this.get('#/authenticated', function (context) {
         //console.log('authenticated');
     });
@@ -207,9 +218,9 @@ companyGroup.registration = $.sammy(function () {
     this.get('#/notchecked', function (context) {
         $("#tabs-7").hide(500);
     });
-    this.get('#/showwebadmin', function (context) {
-        setTabsVisibility(4);
-        context.title('HRP/BSC Regisztráció - web adminisztrátor adatai');
+    this.get('#/showdatacheck', function (context) {
+        setTabsVisibility(6);
+        context.title('HRP/BSC Regisztráció - adatok ellenőrzése');
     });
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
@@ -289,6 +300,9 @@ companyGroup.registration = $.sammy(function () {
             }
         });
     });
+    this.get('#/companydata', function (context) {
+        $("form#form_companydata").submit();
+    });
     //cégregisztráció adatainak validálása
     this.before({ only: { verb: 'post', path: '#/companydata'} }, function (e) {
         var error_msg = '';
@@ -359,6 +373,10 @@ companyGroup.registration = $.sammy(function () {
                 City: context.params['txt_mailaddresscity'],
                 Street: context.params['txt_mailaddressstreet'],
                 ZipCode: context.params['txt_mailaddresszipcode']
+            },
+			Hidden: {
+                
+                Hidden: context.params['hidden'],
             }
         };
         $.ajax({
@@ -1107,10 +1125,6 @@ companyGroup.registration = $.sammy(function () {
         }
         if (i == 6) {
             $("#tabs-6").show(500);
-            $("#tabs-5").show(500);
-            $("#tabs-4").show(500);
-            $("#tabs-3").show(500);
-            $("#tabs-2").show(500);
             $('#tabs-5-button').show(500);
             $('#tab_5_ok').show(500);
 
@@ -1179,7 +1193,7 @@ companyGroup.registration = $.sammy(function () {
 
 
     function displayVals() {
-        var singleValues = $("#selectCountry").val();
+        var singleValues = $("#select_country").val();
         if (singleValues != "HU") {
             $("#foreign_vat").show(500);
             $("#hun_vat").hide(500);

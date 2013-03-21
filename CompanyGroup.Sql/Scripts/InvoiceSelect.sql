@@ -240,7 +240,7 @@ SET NOCOUNT ON
 	FROM InternetUser.Invoice 
 	WHERE CustomerId = @CustomerId 
 		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
-		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
+		  AND 1 = CASE WHEN (@OverDue = 1 AND DueDate <= GETDATE() AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END
 		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
 		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
@@ -316,7 +316,7 @@ SET NOCOUNT ON
 	FROM InternetUser.Invoice 
 	WHERE CustomerId = @CustomerId 
 		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
-		  AND DueDate <= CASE WHEN @OverDue = 1 then GETDATE() ELSE DueDate END
+		  AND 1 = CASE WHEN (@OverDue = 1 AND DueDate <= GETDATE() AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END
 		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
 		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
@@ -343,20 +343,20 @@ GO
 /*
 EXEC [InternetUser].[InvoiceSelect] @CustomerId = 'V001446',	
 									@Debit = 0,				--0: mind, 1 kifizetetlen
-									@OverDue = 0,				--0: mind, 1 lejart 
+									@OverDue = 1,				--0: mind, 1 lejart 
 									@ItemId = '', 
-									@ItemName = 'monitor',
+									@ItemName = '',	-- monitor
 									@SalesId = '',
 									@SerialNumber = '',
 									@InvoiceId = '',	--HI057773
 									@DateIntervall = 0,
 									@Sequence = 0, 
 									@CurrentPageIndex = 1, 
-									@ItemsOnPage = 30;
+									@ItemsOnPage = 3000;
 */
 DROP PROCEDURE [InternetUser].[InvoiceSelect3];
 GO
-CREATE PROCEDURE [InternetUser].[InvoiceSelect3]( @CustomerId NVARCHAR(10) = '',	--vevokod
+CREATE PROCEDURE [InternetUser].[InvoiceSelect3](@CustomerId NVARCHAR(10) = '',	--vevokod
 											     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
 											     @OverDue BIT = 0,				--0: mind, 1 lejart 
 												 @ItemId NVARCHAR(20) = '', 
@@ -396,3 +396,36 @@ EXEC [InternetUser].[InvoiceSelect3] @CustomerId = 'V001446',
 									@InvoiceId = 'HI057773',
 									@DateIntervall = 0;
 */
+DROP PROCEDURE [InternetUser].[InvoiceSumValues];
+GO
+CREATE PROCEDURE [InternetUser].[InvoiceSumValues](@CustomerId NVARCHAR(10) = '')
+AS
+SET NOCOUNT ON
+	;
+	WITH CTE (AmountCredit, AmountOverdue, CurrencyCode)
+	AS (
+	SELECT --SUM(InvoiceAmount) as SumInvoiceAmount,  -- szamla vegosszege
+		   SUM(InvoiceCredit) as AmountCredit,  -- szamla tartozas
+		   0 as AmountOverdue, 
+		   --'Credit' as InvoiceType,
+		   CurrencyCode  
+	FROM InternetUser.Invoice
+	WHERE CustomerId = @CustomerId 
+	GROUP BY CurrencyCode
+	UNION ALL
+	SELECT --SUM(InvoiceAmount) as SumInvoiceAmount,  -- szamla vegosszege
+		   0 as AmountCredit, 
+		   SUM(InvoiceCredit) as AmountOverdue,  -- szamla tartozas
+		   --'Overdue' as InvoiceType,
+		   CurrencyCode  
+	FROM InternetUser.Invoice
+	WHERE CustomerId = @CustomerId  AND 
+		  DueDate <= GETDATE()
+	GROUP BY CurrencyCode )
+	SELECT SUM(AmountCredit) as AmountCredit, SUM(AmountOverdue) as AmountOverdue, CurrencyCode FROM CTE GROUP BY CurrencyCode;
+
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.[InvoiceSumValues] TO InternetUser
+GO
+-- EXEC [InternetUser].[InvoiceSumValues] 'V001446'

@@ -10,8 +10,9 @@ namespace CompanyGroup.WebClient.Models
                                 CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart,
                                 CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, 
                                 Visitor visitor, 
-                                bool catalogueOpenStatus, 
-                                bool shoppingCartOpenStatus)
+                                bool catalogueOpenStatus,
+                                bool shoppingCartOpenStatus, 
+                                string currency)
         {
             this.StoredItems = storedItems;
 
@@ -26,6 +27,8 @@ namespace CompanyGroup.WebClient.Models
             this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
 
             this.Visitor = visitor;
+
+            this.Currency = currency;
         }
 
         public List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> StoredItems { get; set; }
@@ -41,5 +44,10 @@ namespace CompanyGroup.WebClient.Models
         public bool ShoppingCartOpenStatus { get; set; }
 
         public bool CatalogueOpenStatus { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

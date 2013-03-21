@@ -19,9 +19,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                        {
                            Items = from.ConvertAll(x => MapInvoiceToInvoice(x)),
                            ListCount = from.ListCount,
-                           Pager = new CompanyGroup.ApplicationServices.PartnerModule.PagerToPager().Map(from.Pager, itemsOnPage),
-                           AllOverdueDebts = String.Format("{0:0,0.00}", from.AllOverdueDebts),
-                           TotalNettoCredit = String.Format("{0:0,0.00}", from.TotalNettoCredit)
+                           Pager = new CompanyGroup.ApplicationServices.PartnerModule.PagerToPager().Map(from.Pager, itemsOnPage)
                         };
         }
 

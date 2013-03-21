@@ -51,5 +51,12 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="id"></param>
         /// <returns></returns>
         List<CompanyGroup.Domain.PartnerModule.InvoiceLine> GetDetails(int id);
+
+        /// <summary>
+        /// Összes tartozás, összes lejárt tartozás
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.PartnerModule.InvoiceSumAmount> InvoiceSumValues(string customerId);
     }
 }

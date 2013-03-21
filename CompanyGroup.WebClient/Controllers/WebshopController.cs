@@ -101,7 +101,7 @@ namespace CompanyGroup.WebClient.Controllers
 
             if (visitor.IsValidLogin)
             {
-                CompanyGroup.Dto.WebshopModule.GetActiveCartRequest activeCartRequest = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest(visitorData.Language, visitor.Id);
+                CompanyGroup.Dto.WebshopModule.GetActiveCartRequest activeCartRequest = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest(visitorData.Language, visitor.Id, visitorData.Currency);
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo shoppingCartInfo = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetActiveCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "GetActiveCart", activeCartRequest);
 

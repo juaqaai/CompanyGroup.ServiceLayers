@@ -203,9 +203,9 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("52E75B6E1D6A452FACEAA31C1D856E58");
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("E90AB8E1307545E1879920001DC68844");
 
-            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("C9465A", "hrp");
+            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("MBSPAGAEU", "hrp");
 
             decimal price = visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
                                                            product.Structure.Manufacturer.ManufacturerId, 
@@ -413,7 +413,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("503a0aad6ee01209a42e0c41", "alma", "hu");
+            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("503a0aad6ee01209a42e0c41", "alma", "hu", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.AssociateCart(request);
 
@@ -440,7 +440,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "5039d7e66ee01213b0c8c201", "kosar neve");
+            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "5039d7e66ee01213b0c8c201", "kosar neve", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = service.AddCart(request);
 
@@ -501,7 +501,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "5039d7e66ee01213b0c8c201", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             CompanyGroup.Dto.WebshopModule.ShoppingCart cart = service.GetCartByKey(request);
 
@@ -525,7 +525,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
 
-            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "5039d7e66ee01213b0c8c201");
+            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "5039d7e66ee01213b0c8c201", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             CompanyGroup.Dto.WebshopModule.ShoppingCartInfo cart = service.GetActiveCart(request);
 

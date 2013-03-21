@@ -1263,6 +1263,7 @@
     <Content Include="Views\Company\Contact.cshtml" />
     <Content Include="Views\Company\WasteManagement.cshtml" />
     <Content Include="Views\Webshop\Partial1.cshtml" />
+    <Content Include="Views\Registration\Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\Report1.rdlc" />

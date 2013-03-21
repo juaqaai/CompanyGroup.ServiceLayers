@@ -42,4 +42,4 @@ GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
 GO
 -- EXEC [InternetUser].[VisitorSelect] 'alma'
 
--- select * from InternetUser.Visitor
+-- select * from InternetUser.Visitor order by id desc

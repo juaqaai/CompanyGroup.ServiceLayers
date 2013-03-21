@@ -225,27 +225,18 @@
                     }
                 });
             },
-            invoiceInfoByFilter: function (request) {
+            invoiceSumValues: function (callback) {
                 $.ajax({
                     //console.log(context);
-                    url: companyGroup.utils.instance().getInvoiceApiUrl('GetInvoiceInfo'),
-                    data: JSON.stringify(request),
-                    type: "POST",
+                    url: companyGroup.utils.instance().getInvoiceApiUrl('InvoiceSumValues'),
+                    data: {},
+                    type: "GET",
                     contentType: "application/json;charset=utf-8",
                     timeout: 10000,
                     dataType: "json",
-                    success: function (response) {
-                        //console.log(response);
-                        $('#main_container').empty();
-                        $('#span_invoicecount').html(response.ListCount);
-                        $('#span_AllOverdueDebts').html(response.AllOverdueDebts);
-                        $('#span_TotalNettoCredit').html(response.TotalNettoCredit);
-                        $("#invoiceInfoTemplate").tmpl(response).appendTo("#main_container");
-
-                        $('#invoicePagerContainer').empty();
-                        $("#invoicePagerTemplate").tmpl(response).appendTo("#invoicePagerContainer");
-                        //                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
-                        //                $('#main_container').html(html);
+                    success: function (result) {
+                        if (callback)
+                            callback(result);
                     },
                     error: function () {
                         //console.log('GetVisitorInfo call failed');

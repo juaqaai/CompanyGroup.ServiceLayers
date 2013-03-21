@@ -5,15 +5,17 @@ namespace CompanyGroup.Dto.WebshopModule
 {
     public class AddCartRequest
     {
-        public AddCartRequest() : this( "", "", "") { }
+        public AddCartRequest() : this( "", "", "", "") { }
 
-        public AddCartRequest(string language, string visitorId, string cartName)
+        public AddCartRequest(string language, string visitorId, string cartName, string currency)
         {
             this.Language = language;
 
             this.VisitorId = visitorId;
 
             this.CartName = cartName;
+
+            this.Currency = currency;
         }
 
         /// <summary>
@@ -30,6 +32,11 @@ namespace CompanyGroup.Dto.WebshopModule
         /// kosárnév
         /// </summary>
         public string CartName { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
 
     }
 }

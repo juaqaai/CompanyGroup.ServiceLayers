@@ -63,7 +63,7 @@ namespace CompanyGroup.WebClient.Controllers
             catch { return new CompanyGroup.WebClient.Models.Visitor(); }
         }
 
-        #region "PostJSonData"
+        #region "PostJSonData, GetJSonData"
 
         private readonly static string ServiceBaseAddress = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ServiceBaseAddress", "http://1Juhasza/CompanyGroup.WebApi/api/");
 
@@ -114,6 +114,33 @@ namespace CompanyGroup.WebClient.Controllers
             }
             catch { return default(TResponse); }
 
+        }
+
+        /// <summary>
+        /// GET json data 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="requestUrl"></param>
+        /// <returns></returns>
+        protected T GetJSonData<T>(string requestUrl) where T : new()
+        {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(requestUrl), "RequestUrl can not be null or empty!");
+
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                client.BaseAddress = new Uri(BaseController.ServiceBaseAddress);
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync(requestUrl).Result;
+
+                T result = response.Content.ReadAsAsync<T>().Result;
+
+                return result;
+            }
+            catch { return default(T); }
         }
 
         #endregion

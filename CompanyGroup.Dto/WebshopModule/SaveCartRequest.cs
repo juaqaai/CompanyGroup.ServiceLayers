@@ -5,9 +5,9 @@ namespace CompanyGroup.Dto.WebshopModule
 {
     public class SaveCartRequest
     {
-        public SaveCartRequest() : this( "", "", 0, "") { }
+        public SaveCartRequest() : this( "", "", 0, "", "") { }
 
-        public SaveCartRequest(string language, string visitorId, int cartId, string name)
+        public SaveCartRequest(string language, string visitorId, int cartId, string name, string currency)
         {
             this.Language = language;
 
@@ -16,6 +16,8 @@ namespace CompanyGroup.Dto.WebshopModule
             this.CartId = cartId;
 
             this.Name = name;
+
+            this.Currency = currency;
         }
 
         /// <summary>
@@ -37,5 +39,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// kosár neve
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

@@ -398,7 +398,7 @@
 					        <div id="cus_filter_1">
 						        Gyártók kiválasztása
 						        <br />
-						        <select id="manufacturerList" data-placeholder="Gyártók..." class="chzn-select" multiple style="width:270px;">
+						        <select id="manufacturerList" data-placeholder="Gyártók..." class="chosen" multiple style="width:270px;">
 							        <option value=""></option>
 							        @foreach (var manufacturer in @Model.Structures.Manufacturers)
                                     { 
@@ -409,7 +409,7 @@
 					        <div id="cus_filter_2">
 						        Jelleg 1 kiválasztása
 						        <br />
-						        <select id="category1List" data-placeholder="Jelleg - 1..." class="chzn-select" multiple style="width:270px;">
+						        <select id="category1List" data-placeholder="Jelleg - 1..." class="chosen" multiple style="width:270px;">
 							        <option value=""></option>
 							        @foreach (var category1 in @Model.Structures.FirstLevelCategories)
                                     { 
@@ -420,7 +420,7 @@
 					        <div id="cus_filter_3">
 						        Jelleg 2 kiválasztása
 						        <br />
-						        <select id="category2List" data-placeholder="Jelleg - 2..." class="chzn-select" multiple style="width:270px;">
+						        <select id="category2List" data-placeholder="Jelleg - 2..." class="chosen" multiple style="width:270px;">
 							        <option value=""></option>
 							        @foreach (var category2 in @Model.Structures.SecondLevelCategories)
                                     { 
@@ -431,7 +431,7 @@
 					        <div id="cus_filter_4">
                                 Jelleg 3 kiválasztása
 						        <br />
-                                <select id="category3List" data-placeholder="Jelleg - 3..." class="chzn-select" multiple style="width:270px;">
+                                <select id="category3List" data-placeholder="Jelleg - 3..." class="chosen" multiple style="width:270px;">
 							        <option value=""></option>
                                     @foreach (var category3 in @Model.Structures.ThirdLevelCategories)
                                     { 
@@ -1163,11 +1163,10 @@
             <p><em>HRP Hungary Kft. értékesitési csoportja</em><br />    
 </div>
 </div>
-        @Scripts.Render("~/bundles/webshop")
-        @Scripts.Render("~/bundles/easypaginate")
         @section ScriptFiles {
-      
+        head.js('@Scripts.Url("~/bundles/sammy")', '@Scripts.Url("~/bundles/sammytitle")', '@Scripts.Url("~/bundles/apputils")', '@Scripts.Url("~/bundles/helpers")', '@Scripts.Url("~/bundles/webshop")');
 
+        head.js('@Scripts.Url("~/bundles/easypaginate")');
         }
         @section ScriptOnReady {
         //console.log('ScriptOnReady section');

@@ -5,15 +5,17 @@ namespace CompanyGroup.Dto.WebshopModule
 {
     public class ActivateCartRequest
     {
-        public ActivateCartRequest() : this(0, String.Empty, String.Empty) { }
+        public ActivateCartRequest() : this(0, String.Empty, String.Empty, String.Empty) { }
 
-        public ActivateCartRequest(int cartId, string language, string visitorId)
+        public ActivateCartRequest(int cartId, string language, string visitorId, string currency)
         { 
-            CartId = cartId;
+            this.CartId = cartId;
 
-            Language = language;
+            this.Language = language;
 
-            VisitorId = visitorId;
+            this.VisitorId = visitorId;
+
+            this.Currency = currency;
         }
 
         /// <summary>
@@ -30,5 +32,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// látogató azonosítója
         /// </summary>
         public string VisitorId { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

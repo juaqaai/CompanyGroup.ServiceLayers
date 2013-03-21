@@ -118,5 +118,26 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             catch (Exception ex) { throw ex; }
         }
 
+        /// <summary>
+        /// összes tartozás, lejárt tartozás, pénznem lista
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount> InvoiceSumValues(string visitorId)
+        {
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(visitorId), "The visitorId cannot be null!");
+
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(visitorId);
+
+                List<CompanyGroup.Domain.PartnerModule.InvoiceSumAmount> result = invoiceRepository.InvoiceSumValues(visitor.CustomerId);
+
+                return result.ConvertAll( x => {
+                        return new CompanyGroup.Dto.PartnerModule.InvoiceSumAmount(String.Format("{0:0,0.00}", x.AmountCredit), String.Format("{0:0,0.00}", x.AmountOverdue), x.CurrencyCode);
+                    });
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }

@@ -17,7 +17,9 @@ namespace CompanyGroup.Dto.WebshopModule
             this.PaymentTerms = 0;
             this.DeliveryTerms = 0;
 
-            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions(); 
+            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
+
+            this.Currency = String.Empty;
         }
 
         public List<ShoppingCartItem> Items { get; set; }
@@ -33,5 +35,10 @@ namespace CompanyGroup.Dto.WebshopModule
         public int PaymentTerms { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
+
+        /// <summary>
+        /// pénznem
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

@@ -51,6 +51,7 @@
     <Compile Include="PartnerModule\Invoice.cs" />
     <Compile Include="PartnerModule\InvoiceHeader.cs" />
     <Compile Include="PartnerModule\InvoiceLine.cs" />
+    <Compile Include="PartnerModule\InvoiceSumAmount.cs" />
     <Compile Include="PartnerModule\Pager.cs" />
     <Compile Include="PartnerModule\UndoChangePassword.cs" />
     <Compile Include="PartnerModule\InvoiceInfoDetailed.cs" />

@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void AssociateCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("alma", "", "hu");
+            CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("alma", "", "hu", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -40,7 +40,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void AddCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "alma", "teszt1");
+            CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "alma", "teszt1", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -63,7 +63,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void SaveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.SaveCartRequest request = new CompanyGroup.Dto.WebshopModule.SaveCartRequest("hu", "alma", 1, "teszt2");
+            CompanyGroup.Dto.WebshopModule.SaveCartRequest request = new CompanyGroup.Dto.WebshopModule.SaveCartRequest("hu", "alma", 1, "teszt2", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -86,7 +86,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void RemoveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.RemoveCartRequest request = new CompanyGroup.Dto.WebshopModule.RemoveCartRequest(1, "hu", "alma");
+            CompanyGroup.Dto.WebshopModule.RemoveCartRequest request = new CompanyGroup.Dto.WebshopModule.RemoveCartRequest(1, "hu", "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -109,7 +109,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void ActivateCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.ActivateCartRequest request = new CompanyGroup.Dto.WebshopModule.ActivateCartRequest(1, "hu", "alma");
+            CompanyGroup.Dto.WebshopModule.ActivateCartRequest request = new CompanyGroup.Dto.WebshopModule.ActivateCartRequest(1, "hu", "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -132,7 +132,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void AddLineTest()
         {
-            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest(106, "3GTLA001300W", "hu", "hrp", 2, "3AC042B955814049A145A7D3A78ECEA0", true);
+            CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest(106, "3GTLA001300W", "hu", "hrp", 2, "3AC042B955814049A145A7D3A78ECEA0", true, CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -155,7 +155,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void RemoveLineTest()
         {
-            CompanyGroup.Dto.WebshopModule.RemoveLineRequest request = new CompanyGroup.Dto.WebshopModule.RemoveLineRequest(1, 1, "hu", "alma");
+            CompanyGroup.Dto.WebshopModule.RemoveLineRequest request = new CompanyGroup.Dto.WebshopModule.RemoveLineRequest(1, 1, "hu", "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -178,7 +178,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void UpdateLineQuantityTest()
         {
-            CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request = new CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest(1, 1, "hu", "hrp", 2, "alma");
+            CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request = new CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest(1, 1, "hu", "hrp", 2, "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -201,7 +201,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetShoppingCartInfoTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest(1, "alma");
+            CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request = new CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest(1, "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -224,7 +224,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetCartByKeyTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "alma");
+            CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 
@@ -247,7 +247,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetActiveCartTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "alma");
+            CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "alma", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
             Uri requestUri = null;
 

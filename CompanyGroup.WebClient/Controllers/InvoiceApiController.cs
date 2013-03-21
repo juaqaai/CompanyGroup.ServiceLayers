@@ -41,7 +41,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.PartnerModule.InvoiceInfo response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, CompanyGroup.Dto.PartnerModule.InvoiceInfo>("Invoice", "GetInvoiceInfo", req);
 
-                CompanyGroup.WebClient.Models.InvoiceInfo model = new CompanyGroup.WebClient.Models.InvoiceInfo(response.Items, response.Pager, response.ListCount, response.TotalNettoCredit, response.AllOverdueDebts, visitor);
+                CompanyGroup.WebClient.Models.InvoiceInfo model = new CompanyGroup.WebClient.Models.InvoiceInfo(response.Items, response.Pager, response.ListCount, visitor);
 
                 return Request.CreateResponse<CompanyGroup.WebClient.Models.InvoiceInfo>(HttpStatusCode.OK, model);
             }
@@ -70,6 +70,31 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest, CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>("Invoice", "GetDetails", request);
 
                 return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
+
+        /// <summary>
+        /// kifizetetlen és lejárt számlák lista
+        /// </summary>
+        /// <returns></returns>
+        [ActionName("InvoiceSumValues")]
+        [HttpGet]
+        public HttpResponseMessage InvoiceSumValues()
+        {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
+
+
+                List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount> response = this.GetJSonData<List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount>>("Invoice", "InvoiceSumValues", visitorData.VisitorId);
+
+                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.InvoiceSumAmount>>(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

@@ -11,8 +11,6 @@ namespace CompanyGroup.WebClient.Models
         public InvoiceInfo(List<CompanyGroup.Dto.PartnerModule.Invoice> items, 
                            CompanyGroup.Dto.PartnerModule.Pager pager, 
                            long listCount, 
-                           string totalNettoCredit, 
-                           string allOverdueDebts, 
                            Visitor visitor)
         {
             this.Items = items;
@@ -22,10 +20,6 @@ namespace CompanyGroup.WebClient.Models
             this.ListCount = listCount;
 
             this.Visitor = visitor;
-
-            this.TotalNettoCredit = totalNettoCredit;
-
-            this.AllOverdueDebts = allOverdueDebts;
         }
 
         /// <summary>
@@ -42,16 +36,6 @@ namespace CompanyGroup.WebClient.Models
         /// elemek száma
         /// </summary>
         public long ListCount { get; set; }
-
-        /// <summary>
-        /// összes tartozás
-        /// </summary>
-        public string TotalNettoCredit { get; set; }
-
-        /// <summary>
-        /// összes lejárt tartozás
-        /// </summary>
-        public string AllOverdueDebts { get; set; }
 
         /// <summary>
         /// látogató

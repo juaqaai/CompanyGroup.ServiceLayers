@@ -15,6 +15,11 @@ companyGroup.carreer = $.sammy(function () {
 		$("#Kereskedő").show();
 		$("#Termékmenedzser").show();
     });
+	
+	    this.get('#/closed', function (context) {
+        //console.log(context);
+        $.fancybox.close()
+    });
     //események
     this.bind('run', function (e, data) {
         var context = this;
