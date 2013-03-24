@@ -268,7 +268,7 @@ nav ul
 #layout-navigation {}
 #layout-featured {}
 #layout-before-main {}
-#layout-main {}
+#layout-main { background-color: #FFF;}
     #aside-first {}
     #layout-content {}
         #messages {}
@@ -310,6 +310,7 @@ nav ul
 .zone-beforecontent {}
 .zone-content {
 	background-color: #FFF;
+
 }
 .zone-aftercontent {}
 .zone-asidesecond {}

@@ -7,7 +7,6 @@ namespace CompanyGroup.Dto.WebshopModule
     /// rendelés válasz objektum
     /// </summary>
     [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "OrderFulFillment", Namespace = "CompanyGroup.Dto.WebshopModule")]
     public class OrderFulFillment
     {
         public OrderFulFillment()
@@ -29,41 +28,61 @@ namespace CompanyGroup.Dto.WebshopModule
             this.LineMessages = new List<string>();
 
             this.IsValidated = false;
+
+            this.HrpOrderId = String.Empty;
+
+            this.BscOrderId = String.Empty;
+
+            this.HrpSecondHandOrderId = String.Empty;
+
+            this.BscSecondHandOrderId = String.Empty;
         }
 
         /// <summary>
         /// direktben elkészült-e a rendelés, vagy nem
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Created", Order = 1)]
         public bool Created { get; set; }
 
         /// <summary>
         /// ha direktben nem készülz el a rendelés, akkor ennek a státusznak kell igaznak lennie.
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "WaitForAutoPost", Order = 2)]
         public bool WaitForAutoPost { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Message", Order = 3)]
         public string Message { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "StoredItems", Order = 4)]
         public List<CompanyGroup.Dto.WebshopModule.StoredShoppingCart> StoredItems { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "OpenedItems", Order = 5)]
         public List<CompanyGroup.Dto.WebshopModule.OpenedShoppingCart> OpenedItems { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ActiveCart", Order = 6)]
         public CompanyGroup.Dto.WebshopModule.ShoppingCart ActiveCart { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LeasingOptions", Order = 7)]
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LineMessages", Order = 8)]
         public List<string> LineMessages { get; set; }
 
         /// <summary>
         /// validált a kosár, vagy nem. (üzenet a Message-ben)
         /// </summary>
         public bool IsValidated { get; set; }
+
+        /// <summary>
+        /// hrp megrendelés azonosító
+        /// </summary>
+        public string HrpOrderId { get; set; }
+
+        /// <summary>
+        /// bsc megrendelés azonosító
+        /// </summary>
+        public string BscOrderId { get; set; }
+
+        /// <summary>
+        /// bsc használt cikk megrendelés azonosító
+        /// </summary>
+        public string BscSecondHandOrderId { get; set; }
+
+        /// <summary>
+        /// hrp használt cikk megrendelés azonosító
+        /// </summary>
+        public string HrpSecondHandOrderId { get; set; }
     }
 }

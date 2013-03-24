@@ -195,6 +195,32 @@ namespace CompanyGroup.Domain.WebshopModule
             }
         }
 
+        public bool AllInStock
+        {
+            get
+            {
+                try
+                {
+                    if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
+                    {
+                        return false;
+                    }
+
+                    bool allInStock = this.Items.ToList().TrueForAll(x =>
+                                      {
+                                          return ((x != null) && (x.Status.Equals(CartItemStatus.Created) || x.Status.Equals(CartItemStatus.Stored)) && (x.IsInStock)) || 
+                                                   x.Status.Equals(CartItemStatus.Deleted) || x.Status.Equals(CartItemStatus.Posted);
+                                      });
+
+                    return allInStock;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// üres-e a kosár?
         /// </summary>

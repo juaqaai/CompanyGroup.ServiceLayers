@@ -109,6 +109,7 @@ namespace CompanyGroup.Data.PartnerModule
         /// <param name="category2Id"></param>
         /// <param name="category3Id"></param>
         /// <param name="order"></param>
+        /// <param name="customerPriceGroup"></param>
         public void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup)
         {
             NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupInsert")
@@ -118,7 +119,8 @@ namespace CompanyGroup.Data.PartnerModule
                                                             .SetString("Category1Id", customerPriceGroup.Category1Id)
                                                             .SetString("Category2Id", customerPriceGroup.Category2Id)
                                                             .SetString("Category3Id", customerPriceGroup.Category3Id)
-                                                            .SetInt32("Order", customerPriceGroup.Order);
+                                                            .SetInt32("Order", customerPriceGroup.Order)
+                                                            .SetString("DataAreaId", customerPriceGroup.DataAreaId);
             query.UniqueResult();
         }
 

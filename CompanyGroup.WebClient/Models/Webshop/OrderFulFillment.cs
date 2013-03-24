@@ -7,7 +7,8 @@ namespace CompanyGroup.WebClient.Models
 {
     public class OrderFulFillment
     {
-        public OrderFulFillment(CompanyGroup.Dto.WebshopModule.OrderFulFillment orderFulFillment, bool catalogueOpenStatus, bool shoppingCartOpenStatus, Visitor visitor)
+        public OrderFulFillment(CompanyGroup.Dto.WebshopModule.OrderFulFillment orderFulFillment, bool catalogueOpenStatus, bool shoppingCartOpenStatus, 
+                                                                                                  Visitor visitor)
         {
             this.Created = orderFulFillment.Created;
 
@@ -30,6 +31,14 @@ namespace CompanyGroup.WebClient.Models
             this.ShoppingCartOpenStatus = shoppingCartOpenStatus;
 
             this.Visitor = visitor;
+
+            this.HrpOrderId = orderFulFillment.HrpOrderId;
+
+            this.BscOrderId = orderFulFillment.BscOrderId;
+
+            this.HrpSecondHandOrderId = orderFulFillment.HrpSecondHandOrderId;
+
+            this.BscSecondHandOrderId = orderFulFillment.BscSecondHandOrderId;
         }
 
         public Visitor Visitor { get; set; }
@@ -59,5 +68,14 @@ namespace CompanyGroup.WebClient.Models
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
 
         public List<string> LineMessages { get; set; }
+
+        public string HrpOrderId { get; set; }
+
+        public string BscOrderId { get; set; }
+
+        public string BscSecondHandOrderId { get; set; }
+
+        public string HrpSecondHandOrderId { get; set; }
+
     }
 }

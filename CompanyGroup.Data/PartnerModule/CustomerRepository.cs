@@ -157,7 +157,7 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
-        /// 
+        /// vevő árbesorolás lista
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <param name="customerId"></param>

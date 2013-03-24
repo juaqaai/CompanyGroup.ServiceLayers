@@ -3,7 +3,7 @@
 namespace CompanyGroup.WebClient.Models
 {
     /// <summary>
-    /// finance ajánlatkészítés kérés adatokat összefogó POCO
+    /// rendelés kérés adatokat összefogó POCO
     /// </summary>
     public class CreateOrder
     {
@@ -15,7 +15,7 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// szállítás időpontja
         /// </summary>
-        public DateTime DeliveryDate { get; set; }
+        public string DeliveryDate { get; set; }
 
         /// <summary>
         /// szállítást kért-e

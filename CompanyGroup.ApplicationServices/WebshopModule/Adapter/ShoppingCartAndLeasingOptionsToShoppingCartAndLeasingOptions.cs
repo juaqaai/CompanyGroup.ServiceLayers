@@ -21,7 +21,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     DeliveryTerms = Convert.ToInt32(shoppingCart.DeliveryTerms),
                     PaymentTerms = Convert.ToInt32(shoppingCart.PaymentTerms),
                     Shipping = new ShippingToShipping().Map(shoppingCart.Shipping), 
-                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions)
+                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
+                    AllInStock = shoppingCart.AllInStock,
+                    Currency = shoppingCart.Currency
                 };
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions(); }

@@ -15,6 +15,7 @@ namespace CompanyGroup.WebClient.Models
             this.PaymentTerms = shoppingCart.PaymentTerms;
             this.Shipping = shoppingCart.Shipping;
             this.SumTotal = shoppingCart.SumTotal;
+            this.AllInStock = shoppingCart.AllInStock;
         }
     }
 }

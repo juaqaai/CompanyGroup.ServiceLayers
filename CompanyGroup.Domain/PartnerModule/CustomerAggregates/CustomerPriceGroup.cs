@@ -49,6 +49,11 @@ namespace CompanyGroup.Domain.PartnerModule
         public int Order { get; set; }
 
         /// <summary>
+        /// vállalatkód
+        /// </summary>
+        public string DataAreaId { get; set; }
+
+        /// <summary>
         /// sorrendet meghatározó jellemző
         /// </summary>
         /// <param name="lineId"></param>
@@ -59,7 +64,8 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category3Id"></param>
         /// <param name="priceGroupId"></param>
         /// <param name="order"></param>
-        public CustomerPriceGroup(int lineId, int visitorKey, string priceGroupId, string manufacturerId, string category1Id, string category2Id, string category3Id, int order)
+        /// <param name="dataAreaId"></param>
+        public CustomerPriceGroup(int lineId, int visitorKey, string priceGroupId, string manufacturerId, string category1Id, string category2Id, string category3Id, int order, string dataAreaId)
         {
             this.LineId = lineId;
 
@@ -76,12 +82,14 @@ namespace CompanyGroup.Domain.PartnerModule
             this.Category3Id = category3Id;
 
             this.Order = order;
+
+            this.DataAreaId = dataAreaId;
         }
 
         /// <summary>
         /// sorrendet meghatározó jellemző
         /// </summary>
-        public CustomerPriceGroup() : this(0, 0, "", "", "", "", "", 0) { }
+        public CustomerPriceGroup() : this(0, 0, "", "", "", "", "", 0, "") { }
 
         #region "EntityBase"overrides"
 

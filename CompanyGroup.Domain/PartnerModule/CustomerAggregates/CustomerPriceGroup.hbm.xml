@@ -10,7 +10,8 @@
     <property name="Category1Id" />
     <property name="Category2Id" />
     <property name="Category3Id" />
-    <property name="Order" />    
+    <property name="Order" />
+    <property name="DataAreaId" />
   </class>
   <sql-query name="InternetUser.CustomerPriceGroupSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
@@ -25,6 +26,7 @@
     <query-param name="Category2Id" type="System.String"/>
     <query-param name="Category3Id" type="System.String"/>
     <query-param name="Order" type="System.Int32"/>
-    exec InternetUser.CustomerPriceGroupInsert @VisitorKey=:VisitorKey, @PriceGroupId=:PriceGroupId, @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order
+    <query-param name="DataAreaId" type="System.String"/>
+    exec InternetUser.CustomerPriceGroupInsert @VisitorKey=:VisitorKey, @PriceGroupId=:PriceGroupId, @ManufacturerId=:ManufacturerId,  @Category1Id=:Category1Id,  @Category2Id=:Category2Id,  @Category3Id=:Category3Id,  @Order=:Order, @DataAreaId=:DataAreaId
   </sql-query>  
 </hibernate-mapping>

@@ -174,7 +174,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                                             StockFilter = false,
                                                                             TextFilter = "",
                                                                             CurrentPageIndex = 1,
-                                                                            ItemsOnPage = 20,
+                                                                            ItemsOnPage = 30,
                                                                             Sequence = 0,
                                                                             VisitorId = "F1832E403BED4C9D975C620CC4DBF7BC"
                                                                         };
@@ -211,7 +211,7 @@ namespace CompanyGroup.ApplicationServices.Test
                                                            product.Structure.Manufacturer.ManufacturerId, 
                                                            product.Structure.Category1.CategoryId, 
                                                            product.Structure.Category2.CategoryId, 
-                                                           product.Structure.Category3.CategoryId);
+                                                           product.Structure.Category3.CategoryId, product.DataAreaId);
 
             Assert.IsTrue(price > 0);
         }

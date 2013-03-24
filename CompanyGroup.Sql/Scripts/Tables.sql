@@ -154,7 +154,8 @@ CREATE TABLE InternetUser.CustomerPriceGroup
 	Category2Id		NVARCHAR(4) NOT NULL DEFAULT '', 
 	Category3Id		NVARCHAR(4) NOT NULL DEFAULT '',
 	PriceGroupId	NVARCHAR(4) NOT NULL DEFAULT '',
-	[Order]			INT NOT NULL DEFAULT 1
+	[Order]			INT NOT NULL DEFAULT 1, 
+	DataAreaId		NVARCHAR(3) NOT NULL DEFAULT '',
 )
 GO
 

@@ -13,13 +13,14 @@ CREATE PROCEDURE [InternetUser].[CustomerPriceGroupInsert](@VisitorKey INT = 0,
 														   @Category1Id NVARCHAR(4) = '',
 														   @Category2Id NVARCHAR(4) = '',
 														   @Category3Id NVARCHAR(4) = '',							
-														   @Order INT = 0
+														   @Order INT = 0, 
+														   @DataAreaId NVARCHAR(3) = ''
 														  )			
 AS
 SET NOCOUNT ON
 
-	INSERT INTO InternetUser.CustomerPriceGroup (VisitorId, ManufacturerId, Category1Id, Category2Id, Category3Id, PriceGroupId, [Order])
-										 VALUES (@VisitorKey, @ManufacturerId, @Category1Id, @Category2Id, @Category3Id, @PriceGroupId, @Order);
+	INSERT INTO InternetUser.CustomerPriceGroup (VisitorId, ManufacturerId, Category1Id, Category2Id, Category3Id, PriceGroupId, [Order], DataAreaId)
+										 VALUES (@VisitorKey, @ManufacturerId, @Category1Id, @Category2Id, @Category3Id, @PriceGroupId, @Order, @DataAreaId);
 
 RETURN
 GO

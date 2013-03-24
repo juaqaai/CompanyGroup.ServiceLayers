@@ -20,6 +20,8 @@ namespace CompanyGroup.Dto.WebshopModule
             this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
 
             this.Currency = String.Empty;
+
+            this.AllInStock = false;
         }
 
         public List<ShoppingCartItem> Items { get; set; }
@@ -40,5 +42,10 @@ namespace CompanyGroup.Dto.WebshopModule
         /// pénznem
         /// </summary>
         public string Currency { get; set; }
+
+        /// <summary>
+        /// minden termék a kosárban raktáron van-e?
+        /// </summary>
+        public bool AllInStock { get; set; }
     }
 }

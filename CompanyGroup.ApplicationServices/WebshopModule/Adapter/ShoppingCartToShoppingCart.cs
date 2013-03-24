@@ -27,7 +27,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     DeliveryTerms = Convert.ToInt32(from.DeliveryTerms),
                     PaymentTerms =  Convert.ToInt32(from.PaymentTerms), 
                     Shipping =  new ShippingToShipping().Map(from.Shipping),
-                    Items = items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency))
+                    Items = items.ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, from.Currency)), 
+                    AllInStock = from.AllInStock
                 };
             }
             catch(Exception ex) { throw ex; }

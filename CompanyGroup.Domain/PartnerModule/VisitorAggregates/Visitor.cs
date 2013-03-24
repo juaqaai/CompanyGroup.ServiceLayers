@@ -246,42 +246,44 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category1Id"></param>
         /// <param name="category2Id"></param>
         /// <param name="category3Id"></param>
+        /// <param name="dataAreaId"></param>
         /// <![CDATA[
-        ///     Id	VisitorId	ManufacturerId	Category1Id	Category2Id	Category3Id	PriceGroupId	Order
-        ///    2370	247					                                                        3	150
-        ///    2371	247					                                                        2	170
-        ///    2372	247	        A010				                                            4	150
-        ///    2373	247	        A017				                                            4	150
-        ///    2374	247	        A029				                                            4	150
-        ///    2375	247	        A036				                                            5	140
-        ///    2376	247	        A040				                                            4	150
-        ///    2377	247	        A044				                                            5	140
-        ///    2378	247	        A052	           B007			                                5	140
-        ///    2379	247	        A057				                                            4	150
-        ///    2380	247	        A058				                                            3	160
-        ///    2381	247	        A075				                                            4	150
-        ///    2382	247	        A083	____	____	____	                                3	150
-        ///    2383	247	        A090				                                            4	150
-        ///    2384	247	        A093				                                            4	150
-        ///    2385	247	        A098				                                            4	150
-        ///    2386	247	        A102	____	____	____	                                3	150
-        ///    2387	247	        A122				                                            5	140
-        ///    2388	247	        A125				                                            3	160
-        ///    2389	247	        A133				                                            4	150
-        ///    2390	247	        A142				                                            4	150
+        ///     Id	VisitorId	ManufacturerId	Category1Id	Category2Id	Category3Id	PriceGroupId	Order   DataAreaId
+        ///    2370	247					                                                        3	150     bsc
+        ///    2371	247					                                                        2	170     hrp
+        ///    2372	247	        A010				                                            4	150     hrp
+        ///    2373	247	        A017				                                            4	150     hrp
+        ///    2374	247	        A029				                                            4	150     hrp
+        ///    2375	247	        A036				                                            5	140     hrp
+        ///    2376	247	        A040				                                            4	150     hrp
+        ///    2377	247	        A044				                                            5	140     hrp
+        ///    2378	247	        A052	           B007			                                5	140     hrp
+        ///    2379	247	        A057				                                            4	150     hrp
+        ///    2380	247	        A058				                                            3	160     hrp
+        ///    2381	247	        A075				                                            4	150     hrp
+        ///    2382	247	        A083	____	____	____	                                3	150     hrp
+        ///    2383	247	        A090				                                            4	150     hrp
+        ///    2384	247	        A093				                                            4	150     hrp
+        ///    2385	247	        A098				                                            4	150     hrp
+        ///    2386	247	        A102	____	____	____	                                3	150     hrp
+        ///    2387	247	        A122				                                            5	140     hrp
+        ///    2388	247	        A125				                                            3	160     hrp
+        ///    2389	247	        A133				                                            4	150     hrp
+        ///    2390	247	        A142				                                            4	150     hrp
         /// ]]>
         /// <returns></returns>
         public decimal CalculateCustomerPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
-                                              string manufacturerId, string category1Id, string category2Id, string category3Id)
+                                              string manufacturerId, string category1Id, string category2Id, string category3Id, string dataAreaId)
         {
             CustomerPriceGroup priceGroup;
 
-            //vizsgálat teljes egyezésre, gyártó - jelleg1 - jelleg2 - jelleg3, vagy üres gyártó - jelleg1 - jelleg2 - jelleg3
+            //vizsgálat teljes egyezésre, gyártó - jelleg1 - jelleg2 - jelleg3, vagy üres árbesorolás és termék gyártó - üres árbesorolás és termék jelleg1 - üres árbesorolás és termék jelleg2 - üres árbesorolás és termék jelleg3
             IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x =>
                                                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
                                                                                         ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
-                                                                                        ((x.Category3Id == category3Id) || (String.IsNullOrEmpty(x.Category3Id) && String.IsNullOrEmpty(category3Id))) );
+                                                                                        ((x.Category3Id == category3Id) || (String.IsNullOrEmpty(x.Category3Id) && String.IsNullOrEmpty(category3Id))) &&
+                                                                                        (x.DataAreaId == dataAreaId));
             
             if (priceGroups.Count() > 0)
             {
@@ -291,11 +293,12 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - jelleg1 - jelleg2 egyezésre, vagy üres gyártó - jelleg1 - jelleg2
+            //vizsgálat gyártó - jelleg1 - jelleg2 egyezésre, vagy üres árbesorolás és termék  gyártó - üres árbesorolás és termék jelleg1 - üres árbesorolás és termék jelleg2
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
-                                                        ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) );
+                                                        ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
+                                                        (x.DataAreaId == dataAreaId));
 
             if (priceGroups.Count() > 0)
             {
@@ -305,10 +308,11 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - jelleg1 - egyezésre, vagy üres gyártó - jelleg1
+            //vizsgálat gyártó - jelleg1 - egyezésre, vagy üres üres árbesorolás és termék gyártó - üres árbesorolás és termék jelleg1
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
-                                                        ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) );
+                                                        ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
+                                                        (x.DataAreaId == dataAreaId));
 
             if (priceGroups.Count() > 0)
             {
@@ -318,8 +322,8 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - egyezésre, vagy üres gyártó
-            priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))));
+            //vizsgálat gyártó - egyezésre, vagy üres árbesorolás és termék gyártó
+            priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) && (x.DataAreaId == dataAreaId));
 
             if (priceGroups.Count() > 0)
             {
@@ -330,7 +334,7 @@ namespace CompanyGroup.Domain.PartnerModule
             }
 
             //vizsgálat üres gyártó, jelleg1, jelleg2, jelleg3 -ra
-            priceGroups = this.CustomerPriceGroups.Where(x => (x.ManufacturerId == "" && x.Category1Id == "" && x.Category2Id == "" && x.Category3Id == ""));
+            priceGroups = this.CustomerPriceGroups.Where(x => (x.ManufacturerId == "" && x.Category1Id == "" && x.Category2Id == "" && x.Category3Id == "" && x.DataAreaId == dataAreaId));
 
             if (priceGroups.Count() > 0)
             {

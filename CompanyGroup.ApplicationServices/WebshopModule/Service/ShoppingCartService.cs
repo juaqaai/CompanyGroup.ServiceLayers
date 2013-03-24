@@ -525,7 +525,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                     //ár beállítás csak akkor, ha kereskedelmi készletről történik az értékesítés
                     shoppingCartItem.CustomerPrice = Convert.ToInt32(visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
-                                                                                                    product.Structure.Manufacturer.ManufacturerId, product.Structure.Category1.CategoryId, product.Structure.Category2.CategoryId, product.Structure.Category3.CategoryId));
+                                                                                                    product.Structure.Manufacturer.ManufacturerId, product.Structure.Category1.CategoryId, product.Structure.Category2.CategoryId, product.Structure.Category3.CategoryId, product.DataAreaId));
 
                 }
 
@@ -1022,11 +1022,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 #region "HRP - BSC rendelés feladása"
 
-                int year = request.DeliveryDate.Year == 1 ? DateTime.Now.Year : request.DeliveryDate.Year;
+                DateTime deliveryDate = DateTime.Now.AddDays(7);
 
-                int month = request.DeliveryDate.Month == 1 ? DateTime.Now.Month : request.DeliveryDate.Month;
+                DateTime.TryParse(request.DeliveryDate, out deliveryDate);
 
-                int day = request.DeliveryDate.Day == 1 ? DateTime.Now.Day : request.DeliveryDate.Day;
+                int year = deliveryDate.Year == 1 ? DateTime.Now.Year : deliveryDate.Year;
+
+                int month = deliveryDate.Month == 1 ? DateTime.Now.Month : deliveryDate.Month;
+
+                int day = deliveryDate.Day == 1 ? DateTime.Now.Day : deliveryDate.Day;
 
                 CompanyGroup.Domain.PartnerModule.SalesOrderCreateResult salesOrderCreateResultHrp = null;
 
@@ -1043,7 +1047,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryCity = deliveryAddress.City,
                         DeliveryCompanyName = visitor.CustomerName,
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
-                        DeliveryEmail = "",
+                        DeliveryEmail = visitor.Email,
                         DeliveryId = "",
                         DeliveryPersonName = visitor.PersonName,
                         DeliveryPhone = "",
@@ -1079,11 +1083,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         CustomerId = visitor.CustomerId,
                         DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdBsc, //visitor.DataAreaId
                         DeliveryCity = deliveryAddress.City,
-                        DeliveryCompanyName = "",
+                        DeliveryCompanyName = visitor.CustomerName,
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
-                        DeliveryEmail = "",
+                        DeliveryEmail = visitor.Email,
                         DeliveryId = "",
-                        DeliveryPersonName = "",
+                        DeliveryPersonName = visitor.PersonName,
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
@@ -1118,11 +1122,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         CustomerId = visitor.CustomerId,
                         DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
                         DeliveryCity = deliveryAddress.City,
-                        DeliveryCompanyName = "",
+                        DeliveryCompanyName = visitor.CustomerName,
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
-                        DeliveryEmail = "",
+                        DeliveryEmail = visitor.Email,
                         DeliveryId = "",
-                        DeliveryPersonName = "",
+                        DeliveryPersonName = visitor.PersonName,
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
@@ -1156,11 +1160,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         CustomerId = visitor.CustomerId,
                         DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, //visitor.DataAreaId
                         DeliveryCity = deliveryAddress.City,
-                        DeliveryCompanyName = "",
+                        DeliveryCompanyName = visitor.CustomerName,
                         DeliveryDate = String.Format("{0}-{1}-{2}", year, month, day),
-                        DeliveryEmail = "",
+                        DeliveryEmail = visitor.Email,
                         DeliveryId = "",
-                        DeliveryPersonName = "",
+                        DeliveryPersonName = visitor.PersonName,
                         DeliveryPhone = "",
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
@@ -1191,7 +1195,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                               AddrRecId = request.DeliveryAddressRecId, 
                                                                               City = deliveryAddress.City,
                                                                               Country = deliveryAddress.CountryRegionId, 
-                                                                              DateRequested = request.DeliveryDate, 
+                                                                              DateRequested = deliveryDate, 
                                                                               InvoiceAttached = false,
                                                                               Street = deliveryAddress.Street,
                                                                               ZipCode = deliveryAddress.ZipCode 
@@ -1237,6 +1241,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 response.WaitForAutoPost = false;
                 response.Message = String.Format("HRP: {0}  BSC: {1} HRP használt: {2} BSC használt: {3}", (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.SalesId : "", (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.SalesId : "", !String.IsNullOrEmpty(salesOrderCreateSecondHandResultHrp) ? salesOrderCreateSecondHandResultHrp : "", !String.IsNullOrEmpty(salesOrderCreateSecondHandResultBsc) ? salesOrderCreateSecondHandResultBsc : "");
                 response.IsValidated = (salesOrderCreateResultHrp != null) || (salesOrderCreateResultBsc != null) || (!String.IsNullOrEmpty(salesOrderCreateSecondHandResultHrp)) || (!String.IsNullOrEmpty(salesOrderCreateSecondHandResultBsc));
+
+                response.BscOrderId = (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.SalesId : "";
+                response.BscSecondHandOrderId = !String.IsNullOrEmpty(salesOrderCreateSecondHandResultBsc) ? salesOrderCreateSecondHandResultBsc : "";
+                response.HrpOrderId = (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.SalesId : "";
+                response.HrpSecondHandOrderId = !String.IsNullOrEmpty(salesOrderCreateSecondHandResultHrp) ? salesOrderCreateSecondHandResultHrp : "";
 
                 return response;
             }

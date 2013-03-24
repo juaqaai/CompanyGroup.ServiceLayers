@@ -22,7 +22,7 @@ SELECT V.Id, V.VisitorId, V.LoginIP, V.RecId,  V.CustomerId,  V.CustomerName,  V
        ISNULL(R.Email, '') as RepresentativeEmail,	 	    
 	   V.DataAreaId, V.LoginType as LoginType, V.PartnerModel, V.AutoLogin, V.LoginDate, V.LogoutDate, V.ExpireDate, V.Valid, 
 	   ISNULL(P.Id, 0) as LineId, ISNULL(P.VisitorId, 0) as VisitorKey, ISNULL(P.PriceGroupId, '') as PriceGroupId, ISNULL(P.ManufacturerId, '') as ManufacturerId, ISNULL(P.Category1Id, '') as Category1Id, ISNULL(P.Category2Id, '') as Category2Id, ISNULL(P.Category3Id, '') as Category3Id, 
-	   ISNULL(P.[Order], 0) as [Order] 
+	   ISNULL(P.[Order], 0) as [Order], ISNULL(P.DataAreaId, '') as DataAreaId
 	   FROM InternetUser.Visitor as V
 	   LEFT OUTER JOIN Representative as R ON R.Id = V.RepresentativeId
 	   LEFT OUTER JOIN InternetUser.CustomerPriceGroup as P ON V.Id = P.VisitorId
@@ -42,4 +42,4 @@ GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
 GO
 -- EXEC [InternetUser].[VisitorSelect] 'alma'
 
--- select * from InternetUser.Visitor order by id desc
+-- select top 100 * from InternetUser.Visitor order by id desc

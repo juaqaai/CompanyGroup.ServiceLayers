@@ -213,7 +213,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 products.ForEach(x =>
                 {
-                    decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
+                    decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId, x.DataAreaId);
 
                     x.CustomerPrice = this.ChangePrice(price, request.Currency);
 
@@ -460,7 +460,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 {
                     bannerProducts.ForEach(x =>
                     {
-                        decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
+                        decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId, x.DataAreaId);
 
                         x.CustomerPrice = this.ChangePrice(price, request.Currency);
                     });
@@ -520,7 +520,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             {
                 priceList.ForEach(x =>
                 {
-                    decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId);
+                    decimal price = visitor.CalculateCustomerPrice(x.Prices.Price1, x.Prices.Price2, x.Prices.Price3, x.Prices.Price4, x.Prices.Price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId, x.DataAreaId);
 
                     x.CustomerPrice = this.ChangePrice(price, request.Currency);
 
@@ -604,7 +604,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                product.Structure.Manufacturer.ManufacturerId,
                                                                product.Structure.Category1.CategoryId,
                                                                product.Structure.Category2.CategoryId,
-                                                               product.Structure.Category3.CategoryId);
+                                                               product.Structure.Category3.CategoryId, 
+                                                               product.DataAreaId);
 
                 product.CustomerPrice = this.ChangePrice(price, request.Currency);
 
@@ -744,7 +745,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                        product.Structure.Manufacturer.ManufacturerId,
                                                                        product.Structure.Category1.CategoryId,
                                                                        product.Structure.Category2.CategoryId,
-                                                                       product.Structure.Category3.CategoryId);
+                                                                       product.Structure.Category3.CategoryId, 
+                                                                       product.DataAreaId);
                 //product.CustomerPrice = this.ChangePrice(price, request.Currency);
 
                 product.IsInNewsletter = false;
