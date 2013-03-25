@@ -95,24 +95,22 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.Dto.RegistrationModule.Registration response = null;
 
-                //regisztrációs azonosító kiolvasása sütiből
+                //bejelentkezett felhasználó adatainak kiolvasása sütiből
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                //CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
-
                 //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
-                if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
-                {
-                    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.VisitorId, RegistrationApiController.DataAreaId)); 
-                }
+                //if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
+                //{
+                //    response = this.GetJSonData<CompanyGroup.Dto.RegistrationModule.Registration>("Customer", "GetCustomerRegistration", String.Format("{0}/{1}", visitorData.VisitorId, RegistrationApiController.DataAreaId)); 
+                //}
                 //volt már regisztrációs azonosítója, ezért az ahhoz tartozó adatokat kell visszaolvasni a cacheDb-ből
-                else if (!String.IsNullOrEmpty(visitorData.RegistrationId))     
+                if (!String.IsNullOrEmpty(visitorData.RegistrationId))     
                 {
                     CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
 
                     response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
                 }
-                //ha nincs belépve, és nincs megkezdett regisztrációja sem, akkor üreset kell visszaadni
+                //ha nincs megkezdett regisztrációja, akkor üreset kell visszaadni
                 else
                 {
                     response = new CompanyGroup.Dto.RegistrationModule.Registration();

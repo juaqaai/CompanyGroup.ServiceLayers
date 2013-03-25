@@ -14,31 +14,33 @@ namespace CompanyGroup.Domain.PartnerModule
                              bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery, 
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, 
                              bool webAdmin, bool priceListDownload, bool invoiceInfo, 
-                             string userName, string password, bool leftCompany, bool newsletter)
+                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId)
         {
-            ContactPersonId = contactPersonId;
-            FirstName = firstName;
-            LastName = lastName;
-            AllowOrder = allowOrder;
-            AllowReceiptOfGoods = allowReceiptOfGoods;
-            SmsArriveOfGoods = smsArriveOfGoods;
-            SmsOrderConfirm = smsOrderConfirm;
-            SmsOfDelivery = smsOfDelivery;
-            EmailArriveOfGoods = emailArriveOfGoods;
-            EmailOfOrderConfirm = emailOfOrderConfirm;
-            EmailOfDelivery = emailOfDelivery;
-            WebAdmin = webAdmin;
-            PriceListDownload = priceListDownload;
-            InvoiceInfo = invoiceInfo;
-            UserName = userName;
-            Password = password;
-            Newsletter = newsletter;
-            Telephone = !String.IsNullOrWhiteSpace(cellularPhone) ? cellularPhone : !String.IsNullOrWhiteSpace(phone) ? phone : "";
-            Email = email;
-            LeftCompany = leftCompany;
+            this.ContactPersonId = contactPersonId;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.AllowOrder = allowOrder;
+            this.AllowReceiptOfGoods = allowReceiptOfGoods;
+            this.SmsArriveOfGoods = smsArriveOfGoods;
+            this.SmsOrderConfirm = smsOrderConfirm;
+            this.SmsOfDelivery = smsOfDelivery;
+            this.EmailArriveOfGoods = emailArriveOfGoods;
+            this.EmailOfOrderConfirm = emailOfOrderConfirm;
+            this.EmailOfDelivery = emailOfDelivery;
+            this.WebAdmin = webAdmin;
+            this.PriceListDownload = priceListDownload;
+            this.InvoiceInfo = invoiceInfo;
+            this.UserName = userName;
+            this.Password = password;
+            this.Newsletter = newsletter;
+            this.Telephone = !String.IsNullOrWhiteSpace(cellularPhone) ? cellularPhone : !String.IsNullOrWhiteSpace(phone) ? phone : "";
+            this.Email = email;
+            this.LeftCompany = leftCompany;
+            this.RecId = recId;
+            this.RefRecId = refRecId;
         }
 
-        public ContactPerson() : this("", "", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false) { }
+        public ContactPerson() : this("", "", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0) { }
 
         /// <summary>
         /// kapcsolattartó egyedi azonosító
@@ -209,6 +211,16 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public bool LeftCompany { get; set; }
+
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("RecId")]
+        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
+        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        public long RecId { get; set; }
+
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("RefRecId")]
+        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
+        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        public long RefRecId { get; set; }
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>

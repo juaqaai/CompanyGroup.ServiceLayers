@@ -235,6 +235,9 @@ companyGroup.registration = $.sammy(function () {
             processData: true,
             success: function (response) {
                 if (response) {
+                    if (response.LoadData) {
+                        initRegistrationData(response);
+                    }
                     setTabsVisibility(2);
                     context.title('HRP/BSC Regisztráció - kitöltő adatai');
                 }
@@ -961,7 +964,7 @@ companyGroup.registration = $.sammy(function () {
             url: companyGroup.utils.instance().getRegistrationApiUrl('Post'),
             data: {},
             contentType: "application/json; charset=utf-8",
-            timeout: 10000,
+            timeout: 0,
             dataType: "json",
             processData: true,
             success: function (result) {

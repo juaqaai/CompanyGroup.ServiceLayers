@@ -18,21 +18,6 @@ namespace CompanyGroup.Domain.RegistrationModule
                              smsArriveOfGoods, smsOrderConfirm, smsOfDelivery, 
                              emailArriveOfGoods, emailOfOrderConfirm, emailOfDelivery, 
                              true, priceListDownload, invoiceInfo, 
-                             userName, password, leftCompany, newsletter)
-        {
-            RecId = recId;
-
-            RefRecId = refRecId;
-        }
-
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("RecId")]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public long RecId { get; set; }
-
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("RefRecId")]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public long RefRecId { get; set; }
+                             userName, password, leftCompany, newsletter, recId, refRecId) { }
     }
 }

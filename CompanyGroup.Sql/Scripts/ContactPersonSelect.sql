@@ -39,7 +39,9 @@ AS
 			   ISNULL( wsui.WEBLOGINNAME, '' ) as UserName, 
 			   ISNULL( wsui.PWD, '' ) as [Password],
 			   CONVERT( BIT, cp.LeftCompany ) as LeftCompany,
-			   CASE WHEN ( ISNULL( ( SELECT TEMAID FROM axdb_20120614.dbo.UPDHIRLEVELTEMA WHERE ContactPersonID = cp.ContactPersonId AND DataAreaID = @DataAreaId AND TemaID = 'Periféria' ), '' ) ) = '' THEN @No ELSE @Yes END as Newsletter
+			   CASE WHEN ( ISNULL( ( SELECT TEMAID FROM axdb_20120614.dbo.UPDHIRLEVELTEMA WHERE ContactPersonID = cp.ContactPersonId AND DataAreaID = @DataAreaId AND TemaID = 'Periféria' ), '' ) ) = '' THEN @No ELSE @Yes END as Newsletter, 
+			   cp.RecId, 
+			   0 as RefRecId
 		FROM axdb_20120614.dbo.ContactPerson as cp
 			 LEFT OUTER JOIN axdb_20120614.dbo.WebShopUserInfo as wsui ON wsui.ContactPersonID = cp.ContactPersonId AND wsui.DataAreaID = @VirtualDataAreaId
 		WHERE cp.CustAccount = CASE WHEN (@CustomerId <> '') THEN @CustomerId ELSE cp.CustAccount END AND

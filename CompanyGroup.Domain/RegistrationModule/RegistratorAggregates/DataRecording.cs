@@ -12,9 +12,9 @@ namespace CompanyGroup.Domain.RegistrationModule
 
         public DataRecording(string email, string name, string phone)
         {
-            Email = email;
-            Name = name;
-            Phone = phone;
+            this.Email = email;
+            this.Name = name;
+            this.Phone = phone;
         }
 
         /// <summary>

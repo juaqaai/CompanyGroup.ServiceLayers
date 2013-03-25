@@ -271,7 +271,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\DeliveryAddress.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\BankAccount.hbm.xml" />
-    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ContactPersonList.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\OrderAggregates\OrderDetailedLineInfo.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\InvoiceAggregates\InvoiceInfo.hbm.xml">
       <SubType>Designer</SubType>

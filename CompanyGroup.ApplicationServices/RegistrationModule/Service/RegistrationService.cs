@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Linq;
+
 
 namespace CompanyGroup.ApplicationServices.RegistrationModule
 {
@@ -31,7 +33,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         }
 
         /// <summary>
-        /// kulcs alapján a megkezdett regisztrációs adatok kiolvasása
+        /// kulcs alapján a megkezdett regisztrációs adatok kiolvasása a cacheDb-ből
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -104,11 +106,114 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             {
                 CompanyGroup.Domain.RegistrationModule.Registration registration = null;
 
+                //be kell-e tölteni a UI-on az adatokat?
+                bool loadData = false;
+
                 //bejelentkezett felhasználó lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
 
-                
-                if (!String.IsNullOrEmpty(request.RegistrationId))
+                //ha be van jelentkezve a felhasználó, akkor le kell kérdezni a korábbi regisztrációs adatokat
+                if (visitor.IsValidLogin && (String.IsNullOrEmpty(request.RegistrationId) || MongoDB.Bson.ObjectId.Empty.ToString().Equals(request.RegistrationId)))
+                {
+                    registration = new CompanyGroup.Domain.RegistrationModule.Registration();
+
+                    registration.DataRecording = new Domain.RegistrationModule.DataRecording();
+
+                    List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = customerRepository.GetBankAccounts(visitor.CustomerId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                    List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = customerRepository.GetContactPersons(visitor.CustomerId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                    CompanyGroup.Domain.PartnerModule.Customer customer = customerRepository.GetCustomer(visitor.CustomerId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                    List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                    CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = customerRepository.GetMailAddress(visitor.CustomerId, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+
+                    //registration.BankAccountList = new List<Domain.RegistrationModule.BankAccount>();
+
+                    registration.BankAccountList = bankAccounts.ConvertAll<CompanyGroup.Domain.RegistrationModule.BankAccount>(x => { return new CompanyGroup.Domain.RegistrationModule.BankAccount(x.Number, x.RecId); });
+
+                    registration.ContactPersonList = contactPersons.FindAll(x => x.WebAdmin == false).ConvertAll<CompanyGroup.Domain.RegistrationModule.ContactPerson>(x => { 
+                        
+                        return new CompanyGroup.Domain.RegistrationModule.ContactPerson(x.ContactPersonId, 
+                                                                                        x.LastName, 
+                                                                                        x.FirstName, 
+                                                                                        x.Email, 
+                                                                                        x.Telephone, 
+                                                                                        x.Telephone, 
+                                                                                        x.AllowOrder, 
+                                                                                        x.AllowReceiptOfGoods, 
+                                                                                        x.SmsArriveOfGoods, 
+                                                                                        x.SmsOrderConfirm, 
+                                                                                        x.SmsOfDelivery, 
+                                                                                        x.EmailArriveOfGoods, 
+                                                                                        x.EmailOfOrderConfirm, 
+                                                                                        x.EmailOfDelivery, 
+                                                                                        x.WebAdmin, 
+                                                                                        x.PriceListDownload, 
+                                                                                        x.InvoiceInfo, 
+                                                                                        x.UserName, 
+                                                                                        x.Password, 
+                                                                                        x.LeftCompany,
+                                                                                        x.Newsletter,
+                                                                                        x.RecId, 
+                                                                                        x.RefRecId); 
+                    });
+
+                    registration.CompanyData = new Domain.RegistrationModule.CompanyData(customer.InvoiceCountry, customer.CustomerId, customer.CustomerName, customer.EUVatNumber, customer.Email, 
+                                                                                         customer.Newsletter, customer.CompanyRegisterNumber, customer.SignatureEntityFile, customer.VatNumber);
+
+                    registration.CompanyId = customer.CustomerId;
+
+                    registration.DeliveryAddressList = deliveryAddresses.ConvertAll<CompanyGroup.Domain.RegistrationModule.DeliveryAddress>(x => { 
+                        
+                        return new CompanyGroup.Domain.RegistrationModule.DeliveryAddress(x.RecId, x.City, x.ZipCode, x.Street, x.CountryRegionId); 
+                    
+                    });
+
+                    registration.MailAddress = new Domain.RegistrationModule.MailAddress(customer.MailCity, customer.MailCountry, customer.MailZipCode, customer.MailStreet);
+
+                    registration.InvoiceAddress = new Domain.RegistrationModule.InvoiceAddress(customer.InvoiceCity, customer.InvoiceCountry, customer.InvoiceZipCode, customer.InvoiceStreet, customer.InvoicePhone);
+
+
+                    CompanyGroup.Domain.PartnerModule.ContactPerson webAdmin = contactPersons.FirstOrDefault(x => x.WebAdmin == true);
+
+                    
+
+                    registration.WebAdministrator = (webAdmin == null) ? new CompanyGroup.Domain.RegistrationModule.WebAdministrator() :
+                        
+                                                                         new CompanyGroup.Domain.RegistrationModule.WebAdministrator(webAdmin.ContactPersonId,
+                                                                                                                webAdmin.LastName,
+                                                                                                                webAdmin.FirstName,
+                                                                                                                webAdmin.Email,
+                                                                                                                webAdmin.Telephone,
+                                                                                                                webAdmin.Telephone,
+                                                                                                                webAdmin.AllowOrder,
+                                                                                                                webAdmin.AllowReceiptOfGoods,
+                                                                                                                webAdmin.SmsArriveOfGoods,
+                                                                                                                webAdmin.SmsOrderConfirm,
+                                                                                                                webAdmin.SmsOfDelivery,
+                                                                                                                webAdmin.EmailArriveOfGoods,
+                                                                                                                webAdmin.EmailOfOrderConfirm,
+                                                                                                                webAdmin.EmailOfDelivery, 
+                                                                                                                webAdmin.PriceListDownload,
+                                                                                                                webAdmin.InvoiceInfo,
+                                                                                                                webAdmin.UserName,
+                                                                                                                webAdmin.Password,
+                                                                                                                webAdmin.LeftCompany,
+                                                                                                                webAdmin.Newsletter,
+                                                                                                                webAdmin.RecId,
+                                                                                                                webAdmin.RefRecId);
+                    
+                    registration.VisitorId = visitor.VisitorId;
+
+                    registration.Status = Domain.RegistrationModule.RegistrationStatus.Created;
+
+                    loadData = true;
+                }
+
+                //ha nem üres a kérésben szereplő regisztrációs azonosító, akkor annak lekérdezése történik a cacheDb-ből
+                if (!String.IsNullOrEmpty(request.RegistrationId) && !MongoDB.Bson.ObjectId.Empty.ToString().Equals(request.RegistrationId))
                 {
                     registration = registrationRepository.GetByKey(request.RegistrationId);
                 }
@@ -117,7 +222,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 if (registration == null || MongoDB.Bson.ObjectId.Empty.Equals(registration.Id))
                 {
                     //üres regisztráció létrehozása
-                    CompanyGroup.Domain.RegistrationModule.Registration newRegistration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                    CompanyGroup.Domain.RegistrationModule.Registration newRegistration = (registration == null) ? CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration() : registration;
 
                     //új regisztrációs azonosító létrehozása
                     newRegistration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
@@ -133,12 +238,16 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                     //új regisztráció visszaolvasás
                     registration = registrationRepository.GetByKey(newRegistration.Id.ToString());
+
+                    loadData = true;
                 }
 
                 //ha még mindíg nincs meg a regisztráció, akkor egy új létrehozása szükséges
                 if (registration == null)
                 {
                     registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+
+                    loadData = true;
                 }
 
                 //bankszámlaszámok szétdarabolása
@@ -147,6 +256,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
 
                 response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
+
+                response.LoadData = loadData;
 
                 return response;
             }

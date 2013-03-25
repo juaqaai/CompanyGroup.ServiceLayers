@@ -21,28 +21,14 @@ namespace CompanyGroup.Domain.RegistrationModule
                              smsArriveOfGoods, smsOrderConfirm, smsOfDelivery, 
                              emailArriveOfGoods, emailOfOrderConfirm, emailOfDelivery, 
                              webAdmin, priceListDownload, invoiceInfo, 
-                             userName, password, leftCompany, newsletter)
+                             userName, password, leftCompany, newsletter, recId, refRecId)
         {
-            RecId = recId;
-
-            RefRecId = refRecId;
-
             this.Id = MongoDB.Bson.ObjectId.GenerateNewId();
         }
 
         [MongoDB.Bson.Serialization.Attributes.BsonId(Order = 1)]    
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public MongoDB.Bson.ObjectId Id { set; get; }
-
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("RecId")]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public long RecId { get; set; }
-
-        [MongoDB.Bson.Serialization.Attributes.BsonElement("RefRecId")]
-        [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
-        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
-        public long RefRecId { get; set; }
 
     }
 }

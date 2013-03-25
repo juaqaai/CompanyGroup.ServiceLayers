@@ -119,6 +119,21 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 CompanyGroup.WebClient.Models.RegistrationData model = this.GetRegistration();
 
+                //regisztrációs azonosító kiolvasása sütiből
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
+
+                CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration(visitorData.RegistrationId, visitorData.Language, visitorData.VisitorId);
+
+                CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
+
+                //ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
+                if (response.Successed)
+                {
+                    visitorData.RegistrationId = String.Empty;
+
+                    CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, CookieName, visitorData);
+                }
+
                 return View(model);
             }
             catch (Exception ex)

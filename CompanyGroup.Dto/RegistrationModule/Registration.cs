@@ -6,7 +6,6 @@ namespace CompanyGroup.Dto.RegistrationModule
     /// <summary>
     /// összefogja a regisztrációs űrlapon módosítható értékeket 
     /// </summary>
-    [System.Runtime.Serialization.DataContract(Name = "Registration", Namespace = "CompanyGroup.Dto.RegistrationModule")]
     public class Registration
     {
         public Registration()
@@ -53,36 +52,30 @@ namespace CompanyGroup.Dto.RegistrationModule
             this.Visitor = new CompanyGroup.Dto.PartnerModule.Visitor();
 
             this.RegistrationId = String.Empty;
+
+            this.LoadData = false;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "DataRecording", Order = 1)]
         public CompanyGroup.Dto.RegistrationModule.DataRecording DataRecording { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CompanyData", Order = 2)]
         public CompanyGroup.Dto.RegistrationModule.CompanyData CompanyData { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "InvoiceAddress", Order = 3)]
         public CompanyGroup.Dto.RegistrationModule.InvoiceAddress InvoiceAddress { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "MailAddress", Order = 3)]
         public CompanyGroup.Dto.RegistrationModule.MailAddress MailAddress { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "BankAccounts", Order = 4)]
         public List<CompanyGroup.Dto.RegistrationModule.BankAccount> BankAccounts { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "DeliveryAddresses", Order = 5)]
         public List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> DeliveryAddresses { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ContactPersons", Order = 6)]
         public List<CompanyGroup.Dto.RegistrationModule.ContactPerson> ContactPersons { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "WebAdministrator", Order = 7)]
         public CompanyGroup.Dto.RegistrationModule.WebAdministrator WebAdministrator { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Visitor", Order = 8)]
         public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 9)]
         public string RegistrationId { get; set; }
+
+        public bool LoadData { get; set; }
     }
 }

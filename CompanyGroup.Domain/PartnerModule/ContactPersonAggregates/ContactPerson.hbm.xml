@@ -26,6 +26,8 @@
     <return-scalar column="Password" type="System.String"/>
     <return-scalar column="LeftCompany" type="System.Boolean"/>
     <return-scalar column="Newsletter" type="System.Boolean"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    <return-scalar column="RefRecId" type="System.Int64"/>
     exec InternetUser.ContactPersonSelect @CustomerId=:CustomerId, @ContactPersonId=:ContactPersonId, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>

@@ -14,5 +14,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         {
             return new CompanyGroup.Dto.RegistrationModule.BankAccount() { Id = String.Empty, Part1 = from.Part1, Part2 = from.Part2, Part3 = from.Part3, RecId = from.RecId };
         }
+
+
     }
 }
