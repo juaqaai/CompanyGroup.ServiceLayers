@@ -9,13 +9,15 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class SalesOrderCreateRequest
     {
-        public SalesOrderCreateRequest() : this(0, "", "", 0, "", false, 0, 0, "", "") { }
+        public SalesOrderCreateRequest() : this(0, "", "", "", 0, "", false, 0, 0, "", "") { }
 
-        public SalesOrderCreateRequest(int cartId, string language, string visitorId, 
+        public SalesOrderCreateRequest(int cartId, string currency, string language, string visitorId, 
                                        long deliveryAddressRecId, string deliveryDate, bool deliveryRequest,
                                        int paymentTerm, int deliveryTerm, string customerOrderId, string customerOrderNote)
         {
             this.CartId = cartId;
+
+            this.Currency = currency;
 
             this.Language = language;
 
@@ -40,6 +42,8 @@ namespace CompanyGroup.Dto.WebshopModule
         /// kosár azonosító
         /// </summary>
         public int CartId { get; set; }
+
+        public string Currency { get; set; }
 
         /// <summary>
         /// választott nyelv

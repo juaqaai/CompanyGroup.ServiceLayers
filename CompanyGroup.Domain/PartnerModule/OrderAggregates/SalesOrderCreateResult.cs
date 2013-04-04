@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.PartnerModule
 {
-    [System.Xml.Serialization.XmlRoot(ElementName = "SalesOrderResponse", Namespace = "http://Shared.Web.Dynamics.Entities/SalesOrderResponse")]
+    [System.Xml.Serialization.XmlRoot(ElementName = "SalesOrderResponse", Namespace = "http://CompanyGroup.Domain.WebshopModule/SalesOrderResponse")]
     public class SalesOrderCreateResult : System.Xml.Serialization.IXmlSerializable
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
         public string DataAreaId { get; set; }
 
-		//<?xml version=\"1.0\" encoding=\"utf-16\"?><SalesOrderResponse xmlns=\"http://Shared.Web.Dynamics.Entities/SalesOrderResponse\">
+		//<?xml version=\"1.0\" encoding=\"utf-16\"?><SalesOrderResponse xmlns=\"http://CompanyGroup.Domain.WebshopModule/SalesOrderResponse\">
         //<SalesId>VR636087</SalesId>
         //<Code>1</Code>
         //<Message>The createSalesOrder process completed successfully!</Message>

@@ -295,7 +295,7 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
-        /// adott vállalatban lévő elemek kiolvasása (nem használt)
+        /// adott vállalatban lévő elemek kiolvasása (kosár státusz új, vagy tárolt, cikk vállalatkódja egyezik a paraméter vállalatkódjával, a cikk nem használt cikk)
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
@@ -312,7 +312,7 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
-        /// adott vállalatban lévő használt elemek kiolvasása
+        /// adott vállalatban lévő használt elemek kiolvasása (kosár státusz új, vagy tárolt, cikk vállalatkódja egyezik a paraméter vállalatkódjával, cikk használt cikk)
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>

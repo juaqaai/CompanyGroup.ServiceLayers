@@ -3,7 +3,19 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
-        <ConnectionNode Name="srv2:HRP_HEADOFFICE\JuhaszA">
+        <ConnectionNode Name="AXDB\HRPAXDB:HRP_HEADOFFICE\juhasza">
+          <Created>2013-04-02T22:10:21.5589893+02:00</Created>
+          <Type>SQL</Type>
+          <Server>AXDB\HRPAXDB</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB>Axdb_20130131</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="srv2:HRP_HEADOFFICE\juhasza">
           <Created>2013-01-26T01:24:38.35824+01:00</Created>
           <Type>SQL</Type>
           <Server>srv2</Server>
@@ -19,6 +31,12 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
+        <FileNode Name="CataloguePriceUpdate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CataloguePriceUpdate.sql</FullPath>
+        </FileNode>
         <FileNode Name="CreateDb.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
@@ -36,6 +54,12 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Procedures.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SyncMetadata.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SyncMetadata.sql</FullPath>
         </FileNode>
         <FileNode Name="Tables.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>

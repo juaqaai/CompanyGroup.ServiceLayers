@@ -1,0 +1,1435 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobSalesOrderServiceTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobSalesOrderServiceTest
+    #static void JobSalesOrderServiceTest(Args _args)
+    #{
+    #    SalesOrderService salesOrderService;
+    #    SalesOrderEntity salesOrderEntity;
+    #    SalesLineEntity salesLineEntity;
+    #    str xml = '';
+    #    str msg = '';
+    #    ListEnumerator lstEnum;
+    #    ;
+    #
+    #    salesOrderService = new SalesOrderService();
+    #
+    #    xml = salesOrderService.serializeTest();
+    #
+    #    info( 'SalesOrderEntity xml: ' + xml );
+    #
+    #    salesOrderEntity = salesOrderService.deSerializeTest(xml);
+    #
+    #    lstEnum = salesOrderEntity.getItems().getEnumerator();
+    #    while(lstEnum.moveNext())
+    #    {
+    #        salesLineEntity = lstEnum.current();
+    #        msg += ' ItemId: ' +  salesLineEntity.getItemId();
+    #        msg += ' Qty: ' + num2str(salesLineEntity.getQty(), 0, 16, 1, 3 );
+    #        msg += ' ConfigId: ' + salesLineEntity.getConfigId();
+    #    }
+    #
+    #    msg += ' LineCount: ' + int2str(salesOrderEntity.getLineCount());
+    #
+    #    info( 'SalesOrderEntity message: ' + msg);
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobSalesOrderServiceTest2 eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobSalesOrderServiceTest2
+    #static void JobSalesOrderServiceTest2(Args _args)
+    #{
+    #    SalesOrderService salesOrderService;
+    #    SalesOrderEntity salesOrderEntity;
+    #    SalesLineEntity salesLineEntity;
+    #    str xml;
+    #    str msg = '';
+    #    ListEnumerator lstEnum;
+    #    int ret;
+    #    ;
+    #
+    #    /*
+    #
+    #"<?xml version=\"1.0\" encoding=\"utf-16\"?><SalesOrder xmlns=\"http://Shared.Web.Dynamics.Entities/SalesOrder\">
+    #<ContactPersonId>SKAPC00008</ContactPersonId>
+    #<CustomerId>SV000012</CustomerId>
+    #<DataAreaId>ser</DataAreaId>
+    #<DeliveryCity>Gospođinci</DeliveryCity>
+    #<DeliveryCompanyName>HRP Hu</DeliveryCompanyName>
+    #<DeliveryDate>2011.03.27</DeliveryDate
+    #<DeliveryEmail>jverebelyi@hrp.hu</DeliveryEmail>
+    #<DeliveryId>5637324326</DeliveryId>
+    #<DeliveryPersonName>SKAPC00008</DeliveryPersonName>
+    #<DeliveryPhone />
+    #<DeliveryStreet />
+    #<DeliveryZip />
+    #<Message/>
+    #<PartialDelivery>1</PartialDelivery>
+    #<RequiredDelivery>0</RequiredDelivery>
+    #<SalesSource>1</SalesSource>
+    #<InventLocationId />
+    #<Transporter />
+    #<Lines>
+    #<Line>
+    #<ConfigId /><InventDimId /><ItemId>ABP6P5G41E</ItemId><TaxItem /><Qty>1</Qty></Line>
+    #<Line><ConfigId /><InventDimId /><ItemId>AV5670DI5V2</ItemId><TaxItem /><Qty>1</Qty></Line></Lines></SalesOrder>"
+    #    */
+    #
+    #    xml = '<?xml version=\"1.0\" encoding=\"utf-16\"?>' +
+    #          '<SalesOrder xmlns=\"http://Shared.Web.Dynamics.Entities/SalesOrder\">' +
+    #          '<ContactPersonId>SKAPC00008</ContactPersonId>' +
+    #          '<CustomerId>SV000012</CustomerId>' +
+    #          '<DataAreaId>ser</DataAreaId>' +
+    #          '<DeliveryCity>Gospođinci</DeliveryCity>' +
+    #          '<DeliveryCompanyName>HRP Hu</DeliveryCompanyName>' +
+    #          '<DeliveryDate>2011.03.21</DeliveryDate>' +
+    #          '<DeliveryEmail>jverebelyi@hrp.hu</DeliveryEmail>' +
+    #          '<DeliveryId>5637324326</DeliveryId>' +
+    #          '<DeliveryPersonName>SKAPC00008</DeliveryPersonName>' +
+    #          '<DeliveryPhone>+38/456-4533</DeliveryPhone>' +
+    #          '<DeliveryStreet>Sample street 12</DeliveryStreet>' +
+    #          '<DeliveryZip>11000</DeliveryZip>' +
+    #          '<Message />' +
+    #          '<PartialDelivery>1</PartialDelivery>' +
+    #          '<RequiredDelivery>0</RequiredDelivery>' +
+    #          '<SalesSource>1</SalesSource>' +
+    #          '<InventLocationId />' +
+    #          '<Transporter />' +
+    #          '<Lines>' +
+    #          '<Line>' +
+    #          '<ConfigId />' +
+    #          '<InventDimId />' +
+    #          '<ItemId>C12C802221BB</ItemId>' +
+    #          '<TaxItem />' +
+    #          '<Qty>1</Qty>' +
+    #          '</Line>' +
+    #          '<Line>' +
+    #          '<ConfigId />' +
+    #          '<InventDimId />' +
+    #          '<ItemId>BCI24B</ItemId>' +
+    #          '<TaxItem />' +
+    #          '<Qty>2</Qty>' +
+    #          '</Line>' +
+    #          '</Lines>' +
+    #          '</SalesOrder>';
+    #
+    #        salesOrderService = new SalesOrderService();
+    #
+    #        //salesOrderService.deserialize(xml);
+    #
+    #        //salesOrderEntity = salesOrderService.getSalesOrderEntity();
+    #
+    #
+    #        //lstEnum = salesOrderEntity.getItems().getEnumerator();
+    #        //while(lstEnum.moveNext())
+    #        //{
+    #        //    salesLineEntity = lstEnum.current();
+    #        //    msg += ' ConfigId: ' +  salesLineEntity.getConfigId();
+    #        //    msg += ' InventDimId: ' +  salesLineEntity.getInventDimId();
+    #        //    msg += ' ItemId: ' +  salesLineEntity.getItemId();
+    #        //    msg += ' TaxITem: ' +  salesLineEntity.getTaxItem();
+    #        //    msg += ' Qty: ' + num2str(salesLineEntity.getQty(), 0, 16, 1, 3 );
+    #        //    msg += ' ConfigId: ' + salesLineEntity.getConfigId();
+    #        //}
+    #
+    #        ret = salesOrderService.createSalesOrder(xml);
+    #
+    #        info(int2str(ret));
+    #
+    #        //info('CustAccount: ' + salesOrderEntity.getCustAccount() + ' items: ' + msg + ' itemcount: ' + int2str(salesOrderEntity.getItems().elements()) );
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobSalesOrderServiceTest3 eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobSalesOrderServiceTest3
+    #static void JobSalesOrderServiceTest3(Args _args)
+    #{
+    #    SalesOrderService salesOrderService;
+    #    str ret = '';
+    #    str xml = '';
+    #
+    #    ItemId itemId = 'AV5670DI1';
+    #    int qty = 1;
+    #    CustAccount customerId = 'SV000002';
+    #    DataAreaId dataAreaId = 'ser';
+    #    RecId deliveryId = 5637326827;
+    #    ContactPersonId contactPersonId = 'SKAPC00001';
+    #
+    #    ;
+    #          xml ='<?xml version=\"1.0\" encoding=\"utf-16\"?>' +
+    #'<SalesOrder xmlns=\"http://CompanyGroup.Domain.WebshopModule/SalesOrder\">' +
+    #'<ContactPersonId>KAPCS03399</ContactPersonId>' +
+    #'<CurrencyCode>HUF</CurrencyCode>' +
+    #'<CustomerId>V001446</CustomerId>' +
+    #'<CustomerOrderNo>teszt3</CustomerOrderNo>' +
+    #'<CustomerRef>teszt3 megjegyzés</CustomerRef>' +
+    #'<DataAreaId>hrp</DataAreaId>' +
+    #'<DeliveryCity>Budapest XIV.ker</DeliveryCity>' +
+    #'<DeliveryCompanyName>iPon Computer Kft.</DeliveryCompanyName>' +
+    #'<DeliveryDate>2013-4-3</DeliveryDate>' +
+    #'<DeliveryEmail>paradi@ipon.hu</DeliveryEmail>' +
+    #'<DeliveryPersonName>Parádi András</DeliveryPersonName>' +
+    #'<DeliveryStreet>Francia út 40/b</DeliveryStreet>' +
+    #'<DeliveryZip>1143</DeliveryZip>' +
+    #'<InventLocationId>KULSO</InventLocationId>' +
+    #'<LineCount>1</LineCount>' +
+    #'<Payment>U8</Payment>' +
+    #'<RequiredDelivery>1</RequiredDelivery>' +
+    #'<SalesSource>1</SalesSource>' +
+    #'<Lines>' +
+    #'<Line>' +
+    #'<ConfigId>ALAP</ConfigId>' +
+    #'<ItemId>T24B350EW</ItemId>' +
+    #'<Qty>1</Qty></Line>' +
+    #'</Lines>' +
+    #'</SalesOrder>';
+    #
+    #         salesOrderService = new SalesOrderService();
+    #
+    #        //TODO: breakpoint
+    #        ret = salesOrderService.createSalesOrder(xml);
+    #
+    #        info('SalesOrder: ' + ret);
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) Job308 eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #Job308
+    #static void JobSecondhandOrderServiceTest(Args _args)
+    #{
+    #    str xml = '<?xml version=\"1.0\" encoding=\"utf-16\"?>' +
+    #'<SecondhandOrder xmlns=\"http://CompanyGroup.Domain.WebshopModule/SecondhandOrder\">' +
+    #'<ContactPersonId>KAPCS03399</ContactPersonId>' +
+    #'<CustomerId>V001446</CustomerId>' +
+    #'<CustomerOrderNo>xcxcxcxc</CustomerOrderNo>' +
+    #'<CustomerRef>xcxcxcxc</CustomerRef>' +
+    #'<DataAreaId>hrp</DataAreaId>' +
+    #'<DeliveryCity>Budapest XIV.ker</DeliveryCity>' +
+    #'<DeliveryDate>2013-3-27</DeliveryDate>' +
+    #'<DeliveryEmail>paradi@ipon.hu</DeliveryEmail>' +
+    #'<DeliveryName>iPon Computer Kft.</DeliveryName>' +
+    #'<DeliveryStreet>Francia út 0/b</DeliveryStreet>' +
+    #'<DeliveryZip>1143</DeliveryZip>' +
+    #'<InventLocationId>HASZNALT</InventLocationId>' +
+    #'<Payment>ATUT8</Payment>' +
+    #'<RequiredDelivery>0</RequiredDelivery>' +
+    #'<LineCount>1</LineCount>' +
+    #'<Lines>' +
+    #'<Line>' +
+    #'<ConfigId>XXOEMKARCO</ConfigId>' +
+    #'<ItemId>SCD400G</ItemId>' +
+    #'<Qty>1</Qty>' +
+    #'</Line>' +
+    #'</Lines>' +
+    #'</SecondhandOrder>';
+    #
+    #    SecondhandOrderService service = new SecondhandOrderService();
+    #
+    #    str res = '';
+    #    ;
+    #
+    #    res = service.createSecondhandOrder(xml);
+    #
+    #    info(res);
+    #
+    #}
+  ENDSOURCE
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SalesOrderService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SalesOrderService
+    PROPERTIES
+      Name                #SalesOrderService
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class SalesOrderService
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #constructSalesOrderResponse
+        #str constructSalesOrderResponse(SalesId _SalesId = '', int _code = 0, str _msg = '')
+        #{
+        #    str xml;
+        #
+        #    XmlTextWriter writer;
+        #
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement2('SalesOrderResponse', #SchemaResponseUrl);
+        #
+        #    writer.writeElementString('SalesId', _SalesId);
+        #
+        #    writer.writeElementString('Code', int2str(_code));
+        #
+        #    writer.writeElementString('Message', _msg);
+        #
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SalesLineEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SalesLineEntity
+    PROPERTIES
+      Name                #SalesLineEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class SalesLineEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SecondhandLine eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SecondhandLine
+    PROPERTIES
+      Name                #SecondhandLine
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class SecondhandLine
+        #{
+        #    ItemId      itemId;
+        #    Real        qty;
+        #    ConfigId    configId;
+        #}
+      ENDSOURCE
+      SOURCE #getConfigId
+        #public ConfigId getConfigId()
+        #{
+        #    return configId;
+        #}
+      ENDSOURCE
+      SOURCE #getItemId
+        #public ItemId getItemId()
+        #{
+        #    return itemId;
+        #}
+      ENDSOURCE
+      SOURCE #getQty
+        #public Real getQty()
+        #{
+        #    return qty;
+        #}
+      ENDSOURCE
+      SOURCE #isValid
+        #boolean isValid()
+        #{
+        #    ;
+        #    return configId != '' && itemId != '' && qty > 0;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #public void new(ItemId _itemId = '', Real _qty = 0, ConfigId _configId = '')
+        #{
+        #    ;
+        #    itemId = _itemId;
+        #    qty = _qty;
+        #    configId = _configId;
+        #}
+      ENDSOURCE
+      SOURCE #setConfigId
+        #public void setConfigId(ConfigId _configId)
+        #{
+        #    ;
+        #    configId = _configId;
+        #}
+      ENDSOURCE
+      SOURCE #setItemId
+        #public void setItemId(ItemId _itemId)
+        #{
+        #    ;
+        #    itemId = _itemId;
+        #}
+      ENDSOURCE
+      SOURCE #setQty
+        #public void setQty(Real _qty)
+        #{
+        #    ;
+        #    qty = _qty;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SalesOrderEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SalesOrderEntity
+    PROPERTIES
+      Name                #SalesOrderEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class SalesOrderEntity
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #getCustomerOrderNo
+        #str 20 getCustomerOrderNo()
+        #{
+        #    ;
+        #    return customerOrderNo;
+        #}
+      ENDSOURCE
+      SOURCE #getCustomerRef
+        #str 300 getCustomerRef()
+        #{
+        #    ;
+        #    return customerRef;
+        #}
+      ENDSOURCE
+      SOURCE #getPayment
+        #PaymTermId getPayment()
+        #{
+        #    ;
+        #    return payment;
+        #}
+      ENDSOURCE
+      SOURCE #setCustomerOrderNo
+        #void setCustomerOrderNo(str 20 _customerOrderNo)
+        #{
+        #    ;
+        #    customerOrderNo = _customerOrderNo;
+        #}
+      ENDSOURCE
+      SOURCE #setCustomerRef
+        #void setCustomerRef(str 300 _customerRef)
+        #{
+        #    ;
+        #    customerRef = _customerRef;
+        #}
+      ENDSOURCE
+      SOURCE #setPayment
+        #void setPayment(PaymTermId _payment)
+        #{
+        #    ;
+        #    payment = _payment;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SecondhandEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SecondhandEntity
+    PROPERTIES
+      Name                #SecondhandEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #addItem
+        #public void addItem(SecondhandLine _line)
+        #{
+        #    if ( _line.isValid() )
+        #    {
+        #        items.addEnd( _line );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #//használt cikk adatokat összefogó osztály
+        #public class SecondhandEntity
+        #{
+        #    ContactPersonId contactPersonId;
+        #
+        #    CustAccount customer;
+        #
+        #    str 300 customerRef;
+        #
+        #    str 20 customerOrderNo;
+        #
+        #    DataAreaId dataAreaId;
+        #
+        #    KiszalitasDatum deliveryDate;
+        #
+        #    str 80 deliveryName;
+        #
+        #    str 10 deliveryZipCode;
+        #
+        #    str 80 deliveryCity;
+        #
+        #    str 250 deliveryStreet;
+        #
+        #    str 250 deliveryAddress;
+        #
+        #    Email deliveryEmail;
+        #
+        #    RecId deliveryRecId;
+        #
+        #    InventLocationId inventLocationId;
+        #
+        #    PaymTermId payment;
+        #
+        #    NoYes requiredDelivery;
+        #
+        #    SalesSource salesSource;
+        #
+        #    List items;
+        #}
+      ENDSOURCE
+      SOURCE #getContactPersonId
+        #public ContactPersonId getContactPersonId()
+        #{
+        #    ;
+        #    return contactPersonId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCustAccount
+        #public CustAccount getCustAccount()
+        #{
+        #    ;
+        #    return customer;
+        #}
+      ENDSOURCE
+      SOURCE #getCustomerOrderNo
+        #str 20 getCustomerOrderNo()
+        #{
+        #    ;
+        #    return customerOrderNo;
+        #}
+      ENDSOURCE
+      SOURCE #getCustomerRef
+        #str 300 getCustomerRef()
+        #{
+        #    ;
+        #    return customerRef;
+        #}
+      ENDSOURCE
+      SOURCE #getDataAreaId
+        #DataAreaId getDataAreaId()
+        #{
+        #    ;
+        #    return dataAreaId;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryAddress
+        #public str 250 getDeliveryAddress()
+        #{
+        #    ;
+        #    return deliveryAddress;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryCity
+        #public str 80 getDeliveryCity()
+        #{
+        #    ;
+        #    return deliveryCity;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryDate
+        #public KiszalitasDatum getDeliveryDate()
+        #{
+        #    ;
+        #    return deliveryDate;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryEmail
+        #public Email getDeliveryEmail()
+        #{
+        #    ;
+        #    return deliveryEmail;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryName
+        #public str 80 getDeliveryName()
+        #{
+        #    ;
+        #    return deliveryName;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryRecId
+        #
+        #RecId getDeliveryRecId()
+        #{
+        #    ;
+        #    return deliveryRecId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getDeliveryStreet
+        #public str 250 getDeliveryStreet()
+        #{
+        #    ;
+        #    return deliveryStreet;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryZipCode
+        #public str 10 getDeliveryZipCode()
+        #{
+        #    ;
+        #    return deliveryZipCode;
+        #}
+      ENDSOURCE
+      SOURCE #getInventLocationId
+        #public InventLocationId getInventLocationId()
+        #{
+        #    ;
+        #    return inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #getItems
+        #public List getItems()
+        #{
+        #    ;
+        #    return items;
+        #}
+      ENDSOURCE
+      SOURCE #getPayment
+        #PaymTermId getPayment()
+        #{
+        #    ;
+        #    return payment;
+        #}
+      ENDSOURCE
+      SOURCE #getRequiredDelivery
+        #public NoYes getRequiredDelivery()
+        #{
+        #    ;
+        #    return requiredDelivery;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #public void new( CustAccount _custAccount = '',
+        #                 NoYes _requiredDelivery = NoYes::No,
+        #                 KiszalitasDatum _deliveryDate = SystemDateGet(),
+        #                 str 80 _deliveryName = '',
+        #                 str 10 _deliveryZipCode = '',
+        #                 str 80 _deliveryCity = '',
+        #                 str 250 _deliveryStreet = '',
+        #                 Email _deliveryEmail = '',
+        #                 str 250 _deliveryAddress = '',
+        #                 ContactPersonId _contactPersonId = '',
+        #                 InventLocationId _inventLocationId = '',
+        #                 PaymTermId _payment = '')
+        #{
+        #    customer = _custAccount;
+        #
+        #    requiredDelivery = _requiredDelivery;
+        #
+        #    deliveryDate = _deliveryDate;
+        #
+        #    deliveryName = _deliveryName;
+        #
+        #    deliveryZipCode = _deliveryZipCode;
+        #
+        #    deliveryCity = _deliveryCity;
+        #
+        #    deliveryStreet = _deliveryStreet;
+        #
+        #    deliveryEmail = _deliveryEmail;
+        #
+        #    deliveryAddress = _deliveryAddress;
+        #
+        #    salesSource = SalesSource::Internet;
+        #
+        #    contactPersonId = _contactPersonId;
+        #
+        #    inventLocationId = _inventLocationId;
+        #
+        #    payment = _payment;
+        #
+        #    items = new List(Types::Class);
+        #
+        #    /*
+        #    CustAccount customer;
+        #
+        #    NoYes requiredDelivery;
+        #
+        #    DataAreaId dataAreaId;
+        #
+        #    KiszalitasDatum deliveryDate;
+        #
+        #    str 80 deliveryName;
+        #
+        #    str 10 deliveryZipCode;
+        #
+        #    str 80 deliveryCity;
+        #
+        #    str 250 deliveryStreet;
+        #
+        #    str 250 deliveryAddress;
+        #
+        #    Email deliveryEmail;
+        #
+        #    RecId deliveryRecId;
+        #
+        #    SalesSource salesSource;
+        #
+        #    ContactPersonId contactPersonId;
+        #
+        #    InventLocationId inventLocationId;
+        #
+        #    str 300 customerRef;
+        #
+        #    str 20 customerOrderNo;
+        #
+        #    PaymTerm payment;
+        #    */
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setContactPersonId
+        #public void setContactPersonId(ContactPersonId _contactPersonId)
+        #{
+        #    ;
+        #    contactPersonId = _contactPersonId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setCustAccount
+        #public void setCustAccount(CustAccount _customer)
+        #{
+        #    ;
+        #    customer = _customer;
+        #}
+      ENDSOURCE
+      SOURCE #setCustomerOrderNo
+        #void setCustomerOrderNo(str 20 _customerOrderNo)
+        #{
+        #    ;
+        #    customerOrderNo = _customerOrderNo;
+        #}
+      ENDSOURCE
+      SOURCE #setCustomerRef
+        #void setCustomerRef(str 300 _customerRef)
+        #{
+        #    ;
+        #    customerRef = _customerRef;
+        #}
+      ENDSOURCE
+      SOURCE #setDataAreaId
+        #void setDataAreaId(DataAreaId _dataAreaId)
+        #{
+        #    ;
+        #    dataAreaId = _dataAreaId;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryAddress
+        #public void setDeliveryAddress(str 250 _deliveryAddress)
+        #{
+        #    ;
+        #    deliveryAddress = _deliveryAddress;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCity
+        #public void setDeliveryCity(str 80 _deliveryCity)
+        #{
+        #    ;
+        #    deliveryCity = _deliveryCity;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryDate
+        #public void setDeliveryDate(KiszalitasDatum _deliveryDate)
+        #{
+        #    ;
+        #    deliveryDate = _deliveryDate;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryEmail
+        #public void setDeliveryEmail(Email _deliveryEmail)
+        #{
+        #    ;
+        #    deliveryEmail = _deliveryEmail;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryName
+        #public void setDeliveryName(str 80 _deliveryName)
+        #{
+        #    ;
+        #    deliveryName = _deliveryName;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryRecId
+        #
+        #void setDeliveryRecId(RecId _deliveryRecId)
+        #{
+        #    ;
+        #    deliveryRecId = _deliveryRecId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setDeliveryStreet
+        #public void setDeliveryStreet(str 250 _deliveryStreet)
+        #{
+        #    ;
+        #    deliveryStreet = _deliveryStreet;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryZipCode
+        #public void setDeliveryZipCode(str 10 _deliveryZipCode)
+        #{
+        #    ;
+        #    deliveryZipCode = _deliveryZipCode;
+        #}
+      ENDSOURCE
+      SOURCE #setInventLocationId
+        #public void setInventLocationId(InventLocationId _inventLocationId)
+        #{
+        #    ;
+        #    inventLocationId = _inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #setPayment
+        #void setPayment(PaymTermId _payment)
+        #{
+        #    ;
+        #    payment = _payment;
+        #}
+      ENDSOURCE
+      SOURCE #setRequiredDelivery
+        #public void setRequiredDelivery(NoYes _requiredDelivery)
+        #{
+        #    ;
+        #    requiredDelivery = _requiredDelivery;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SecondhandOrderService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SecondhandOrderService
+    PROPERTIES
+      Name                #SecondhandOrderService
+      Extends             #SalesAutoCreate
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #//CustInvoiceAccount invoiceAccount()
+        #//void nextRecord()
+        #//boolean recordExist()
+        #//SalesType salesType()
+        #//void  setCust()
+        #class SecondhandOrderService  extends SalesAutoCreate
+        #{
+        #    SecondhandEntity entity;
+        #    CustAccount      custAcc;
+        #    SalesType        salesType;
+        #    SalesStatus      salesStatus;
+        #    ListEnumerator   lstEnum;
+        #    int              currentIndex;
+        #    int              lineCount;
+        #
+        #    #define.SchemaUrl('http://CompanyGroup.Domain.WebshopModule/SecondhandOrder')
+        #
+        #    #define.SchemaResponseUrl('http://CompanyGroup.Domain.WebshopModule/SecondhandOrderResponse')
+        #}
+      ENDSOURCE
+      SOURCE #createSalesLine
+        #void  createSalesLine()
+        #{
+        #    ;
+        #    salesLine.createLine(NoYes::No,             // Validate
+        #                         NoYes::No,             // initFromSalesTable
+        #                         NoYes::No,             // initFromInventTable
+        #                         NoYes::No,             // calcInventQty
+        #                         NoYes::No,            // searchMarkup
+        #                         NoYes::No             // searchPrice
+        #                         );
+        #}
+      ENDSOURCE
+      SOURCE #createSecondhandLine
+        #public SecondhandLine createSecondhandLine(XmlReader reader)
+        #{
+        #    SecondhandLine line;
+        #    ;
+        #
+        #    line = new SecondhandLine();
+        #
+        #    line.setConfigId(reader.readElementString());
+        #
+        #    line.setItemId(reader.readElementString());
+        #
+        #    line.setQty( str2num( reader.readElementString()));
+        #
+        #    return line;
+        #}
+      ENDSOURCE
+      SOURCE #createSecondhandOrder
+        #str createSecondhandOrder(str xml)
+        #{
+        #    SalesId salesId;
+        #    ;
+        #
+        #    try
+        #    {
+        #        if (!xml)
+        #        {
+        #            return this.createSecondhandOrderResponse('', -1, 'The createSecondhandOrder xml parameter value is empty!');
+        #        }
+        #
+        #        this.deserialize(xml);
+        #
+        #        changeCompany(entity.getDataAreaId())
+        #        {
+        #            //salesOrderEntity ellenörzése kell ide
+        #
+        #            lstEnum = entity.getItems().getEnumerator();
+        #
+        #            this.create();
+        #
+        #            salesId = this.getSalesTable().SalesId;
+        #
+        #            //SalesId ellenörzése
+        #            if (salesId)
+        #            {
+        #                return this.createSecondhandOrderResponse(salesId, 1, 'The createSecondhandOrder process completed successfully!');
+        #            }
+        #            else
+        #            {
+        #                return this.createSecondhandOrderResponse('', -2, 'The createSecondhandOrder process failed!');
+        #            }
+        #        }
+        #    }
+        #    catch(Exception::Warning )
+        #    {
+        #        return this.createSecondhandOrderResponse('', -3, 'The createSecondhandOrder process failed!');
+        #    }
+        #    catch(Exception::Error )
+        #    {
+        #        return this.createSecondhandOrderResponse('', -4, 'The createSecondhandOrder process failed!');
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #createSecondhandOrderResponse
+        #str createSecondhandOrderResponse(SalesId _salesId = '', int _code = 0, str _msg = '')
+        #{
+        #    str xml;
+        #
+        #    XmlTextWriter writer;
+        #
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement2('SecondhandOrderResponse', #SchemaResponseUrl);
+        #
+        #    writer.writeElementString('SalesId', _salesId);
+        #
+        #    writer.writeElementString('Code', int2str(_code));
+        #
+        #    writer.writeElementString('Message', _msg);
+        #
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #deserialize
+        #//paraméter xml alapján elkészíti a vevőrendelés objektumot tételekkel együtt
+        #/*
+        #<?xml version=\"1.0\" encoding=\"utf-16\"?>
+        #<SecondhandOrder xmlns=\"http://CompanyGroup.Domain.WebshopModule/SecondhandOrder\">
+        #<ContactPersonId>KAPCS03399</ContactPersonId>
+        #<CustomerId>V001446</CustomerId>
+        #<CustomerOrderNo />
+        #<CustomerRef />
+        #<DataAreaId>hrp</DataAreaId>
+        #<DeliveryCity>Budapest XIV.ker</DeliveryCity>
+        #<DeliveryDate>2013-3-27</DeliveryDate>
+        #<DeliveryEmail>paradi@ipon.hu</DeliveryEmail>
+        #<DeliveryName>iPon Computer Kft.</DeliveryName>
+        #<DeliveryStreet>Francia út 0/b</DeliveryStreet>
+        #<DeliveryZip>1143</DeliveryZip>
+        #<InventLocationId>1000</InventLocationId>
+        #<Payment>ATUT8</Payment>
+        #<RequiredDelivery>0</RequiredDelivery>
+        #<Lines><Line><ConfigId>XXKARTONS</ConfigId><ItemId>613570221012</ItemId><Qty>1</Qty></Line></Lines>
+        #</SecondhandOrder>
+        #*/
+        #void deserialize(str xml)
+        #{
+        #    XmlTextReader xmlReader;
+        #
+        #    SecondhandLine line;
+        #
+        #    str 250 deliveryAddress = '';
+        #
+        #    int i = 0;
+        #    ;
+        #
+        #    xmlReader = XmlTextReader::newXml(xml);
+        #
+        #    xmlReader.whitespaceHandling(XmlWhitespaceHandling::None);
+        #
+        #    xmlReader.moveToContent();
+        #
+        #    while( ( xmlReader.nodeType() != XmlNodeType::Element ) && !xmlReader.eof() )
+        #    {
+        #        xmlReader.read();
+        #    }
+        #
+        #    xmlReader.readStartElement3('SecondhandOrder', #SchemaUrl);
+        #
+        #    entity = new SecondhandEntity();
+        #
+        #    if (!xmlReader.eof() && xmlReader.isStartElement())
+        #    {
+        #        entity.setContactPersonId( xmlReader.readElementString2('ContactPersonId'));
+        #
+        #        entity.setCustAccount(xmlReader.readElementString2('CustomerId'));
+        #
+        #        entity.setCustomerOrderNo(xmlReader.readElementString2('CustomerOrderNo'));
+        #
+        #        entity.setCustomerRef(xmlReader.readElementString2('CustomerRef'));
+        #
+        #        entity.setDataAreaId(xmlReader.readElementString2('DataAreaId'));
+        #
+        #        //entity.setDeliveryRecId(str2Int64(xmlReader.readElementString2('DeliveryRecId')));
+        #
+        #        entity.setDeliveryCity(xmlReader.readElementString2('DeliveryCity'));
+        #
+        #        entity.setDeliveryDate(str2date( xmlReader.readElementString2('DeliveryDate'), 321 ));
+        #
+        #        entity.setDeliveryEmail(xmlReader.readElementString2('DeliveryEmail'));
+        #
+        #        entity.setDeliveryName(xmlReader.readElementString2('DeliveryName'));
+        #
+        #        entity.setDeliveryStreet(xmlReader.readElementString2('DeliveryStreet'));
+        #
+        #        entity.setDeliveryZipCode(xmlReader.readElementString2('DeliveryZip'));
+        #
+        #        deliveryAddress = strFmt( '%1 %2 %3', entity.getDeliveryZipCode(), entity.getDeliveryCity(), entity.getDeliveryStreet() );
+        #
+        #        entity.setDeliveryAddress(deliveryAddress);
+        #
+        #        entity.setInventLocationId(xmlReader.readElementString2('InventLocationId'));
+        #
+        #        entity.setPayment(xmlReader.readElementString2('Payment'));
+        #
+        #        entity.setRequiredDelivery(str2int(xmlReader.readElementString2('RequiredDelivery')));
+        #
+        #        lineCount = str2int(xmlReader.readElementString2('LineCount'));
+        #
+        #        if (lineCount > 0) {
+        #
+        #            xmlReader.readStartElement();
+        #
+        #            xmlReader.readStartElement();
+        #
+        #            for(i=1; i<=lineCount; i++)
+        #            {
+        #
+        #            //if (xmlReader.NodeType() == XmlNodeType::Element)
+        #            //{
+        #            //    if (xmlReader.Name() == 'Line')
+        #            //    {
+        #                    line = new SecondhandLine();
+        #            //    }
+        #            //    else if (xmlReader.Name() == 'ConfigId')
+        #            //    {
+        #                    line.setConfigId(xmlReader.readElementString2('ConfigId') );
+        #            //    }
+        #            //    else if (xmlReader.Name() == 'ItemId')
+        #            //    {
+        #                   line.setItemId(xmlReader.readElementString2('ItemId'));
+        #            //    }
+        #            //    else if (xmlReader.Name() == 'Qty')
+        #            //    {
+        #                    line.setQty( str2num(xmlReader.readElementString2('Qty')) );
+        #
+        #                    entity.addItem(line);
+        #            //    }
+        #           //}
+        #            }
+        #            xmlReader.readEndElement();
+        #
+        #            xmlReader.readEndElement();
+        #        }
+        #    }
+        #
+        #    xmlReader.close();
+        #}
+      ENDSOURCE
+      SOURCE #getSalesTable
+        #SalesTable getSalesTable()
+        #{
+        #    ;
+        #    return SalesTable;
+        #}
+      ENDSOURCE
+      SOURCE #invoiceAccount
+        #CustInvoiceAccount invoiceAccount()
+        #{
+        #    ;
+        #    return entity.getCustAccount();
+        #}
+      ENDSOURCE
+      SOURCE #nextRecord
+        #void nextRecord()
+        #{
+        #    ;
+        #}
+      ENDSOURCE
+      SOURCE #recordExist
+        #public boolean recordExist()
+        #{
+        #    ;
+        #    return lstEnum.moveNext();
+        #}
+      ENDSOURCE
+      SOURCE #salesType
+        #SalesType salesType()
+        #{
+        #    ;
+        #    return salesType;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setCust
+        #void setCust()
+        #{
+        #    ;
+        #    CustTable = CustTable::find(entity.getCustAccount());
+        #}
+      ENDSOURCE
+      SOURCE #setSalesLine
+        #void  setSalesLine()
+        #{
+        #    updCalcPrice    updCalcPrice;
+        #    SecondhandLine secondhandLine;
+        #    InventDim _inventDim;
+        #    str company;
+        #    ;
+        #
+        #    super();
+        #
+        #    secondhandLine = lstEnum.current();
+        #
+        #    salesline.clear();
+        #
+        #    salesline.initFromSalesTable(salestable);
+        #
+        #    salesline.ItemId = secondhandLine.getItemId();
+        #
+        #    salesline.initFromInventTable( Inventtable::find( secondhandLine.getItemId() ) );
+        #
+        #    salesline.SalesQty = secondhandLine.getQty();
+        #
+        #    salesline.QtyOrdered = secondhandLine.getQty();
+        #
+        #    select firstonly _inventDim where _inventDim.configId == secondhandLine.getConfigId() &&
+        #                                      _inventDim.InventLocationId ==  entity.getInventLocationId() &&
+        #                                      _inventDim.wMSLocationId == '';
+        #
+        #    salesline.initItemDim( _inventDim );
+        #
+        #    updCalcPrice = new updCalcPrice( secondhandLine.getItemId(), entity.getCustAccount(), '', '', secondhandLine.getQty() );
+        #
+        #    updCalcPrice.calculate( secondhandLine.getConfigId() );
+        #
+        #    salesline.SalesPrice = updCalcPrice.getCalculatedPrice();
+        #
+        #    if (!salesLine.origPriceGroupId)
+        #    {
+        #        salesLine.origPriceGroupId = updCalcPrice.getAccountRelation();
+        #    }
+        #
+        #    if ( !salesLine.origPrice )
+        #    {
+        #        salesLine.origPrice = updCalcPrice.getCalculatedPrice();
+        #    }
+        #
+        #    salesLine.lineAmount = salesLine.calcLineAmountForced();
+        #
+        #    this.createSalesLine();
+        #
+        #    salesLine.OrderAttarolas( salesline.QtyOrdered );
+        #
+        #    //salesLine.InventDimId
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setSalesTable
+        #void  setSalesTable()
+        #{
+        #    NumberSeq       num;
+        #    SalesIdBase     tmpSalesId;
+        #    str 10 dlvTermCaption = 'RAKTÁRBÓL';
+        #    ;
+        #
+        #    If ( custAcc != entity.getCustAccount() )
+        #    {
+        #        if (!custTable)
+        #        {
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.clear();
+        #        salesTable.initValue();
+        #
+        #        num = NumberSeq::newGetNum(SalesParameters::numRefSalesId());
+        #        tmpSalesId = num.num();
+        #
+        #        if (SalesTable::exist(tmpSalesId))
+        #        {
+        #            num.abort();
+        #            checkFailed("@SYS55111");
+        #            checkFailed(strfmt("@SYS55112", tmpSalesId));
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.salesId = tmpSalesId;
+        #
+        #        salesTable.custAccount      = custTable.accountNum;
+        #        salesTable.initFromCustTable();
+        #
+        #        salesTable.SalesType       = this.salesType();
+        #
+        #        salesTable.ContactPersonId = entity.getContactPersonId();
+        #        salesTable.initFromContactInfo();
+        #
+        #        salesTable.Email = entity.getDeliveryEmail();
+        #
+        #        if ( entity.getRequiredDelivery() == NoYes::Yes )
+        #        {
+        #            dlvTermCaption = 'KISZALL';
+        #        }
+        #        else
+        #        {
+        #            dlvTermCaption ='RAKTÁRBÓL';
+        #        }
+        #
+        #        //if (_SecondHandCart.getRequiredDelivery())
+        #        //{
+        #//          salesTable.DeliveryDate    = AxBasketTable.KiszalitasDatum;
+        #            salesTable.ShippingDateRequested = entity.getDeliveryDate();
+        #            salesTable.DlvTerm         = dlvTermCaption;
+        #            salesTable.DeliveryCity    = entity.getDeliveryCity();
+        #            salesTable.DeliveryName    = entity.getDeliveryName();
+        #            salesTable.DeliveryStreet  = entity.getDeliveryStreet();
+        #            salesTable.DeliveryZipCode = entity.getDeliveryZipCode();
+        #            salesTable.DeliveryAddress = entity.getDeliveryAddress();
+        #            salesTable.InventLocationId = entity.getInventLocationId();
+        #            salesTable.Payment = entity.getPayment();
+        #        //}
+        #
+        #        salesTable.SalesSource = SalesSource::Internet;
+        #
+        #        salesTable.NemKellSzamla = custTable.NemkellSzla;
+        #
+        #        salesTable.SalesHeaderType = 'Standard';
+        #
+        #        salesTable.AutoTorles = NoYes::Yes;
+        #
+        #        salesTable.VevoRendelesSzama = entity.getCustomerOrderNo();
+        #
+        #        salesTable.CustomerRef = entity.getCustomerRef();
+        #
+        #        salesTable.SalesType = SalesType::Sales;
+        #
+        #        //salesTable.
+        #
+        #        salesTable.insert();
+        #
+        #        custAcc = entity.getCustAccount();
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: PRN
+
+; Microsoft Dynamics Project : CompanyGroup unloaded
+; --------------------------------------------------------------------------------
+  PROJECTVERSION 2
+  
+  PROJECT #CompanyGroup
+   PRIVATE
+  PROPERTIES
+    Name                #CompanyGroup
+  ENDPROPERTIES
+  
+    GROUP #Jobs
+      PROPERTIES
+        Name                #Jobs
+        ProjectGroupType    #Jobs
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobSalesOrderServiceTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobSalesOrderServiceTest2
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobSalesOrderServiceTest3
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobSecondhandOrderServiceTest
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Classes
+      PROPERTIES
+        Name                #Classes
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50340
+        NODETYPE 329
+        NAME #SalesOrderService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50338
+        NODETYPE 329
+        NAME #SalesLineEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50419
+        NODETYPE 329
+        NAME #SecondhandLine
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50339
+        NODETYPE 329
+        NAME #SalesOrderEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50418
+        NODETYPE 329
+        NAME #SecondhandEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50417
+        NODETYPE 329
+        NAME #SecondhandOrderService
+      ENDNODE
+      ENDGROUP
+      
+  ENDPROJECT
+  
+
+***Element: END

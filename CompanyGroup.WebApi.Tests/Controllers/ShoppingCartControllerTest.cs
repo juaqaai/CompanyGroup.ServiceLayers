@@ -274,7 +274,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
             "CartId":642,"CustomerOrderNote":"megjegyzés xxxx ","CustomerOrderId":"testxxx","DeliveryRequest":true,"DeliveryDate":"2013-03-27","PaymentTerm":"1","DeliveryTerm":"2","DeliveryAddressRecId":"5637166088"             
              */
 
-            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest(660, "hu", "0A1F8BBA840E4DC6A5183828656C89B4", 5637166088, DateTime.Now.AddDays(7).ToShortDateString(), true, 1, 2, "testxxx", "megjegyzés xxxx");
+            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest(660, "HUF", "hu", "0A1F8BBA840E4DC6A5183828656C89B4", 5637166088, DateTime.Now.AddDays(7).ToShortDateString(), true, 1, 2, "testxxx", "megjegyzés xxxx");
 
             Uri requestUri = null;
 

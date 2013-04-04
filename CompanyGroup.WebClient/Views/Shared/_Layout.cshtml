@@ -11,7 +11,7 @@
         <meta name="expires" content="7 days" />
         <meta name="owner" content="HRP Hungary Kft." />
         <meta name="copyright" content="HRP Hungary Kft." /><meta name="publisher" content="HRP Hungary Kft." />
-		<!-- [if IE]>
+        <!-- [if IE]>
         <meta http-equiv="imagetoolbar" content="no" />
         <meta name="MSSmartTagsPreventParsing" content="true" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -23,6 +23,7 @@
 		<meta name="viewport" content="width=device-width" />
 
         @Styles.Render("~/Content/css")
+
 
 
         @Scripts.Render("~/bundles/modernizr")
@@ -47,10 +48,12 @@
         @Scripts.Render("~/bundles/skinner")
         @Scripts.Render("~/bundles/apputils")
         @Scripts.Render("~/bundles/helpers")
-		
 
+
+        
 
         @RenderSection("ScriptsInHead", required: false)
+    
     </head>
     <body>
 	<div id="preloader_site">
@@ -470,79 +473,79 @@
 						              
 
             @RenderSection("ScriptFiles", false)
-
-
+       
+        
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 			companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
-			
+            
 
 
             $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('.scrollup').fadeIn();
-        } else {
-            $('.scrollup').fadeOut();
-        }
-    });
-	
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                } else {
+                    $('.scrollup').fadeOut();
+                }
+            });
+
             $('.scrollup').click(function () {
                 $("html, body").animate({ scrollTop: 0 }, 100);
                 return false;
             });
 
 
-			
-			$('#preloader').ajaxStart(function () {
+
+            $('#preloader').ajaxStart(function () {
                 $('#preloader').fadeIn('100');
             }).ajaxStop(function () {
                 $('#preloader').fadeOut('100');
             });
-			
-			  $('#forget_password').fancybox({
-	    	transitionIn: 'fade',
-	    	transitionOut: 'fade'
-			  });
-			  
-			
+
+            $('#forget_password').fancybox({
+                transitionIn: 'fade',
+                transitionOut: 'fade'
+            });
+
+
             $(function () {
                 $('.select1').skinner({ 'type': 'left' });
             });
 
 
             (function ($) {
-            var proto = $.ui.autocomplete.prototype,
-                initSource = proto._initSource;
+                var proto = $.ui.autocomplete.prototype,
+                    initSource = proto._initSource;
 
-            function filter( array, term ) {
+                function filter(array, term) {
                     var matcher = new RegExp($.ui.autocomplete.escapeRegex(term), "i");
-                return $.grep( array, function(value) {
+                    return $.grep(array, function (value) {
                         return matcher.test($("<div>").html(value.label || value.value || value).text());
-                });
-            }
+                    });
+                }
 
-            $.extend( proto, {
-                _initSource: function() {
-                    if ( this.options.html && $.isArray(this.options.source) ) {
+                $.extend(proto, {
+                    _initSource: function () {
+                        if (this.options.html && $.isArray(this.options.source)) {
                             this.source = function (request, response) {
                                 response(filter(this.options.source, request.term));
-                        };
-                    } else {
+                            };
+                        } else {
                             initSource.call(this);
-                    }
-                },
+                        }
+                    },
 
                     _renderItem: function (ul, item) {
                         return $("<li></li>")
                             .data("item.autocomplete", item)
                             .append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
                             .appendTo(ul);
-                }
-            });
+                    }
+                });
             })(jQuery);
-
+ 
 			
-            @RenderSection("ScriptOnReady", false)
+          @RenderSection("ScriptOnReady", false) 
 			
 			$("#status").fadeOut(); // will first fade out the loading animation
             $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.

@@ -189,7 +189,7 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
-        /// használt konfigon van-e a cikk?
+        /// használt konfigon van-e a cikk? (XX-el kezdődik és 2100, vagy HASZNALT a raktárkódja)
         /// </summary>
         public bool IsInSecondHand
         {

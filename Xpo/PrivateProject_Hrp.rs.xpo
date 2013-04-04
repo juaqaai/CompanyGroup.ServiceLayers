@@ -1,0 +1,5715 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) StockSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #StockSyncEntity
+    PROPERTIES
+      Name                #StockSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class StockSyncEntity extends SyncBaseEntity
+        #{
+        #    InventLocationId inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #getInventLocationId
+        #public InventLocationId getInventLocationId()
+        #{
+        #    ;
+        #    return inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #public str serialize()
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement('Stock');
+        #
+        #    writer.writeElementString('SyncOperation', int2str(this.getSyncOperation()));
+        #
+        #    writer.writeElementString('ItemId', this.getItemId());
+        #
+        #    writer.writeElementString('InventLocationId', this.getInventLocationId());
+        #
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #setInventLocationId
+        #public void  setInventLocationId( InventLocationId _inventLocationId )
+        #{
+        #    ;
+        #    inventLocationId = _inventLocationId;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) BarCodeSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #BarCodeSyncEntity
+    PROPERTIES
+      Name                #BarCodeSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class BarCodeSyncEntity extends SyncBaseEntity
+        #{
+        #    ItemBarCode barCode;
+        #}
+      ENDSOURCE
+      SOURCE #getBarCode
+        #public ItemBarCode getBarCode()
+        #{
+        #    ;
+        #    return barCode;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setBarCode
+        #public void setBarCode( ItemBarCode _barCode )
+        #{
+        #    ;
+        #    barCode = _barCode;
+        #}
+        #
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) PriceSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #PriceSyncEntity
+    PROPERTIES
+      Name                #PriceSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class PriceSyncEntity extends SyncBaseEntity
+        #{
+        #    AmountCur price;
+        #
+        #    int priceNo;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice
+        #public AmountCur getPrice()
+        #{
+        #    ;
+        #    return price;
+        #}
+      ENDSOURCE
+      SOURCE #getPriceNo
+        #public int getPriceNo()
+        #{
+        #    ;
+        #    return priceNo;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #public str serialize()
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement('Price');
+        #    writer.writeElementString('SyncOperation', int2str(this.getSyncOperation()));
+        #    writer.writeElementString('Price', num2str(this.getPrice(), 16, 0, 0, 0));
+        #    writer.writeElementString('ItemId', this.getItemId());
+        #    writer.writeElementString('PriceNo', int2str(this.getPriceNo()));
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #setPrice
+        #public void setPrice( AmountCur _price )
+        #{
+        #    ;
+        #    price = _price;
+        #}
+      ENDSOURCE
+      SOURCE #setPriceNo
+        #public void setPriceNo(int _priceNo)
+        #{
+        #    ;
+        #    priceNo = _priceNo;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) PictureSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #PictureSyncEntity
+    PROPERTIES
+      Name                #PictureSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class PictureSyncEntity extends SyncBaseEntity
+        #{
+        #    FileName fileName;
+        #
+        #    int64 recId;
+        #
+        #    NoYes primary;
+        #}
+      ENDSOURCE
+      SOURCE #getFileName
+        #public FileName getFileName()
+        #{
+        #    ;
+        #    return fileName;
+        #}
+      ENDSOURCE
+      SOURCE #getPrimary
+        #public NoYes getPrimary()
+        #{
+        #    ;
+        #    return primary;
+        #}
+      ENDSOURCE
+      SOURCE #getRecId
+        #public int64 getRecId()
+        #{
+        #    ;
+        #    return recId;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #str serialize()
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement('Picture');
+        #    writer.writeElementString('SyncOperation', int2str(this.getSyncOperation()));
+        #    writer.writeElementString('FileName', this.getFileName());
+        #    writer.writeElementString('ItemId', this.getItemId());
+        #    writer.writeElementString('Primary', this.enum2Boolean(this.getPrimary()) ? 'true' : 'false');
+        #    writer.writeElementString('RecId', num2str(this.getRecId(), 16, 0, 0, 0));
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #setFileName
+        #public void setFileName( FileName _fileName )
+        #{
+        #    ;
+        #    fileName = _fileName;
+        #}
+      ENDSOURCE
+      SOURCE #setPrimary
+        #public void setPrimary(NoYes _primary)
+        #{
+        #    ;
+        #    primary = _primary;
+        #}
+      ENDSOURCE
+      SOURCE #setRecId
+        #public void setRecId( int64 _recId )
+        #{
+        #    ;
+        #    recId = _recId;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) DescriptionSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #DescriptionSyncEntity
+    PROPERTIES
+      Name                #DescriptionSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class DescriptionSyncEntity extends SyncBaseEntity
+        #{
+        #    ItemFreeTxt text;
+        #}
+      ENDSOURCE
+      SOURCE #getText
+        #public ItemFreeTxt getText()
+        #{
+        #    ;
+        #    return text;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #str serialize()
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement('Description');
+        #    writer.writeElementString('SyncOperation', int2str(this.getSyncOperation()));
+        #    writer.writeElementString('Text', this.getText());
+        #    writer.writeElementString('ItemId', this.getItemId());
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #setText
+        #public void setText( ItemFreeTxt _text )
+        #{
+        #    ;
+        #    text = _text;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SyncBaseEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SyncBaseEntity
+    PROPERTIES
+      Name                #SyncBaseEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #//tartalmazza a cikkazonosítót és a szinkronizációs művelet felsorolt típust
+        #public abstract class SyncBaseEntity
+        #{
+        #    ItemId itemId;
+        #
+        #    //insert : 1, none : 0, update : 2, delete : 3, set : 4
+        #    SyncOperation syncOperation;
+        #}
+      ENDSOURCE
+      SOURCE #enum2Boolean
+        #protected boolean enum2Boolean( NoYes _NoYes )
+        #{
+        #    ;
+        #    return _NoYes == NoYes::Yes ? true : false;
+        #}
+      ENDSOURCE
+      SOURCE #getItemId
+        #public ItemId getItemId()
+        #{
+        #    ;
+        #    return itemId;
+        #}
+      ENDSOURCE
+      SOURCE #getSyncOperation
+        #public SyncOperation getSyncOperation()
+        #{
+        #    return syncOperation;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #public str serialize()
+        #{
+        #    ;
+        #    throw error(Error::missingOverload(funcname()));
+        #}
+      ENDSOURCE
+      SOURCE #setItemId
+        #public void setItemId( ItemId _ItemId )
+        #{
+        #    ;
+        #    itemId = _ItemId;
+        #}
+      ENDSOURCE
+      SOURCE #setSyncOperation
+        #public void setSyncOperation(SyncOperation _syncOperation)
+        #{
+        #    ;
+        #    syncOperation = _syncOperation;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CatalogueSyncEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CatalogueSyncEntity
+    PROPERTIES
+      Name                #CatalogueSyncEntity
+      Extends             #SyncBaseEntity
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class CatalogueSyncEntity extends SyncBaseEntity
+        #{
+        #
+        #//      private string _Currency = String.Empty;
+        #/*
+        #        private int _SerbianStock = 0;
+        #        private int _HungarianStock = 0;
+        #
+        #        private List<Picture> _Pictures = new List<Picture>();
+        #
+        #        private string _Description = String.Empty;
+        #
+        #        private Agent _Agent = new Agent();
+        #
+        #        private string _Currency = String.Empty;
+        #*/
+        #
+        #    AxStruktKod axStructCode;
+        #
+        #    ItemName itemName;
+        #
+        #    GyartoiCikkszam partNumber;
+        #
+        #    GyartoId manufacturerId;
+        #    GyartoNevArcsoport manufacturerName;
+        #
+        #    Jelleg1Id category1Id;
+        #    JellegNevArcsoport category1Name;
+        #
+        #    Jelleg2Id category2Id;
+        #    JellegNev2Arcsoport category2Name;
+        #
+        #    Jelleg3Id category3Id;
+        #    JellegNev3Arcsoport category3Name;
+        #
+        #    updJotallasIdejeID garantyTimeId;
+        #    updJotallasModjaID garantyModeId;
+        #
+        #    ItemState itemState;
+        #
+        #    Amount price1;
+        #    Amount price2;
+        #    Amount price3;
+        #    Amount price4;
+        #    Amount price5;
+        #    Amount price6;
+        #
+        #    NoYes actionFilter;
+        #    NoYes bargainFilter;
+        #    NoYes top10Filter;
+        #    NoYes focusWeekFilter;
+        #    NoYes newFilter;
+        #
+        #    TermekmenedzserId employeeId;
+        #
+        #    ConfigIdStandard standardConfigId;
+        #
+        #    str description;
+        #
+        #    CurrencyCode currency;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #getActionFilter
+        #public NoYes getActionFilter()
+        #{
+        #    ;
+        #    return actionFilter;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getAxStructCode
+        #public AxStruktKod getAxStructCode()
+        #{
+        #    ;
+        #    return axStructCode;
+        #}
+      ENDSOURCE
+      SOURCE #getBargainFilter
+        #public NoYes getBargainFilter()
+        #{
+        #    ;
+        #    return bargainFilter;
+        #}
+      ENDSOURCE
+      SOURCE #getCategory1Id
+        #public Jelleg1Id getCategory1Id()
+        #{
+        #    ;
+        #    return category1Id;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCategory1Name
+        #public JellegNevArcsoport getCategory1Name()
+        #{
+        #    ;
+        #    return category1Name;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCategory2Id
+        #public Jelleg2Id getCategory2Id()
+        #{
+        #    ;
+        #    return category2Id;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCategory2Name
+        #public JellegNev2Arcsoport getCategory2Name()
+        #{
+        #    ;
+        #    return category2Name;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCategory3Id
+        #public Jelleg3Id getCategory3Id()
+        #{
+        #    ;
+        #    return category3Id;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCategory3Name
+        #public JellegNev3Arcsoport getCategory3Name()
+        #{
+        #    ;
+        #    return category3Name;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCurrency
+        #public CurrencyCode getCurrency()
+        #{
+        #    ;
+        #    return currency;
+        #}
+      ENDSOURCE
+      SOURCE #getDescription
+        #public str getDescription()
+        #{
+        #    ;
+        #    return description;
+        #}
+      ENDSOURCE
+      SOURCE #getEmployeeId
+        #public TermekmenedzserID getEmployeeId()
+        #{
+        #    ;
+        #    return employeeId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getFocusWeekFilter
+        #public NoYes getFocusWeekFilter()
+        #{
+        #    ;
+        #    return focusWeekFilter;
+        #}
+      ENDSOURCE
+      SOURCE #getGarantyModeId
+        #public updJotallasModjaID getGarantyModeId()
+        #{
+        #    ;
+        #    return garantyModeId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getGarantyTimeId
+        #public updJotallasIdejeID getGarantyTimeId()
+        #{
+        #    ;
+        #    return garantyTimeId;
+        #}
+        #
+        #
+      ENDSOURCE
+      SOURCE #getItemName
+        #public ItemName getItemName()
+        #{
+        #    ;
+        #    return itemName;
+        #}
+      ENDSOURCE
+      SOURCE #getItemState
+        #public ItemState getItemState()
+        #{
+        #    ;
+        #    return itemState;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getManufacturerId
+        #public GyartoId getManufacturerId()
+        #{
+        #    ;
+        #    return manufacturerId;
+        #}
+      ENDSOURCE
+      SOURCE #getManufacturerName
+        #public GyartoNevArcsoport getManufacturerName()
+        #{
+        #    ;
+        #    return manufacturerName;
+        #}
+      ENDSOURCE
+      SOURCE #getNewFilter
+        #public NoYes getNewFilter()
+        #{
+        #    ;
+        #    return newFilter;
+        #}
+      ENDSOURCE
+      SOURCE #getPartNumber
+        #public GyartoiCikkszam getPartNumber()
+        #{
+        #    ;
+        #    return partNumber;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice1
+        #public Amount getPrice1()
+        #{
+        #    ;
+        #    return  price1;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice2
+        #public Amount getPrice2()
+        #{
+        #    ;
+        #    return  price2;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice3
+        #public Amount getPrice3()
+        #{
+        #    ;
+        #    return  price3;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice4
+        #public Amount getPrice4()
+        #{
+        #    ;
+        #    return  price4;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice5
+        #public Amount getPrice5()
+        #{
+        #    ;
+        #    return  price5;
+        #}
+      ENDSOURCE
+      SOURCE #getPrice6
+        #public Amount getPrice6()
+        #{
+        #    ;
+        #    return  price6;
+        #}
+      ENDSOURCE
+      SOURCE #getStandardConfigId
+        #public ConfigIdStandard getStandardConfigId()
+        #{
+        #    ;
+        #    return standardConfigId;
+        #}
+      ENDSOURCE
+      SOURCE #getTop10Filter
+        #public NoYes getTop10Filter()
+        #{
+        #    ;
+        #    return top10Filter;
+        #}
+      ENDSOURCE
+      SOURCE #serialize
+        #public str serialize()
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #/*
+        #    AxStruktKod axStructCode;
+        #    ItemName itemName;
+        #    GyartoiCikkszam partNumber;
+        #    GyartoId manufacturerID;
+        #    GyartoNevArcsoport manufacturerName;
+        #    Jelleg1Id category1Id;
+        #    JellegNevArcsoport category1Name;
+        #    Jelleg2Id category2Id;
+        #    JellegNev2Arcsoport category2Name;
+        #    Jelleg3Id category3Id;
+        #    JellegNev3Arcsoport category3Name;
+        #
+        #    updJotallasIdejeID garantyTimeId;
+        #    updJotallasModjaID garantyModeId;
+        #    ItemState itemState;
+        #    Amount price1;
+        #    Amount price2;
+        #    Amount price3;
+        #    Amount price4;
+        #    Amount price5;
+        #    Amount price6;
+        #    NoYes actionFilter;
+        #    NoYes bargainFilter;
+        #    NoYes top10Filter;
+        #    NoYes focusWeekFilter;
+        #    NoYes newFilter;
+        #    TermekmenedzserId employeeId;
+        #    ConfigIdStandard standardConfigId;
+        #    str description;
+        #    CurrencyCode currency;
+        #*/
+        #
+        #    writer.writeStartElement('Product');
+        #    writer.writeElementString('SyncOperation', int2str(this.getSyncOperation()));
+        #    writer.writeElementString('AxStructCode', this.getAxStructCode());
+        #    writer.writeElementString('ItemName', this.getItemName());
+        #    writer.writeElementString('ItemId', this.getItemId());
+        #    writer.writeElementString('PartNumber', this.getPartNumber());
+        #    writer.writeElementString('ManufacturerId', this.getManufacturerId());
+        #    writer.writeElementString('ManufacturerName', this.getManufacturerName());
+        #    writer.writeElementString('Category1Id', this.getCategory1Id());
+        #    writer.writeElementString('Category1Name', this.getCategory1Name());
+        #    writer.writeElementString('Category2Id', this.getCategory2Id());
+        #    writer.writeElementString('Category2Name', this.getCategory2Name());
+        #    writer.writeElementString('Category3Id', this.getCategory3Id());
+        #    writer.writeElementString('Category3Name', this.getCategory3Name());
+        #    writer.writeElementString('GarantyTimeId', this.getGarantyTimeId());
+        #    writer.writeElementString('GarantyModeId', this.getGarantyModeId());
+        #    writer.writeElementString('ItemState', int2str(this.getItemState()));
+        #    writer.writeElementString('Price1', num2str(this.getPrice1(), 16, 0, 0, 0));
+        #    writer.writeElementString('Price2', num2str(this.getPrice2(), 16, 0, 0, 0));
+        #    writer.writeElementString('Price3', num2str(this.getPrice3(), 16, 0, 0, 0));
+        #    writer.writeElementString('Price4', num2str(this.getPrice4(), 16, 0, 0, 0));
+        #    writer.writeElementString('Price5', num2str(this.getPrice5(), 16, 0, 0, 0));
+        #    writer.writeElementString('Price6', num2str(this.getPrice6(), 16, 0, 0, 0));
+        #    writer.writeElementString('ActionFilter', this.enum2Boolean(this.getActionFilter()) ? 'true' : 'false');
+        #    writer.writeElementString('BargainFilter', this.enum2Boolean(this.getBargainFilter()) ? 'true' : 'false');
+        #    writer.writeElementString('Top10Filter', this.enum2Boolean(this.getTop10Filter()) ? 'true' : 'false');
+        #    writer.writeElementString('FocusWeekFilter', this.enum2Boolean(this.getFocusWeekFilter()) ? 'true' : 'false');
+        #    writer.writeElementString('NewFilter', this.enum2Boolean(this.getNewFilter()) ? 'true' : 'false');
+        #    writer.writeElementString('EmployeeId', this.getEmployeeId());
+        #    writer.writeElementString('StandardConfigId', this.getStandardConfigId());
+        #    writer.writeElementString('Description', this.getDescription());
+        #    writer.writeElementString('Currency', this.getCurrency());
+        #    writer.writeElementString('DataAreaId', curext());
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #setActionFilter
+        #public void setActionFilter( NoYes _actionFilter )
+        #{
+        #    ;
+        #    actionFilter = _actionFilter;
+        #}
+      ENDSOURCE
+      SOURCE #setAxStructCode
+        #public void setAxStructCode( AxStruktKod _axStructCode )
+        #{
+        #    ;
+        #    axStructCode = _axStructCode;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setBargainFilter
+        #public void setBargainFilter( NoYes _bargainFilter )
+        #{
+        #    ;
+        #    bargainFilter = _bargainFilter;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory1Id
+        #public void setCategory1Id( Jelleg1Id _category1Id )
+        #{
+        #    ;
+        #    category1Id = _category1Id;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory1Name
+        #public void setCategory1Name( JellegNevArcsoport _category1Name )
+        #{
+        #    ;
+        #    category1Name = _category1Name;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory2Id
+        #public void setCategory2Id( Jelleg2Id _category2Id )
+        #{
+        #    ;
+        #    category2Id = _category2Id;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory2Name
+        #public void setCategory2Name( JellegNev2Arcsoport _category2Name )
+        #{
+        #    ;
+        #    category2Name = _category2Name;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory3Id
+        #public void setCategory3Id( Jelleg3Id _category3Id )
+        #{
+        #    ;
+        #    category3Id = _category3Id;
+        #}
+      ENDSOURCE
+      SOURCE #setCategory3Name
+        #public void setCategory3Name( JellegNev3Arcsoport _category3Name )
+        #{
+        #    ;
+        #    category3Name = _category3Name;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setCurrency
+        #public void setCurrency(CurrencyCode _currency)
+        #{
+        #    ;
+        #    currency = _currency;
+        #}
+      ENDSOURCE
+      SOURCE #setDescription
+        #public void setDescription( str _description )
+        #{
+        #    ;
+        #    description = _description;
+        #}
+      ENDSOURCE
+      SOURCE #setEmployeeId
+        #public void setEmployeeId( TermekmenedzserID _employeeId )
+        #{
+        #    ;
+        #    employeeId = _employeeId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setFocusWeekFilter
+        #public void setFocusWeekFilter( NoYes _focusWeekFilter )
+        #{
+        #    ;
+        #    focusWeekFilter = _focusWeekFilter;
+        #}
+      ENDSOURCE
+      SOURCE #setGarantyModeId
+        #public void setGarantyModeId( updJotallasModjaID _garantyModeId  )
+        #{
+        #    ;
+        #    garantyModeId = _garantyModeId;
+        #}
+        #
+        #
+      ENDSOURCE
+      SOURCE #setGarantyTimeId
+        #public void setGarantyTimeId( updJotallasIdejeID _garantyTimeId )
+        #{
+        #    ;
+        #    garantyTimeId = _garantyTimeId;
+        #}
+      ENDSOURCE
+      SOURCE #setItemName
+        #public void setItemName( ItemName _itemName )
+        #{
+        #    ;
+        #    itemName = _itemName;
+        #}
+      ENDSOURCE
+      SOURCE #setItemState
+        #public void setItemState( ItemState _itemState )
+        #{
+        #    ;
+        #    itemState = _itemState;
+        #}
+      ENDSOURCE
+      SOURCE #setManufacturerId
+        #public void setManufacturerId( GyartoId _manufacturerId )
+        #{
+        #    ;
+        #    manufacturerId = _manufacturerId;
+        #}
+      ENDSOURCE
+      SOURCE #setManufacturerName
+        #public void setManufacturerName( GyartoNevArcsoport _manufacturerName )
+        #{
+        #    ;
+        #    manufacturerName = _manufacturerName;
+        #}
+      ENDSOURCE
+      SOURCE #setNewFilter
+        #public void setNewFilter( NoYes _newFilter )
+        #{
+        #    ;
+        #    newFilter = _newFilter;
+        #}
+      ENDSOURCE
+      SOURCE #setPartNumber
+        #public void setPartNumber( GyartoiCikkszam _partNumber )
+        #{
+        #    ;
+        #    partNumber = _partNumber;
+        #}
+      ENDSOURCE
+      SOURCE #setPrice1
+        #public void setPrice1( Amount _price1 )
+        #{
+        #    ;
+        #    price1 = _price1;
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setPrice2
+        #public void setPrice2( Amount _price2 )
+        #{
+        #    ;
+        #    price2 = _price2;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setPrice3
+        #public void setPrice3( Amount _price3 )
+        #{
+        #    ;
+        #    price3 = _price3;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setPrice4
+        #public void setPrice4( Amount _price4 )
+        #{
+        #    ;
+        #    price4 = _price4;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setPrice5
+        #public void setPrice5( Amount _price5 )
+        #{
+        #    ;
+        #    price5 = _price5;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setPrice6
+        #public void setPrice6( Amount _price6 )
+        #{
+        #    ;
+        #    price6 = _price6;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setStandardConfigId
+        #public void setStandardConfigId( ConfigIdStandard _standardConfigId )
+        #{
+        #    ;
+        #    standardConfigId = _standardConfigId;
+        #}
+      ENDSOURCE
+      SOURCE #setTop10Filter
+        #public void setTop10Filter( NoYes _top10Filter )
+        #{
+        #    ;
+        #    top10Filter = _top10Filter;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) MsmqSyncService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #MsmqSyncService
+    PROPERTIES
+      Name                #MsmqSyncService
+      Extends             #MsmqSyncServiceBase
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class MsmqSyncService extends MsmqSyncServiceBase implements ISyncService
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #deleteCatalogue
+        #public int deleteCatalogue(ItemId _itemId)
+        #{
+        #
+        #    str serialize(ItemId _Id )
+        #    {
+        #        str xml;
+        #        XmlTextWriter writer;
+        #        ;
+        #        writer = XmlTextWriter::newXml();
+        #        writer.formatting(XmlFormatting::None);
+        #        writer.writeStartDocument();
+        #        writer.writeStartElement('Product');
+        #        writer.writeElementString('SyncOperation', int2str(SyncOperation::Delete));
+        #        writer.writeElementString('ItemId', _Id);
+        #        writer.writeElementString('DataAreaId', curext());
+        #        writer.writeEndDocument();
+        #        xml = writer.writeToString();
+        #        writer.close();
+        #        return xml;
+        #    }
+        #
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableCatalogueSync()) { return 0; }
+        #
+        #        this.send(serialize( _ItemId ), 'Product');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #
+        #        throw error(strFmt('deleteCatalogue clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'deleteCatalogue error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #deleteDescription
+        #public int deleteDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableDescriptionSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Delete );
+        #
+        #        this.send(entity.serialize(), 'Description');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #
+        #        throw error(strFmt('deleteDescription clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'deleteDescription error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #deletePicture
+        #public int deletePicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Delete );
+        #
+        #        this.send(entity.serialize(), 'Picture');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #
+        #        throw error(strFmt('deletePicture clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( "deletePicture error!" );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #InsertCatalogue
+        #public int insertCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableCatalogueSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Insert );
+        #
+        #        this.send(entity.serialize(), 'Product');
+        #
+        #        return 1;
+        #        /*
+        #        //entity.getStandardConfigId()
+        #        entity.getEmployeeId() */
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #
+        #        throw error(strFmt('insertCatalogue clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'insertCatalogue error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #insertDescription
+        #public int insertDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableDescriptionSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Insert );
+        #
+        #        this.send(entity.serialize(), 'Description');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('insertDescription clr error: ', clrException.get_InnerException())); }
+        #    catch
+        #    {
+        #        throw error( 'insertDescription error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #insertPicture
+        #public int insertPicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Insert );
+        #
+        #        this.send(entity.serialize(), 'Picture');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('insertPicture clr error: ', clrException.get_InnerException()));    }
+        #    catch
+        #    {
+        #        throw error( 'insertPicture error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new()
+        #{
+        #    SyncServiceParameter syncServiceParameter;
+        #    ;
+        #
+        #    //szinkronizációs beállítások közül kiválasztjuk az adott vállalatban az elsőt
+        #    select firstonly syncServiceParameter;
+        #
+        #    if (syncServiceParameter)
+        #    {
+        #        this.setEnableCatalogueSync( syncServiceParameter.EnableCatalogueSync );
+        #        this.setEnableDescriptionSync( syncServiceParameter.EnableDescriptionSync );
+        #        this.setEnableStockSync( syncServiceParameter.EnableStockSync );
+        #        this.setEnablePriceSync( syncServiceParameter.EnablePriceSync );
+        #        this.setEnablePictureSync( syncServiceParameter.EnablePictureSync );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #SetPrimaryPicture
+        #public int setPrimaryPicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Set );
+        #
+        #        this.send(entity.serialize(), 'Picture');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('setPrimaryPicture clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'setPrimaryPicture error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #setStock
+        #//készletérték változás művelete
+        #public int setStock(StockSyncEntity entity)
+        #{
+        #    try
+        #    {
+        #        if (!this.isEnableStockSync()) { return 0; }
+        #
+        #        //művelet beállítása
+        #        entity.setSyncOperation( SyncOperation::Set );
+        #
+        #        //küldés msmq-nak
+        #        this.send(entity.serialize(), 'Stock');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('setStock clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'setStock error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #setSyncServiceParams
+        #public int setSyncServiceParams(NoYes _enableCatalogueSync = NoYes::No,
+        #                                NoYes _enableDescriptionSync = NoYes::No,
+        #                                NoYes _enablePictureSync = NoYes::No,
+        #                                NoYes _enablePriceSync = NoYes::No,
+        #                                NoYes _enableStockSync = NoYes::No)
+        #{
+        #    return super(_enableCatalogueSync, _enableDescriptionSync,
+        #                 _enablePictureSync,_enablePriceSync,
+        #                 _enableStockSync);
+        #}
+      ENDSOURCE
+      SOURCE #updateCatalogue
+        #public int updateCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    try
+        #    {
+        #        if (!this.isEnableCatalogueSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Update );
+        #
+        #        this.send(entity.serialize(), 'Product');
+        #
+        #        return 1;
+        #        /*
+        #        entity.getStandardConfigId()
+        #        entity.getEmployeeId() */
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('updateCatalogue clr error: ', clrException.get_InnerException()));
+        #    }
+        #    catch
+        #    {
+        #        throw error( 'updateCatalogue error!' );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #updateDescription
+        #public int updateDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableDescriptionSync()) { return 0; }
+        #
+        #        entity.setSyncOperation( SyncOperation::Update );
+        #
+        #        this.send(entity.serialize(), 'Description');
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        throw error(strFmt('updateDescription clr error: ', clrException.get_InnerException())); }
+        #    catch
+        #    {
+        #        throw error( 'updateDescription error!' );
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SyncServiceBase eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SyncServiceBase
+    PROPERTIES
+      Name                #SyncServiceBase
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class SyncServiceBase
+        #{
+        #    System.Exception clrException;
+        #
+        #    NoYes enableCatalogueSync;
+        #
+        #    NoYes enableDescriptionSync;
+        #
+        #    NoYes enablePictureSync;
+        #
+        #    NoYes enableStockSync;
+        #
+        #    NoYes enablePriceSync;
+        #}
+      ENDSOURCE
+      SOURCE #enum2Boolean
+        #protected boolean enum2Boolean( NoYes _NoYes )
+        #{
+        #    ;
+        #    return _NoYes == NoYes::Yes ? true : false;
+        #}
+      ENDSOURCE
+      SOURCE #isEnableCatalogueSync
+        #protected NoYes isEnableCatalogueSync()
+        #{
+        #    ;
+        #    return enableCatalogueSync;
+        #}
+      ENDSOURCE
+      SOURCE #isEnableDescriptionSync
+        #protected NoYes isEnableDescriptionSync()
+        #{
+        #    ;
+        #    return enableDescriptionSync;
+        #}
+      ENDSOURCE
+      SOURCE #isEnablePictureSync
+        #protected NoYes isEnablePictureSync()
+        #{
+        #    ;
+        #    return enablePictureSync;
+        #}
+      ENDSOURCE
+      SOURCE #isEnablePriceSync
+        #protected NoYes isEnablePriceSync()
+        #{
+        #    ;
+        #    return enablePriceSync;
+        #}
+      ENDSOURCE
+      SOURCE #isEnableStockSync
+        #protected NoYes isEnableStockSync()
+        #{
+        #    ;
+        #    return enableStockSync;
+        #}
+      ENDSOURCE
+      SOURCE #setEnableCatalogueSync
+        #protected void setEnableCatalogueSync(NoYes _enableCatalogueSync)
+        #{
+        #    ;
+        #    enableCatalogueSync = _enableCatalogueSync;
+        #}
+      ENDSOURCE
+      SOURCE #setEnableDescriptionSync
+        #protected void setEnableDescriptionSync(NoYes _enableDescriptionSync)
+        #{
+        #    ;
+        #    enableDescriptionSync = _enableDescriptionSync;
+        #}
+      ENDSOURCE
+      SOURCE #setEnablePictureSync
+        #protected void setEnablePictureSync(NoYes _enablePictureSync)
+        #{
+        #    ;
+        #    enablePictureSync = _enablePictureSync;
+        #}
+      ENDSOURCE
+      SOURCE #setEnablePriceSync
+        #protected void setEnablePriceSync(NoYes _enablePriceSync)
+        #{
+        #    ;
+        #    enablePriceSync = _enablePriceSync;
+        #}
+      ENDSOURCE
+      SOURCE #setEnableStockSync
+        #protected void setEnableStockSync(NoYes _enableStockSync)
+        #{
+        #    ;
+        #    enableStockSync = _enableStockSync;
+        #}
+      ENDSOURCE
+      SOURCE #setSyncServiceParams
+        #public int setSyncServiceParams(NoYes _enableCatalogueSync = NoYes::No,
+        #                                NoYes _enableDescriptionSync = NoYes::No,
+        #                                NoYes _enablePictureSync = NoYes::No,
+        #                                NoYes _enablePriceSync = NoYes::No,
+        #                                NoYes _enableStockSync = NoYes::No)
+        #{
+        #    SyncServiceParameter syncServiceParameter;
+        #    ;
+        #
+        #    try
+        #    {
+        #        select forupdate syncServiceParameter;
+        #
+        #        if (!syncServiceParameter) { return 0; }
+        #
+        #        ttsbegin;
+        #
+        #        syncServiceParameter.EnableCatalogueSync = _enableCatalogueSync;
+        #
+        #        syncServiceParameter.EnableDescriptionSync = _enableDescriptionSync;
+        #
+        #        syncServiceParameter.EnablePictureSync = _enablePictureSync;
+        #
+        #        syncServiceParameter.EnablePriceSync = _enablePriceSync;
+        #
+        #        syncServiceParameter.EnableStockSync = _enableStockSync;
+        #
+        #        syncServiceParameter.update();
+        #
+        #        ttscommit;
+        #
+        #        return 1;
+        #    }
+        #    catch
+        #    {
+        #        return -1;
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) RestSyncServiceBase eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #RestSyncServiceBase
+    PROPERTIES
+      Name                #RestSyncServiceBase
+      Extends             #SyncServiceBase
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class RestSyncServiceBase extends SyncServiceBase
+        #{
+        #    System.Text.Encoding encoding;
+        #
+        #    #define.CodePage( 1252 )
+        #
+        #    System.Net.WebClient xclient;
+        #
+        #    System.Uri uri;
+        #
+        #    #define.BaseUrl('http://juhasza-2k3:8080/Web.Services.Host/servicestack.ashx/json/syncreply/%1')
+        #}
+      ENDSOURCE
+      SOURCE #getCatalogueTemplate
+        #protected str getCatalogueTemplate()
+        #{
+        #    str tmpl = '';
+        #    ;
+        #
+        #/*
+        #{"ProductId":"String","DataAreaId":"String","ActionFilter":false,"BargainFilter":false,"Category1Id":"String","Category1Name":"String","Category2Id":"String","Category2Name":"String","Category3Id":"String","Category3Name":"String","Currency":"String
+        #"Description":"String","FocusWeekFilter":false,"Garanty":"String","GarantyMode":"String","ItemName":"String","ItemState":0,"ManufacturerId":"String","ManufacturerName":"String","NewFilter":false,"PartNumber":"String",
+        #"Price1":0,"Price2":0,"Price3":0, Price4":0,"Price5":0,"Price6":0,"Top10Filter":false}
+        #*/
+        #
+        #    tmpl = '{\"ProductId\":\"%1\",\"DataAreaId\":\"%2\",\"ActionFilter\":%3,\"BargainFilter\":%4,\"Category1Id\":\"%5\",\"Category1Name\":\"%6\",' +
+        #           '\"Category2Id\":\"%7\",\"Category2Name\":\"%8\",\"Category3Id\":\"%9\",\"Category3Name\":\"%10\",\"Currency\":\"%11\",\"Description\":\"%12\",\"FocusWeekFilter\":%13,' +
+        #           '\"Garanty\":\"%14\",\"GarantyMode\":\"%15\",\"ItemName\":\"%16\",\"ItemState\":%17,\"ManufacturerId\":\"%18\",\"ManufacturerName\":\"%19\",' +
+        #           '\"NewFilter\":%20,\"PartNumber\":\"%21\","\Price1\":%22,\"Price2\":%23,\"Price3\":%24,\"Price4\":%25,\"Price5\":%26,\"Price6\":%27,\"Top10Filter\":%28}';
+        #
+        #    return tmpl;
+        #}
+      ENDSOURCE
+      SOURCE #getPictureTemplate
+        #protected str getPictureTemplate()
+        #{
+        #    str tmpl = '';
+        #    ;
+        #
+        #    tmpl = '{\"RecId\":%1,\"ProductId\":\"%2\",\"Primary\":%3,\"FileName\":\"%4\"}';
+        #
+        #    return tmpl;
+        #}
+      ENDSOURCE
+      SOURCE #sendJSon
+        #protected str sendJSon(str _url, str _json, str 10 _method = 'POST' )
+        #{
+        #    str ret = '';
+        #    str url = '';
+        #    InteropPermission permission;
+        #    ;
+        #
+        #    try
+        #    {
+        #        if (!_url ) { return ''; }
+        #
+        #        if (!_json ) { return ''; }
+        #
+        #        uri = null;
+        #
+        #        permission = new InteropPermission(InteropKind::ClrInterop);
+        #        permission.assert();
+        #
+        #        xclient = new System.Net.WebClient();
+        #
+        #        encoding = System.Text.Encoding::GetEncoding( "utf-8" );
+        #
+        #        xclient.set_Encoding( encoding );
+        #
+        #        xclient.set_Credentials( System.Net.CredentialCache::get_DefaultNetworkCredentials() );
+        #
+        #        url = #BaseUrl + _url;
+        #
+        #        uri = new System.Uri(url);
+        #
+        #        ret = xclient.UploadString(uri, _method, _json);
+        #
+        #        CodeAccessPermission::revertAssert();
+        #
+        #        return ret;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = CLRInterop::getLastException();
+        #
+        #        info(clrException.get_Message());
+        #
+        #        return ret;
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SyncServiceProvider eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SyncServiceProvider
+    PROPERTIES
+      Name                #SyncServiceProvider
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #//összes elvégezhető műveletet tartalmazza, melyek interfészem keresztül hívhatóak
+        #public class SyncServiceProvider
+        #{
+        #    ISyncService syncService;
+        #}
+      ENDSOURCE
+      SOURCE #deleteCatalogue
+        #public int deleteCatalogue(ItemId _itemId)
+        #{
+        #    ;
+        #    return syncService.deleteCatalogue(_itemId);
+        #}
+      ENDSOURCE
+      SOURCE #deleteDescription
+        #public int deleteDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.deleteDescription(entity);
+        #}
+      ENDSOURCE
+      SOURCE #deletePicture
+        #public int deletePicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.deletePicture(entity);
+        #}
+      ENDSOURCE
+      SOURCE #getFactoryInstance
+        #private ISyncServiceFactory getFactoryInstance(SyncServiceConfigKey configKey)
+        #{
+        #    if (configKey == SyncServiceConfigKey::Rest)
+        #    {
+        #        return new RestSyncServiceFactory();
+        #    }
+        #    if (configKey == SyncServiceConfigKey::Msmq)
+        #    {
+        #        return new MsmqSyncServiceFactory();
+        #    }
+        #    return new MsmqSyncServiceFactory();
+        #}
+      ENDSOURCE
+      SOURCE #insertCatalogue
+        #public int insertCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.insertCatalogue(entity);
+        #}
+      ENDSOURCE
+      SOURCE #insertDescription
+        #public int insertDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.insertDescription(entity);
+        #}
+      ENDSOURCE
+      SOURCE #insertPicture
+        #public int insertPicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.insertPicture(entity);
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #//létrehozza és beállítja az interfészt megvalósító példányt egy factory segítségével
+        #void new(SyncServiceConfigKey configKey = SyncServiceConfigKey::Msmq)
+        #{
+        #    ISyncServiceFactory factory;
+        #    ;
+        #
+        #    factory = this.getFactoryInstance(configKey);
+        #
+        #    syncService = factory.create();
+        #}
+      ENDSOURCE
+      SOURCE #setPrimaryPicture
+        #public int setPrimaryPicture(PictureSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.setPrimaryPicture(entity);
+        #}
+      ENDSOURCE
+      SOURCE #setStock
+        #//készletérték változás művelete
+        #public int setStock(StockSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.setStock(entity);
+        #}
+      ENDSOURCE
+      SOURCE #setSyncServiceParams
+        #public int setSyncServiceParams(NoYes _enableCatalogueSync = NoYes::No,
+        #                                NoYes _enableDescriptionSync = NoYes::No,
+        #                                NoYes _enablePictureSync = NoYes::No,
+        #                                NoYes _enablePriceSync = NoYes::No,
+        #                                NoYes _enableStockSync = NoYes::No)
+        #{
+        #
+        #    return syncService.setSyncServiceParams(_enableCatalogueSync,
+        #                                            _enableDescriptionSync,
+        #                                            _enablePictureSync,
+        #                                            _enablePriceSync,
+        #                                            _enableStockSync);
+        #}
+      ENDSOURCE
+      SOURCE #updateCatalogue
+        #public int updateCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.updateCatalogue(entity);
+        #}
+      ENDSOURCE
+      SOURCE #updateDescription
+        #public int updateDescription(DescriptionSyncEntity entity)
+        #{
+        #    ;
+        #    return syncService.updateDescription(entity);
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) RestSyncService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #RestSyncService
+    PROPERTIES
+      Name                #RestSyncService
+      Extends             #RestSyncServiceBase
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class RestSyncService extends RestSyncServiceBase implements ISyncService
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #deleteCatalogue
+        #public int deleteCatalogue(ItemId _itemId)
+        #{
+        #    ;
+        #    return 0;
+        #}
+      ENDSOURCE
+      SOURCE #deleteDescription
+        #public int deleteDescription(DescriptionSyncEntity entity)
+        #{
+        #    return -1;
+        #}
+      ENDSOURCE
+      SOURCE #deletePicture
+        #public int deletePicture(PictureSyncEntity entity)
+        #{
+        #/*{"ProductId":"String","FileName":"String"}*/
+        #    str tmpl = '{\"ProductId\":\"%1\",\"FileName\":\"%2\"}';
+        #    str json = '';
+        #    str ret = '';
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        json = strFmt( tmpl, entity.getItemId(), entity.getFileName() );
+        #
+        #        //info(json);
+        #
+        #        ret = this.sendJSon( 'DeletePicture', json );
+        #
+        #        //info(ret);
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "deletePicture error!\n" + clrException.get_InnerException() );
+        #        return -1;
+        #    }
+        #    catch
+        #    {
+        #        info( "deletePicture error!\n" );
+        #        return -2;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #insertCatalogue
+        #public int insertCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    str json = '';
+        #    str ret = '';
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableCatalogueSync()) { return 0; }
+        #
+        #        json = strFmt( this.getCatalogueTemplate(), entity.getItemId(), curext(),
+        #                       this.enum2Boolean(entity.getActionFilter()), this.enum2Boolean(entity.getBargainFilter()),
+        #                       entity.getCategory1Id(), entity.getCategory1Name(),
+        #                       entity.getCategory2Id(), entity.getCategory2Name(),
+        #                       entity.getCategory3Id(), entity.getCategory3Name(),
+        #                       entity.getCurrency(),entity.getDescription(),
+        #                       this.enum2Boolean(entity.getFocusWeekFilter()),
+        #                       entity.getGarantyTimeId(), entity.getGarantyModeId(),
+        #                       entity.getItemName(), enum2int(entity.getItemState()),
+        #                       entity.getManufacturerId(), entity.getManufacturerName(),
+        #                       this.enum2Boolean(entity.getNewFilter()), entity.getPartNumber(),
+        #                       entity.getPrice1(), entity.getPrice2(), entity.getPrice3(),
+        #                       entity.getPrice4(),entity.getPrice5(),entity.getPrice6(),
+        #                       this.enum2Boolean(entity.getTop10Filter()) );
+        #
+        #        //info(json);
+        #
+        #        ret = this.sendJSon( 'InsertCatalogue', json );
+        #
+        #        //info(ret);
+        #
+        #        return 1;
+        #        /*
+        #        //entity.getStandardConfigId()
+        #        entity.getEmployeeId() */
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "InsertCatalogue error!\n" + clrException.get_InnerException() );
+        #        return -1;
+        #    }
+        #    catch
+        #    {
+        #        info( "InsertCatalogue error!\n" );
+        #        return -2;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #insertDescription
+        #public int insertDescription(DescriptionSyncEntity entity)
+        #{
+        #    return -1;
+        #}
+      ENDSOURCE
+      SOURCE #insertPicture
+        #public int insertPicture(PictureSyncEntity entity)
+        #{
+        #    str json = '';
+        #    str ret = '';
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        json = strFmt( this.getPictureTemplate(), entity.getRecId(), entity.getItemId(),
+        #                       this.enum2Boolean(entity.getPrimary()), entity.getFileName() );
+        #
+        #        //info(json);
+        #
+        #        ret = this.sendJSon( 'InsertPicture', json );
+        #
+        #        //info(ret);
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "insertPicture error!\n" + clrException.get_InnerException() );
+        #        return -1;
+        #    }
+        #    catch
+        #    {
+        #        info( "insertPicture error!\n" );
+        #        return -2;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #setPrimaryPicture
+        #public int setPrimaryPicture(PictureSyncEntity entity)
+        #{
+        #    str json = '';
+        #    str ret = '';
+        #    str tmpl = '{\"ProductId\":\"%1\",\"FileName\":\"%2\"}';
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnablePictureSync()) { return 0; }
+        #
+        #        json = strFmt( tmpl, entity.getItemId(), entity.getFileName() );
+        #
+        #        //info(json);
+        #
+        #        ret = this.sendJSon( 'SetPrimaryPicture', json );
+        #
+        #        //info(ret);
+        #
+        #        return 1;
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "SetPrimaryPicture error!\n" + clrException.get_InnerException() );
+        #        return -1;
+        #    }
+        #    catch
+        #    {
+        #        info( "SetPrimaryPicture error!\n" );
+        #        return -2;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #setStock
+        #public int setStock(StockSyncEntity entity)
+        #{
+        #    return 0;
+        #}
+      ENDSOURCE
+      SOURCE #setSyncServiceParams
+        #public int setSyncServiceParams(NoYes _enableCatalogueSync = NoYes::No,
+        #                                NoYes _enableDescriptionSync = NoYes::No,
+        #                                NoYes _enablePictureSync = NoYes::No,
+        #                                NoYes _enablePriceSync = NoYes::No,
+        #                                NoYes _enableStockSync = NoYes::No)
+        #{
+        #    return super(_enableCatalogueSync, _enableDescriptionSync,
+        #                 _enablePictureSync,_enablePriceSync,
+        #                 _enableStockSync);
+        #}
+      ENDSOURCE
+      SOURCE #testService
+        #void testService()
+        #{
+        #    str json = '{\"Message\":\"Hello\",\"DataAreaId\":\"ser\"}';
+        #    str ret = '';
+        #    ;
+        #    try
+        #    {
+        #        ret = this.sendJSon( 'http://localhost:8080/Web.Services.Host/servicestack.ashx/json/syncreply/SayHello', json );
+        #
+        #        info(ret);
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "updateCatalogue error!\n" + clrException.get_InnerException() );
+        #    }
+        #    catch
+        #    {
+        #        info( "updateCatalogue error!\n" );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #updateCatalogue
+        #public int updateCatalogue(CatalogueSyncEntity entity)
+        #{
+        #    str json = '';
+        #    str ret = '';
+        #    ;
+        #    try
+        #    {
+        #        if (!this.isEnableCatalogueSync()) { return 0; }
+        #
+        #        json = strFmt( this.getCatalogueTemplate(), entity.getItemId(), curext(),
+        #                       this.enum2Boolean(entity.getActionFilter()), this.enum2Boolean(entity.getBargainFilter()),
+        #                       entity.getCategory1Id(), entity.getCategory1Name(),
+        #                       entity.getCategory2Id(), entity.getCategory2Name(),
+        #                       entity.getCategory3Id(), entity.getCategory3Name(),
+        #                       entity.getCurrency(), entity.getDescription(),
+        #                       this.enum2Boolean(entity.getFocusWeekFilter()),
+        #                       entity.getGarantyTimeId(), entity.getGarantyModeId(),
+        #                       entity.getItemName(), enum2int(entity.getItemState()),
+        #                       entity.getManufacturerId(), entity.getManufacturerName(),
+        #                       this.enum2Boolean(entity.getNewFilter()), entity.getPartNumber(),
+        #                       entity.getPrice1(), entity.getPrice2(), entity.getPrice3(),
+        #                       entity.getPrice4(),entity.getPrice5(),entity.getPrice6(),
+        #                       this.enum2Boolean(entity.getTop10Filter()) );
+        #
+        #        //info(json);
+        #
+        #        ret = this.sendJSon( 'UpdateCatalogue', json );
+        #
+        #        //info(ret);
+        #
+        #        return 1;
+        #        /*
+        #        entity.getStandardConfigId()
+        #        entity.getEmployeeId() */
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = ClrInterop::getLastException();
+        #        info( "updateCatalogue error!\n" + clrException.get_InnerException() );
+        #        return -1;
+        #    }
+        #    catch
+        #    {
+        #        info( "updateCatalogue error!\n" );
+        #        return -2;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #updateDescription
+        #public int updateDescription(DescriptionSyncEntity entity)
+        #{
+        #    return -1;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) RestSyncServiceFactory eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #RestSyncServiceFactory
+    PROPERTIES
+      Name                #RestSyncServiceFactory
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class RestSyncServiceFactory implements ISyncServiceFactory
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #create
+        #public ISyncService create()
+        #{
+        #    return new RestSyncService();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) MsmqSyncServiceBase eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #MsmqSyncServiceBase
+    PROPERTIES
+      Name                #MsmqSyncServiceBase
+      Extends             #SyncServiceBase
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #//definiálja az msmq nevét és egy referenciát tartalmaz msmq kezelésére
+        #public class MsmqSyncServiceBase extends SyncServiceBase
+        #{
+        #    System.Messaging.MessageQueue msmq;
+        #
+        #     #define.QueueName('FormatName:DIRECT=OS:srv2\AxSync')
+        #
+        #    //#define.QueueName( 'srv2\\axsync' ) //srv1\\axsync
+        #}
+      ENDSOURCE
+      SOURCE #send
+        #//a body paraméterben sorosított üzenetet elküldi az msmq-nak a második paraméterben megadott felirattal
+        #protected void send(str body, str label)
+        #{
+        #    try
+        #    {
+        #        if (!body)
+        #        {
+        #            throw error('Message body not exists');
+        #        }
+        #
+        #        if (!label)
+        #        {
+        #            throw error('Message label not exists');
+        #        }
+        #
+        #        new InteropPermission(InteropKind::ClrInterop).assert();
+        #
+        #        //if (!System.Messaging.MessageQueue::Exists(#QueueName))
+        #        //{
+        #        //    CodeAccessPermission::revertAssert();
+        #
+        #        //    throw error(strfmt('Message queue: %1 not exists', #QueueName));
+        #        //}
+        #
+        #        msmq = new System.Messaging.MessageQueue(#QueueName);
+        #
+        #        //msmq.set_Authenticate(false);
+        #
+        #        msmq.Send(body, label);
+        #
+        #        msmq.Dispose();
+        #
+        #        CodeAccessPermission::revertAssert();
+        #
+        #    }
+        #    catch(Exception::CLRError)
+        #    {
+        #        clrException = CLRInterop::getLastException();
+        #
+        #        throw error(strfmt('Clr error message: %1, source: %2', clrException.get_Message(), clrException.get_Source()));
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) MsmqSyncServiceFactory eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #MsmqSyncServiceFactory
+    PROPERTIES
+      Name                #MsmqSyncServiceFactory
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class MsmqSyncServiceFactory implements ISyncServiceFactory
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #create
+        #public ISyncService create()
+        #{
+        #    return new MsmqSyncService();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) ISyncServiceFactory eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  INTERFACE #ISyncServiceFactory
+    PROPERTIES
+      Name                #ISyncServiceFactory
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public interface ISyncServiceFactory
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #create
+        #public ISyncService create()
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) ISyncService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  INTERFACE #ISyncService
+    PROPERTIES
+      Name                #ISyncService
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #//szinkronizaciohoz hasznalt muveletek meghatarozasa
+        #public interface ISyncService
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #deleteCatalogue
+        #public int deleteCatalogue(ItemId _itemId)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #deleteDescription
+        #public int deleteDescription(DescriptionSyncEntity entity){}
+      ENDSOURCE
+      SOURCE #deletePicture
+        #public int deletePicture(PictureSyncEntity entity)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #insertCatalogue
+        #public int insertCatalogue(CatalogueSyncEntity entity)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #insertDescription
+        #public int insertDescription(DescriptionSyncEntity entity){}
+      ENDSOURCE
+      SOURCE #insertPicture
+        #public int insertPicture(PictureSyncEntity entity)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #setPrimaryPicture
+        #public int setPrimaryPicture(PictureSyncEntity entity)
+        #{
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setStock
+        #public int setStock(StockSyncEntity entity)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #setSyncServiceParams
+        #public int setSyncServiceParams(NoYes _enableCatalogueSync = NoYes::No,
+        #                                NoYes _enableDescriptionSync = NoYes::No,
+        #                                NoYes _enablePictureSync = NoYes::No,
+        #                                NoYes _enablePriceSync = NoYes::No,
+        #                                NoYes _enableStockSync = NoYes::No){}
+      ENDSOURCE
+      SOURCE #updateCatalogue
+        #public int updateCatalogue(CatalogueSyncEntity entity)
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #updateDescription
+        #public int updateDescription(DescriptionSyncEntity entity){}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: DBE
+
+; Microsoft Dynamics Enumtype : SyncServiceConfigKey unloaded
+; --------------------------------------------------------------------------------
+  ENUMTYPEVERSION 1
+  
+  ENUMTYPE #SyncServiceConfigKey
+    PROPERTIES
+      Name                #SyncServiceConfigKey
+      Label               #SyncServiceConfigKey
+      Help                #SyncServiceConfigKey
+      UseEnumValue        #Yes
+    ENDPROPERTIES
+    
+    TYPEELEMENTS
+      #Rest
+      PROPERTIES
+        Name                #Rest
+        Label               #Rest
+        EnumValue           #1
+      ENDPROPERTIES
+      
+      #Msmq
+      PROPERTIES
+        Name                #Msmq
+        Label               #Msmq
+        EnumValue           #2
+      ENDPROPERTIES
+      
+    ENDTYPEELEMENTS
+  ENDENUMTYPE
+  
+
+***Element: DBE
+
+; Microsoft Dynamics Enumtype : SyncOperation unloaded
+; --------------------------------------------------------------------------------
+  ENUMTYPEVERSION 1
+  
+  ENUMTYPE #SyncOperation
+    PROPERTIES
+      Name                #SyncOperation
+      Label               #SyncOperation
+      Help                #SyncOperation
+      UseEnumValue        #Yes
+    ENDPROPERTIES
+    
+    TYPEELEMENTS
+      #Insert
+      PROPERTIES
+        Name                #Insert
+        Label               #Insert
+        EnumValue           #1
+      ENDPROPERTIES
+      
+      #None
+      PROPERTIES
+        Name                #None
+        Label               #None
+        EnumValue           #0
+      ENDPROPERTIES
+      
+      #Update
+      PROPERTIES
+        Name                #Update
+        Label               #Update
+        EnumValue           #2
+      ENDPROPERTIES
+      
+      #Delete
+      PROPERTIES
+        Name                #Delete
+        Label               #Delete
+        EnumValue           #3
+      ENDPROPERTIES
+      
+      #Set
+      PROPERTIES
+        Name                #Set
+        Label               #Set
+        EnumValue           #4
+      ENDPROPERTIES
+      
+    ENDTYPEELEMENTS
+  ENDENUMTYPE
+  
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobSetStockTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobSetStockTest
+    #static void JobSetStockTest(Args _args)
+    #{
+    #     SyncServiceProvider sync;
+    #
+    #     StockSyncEntity entity;
+    #
+    #     ;
+    #
+    #     sync = new SyncServiceProvider();
+    #
+    #     entity = new StockSyncEntity();
+    #
+    #     entity.setInventLocationId('KULSO');
+    #
+    #     entity.setItemId('V2520-2');
+    #
+    #     entity.setSyncOperation(SyncOperation::Set);
+    #
+    #     sync.setStock(entity);
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_Date eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_Date
+    #static void test_Date(Args _args)
+    #{
+    #    date d;
+    #    ;
+    #
+    #    d = str2date( '2011/03/01', 321 );
+    #
+    #
+    #    info( strFmt( '%1, %2, %3', d, today(), today() - d) );
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_InventSum eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_InventSum
+    #static void test_InventSum(Args _args)
+    #{
+    #    InventSum   InventSum;
+    #    InventDim   InventDim;
+    #    InventParameters inventParameters;
+    #    InventTable inventTable;
+    #    int timeInterval;
+    #    ;
+    #
+    #    timeInterval = WinAPI::getTickCount();
+    #
+    #    inventParameters = inventparameters::find();
+    #
+    #    inventTable = InventTable::find('380DT-28');
+    #
+    #    if (inventTable.Webaruhaz == NoYes::Yes)
+    #    {
+    #        select sum(AvailPhysical) from InventSum
+    #                                join InventDim
+    #                                where InventDim.inventDimId==InventSum.inventDimId &&
+    #                                        InventSum.Closed==NoYes::No &&  InventSum.ItemId==inventTable.ItemId &&
+    #                                        InventDim.configId==inventTable.StandardConfigId &&
+    #                                        (InventDim.InventLocationId == inventparameters.InventLocationBelso ||
+    #                                         InventDim.InventLocationId == inventparameters.InventLocationKulso);
+    #
+    #        timeInterval = WinAPI::getTickCount() - timeInterval;
+    #
+    #        info( strFmt(' avail physical: %1 timeInterval: %2', InventSum.AvailPhysical, timeInterval));
+    #    }
+    #    else
+    #    {
+    #        info('Nem webes a cikk!');
+    #    }
+    #
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_MsmqAdapter eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_MsmqAdapter
+    #static void test_MsmqAdapter(Args _args)
+    #{
+    #    MsmqAdapter msmqAdapter;
+    #    PictureSyncEntity entity;
+    #    int ret = 0;
+    #    ;
+    #
+    #    entity = new PictureSyncEntity();
+    #    entity.setFileName( 'C12C802221BB44.jpg' );
+    #    entity.setItemId( 'C12C802221BB44' );
+    #    entity.setPrimary( NoYes::No );
+    #    entity.setRecId( 5637212076 );
+    #
+    #    msmqAdapter = new MsmqAdapter();
+    #
+    #    // Assert permission to use COM objects
+    #    new InteropPermission(InteropKind::ComInterop).assert();
+    #
+    #    msmqAdapter.initialize();
+    #
+    #    CodeAccessPermission::revertAssert();
+    #
+    #    msmqAdapter.sendMessage( entity.serialize() );
+    #
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) testMessageQueue eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #testMessageQueue
+    #static void testMessageQueue(Args _args)
+    #{
+    #    System.Exception clrException;
+    #    InteropPermission permission;
+    #    System.Messaging.MessageQueue msmq;
+    #    PictureSyncEntity picture;
+    #    str queueName = @'axos3\test';    //srv1\axsync
+    #    //srv1\\private$\\test
+    #    //'FormatName:Direct=OS:juhasza-2k3\\private$\\testqueue';
+    #    //'juhasza-2k3\\PictureSync';
+    #    //@"Juhasza-2k3.hrp.hu\Private$\TestQueue"
+    #    //@"\private$\MSMQOrders" srv1\axsync
+    #    ;
+    #
+    #    try
+    #    {
+    #        picture = new PictureSyncEntity();
+    #        picture.setFileName('test.jpg');
+    #        picture.setItemId('Item001');
+    #        picture.setPrimary(true);
+    #        picture.setRecId( 10000000);
+    #
+    #        //permission = new InteropPermission(InteropKind::ClrInterop);
+    #        //permission.assert();
+    #
+    #        //if (System.Messaging.MessageQueue::Exists(queueName))
+    #        //{
+    #            msmq = new System.Messaging.MessageQueue(queueName);
+    #            //msmq.set_Authenticate(false);
+    #            msmq.Send(picture.serialize(), "Picture");
+    #
+    #            msmq.Dispose();
+    #            info('kész');
+    #        //}
+    #        //else
+    #        //{
+    #        //    info('nincs ilyen queue');
+    #        //}
+    #        CodeAccessPermission::revertAssert();
+    #
+    #    }
+    #    catch(Exception::CLRError)
+    #    {
+    #        clrException = CLRInterop::getLastException();
+    #        info(clrException.get_Message());
+    #    }
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobUpdatePictureTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobUpdatePictureTest
+    #static void JobUpdatePictureTest(Args _args)
+    #{
+    #    SyncServiceProvider sync;
+    #    PictureSyncEntity entity;
+    #    int ret = 0;
+    #    ;
+    #
+    #    entity = new PictureSyncEntity();
+    #    entity.setFileName( 'C12C802221BB44.jpg' );
+    #    entity.setItemId( 'C12C802221BB44' );
+    #    entity.setPrimary( NoYes::No );
+    #    entity.setRecId( 5637212076 );
+    #
+    #    sync = new SyncServiceProvider();
+    #    ret = sync.setPrimaryPicture( entity );
+    #
+    #    info(strFmt('%1', ret));
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobInsertPictureTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobInsertPictureTest
+    #static void JobInsertPictureTest(Args _args)
+    #{
+    #    SyncServiceProvider sync;
+    #    PictureSyncEntity entity;
+    #    int ret = 0;
+    #    ;
+    #
+    #    entity = new PictureSyncEntity();
+    #    entity.setFileName( 'C12C802221BB44.jpg' );
+    #    entity.setItemId( 'C12C802221BB44' );
+    #    entity.setPrimary( NoYes::Yes );
+    #    entity.setRecId( 5637212076 );
+    #
+    #    sync = new SyncServiceProvider();
+    #    ret = sync.insertPicture( entity );
+    #
+    #    info(strFmt('%1', ret));
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_Enum eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_Enum
+    #static void test_Enum(Args _args)
+    #{
+    #    ;
+    #    info( strFmt( '%1', enum2int(NoYes::No)) );
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_SyncService eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_SyncService
+    #static void test_SyncService(Args _args)
+    #{
+    #    SyncServiceProvider sync;
+    #
+    #    CatalogueSyncEntity entity;
+    #    ;
+    #
+    #    sync = new SyncServiceProvider();
+    #
+    #    entity = new CatalogueSyncEntity();
+    #
+    #/*
+    #ProductId AxStructCode StandardConfigId PartNumber ItemName Garanty GarantyMode
+    #ManufacturerId ManufacturerName
+    #Category1Id Category1Name Category2Id Category2Name Category3Id Category3Name
+    #Price ItemState Action BargainCounter Top10 FocusWeek New Description
+    #AgentId AgentName AgentExtension AgentEmail AgentMobile CreatedDate CreatedTime ModifiedDate ModifiedTime-
+    #
+    #BCI24B A021B012C067____ BASE CA6881A002AAH Canon cartrige black
+    #A021 Canon B012 Štampači C067 Termosublimacioni
+    #2100.000000000000 0 0 0 0 0 1 DMilovanov Darko Milovanovic dmilovanovic@hrp.rs 2011-02-26 00:00:00.000 65099 2011-02-28 00:00:00.000 70027
+    #*/
+    #
+    #    entity.setActionFilter(NoYes::No);
+    #    entity.setAxStructCode('A021B012C067____');
+    #    entity.setBargainFilter(NoYes::No);
+    #    entity.setCategory1Id('B012');
+    #    entity.setCategory1Name('Štampači');
+    #    entity.setCategory2Id('C067');
+    #    entity.setCategory2Name('Termosublimacioni');
+    #    entity.setCategory3Id('');
+    #    entity.setCategory3Name('');
+    #    entity.setEmployeeId('DMilovanov');
+    #    entity.setFocusWeekFilter(NoYes::No);
+    #    entity.setGarantyModeId('');
+    #    entity.setGarantyTimeId('');
+    #    entity.setItemId('BCI24B');
+    #    entity.setItemName('Canon cartrige black ');
+    #    entity.setItemState(ItemState::Aktiv);
+    #    entity.setManufacturerId('A021');
+    #    entity.setManufacturerName('Canon');
+    #    entity.setNewFilter(NoYes::No);
+    #    entity.setPartNumber('CA6881A002AAH');
+    #    entity.setTop10Filter(NoYes::No);
+    #
+    #    sync.updateCatalogue(entity);
+    #
+    #
+    #    //syncService.testService();
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_WebClient eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_WebClient
+    #static void test_WebClient(Args _args)
+    #{
+    #    System.Text.Encoding encoding;
+    #
+    #    System.Exception clrException;
+    #
+    #    #define.CodePage( 1252 )
+    #
+    #    System.Net.WebClient xclient;
+    #
+    #    System.Uri uri = null;
+    #
+    #    str url = 'http://localhost:8080/Web.Services.Host/servicestack.ashx/json/syncreply/SayHello';
+    #
+    #    str ret = '';
+    #
+    #    str json = '{\"Message\":\"Hello\",\"DataAreaId\":\"ser\"}';
+    #    ;
+    #
+    #    try
+    #    {
+    #        xclient = new System.Net.WebClient();
+    #
+    #        encoding = System.Text.Encoding::GetEncoding( "utf-8" );
+    #
+    #        xclient.set_Encoding( encoding );
+    #
+    #        xclient.set_Credentials( System.Net.CredentialCache::get_DefaultNetworkCredentials() );
+    #
+    #        uri = new System.Uri(url);
+    #
+    #        ret = xclient.UploadString(uri, json);
+    #
+    #        info('returned message: ' + ret);
+    #    }
+    #    catch(Exception::CLRError)
+    #    {
+    #        clrException = CLRInterop::getLastException();
+    #        info(clrException.get_Message());
+    #    }
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_HttpRequestResponse eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_HttpRequestResponse
+    #static void test_HttpRequestResponse(Args _args)
+    #{
+    #    System.Net.HttpWebRequest   httpRequest  = null;
+    #    System.Net.HttpWebResponse  httpResponse = null;
+    #    System.Net.CookieCollection cookies      = null;
+    #    CLRObject                   clro         = null;
+    #    ;
+    #    new InteropPermission(InteropKind::ClrInterop).assert();
+    #    clro         = System.Net.WebRequest::Create("http://www.url.com/authenticate");
+    #    httpRequest  = clro;
+    #    httpResponse = httpRequest.GetResponse();
+    #    cookies      = httpResponse.get_Cookies();
+    #    clro         = System.Net.WebRequest::Create("http://www.url.com/");
+    #    httpRequest  = clro;
+    #    httpResponse.set_Cookies(cookies);
+    #    httpResponse = httpRequest.GetResponse();
+    #
+    #    /*
+    #    response = request.GetResponse();
+    #    stream = response.GetResponseStream();
+    #    reader = new System.IO.StreamReader(stream);
+    #    xmlFeed = reader.ReadToEnd();
+    #    reader.Close();
+    #    */
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_HttpPost eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_HttpPost
+    #static void test_HttpPost(Args _args)
+    #{
+    #    System.Text.Encoding encoding;
+    #    System.Exception clrException;
+    #    #define.CodePage( 1252 )
+    #
+    #    str url = 'http://localhost:8080/Web.Services.Host/servicestack.ashx/json/syncreply/SayHello';
+    #
+    #    System.Net.HttpWebRequest httpRequest = null;
+    #    System.Net.WebRequest webRequest = null;
+    #    System.Net.HttpWebResponse httpResponse = null;
+    #    System.Net.WebResponse webResponse = null;
+    #    CLRObject clro = null;
+    #
+    #    str json = '{"Message":"Hello","DataAreaId":"ser"}';
+    #    str ret = '';
+    #
+    #    System.IO.Stream stream;
+    #
+    #    System.IO.StreamReader streamReader;
+    #
+    #    System.Type typeOfByte;
+    #    System.Array arrayOfByte;
+    #    int arrayOfByteLength = 1024;
+    #    ;
+    #
+    #    try
+    #    {
+    #    new InteropPermission(InteropKind::ClrInterop).assert();
+    #
+    #    clro = System.Net.WebRequest::Create(url);
+    #
+    #    httpRequest = clro;
+    #
+    #    httpRequest.set_Method('POST');
+    #
+    #    httpRequest.set_PreAuthenticate(true);
+    #    httpRequest.set_UseDefaultCredentials(true);
+    #
+    #    httpRequest.set_ContentType("application/json; charset=utf-8");
+    #
+    #    typeOfByte = System.Type::GetType("System.Byte");
+    #    arrayOfByte = System.Array::CreateInstance(typeOfByte, arrayOfByteLength);
+    #
+    #    encoding = System.Text.Encoding::get_UTF8();
+    #    arrayOfByte = encoding.GetBytes(json);
+    #
+    #    httpRequest.set_ContentLength(arrayOfByte.get_Length());
+    #
+    #    stream = httpRequest.GetRequestStream();
+    #
+    #    //stream.Write(arrayOfByte, 0, arrayOfByte.get_Length());
+    #
+    #    stream.Close();
+    #
+    #    httpResponse = httpRequest.GetResponse();
+    #
+    #    stream = httpResponse.GetResponseStream();
+    #
+    #    streamReader = new System.IO.StreamReader(stream);
+    #
+    #    ret = streamReader.ReadToEnd();
+    #
+    #    streamReader.Close();
+    #
+    #    stream.Close ();
+    #
+    #    httpResponse.Close ();
+    #
+    #    codeAccessPermission::revertAssert();
+    #    }
+    #    catch (Exception::CLRError)
+    #    {
+    #        clrException = CLRInterop::getLastException();
+    #        info(clrException.get_Message());
+    #    }
+    #
+    #
+    #    //request.ContentLength = postData.Length;
+    #    //reqStream = request.GetRequestStream();
+    #    //reqStream.Write(postData, 0, postData.Length);
+    #
+    #/*
+    #    new InteropPermission(InteropKind::ClrInterop).assert();
+    #    clro         = System.Net.WebRequest::Create("http://www.url.com/authenticate");
+    #    httpRequest  = clro;
+    #    httpResponse = httpRequest.GetResponse();
+    #    cookies      = httpResponse.get_Cookies();
+    #    clro         = System.Net.WebRequest::Create("http://www.url.com/");
+    #    httpRequest  = clro;
+    #    httpResponse.set_Cookies(cookies);
+    #    httpResponse = httpRequest.GetResponse();
+    #*/
+    #
+    #    /*
+    #            System.IO.Stream reqStream = null;
+    #            System.IO.Stream responeStream = null;
+    #            System.Net.WebResponse response = null;
+    #            System.IO.StreamReader reader = null;
+    #            try
+    #            {
+    #                if (String.IsNullOrEmpty(url))
+    #                {
+    #                    return String.Empty;
+    #                }
+    #
+    #                System.Net.WebRequest request = System.Net.WebRequest.Create(url);
+    #                request.Method = 'POST';
+    #
+    #                request.PreAuthenticate = true;
+    #                request.UseDefaultCredentials = true;
+    #                request.ContentType = "application/json; charset=utf-8";
+    #                if (!String.IsNullOrEmpty(json) && !method.Equals("GET") )
+    #                {
+    #                    byte[] postData = System.Text.Encoding.UTF8.GetBytes(json);
+    #                    request.ContentLength = postData.Length;
+    #                    reqStream = request.GetRequestStream();
+    #                    reqStream.Write(postData, 0, postData.Length);
+    #                }
+    #
+    #                response = request.GetResponse();
+    #
+    #                System.Net.HttpWebResponse httpResponse = (System.Net.HttpWebResponse)response;
+    #
+    #                if (httpResponse.StatusCode != System.Net.HttpStatusCode.OK)
+    #                {
+    #                    return String.Empty;
+    #                }
+    #
+    #                responeStream = response.GetResponseStream();
+    #
+    #                reader = new System.IO.StreamReader(responeStream);
+    #
+    #                return reader.ReadToEnd();
+    #            }
+    #            catch (Exception e)
+    #            {
+    #                Console.WriteLine(e.Message);
+    #                return String.Empty;
+    #            }
+    #            finally
+    #            {
+    #                if (reqStream != null)
+    #                {
+    #                    reqStream.Close();
+    #                }
+    #                if (reader != null)
+    #                {
+    #                    reader.Close();
+    #                }
+    #                if (responeStream != null)
+    #                {
+    #                    responeStream.Close();
+    #                }
+    #                if (response != null)
+    #                {
+    #                    response.Close();
+    #                }
+    #            }
+    #    */
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) test_HttpGet eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #test_HttpGet
+    #static void test_HttpGet(Args _args)
+    #{
+    #    System.Text.Encoding encoding;
+    #
+    #    #define.CodePage( 1252 )
+    #
+    #    System.Net.WebClient xclient;
+    #
+    #    System.Uri uri = null;
+    #
+    #    str url = 'http://axeps:8080/IcecatService/Dataservice.svc/ProductJsonTest/1905949';
+    #
+    #    System.String ret = '';
+    #    ;
+    #
+    #    xclient = new System.Net.WebClient();
+    #
+    #    encoding = System.Text.Encoding::GetEncoding( "utf-8" );
+    #
+    #    xclient.set_Encoding( encoding );
+    #
+    #    xclient.set_Credentials( System.Net.CredentialCache::get_DefaultNetworkCredentials() );
+    #    //new System.Net.NetworkCredential( "username", "pwd" )
+    #
+    #    uri = new System.Uri(url);
+    #
+    #    ret = xclient.DownloadString( uri );
+    #
+    #    info( ret );
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobMsOemList eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobMsOemList
+    #static void JobMsOemList(Args _args)
+    #{
+    #    AccountNum custAccount = '';
+    #    GyartoId manufacturerId = '';
+    #    GyartoNev manufacturerName = '';
+    #    Jelleg1Id category1Id = '';
+    #    JellegNev category1Name = '';
+    #    Jelleg2Id category2Id = '';
+    #    JellegNev2 category2Name = '';
+    #    Jelleg3Id category3Id = '';
+    #    JellegNev3 category3Name = '';
+    #    str 8 priceGroupId = '';
+    #    AxStruktKod axStruktKod = '';
+    #    str 32 regiKod = '';
+    #
+    #    CCADORecordSet recordSet;
+    #    CCADOFields fields;
+    #    AdoDbHelper helper;
+    #    str err = '';
+    #
+    #    UpdStrukturaArcsoport updStrukturaArcsoport;
+    #    ;
+    #
+    #    try
+    #    {
+    #        helper = new AdoDbHelper( 'InternetUser.MsOemList' );
+    #
+    #        recordSet = helper.executeRecordSet();
+    #
+    #        while ( !recordSet.EOF() )
+    #        {
+    #            fields = recordSet.fields();
+    #            custAccount = fields.itemName("CustAccount").value();
+    #            manufacturerId = fields.itemName("ManufacturerId").value();
+    #            manufacturerName = fields.itemName("ManufacturerName").value();
+    #            category1Id = fields.itemName("Category1Id").value();
+    #            category1Name = fields.itemName("Category1Name").value();
+    #            category2Id = fields.itemName("Category2Id").value();
+    #            category2Name = fields.itemName("Category2Name").value();
+    #            category3Id = fields.itemName("Category3Id").value();
+    #            category3Name = fields.itemName("Category3Name").value();
+    #            priceGroupId = fields.itemName("PriceGroupId").value();
+    #            axStruktKod = fields.itemName("AxStruktKod").value();
+    #            regiKod = fields.itemName("RegiKod").value();
+    #
+    #            if( priceGroupId != '' && custAccount != '' )
+    #            {
+    #                select firstonly * from updStrukturaArcsoport where updStrukturaArcsoport.AxStruktKod == axStruktKod &&
+    #                                                                    updStrukturaArcsoport.Vevoszam == custAccount;
+    #
+    #                if (!updStrukturaArcsoport)
+    #                {
+    #                    updStrukturaArcsoport.clear();
+    #                    updStrukturaArcsoport.VevoSzam = custAccount;
+    #                    updStrukturaArcsoport.Gyartoid = manufacturerId;
+    #                    updStrukturaArcsoport.GyartoNev = manufacturerName;
+    #                    updStrukturaArcsoport.Jelleg1Id = category1Id;
+    #                    updStrukturaArcsoport.Jelleg2Id = category2Id;
+    #                    updStrukturaArcsoport.Jelleg3Id = category3Id;
+    #                    updStrukturaArcsoport.JellegNev1 = category1Name;
+    #                    updStrukturaArcsoport.JellegNev2 = category2Name;
+    #                    updStrukturaArcsoport.JellegNev3 = category3Name;
+    #                    updStrukturaArcsoport.JellegNev3 = category3Name;
+    #                    updStrukturaArcsoport.PriceGroupId = priceGroupId;
+    #                    updStrukturaArcsoport.AxStruktKod = axStruktKod;
+    #                    updStrukturaArcsoport.RegiKod = regiKod;
+    #                    updStrukturaArcsoport.doInsert();
+    #                }
+    #                else
+    #                {
+    #                    err += strFmt( 'Van ilyen rekord: axStruktKod: %1 custAccount: %2 priceGroupId: %3', axStruktKod, custAccount, priceGroupId );
+    #                }
+    #                 recordset.moveNext();
+    #            }
+    #            else
+    #            {
+    #                err += strFmt( 'Üres változók: axStruktKod: %1 custAccount: %2 priceGroupId: %3', axStruktKod, custAccount, priceGroupId );
+    #            }
+    #        }
+    #
+    #        recordSet.close();
+    #        helper.closeConnection();
+    #
+    #        info( err == '' ? 'A művelet sikeresen megtörtént' : err );
+    #
+    #    }
+    #    catch
+    #    {
+    #        info( "Hiba a JobMsOemList metódusban!\n" );
+    #    }
+    #
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobCreateCustomerTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobCreateCustomerTest
+    #static void JobCreateCustomerTest(Args _args)
+    #{
+    #    CustomerService customerService;
+    #    ;
+    #
+    #    customerService = new CustomerService();
+    #
+    #    customerService.deserializeCustomerRegTest();
+    #}
+  ENDSOURCE
+
+***Element: JOB
+
+; Microsoft Dynamics Job: a(z) JobForgetPasswordServiceTest eltávolítva
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #JobForgetPasswordServiceTest
+    #static void JobForgetPasswordServiceTest(Args _args)
+    #{
+    #    ContactPersonService service;
+    #    ;
+    #
+    #    service = new ContactPersonService();
+    #    service.deserializeForgetPasswordTest();
+    #}
+  ENDSOURCE
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CustRegReducedEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CustRegReducedEntity
+    PROPERTIES
+      Name                #CustRegReducedEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class CustRegReducedEntity
+        #{
+        #        str 64 companyCertificateFile;
+        #        str 64 customerName;
+        #        str 3 dataAreaId;
+        #        str 80 deliveryCity;
+        #        str 10 deliveryCounty;
+        #        str 10 deliveryCountry;
+        #        str 10 deliveryPostCode;
+        #        str 250 deliveryStreet;
+        #        str 80 invoiceCity;
+        #        str 10 invoiceCountry;
+        #        str 10 invoiceCounty;
+        #        str 80 invoiceEmail;
+        #        str 20 invoicePhone;
+        #        str 10 invoicePostCode;
+        #        str 250 invoiceStreet;
+        #        str 80 mailCity;
+        #        str 10 mailCountry;
+        #        str 10 mailCounty;
+        #        str 10 mailPostCode;
+        #        str 250 mailStreet;
+        #        NoYes newsletterSubScription;
+        #        str 64 signatureEntityFile;
+        #        str 20 vatNumber;
+        #        str 80 webAdminEmail;
+        #        str 25 webAdminFirstName;
+        #        str 25 webAdminLastName;
+        #        str 32 webAdminLoginName;
+        #        str 20 webAdminPassword;
+        #}
+      ENDSOURCE
+      SOURCE #getCompanyCertificateFile
+        #public str 64 getCompanyCertificateFile()
+        #{
+        #    return companyCertificateFile;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCustomerName
+        #public str 64 getCustomerName()
+        #{
+        #    return customerName;
+        #}
+      ENDSOURCE
+      SOURCE #getDataAreaId
+        #public str 3 getDataAreaId()
+        #{
+        #    return dataAreaId;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryCity
+        #public str 80 getDeliveryCity()
+        #{
+        #    return deliveryCity;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getDeliveryCountry
+        #public str 10 getDeliveryCountry()
+        #{
+        #    return deliveryCountry;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryCounty
+        #public str 10 getDeliveryCounty()
+        #{
+        #    return deliveryCounty;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getDeliveryPostCode
+        #public str 10 getDeliveryPostCode()
+        #{
+        #    return deliveryPostCode;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getDeliveryStreet
+        #public str 250 getDeliveryStreet()
+        #{
+        #    return deliveryStreet;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getInvoiceCity
+        #public str 80 getInvoiceCity()
+        #{
+        #    return invoiceCity;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoiceCountry
+        #public str 10 getInvoiceCountry()
+        #{
+        #    return invoiceCountry;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoiceCounty
+        #public str 10 getInvoiceCounty()
+        #{
+        #    return invoiceCounty;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoiceEmail
+        #public str 80 getInvoiceEmail()
+        #{
+        #    return invoiceEmail;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoicePhone
+        #public str 20 getInvoicePhone()
+        #{
+        #    return invoicePhone;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoicePostCode
+        #public str 10 getInvoicePostCode()
+        #{
+        #    return invoicePostCode;
+        #}
+      ENDSOURCE
+      SOURCE #getInvoiceStreet
+        #public str 250 getInvoiceStreet()
+        #{
+        #    return invoiceStreet;
+        #}
+      ENDSOURCE
+      SOURCE #getMailCity
+        #public str 80 getMailCity()
+        #{
+        #    return mailCity;
+        #}
+      ENDSOURCE
+      SOURCE #getMailCountry
+        #public str 10 getMailCountry()
+        #{
+        #    return mailCountry;
+        #}
+      ENDSOURCE
+      SOURCE #getMailCounty
+        #public str 10 getMailCounty()
+        #{
+        #    return mailCounty;
+        #}
+      ENDSOURCE
+      SOURCE #getMailPostCode
+        #public str 10 getMailPostCode()
+        #{
+        #    return mailPostCode;
+        #}
+      ENDSOURCE
+      SOURCE #getMailStreet
+        #public str 250 getMailStreet()
+        #{
+        #    return mailStreet;
+        #}
+      ENDSOURCE
+      SOURCE #getNewsletterSubScription
+        #public NoYes getNewsletterSubScription()
+        #{
+        #    return newsletterSubScription;
+        #}
+      ENDSOURCE
+      SOURCE #getSignatureEntityFile
+        #public str 64 getSignatureEntityFile()
+        #{
+        #    return signatureEntityFile;
+        #}
+      ENDSOURCE
+      SOURCE #getVatNumber
+        #public str 20 getVatNumber()
+        #{
+        #    return vatNumber;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getWebAdminEmail
+        #public str 80 getWebAdminEmail()
+        #{
+        #    return webAdminEmail;
+        #}
+      ENDSOURCE
+      SOURCE #getWebAdminFirstName
+        #public str 25 getWebAdminFirstName()
+        #{
+        #    return webAdminFirstName;
+        #}
+      ENDSOURCE
+      SOURCE #getWebAdminLastName
+        #public str 25 getWebAdminLastName()
+        #{
+        #    return webAdminLastName;
+        #}
+      ENDSOURCE
+      SOURCE #getWebAdminLoginName
+        #public str 25 getWebAdminLoginName()
+        #{
+        #    return webAdminLoginName;
+        #}
+      ENDSOURCE
+      SOURCE #getWebAdminPassword
+        #public str 20 getWebAdminPassword()
+        #{
+        #    return webAdminPassword;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new()
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #setCompanyCertificateFile
+        #public void setCompanyCertificateFile(str 64 _companyCertificateFile)
+        #{
+        #    ;
+        #    companyCertificateFile = _companyCertificateFile;
+        #}
+      ENDSOURCE
+      SOURCE #setCustomerName
+        #public void setCustomerName(str 64 _customerName)
+        #{
+        #    ;
+        #    customerName = _customerName;
+        #}
+      ENDSOURCE
+      SOURCE #setDataAreaId
+        #public void setDataAreaId(str 3 _dataAreaId)
+        #{
+        #    ;
+        #    dataAreaId = _dataAreaId;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCity
+        #public void setDeliveryCity(str 80 _deliveryCity)
+        #{
+        #    ;
+        #    deliveryCity = _deliveryCity;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCountry
+        #public void setDeliveryCountry(str 10 _deliveryCountry)
+        #{
+        #    ;
+        #    deliveryCountry = _deliveryCountry;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCounty
+        #public void setDeliveryCounty(str 10 _deliveryCounty)
+        #{
+        #    ;
+        #    deliveryCounty = _deliveryCounty;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryPostCode
+        #public void setDeliveryPostCode(str 10 _deliveryPostCode)
+        #{
+        #    ;
+        #    deliveryPostCode = _deliveryPostCode;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryStreet
+        #public void setDeliveryStreet(str 250 _deliveryStreet)
+        #{
+        #    ;
+        #    deliveryStreet = _deliveryStreet;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoiceCity
+        #public void setInvoiceCity(str 80 _invoiceCity)
+        #{
+        #    ;
+        #    invoiceCity = _invoiceCity;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoiceCountry
+        #public void setInvoiceCountry(str 10 _invoiceCountry)
+        #{
+        #    ;
+        #    invoiceCountry = _invoiceCountry;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoiceCounty
+        #public void setInvoiceCounty(str 10 _invoiceCounty)
+        #{
+        #    ;
+        #    invoiceCounty = _invoiceCounty;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoiceEmail
+        #public void setInvoiceEmail(str 80 _invoiceEmail)
+        #{
+        #    ;
+        #    invoiceEmail = _invoiceEmail;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoicePhone
+        #public void setInvoicePhone(str 20 _invoicePhone)
+        #{
+        #    ;
+        #    invoicePhone = _invoicePhone;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoicePostCode
+        #public void setInvoicePostCode(str 10 _invoicePostCode)
+        #{
+        #    ;
+        #    invoicePostCode = _invoicePostCode;
+        #}
+      ENDSOURCE
+      SOURCE #setInvoiceStreet
+        #public void setInvoiceStreet(str 250 _invoiceStreet)
+        #{
+        #    ;
+        #    invoiceStreet = _invoiceStreet;
+        #}
+      ENDSOURCE
+      SOURCE #setMailCity
+        #public void setMailCity(str 80 _mailCity)
+        #{
+        #    ;
+        #    mailCity = _mailCity;
+        #}
+      ENDSOURCE
+      SOURCE #setMailCountry
+        #public void setMailCountry(str 10 _mailCountry)
+        #{
+        #    ;
+        #    mailCountry = _mailCountry;
+        #}
+      ENDSOURCE
+      SOURCE #setMailCounty
+        #public void setMailCounty(str 10 _mailCounty)
+        #{
+        #    ;
+        #    mailCounty = _mailCounty;
+        #}
+      ENDSOURCE
+      SOURCE #setMailPostCode
+        #public void setMailPostCode(str 10 _mailPostCode)
+        #{
+        #    ;
+        #    mailPostCode = _mailPostCode;
+        #}
+      ENDSOURCE
+      SOURCE #setMailStreet
+        #public void setMailStreet(str 250 _mailStreet)
+        #{
+        #    ;
+        #    mailStreet = _mailStreet;
+        #}
+      ENDSOURCE
+      SOURCE #setNewsletterSubScription
+        #public void setNewsletterSubScription(NoYes _newsletterSubScription)
+        #{
+        #    ;
+        #    newsletterSubScription = _newsletterSubScription;
+        #}
+      ENDSOURCE
+      SOURCE #setSignatureEntityFile
+        #public void setSignatureEntityFile(str 64 _signatureEntityFile)
+        #{
+        #    ;
+        #    signatureEntityFile = _signatureEntityFile;
+        #}
+      ENDSOURCE
+      SOURCE #setVatNumber
+        #public void setVatNumber(str 20 _vatNumber)
+        #{
+        #    ;
+        #    vatNumber = _vatNumber;
+        #}
+      ENDSOURCE
+      SOURCE #setWebAdminEmail
+        #public void setWebAdminEmail(str 80 _webAdminEmail)
+        #{
+        #    ;
+        #    webAdminEmail = _webAdminEmail;
+        #}
+      ENDSOURCE
+      SOURCE #setWebAdminFirstName
+        #public void setWebAdminFirstName(str 25 _webAdminFirstName)
+        #{
+        #    ;
+        #    webAdminFirstName = _webAdminFirstName;
+        #}
+      ENDSOURCE
+      SOURCE #setWebAdminLastName
+        #public void setWebAdminLastName(str 25 _webAdminLastName)
+        #{
+        #    ;
+        #    webAdminLastName = _webAdminLastName;
+        #}
+      ENDSOURCE
+      SOURCE #setWebAdminLoginName
+        #public void setWebAdminLoginName(str 25 _webAdminLoginName)
+        #{
+        #    ;
+        #    webAdminLoginName = _webAdminLoginName;
+        #}
+      ENDSOURCE
+      SOURCE #setWebAdminPassword
+        #public void setWebAdminPassword(str 20 _webAdminPassword)
+        #{
+        #    webAdminPassword = _webAdminPassword;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) BusinessConnectorTest eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #BusinessConnectorTest
+    PROPERTIES
+      Name                #BusinessConnectorTest
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class BusinessConnectorTest 
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #methodWithParam
+        #str methodWithParam(str 10 _param)
+        #{
+        #    str 10 param = 'yes';
+        #    str 20 ret = 'empty text';
+        #    ;
+        #
+        #    changeCompany('ser') {
+        #
+        #        ret = (param == _param) ? 'equal' : 'not equal';
+        #    }
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) MsmqAdapter eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #MsmqAdapter
+    PROPERTIES
+      Name                #MsmqAdapter
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class MsmqAdapter
+        #{
+        #    #AIF
+        #
+        #    COM MSMQ;
+        #
+        #    boolean isInitialized;
+        #
+        #    #define.MsmqAddress('axos3\\test')
+        #
+        #    #define.ChannelId('MsmqSyncChannel')
+        #
+        #    #define.DefaultEncoding('UTF-8')
+        #}
+      ENDSOURCE
+      SOURCE #initialize
+        #public void initialize()
+        #{
+        #    COMError COMError;
+        #    ;
+        #    // Calling code must assert permission to access a new COM object.
+        #    // The permission is not asserted by this method.
+        #
+        #    // BP Deviation Documented
+        #    MSMQ = AifUtil::getCOM(#MSMQProgId);
+        #    if(MSMQ != null)
+        #    {
+        #        try
+        #        {
+        #            new InteropPermission(InteropKind::ComInterop).assert();
+        #            // BP Deviation Documented
+        #            MSMQ.initialize(#MsmqAddress);
+        #            CodeAccessPermission::revertAssert();
+        #        }
+        #        catch
+        #        {
+        #            COMError = MSMQ.error();
+        #            error(strfmt('%1',COMError.description()));
+        #
+        #            isInitialized = false;
+        #            return;
+        #        }
+        #
+        #        isInitialized = true;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new()
+        #{
+        #    MSMQ = null;
+        #    isInitialized = false;
+        #}
+      ENDSOURCE
+      SOURCE #sendMessage
+        #public void sendMessage(str _messageXml)
+        #{
+        #    AifGatewayMessage gatewayMessage;
+        #    COMError COMError;
+        #    ;
+        #    if(!isInitialized)
+        #        throw error("@SYS95513");
+        #
+        #    try
+        #    {
+        #        gatewayMessage = new AifGatewayMessage( _messageXml, #DefaultEncoding, 'JuAt' );
+        #        this.sendMessageProxy(gatewayMessage);
+        #    }
+        #    catch
+        #    {
+        #        COMError = MSMQ.error();
+        #        error(strfmt('%1',COMError.description()));
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #sendMessageProxy
+        #private void sendMessageProxy(AifGatewayMessage _message)
+        #{
+        #    COM transportMessage;
+        #    ;
+        #    // BP Deviation Documented
+        #    transportMessage = new COM(#TransportMessageProgId);
+        #    // BP Deviation Documented
+        #    transportMessage.submittingUser(_message.parmSubmittingUser());
+        #    // BP Deviation Documented
+        #    transportMessage.messageXml(_message.parmMessageXml());
+        #    // BP Deviation Documented
+        #    transportMessage.encoding(_message.parmEncoding());
+        #    // BP Deviation Documented
+        #    MSMQ.sendMessage(transportMessage);
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) DeliveryAddrRegEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #DeliveryAddrRegEntity
+    PROPERTIES
+      Name                #DeliveryAddrRegEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class DeliveryAddrRegEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) MailAddrRegEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #MailAddrRegEntity
+    PROPERTIES
+      Name                #MailAddrRegEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class MailAddrRegEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) ContactRegEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #ContactRegEntity
+    PROPERTIES
+      Name                #ContactRegEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class ContactRegEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) BankAccRegEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #BankAccRegEntity
+    PROPERTIES
+      Name                #BankAccRegEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class BankAccRegEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CustomerRegEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CustomerRegEntity
+    PROPERTIES
+      Name                #CustomerRegEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class CustomerRegEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CustomerService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CustomerService
+    PROPERTIES
+      Name                #CustomerService
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #public class CustomerService
+        #{
+        #    #define.CreateCustRegReducedSchemaUrl( 'http://Shared.Web.Dynamics.Entities/CustRegReduced' )
+        #}
+      ENDSOURCE
+      SOURCE #createCustRegReduced
+        #public int createCustRegReduced(str xml)
+        #{
+        #    updTmpCustTable updTmpCustTable;
+        #
+        #    updTmpCustTable updTmpCustTableResult;
+        #
+        #    updTmpContactPersonTable updTmpContactPersonTable;
+        #
+        #    updTmpDeliveryAddrTable updTmpDeliveryAddrTable;
+        #
+        #    CustRegReducedEntity entity = null;
+        #    ;
+        #
+        #    try
+        #    {
+        #        if (!xml)
+        #        {
+        #            return -1;
+        #        }
+        #
+        #        entity = this.deserializeCustRegReduced(xml);
+        #
+        #        changeCompany(entity.getDataAreaId())
+        #        {
+        #            ttsBegin;
+        #            updTmpCustTable.clear();
+        #            updTmpCustTable.RegName = 'Darko Milovanovic';
+        #            updTmpCustTable.RegEmail = 'dmilovanovic@hrp.rs';
+        #            updTmpCustTable.RegPhone = '+381 (11) 20 19 837; 20 19 834';
+        #            updTmpCustTable.Hrp = NoYes::Yes;
+        #            updTmpCustTable.Bsc = NoYes::No;
+        #            updTmpCustTable.RegType = RegistrationType::Egyeb;
+        #            updTmpCustTable.OtherType = '';
+        #            updTmpCustTable.Name = entity.getCustomerName();
+        #            updTmpCustTable.RegisterNumber = '';
+        #            updTmpCustTable.VatNumber = entity.getVatNumber();
+        #            updTmpCustTable.EuVatNumber = '';
+        #            updTmpCustTable.SignatureEntityFile = entity.getSignatureEntityFile();
+        #            updTmpCustTable.CompanySertificate = entity.getCompanyCertificateFile();
+        #            updTmpCustTable.InvoiceCity = entity.getInvoiceCity();
+        #            updTmpCustTable.InvoicePostCode = entity.getInvoicePostCode();
+        #            updTmpCustTable.InvoiceCountry = entity.getInvoiceCountry();
+        #            updTmpCustTable.InvoiceStreet = entity.getInvoiceStreet();
+        #            updTmpCustTable.InvoicePhone = entity.getInvoicePhone();
+        #            updTmpCustTable.InvoiceEmail = entity.getInvoiceEmail();
+        #            updTmpCustTable.NewsletterSubScriptionHrp = entity.getNewsletterSubScription();
+        #            updTmpCustTable.NewsletterSubScriptionBsc = NoYes::No;
+        #            updTmpCustTable.LetterCountry = entity.getMailCountry();
+        #            updTmpCustTable.LetterCity = entity.getMailCity();
+        #            updTmpCustTable.LetterPostCode = entity.getMailPostCode();
+        #            updTmpCustTable.LetterCounty = entity.getMailCountry();
+        #            updTmpCustTable.LetterStreet = entity.getMailStreet();
+        #            updTmpCustTable.RegState = 1;
+        #            updTmpCustTable.InvoiceCounty = entity.getInvoiceCounty();
+        #            updTmpCustTable.RegistrationMethod = RegistrationMethod::Create;
+        #            updTmpCustTable.AccountNum = '';
+        #            updTmpCustTable.insert();
+        #
+        #            select firstonly updTmpCustTableResult where updTmpCustTableResult.RecId == updTmpCustTable.RecId;
+        #
+        #            updTmpContactPersonTable.clear();
+        #            updTmpContactPersonTable.RegistrationMethod = RegistrationMethod::Create;
+        #            updTmpContactPersonTable.Gender = Gender::Male;
+        #            updTmpContactPersonTable.LastName = entity.getWebAdminLastName();
+        #            updTmpContactPersonTable.FirstName = entity.getWebAdminFirstName();
+        #            updTmpContactPersonTable.Email = entity.getWebAdminEmail();
+        #            updTmpContactPersonTable.CellularPhone = '';
+        #            updTmpContactPersonTable.Phone = '';
+        #            updTmpContactPersonTable.PhoneLocal = '';
+        #            updTmpContactPersonTable.Fax = '';
+        #            updTmpContactPersonTable.FunctionId = '';
+        #            updTmpContactPersonTable.AllowOrder = NoYes::Yes;
+        #            updTmpContactPersonTable.AllowReceiptOfGoods = NoYes::Yes;
+        #            updTmpContactPersonTable.EmailArriveOfGoods =  NoYes::Yes;
+        #            updTmpContactPersonTable.EmailOfOrderConfirm = NoYes::Yes;
+        #            updTmpContactPersonTable.EmailOfDelivery =  NoYes::Yes;
+        #            updTmpContactPersonTable.WebAdmin =  NoYes::Yes;
+        #            updTmpContactPersonTable.PriceListDownload =  NoYes::Yes;
+        #            updTmpContactPersonTable.InvoiceInfo =  NoYes::Yes;
+        #            updTmpContactPersonTable.Director =  NoYes::Yes;
+        #            updTmpContactPersonTable.FinanceManager =  NoYes::Yes;
+        #            updTmpContactPersonTable.SalesManager =  NoYes::Yes;
+        #            updTmpContactPersonTable.SimpleContact =  NoYes::Yes;
+        #            updTmpContactPersonTable.SimpleSales =  NoYes::Yes;
+        #            updTmpContactPersonTable.LeftCompany =  NoYes::No;
+        #            updTmpContactPersonTable.RegistrationState = NoYes::Yes;
+        #            updTmpContactPersonTable.RefRecId = updTmpCustTable.RecId;
+        #            updTmpContactPersonTable.ContactPersonId = '';
+        #            updTmpContactPersonTable.WebLoginName = entity.getWebAdminLoginName();
+        #            updTmpContactPersonTable.Pwd = entity.getWebAdminPassword();
+        #            updTmpContactPersonTable.RefTableId = tablenum( updTmpCustTable );
+        #            updTmpContactPersonTable.insert();
+        #
+        #            updTmpDeliveryAddrTable.clear();
+        #            updTmpDeliveryAddrTable.RefRecId = updTmpCustTable.RecId;
+        #            updTmpDeliveryAddrTable.City = entity.getDeliveryCity();
+        #            updTmpDeliveryAddrTable.PostCode = entity.getDeliveryPostCode();
+        #            updTmpDeliveryAddrTable.Street = entity.getDeliveryStreet();
+        #            updTmpDeliveryAddrTable.Country = entity.getDeliveryCountry();
+        #            updTmpDeliveryAddrTable.County = entity.getDeliveryCounty();
+        #            updTmpDeliveryAddrTable.AddressId = '';
+        #            updTmpDeliveryAddrTable.RegistrationMethod = RegistrationMethod::Create;
+        #            updTmpDeliveryAddrTable.RefTableId = tablenum( updTmpCustTable );
+        #            updTmpDeliveryAddrTable.insert();
+        #            ttscommit;
+        #
+        #            return 1;
+        #        }
+        #    }
+        #    catch(Exception::Warning )
+        #    {
+        #        return -8;
+        #    }
+        #    catch(Exception::Error )
+        #    {
+        #        return -9;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #deserializeCustRegReduced
+        #//paraméter xml alapján elkészíti az új vevőfelvitelhez szükséges input adatokat
+        #private CustRegReducedEntity deserializeCustRegReduced(str xml)
+        #{
+        #    CustRegReducedEntity entity = null;
+        #
+        #    XmlTextReader xmlReader;
+        #    ;
+        #
+        #    xmlReader = XmlTextReader::newXml(xml);
+        #
+        #    xmlReader.whitespaceHandling(XmlWhitespaceHandling::None);
+        #
+        #    xmlReader.moveToContent();
+        #
+        #    while( ( xmlReader.nodeType() != XmlNodeType::Element ) && !xmlReader.eof() )
+        #    {
+        #        xmlReader.read();
+        #    }
+        #
+        #    xmlReader.readStartElement3('CustRegReduced', #CreateCustRegReducedSchemaUrl);
+        #
+        #    if (!xmlReader.eof() && xmlReader.isStartElement())
+        #    {
+        #        entity = new CustRegReducedEntity();
+        #        entity.setCompanyCertificateFile( xmlReader.readElementString2('CompanyCertificateFile') );
+        #        entity.setCustomerName( xmlReader.readElementString2('CustomerName') );
+        #        entity.setDataAreaId( xmlReader.readElementString2('DataAreaId') );
+        #        entity.setDeliveryCity( xmlReader.readElementString2('DeliveryCity') );
+        #        entity.setDeliveryCountry( xmlReader.readElementString2('DeliveryCountry') );
+        #        entity.setDeliveryCounty( xmlReader.readElementString2('DeliveryCounty') );
+        #        entity.setDeliveryPostCode( xmlReader.readElementString2('DeliveryPostCode') );
+        #        entity.setDeliveryStreet( xmlReader.readElementString2('DeliveryStreet') );
+        #        entity.setInvoiceCity( xmlReader.readElementString2('InvoiceCity') );
+        #        entity.setInvoiceCountry( xmlReader.readElementString2('InvoiceCountry') );
+        #        entity.setInvoiceCounty( xmlReader.readElementString2('InvoiceCounty') );
+        #        entity.setInvoiceEmail( xmlReader.readElementString2('InvoiceEmail') );
+        #        entity.setInvoicePhone( xmlReader.readElementString2('InvoicePhone') );
+        #        entity.setInvoicePostCode( xmlReader.readElementString2('InvoicePostCode') );
+        #        entity.setInvoiceStreet( xmlReader.readElementString2('InvoiceStreet') );
+        #        entity.setMailCity(xmlReader.readElementString2('MailCity'));
+        #        entity.setMailCountry(xmlReader.readElementString2('MailCountry'));
+        #        entity.setMailCounty(xmlReader.readElementString2('MailCounty'));
+        #        entity.setMailPostCode(xmlReader.readElementString2('MailPostCode'));
+        #        entity.setMailStreet(xmlReader.readElementString2('MailStreet'));
+        #        entity.setNewsletterSubScription( str2int( xmlReader.readElementString2('NewsletterSubScription')));
+        #        entity.setSignatureEntityFile( xmlReader.readElementString2('SignatureEntityFile') );
+        #        entity.setVatNumber( xmlReader.readElementString2('VatNumber') );
+        #        entity.setWebAdminEmail( xmlReader.readElementString2('WebAdminEmail') );
+        #        entity.setWebAdminFirstName( xmlReader.readElementString2('WebAdminFirstName') );
+        #        entity.setWebAdminLastName( xmlReader.readElementString2('WebAdminLastName') );
+        #        entity.setWebAdminLoginName( xmlReader.readElementString2('WebAdminLoginName') );
+        #        entity.setWebAdminPassword( xmlReader.readElementString2('WebAdminPassword') );
+        #    }
+        #
+        #    xmlReader.readEndElement();
+        #    xmlReader.close();
+        #
+        #    return (entity != null) ? entity : new CustRegReducedEntity();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) ForgetPasswordEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #ForgetPasswordEntity
+    PROPERTIES
+      Name                #ForgetPasswordEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class ForgetPasswordEntity
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CopyOfSalesOrderService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CopyOfSalesOrderService
+    PROPERTIES
+      Name                #CopyOfSalesOrderService
+      Extends             #SalesAutoCreate
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #/*
+        #vevőrendelés létrehozása
+        #*/
+        #class CopyOfSalesOrderService extends SalesAutoCreate
+        #{
+        #    //rendelés adatokat összefogó objektum osztály
+        #    SalesOrderEntity salesOrderEntity;
+        #
+        #    CustAccount      custAcc;
+        #    SalesType        salesType;
+        #    SalesStatus      salesStatus;
+        #    ListEnumerator   lstEnum;
+        #    int              currentIndex;
+        #
+        #    #define.SchemaUrl( 'http://Shared.Web.Dynamics.Entities/SalesOrder' )
+        #
+        #    #define.SchemaResponseUrl( 'http://Shared.Web.Dynamics.Entities/SalesOrderResponse' )
+        #}
+      ENDSOURCE
+      SOURCE #constructSalesLineEntity
+        #public SalesLineEntity constructSalesLineEntity(XmlReader reader)
+        #{
+        #    SalesLineEntity entity;
+        #    ;
+        #
+        #    entity = new SalesLineEntity();
+        #    entity.setItemId(reader.readElementString());
+        #    entity.setQty( str2num( reader.readElementString()));
+        #    //reader.moveToContent();
+        #    return entity;
+        #}
+      ENDSOURCE
+      SOURCE #constructSalesOrderResponse
+        #str constructSalesOrderResponse(SalesId _SalesId = '', int _code = 0, str _msg = '')
+        #{
+        #    str xml;
+        #
+        #    XmlTextWriter writer;
+        #
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement2('SalesOrderResponse', #SchemaResponseUrl);
+        #
+        #    writer.writeElementString('SalesId', _SalesId);
+        #
+        #    writer.writeElementString('Code', int2str(_code));
+        #
+        #    writer.writeElementString('Message', _msg);
+        #
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #createSalesLine
+        #void  createSalesLine()
+        #{
+        #    ;
+        #    salesLine.createLine(NoYes::No,             // Validate
+        #                         NoYes::No,             // initFromSalesTable
+        #                         NoYes::No,             // initFromInventTable
+        #                         NoYes::No,             // calcInventQty
+        #                         NoYes::No,            // searchMarkup
+        #                         NoYes::no             // searchPrice
+        #                         );
+        #}
+      ENDSOURCE
+      SOURCE #createSalesOrder
+        #str createSalesOrder(str xml)
+        #{
+        #    SalesId salesId;
+        #    ;
+        #
+        #    try
+        #    {
+        #        if (!xml)
+        #        {
+        #            return this.constructSalesOrderResponse('', -1, 'The createSalesOrder xml parameter value is empty!');
+        #        }
+        #
+        #        this.deserialize(xml);
+        #
+        #        changeCompany(salesOrderEntity.getDataAreaId())
+        #        {
+        #            //salesOrderEntity ellenörzése kell ide
+        #
+        #            lstEnum = salesOrderEntity.getItems().getEnumerator();
+        #
+        #            this.create();
+        #
+        #            salesId = this.getSalesTable().SalesId;
+        #
+        #            //SalesId ellenörzése
+        #            if (salesId)
+        #            {
+        #                return this.constructSalesOrderResponse(salesId, 1, 'The createSalesOrder process completed successfully!');
+        #            }
+        #            else
+        #            {
+        #                return this.constructSalesOrderResponse('', -2, 'The createSalesOrder process failed!');
+        #            }
+        #        }
+        #    }
+        #    catch(Exception::Warning )
+        #    {
+        #        return this.constructSalesOrderResponse('', -3, 'The createSalesOrder process failed!');
+        #    }
+        #    catch(Exception::Error )
+        #    {
+        #        return this.constructSalesOrderResponse('', -4, 'The createSalesOrder process failed!');
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #deserialize
+        #//paraméter xml alapján elkészíti a vevőrendelés objektumot tételekkel együtt
+        #void deserialize(str xml)
+        #{
+        #    XmlTextReader xmlReader;
+        #
+        #    SalesLineEntity lineEntity;
+        #
+        #    str 250 deliveryAddress = '';
+        #    ;
+        #
+        #    xmlReader = XmlTextReader::newXml(xml);
+        #
+        #    xmlReader.whitespaceHandling(XmlWhitespaceHandling::None);
+        #
+        #    xmlReader.moveToContent();
+        #
+        #    while( ( xmlReader.nodeType() != XmlNodeType::Element ) && !xmlReader.eof() )
+        #    {
+        #        xmlReader.read();
+        #    }
+        #
+        #    xmlReader.readStartElement3('SalesOrder', #SchemaUrl);
+        #
+        #    salesOrderEntity = new SalesOrderEntity();
+        #
+        #    if (!xmlReader.eof() && xmlReader.isStartElement())
+        #    {
+        #        salesOrderEntity.setContactPersonId( xmlReader.readElementString2('ContactPersonId'));
+        #
+        #        salesOrderEntity.setCustAccount(xmlReader.readElementString2('CustomerId'));
+        #
+        #        salesOrderEntity.setDataAreaId(xmlReader.readElementString2('DataAreaId'));
+        #
+        #        salesOrderEntity.setDeliveryCity(xmlReader.readElementString2('DeliveryCity'));
+        #
+        #        salesOrderEntity.setDeliveryCompanyName(xmlReader.readElementString2('DeliveryCompanyName'));
+        #
+        #        salesOrderEntity.setDeliveryDate(str2date( xmlReader.readElementString2('DeliveryDate'), 321 ));
+        #
+        #        salesOrderEntity.setDeliveryEmail(xmlReader.readElementString2('DeliveryEmail'));
+        #
+        #        salesOrderEntity.setDeliveryId(xmlReader.readElementString2('DeliveryId'));
+        #
+        #        salesOrderEntity.setDeliveryPersonName(xmlReader.readElementString2('DeliveryPersonName'));
+        #
+        #        salesOrderEntity.setDeliveryPhone(xmlReader.readElementString2('DeliveryPhone'));
+        #
+        #        salesOrderEntity.setDeliveryStreet(xmlReader.readElementString2('DeliveryStreet'));
+        #
+        #        salesOrderEntity.setDeliveryZipCode(xmlReader.readElementString2('DeliveryZip'));
+        #
+        #        //deliveryAddress = salesOrderEntity.getDeliveryZipCode() + ' ' + salesOrderEntity.getDeliveryCity() + ' ' + salesOrderEntity.getDeliveryStreet();
+        #        deliveryAddress = strFmt( '%1 %2 %3', salesOrderEntity.getDeliveryZipCode(), salesOrderEntity.getDeliveryCity(), salesOrderEntity.getDeliveryStreet() );
+        #
+        #        salesOrderEntity.setDeliveryAddress(deliveryAddress);
+        #
+        #        salesOrderEntity.setMessage(xmlReader.readElementString2('Message'));
+        #
+        #        salesOrderEntity.setPartialDelivery(str2int( xmlReader.readElementString2('PartialDelivery')));
+        #
+        #        salesOrderEntity.setRequiredDelivery(str2int( xmlReader.readElementString2('RequiredDelivery')));
+        #
+        #        salesOrderEntity.setSalesSource(str2int( xmlReader.readElementString2('SalesSource')));
+        #
+        #        salesOrderEntity.setInventLocationId(xmlReader.readElementString2('InventLocationId'));
+        #
+        #        salesOrderEntity.setTransporter(xmlReader.readElementString2('Transporter'));
+        #
+        #        while(xmlReader.read())
+        #        {
+        #            if (xmlReader.NodeType() == XmlNodeType::Element)
+        #            {
+        #                if (xmlReader.Name() == 'Line')
+        #                {
+        #                    lineEntity = new SalesLineEntity();
+        #                }
+        #                else if (xmlReader.Name() == 'ConfigId')
+        #                {
+        #                    lineEntity.setConfigId( xmlReader.readInnerXml() );
+        #                }
+        #                else if (xmlReader.Name() == 'InventDimId')
+        #                {
+        #                    lineEntity.setInventDimId( xmlReader.readInnerXml() );
+        #                }
+        #                else if (xmlReader.Name() == 'ItemId')
+        #                {
+        #                   lineEntity.setItemId( xmlReader.readInnerXml() );
+        #                }
+        #                else if (xmlReader.Name() == 'TaxItem')
+        #                {
+        #                    lineEntity.setTaxItem( xmlReader.readInnerXml() );
+        #                }
+        #                else if (xmlReader.Name() == 'Qty')
+        #                {
+        #                    lineEntity.setQty( str2int(xmlReader.readInnerXml()) );
+        #                    salesOrderEntity.addItem( lineEntity);
+        #                }
+        #            }
+        #        }
+        #    }
+        #
+        #    //xmlReader.readEndElement();
+        #    xmlReader.close();
+        #}
+      ENDSOURCE
+      SOURCE #deSerializeTest
+        #SalesOrderEntity deSerializeTest(str xml)
+        #{
+        #    ;
+        #
+        #    this.deserialize(xml);
+        #
+        #    return salesOrderEntity;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesOrderEntity
+        #SalesOrderEntity getSalesOrderEntity()
+        #{
+        #    ;
+        #    return salesOrderEntity;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesTable
+        #SalesTable getSalesTable()
+        #{
+        #    ;
+        #    return SalesTable;
+        #}
+      ENDSOURCE
+      SOURCE #invoiceAccount
+        #CustInvoiceAccount invoiceAccount()
+        #{
+        #    ;
+        #    return salesOrderEntity.getCustAccount();
+        #}
+      ENDSOURCE
+      SOURCE #nextRecord
+        #void nextRecord()
+        #{
+        #    ;
+        #}
+      ENDSOURCE
+      SOURCE #recordExist
+        #boolean recordExist()
+        #{
+        #    ;
+        #    return lstEnum.moveNext();
+        #}
+      ENDSOURCE
+      SOURCE #salesType
+        #SalesType salesType()
+        #{
+        #    ;
+        #    return salesType;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #serialize
+        #str serialize(SalesOrderEntity _salesOrderEntity)
+        #{
+        #    str xml;
+        #    XmlTextWriter writer;
+        #    str 1 partialDelivery = '0';
+        #    str 1 requiredDelivery = '0';
+        #    str 20 deliveryDate = '';
+        #    SalesLineEntity entity;
+        #    ;
+        #    #Aif
+        #
+        #    deliveryDate = date2Str(_salesOrderEntity.getDeliveryDate(), 321, 2, 2, 2, 2, 4);
+        #    partialDelivery = _salesOrderEntity.getPartialDelivery() == NoYes::Yes ? '1' : '0';
+        #    requiredDelivery = _salesOrderEntity.getRequiredDelivery() == NoYes::Yes ? '1' : '0';
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement2('SalesOrder', #SchemaUrl);
+        #    writer.writeElementString('ContactPersonId', _salesOrderEntity.getContactPersonId());
+        #    writer.writeElementString('CustomerId', _salesOrderEntity.getCustAccount());
+        #    writer.writeElementString('DataAreaId', _salesOrderEntity.getDataAreaId());
+        #    writer.writeElementString('DeliveryCity', _salesOrderEntity.getDeliveryCity());
+        #    writer.writeElementString('DeliveryCompanyName', _salesOrderEntity.getDeliveryCompanyName());
+        #    writer.writeElementString('DeliveryDate', deliveryDate);
+        #    writer.writeElementString('DeliveryEmail', _salesOrderEntity.getDeliveryEmail());
+        #    writer.writeElementString('DeliveryId', _salesOrderEntity.getDeliveryId());
+        #    writer.writeElementString('DeliveryPersonName', _salesOrderEntity.getDeliveryPersonName());
+        #    writer.writeElementString('DeliveryPhone', _salesOrderEntity.getDeliveryPhone());
+        #    writer.writeElementString('DeliveryStreet', _salesOrderEntity.getDeliveryStreet());
+        #    writer.writeElementString('DeliveryZip', _salesOrderEntity.getDeliveryZipCode());
+        #    writer.writeElementString('Message', _salesOrderEntity.getMessage());
+        #    writer.writeElementString('PartialDelivery', partialDelivery);
+        #    writer.writeElementString('RequiredDelivery', requiredDelivery);
+        #    writer.writeElementString('SalesSource', int2str(_salesOrderEntity.getSalesSource()));
+        #    writer.writeElementString('InventLocationId', _salesOrderEntity.getInventLocationId());
+        #    writer.writeElementString('Transporter', _salesOrderEntity.getTransporter());
+        #
+        #    writer.WriteStartElement("Lines");
+        #
+        #    lstEnum = _salesOrderEntity.getItems().getEnumerator();
+        #    while(lstEnum.moveNext())
+        #    {
+        #        writer.WriteStartElement("Line");
+        #        entity = lstEnum.current();
+        #        writer.writeElementString('ItemId', entity.getItemId());
+        #        writer.writeElementString('Qty', num2str(entity.getQty(), 0, 16, 1, 3 ));
+        #        writer.writeElementString('ConfigId', entity.getConfigId());
+        #        writer.WriteEndElement();
+        #    }
+        #
+        #    writer.WriteEndElement();
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #serializeTest
+        #str serializeTest()
+        #{
+        #    SalesOrderEntity entity;
+        #    ;
+        #
+        #    entity = new SalesOrderEntity();
+        #
+        #    entity.setCustAccount('aaaaaaa');
+        #    entity.setContactPersonId('aaaaaaa');
+        #    entity.setDataAreaId('hrp');
+        #    entity.setDeliveryCity('aaaaaaa');
+        #    entity.setDeliveryCompanyName('aaaaaaa');
+        #    entity.setDeliveryDate(SystemDateGet());
+        #    entity.setDeliveryEmail("ajuhasz@hrp.hu");
+        #    entity.setDeliveryId('aaaaaaa');
+        #    entity.setDeliveryPersonName('aaaaaaa');
+        #    entity.setDeliveryPhone('1234567890');
+        #    entity.setDeliveryStreet('aaaaaaa');
+        #    entity.setDeliveryZipCode('1234');
+        #    //Lines = lines;
+        #    entity.setMessage('bbbbbbbb');
+        #    entity.setPartialDelivery(NoYes::No);
+        #    entity.setRequiredDelivery(NoYes::No);
+        #    entity.setSalesSource(SalesSource::Internet);
+        #    entity.setInventLocationId('aaaaaaa');
+        #    entity.setTransporter('aaaaaaa');
+        #
+        #    entity.addItem( new SalesLineEntity( 'item1', 100, 'config1', 'taxItem1', 'inventDim1') );
+        #    entity.addItem( new SalesLineEntity( 'item2', 100, 'config2', 'taxItem2', 'inventDim2') );
+        #
+        #    return this.serialize(entity);
+        #}
+      ENDSOURCE
+      SOURCE #setCust
+        #void setCust()
+        #{
+        #    ;
+        #    CustTable = CustTable::find(salesOrderEntity.getCustAccount());
+        #}
+      ENDSOURCE
+      SOURCE #setSalesLine
+        #void  setSalesLine()
+        #{
+        #    updCalcPrice    updCalcPrice;
+        #    SalesLineEntity salesLineEntity;
+        #    InventDim _inventDim;
+        #    str company;
+        #    ;
+        #
+        #    super();
+        #
+        #    salesLineEntity = lstEnum.current();
+        #
+        #    salesLineEntity.replaceConfigIdIfEmpty();
+        #
+        #    salesline.clear();
+        #
+        #    salesline.initFromSalesTable(salestable);
+        #
+        #    salesline.ItemId = salesLineEntity.getItemId();
+        #
+        #    salesline.initFromInventTable( Inventtable::find( salesLineEntity.getItemId() ) );
+        #
+        #    salesline.SalesQty = salesLineEntity.getQty();
+        #
+        #    salesline.QtyOrdered = salesLineEntity.getQty();
+        #
+        #    company = curext();
+        #
+        #    if (company == 'hrp')
+        #    {
+        #    select firstonly _inventDim where _inventDim.configId == salesLineEntity.getConfigId() &&
+        #                                      _inventDim.InventLocationId == 'KULSO'; //salesOrderEntity.getInventLocationId();
+        #    }
+        #    else
+        #    {
+        #    select firstonly _inventDim where _inventDim.configId == salesLineEntity.getConfigId() &&
+        #                                      _inventDim.InventLocationId == '7000' && _inventDim.wMSLocationId == '';
+        #    }
+        #
+        #    salesline.initItemDim( _inventDim );
+        #
+        #    updCalcPrice = new updCalcPrice( salesLineEntity.getItemId(), salesOrderEntity.getCustAccount(), '', '', salesLineEntity.getQty() );
+        #
+        #    updCalcPrice.calculate( salesLineEntity.getConfigId() );
+        #
+        #    salesline.SalesPrice = updCalcPrice.getCalculatedPrice();
+        #
+        #    if (!salesLine.origPriceGroupId)
+        #    {
+        #        salesLine.origPriceGroupId = updCalcPrice.getAccountRelation();
+        #    }
+        #
+        #    if ( !salesLine.origPrice )
+        #    {
+        #        salesLine.origPrice = updCalcPrice.getCalculatedPrice();
+        #    }
+        #
+        #    salesLine.lineAmount = salesLine.calcLineAmountForced();
+        #
+        #    this.createSalesLine();
+        #
+        #    salesLine.OrderAttarolas( salesline.QtyOrdered );
+        #
+        #    //salesLine.InventDimId
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setSalesTable
+        #void  setSalesTable()
+        #{
+        #    NumberSeq       num;
+        #    SalesIdBase     tmpSalesId;
+        #    str 10 dlvTermCaption = 'RAKTÁRBÓL';
+        #    ;
+        #
+        #    If ( custAcc != salesOrderEntity.getCustAccount() )
+        #    {
+        #        if (!custTable)
+        #        {
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.clear();
+        #        salesTable.initValue();
+        #
+        #        num = NumberSeq::newGetNum(SalesParameters::numRefSalesId());
+        #        tmpSalesId = num.num();
+        #
+        #        if (SalesTable::exist(tmpSalesId))
+        #        {
+        #            num.abort();
+        #            checkFailed("@SYS55111");
+        #            checkFailed(strfmt("@SYS55112", tmpSalesId));
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.salesId = tmpSalesId;
+        #
+        #        salesTable.custAccount      = custTable.accountNum;
+        #        salesTable.initFromCustTable();
+        #
+        #        salesTable.SalesType       = this.salesType();
+        #
+        #        salesTable.ContactPersonId = salesOrderEntity.getContactPersonId();
+        #        salesTable.initFromContactInfo();
+        #
+        #        salesTable.Email = salesOrderEntity.getDeliveryEmail();
+        #
+        #        salesTable.Reszteljesites  = salesOrderEntity.getPartialDelivery();
+        #
+        #        salesOrderEntity.replaceInventLocationIdIfEmpty();
+        #
+        #        if ( salesOrderEntity.getRequiredDelivery() == NoYes::Yes )
+        #        {
+        #            dlvTermCaption = (curext() == 'ser') ? 'Delivery' : 'KISZALL';
+        #        }
+        #        else
+        #        {
+        #            dlvTermCaption = (curext() == 'ser') ? 'Warehouse' : 'RAKTÁRBÓL';
+        #        }
+        #
+        #        //if (_SecondHandCart.getRequiredDelivery())
+        #        //{
+        #//          salesTable.DeliveryDate    = AxBasketTable.KiszalitasDatum;
+        #            salesTable.ShippingDateRequested = salesOrderEntity.getDeliveryDate();
+        #            salesTable.DlvTerm         = dlvTermCaption;
+        #            salesTable.DeliveryCity    = salesOrderEntity.getDeliveryCity();
+        #            salesTable.DeliveryName    = salesOrderEntity.getDeliveryCompanyName();
+        #            salesTable.DeliveryStreet  = salesOrderEntity.getDeliveryStreet();
+        #            salesTable.DeliveryZipCode = salesOrderEntity.getDeliveryZipCode();
+        #            salesTable.DeliveryAddress = salesOrderEntity.getDeliveryAddress();
+        #            salesTable.InventLocationId = (curext() == 'HRP') ? 'Kulso' : '7000'; //salesOrderEntity.getInventLocationId();
+        #        //}
+        #
+        #        salesTable.SalesSource = salesOrderEntity.getSalesSource();
+        #        //salesTable.NemKellSzamla = ( salesOrderEntity.getSalesSource() == SalesSource::Xml ) ? NoYes::Yes : NoYes::No;
+        #        salesTable.NemKellSzamla = custTable.NemkellSzla;
+        #
+        #        salesTable.SalesHeaderType = 'Standard';
+        #
+        #        salesTable.AutoTorles = NoYes::Yes;
+        #        //salesTable.Reszteljesites = salesOrderEntity.getPartialDelivery();
+        #        salesTable.VevoiHivatkozas = salesOrderEntity.getMessage();
+        #
+        #        salesTable.SalesType = SalesType::Sales;
+        #
+        #        salesTable.insert();
+        #
+        #        custAcc = salesOrderEntity.getCustAccount();
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CopyOfSalesLineEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CopyOfSalesLineEntity
+    PROPERTIES
+      Name                #CopyOfSalesLineEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #/*
+        #vevőrendelés sor entitás
+        #*/
+        #class CopyOfSalesLineEntity
+        #{
+        #    ItemId      itemId;
+        #    Real        qty;
+        #    ConfigId    configId;
+        #    str 10      taxItem;
+        #    InventDimId inventDimId;
+        #}
+      ENDSOURCE
+      SOURCE #getConfigId
+        #public ConfigId getConfigId()
+        #{
+        #    ;
+        #    return configId;
+        #}
+      ENDSOURCE
+      SOURCE #getInventDimId
+        #public InventDimId getInventDimId()
+        #{
+        #    ;
+        #    return inventDimId;
+        #}
+      ENDSOURCE
+      SOURCE #getItemId
+        #public ItemId getItemId()
+        #{
+        #    ;
+        #    return itemId;
+        #}
+      ENDSOURCE
+      SOURCE #getQty
+        #public Real getQty()
+        #{
+        #    ;
+        #    return qty;
+        #}
+      ENDSOURCE
+      SOURCE #getTaxItem
+        #public str 10 getTaxItem()
+        #{
+        #    ;
+        #    return taxItem;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #public void new( ItemId _itemId = '',
+        #                 Real _qty = 0,
+        #                 ConfigId _configId = '',
+        #                 str 10 _taxItem = '',
+        #                 InventDimId _inventDimId ='' )
+        #{
+        #    ;
+        #    itemId = _itemId;
+        #    qty = _qty;
+        #    configId = _configId;
+        #    taxItem = _taxItem;
+        #    inventDimId = _inventDimId;
+        #}
+      ENDSOURCE
+      SOURCE #replaceConfigIdIfEmpty
+        #boolean replaceConfigIdIfEmpty()
+        #{
+        #    InventTable inventTable;
+        #    ;
+        #    if (configId != '')
+        #    {
+        #        return false;
+        #    }
+        #
+        #    if (itemId == '')
+        #    {
+        #        return false;
+        #    }
+        #
+        #    select firstonly StandardConfigId from inventTable where inventTable.ItemId == itemId;
+        #
+        #    if (inventTable)
+        #    {
+        #        configId = inventTable.StandardConfigId;
+        #        return true;
+        #    }
+        #
+        #    configId = 'BASE';
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #setConfigId
+        #public void setConfigId(ConfigId _configId)
+        #{
+        #    ;
+        #    configId = _configId;
+        #}
+      ENDSOURCE
+      SOURCE #setInventDimId
+        #public void setInventDimId(InventDimId _inventDimId)
+        #{
+        #    ;
+        #    inventDimId = _inventDimId;
+        #}
+      ENDSOURCE
+      SOURCE #setItemId
+        #public void setItemId(ItemId _itemId)
+        #{
+        #    ;
+        #    itemId = _itemId;
+        #}
+      ENDSOURCE
+      SOURCE #setQty
+        #public void setQty(Real _qty)
+        #{
+        #    ;
+        #    qty = _qty;
+        #}
+      ENDSOURCE
+      SOURCE #setTaxItem
+        #public void setTaxItem(str 10 _taxItem)
+        #{
+        #    ;
+        #    taxItem = _taxItem;
+        #}
+      ENDSOURCE
+      SOURCE #validate
+        #public boolean validate()
+        #{
+        #    ;
+        #    return itemId != '' && qty > 0;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) CopyOfSalesOrderEntity eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #CopyOfSalesOrderEntity
+    PROPERTIES
+      Name                #CopyOfSalesOrderEntity
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #addItem
+        #public void addItem( SalesLineEntity _item )
+        #{
+        #    ;
+        #    if( _item.validate() )
+        #    {
+        #        items.addEnd( _item );
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #/*
+        #vevőrendelés entitás
+        #*/
+        #class CopyOfSalesOrderEntity
+        #{
+        #    ContactPersonId contactPersonId;
+        #
+        #    CustAccount custAccount;
+        #
+        #    DataAreaId dataAreaId;
+        #
+        #    NoYes requiredDelivery;
+        #
+        #    KiszalitasDatum deliveryDate;
+        #
+        #    NoYes partialDelivery;
+        #
+        #    str 10 deliveryId;
+        #
+        #    str 80 deliveryCompanyName;
+        #
+        #    str 80 deliveryPersonName;
+        #
+        #    str 10 deliveryZipCode;
+        #
+        #    str 80 deliveryCity;
+        #
+        #    str 250 deliveryStreet;
+        #
+        #    str 20 deliveryPhone;
+        #
+        #    str 250 deliveryAddress;
+        #
+        #    Email deliveryEmail;
+        #
+        #    str 30 deliveryCountry;
+        #
+        #    SalesSource salesSource;
+        #
+        #    InventLocationId inventLocationId;
+        #
+        #    CurrencyCode currencyCode;
+        #
+        #    SalesType salesType;
+        #
+        #    str message;
+        #
+        #    str 10 transporter;
+        #
+        #    List items;
+        #}
+      ENDSOURCE
+      SOURCE #getContactPersonId
+        #public ContactPersonId getContactPersonId()
+        #{
+        #    return contactPersonId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getCurrencyCode
+        #public CurrencyCode getCurrencyCode()
+        #{
+        #    ;
+        #    return currencyCode;
+        #}
+      ENDSOURCE
+      SOURCE #getCustAccount
+        #public CustAccount getCustAccount()
+        #{
+        #    return custAccount;
+        #}
+      ENDSOURCE
+      SOURCE #getDataAreaId
+        #public DataAreaId getDataAreaId()
+        #{
+        #    return dataAreaId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #getDeliveryAddress
+        #public str 250 getDeliveryAddress()
+        #{
+        #    return deliveryAddress;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryCity
+        #public str 80 getDeliveryCity()
+        #{
+        #    return deliveryCity;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryCompanyName
+        #public str 80 getDeliveryCompanyName()
+        #{
+        #    return deliveryCompanyName;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryDate
+        #public KiszalitasDatum getDeliveryDate()
+        #{
+        #    return deliveryDate;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryEmail
+        #public Email getDeliveryEmail()
+        #{
+        #    return deliveryEmail;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryId
+        #public str 10 getDeliveryId()
+        #{
+        #    return deliveryId;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryPersonName
+        #public str 80 getDeliveryPersonName()
+        #{
+        #    ;
+        #    return deliveryPersonName;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryPhone
+        #public str 20 getDeliveryPhone()
+        #{
+        #    return deliveryPhone;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryStreet
+        #public str 250 getDeliveryStreet()
+        #{
+        #    return deliveryStreet;
+        #}
+      ENDSOURCE
+      SOURCE #getDeliveryZipCode
+        #public str 10 getDeliveryZipCode()
+        #{
+        #    return deliveryZipCode;
+        #}
+      ENDSOURCE
+      SOURCE #getInventLocationId
+        #public InventLocationId getInventLocationId()
+        #{
+        #    return inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #getItems
+        #public List getItems()
+        #{
+        #    return items;
+        #}
+      ENDSOURCE
+      SOURCE #getLineCount
+        #public int getLineCount()
+        #{
+        #    return items.elements();
+        #}
+      ENDSOURCE
+      SOURCE #getMessage
+        #public str getMessage()
+        #{
+        #    return message;
+        #}
+      ENDSOURCE
+      SOURCE #getPartialDelivery
+        #public NoYes getPartialDelivery()
+        #{
+        #    return partialDelivery;
+        #}
+      ENDSOURCE
+      SOURCE #getRequiredDelivery
+        #public NoYes getRequiredDelivery()
+        #{
+        #    return requiredDelivery;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesSource
+        #public SalesSource getSalesSource()
+        #{
+        #    return salesSource;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesType
+        #public SalesType getSalesType()
+        #{
+        #    ;
+        #    return salesType;
+        #}
+      ENDSOURCE
+      SOURCE #getTransporter
+        #public str getTransporter()
+        #{
+        #    return transporter;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #new
+        #public void new( CustAccount _custAccount = '',
+        #                 NoYes _requiredDelivery = NoYes::No,
+        #                 KiszalitasDatum _deliveryDate = SystemDateGet(),
+        #                 NoYes _partialDelivery = NoYes::Yes,
+        #                 str 10 _deliveryId = '',
+        #                 str 80 _deliveryCompanyName = '',
+        #                 str 10 _deliveryZipCode = '',
+        #                 str 80 _deliveryCity = '',
+        #                 str 250 _deliveryStreet = '',
+        #                 str 20 _deliveryPhone = '',
+        #                 Email _deliveryEmail = '',
+        #                 str 250 _deliveryAddress = '',
+        #                 SalesSource _salesSource = SalesSource::Internet,
+        #                 ContactPersonId _contactPersonId = '',
+        #                 InventLocationId _inventLocationId = '' )
+        #{
+        #    ;
+        #    custAccount = _custAccount;
+        #
+        #    requiredDelivery = _requiredDelivery;
+        #
+        #    deliveryDate = _deliveryDate;
+        #
+        #    partialDelivery = _partialDelivery;
+        #
+        #    deliveryId = _deliveryId;
+        #
+        #    deliveryCompanyName = _deliveryCompanyName;
+        #
+        #    deliveryZipCode = _deliveryZipCode;
+        #
+        #    deliveryCity = _deliveryCity;
+        #
+        #    deliveryStreet = _deliveryStreet;
+        #
+        #    deliveryPhone = _deliveryPhone;
+        #
+        #    deliveryEmail = _deliveryEmail;
+        #
+        #    deliveryAddress = _deliveryAddress;
+        #
+        #    salesSource = _salesSource;
+        #
+        #    contactPersonId = _contactPersonId;
+        #
+        #    inventLocationId = _inventLocationId;
+        #
+        #    items = new List(Types::Class);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #replaceInventLocationIdIfEmpty
+        #boolean replaceInventLocationIdIfEmpty()
+        #{
+        #    if ( inventLocationId == '' )
+        #    {
+        #        inventLocationId = 'SER';
+        #        return true;
+        #    }
+        #    return false;
+        #}
+      ENDSOURCE
+      SOURCE #setContactPersonId
+        #public void setContactPersonId(ContactPersonId _contactPersonId)
+        #{
+        #    ;
+        #    contactPersonId = _contactPersonId;
+        #}
+      ENDSOURCE
+      SOURCE #setCurrencyCode
+        #public void setCurrencyCode( CurrencyCode _currencyCode )
+        #{
+        #    ;
+        #    currencyCode = _currencyCode;
+        #}
+      ENDSOURCE
+      SOURCE #setCustAccount
+        #public void setCustAccount(CustAccount _custAccount)
+        #{
+        #    ;
+        #    custAccount = _custAccount;
+        #}
+      ENDSOURCE
+      SOURCE #setDataAreaId
+        #public void setDataAreaId(DataAreaId _dataAreaId )
+        #{
+        #    ;
+        #    dataAreaId = _dataAreaId;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryAddress
+        #public void setDeliveryAddress(str 250 _deliveryAddress)
+        #{
+        #    ;
+        #    deliveryAddress = _deliveryAddress;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCity
+        #public void setDeliveryCity( str 80 _deliveryCity)
+        #{
+        #    ;
+        #    deliveryCity = _deliveryCity;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryCompanyName
+        #public void setDeliveryCompanyName(str 80 _deliveryCompanyName)
+        #{
+        #    ;
+        #    deliveryCompanyName = _deliveryCompanyName;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryDate
+        #public void setDeliveryDate(KiszalitasDatum _deliveryDate)
+        #{
+        #    ;
+        #    deliveryDate = _deliveryDate;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryEmail
+        #public void setDeliveryEmail(Email _deliveryEmail)
+        #{
+        #    ;
+        #    deliveryEmail = _deliveryEmail;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryId
+        #public void setDeliveryId(str 10 _deliveryId)
+        #{
+        #    ;
+        #    deliveryId = _deliveryId;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryPersonName
+        #public void setDeliveryPersonName(str 80 _deliveryPersonName)
+        #{
+        #    ;
+        #    deliveryPersonName = _deliveryPersonName;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setDeliveryPhone
+        #public void setDeliveryPhone(str 20 _deliveryPhone)
+        #{
+        #    ;
+        #    deliveryPhone = _deliveryPhone;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryStreet
+        #public void setDeliveryStreet(str 250 _deliveryStreet)
+        #{
+        #    ;
+        #    deliveryStreet = _deliveryStreet;
+        #}
+      ENDSOURCE
+      SOURCE #setDeliveryZipCode
+        #public void setDeliveryZipCode(str 10 _deliveryZipCode)
+        #{
+        #    ;
+        #    deliveryZipCode = _deliveryZipCode;
+        #}
+      ENDSOURCE
+      SOURCE #setInventLocationId
+        #public void setInventLocationId(InventLocationId _inventLocationId)
+        #{
+        #    ;
+        #    inventLocationId = _inventLocationId;
+        #}
+      ENDSOURCE
+      SOURCE #setMessage
+        #public void setMessage(str _message)
+        #{
+        #    ;
+        #    message = _message;
+        #}
+      ENDSOURCE
+      SOURCE #setPartialDelivery
+        #public void setPartialDelivery(NoYes _partialDelivery)
+        #{
+        #    ;
+        #    partialDelivery = _partialDelivery;
+        #}
+      ENDSOURCE
+      SOURCE #setRequiredDelivery
+        #public void setRequiredDelivery(NoYes _requiredDelivery)
+        #{
+        #    ;
+        #    requiredDelivery = _requiredDelivery;
+        #}
+      ENDSOURCE
+      SOURCE #setSalesSource
+        #public void setSalesSource(SalesSource _salesSource)
+        #{
+        #    ;
+        #    salesSource = _salesSource;
+        #}
+      ENDSOURCE
+      SOURCE #setSalesType
+        #public void setSalesType( SalesType _salesType )
+        #{
+        #    ;
+        #    salesType = _salesType;
+        #}
+      ENDSOURCE
+      SOURCE #setTransporter
+        #public void setTransporter(str _transporter)
+        #{
+        #    ;
+        #    transporter = _transporter;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) ContactPersonService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #ContactPersonService
+    PROPERTIES
+      Name                #ContactPersonService
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class ContactPersonService
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: DBT
+
+; Microsoft Dynamics Table : SyncServiceParameter unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #SyncServiceParameter
+    PROPERTIES
+      Name                #SyncServiceParameter
+      Label               #sync service parameter
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #EnableCatalogueSync
+        ENUM
+        PROPERTIES
+          Name                #EnableCatalogueSync
+          HelpText            #EnableCatalogueSync
+          Table               #SyncServiceParameter
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #EnableStockSync
+        ENUM
+        PROPERTIES
+          Name                #EnableStockSync
+          HelpText            #EnableStockSync
+          Table               #SyncServiceParameter
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #EnableDescriptionSync
+        ENUM
+        PROPERTIES
+          Name                #EnableDescriptionSync
+          HelpText            #EnableDescriptionSync
+          Table               #SyncServiceParameter
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #EnablePictureSync
+        ENUM
+        PROPERTIES
+          Name                #EnablePictureSync
+          HelpText            #EnablePictureSync
+          Table               #SyncServiceParameter
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #EnablePriceSync
+        ENUM
+        PROPERTIES
+          Name                #EnablePriceSync
+          HelpText            #EnablePriceSync
+          Table               #SyncServiceParameter
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    INDICES
+    ENDINDICES
+    REFERENCES
+    ENDREFERENCES
+    
+    DELETEACTIONS
+    ENDDELETEACTIONS
+    
+  ENDTABLE
+  
+
+***Element: PRN
+
+; Microsoft Dynamics Project : Hrp.rs unloaded
+; --------------------------------------------------------------------------------
+  PROJECTVERSION 2
+  
+  PROJECT #Hrp.rs
+   PRIVATE
+  PROPERTIES
+    Name                #Hrp.rs
+  ENDPROPERTIES
+  
+    GROUP #Forms
+      PROPERTIES
+        Name                #Forms
+        ProjectGroupType    #Forms
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      ENDGROUP
+      
+    GROUP #Sync entities
+      PROPERTIES
+        Name                #Sync entities
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50360
+        NODETYPE 329
+        NAME #StockSyncEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50346
+        NODETYPE 329
+        NAME #BarCodeSyncEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50356
+        NODETYPE 329
+        NAME #PriceSyncEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50355
+        NODETYPE 329
+        NAME #PictureSyncEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50348
+        NODETYPE 329
+        NAME #DescriptionSyncEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50361
+        NODETYPE 329
+        NAME #SyncBaseEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50347
+        NODETYPE 329
+        NAME #CatalogueSyncEntity
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Sync classes
+      PROPERTIES
+        Name                #Sync classes
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50352
+        NODETYPE 329
+        NAME #MsmqSyncService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50362
+        NODETYPE 329
+        NAME #SyncServiceBase
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50358
+        NODETYPE 329
+        NAME #RestSyncServiceBase
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50363
+        NODETYPE 329
+        NAME #SyncServiceProvider
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50357
+        NODETYPE 329
+        NAME #RestSyncService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50359
+        NODETYPE 329
+        NAME #RestSyncServiceFactory
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50353
+        NODETYPE 329
+        NAME #MsmqSyncServiceBase
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50354
+        NODETYPE 329
+        NAME #MsmqSyncServiceFactory
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Interfaces
+      PROPERTIES
+        Name                #Interfaces
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50350
+        NODETYPE 329
+        NAME #ISyncServiceFactory
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50349
+        NODETYPE 329
+        NAME #ISyncService
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Enums
+      PROPERTIES
+        Name                #Enums
+        ProjectGroupType    #BaseEnums
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 40
+        UTILOBJECTID 50111
+        NODETYPE 209
+        NAME #SyncServiceConfigKey
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 40
+        UTILOBJECTID 50110
+        NODETYPE 209
+        NAME #SyncOperation
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Jobs
+      PROPERTIES
+        Name                #Jobs
+        ProjectGroupType    #Jobs
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobSetStockTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_Date
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_InventSum
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_MsmqAdapter
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #testMessageQueue
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobUpdatePictureTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobInsertPictureTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_Enum
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_SyncService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_WebClient
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_HttpRequestResponse
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_HttpPost
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #test_HttpGet
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobMsOemList
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobCreateCustomerTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #JobForgetPasswordServiceTest
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Classes
+      PROPERTIES
+        Name                #Classes
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50376
+        NODETYPE 329
+        NAME #CustRegReducedEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50364
+        NODETYPE 329
+        NAME #BusinessConnectorTest
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50351
+        NODETYPE 329
+        NAME #MsmqAdapter
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50335
+        NODETYPE 329
+        NAME #DeliveryAddrRegEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50337
+        NODETYPE 329
+        NAME #MailAddrRegEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50332
+        NODETYPE 329
+        NAME #ContactRegEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50330
+        NODETYPE 329
+        NAME #BankAccRegEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50333
+        NODETYPE 329
+        NAME #CustomerRegEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50334
+        NODETYPE 329
+        NAME #CustomerService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50336
+        NODETYPE 329
+        NAME #ForgetPasswordEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50420
+        NODETYPE 329
+        NAME #CopyOfSalesOrderService
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50421
+        NODETYPE 329
+        NAME #CopyOfSalesLineEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50422
+        NODETYPE 329
+        NAME #CopyOfSalesOrderEntity
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 50331
+        NODETYPE 329
+        NAME #ContactPersonService
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Tables
+      PROPERTIES
+        Name                #Tables
+        ProjectGroupType    #Tables
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 44
+        UTILOBJECTID 50380
+        NODETYPE 204
+        NAME #SyncServiceParameter
+      ENDNODE
+      ENDGROUP
+      
+  ENDPROJECT
+  
+
+***Element: END

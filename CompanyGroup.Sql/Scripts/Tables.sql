@@ -408,3 +408,37 @@ CREATE TABLE InternetUser.Invoice
     [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )
+GO
+
+-- InventSum stage tábla
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_InventSum') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_InventSum;
+GO
+CREATE TABLE InternetUser.Stage_InventSum
+(
+	[Version] INT NOT NULL DEFAULT 0,
+	ItemId NVARCHAR(20) NOT NULL DEFAULT '',
+	AvailPhysical INT NOT NULL DEFAULT 0, 
+	DataAreaId NVARCHAR(3) NOT NULL DEFAULT '',
+	InventLocationId NVARCHAR(10) NOT NULL DEFAULT '',
+	Operation NVARCHAR(1) NOT NULL DEFAULT '', 
+    [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		INT NOT NULL DEFAULT 0
+)
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_PriceDiscTable') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_PriceDiscTable;
+GO
+CREATE TABLE InternetUser.Stage_PriceDiscTable
+(
+	[Version] INT NOT NULL DEFAULT 0,
+	ItemRelation NVARCHAR(20) NOT NULL DEFAULT '',
+	AccountRelation NVARCHAR(20) NOT NULL DEFAULT '',
+	Amount INT NOT NULL DEFAULT 0, 
+	Currency NVARCHAR(10) NOT NULL DEFAULT '',
+	DataAreaId NVARCHAR(3) NOT NULL DEFAULT '',
+	Operation NVARCHAR(1) NOT NULL DEFAULT '', 
+    [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		INT NOT NULL DEFAULT 0
+)

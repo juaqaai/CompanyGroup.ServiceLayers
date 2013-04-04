@@ -1189,9 +1189,20 @@ companyGroup.registration = $.sammy(function () {
         });
     });
 
-    $("a#nyomtatas").fancybox({
-        'hideOnContentClick': false
-    });
+	$("a#nyomtatas").fancybox();
+	
+
+    /*$("#iframe").fancybox({
+		'width'				: '960px',
+		'height'			: '80%',
+		'fitToView'  : false,
+		'autoSize'   : false,
+		'closeBtn'   : true,
+        'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'type'				: 'iframe'
+		
+	});*/
 
 
 

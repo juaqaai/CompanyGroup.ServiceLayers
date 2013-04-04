@@ -565,6 +565,30 @@ namespace CompanyGroup.ApplicationServices.Test
             Assert.IsNotNull(shoppingCart);
         }
 
+        [TestMethod()]
+        public void CreateOrderTest()
+        {
+            CompanyGroup.Domain.WebshopModule.IProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
+
+            CompanyGroup.Data.WebshopModule.ShoppingCartRepository shoppingCartRepository = new CompanyGroup.Data.WebshopModule.ShoppingCartRepository();
+
+            CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
+
+            CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
+
+            CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
+
+            CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
+
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+
+            CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new Dto.WebshopModule.SalesOrderCreateRequest(705, "HUF", "HU", "", 500, "", true, 1, 1, "", "");
+
+            CompanyGroup.Dto.WebshopModule.OrderFulFillment response = service.CreateOrder(request);
+
+            Assert.IsNotNull(response);
+        }
+
         #endregion
 
         [TestMethod]

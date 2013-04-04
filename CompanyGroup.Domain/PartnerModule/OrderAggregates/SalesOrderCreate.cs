@@ -3,32 +3,39 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.PartnerModule
 {
-    [System.Xml.Serialization.XmlRoot(ElementName = "SalesOrder", Namespace = "http://Shared.Web.Dynamics.Entities/SalesOrder")]
+    [System.Xml.Serialization.XmlRoot(ElementName = "SalesOrder", Namespace = "http://CompanyGroup.Domain.WebshopModule/SalesOrder")]
     public class SalesOrderCreate : System.Xml.Serialization.IXmlSerializable
     {
         string _ContactPersonId = String.Empty;
+        string _CurrencyCode = String.Empty;
         string _CustomerId = String.Empty;
+        string _CustomerOrderNo = String.Empty;
+        string _CustomerRef = String.Empty;
         string _DataAreaId = String.Empty;
         string _DeliveryCity = String.Empty;
         string _DeliveryCompanyName = String.Empty;
         string _DeliveryDate = String.Empty;
         string _DeliveryEmail = String.Empty;
-        string _DeliveryId = String.Empty;
         string _DeliveryPersonName = String.Empty;
-        string _DeliveryPhone = String.Empty;
         string _DeliveryStreet = String.Empty;
         string _DeliveryZip = String.Empty;
-        string _Message = String.Empty;
-        bool _PartialDelivery = true;
+        string _InventLocationId = String.Empty;
+        int _LineCount = 0;
+        string _Payment = String.Empty;
         bool _RequiredDelivery = false;
         int _SalesSource = 0;
-        string _InventLocationId = String.Empty;
-        string _Transporter = String.Empty;
+
         private List<SalesOrderLineCreate> _Lines = new List<SalesOrderLineCreate>();
 
         public string ContactPersonId { get { return _ContactPersonId; } set { _ContactPersonId = value; } }
 
+        public string CurrencyCode { get { return _CurrencyCode; } set { _CurrencyCode = value; } }
+
         public string CustomerId { get { return _CustomerId; } set { _CustomerId = value; } }
+
+        public string CustomerRef { get { return _CustomerRef; } set { _CustomerRef = value; } }
+
+        public string CustomerOrderNo { get { return _CustomerOrderNo; } set { _CustomerOrderNo = value; } }
 
         public string DataAreaId { get { return _DataAreaId; } set { _DataAreaId = value; } }
 
@@ -40,27 +47,21 @@ namespace CompanyGroup.Domain.PartnerModule
 
         public string DeliveryEmail { get { return _DeliveryEmail; } set { _DeliveryEmail = value; } }
 
-        public string DeliveryId { get { return _DeliveryId; } set { _DeliveryId = value; } }
-
         public string DeliveryPersonName { get { return _DeliveryPersonName; } set { _DeliveryPersonName = value; } }
-
-        public string DeliveryPhone { get { return _DeliveryPhone; } set { _DeliveryPhone = value; } }
 
         public string DeliveryStreet { get { return _DeliveryStreet; } set { _DeliveryStreet = value; } }
 
         public string DeliveryZip { get { return _DeliveryZip; } set { _DeliveryZip = value; } }
 
-        public string Message { get { return _Message; } set { _Message = value; } }
+        public string InventLocationId { get { return _InventLocationId; } set { _InventLocationId = value; } }
 
-        public bool PartialDelivery { get { return _PartialDelivery; } set { _PartialDelivery = value; } }
+        public int LineCount { get { return _LineCount; } set { _LineCount = value; } }
+
+        public string Payment { get { return _Payment; } set { _Payment = value; } }
 
         public bool RequiredDelivery { get { return _RequiredDelivery; } set { _RequiredDelivery = value; } }
 
         public int SalesSource { get { return _SalesSource; } set { _SalesSource = value; } }
-
-        public string InventLocationId { get { return _InventLocationId; } set { _InventLocationId = value; } }
-
-        public string Transporter { get { return _Transporter; } set { _Transporter = value; } }
 
         public List<SalesOrderLineCreate> Lines
         {
@@ -79,23 +80,23 @@ namespace CompanyGroup.Domain.PartnerModule
         public void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteElementString("ContactPersonId", _ContactPersonId);
+            writer.WriteElementString("CurrencyCode", _CurrencyCode);
             writer.WriteElementString("CustomerId", _CustomerId);
+            writer.WriteElementString("CustomerOrderNo", _CustomerOrderNo);
+            writer.WriteElementString("CustomerRef", _CustomerRef);
             writer.WriteElementString("DataAreaId", _DataAreaId);
             writer.WriteElementString("DeliveryCity", _DeliveryCity);
             writer.WriteElementString("DeliveryCompanyName", _DeliveryCompanyName);
             writer.WriteElementString("DeliveryDate", _DeliveryDate);
             writer.WriteElementString("DeliveryEmail", _DeliveryEmail);
-            writer.WriteElementString("DeliveryId", _DeliveryId);
             writer.WriteElementString("DeliveryPersonName", _DeliveryPersonName);
-            writer.WriteElementString("DeliveryPhone", _DeliveryPhone);
             writer.WriteElementString("DeliveryStreet", _DeliveryStreet);
             writer.WriteElementString("DeliveryZip", _DeliveryZip);
-            writer.WriteElementString("Message", _Message);
-            writer.WriteElementString("PartialDelivery", String.Format("{0}", _PartialDelivery ? 1 : 0));
-            writer.WriteElementString("RequiredDelivery", String.Format("{0}", _RequiredDelivery ? 1 : 0));
-            writer.WriteElementString("SalesSource", Convert.ToString(_SalesSource));
             writer.WriteElementString("InventLocationId", _InventLocationId);
-            writer.WriteElementString("Transporter", _Transporter);
+            writer.WriteElementString("LineCount", String.Format("{0}", _LineCount));
+            writer.WriteElementString("Payment", _Payment);
+            writer.WriteElementString("RequiredDelivery", String.Format("{0}", _RequiredDelivery ? 1 : 0));
+            writer.WriteElementString("SalesSource", String.Format("{0}", _SalesSource));
 
             writer.WriteStartElement("Lines");
             foreach (SalesOrderLineCreate line in _Lines)
@@ -120,23 +121,23 @@ namespace CompanyGroup.Domain.PartnerModule
             reader.MoveToContent();
 
             _ContactPersonId = reader.ReadElementString();
+            _CurrencyCode = reader.ReadElementString();
             _CustomerId = reader.ReadElementString();
+            _CustomerOrderNo = reader.ReadElementString();
+            _CustomerRef = reader.ReadElementString();
             _DataAreaId = reader.ReadElementString();
             _DeliveryCity = reader.ReadElementString();
             _DeliveryCompanyName = reader.ReadElementString();
             _DeliveryDate = reader.ReadElementString();
             _DeliveryEmail = reader.ReadElementString();
-            _DeliveryId = reader.ReadElementString();
             _DeliveryPersonName = reader.ReadElementString();
-            _DeliveryPhone = reader.ReadElementString();
             _DeliveryStreet = reader.ReadElementString();
             _DeliveryZip = reader.ReadElementString();
-            _Message = reader.ReadElementString();
-            _PartialDelivery = int.Parse(reader.ReadElementString()) > 0;
+            _InventLocationId = reader.ReadElementString();
+            _LineCount = int.Parse(reader.ReadElementString());
+            _Payment = reader.ReadElementString();
             _RequiredDelivery = int.Parse(reader.ReadElementString()) > 0;
             _SalesSource = int.Parse(reader.ReadElementString());
-            _InventLocationId = reader.ReadElementString();
-            _Transporter = reader.ReadElementString();
             _Lines.Clear();
 
             int depth = reader.Depth;

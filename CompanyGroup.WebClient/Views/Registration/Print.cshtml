@@ -1,4 +1,4 @@
-@model CompanyGroup.WebClient.Models.RegistrationData
+ï»¿@model CompanyGroup.WebClient.Models.RegistrationData
 
 @{
     Layout = null;
@@ -18,7 +18,7 @@
 	text-align:justify;
 
     }
-	ul {
+	    ul {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 
@@ -43,14 +43,14 @@
 <body>
       <div id="szovegtorzs">
 	  <p>&nbsp;</p>
-          <h2 align="center">Viszonteladói és elektronikus kereskedelmi szerzõdés</h2>
+          <h2 align="center">ViszonteladÃ³i Ã©s elektronikus kereskedelmi szerzÅ‘dÃ©s</h2>
           <table width="798" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td><p><strong>szerzõdésszám: @*@Model.ContractNumber*@</strong></p></td>
+              <td><p><strong>szerzÅ‘dÃ©sszÃ¡m: @*@Model.ContractNumber*@</strong></p></td>
               <td>&nbsp;</td>
             </tr>
             <tr>
@@ -58,7 +58,7 @@
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td width="399"><p><strong>mely létrejött egyrészrõl a</strong></p></td>
+              <td width="399"><p><strong>mely lÃ©trejÃ¶tt egyrÃ©szrÅ‘l a</strong></p></td>
               <td width="399"><p><strong>valamint a</strong></p></td>
             </tr>
             <tr>
@@ -69,18 +69,18 @@
               <td><div align="left">
                 <h3><strong>Business Software Center Kft.</strong></h3>
                 <p>1033 Budapest, Huszti &uacute;t. 34.<br />
-                    Adószám: 11087120-2-41<br />
-                    Bankszámlaszám: 10300002-20354734-00003285<br />
-                    Cégbejegyzés száma: 01-09-663082<br />
-                    Képviselõ: Pál Imre, kereskedelmi igazgató </p>
+                    AdÃ³szÃ¡m: 11087120-2-41<br />
+                    BankszÃ¡mlaszÃ¡m: 10300002-20354734-00003285<br />
+                    CÃ©gbejegyzÃ©s szÃ¡ma: 01-09-663082<br />
+                    KÃ©pviselÅ‘: PÃ¡l Imre, kereskedelmi igazgatÃ³ </p>
               </div></td>
               <td><div align="left">
                 <h3><strong>HRP Hungary Kft.</strong></h3>
                 <p>1033 Budapest, Huszti &uacute;t. 34..<br />
-                    Adószám: 10490811-2-41<br />
-                    Bankszámlaszám: 10300002-20107680-00003285<br />
-                    Cégbejegyzés száma: Cg.01-09-073874<br />
-                    K&eacute;pviselõ: P&aacute;l Imre, kereskedelmi igazgat&oacute;</p>
+                    AdÃ³szÃ¡m: 10490811-2-41<br />
+                    BankszÃ¡mlaszÃ¡m: 10300002-20107680-00003285<br />
+                    CÃ©gbejegyzÃ©s szÃ¡ma: Cg.01-09-073874<br />
+                    K&eacute;pviselÅ‘: P&aacute;l Imre, kereskedelmi igazgat&oacute;</p>
               </div></td>
             </tr>
             <tr>
@@ -89,575 +89,593 @@
             </tr>
             <tr>
               <td colspan="2"><div align="center">
-                <p style="text-align:center;"><em >mint Disztribútorok - a továbbiakban <strong>
-                Disztribútor</strong> -</em></p>
+                <p style="text-align:center;"><em >mint DisztribÃºtorok - a tovÃ¡bbiakban <strong>
+                DisztribÃºtor</strong> -</em></p>
 </div></td>
             </tr>
           </table>
-          <p><strong>másrészrõl a(z)</strong></p>
+          <p><strong>mÃ¡srÃ©szrÅ‘l a(z)</strong></p>
           <blockquote>
-            <h3><strong>Cégnév: </strong>@Model.CompanyData.CustomerName</h3>
+            <h3><strong>CÃ©gnÃ©v: </strong>@Model.CompanyData.CustomerName</h3>
             <p>@String.Format("{0} {1} {2}", Model.InvoiceAddress.ZipCode, Model.InvoiceAddress.City, Model.InvoiceAddress.Street)<br />
-                Adószám: @Model.CompanyData.VatNumber<br />
-                Bankszámlaszám: $BankAccount$<br />
-                Cégbejegyzés száma:@Model.CompanyData.RegistrationNumber<br />
+                AdÃ³szÃ¡m: @Model.CompanyData.VatNumber<br />
+                BankszÃ¡mlaszÃ¡m: $BankAccount$<br />
+                CÃ©gbejegyzÃ©s szÃ¡ma:@Model.CompanyData.RegistrationNumber<br />
             </p>
           </blockquote>
-          <p style="text-align:center;"> <em>mint Viszonteladó - a továbbiakban <strong>Viszonteladó</strong> 
+          <p style="text-align:center;"> <em>mint ViszonteladÃ³ - a tovÃ¡bbiakban <strong>ViszonteladÃ³</strong> 
               -</em><br />
-          <em>- közösen mint <strong>Felek</strong></em>-</p>
-        <p>között az alulírott napon és helyen az alábbi pontokban részletezett feltételek 
+          <em>- kÃ¶zÃ¶sen mint <strong>Felek</strong></em>-</p>
+        <p>kÃ¶zÃ¶tt az alulÃ­rott napon Ã©s helyen az alÃ¡bbi pontokban rÃ©szletezett feltÃ©telek 
             szerint.</p>
-        <h3> 1. Definíciók</h3>
+        <h3> 1. DefinÃ­ciÃ³k</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40px">&nbsp;</td>
             <td width="35px" valign="top"><p>1.1.</p></td>
-            <td width="800px"><p><strong>Honlap</strong> a <strong>Disztribútorok</strong> 
-              honlapjai: <a href="https://www.hrp.hu" target="_blank">www.hrp.hu</a> és <a href="http://www.bsc.hu" target="_blank">
+            <td width="800px"><p><strong>Honlap</strong> a <strong>DisztribÃºtorok</strong> 
+              honlapjai: <a href="https://www.hrp.hu" target="_blank">www.hrp.hu</a> Ã©s <a href="http://www.bsc.hu" target="_blank">
               www.bsc.hu</a>.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>1.2.</p></td>
-            <td><p><strong>Webáruház</strong> a <strong>Disztribútorok</strong> honlapján belül a 
-                terméklistát, termékinformációkat, árakat, készletinformációt és rendelési 
-                lehetõséget tartalmazó rész. A <strong>Webáruház </strong>adatai tájékoztató 
-                jellegûek.</p></td>
+            <td><p><strong>WebÃ¡ruhÃ¡z</strong> a <strong>DisztribÃºtorok</strong> honlapjÃ¡n belÃ¼l a 
+                termÃ©klistÃ¡t, termÃ©kinformÃ¡ciÃ³kat, Ã¡rakat, kÃ©szletinformÃ¡ciÃ³t Ã©s rendelÃ©si 
+                lehetÅ‘sÃ©get tartalmazÃ³ rÃ©sz. A <strong>WebÃ¡ruhÃ¡z </strong>adatai tÃ¡jÃ©koztatÃ³ 
+                jellegÅ±ek.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>1.3.</p></td>
-            <td><p><strong>Cégadminisztrátor</strong> a <strong>Viszonteladónál</strong> kijelölt 
-            személy, aki felvehet, törölhet és módosíthat felhasználókat a <strong>Honlap </strong>felhasználónévvel és jelszóval történt bejelentkezés után elérhetõ részén.</p></td>
+            <td><p><strong>CÃ©gadminisztrÃ¡tor</strong> a <strong>ViszonteladÃ³nÃ¡l</strong> kijelÃ¶lt 
+            szemÃ©ly, aki felvehet, tÃ¶rÃ¶lhet Ã©s mÃ³dosÃ­that felhasznÃ¡lÃ³kat a <strong>Honlap </strong>felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val tÃ¶rtÃ©nt bejelentkezÃ©s utÃ¡n elÃ©rhetÅ‘ rÃ©szÃ©n.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>1.4.</p></td>
-            <td><p><strong>Felhasználó</strong> a <strong>Viszonteladó</strong> munkatársa, akit a <strong>
-              Cégadminisztrátor</strong> beregisztrál a
+            <td><p><strong>FelhasznÃ¡lÃ³</strong> a <strong>ViszonteladÃ³</strong> munkatÃ¡rsa, akit a <strong>
+              CÃ©gadminisztrÃ¡tor</strong> beregisztrÃ¡l a
               <strong>Honlapon</strong>.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>1.5.</p></td>
-            <td><p><strong>Online regisztráció </strong>a <strong>Disztribútor</strong> <strong>
-              Honlapján</strong> található online formanyomtatvány kitöltése, amelyen 
-                keresztül a <strong>Viszonteladó</strong> megadja a szerzõdéskötéskor érvényes 
-                hivatalos adatait, általános üzleti kapcsolattartásra, logisztikai célokra 
-                illetve a <strong>Honlap</strong> felhasználónévvel és jelszóval történt bejelentkezés után elérhetõ részének használatára jogosult személyek személyi 
-                adatait és elérhetõségeit.</p></td>
+            <td><p><strong>Online regisztrÃ¡ciÃ³ </strong>a <strong>DisztribÃºtor</strong> <strong>
+              HonlapjÃ¡n</strong> talÃ¡lhatÃ³ online formanyomtatvÃ¡ny kitÃ¶ltÃ©se, amelyen 
+                keresztÃ¼l a <strong>ViszonteladÃ³</strong> megadja a szerzÅ‘dÃ©skÃ¶tÃ©skor Ã©rvÃ©nyes 
+                hivatalos adatait, Ã¡ltalÃ¡nos Ã¼zleti kapcsolattartÃ¡sra, logisztikai cÃ©lokra 
+                illetve a <strong>Honlap</strong> felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val tÃ¶rtÃ©nt bejelentkezÃ©s utÃ¡n elÃ©rhetÅ‘ rÃ©szÃ©nek hasznÃ¡latÃ¡ra jogosult szemÃ©lyek szemÃ©lyi 
+                adatait Ã©s elÃ©rhetÅ‘sÃ©geit.</p></td>
           </tr>
         </table>
-        <h3> 2. Szerzõdés tárgya</h3>
+        <h3> 2. SzerzÅ‘dÃ©s tÃ¡rgya</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>2.1.</p></td>
-            <td width="800"><p><strong>Disztribútor</strong> az általa forgalmazott termékeket regisztrált <strong>Viszonteladói</strong> részére értékesíti.<strong> Viszonteladó</strong> kizárólag számítástechnikai termékek kereskedelmével (üzletszerûen) foglalkozó gazdasági társaság vagy egyéni vállalkozó lehet.</p></td>
+            <td width="800"><p><strong>DisztribÃºtor</strong> az Ã¡ltala forgalmazott termÃ©keket regisztrÃ¡lt <strong>ViszonteladÃ³i</strong> rÃ©szÃ©re Ã©rtÃ©kesÃ­ti.<strong> ViszonteladÃ³</strong> kizÃ¡rÃ³lag szÃ¡mÃ­tÃ¡stechnikai termÃ©kek kereskedelmÃ©vel (Ã¼zletszerÅ±en) foglalkozÃ³ gazdasÃ¡gi tÃ¡rsasÃ¡g vagy egyÃ©ni vÃ¡llalkozÃ³ lehet.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>2.2.</p></td>
-            <td><p>A szerzõdés aláírásával a <strong>Felek</strong> között jelen szerzõdés tárgyában, korábban létrejött szóbeli és írásbeli szerzõdések érvényüket vesztik, a továbbiakban e tárgykörben kizárólag jelen szerzõdés rendelkezései az irányadóak.</p></td>
+            <td><p>A szerzÅ‘dÃ©s alÃ¡Ã­rÃ¡sÃ¡val a <strong>Felek</strong> kÃ¶zÃ¶tt jelen szerzÅ‘dÃ©s tÃ¡rgyÃ¡ban, korÃ¡bban lÃ©trejÃ¶tt szÃ³beli Ã©s Ã­rÃ¡sbeli szerzÅ‘dÃ©sek Ã©rvÃ©nyÃ¼ket vesztik, a tovÃ¡bbiakban e tÃ¡rgykÃ¶rben kizÃ¡rÃ³lag jelen szerzÅ‘dÃ©s rendelkezÃ©sei az irÃ¡nyadÃ³ak.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>2.3.</p></td>
-            <td> <p>A <strong>Disztribútor</strong> feljogosítja a<strong> Viszonteladót</strong> a <strong>Honlap</strong> felhasználónévvel és jelszóval történt bejelentkezés után elérhetõ részének használatára, melyen a bejelentkezés után az alábbi funkciókat biztosítja (az adott <strong>Felhasználónak</strong> a <strong>Cégadminisztrátor</strong> által beállított jogosultságaitól függõen):</p>
+            <td> <p>A <strong>DisztribÃºtor</strong> feljogosÃ­tja a<strong> ViszonteladÃ³t</strong> a <strong>Honlap</strong> felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val tÃ¶rtÃ©nt bejelentkezÃ©s utÃ¡n elÃ©rhetÅ‘ rÃ©szÃ©nek hasznÃ¡latÃ¡ra, melyen a bejelentkezÃ©s utÃ¡n az alÃ¡bbi funkciÃ³kat biztosÃ­tja (az adott <strong>FelhasznÃ¡lÃ³nak</strong> a <strong>CÃ©gadminisztrÃ¡tor</strong> Ã¡ltal beÃ¡llÃ­tott jogosultsÃ¡gaitÃ³l fÃ¼ggÅ‘en):</p>
               <ul>
-                <li> terméklista termékleírásokkal és árakkal</li>
-                <li> készletinformáció</li>
-                <li> raktáron lévõ termék megrendelése, raktáron nem lévõ termék elõrendelése</li>
-                <li> árlista letöltés</li>
-                <li>megrendelések követése</li>
-                <li>számlainformációk követése</li>
+                <li> termÃ©klista termÃ©kleÃ­rÃ¡sokkal Ã©s Ã¡rakkal</li>
+                <li> kÃ©szletinformÃ¡ciÃ³</li>
+                <li> raktÃ¡ron lÃ©vÅ‘ termÃ©k megrendelÃ©se, raktÃ¡ron nem lÃ©vÅ‘ termÃ©k elÅ‘rendelÃ©se</li>
+                <li> Ã¡rlista letÃ¶ltÃ©s</li>
+                <li>megrendelÃ©sek kÃ¶vetÃ©se</li>
+                <li>szÃ¡mlainformÃ¡ciÃ³k kÃ¶vetÃ©se</li>
             </ul>      </td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>2.4.</p></td>
-            <td><p><strong>Disztribútor</strong> a raktárában lévõ termékeire a <strong>Webáruházon</strong> keresztül valamint szóban és írásban egyaránt elfogad megrendelést. Raktáron nem lévõ, kizárólag a <strong>Viszonteladó</strong> részére beszerzendõ termékekre megrendelés csak a <strong>Webáruházon</strong> keresztül vagy e-mail útján történhet.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> a raktÃ¡rÃ¡ban lÃ©vÅ‘ termÃ©keire a <strong>WebÃ¡ruhÃ¡zon</strong> keresztÃ¼l valamint szÃ³ban Ã©s Ã­rÃ¡sban egyarÃ¡nt elfogad megrendelÃ©st. RaktÃ¡ron nem lÃ©vÅ‘, kizÃ¡rÃ³lag a <strong>ViszonteladÃ³</strong> rÃ©szÃ©re beszerzendÅ‘ termÃ©kekre megrendelÃ©s csak a <strong>WebÃ¡ruhÃ¡zon</strong> keresztÃ¼l vagy e-mail ÃºtjÃ¡n tÃ¶rtÃ©nhet.</p></td>
           </tr>
         </table>
-        <h3> 3. Disztribútor jogai és kötelezettségei</h3>
+        <h3> 3. DisztribÃºtor jogai Ã©s kÃ¶telezettsÃ©gei</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>3.1.</p></td>
-            <td width="800"><p><strong>Disztribútor</strong> nyilatkozik, hogy az összes általa forgalmazott termékhez kapcsolódó hatósági kötelezettségének eleget tett (vám, környezetvédelmi adó stb.).</p></td>
+            <td width="800"><p><strong>DisztribÃºtor</strong> nyilatkozik, hogy az Ã¶sszes Ã¡ltala forgalmazott termÃ©khez kapcsolÃ³dÃ³ hatÃ³sÃ¡gi kÃ¶telezettsÃ©gÃ©nek eleget tett (vÃ¡m, kÃ¶rnyezetvÃ©delmi adÃ³ stb.).</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>&nbsp;</p>
             <p>3.2. </p></td>
-            <td><p><strong>Disztribútor</strong> által forgalomba hozott termékek szervizelése és garanciális ügyintézése az adott termék garancialevelén feltüntetettek szerint vagy a <strong>Disztribútor</strong> saját szervizében vagy szerzõdött szerviz partnereinél történik.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> Ã¡ltal forgalomba hozott termÃ©kek szervizelÃ©se Ã©s garanciÃ¡lis Ã¼gyintÃ©zÃ©se az adott termÃ©k garancialevelÃ©n feltÃ¼ntetettek szerint vagy a <strong>DisztribÃºtor</strong> sajÃ¡t szervizÃ©ben vagy szerzÅ‘dÃ¶tt szerviz partnereinÃ©l tÃ¶rtÃ©nik.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.3. </p></td>
-            <td><p><strong>Disztribútor</strong> az áruk <strong>Viszonteladó</strong> által végzett, tételes átvételt követõen észlelt hibákért, hiányosságokért és az ezekbõl eredõ károkért nem vállal felelõsséget.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> az Ã¡ruk <strong>ViszonteladÃ³</strong> Ã¡ltal vÃ©gzett, tÃ©teles Ã¡tvÃ©telt kÃ¶vetÅ‘en Ã©szlelt hibÃ¡kÃ©rt, hiÃ¡nyossÃ¡gokÃ©rt Ã©s az ezekbÅ‘l eredÅ‘ kÃ¡rokÃ©rt nem vÃ¡llal felelÅ‘ssÃ©get.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.4.</p></td>
-            <td><p>Az egyes termékek cseréjét a <strong>Disztribútor</strong> a mindenkor hatályos magyar jogszabályok, illetve a gyártó által elõírt garancia idõtartamon belül elvégzi.</p></td>
+            <td><p>Az egyes termÃ©kek cserÃ©jÃ©t a <strong>DisztribÃºtor</strong> a mindenkor hatÃ¡lyos magyar jogszabÃ¡lyok, illetve a gyÃ¡rtÃ³ Ã¡ltal elÅ‘Ã­rt garancia idÅ‘tartamon belÃ¼l elvÃ©gzi.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.5.</p></td>
-            <td><p><strong>Disztribútor</strong> nem cserél ki olyan árut, illetve nem ad kártérítést olyan áru után, amelynek hibája bizonyíthatóan rajta kívülálló okból merült fel.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> nem cserÃ©l ki olyan Ã¡rut, illetve nem ad kÃ¡rtÃ©rÃ­tÃ©st olyan Ã¡ru utÃ¡n, amelynek hibÃ¡ja bizonyÃ­thatÃ³an rajta kÃ­vÃ¼lÃ¡llÃ³ okbÃ³l merÃ¼lt fel.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.6. </p></td>
-            <td><p><strong>Disztribútor</strong> elutasíthatja a rendelést, ha az olyan termékre vonatkozik, amelyet a gyártó nem tud szállítani.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> elutasÃ­thatja a rendelÃ©st, ha az olyan termÃ©kre vonatkozik, amelyet a gyÃ¡rtÃ³ nem tud szÃ¡llÃ­tani.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.7. </p></td>
-            <td><p>A <strong>Viszonteladó</strong> által megrendelt és a <strong>Disztribútor</strong> által visszaigazolt, de készleten nem lévõ termékekre vonatkozó megrendelés utólagos lemondásakor a <strong>Disztribútor</strong> jogosult az áru nettó értékének 10%-át bánatpénz jogcímén kiszámlázni <strong>Viszonteladó</strong> számára. A jelen pont alól kivételt képez a jelen szerzõdés 4.11 pontjában leírt eset.</p></td>
+            <td><p>A <strong>ViszonteladÃ³</strong> Ã¡ltal megrendelt Ã©s a <strong>DisztribÃºtor</strong> Ã¡ltal visszaigazolt, de kÃ©szleten nem lÃ©vÅ‘ termÃ©kekre vonatkozÃ³ megrendelÃ©s utÃ³lagos lemondÃ¡sakor a <strong>DisztribÃºtor</strong> jogosult az Ã¡ru nettÃ³ Ã©rtÃ©kÃ©nek 10%-Ã¡t bÃ¡natpÃ©nz jogcÃ­mÃ©n kiszÃ¡mlÃ¡zni <strong>ViszonteladÃ³</strong> szÃ¡mÃ¡ra. A jelen pont alÃ³l kivÃ©telt kÃ©pez a jelen szerzÅ‘dÃ©s 4.11 pontjÃ¡ban leÃ­rt eset.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.8. </p></td>
-            <td><p><strong>Disztribútor</strong> a megrendelt árukat az áru beérkezésérõl való értesítéstõl számított 5 (öt) munkanapig tartja <strong>Viszonteladó</strong> rendelkezésére. Az ezen határidõn belül át nem vett termékekre vonatkozó megrendelés automatikusan lemondottnak minõsül és a <strong>Disztribútor</strong> semmissé nyilváníthatja. Ilyen esetben <strong>Disztribútor</strong> jogosult az áru nettó értékének 10%-át bánatpénz jogcímén kiszámlázni <strong>Viszonteladó</strong> számára. A jelen pont alól kivételt képez a jelen szerzõdés 4.11 pontjában leírt eset.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> a megrendelt Ã¡rukat az Ã¡ru beÃ©rkezÃ©sÃ©rÅ‘l valÃ³ Ã©rtesÃ­tÃ©stÅ‘l szÃ¡mÃ­tott 5 (Ã¶t) munkanapig tartja <strong>ViszonteladÃ³</strong> rendelkezÃ©sÃ©re. Az ezen hatÃ¡ridÅ‘n belÃ¼l Ã¡t nem vett termÃ©kekre vonatkozÃ³ megrendelÃ©s automatikusan lemondottnak minÅ‘sÃ¼l Ã©s a <strong>DisztribÃºtor</strong> semmissÃ© nyilvÃ¡nÃ­thatja. Ilyen esetben <strong>DisztribÃºtor</strong> jogosult az Ã¡ru nettÃ³ Ã©rtÃ©kÃ©nek 10%-Ã¡t bÃ¡natpÃ©nz jogcÃ­mÃ©n kiszÃ¡mlÃ¡zni <strong>ViszonteladÃ³</strong> szÃ¡mÃ¡ra. A jelen pont alÃ³l kivÃ©telt kÃ©pez a jelen szerzÅ‘dÃ©s 4.11 pontjÃ¡ban leÃ­rt eset.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.9.</p></td>
-            <td><p><strong>Disztribútor</strong> a kereskedelmi kapcsolathoz szükséges információátadást a <strong>Viszonteladó</strong> által megadott e-mail címre küldött levelekkel biztosítja. A <strong>Viszonteladó</strong> a regisztrációval egyben hozzájárul a kommunikáció eme formájának gyakorlásához. A kereskedelmi hírlevelek küldési beállításait a <strong>Viszonteladó</strong> a <strong>Honlap</strong> Partnerinfo menüpontja alatt megváltoztathatja.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> a kereskedelmi kapcsolathoz szÃ¼ksÃ©ges informÃ¡ciÃ³Ã¡tadÃ¡st a <strong>ViszonteladÃ³</strong> Ã¡ltal megadott e-mail cÃ­mre kÃ¼ldÃ¶tt levelekkel biztosÃ­tja. A <strong>ViszonteladÃ³</strong> a regisztrÃ¡ciÃ³val egyben hozzÃ¡jÃ¡rul a kommunikÃ¡ciÃ³ eme formÃ¡jÃ¡nak gyakorlÃ¡sÃ¡hoz. A kereskedelmi hÃ­rlevelek kÃ¼ldÃ©si beÃ¡llÃ­tÃ¡sait a <strong>ViszonteladÃ³</strong> a <strong>Honlap</strong> Partnerinfo menÃ¼pontja alatt megvÃ¡ltoztathatja.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>3.10. </p></td>
-            <td><p><strong>Disztribútor</strong> kijelenti, hogy a mindenkor érvényes terméklistában szereplõ árak és termékleírások tájékoztató jellegûek. Az árak nettó árak, az ÁFA-t nem tartalmazzák. A <strong>Disztribútor</strong> az árakban és termékleírásokban található esetleges tévedésekért felelõsséget nem vállal (ld. 5.12 pont).</p></td>
+            <td><p><strong>DisztribÃºtor</strong> kijelenti, hogy a mindenkor Ã©rvÃ©nyes termÃ©klistÃ¡ban szereplÅ‘ Ã¡rak Ã©s termÃ©kleÃ­rÃ¡sok tÃ¡jÃ©koztatÃ³ jellegÅ±ek. Az Ã¡rak nettÃ³ Ã¡rak, az ÃFA-t nem tartalmazzÃ¡k. A <strong>DisztribÃºtor</strong> az Ã¡rakban Ã©s termÃ©kleÃ­rÃ¡sokban talÃ¡lhatÃ³ esetleges tÃ©vedÃ©sekÃ©rt felelÅ‘ssÃ©get nem vÃ¡llal (ld. 5.12 pont).</p></td>
           </tr>
         </table>
-        <h3> 4. Viszonteladó jogai és kötelezettségei</h3>
+        <h3> 4. ViszonteladÃ³ jogai Ã©s kÃ¶telezettsÃ©gei</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>4.1. </p></td>
-            <td width="800"><p><strong>Viszonteladó</strong> kijelenti, hogy a jelen szerzõdésben és mellékleteiben közölt adatok a valóságnak megfelelnek.</p></td>
+            <td width="800"><p><strong>ViszonteladÃ³</strong> kijelenti, hogy a jelen szerzÅ‘dÃ©sben Ã©s mellÃ©kleteiben kÃ¶zÃ¶lt adatok a valÃ³sÃ¡gnak megfelelnek.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.2. </p></td>
-            <td><p><strong>Viszonteladó</strong> kijelenti, hogy sem csõdeljárás, sem felszámolás, 
-                illetõleg végelszámolás alatt nem áll és nem kezdõdött ellene sem bírósági, sem 
-                cégbírósági, sem más fórum elõtt semmiféle olyan eljárás, amely gazdasági 
-                tevékenységét korlátozná, és jelen megállapodás teljesítését akadályozná.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> kijelenti, hogy sem csÅ‘deljÃ¡rÃ¡s, sem felszÃ¡molÃ¡s, 
+                illetÅ‘leg vÃ©gelszÃ¡molÃ¡s alatt nem Ã¡ll Ã©s nem kezdÅ‘dÃ¶tt ellene sem bÃ­rÃ³sÃ¡gi, sem 
+                cÃ©gbÃ­rÃ³sÃ¡gi, sem mÃ¡s fÃ³rum elÅ‘tt semmifÃ©le olyan eljÃ¡rÃ¡s, amely gazdasÃ¡gi 
+                tevÃ©kenysÃ©gÃ©t korlÃ¡toznÃ¡, Ã©s jelen megÃ¡llapodÃ¡s teljesÃ­tÃ©sÃ©t akadÃ¡lyoznÃ¡.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.3. </p></td>
-            <td><p><strong>Viszonteladó</strong> kijelenti, hogy számítástechnikai termékek 
-                kereskedelmével foglalkozó gazdasági társaság, vagy egyéni vállalkozó (ld. 
+            <td><p><strong>ViszonteladÃ³</strong> kijelenti, hogy szÃ¡mÃ­tÃ¡stechnikai termÃ©kek 
+                kereskedelmÃ©vel foglalkozÃ³ gazdasÃ¡gi tÃ¡rsasÃ¡g, vagy egyÃ©ni vÃ¡llalkozÃ³ (ld. 
                 2.1.).</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.4. </p></td>
-            <td><p><strong>Viszonteladó</strong> tudomásul veszi és elismeri, hogy az általa 
-                vásárolt termékek a vételár teljes kifizetéséig <strong>Disztribútor</strong> 
-              tulajdonát képezik és azokért az ellenérték megfizetéséig a felelõs õrzés 
-              szabályai szerint felel. A teljes egészében ki nem fizetett áru nem terhelhetõ 
-              meg, felszámolás illetve csõdeljárás során harmadik személyek kielégítésére nem 
-              szolgálhat.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> tudomÃ¡sul veszi Ã©s elismeri, hogy az Ã¡ltala 
+                vÃ¡sÃ¡rolt termÃ©kek a vÃ©telÃ¡r teljes kifizetÃ©sÃ©ig <strong>DisztribÃºtor</strong> 
+              tulajdonÃ¡t kÃ©pezik Ã©s azokÃ©rt az ellenÃ©rtÃ©k megfizetÃ©sÃ©ig a felelÅ‘s Å‘rzÃ©s 
+              szabÃ¡lyai szerint felel. A teljes egÃ©szÃ©ben ki nem fizetett Ã¡ru nem terhelhetÅ‘ 
+              meg, felszÃ¡molÃ¡s illetve csÅ‘deljÃ¡rÃ¡s sorÃ¡n harmadik szemÃ©lyek kielÃ©gÃ­tÃ©sÃ©re nem 
+              szolgÃ¡lhat.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.5.</p></td>
-            <td><p><strong>Viszonteladó</strong> köteles tûrni a <strong>Disztribútor</strong> 
-              fenntartott tulajdonjoga érvényesítése érdekében tett, szükséges, törvényes 
-              intézkedéseit.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> kÃ¶teles tÅ±rni a <strong>DisztribÃºtor</strong> 
+              fenntartott tulajdonjoga Ã©rvÃ©nyesÃ­tÃ©se Ã©rdekÃ©ben tett, szÃ¼ksÃ©ges, tÃ¶rvÃ©nyes 
+              intÃ©zkedÃ©seit.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.6. </p></td>
-            <td><p>A számlával kapcsolatos kifogás nem jogosítja <strong>Viszonteladót</strong> a 
-                számla kiegyenlítésének visszatartására. A kifogás kizárólag írásban, a számla 
-            átvételét követõ 8 napon belül tehetõ, melynek elbírálását követõen az <strong> Disztribútor</strong> a szükséges mértékben helyesbítõ számlát állít ki.</p></td>
+            <td><p>A szÃ¡mlÃ¡val kapcsolatos kifogÃ¡s nem jogosÃ­tja <strong>ViszonteladÃ³t</strong> a 
+                szÃ¡mla kiegyenlÃ­tÃ©sÃ©nek visszatartÃ¡sÃ¡ra. A kifogÃ¡s kizÃ¡rÃ³lag Ã­rÃ¡sban, a szÃ¡mla 
+            Ã¡tvÃ©telÃ©t kÃ¶vetÅ‘ 8 napon belÃ¼l tehetÅ‘, melynek elbÃ­rÃ¡lÃ¡sÃ¡t kÃ¶vetÅ‘en az <strong> DisztribÃºtor</strong> a szÃ¼ksÃ©ges mÃ©rtÃ©kben helyesbÃ­tÅ‘ szÃ¡mlÃ¡t Ã¡llÃ­t ki.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.7.</p></td>
-            <td><p>A tesztelés és bemutató céljából szállított eszközök a <strong>Disztribútor</strong> tulajdonában maradnak, ezeket <strong>Viszonteladó</strong> csak a <strong>Disztribútor</strong> által meghatározott célra használhatja. Ezen eszközök értékcsökkenését a <strong>Viszonteladó</strong> köteles megtéríteni a <strong>Disztribútor</strong> részére.</p></td>
+            <td><p>A tesztelÃ©s Ã©s bemutatÃ³ cÃ©ljÃ¡bÃ³l szÃ¡llÃ­tott eszkÃ¶zÃ¶k a <strong>DisztribÃºtor</strong> tulajdonÃ¡ban maradnak, ezeket <strong>ViszonteladÃ³</strong> csak a <strong>DisztribÃºtor</strong> Ã¡ltal meghatÃ¡rozott cÃ©lra hasznÃ¡lhatja. Ezen eszkÃ¶zÃ¶k Ã©rtÃ©kcsÃ¶kkenÃ©sÃ©t a <strong>ViszonteladÃ³</strong> kÃ¶teles megtÃ©rÃ­teni a <strong>DisztribÃºtor</strong> rÃ©szÃ©re.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.8.</p></td>
-            <td><p><strong>Viszonteladó</strong> a megrendelt árukat saját költségén szállítja vagy 
-                szállíttatja el a rendelés visszaigazolásban visszaigazolt átadási határidõben. 
-                Igény és megrendelés esetén,  a visszaigazolásban megjelölt 
-                szállítási feltételek és árak szerint <strong>Viszonteladó</strong> címére az 
-            árut <strong>Disztribútor</strong> is leszállíttathatja.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> a megrendelt Ã¡rukat sajÃ¡t kÃ¶ltsÃ©gÃ©n szÃ¡llÃ­tja vagy 
+                szÃ¡llÃ­ttatja el a rendelÃ©s visszaigazolÃ¡sban visszaigazolt Ã¡tadÃ¡si hatÃ¡ridÅ‘ben. 
+                IgÃ©ny Ã©s megrendelÃ©s esetÃ©n,  a visszaigazolÃ¡sban megjelÃ¶lt 
+                szÃ¡llÃ­tÃ¡si feltÃ©telek Ã©s Ã¡rak szerint <strong>ViszonteladÃ³</strong> cÃ­mÃ©re az 
+            Ã¡rut <strong>DisztribÃºtor</strong> is leszÃ¡llÃ­ttathatja.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.9.</p></td>
-            <td><p>Kiszállítás esetén, amennyiben a <strong>Disztribútor</strong> által szállított 
-                áruk és az azokat kísérõ dokumentumok között eltérés van, ha a termékek 
-                nincsenek vonalkóddal ellátva, ha külsérelmi nyomok fedezhetõk fel a 
-                csomagoláson, vagy mennyiségbeli eltérés van, a
-                <strong>Viszonteladó</strong> jogosult saját mérlegelése alapján az adott szállítmány 
-                visszautasítására.</p></td>
+            <td><p>KiszÃ¡llÃ­tÃ¡s esetÃ©n, amennyiben a <strong>DisztribÃºtor</strong> Ã¡ltal szÃ¡llÃ­tott 
+                Ã¡ruk Ã©s az azokat kÃ­sÃ©rÅ‘ dokumentumok kÃ¶zÃ¶tt eltÃ©rÃ©s van, ha a termÃ©kek 
+                nincsenek vonalkÃ³ddal ellÃ¡tva, ha kÃ¼lsÃ©relmi nyomok fedezhetÅ‘k fel a 
+                csomagolÃ¡son, vagy mennyisÃ©gbeli eltÃ©rÃ©s van, a
+                <strong>ViszonteladÃ³</strong> jogosult sajÃ¡t mÃ©rlegelÃ©se alapjÃ¡n az adott szÃ¡llÃ­tmÃ¡ny 
+                visszautasÃ­tÃ¡sÃ¡ra.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.10.</p></td>
-            <td><p><strong>Disztribútor</strong> a <strong>Viszonteladó</strong> külön kérésére 
-            vállalja, hogy a 100 000 Forint (nettó) érték feletti megrendeléseknél az áru beérkezését követõ munkanapon díjmentesen kiszállítja a <strong>Viszonteladó</strong> által megjelölt belföldi telephelyre. A jelen pontban jelzett értékhatárt <strong>Disztribútor</strong> jogosult megváltoztatni. Az ilyen változásról a <strong>Disztribútor</strong> a <strong>Viszonteladót</strong> az <strong>Online regisztráció</strong> folyamán megadott központi email címére küldött üzenetben tájékoztatja. <strong>Disztribútor</strong> kiszállítása esetén <strong>Viszonteladó</strong> telephelyén az áru kirakodásakor, <strong>Viszonteladó</strong> szállítása vagy szállítmányoztatása esetén a <strong>Disztribútor</strong> telephelyén az áru berakodásának megkezdésekor száll át a kárveszély a <strong>Viszonteladóra</strong>.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> a <strong>ViszonteladÃ³</strong> kÃ¼lÃ¶n kÃ©rÃ©sÃ©re 
+            vÃ¡llalja, hogy a 100 000 Forint (nettÃ³) Ã©rtÃ©k feletti megrendelÃ©seknÃ©l az Ã¡ru beÃ©rkezÃ©sÃ©t kÃ¶vetÅ‘ munkanapon dÃ­jmentesen kiszÃ¡llÃ­tja a <strong>ViszonteladÃ³</strong> Ã¡ltal megjelÃ¶lt belfÃ¶ldi telephelyre. A jelen pontban jelzett Ã©rtÃ©khatÃ¡rt <strong>DisztribÃºtor</strong> jogosult megvÃ¡ltoztatni. Az ilyen vÃ¡ltozÃ¡srÃ³l a <strong>DisztribÃºtor</strong> a <strong>ViszonteladÃ³t</strong> az <strong>Online regisztrÃ¡ciÃ³</strong> folyamÃ¡n megadott kÃ¶zponti email cÃ­mÃ©re kÃ¼ldÃ¶tt Ã¼zenetben tÃ¡jÃ©koztatja. <strong>DisztribÃºtor</strong> kiszÃ¡llÃ­tÃ¡sa esetÃ©n <strong>ViszonteladÃ³</strong> telephelyÃ©n az Ã¡ru kirakodÃ¡sakor, <strong>ViszonteladÃ³</strong> szÃ¡llÃ­tÃ¡sa vagy szÃ¡llÃ­tmÃ¡nyoztatÃ¡sa esetÃ©n a <strong>DisztribÃºtor</strong> telephelyÃ©n az Ã¡ru berakodÃ¡sÃ¡nak megkezdÃ©sekor szÃ¡ll Ã¡t a kÃ¡rveszÃ©ly a <strong>ViszonteladÃ³ra</strong>.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>4.11.</p></td>
             <td><p>&nbsp;</p>
-            <p>A <strong>Viszonteladó</strong> az egyedi megrendelésre érkezõ vagy névre szóló szoftverlicenszeket a megrendelésüket követõen nem mondhatja le, hanem azokat a <strong>Disztribútor</strong> mindenkor jogosult kiszámlázni a <strong>Viszonteladó</strong> pedig az átvételtõl függetlenül köteles a vételárat kiegyenlíteni.</p></td>
+            <p>A <strong>ViszonteladÃ³</strong> az egyedi megrendelÃ©sre Ã©rkezÅ‘ vagy nÃ©vre szÃ³lÃ³ szoftverlicenszeket a megrendelÃ©sÃ¼ket kÃ¶vetÅ‘en nem mondhatja le, hanem azokat a <strong>DisztribÃºtor</strong> mindenkor jogosult kiszÃ¡mlÃ¡zni a <strong>ViszonteladÃ³</strong> pedig az Ã¡tvÃ©teltÅ‘l fÃ¼ggetlenÃ¼l kÃ¶teles a vÃ©telÃ¡rat kiegyenlÃ­teni.</p></td>
           </tr>
         </table>
-        <h3> 5. Honlap és Webáruház használata</h3>
+        <h3> 5. Honlap Ã©s WebÃ¡ruhÃ¡z hasznÃ¡lata</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>5.1. </p></td>
-            <td width="800"><p><strong>Disztribútor</strong> minden tõle ésszerûen elvárhatót 
-                megtesz azért, hogy <strong>Honlapja</strong> és <strong>Webáruháza</strong> 
-              folyamatosan elérhetõ legyen a <strong>Viszonteladó</strong> számára.</p></td>
+            <td width="800"><p><strong>DisztribÃºtor</strong> minden tÅ‘le Ã©sszerÅ±en elvÃ¡rhatÃ³t 
+                megtesz azÃ©rt, hogy <strong>Honlapja</strong> Ã©s <strong>WebÃ¡ruhÃ¡za</strong> 
+              folyamatosan elÃ©rhetÅ‘ legyen a <strong>ViszonteladÃ³</strong> szÃ¡mÃ¡ra.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.2. </p></td>
-            <td><p><strong>Viszonteladó</strong> kijelenti, hogy ismeri az Internet lehetõségit és 
-                korlátait és elfogadja, hogy
-                <strong>Disztribútor</strong> az Internet technikai teljesítményéért és felmerülõ 
-                hibáiért nem vállal felelõsséget. A <strong>Webáruházhoz</strong> való 
-                hozzáférés technikai feltételeit (Internet kapcsolat és Böngészõ) a <strong>
-                Viszonteladó</strong> biztosítja saját maga számára.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> kijelenti, hogy ismeri az Internet lehetÅ‘sÃ©git Ã©s 
+                korlÃ¡tait Ã©s elfogadja, hogy
+                <strong>DisztribÃºtor</strong> az Internet technikai teljesÃ­tmÃ©nyÃ©Ã©rt Ã©s felmerÃ¼lÅ‘ 
+                hibÃ¡iÃ©rt nem vÃ¡llal felelÅ‘ssÃ©get. A <strong>WebÃ¡ruhÃ¡zhoz</strong> valÃ³ 
+                hozzÃ¡fÃ©rÃ©s technikai feltÃ©teleit (Internet kapcsolat Ã©s BÃ¶ngÃ©szÅ‘) a <strong>
+                ViszonteladÃ³</strong> biztosÃ­tja sajÃ¡t maga szÃ¡mÃ¡ra.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.3. </p></td>
-            <td><p>A kereskedelem védelme érdekében a <strong>Honlap</strong> egyes részei nem nyilvánosak, kizárólag a <strong>Viszonteladók</strong> számára érhetõek el felhasználónévvel és jelszóval védett legalább 128 bites SSL protokoll szerint titkosított csatornán.</p></td>
+            <td><p>A kereskedelem vÃ©delme Ã©rdekÃ©ben a <strong>Honlap</strong> egyes rÃ©szei nem nyilvÃ¡nosak, kizÃ¡rÃ³lag a <strong>ViszonteladÃ³k</strong> szÃ¡mÃ¡ra Ã©rhetÅ‘ek el felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val vÃ©dett legalÃ¡bb 128 bites SSL protokoll szerint titkosÃ­tott csatornÃ¡n.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.4. </p></td>
             <td><p>&nbsp;</p>
-            <p><strong>Viszonteladó</strong> kijelenti, hogy a <strong>Webáruházat</strong> csak üzemszerûen használja olyan módon, hogy az nem sérül és nem változik a <strong>Felhasználó</strong> szándékos károkozása miatt. A használati jog nem terjed ki a Webáruház tartalmának módosítására és másolására.</p></td>
+            <p><strong>ViszonteladÃ³</strong> kijelenti, hogy a <strong>WebÃ¡ruhÃ¡zat</strong> csak Ã¼zemszerÅ±en hasznÃ¡lja olyan mÃ³don, hogy az nem sÃ©rÃ¼l Ã©s nem vÃ¡ltozik a <strong>FelhasznÃ¡lÃ³</strong> szÃ¡ndÃ©kos kÃ¡rokozÃ¡sa miatt. A hasznÃ¡lati jog nem terjed ki a WebÃ¡ruhÃ¡z tartalmÃ¡nak mÃ³dosÃ­tÃ¡sÃ¡ra Ã©s mÃ¡solÃ¡sÃ¡ra.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.5. </p></td>
             <td><p>&nbsp;</p>
-            <p>Jelen szerzõdés aláírását követõen a <strong>Disztribútor</strong> a megjelölt <strong>Cégadminisztrátor</strong> felhasználónevét és jelszavát aktiválja a Webáruházban, és adminisztrátori jogosítvánnyal látja el. <strong>Cégadminisztrátor</strong> újabb Felhasználókat hozhat létre, és azoknak egyedi jogosultságokat adhat. A Felhasználók felvétele, adatainak, jogosultságainak kezelése és a <strong>Felhasználók</strong> törlése a <strong>Cégadminisztrátor</strong> feladata, és így a <strong>Webáruházban</strong> történõ tevékenységük a <strong>Viszonteladó</strong> felelõssége. Amennyiben a <strong>Cégadminisztrátor</strong> személyét a <strong>Viszonteladó</strong> meg akarja változtatni, errõl azonnal cégszerûen, írásban értesítenie kell <strong>Disztribútort</strong>.</p></td>
+            <p>Jelen szerzÅ‘dÃ©s alÃ¡Ã­rÃ¡sÃ¡t kÃ¶vetÅ‘en a <strong>DisztribÃºtor</strong> a megjelÃ¶lt <strong>CÃ©gadminisztrÃ¡tor</strong> felhasznÃ¡lÃ³nevÃ©t Ã©s jelszavÃ¡t aktivÃ¡lja a WebÃ¡ruhÃ¡zban, Ã©s adminisztrÃ¡tori jogosÃ­tvÃ¡nnyal lÃ¡tja el. <strong>CÃ©gadminisztrÃ¡tor</strong> Ãºjabb FelhasznÃ¡lÃ³kat hozhat lÃ©tre, Ã©s azoknak egyedi jogosultsÃ¡gokat adhat. A FelhasznÃ¡lÃ³k felvÃ©tele, adatainak, jogosultsÃ¡gainak kezelÃ©se Ã©s a <strong>FelhasznÃ¡lÃ³k</strong> tÃ¶rlÃ©se a <strong>CÃ©gadminisztrÃ¡tor</strong> feladata, Ã©s Ã­gy a <strong>WebÃ¡ruhÃ¡zban</strong> tÃ¶rtÃ©nÅ‘ tevÃ©kenysÃ©gÃ¼k a <strong>ViszonteladÃ³</strong> felelÅ‘ssÃ©ge. Amennyiben a <strong>CÃ©gadminisztrÃ¡tor</strong> szemÃ©lyÃ©t a <strong>ViszonteladÃ³</strong> meg akarja vÃ¡ltoztatni, errÅ‘l azonnal cÃ©gszerÅ±en, Ã­rÃ¡sban Ã©rtesÃ­tenie kell <strong>DisztribÃºtort</strong>.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.6.</p></td>
             <td><p>&nbsp;</p>
-            <p><strong>Viszonteladó</strong> köteles a tõle elvárható módon és szinten a <strong>Webáruházhoz</strong> való hozzáférési adatainak megõrzésérõl gondoskodni. Amennyiben ezen adatok a <strong>Felektõl</strong> kívülálló okból harmadik, illetéktelen személyhez kerülnek, az errõl a tényrõl tudomást szerzõ <strong>Fél</strong> köteles haladéktalanul tájékoztatni a másik <strong>Felet</strong>. A tájékoztatás késedelmébõl eredõ károkért ezen <strong>Fél</strong> kártérítési felelõsséggel tartozik.</p></td>
+            <p><strong>ViszonteladÃ³</strong> kÃ¶teles a tÅ‘le elvÃ¡rhatÃ³ mÃ³don Ã©s szinten a <strong>WebÃ¡ruhÃ¡zhoz</strong> valÃ³ hozzÃ¡fÃ©rÃ©si adatainak megÅ‘rzÃ©sÃ©rÅ‘l gondoskodni. Amennyiben ezen adatok a <strong>FelektÅ‘l</strong> kÃ­vÃ¼lÃ¡llÃ³ okbÃ³l harmadik, illetÃ©ktelen szemÃ©lyhez kerÃ¼lnek, az errÅ‘l a tÃ©nyrÅ‘l tudomÃ¡st szerzÅ‘ <strong>FÃ©l</strong> kÃ¶teles haladÃ©ktalanul tÃ¡jÃ©koztatni a mÃ¡sik <strong>Felet</strong>. A tÃ¡jÃ©koztatÃ¡s kÃ©sedelmÃ©bÅ‘l eredÅ‘ kÃ¡rokÃ©rt ezen <strong>FÃ©l</strong> kÃ¡rtÃ©rÃ­tÃ©si felelÅ‘ssÃ©ggel tartozik.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.7.</p></td>
-            <td><p><strong>Disztribútor</strong> nem vállal felelõsséget a felhasználónévvel és jelszóval történõ visszaélésért, a <strong>Viszonteladónak</strong> és/vagy a Viszonteladó ügyfeleinek vagy bármely harmadik személynek okozott olyan károkért, amelyek a <strong>Cégadminisztrátor</strong> és/vagy a <strong>Felhasználók</strong> bejelentkezési nevének és jelszavának jogos vagy jogtalan használata miatt keletkeznek. Ezekért a <strong>Viszonteladó</strong> korlátlanul és egyetemlegesen felel minden károsult felé, beleértve a <strong>Disztribútort</strong> is (akár a Viszonteladó alkalmazásában álló személy, akár harmadik fél követi el a visszaélést).</p></td>
+            <td><p><strong>DisztribÃºtor</strong> nem vÃ¡llal felelÅ‘ssÃ©get a felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val tÃ¶rtÃ©nÅ‘ visszaÃ©lÃ©sÃ©rt, a <strong>ViszonteladÃ³nak</strong> Ã©s/vagy a ViszonteladÃ³ Ã¼gyfeleinek vagy bÃ¡rmely harmadik szemÃ©lynek okozott olyan kÃ¡rokÃ©rt, amelyek a <strong>CÃ©gadminisztrÃ¡tor</strong> Ã©s/vagy a <strong>FelhasznÃ¡lÃ³k</strong> bejelentkezÃ©si nevÃ©nek Ã©s jelszavÃ¡nak jogos vagy jogtalan hasznÃ¡lata miatt keletkeznek. EzekÃ©rt a <strong>ViszonteladÃ³</strong> korlÃ¡tlanul Ã©s egyetemlegesen felel minden kÃ¡rosult felÃ©, beleÃ©rtve a <strong>DisztribÃºtort</strong> is (akÃ¡r a ViszonteladÃ³ alkalmazÃ¡sÃ¡ban Ã¡llÃ³ szemÃ©ly, akÃ¡r harmadik fÃ©l kÃ¶veti el a visszaÃ©lÃ©st).</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.8. </p></td>
             <td><p>&nbsp;</p>
-            <p>A <strong>Disztribútor</strong> vállalja, hogy a <strong>Viszonteladó</strong> <strong>Webáruházban</strong> lévõ adatairól és tranzakcióiról semmilyen harmadik fél számára információt nem szolgáltat ki. Kivételt képeznek ez alól a gyártók számára kötelezõen megadandó licenc végfelhasználói adatok, illetve az összesített adatok és gyártói riportok.</p></td>
+            <p>A <strong>DisztribÃºtor</strong> vÃ¡llalja, hogy a <strong>ViszonteladÃ³</strong> <strong>WebÃ¡ruhÃ¡zban</strong> lÃ©vÅ‘ adatairÃ³l Ã©s tranzakciÃ³irÃ³l semmilyen harmadik fÃ©l szÃ¡mÃ¡ra informÃ¡ciÃ³t nem szolgÃ¡ltat ki. KivÃ©telt kÃ©peznek ez alÃ³l a gyÃ¡rtÃ³k szÃ¡mÃ¡ra kÃ¶telezÅ‘en megadandÃ³ licenc vÃ©gfelhasznÃ¡lÃ³i adatok, illetve az Ã¶sszesÃ­tett adatok Ã©s gyÃ¡rtÃ³i riportok.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.9.</p></td>
-            <td><p>A terméklista feltöltését <strong>Disztribútor</strong> a gyártóktól kapott információkkal végzi. Ennek ellenére elõfordulhatnak a <strong>Disztribútor</strong> hatáskörén kívül esõ téves információk, amelyekért a <strong>Disztribútor</strong> nem vállal felelõsséget.</p></td>
+            <td><p>A termÃ©klista feltÃ¶ltÃ©sÃ©t <strong>DisztribÃºtor</strong> a gyÃ¡rtÃ³ktÃ³l kapott informÃ¡ciÃ³kkal vÃ©gzi. Ennek ellenÃ©re elÅ‘fordulhatnak a <strong>DisztribÃºtor</strong> hatÃ¡skÃ¶rÃ©n kÃ­vÃ¼l esÅ‘ tÃ©ves informÃ¡ciÃ³k, amelyekÃ©rt a <strong>DisztribÃºtor</strong> nem vÃ¡llal felelÅ‘ssÃ©get.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.10.</p></td>
-            <td><p>A <strong>Webáruházban</strong> szereplõ árak nem tartalmazzák az Áfa-t és a <strong>Disztribútor</strong> telephelyén történõ átvételre vonatkoznak - hacsak bármilyen más megegyezés nem történt a <strong>Viszonteladóval</strong>. Az árak módosításának jogát a <strong>Disztribútor</strong> fenntartja magának.</p></td>
+            <td><p>A <strong>WebÃ¡ruhÃ¡zban</strong> szereplÅ‘ Ã¡rak nem tartalmazzÃ¡k az Ãfa-t Ã©s a <strong>DisztribÃºtor</strong> telephelyÃ©n tÃ¶rtÃ©nÅ‘ Ã¡tvÃ©telre vonatkoznak - hacsak bÃ¡rmilyen mÃ¡s megegyezÃ©s nem tÃ¶rtÃ©nt a <strong>ViszonteladÃ³val</strong>. Az Ã¡rak mÃ³dosÃ­tÃ¡sÃ¡nak jogÃ¡t a <strong>DisztribÃºtor</strong> fenntartja magÃ¡nak.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.11. </p></td>
-            <td><p><strong>Viszonteladó</strong> tudomásul veszi, hogy a <strong>Webáruházon</strong> keresztül feladott rendelései nem különböznek az egyéb módon (telefonon, e-mailben, faxon stb.) leadott rendeléseitõl és azokat a <strong>Webáruházon</strong> keresztül egyoldalúan nem vonhatja vissza és nem is módosíthatja. A megrendelés módosítása a <strong>Disztribútor</strong> kereskedõje részére küldött e-mail útján lehetséges. A megrendelés módosítása a <strong>Disztribútor</strong> visszaigazolásával válik érvényessé, ennek megtörténtéig az eredeti megrendelés marad érvényben.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> tudomÃ¡sul veszi, hogy a <strong>WebÃ¡ruhÃ¡zon</strong> keresztÃ¼l feladott rendelÃ©sei nem kÃ¼lÃ¶nbÃ¶znek az egyÃ©b mÃ³don (telefonon, e-mailben, faxon stb.) leadott rendelÃ©seitÅ‘l Ã©s azokat a <strong>WebÃ¡ruhÃ¡zon</strong> keresztÃ¼l egyoldalÃºan nem vonhatja vissza Ã©s nem is mÃ³dosÃ­thatja. A megrendelÃ©s mÃ³dosÃ­tÃ¡sa a <strong>DisztribÃºtor</strong> kereskedÅ‘je rÃ©szÃ©re kÃ¼ldÃ¶tt e-mail ÃºtjÃ¡n lehetsÃ©ges. A megrendelÃ©s mÃ³dosÃ­tÃ¡sa a <strong>DisztribÃºtor</strong> visszaigazolÃ¡sÃ¡val vÃ¡lik Ã©rvÃ©nyessÃ©, ennek megtÃ¶rtÃ©ntÃ©ig az eredeti megrendelÃ©s marad Ã©rvÃ©nyben.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.12. </p></td>
-            <td><p><strong>Disztribútor</strong> a rendelésrõl a <strong>Viszonteladót</strong> visszaigazoló e-mailben tájékoztatja. <strong>Visszaigazoló</strong> e-mail tartalmazza a vevõi rendelés számát, ez jelenti az érvényes megrendelés létrejöttét. <strong>Disztribútor</strong> a 3.10-es pontban leírt esetleges tévedésekért nem vállal felelõsséget.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> a rendelÃ©srÅ‘l a <strong>ViszonteladÃ³t</strong> visszaigazolÃ³ e-mailben tÃ¡jÃ©koztatja. <strong>VisszaigazolÃ³</strong> e-mail tartalmazza a vevÅ‘i rendelÃ©s szÃ¡mÃ¡t, ez jelenti az Ã©rvÃ©nyes megrendelÃ©s lÃ©trejÃ¶ttÃ©t. <strong>DisztribÃºtor</strong> a 3.10-es pontban leÃ­rt esetleges tÃ©vedÃ©sekÃ©rt nem vÃ¡llal felelÅ‘ssÃ©get.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>5.13. </p></td>
-            <td><p><strong>Viszonteladó</strong> a használattal kapcsolatos kérdéssel vagy 
-                esetleges problémával a honlapon található <a href="mailto:webadmin@hrp.hu">
-                webadmin@hrp.hu</a> e-mail címhez fordulhat.</p></td>
+            <td><p><strong>ViszonteladÃ³</strong> a hasznÃ¡lattal kapcsolatos kÃ©rdÃ©ssel vagy 
+                esetleges problÃ©mÃ¡val a honlapon talÃ¡lhatÃ³ <a href="mailto:webadmin@hrp.hu">
+                webadmin@hrp.hu</a> e-mail cÃ­mhez fordulhat.</p></td>
           </tr>
         </table>
-        <h3> 6. Személyes adatok kezelése</h3>
-        <p> A személyes adatok védelmérõl szóló 2011  évi CXII törvény (továbbiakban Tv.) alapján:</p>
+        <h3> 6. SzemÃ©lyes adatok kezelÃ©se</h3>
+        <p> A szemÃ©lyes adatok vÃ©delmÃ©rÅ‘l szÃ³lÃ³ 2011  Ã©vi CXII tÃ¶rvÃ©ny (tovÃ¡bbiakban Tv.) alapjÃ¡n:</p>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>6.1. </p></td>
             <td width="800"><p>&nbsp;</p>
-            <p><strong>Disztribútor</strong> kijelenti, hogy az <strong>Online</strong> <strong>regisztráció</strong> folyamán megadott illetve a jelen szerzõdésben feltüntetett nyilvános adatok, valamint az azokon túli személyes adatok megadása önkéntes jellegû.</p></td>
+            <p><strong>DisztribÃºtor</strong> kijelenti, hogy az <strong>Online</strong> <strong>regisztrÃ¡ciÃ³</strong> folyamÃ¡n megadott illetve a jelen szerzÅ‘dÃ©sben feltÃ¼ntetett nyilvÃ¡nos adatok, valamint az azokon tÃºli szemÃ©lyes adatok megadÃ¡sa Ã¶nkÃ©ntes jellegÅ±.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>6.2. </p></td>
-            <td><p>A nyilvános és a személyes adatokra a <strong>Disztribútornál</strong> történõ Viszonteladói regisztráció, valamint a <strong>Felek</strong> közötti kereskedelmi együttmûködés fenntartása miatt van szükség. Az adatok kezelésére és feldolgozására a <strong>Disztribútor</strong> jogosult.</p></td>
+            <td><p>A nyilvÃ¡nos Ã©s a szemÃ©lyes adatokra a <strong>DisztribÃºtornÃ¡l</strong> tÃ¶rtÃ©nÅ‘ ViszonteladÃ³i regisztrÃ¡ciÃ³, valamint a <strong>Felek</strong> kÃ¶zÃ¶tti kereskedelmi egyÃ¼ttmÅ±kÃ¶dÃ©s fenntartÃ¡sa miatt van szÃ¼ksÃ©g. Az adatok kezelÃ©sÃ©re Ã©s feldolgozÃ¡sÃ¡ra a <strong>DisztribÃºtor</strong> jogosult.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>6.3. </p></td>
             <td><p>&nbsp;</p>
-            <p>Az adatokat a <strong>Disztribútor</strong> mindaddig nyilvántartja, amíg a két Fél közötti kereskedelmi viszony fennáll, illetve annak megszûnése után annyi ideig, amíg a rávonatkozó törvényi kötelezettségek szükségessé teszik. Ezen idõszak leteltét követõen a Viszonteladó adatait <strong>Disztribútor</strong> kereskedelmi nyilvántartásából törli.</p></td>
+            <p>Az adatokat a <strong>DisztribÃºtor</strong> mindaddig nyilvÃ¡ntartja, amÃ­g a kÃ©t FÃ©l kÃ¶zÃ¶tti kereskedelmi viszony fennÃ¡ll, illetve annak megszÅ±nÃ©se utÃ¡n annyi ideig, amÃ­g a rÃ¡vonatkozÃ³ tÃ¶rvÃ©nyi kÃ¶telezettsÃ©gek szÃ¼ksÃ©gessÃ© teszik. Ezen idÅ‘szak leteltÃ©t kÃ¶vetÅ‘en a ViszonteladÃ³ adatait <strong>DisztribÃºtor</strong> kereskedelmi nyilvÃ¡ntartÃ¡sÃ¡bÃ³l tÃ¶rli.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>6.4. </p></td>
-            <td><p>Az adatokat a <strong>Disztribútor</strong> ismerheti meg, illetve rajta kívül azon alvállalkozói, akiket a kereskedelmi folyamatának biztosítása céljából részfeladatok ellátásával megbíz. Miután a <strong>Disztribútor</strong> kereskedelmi felépítése olyan, hogy ez esetenként adattovábbítással, vagy adatkezelések összekapcsolásával jár, ezért az ezzel való egyetértést és az ehhez való hozzájárulást a jelen szerzõdés aláírásával Viszonteladó igazolja, vagyis a szerzõdés egyben hozzájáruló nyilatkozat funkciót is ellát (Tv. 5 § szerint).</p></td>
+            <td><p>Az adatokat a <strong>DisztribÃºtor</strong> ismerheti meg, illetve rajta kÃ­vÃ¼l azon alvÃ¡llalkozÃ³i, akiket a kereskedelmi folyamatÃ¡nak biztosÃ­tÃ¡sa cÃ©ljÃ¡bÃ³l rÃ©szfeladatok ellÃ¡tÃ¡sÃ¡val megbÃ­z. MiutÃ¡n a <strong>DisztribÃºtor</strong> kereskedelmi felÃ©pÃ­tÃ©se olyan, hogy ez esetenkÃ©nt adattovÃ¡bbÃ­tÃ¡ssal, vagy adatkezelÃ©sek Ã¶sszekapcsolÃ¡sÃ¡val jÃ¡r, ezÃ©rt az ezzel valÃ³ egyetÃ©rtÃ©st Ã©s az ehhez valÃ³ hozzÃ¡jÃ¡rulÃ¡st a jelen szerzÅ‘dÃ©s alÃ¡Ã­rÃ¡sÃ¡val ViszonteladÃ³ igazolja, vagyis a szerzÅ‘dÃ©s egyben hozzÃ¡jÃ¡rulÃ³ nyilatkozat funkciÃ³t is ellÃ¡t (Tv. 5 Â§ szerint).</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>6.5. </p></td>
-            <td><p>A <strong>Disztribútor</strong> kijelenti, hogy az adatokat bizalmasan kezeli, azokat harmadik fél részére jogosulatlanul nem adja ki. Minden tõle ésszerûen elvárható intézkedést megtesz annak érdekében, hogy ezeket az adatokat biztonságosan tárolja, és megvédje azokat az illetéktelen hozzáféréstõl és nyilvánosságra hozataltól.</p></td>
+            <td><p>A <strong>DisztribÃºtor</strong> kijelenti, hogy az adatokat bizalmasan kezeli, azokat harmadik fÃ©l rÃ©szÃ©re jogosulatlanul nem adja ki. Minden tÅ‘le Ã©sszerÅ±en elvÃ¡rhatÃ³ intÃ©zkedÃ©st megtesz annak Ã©rdekÃ©ben, hogy ezeket az adatokat biztonsÃ¡gosan tÃ¡rolja, Ã©s megvÃ©dje azokat az illetÃ©ktelen hozzÃ¡fÃ©rÃ©stÅ‘l Ã©s nyilvÃ¡nossÃ¡gra hozataltÃ³l.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>6.6. </p></td>
-            <td><p>A fenti pontokat figyelembe véve az adatszolgáltató (<strong>Viszonteladó</strong>) a jelen szerzõdés aláírásával egyértelmûen hozzájárul a fenti pontok tudomásul vételéhez, és azokkal egyetért. Ezzel a két <strong>Fél</strong> megegyezik abban, hogy a szerzõdés aláírása egyben a Tv. 5 § szerinti írásbeli nyilatkozatnak is megfelel az adatszolgáltató részérõl.</p></td>
+            <td><p>A fenti pontokat figyelembe vÃ©ve az adatszolgÃ¡ltatÃ³ (<strong>ViszonteladÃ³</strong>) a jelen szerzÅ‘dÃ©s alÃ¡Ã­rÃ¡sÃ¡val egyÃ©rtelmÅ±en hozzÃ¡jÃ¡rul a fenti pontok tudomÃ¡sul vÃ©telÃ©hez, Ã©s azokkal egyetÃ©rt. Ezzel a kÃ©t <strong>FÃ©l</strong> megegyezik abban, hogy a szerzÅ‘dÃ©s alÃ¡Ã­rÃ¡sa egyben a Tv. 5 Â§ szerinti Ã­rÃ¡sbeli nyilatkozatnak is megfelel az adatszolgÃ¡ltatÃ³ rÃ©szÃ©rÅ‘l.</p></td>
           </tr>
         </table>
-        <h3>  7. A szerzõdés létrejötte és felmondása</h3>
+        <h3>  7. A szerzÅ‘dÃ©s lÃ©trejÃ¶tte Ã©s felmondÃ¡sa</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>7.1. </p></td>
-            <td width="800"><p>Jelen szerzõdés a <strong>Felek</strong> cégszerû aláírásával lép 
-                hatályba. A szerzõdés határozatlan idõtartamra szól.</p></td>
+            <td width="800"><p>Jelen szerzÅ‘dÃ©s a <strong>Felek</strong> cÃ©gszerÅ± alÃ¡Ã­rÃ¡sÃ¡val lÃ©p 
+                hatÃ¡lyba. A szerzÅ‘dÃ©s hatÃ¡rozatlan idÅ‘tartamra szÃ³l.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.2. </p></td>
-            <td><p>A szerzõdés megkötéséhez a <strong>Viszonteladónak</strong> a két példányban cégszerûen aláírt szerzõdés mellé csatolnia kell az <u>aláírási címpéldány</u> (egyéni vállalkozó esetén a <u>vállalkozói igazolvány</u>) és a <u>cégkivonat</u> másolatát.</p></td>
+            <td><p>A szerzÅ‘dÃ©s megkÃ¶tÃ©sÃ©hez a <strong>ViszonteladÃ³nak</strong> a kÃ©t pÃ©ldÃ¡nyban cÃ©gszerÅ±en alÃ¡Ã­rt szerzÅ‘dÃ©s mellÃ© csatolnia kell az <u>alÃ¡Ã­rÃ¡si cÃ­mpÃ©ldÃ¡ny</u> (egyÃ©ni vÃ¡llalkozÃ³ esetÃ©n a <u>vÃ¡llalkozÃ³i igazolvÃ¡ny</u>) Ã©s a <u>cÃ©gkivonat</u> mÃ¡solatÃ¡t.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.3. </p></td>
-            <td><p>Az eredeti szerzõdést a <strong>Viszonteladó</strong> <strong>Disztribútor</strong> 
-                részére a következõ módokon juttathatja el:</p>
+            <td><p>Az eredeti szerzÅ‘dÃ©st a <strong>ViszonteladÃ³</strong> <strong>DisztribÃºtor</strong> 
+                rÃ©szÃ©re a kÃ¶vetkezÅ‘ mÃ³dokon juttathatja el:</p>
               <ul>
-                <li>Személyesen leadva vagy postai úton megküldve a <strong>Disztribútor</strong> 
-                    1033 Budapest, Huszti &uacute;t 34. szám alatti székhelyére.</li>
+                <li>SzemÃ©lyesen leadva vagy postai Ãºton megkÃ¼ldve a <strong>DisztribÃºtor</strong> 
+                    1033 Budapest, Huszti &uacute;t 34. szÃ¡m alatti szÃ©khelyÃ©re.</li>
               </ul>
-              <p>A jelzett csatolandó dokumentumokat <strong>Disztribútor</strong> részére a 
-                  következõ módokon juttathatja el:</p>
+              <p>A jelzett csatolandÃ³ dokumentumokat <strong>DisztribÃºtor</strong> rÃ©szÃ©re a 
+                  kÃ¶vetkezÅ‘ mÃ³dokon juttathatja el:</p>
               <ul>
-                <li>Az <strong>Online regisztráció</strong> során a regisztrációs formanyomtatványon 
-                    keresztül feltöltve</li>
-                <li>Személyesen leadva vagy postai úton megküldve a <strong>Disztribútor</strong> 
-                    1033 Budapest, Huszti &uacute;t 34. szám alatti székhelyére</li>
-                <li>Faxon a (06 1) 350-1351-es faxszámra megküldve</li>
-              </ul>      <p>A szerzõdés létrejöttének feltétele, hogy a <strong>Viszonteladó</strong> 
-                    az aláírt szerzõdés két eredeti példányát legkésõbb az elsõ vásárlást megelõzõen <strong>
-                    Disztribútorhoz </strong>eljuttassa.<br />
+                <li>Az <strong>Online regisztrÃ¡ciÃ³</strong> sorÃ¡n a regisztrÃ¡ciÃ³s formanyomtatvÃ¡nyon 
+                    keresztÃ¼l feltÃ¶ltve</li>
+                <li>SzemÃ©lyesen leadva vagy postai Ãºton megkÃ¼ldve a <strong>DisztribÃºtor</strong> 
+                    1033 Budapest, Huszti &uacute;t 34. szÃ¡m alatti szÃ©khelyÃ©re</li>
+                <li>Faxon a (06 1) 350-1351-es faxszÃ¡mra megkÃ¼ldve</li>
+              </ul>      <p>A szerzÅ‘dÃ©s lÃ©trejÃ¶ttÃ©nek feltÃ©tele, hogy a <strong>ViszonteladÃ³</strong> 
+                    az alÃ¡Ã­rt szerzÅ‘dÃ©s kÃ©t eredeti pÃ©ldÃ¡nyÃ¡t legkÃ©sÅ‘bb az elsÅ‘ vÃ¡sÃ¡rlÃ¡st megelÅ‘zÅ‘en <strong>
+                    DisztribÃºtorhoz </strong>eljuttassa.<br />
                 </p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.4. </p></td>
-            <td><p><strong>Felek</strong> jogosultak a másik félhez intézett írásos nyilatkozattal 
-                egyoldalúan, indokolás nélkül, 15 napos felmondási idõvel felmondani a 
-                szerzõdést. A felmondási idõ alatt <strong>Felek</strong> kötelesek elszámolni 
-                egymással.</p></td>
+            <td><p><strong>Felek</strong> jogosultak a mÃ¡sik fÃ©lhez intÃ©zett Ã­rÃ¡sos nyilatkozattal 
+                egyoldalÃºan, indokolÃ¡s nÃ©lkÃ¼l, 15 napos felmondÃ¡si idÅ‘vel felmondani a 
+                szerzÅ‘dÃ©st. A felmondÃ¡si idÅ‘ alatt <strong>Felek</strong> kÃ¶telesek elszÃ¡molni 
+                egymÃ¡ssal.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.5.</p></td>
-            <td><p><strong>Disztribútor</strong> jogosult a szerzõdés rendkívüli, azonnali 
-                hatállyal történõ felmondására, amennyiben a <strong>Viszonteladó</strong> a 
-                szerzõdésben vállalt bármely kötelezettségét megszegi.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> jogosult a szerzÅ‘dÃ©s rendkÃ­vÃ¼li, azonnali 
+                hatÃ¡llyal tÃ¶rtÃ©nÅ‘ felmondÃ¡sÃ¡ra, amennyiben a <strong>ViszonteladÃ³</strong> a 
+                szerzÅ‘dÃ©sben vÃ¡llalt bÃ¡rmely kÃ¶telezettsÃ©gÃ©t megszegi.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.6.</p></td>
-            <td><p><strong>Felek</strong> között megkötött szerzõdés a szerzõdés lejártát követõen 
-                is hatályban marad valamennyi olyan, bármelyik <strong>Fél</strong> részérõl a 
-                másik <strong>Fél</strong> részére fennálló, eredetileg a szerzõdésbõl eredõ 
-                kötelezettség vonatkozásában, amely kötelezettség a szerzõdés megszûnéséig nem 
-                került rendezésre. Ilyen vonatkozásban a szerzõdés az adott kötelezettség 
-                végleges rendezésekor szûnik meg.</p></td>
+            <td><p><strong>Felek</strong> kÃ¶zÃ¶tt megkÃ¶tÃ¶tt szerzÅ‘dÃ©s a szerzÅ‘dÃ©s lejÃ¡rtÃ¡t kÃ¶vetÅ‘en 
+                is hatÃ¡lyban marad valamennyi olyan, bÃ¡rmelyik <strong>FÃ©l</strong> rÃ©szÃ©rÅ‘l a 
+                mÃ¡sik <strong>FÃ©l</strong> rÃ©szÃ©re fennÃ¡llÃ³, eredetileg a szerzÅ‘dÃ©sbÅ‘l eredÅ‘ 
+                kÃ¶telezettsÃ©g vonatkozÃ¡sÃ¡ban, amely kÃ¶telezettsÃ©g a szerzÅ‘dÃ©s megszÅ±nÃ©sÃ©ig nem 
+                kerÃ¼lt rendezÃ©sre. Ilyen vonatkozÃ¡sban a szerzÅ‘dÃ©s az adott kÃ¶telezettsÃ©g 
+                vÃ©gleges rendezÃ©sekor szÅ±nik meg.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.7.</p></td>
-            <td><p>A szerzõdés megszûnésekor, érvényességének lejártakor <strong>Disztribútor</strong> letiltja <strong>Viszonteladó</strong> <strong>Cégadminisztrátorának</strong> és 
-                összes <strong>Felhasználóinak</strong> jogosultságát úgy, hogy azok nem férnek 
-                hozzá a <strong>Webáruházhoz</strong> és <strong>Honlap </strong>felhasználónévvel és jelszóval történt bejelentkezés után elérhetõ részéhez. A szerzõdés 
-                megszûnésekor a <strong>Disztribútor</strong> <strong>Viszonteladóval</strong> szembeni követelései azonnal esedékessé válnak, és a <strong>Disztribútor</strong> a <strong>Viszonteladó</strong> függõ rendeléseit jogosult kizárólag elõre 
-            fizetéssel teljesíteni vagy törölni. Törlés esetén a megrendelés a <strong> Viszonteladó </strong>részérõl lemondottnak minõsül és <strong>Disztribútor</strong> jogosult a jelen szerzõdés 3.8. pontjában rögzített igényét érvényesíteni.</p></td>
+            <td><p>A szerzÅ‘dÃ©s megszÅ±nÃ©sekor, Ã©rvÃ©nyessÃ©gÃ©nek lejÃ¡rtakor <strong>DisztribÃºtor</strong> letiltja <strong>ViszonteladÃ³</strong> <strong>CÃ©gadminisztrÃ¡torÃ¡nak</strong> Ã©s 
+                Ã¶sszes <strong>FelhasznÃ¡lÃ³inak</strong> jogosultsÃ¡gÃ¡t Ãºgy, hogy azok nem fÃ©rnek 
+                hozzÃ¡ a <strong>WebÃ¡ruhÃ¡zhoz</strong> Ã©s <strong>Honlap </strong>felhasznÃ¡lÃ³nÃ©vvel Ã©s jelszÃ³val tÃ¶rtÃ©nt bejelentkezÃ©s utÃ¡n elÃ©rhetÅ‘ rÃ©szÃ©hez. A szerzÅ‘dÃ©s 
+                megszÅ±nÃ©sekor a <strong>DisztribÃºtor</strong> <strong>ViszonteladÃ³val</strong> szembeni kÃ¶vetelÃ©sei azonnal esedÃ©kessÃ© vÃ¡lnak, Ã©s a <strong>DisztribÃºtor</strong> a <strong>ViszonteladÃ³</strong> fÃ¼ggÅ‘ rendelÃ©seit jogosult kizÃ¡rÃ³lag elÅ‘re 
+            fizetÃ©ssel teljesÃ­teni vagy tÃ¶rÃ¶lni. TÃ¶rlÃ©s esetÃ©n a megrendelÃ©s a <strong> ViszonteladÃ³ </strong>rÃ©szÃ©rÅ‘l lemondottnak minÅ‘sÃ¼l Ã©s <strong>DisztribÃºtor</strong> jogosult a jelen szerzÅ‘dÃ©s 3.8. pontjÃ¡ban rÃ¶gzÃ­tett igÃ©nyÃ©t Ã©rvÃ©nyesÃ­teni.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.8.</p></td>
-            <td><p>A szerzõdés megszûnése esetén <strong>Viszonteladó</strong> a birtokában lévõ, 
-                de a <strong>Disztribútor</strong> tulajdonát képezõ, még el nem adott 
-                termékeket 24 órán belül köteles <strong>Disztribútor</strong> telephelyére 
-                díjmentesen visszaszállítani, vagy az árut kifizetni. Errõl <strong>Felek</strong> 
-              közösen jegyzõkönyvet vesznek fel, mely a felmondást követõ elszámolás alapját 
-              képezi.</p></td>
+            <td><p>A szerzÅ‘dÃ©s megszÅ±nÃ©se esetÃ©n <strong>ViszonteladÃ³</strong> a birtokÃ¡ban lÃ©vÅ‘, 
+                de a <strong>DisztribÃºtor</strong> tulajdonÃ¡t kÃ©pezÅ‘, mÃ©g el nem adott 
+                termÃ©keket 24 Ã³rÃ¡n belÃ¼l kÃ¶teles <strong>DisztribÃºtor</strong> telephelyÃ©re 
+                dÃ­jmentesen visszaszÃ¡llÃ­tani, vagy az Ã¡rut kifizetni. ErrÅ‘l <strong>Felek</strong> 
+              kÃ¶zÃ¶sen jegyzÅ‘kÃ¶nyvet vesznek fel, mely a felmondÃ¡st kÃ¶vetÅ‘ elszÃ¡molÃ¡s alapjÃ¡t 
+              kÃ©pezi.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.9.</p></td>
-            <td><p>Az elszámolás során a szerzõdés azonnali hatályú felmondására okot adó <strong>
-              Fél</strong> viseli a másik <strong>Félnek</strong> a megállapodás idõ elõtti 
-                megszûnésével kapcsolatosan felmerült, igazolt költségeit és kárait.</p></td>
+            <td><p>Az elszÃ¡molÃ¡s sorÃ¡n a szerzÅ‘dÃ©s azonnali hatÃ¡lyÃº felmondÃ¡sÃ¡ra okot adÃ³ <strong>
+              FÃ©l</strong> viseli a mÃ¡sik <strong>FÃ©lnek</strong> a megÃ¡llapodÃ¡s idÅ‘ elÅ‘tti 
+                megszÅ±nÃ©sÃ©vel kapcsolatosan felmerÃ¼lt, igazolt kÃ¶ltsÃ©geit Ã©s kÃ¡rait.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>7.10.</p></td>
-            <td><p>Jelen szerzõdés megszûnése automatikusan maga után vonja a <strong>Felek</strong> 
-              között esetlegesen fennálló <strong>Kereskedelmi szerzõdés</strong> megszûnését.</p></td>
+            <td><p>Jelen szerzÅ‘dÃ©s megszÅ±nÃ©se automatikusan maga utÃ¡n vonja a <strong>Felek</strong> 
+              kÃ¶zÃ¶tt esetlegesen fennÃ¡llÃ³ <strong>Kereskedelmi szerzÅ‘dÃ©s</strong> megszÅ±nÃ©sÃ©t.</p></td>
           </tr>
         </table>
-        <h3>  8. Vegyes rendelkezések</h3>
+        <h3>  8. Vegyes rendelkezÃ©sek</h3>
         <table width="875" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="40">&nbsp;</td>
             <td width="35" valign="top"><p>8.1. </p></td>
-            <td width="800"><p>Jelen megállapodást a szerzõdõ <strong>Felek</strong> elolvasás és 
-                értelmezést követõen, mint akaratukkal mindenben megegyezõt jóváhagyólag 
-                cégszerûen írják alá.</p></td>
+            <td width="800"><p>Jelen megÃ¡llapodÃ¡st a szerzÅ‘dÅ‘ <strong>Felek</strong> elolvasÃ¡s Ã©s 
+                Ã©rtelmezÃ©st kÃ¶vetÅ‘en, mint akaratukkal mindenben megegyezÅ‘t jÃ³vÃ¡hagyÃ³lag 
+                cÃ©gszerÅ±en Ã­rjÃ¡k alÃ¡.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>8.2. </p></td>
-            <td><p><strong>Disztribútor</strong> jogosult a jelen szerzõdés bármely pontját megváltoztatni. Az ilyen változásról a Disztribútor a Viszonteladót az <strong>Online</strong> <strong>regisztráció</strong> folyamán megadott központi email címére küldött üzenetben tájékoztatja. Amennyiben <strong>Viszonteladó</strong> az adott változtatást nem fogadja el, úgy köteles errõl a <strong>Disztribútort</strong> az email üzenet megérkezését követõ 8 napon belül írásban tájékoztatni. A változás el nem fogadása a szerzõdés 7.4. pont szerinti <strong>Viszonteladó</strong> általi felmondásának minõsül.</p></td>
+            <td><p><strong>DisztribÃºtor</strong> jogosult a jelen szerzÅ‘dÃ©s bÃ¡rmely pontjÃ¡t megvÃ¡ltoztatni. Az ilyen vÃ¡ltozÃ¡srÃ³l a DisztribÃºtor a ViszonteladÃ³t az <strong>Online</strong> <strong>regisztrÃ¡ciÃ³</strong> folyamÃ¡n megadott kÃ¶zponti email cÃ­mÃ©re kÃ¼ldÃ¶tt Ã¼zenetben tÃ¡jÃ©koztatja. Amennyiben <strong>ViszonteladÃ³</strong> az adott vÃ¡ltoztatÃ¡st nem fogadja el, Ãºgy kÃ¶teles errÅ‘l a <strong>DisztribÃºtort</strong> az email Ã¼zenet megÃ©rkezÃ©sÃ©t kÃ¶vetÅ‘ 8 napon belÃ¼l Ã­rÃ¡sban tÃ¡jÃ©koztatni. A vÃ¡ltozÃ¡s el nem fogadÃ¡sa a szerzÅ‘dÃ©s 7.4. pont szerinti <strong>ViszonteladÃ³</strong> Ã¡ltali felmondÃ¡sÃ¡nak minÅ‘sÃ¼l.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>8.3. </p></td>
-            <td><p><strong>Felek</strong> kölcsönösen kötelesek egymást haladéktalanul értesíteni minden olyan adatváltozásról, mely a kettõjük között megkötött szerzõdést, vagy annak lebonyolítását érinti (bankszámlaszám változás, cím, ill. elérhetõség változása, kapcsolattartó személyek változása stb.). <strong>Viszonteladó</strong> továbbá kijelenti, hogy amennyiben a személyi adatok, illetve jogosultságok megváltoznak, arról <strong>Disztribútort</strong> haladéktalanul értesíti írásban és egyben tudomásul veszi, hogy az értesítés elmulasztásából adódó minden felelõsség és anyagi következmény õt terheli.</p></td>
+            <td><p><strong>Felek</strong> kÃ¶lcsÃ¶nÃ¶sen kÃ¶telesek egymÃ¡st haladÃ©ktalanul Ã©rtesÃ­teni minden olyan adatvÃ¡ltozÃ¡srÃ³l, mely a kettÅ‘jÃ¼k kÃ¶zÃ¶tt megkÃ¶tÃ¶tt szerzÅ‘dÃ©st, vagy annak lebonyolÃ­tÃ¡sÃ¡t Ã©rinti (bankszÃ¡mlaszÃ¡m vÃ¡ltozÃ¡s, cÃ­m, ill. elÃ©rhetÅ‘sÃ©g vÃ¡ltozÃ¡sa, kapcsolattartÃ³ szemÃ©lyek vÃ¡ltozÃ¡sa stb.). <strong>ViszonteladÃ³</strong> tovÃ¡bbÃ¡ kijelenti, hogy amennyiben a szemÃ©lyi adatok, illetve jogosultsÃ¡gok megvÃ¡ltoznak, arrÃ³l <strong>DisztribÃºtort</strong> haladÃ©ktalanul Ã©rtesÃ­ti Ã­rÃ¡sban Ã©s egyben tudomÃ¡sul veszi, hogy az Ã©rtesÃ­tÃ©s elmulasztÃ¡sÃ¡bÃ³l adÃ³dÃ³ minden felelÅ‘ssÃ©g Ã©s anyagi kÃ¶vetkezmÃ©ny Å‘t terheli.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
                         <td valign="top"><p>8.4.</p></td>
-            <td><p><strong>Felek </strong>jelen megállapodásban nem szabályozott kérdésekre a Ptk. 
-                és a személyes adatok védelmérõl szóló 2011 évi CXII. törvény vonatkozó 
-                rendelkezéseit tartják magukra nézve kötelezõnek.</p></td>
+            <td><p><strong>Felek </strong>jelen megÃ¡llapodÃ¡sban nem szabÃ¡lyozott kÃ©rdÃ©sekre a Ptk. 
+                Ã©s a szemÃ©lyes adatok vÃ©delmÃ©rÅ‘l szÃ³lÃ³ 2011 Ã©vi CXII. tÃ¶rvÃ©ny vonatkozÃ³ 
+                rendelkezÃ©seit tartjÃ¡k magukra nÃ©zve kÃ¶telezÅ‘nek.</p></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><p>8.5. </p></td>
-            <td><p><strong>Felek </strong>a jelen szerzõdéssel kapcsolatban felmerült vitás 
-                kérdéseiket elsõsorban kölcsönös egyeztetés útján rendezik, ennek sikertelensége 
-                esetén a közöttük keletkezõ jogviták elbírálására a hatásköri szabályok 
-                fegyelembevételével kikötik a Budai  Központi Kerületi Bíróság illetékességét, illetõleg a megyei bíróság  hatáskörébe tartozó perek esetében pedig a Polgári Perrendtartásról szóló 1952.  évi III. törvény illetékességi szabályai az irányadóak. Felek kikötik  alkalmazandó jogként a magyar jogot.</p></td>
+            <td><p><strong>Felek </strong>a jelen szerzÅ‘dÃ©ssel kapcsolatban felmerÃ¼lt vitÃ¡s 
+                kÃ©rdÃ©seiket elsÅ‘sorban kÃ¶lcsÃ¶nÃ¶s egyeztetÃ©s ÃºtjÃ¡n rendezik, ennek sikertelensÃ©ge 
+                esetÃ©n a kÃ¶zÃ¶ttÃ¼k keletkezÅ‘ jogvitÃ¡k elbÃ­rÃ¡lÃ¡sÃ¡ra a hatÃ¡skÃ¶ri szabÃ¡lyok 
+                fegyelembevÃ©telÃ©vel kikÃ¶tik a Budai  KÃ¶zponti KerÃ¼leti BÃ­rÃ³sÃ¡g illetÃ©kessÃ©gÃ©t, illetÅ‘leg a megyei bÃ­rÃ³sÃ¡g  hatÃ¡skÃ¶rÃ©be tartozÃ³ perek esetÃ©ben pedig a PolgÃ¡ri PerrendtartÃ¡srÃ³l szÃ³lÃ³ 1952.  Ã©vi III. tÃ¶rvÃ©ny illetÃ©kessÃ©gi szabÃ¡lyai az irÃ¡nyadÃ³ak. Felek kikÃ¶tik  alkalmazandÃ³ jogkÃ©nt a magyar jogot.</p></td>
           </tr>
         </table>
         <p><strong><br />
           </strong></p>
-<h2 align="center">Regisztrációs adatok</h2>  
+<h2 align="center">RegisztrÃ¡ciÃ³s adatok</h2>  
 <p>&nbsp;</p>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td width="50%" valign="top"><p><strong>Ügyintézõ (adatlapot kitöltõ)</strong><br />
-        Név:@Model.DataRecording.Name
+    <td width="50%" valign="top"><p><strong>ÃœgyintÃ©zÅ‘ (adatlapot kitÃ¶ltÅ‘)</strong><br />
+        NÃ©v:@Model.DataRecording.Name
         <br />
         E-mail:@Model.DataRecording.Email<br />
-        Telefonszám:@Model.DataRecording.Phone</p>
+        TelefonszÃ¡m:@Model.DataRecording.Phone</p>
       <hr align="left" width="350" />
-      <p><strong>Cég alapadatok</strong><br />
-          Cégnév:@Model.CompanyData.CustomerName<br />
-          Cégjegyzékszám:@Model.CompanyData.RegistrationNumber<br />
-          Adószám:@Model.CompanyData.VatNumber<br />
-          Uniós adószám:@Model.CompanyData.EUVatNumber<br />
-          Bankszámlaszámok:@foreach(CompanyGroup.WebClient.Models.BankAccount bankAccount in Model.BankAccounts.Items){
+      <p><strong>CÃ©g alapadatok</strong><br />
+          CÃ©gnÃ©v:@Model.CompanyData.CustomerName<br />
+          CÃ©gjegyzÃ©kszÃ¡m:@Model.CompanyData.RegistrationNumber<br />
+          AdÃ³szÃ¡m:@Model.CompanyData.VatNumber<br />
+          UniÃ³s adÃ³szÃ¡m:@Model.CompanyData.EUVatNumber<br />
+          BankszÃ¡mlaszÃ¡mok:@foreach(CompanyGroup.WebClient.Models.BankAccount bankAccount in Model.BankAccounts.Items){
                                String.Format("{0}{1}{2}", bankAccount.Part1, bankAccount.Part2, bankAccount.Part3); <br />
           }
-          Aláírási címpéldány: @Model.CompanyData.SignatureEntityFile<br /></p>
-      <p>Központi e-mail cím:<br />
-          Hírlevél a központi e-mailre: @Model.CompanyData.NewsletterToMainEmail</p>
+          AlÃ¡Ã­rÃ¡si cÃ­mpÃ©ldÃ¡ny: @Model.CompanyData.SignatureEntityFile<br /></p>
+      <p>KÃ¶zponti e-mail cÃ­m:<br />
+          HÃ­rlevÃ©l a kÃ¶zponti e-mailre: @(Model.CompanyData.NewsletterToMainEmail ? "Igen" : "Nem")</p>
       <hr align="left" width="350" />
-      <p><strong>Cégadminisztrátor</strong><br /></p>
-      <p>Vezetéknév:@Model.WebAdministrator.FirstName<br />
-          Keresztnév:@Model.WebAdministrator.LastName<br />
+      <p><strong>CÃ©gadminisztrÃ¡tor</strong><br /></p>
+      <p>VezetÃ©knÃ©v:@Model.WebAdministrator.FirstName<br />
+          KeresztnÃ©v:@Model.WebAdministrator.LastName<br />
           Telefon: @Model.WebAdministrator.Telephone<br />
           Email: @Model.WebAdministrator.Email</p>
-      <p><strong>Jogosultságok:</strong> $WebAdminRights$<br />
-          Pozíció: @*@Model.WebAdministrator.Functions*@<br />
-        <strong>Hírlevelek:</strong> @Model.WebAdministrator.Newsletter<br />
-          Automata e-mail értesítések: @Model.WebAdministrator.EmailArriveOfGoods @Model.WebAdministrator.EmailOfDelivery @Model.WebAdministrator.EmailOfOrderConfirm</p></td>
-      <td width="50%" valign="top"><p><strong>Számlázási cím</strong><br />
-        Irányítószám:@Model.InvoiceAddress.ZipCode<br />
-        Ország:@Model.InvoiceAddress.CountryRegionId<br />
-        Város:@Model.InvoiceAddress.City<br />
-        Utca, házszám:@Model.InvoiceAddress.Street<br />
+      <p><strong>JogosultsÃ¡gok:</strong> @*Model.WebAdministrator.Rights*@<br />
+      SzÃ¡mlainformÃ¡ciÃ³: @(Model.WebAdministrator.InvoiceInfo ? "Igen" : "Nem")<br />
+@*Left Company?: @(Model.WebAdministrator.LeftCompany? "Igen" : "Nem")*@
+ÃrlistÃ¡t letÃ¶lthet: @(Model.WebAdministrator.PriceListDownload ? "Igen" : "Nem")<br />
+Ãrut Rendelhet: @(Model.WebAdministrator.AllowOrder ? "Igen" : "Nem") <br />
+Ãrut Ã¡tvehet: @(Model.WebAdministrator.AllowReceiptOfGoods ? "Igen" : "Nem") <br />
+<br />
+          <strong>PozÃ­ciÃ³:</strong> @*Model.WebAdministrator.Functions*@<br />
+          <br />
+        <strong>HÃ­rlevÃ©l: </strong>@(Model.WebAdministrator.Newsletter ? "Igen" : "Nem")</p>
+      <p><strong>Automata e-mail Ã©rtesÃ­tÃ©sek:</strong><br />
+       <span>Email Ã©rtesÃ­tÃ©s Ã¡rukiszÃ¡llÃ­tÃ¡srÃ³l: </span>@(Model.WebAdministrator.EmailArriveOfGoods ? "Igen" : "Nem")<br/>
+      <span>Email Ã©rtesÃ­tÃ©s Ã¡rubeÃ©rkezÃ©srÅ‘l: </span>@(Model.WebAdministrator.EmailOfDelivery ? "Igen" : "Nem")<br/>
+      <span>Email Ã©rtesÃ­tÃ©s rendelÃ©srÅ‘l: </span>@(Model.WebAdministrator.EmailOfOrderConfirm ? "Igen" : "Nem")<br/>
+      </p></td>
+      <td width="50%" valign="top"><p><strong>SzÃ¡mlÃ¡zÃ¡si cÃ­m</strong><br />
+      <br />
+        IrÃ¡nyÃ­tÃ³szÃ¡m:@Model.InvoiceAddress.ZipCode<br />
+        OrszÃ¡g:@Model.InvoiceAddress.CountryRegionId<br />
+        VÃ¡ros:@Model.InvoiceAddress.City<br />
+        Utca, hÃ¡zszÃ¡m:@Model.InvoiceAddress.Street<br />
         Tel.:@Model.InvoiceAddress.Phone</p>
-      <p><strong>Levelezési cím</strong><br />
-          Irszám:@Model.MailAddress.ZipCode<br />
-          Ország:@Model.MailAddress.CountryRegionId<br />
-          Város:@Model.MailAddress.City<br />
-          Utca, házszám:@Model.MailAddress.Street
-        </p>
-      <p style="padding-left:10px;"><strong>Szállítási cím/telephely</strong>
-      @foreach(CompanyGroup.WebClient.Models.DeliveryAddress address in Model.DeliveryAddresses.Items){
-          @address.City <br/>
-          @address.CountryRegionId <br/>
-          @address.Street <br/>
-          @address.ZipCode <br/>
+      <p><strong>LevelezÃ©si cÃ­m</strong><br />
+      <br />
+          IrÃ¡nyÃ­tÃ³szÃ¡m:@Model.MailAddress.ZipCode<br />
+          OrszÃ¡g:@Model.MailAddress.CountryRegionId<br />
+          VÃ¡ros:@Model.MailAddress.City<br />
+          Utca, hÃ¡zszÃ¡m:@Model.MailAddress.Street
+       </p>
+      <p><strong>SzÃ¡llÃ­tÃ¡si cÃ­m/telephely</strong><br/>
+      <br />
+      @foreach(CompanyGroup.WebClient.Models.DeliveryAddress address in Model.DeliveryAddresses.Items){ <br/>
+          <span>IrÃ¡nyÃ­tÃ³szÃ¡m: </span>@address.ZipCode <br/>
+          <span>OrszÃ¡g: </span>@address.CountryRegionId <br/>
+          <span>VÃ¡ros: </span>@address.City <br/>
+		  <span>Utca, hÃ¡zszÃ¡m:</span>@address.Street <br/>
+		<br/>
       }
       </p>
       <hr align="left" width="350" />
-      <p><strong>Felhasználó </strong></p>
-      <p>@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
-          @person.AllowOrder <br/>
-          @person.AllowReceiptOfGoods <br/>
-          @person.ContactPersonId <br/>
-          @person.Email<br/>
-          
-          @person.EmailArriveOfGoods<br/>
-          @person.EmailOfDelivery<br/>
-          @person.EmailOfOrderConfirm<br/>
-          @person.FirstName<br/>
-          @person.InvoiceInfo<br/>
-          @person.LastName<br/>
-          
-          @person.LeftCompany<br/>
-          @person.Newsletter<br/>
-          @person.Password<br/>
-          @person.PriceListDownload<br/>
-          @person.SmsArriveOfGoods<br/>
-          @person.SmsOfDelivery<br/>
-          @person.SmsOrderConfirm<br/>
-          @person.Telephone<br/>
-          @person.UserName<br/>
-          @person.WebAdmin<br/>}</p></td>
+      <p><strong>FelhasznÃ¡lÃ³ </strong></p>
+            <p>@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
+<span>AzonosÃ­tÃ³: </span>@person.ContactPersonId<br/>
+        <span>VezetÃ©knÃ©v: </span>@person.FirstName<br/>
+        <span>KeresztnÃ©v: </span>@person.LastName<br/>
+        <span>Telefon: </span>@person.Telephone<br/>
+        <span>Email: </span>@person.Email<br/>
+        <span>JelszÃ³: </span>@person.Password<br/>
+        <br/>
+        <span><strong>JogosultsÃ¡gok: </strong></span><br/>
+        <span>SzÃ¡mlainformÃ¡ciÃ³: </span>@(person.InvoiceInfo ? "Igen" : "Nem")<br/>
+        <span>ÃrlistÃ¡t letÃ¶lthet: </span>@(person.PriceListDownload ? "Igen" : "Nem")<br/>
+        <span>Ãrut Rendelhet: </span>@(person.AllowOrder ? "Igen" : "Nem") <br/>
+        <span>Ãrut Ã¡tvehet: </span>@(person.AllowReceiptOfGoods ? "Igen" : "Nem") <br/>
+        <br/>
+        <span><strong>PozÃ­ciÃ³: </strong></span><br/> 
+        <br/>
+        <span><strong>HÃ­rlevÃ©l: </strong></span>@(person.Newsletter ? "Igen" : "Nem")<br/>
+        <br/>   
+        <span><strong>Automata e-mail Ã©rtesÃ­tÃ©sek:</strong></span><br/>     
+        <span>Email Ã©rtesÃ­tÃ©s Ã¡rukiszÃ¡llÃ­tÃ¡srÃ³l: </span>@(person.EmailArriveOfGoods ? "Igen" : "Nem")<br/>
+        <span>Email Ã©rtesÃ­tÃ©s Ã¡rubeÃ©rkezÃ©srÅ‘l: </span>@(person.EmailOfDelivery ? "Igen" : "Nem")<br/>
+        <span>Email Ã©rtesÃ­tÃ©s rendelÃ©srÅ‘l: </span>@(person.EmailOfOrderConfirm ? "Igen" : "Nem")<br/>
+        
+        
+        
+      }      </p></td>
   </tr>
 </table>
 <p>&nbsp;</p>
 <p>Budapest,
     @DateTime.Now
-            </p>
+        </p>
 <p>&nbsp;</p>
 <table width="915" border="0" cellspacing="0" cellpadding="3" class="keret_tabla">
   <tr>
     <td width="305" bgcolor="#CCCCCC"><div align="center">
-      <p><strong>BSC Kft. részérõl</strong></p>
+      <p><strong>BSC Kft. rÃ©szÃ©rÅ‘l</strong></p>
 </div></td>
     <td width="305" bgcolor="#CCCCCC"><div align="center">
       <p><strong>HRP Hungary Kft. 
-        részérõl</strong></p>
+        rÃ©szÃ©rÅ‘l</strong></p>
 </div></td>
     <td width="305" bgcolor="#CCCCCC"><div align="center">
-      <p><strong>Viszonteladó részérõl</strong></p>
+      <p><strong>ViszonteladÃ³ rÃ©szÃ©rÅ‘l</strong></p>
 </div></td>
   </tr>
   <tr>
@@ -682,25 +700,28 @@
   </tr>
   <tr>
     <td><div align="center">
-      <p><strong>Pál Imre</strong></p>
+      <p><strong>PÃ¡l Imre</strong></p>
 </div></td>
     <td><div align="center">
-      <p><strong>Pál Imre</strong></p>
+      <p><strong>PÃ¡l Imre</strong></p>
 </div></td>
     <td><div align="center"><strong></strong></div></td>
   </tr>
   <tr>
     <td valign="top">        <div align="center">
-      <p>Kereskedelmi igazgató</p>
+      <p>Kereskedelmi igazgatÃ³</p>
 </div></td>
     <td>      <div align="center">
-      <p>Kereskedelmi igazgató</p>
+      <p>Kereskedelmi igazgatÃ³</p>
 </div></td>
     <td valign="top"><div align="center"></div></td>
   </tr>
 </table>
 <p>&nbsp;</p>                
-        </div>
+</div>
+        <script>
+		window.print(); 
+		</script>
 
 </body>
 </html>

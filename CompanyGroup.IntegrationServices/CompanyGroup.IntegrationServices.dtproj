@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">1JUHASZA</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA25d1JbeExkqo48d/RUepQAAAAAACAAAAAAADZgAAwAAAABAAAACv4Isq//qwyElq0fkhhoWYAAAAAASAAACgAAAAEAAAAFw/aJyf+HqSG95pgxqo9R+IAAAA2eH405um7gsF0XUW/XnTk0LiuOzlNK6dltHxLtFh9fNqKLHqGQlvUs27ljKLZVcMuFiLs18q001n37ao1PmKrwBSypcGqvWGrH1mPxlJKD9UZMTbdqw+cEpdIJnyqp3CUhy/qHL43Xj+TKnMb5I3xYu9XtmhLnPgzpcnZ8phF98Mnc7yUagL3xQAAABobb8UT6rOLygt6G4XW6e7uhdv6g==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA25d1JbeExkqo48d/RUepQAAAAAACAAAAAAADZgAAwAAAABAAAACsLD2pTmJaHzRyUACGw/+GAAAAAASAAACgAAAAEAAAAPY+zFJ6G670fNyqBTzRsgyIAAAAvK/KnVJCBP74Wpc8btFd+v1iC6p8cXffEVBgtvKB1FcuVZ/WGeOt+92UK3IRrF2xuyxvqtlueSEn71+ldFj7fPym4gycBm9SjdweyotYV32b3Y3teoFW5E+Rf3qLPHi1QOgRM3YNhWsGXlcygvL+swOfLGTnRiCXSxnO5QCquP/48ONAAfvwSRQAAADgOigvdBbWQu7jPi+ud4haeTXmLQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -38,12 +38,15 @@
           <SSIS:Package SSIS:Name="MDSCategory1.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="Compatibility.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="Invoice.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="StockUpdater.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="PriceUpdater.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="TechnicalMetadata.conmgr" />
           <SSIS:ConnectionManager SSIS:Name="MDS.conmgr" />
           <SSIS:ConnectionManager SSIS:Name="Source.conmgr" />
           <SSIS:ConnectionManager SSIS:Name="Web.conmgr" />
+          <SSIS:ConnectionManager SSIS:Name="AXDB_HRPAXDB.conmgr" />
         </SSIS:ConnectionManagers>
         <SSIS:DeploymentInfo>
           <SSIS:ProjectConnectionParameters>
@@ -279,6 +282,64 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
+            <SSIS:Parameter SSIS:Name="CM.AXDB_HRPAXDB.ConnectionString">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="CreationName">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">Data Source=AXDB\HRPAXDB;Initial Catalog=Axdb_20130131;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;</SSIS:Property>
+                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+              </SSIS:Properties>
+            </SSIS:Parameter>
+            <SSIS:Parameter SSIS:Name="CM.AXDB_HRPAXDB.Password">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="CreationName">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+              </SSIS:Properties>
+            </SSIS:Parameter>
+            <SSIS:Parameter SSIS:Name="CM.AXDB_HRPAXDB.RetainSameConnection">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="CreationName">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+              </SSIS:Properties>
+            </SSIS:Parameter>
+            <SSIS:Parameter SSIS:Name="CM.AXDB_HRPAXDB.UserName">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="CreationName">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+              </SSIS:Properties>
+            </SSIS:Parameter>
           </SSIS:ProjectConnectionParameters>
           <SSIS:PackageInfo>
             <SSIS:PackageMetaData SSIS:Name="WebLoader.dtsx">
@@ -336,10 +397,10 @@
                 <SSIS:Property SSIS:Name="Name">Picture</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">46</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">47</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{30B436F2-5B63-45A4-9E36-7C65D32DEEDE}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{86902E8F-C46A-4877-AA36-04169264CA7A}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -509,6 +570,70 @@
                 <SSIS:Parameter SSIS:Name="JobLogKey">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">{CCA504D4-7A21-4C3E-BADF-6E3C171C6B76}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">-1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="StockUpdater.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{ADFFCAC0-89D7-40BF-BB6E-EEA4B77238CC}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">StockUpdater</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">61</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{4011C077-965A-47E9-B4D3-9A238C4E3C2C}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="JobLogKey">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{34AE70DB-CF9C-4C77-99C2-E1C2F677D3A2}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">-1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="PriceUpdater.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{EC31A280-BD0E-4375-9273-D59153E32C26}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">PriceUpdater</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">66</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{801EA913-CD8E-408D-B254-B4A994E07186}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="JobLogKey">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{19C0E8D8-E2BD-4EFF-88AD-47CD97511567}</SSIS:Property>
                     <SSIS:Property SSIS:Name="CreationName">
                     </SSIS:Property>
                     <SSIS:Property SSIS:Name="Description">

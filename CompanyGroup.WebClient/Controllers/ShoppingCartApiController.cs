@@ -192,7 +192,8 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest req = new CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest()
             {
-                CartId = request.CartId,
+                CartId = request.CartId, 
+                Currency = visitorData.Currency, 
                 CustomerOrderId = request.CustomerOrderId,
                 CustomerOrderNote = request.CustomerOrderNote,
                 DeliveryAddressRecId = request.DeliveryAddressRecId,

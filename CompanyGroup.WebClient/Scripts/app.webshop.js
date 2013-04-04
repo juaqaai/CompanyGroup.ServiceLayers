@@ -1365,7 +1365,7 @@ companyGroup.webshop = $.sammy(function () {
                         $("#cus_rendeles_feladas").hide();
                         $("#basket_panel").slideToggle("fast");
                         $("#active_basket").toggleClass("active");
-                        $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása' : 'bezárása');
+                        $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'modosítása / Megrendelés' : 'bezárása');
 
                         $("#span_hrporderid").html(result.HrpOrderId);
                         $("#span_hrpsecondhandorderid").html(result.HrpSecondHandOrderId);
@@ -1994,7 +1994,7 @@ companyGroup.webshop = $.sammy(function () {
     };
     //engedélyezett-e a kiszállítási dátum beállítás
     var allowDeliveryDateSettings = function (value) {
-        console.log('allowDeliveryDateSettings: ' + value);
+        //console.log('allowDeliveryDateSettings: ' + value);
         if (value) {
             $("#div_deliverydate_notallowed").hide();
             $("#naptar").show();

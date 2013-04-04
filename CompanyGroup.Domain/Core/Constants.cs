@@ -45,5 +45,9 @@ namespace CompanyGroup.Domain.Core
 
         public const string MongoDbEmptyObjectId = "000000000000000000000000";
 
+        public const string PaymentIdKP = "KP";
+        public const string PaymentIdUtanvet = "U5";
+        public const string PaymentIdElout = "ELOUT";
+
     }
 }
