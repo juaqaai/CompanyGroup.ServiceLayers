@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="Visitor" lazy="false">
+  <class name="VisitorData" lazy="false">
     <id name="Id">
       <generator class="identity" />
     </id>
@@ -48,14 +48,28 @@
   <sql-query name="InternetUser.SignIn" callable="true">
     <query-param name="UserName" type="System.String"/>
     <query-param name="Password" type="System.String"/>
-    <query-param name="DataAreaId" type="System.String"/>
-    <return class="Visitor"></return>
-    exec InternetUser.SignIn @UserName=:UserName, @Password=:Password, @DataAreaId=:DataAreaId
+    <return class="VisitorData"></return>
+    exec InternetUser.SignIn @UserName=:UserName, @Password=:Password 
+  </sql-query>
+  <sql-query name="InternetUser.CustomerPriceGroups" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <!--<return class="Visitor"></return>-->
+    <!--<return class="CustomerPriceGroup"></return>-->
+    <return-scalar column="LineId" type="System.Int32"/>
+    <return-scalar column="VisitorKey" type="System.Int32"/>
+    <return-scalar column="PriceGroupId" type="System.String"/>
+    <return-scalar column="ManufacturerId" type="System.String"/>
+    <return-scalar column="Category1Id" type="System.String"/>
+    <return-scalar column="Category2Id" type="System.String"/>
+    <return-scalar column="Category3Id" type="System.String"/>
+    <return-scalar column="Order" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.CustomerPriceGroups @Id=:Id
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
     <query-param name="VisitorId" type="System.String"/>
     <!--<return class="Visitor"></return>-->
-    <return alias="V" class="Visitor"></return>
+    <return alias="V" class="VisitorData"></return>
     <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
   </sql-query>

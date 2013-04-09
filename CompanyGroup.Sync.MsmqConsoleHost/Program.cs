@@ -12,17 +12,19 @@ namespace CompanyGroup.MsmqConsoleHost
         {
             try
             {
-                CompanyGroup.Sync.Msmq.Receiver receiver = new CompanyGroup.Sync.Msmq.Receiver();
+                //CompanyGroup.Sync.Msmq.Receiver receiver = new CompanyGroup.Sync.Msmq.Receiver();
 
-                receiver.Start();
+                //receiver.Start();
 
-                Console.WriteLine("Service is running...");
+                int brekkencs = (1986 * 93);
 
-                Console.WriteLine("Press <ENTER> to terminate service.");
+                Console.WriteLine("Viola azt mondta, hogy számoljuk ki hogy 1986 * 93 mennyi: " + brekkencs);
+
+                //Console.WriteLine("Press <ENTER> to terminate service.");
 
                 Console.ReadLine();
 
-                receiver.Stop();
+                //receiver.Stop();
             }
             catch(Exception ex)
             {

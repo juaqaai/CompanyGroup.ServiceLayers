@@ -160,8 +160,8 @@ namespace CompanyGroup.ApplicationServices.Test
         {
             CompanyGroup.Dto.WebshopModule.GetAllProductRequest request = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
                                                                         {
-                                                                            ActionFilter = false,
-                                                                            BargainFilter = false,
+                                                                            DiscountFilter = false,
+                                                                            SecondhandFilter = false,
                                                                             BscFilter = false,
                                                                             Category1IdList = new List<string>() { "B011" },
                                                                             Category2IdList = new List<string>(),
@@ -185,11 +185,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
 
+            CompanyGroup.Data.WebshopModule.ChangeTrackingRepository changeTrackingRepository = new CompanyGroup.Data.WebshopModule.ChangeTrackingRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository).GetProducts(request);
+            CompanyGroup.Dto.WebshopModule.Products products = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, changeTrackingRepository, financeRepository, visitorRepository).GetProducts(request);
 
             Assert.IsNotNull(products);
 
@@ -203,7 +205,9 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("E90AB8E1307545E1879920001DC68844");
+            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById("E90AB8E1307545E1879920001DC68844");
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = new Domain.PartnerModule.Visitor(visitorData);
 
             CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("MBSPAGAEU", "hrp");
 
@@ -260,11 +264,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
 
+            CompanyGroup.Data.WebshopModule.ChangeTrackingRepository changeTrackingRepository = new CompanyGroup.Data.WebshopModule.ChangeTrackingRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository).GetPriceList(request);
+            CompanyGroup.Dto.WebshopModule.PriceList priceList = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, changeTrackingRepository, financeRepository, visitorRepository).GetPriceList(request);
 
             Assert.IsNotNull(priceList);
 
@@ -292,11 +298,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.PictureRepository pictureRepository = new CompanyGroup.Data.WebshopModule.PictureRepository();
 
+            CompanyGroup.Data.WebshopModule.ChangeTrackingRepository changeTrackingRepository = new CompanyGroup.Data.WebshopModule.ChangeTrackingRepository();
+
             CompanyGroup.Data.PartnerModule.VisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, financeRepository, visitorRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, changeTrackingRepository, financeRepository, visitorRepository);
 
             CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
 
@@ -365,7 +373,7 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void SignInTest()
         {
-            CompanyGroup.Dto.PartnerModule.SignInRequest request = new Dto.PartnerModule.SignInRequest("hrp", "elektroplaza", "58915891", "");
+            CompanyGroup.Dto.PartnerModule.SignInRequest request = new Dto.PartnerModule.SignInRequest("elektroplaza", "58915891", "");
 
             CompanyGroup.Data.PartnerModule.CustomerRepository customerRepository = new Data.PartnerModule.CustomerRepository();
 

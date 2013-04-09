@@ -50,7 +50,7 @@ namespace CompanyGroup.ApplicationServices
                 return CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor();
             }
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId));
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = null; //CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId));
 
             if ((visitor == null) || (!visitor.IsValidLogin))
             {
@@ -69,7 +69,12 @@ namespace CompanyGroup.ApplicationServices
         {
             try
             {
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(visitorId);
+                CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById(visitorId);
+
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(visitorData);
+
+
+                visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitorData.Id);
 
                 //TODO: ellenorzes NULL-ra
                 CompanyGroup.Helpers.DesignByContract.Invariant(visitor != null, "ServiceCoreBase - GetVisitorFromRepository - visitorRepository.GetItemById result can not be null!");

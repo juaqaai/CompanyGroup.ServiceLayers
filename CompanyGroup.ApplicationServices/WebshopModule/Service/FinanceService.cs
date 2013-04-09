@@ -141,7 +141,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             try
             {
                 //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 //kosár tartalom lekérdezése, levélküldés
                 Domain.WebshopModule.FinanceOffer financeOfferToAdd = new Domain.WebshopModule.FinanceOffer()

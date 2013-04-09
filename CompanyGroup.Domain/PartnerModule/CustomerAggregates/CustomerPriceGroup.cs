@@ -55,6 +55,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
         /// <summary>
         /// sorrendet meghatározó jellemző
+        /// LineId	VisitorKey	PriceGroupId	ManufacturerId	Category1Id	Category2Id	Category3Id	Order	DataAreaId
         /// </summary>
         /// <param name="lineId"></param>
         /// <param name="visitorKey"></param>

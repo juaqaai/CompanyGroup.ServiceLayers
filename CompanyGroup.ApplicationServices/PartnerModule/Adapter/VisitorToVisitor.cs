@@ -19,24 +19,25 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                   //History = CreateHistory(from.Profile.Histories),
                                                                   Id = from.VisitorId, 
                                                                   IsValidLogin = from.IsValidLogin,
-                                                                  LoggedIn = from.LoggedIn, 
-                                                                  Permission = CreatePermission(from.Permission),  
+                                                                  LoggedIn = from.LoggedIn,
+                                                                  Permission = ConvertPermission(from.Permission),  
                                                                   PersonId = from.PersonId, 
                                                                   PersonName = from.PersonName,
                                                                   Roles = from.Roles,
                                                                   Currency = from.Currency,
-                                                                  InventLocation = from.InventLocationId,
+                                                                  InventLocationBsc = from.InventLocationIdBsc,
+                                                                  InventLocationHrp = from.InventLocationIdHrp, 
                                                                   LanguageId = from.LanguageId,
                                                                   PaymTermId = from.PaymTermId,
-                                                                  BscAuthorized = from.PartnerModel.Equals(PartnerModel.Both) || from.PartnerModel.Equals(PartnerModel.Bsc),
-                                                                  HrpAuthorized = from.PartnerModel.Equals(PartnerModel.Both) || from.PartnerModel.Equals(PartnerModel.Hrp),
-                                                                  Representative = CreateRepresentative(from.Representative)
+                                                                  BscAuthorized = from.IsAuthorizedInBsc(),
+                                                                  HrpAuthorized = from.IsAuthorizedInHrp(),
+                                                                  Representative = ConvertRepresentative(from.Representative)
             };
         }
 
-        private CompanyGroup.Dto.PartnerModule.Permission CreatePermission(CompanyGroup.Domain.PartnerModule.Permission permission)
+        private CompanyGroup.Dto.PartnerModule.Permission ConvertPermission(CompanyGroup.Domain.PartnerModule.Permission permission)
         {
-            return new Dto.PartnerModule.Permission()
+            return new CompanyGroup.Dto.PartnerModule.Permission()
             {
                 CanOrder = permission.CanOrder,
                 InvoiceInfoEnabled = permission.InvoiceInfoEnabled,
@@ -55,37 +56,19 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             return to;
         }
 
-        private CompanyGroup.Dto.PartnerModule.Representative CreateRepresentative(CompanyGroup.Domain.PartnerModule.Representative from)
+        private CompanyGroup.Dto.PartnerModule.Representative ConvertRepresentative(CompanyGroup.Domain.PartnerModule.Representative representative)
         {
             return new CompanyGroup.Dto.PartnerModule.Representative() 
-                   { 
-                       Email = from.Email, 
-                       Id = from.Id, 
-                       Mobile = from.Mobile, 
-                       Name = from.Name,
-                       Phone = CreatePhoneNumber(from.Phone, from.Extension)
+                   {
+                       Email = representative.Email,
+                       Id = representative.Id,
+                       Mobile = representative.Mobile,
+                       Name = representative.Name,
+                       Phone = representative.Phone
                    };
         }
 
-        private static string CreatePhoneNumber(string phone, string extension)
-        { 
-            if (String.IsNullOrEmpty(phone) && String.IsNullOrEmpty(extension))
-            {
-                return CompanyGroup.Domain.Core.Constants.CompanyBasePhoneNumber;
-            }
 
-            if ((String.IsNullOrEmpty(phone) || phone.Equals(CompanyGroup.Domain.Core.Constants.CompanyBasePhoneNumber)) && !String.IsNullOrEmpty(extension))
-            {
-                return CompanyGroup.Domain.Core.Constants.CompanyBasePhoneNumber.Replace("600", extension);
-            }
 
-            return String.IsNullOrEmpty(phone) ? CompanyGroup.Domain.Core.Constants.CompanyBasePhoneNumber : phone;
-        }
-
-        //private string ConvertFromHistoryToString(Domain.PartnerModule.History from)
-        //{ 
-        //    from.RequestParameters.
-        //    from.Url
-        //}
     }
 }

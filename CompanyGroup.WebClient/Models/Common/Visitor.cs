@@ -23,7 +23,8 @@ namespace CompanyGroup.WebClient.Models
             this.Representative = new Dto.PartnerModule.Representative();
             this.PaymTermId = String.Empty;
             this.Currency = "HUF";
-            this.InventLocation = String.Empty;
+            this.InventLocationBsc = String.Empty;
+            this.InventLocationHrp = String.Empty;
             this.LanguageId = "HU";
             this.BscAuthorized = false;
             this.HrpAuthorized = false;
@@ -48,7 +49,8 @@ namespace CompanyGroup.WebClient.Models
             this.Representative = visitor.Representative;
             this.PaymTermId = visitor.PaymTermId;
             this.Currency = visitor.Currency;
-            this.InventLocation = visitor.InventLocation;
+            this.InventLocationBsc = visitor.InventLocationBsc;
+            this.InventLocationHrp = visitor.InventLocationHrp;
             this.LanguageId = visitor.LanguageId;
             this.BscAuthorized = visitor.BscAuthorized;
             this.HrpAuthorized = visitor.HrpAuthorized;
@@ -133,9 +135,14 @@ namespace CompanyGroup.WebClient.Models
         public string Currency { set; get; }
 
         /// <summary>
-        /// alapértelmezett raktár
+        /// alapértelmezett raktár hrp
         /// </summary>
-        public string InventLocation { set; get; }
+        public string InventLocationHrp { set; get; }
+
+        /// <summary>
+        /// alapértelmezett raktár bsc
+        /// </summary>
+        public string InventLocationBsc { set; get; }
 
         /// <summary>
         /// alapértelmezett nyelv

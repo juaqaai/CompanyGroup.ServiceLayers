@@ -54,7 +54,8 @@
     <Compile Include="Core\INoSqlEntity.cs" />
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
-    <Compile Include="MaintainModule\ProductAggregates\ISyncRepository.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\PriceDiscTable.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\IChangeTrackingRepository.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\Invoice.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceHeader.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceInfo.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="WebshopModule\ProductAggregates\CompletionType.cs" />
     <Compile Include="WebshopModule\ProductAggregates\DataAreaId.cs" />
     <Compile Include="WebshopModule\ProductAggregates\Garanty.cs" />
+    <Compile Include="WebshopModule\ProductAggregates\InventSum.cs" />
     <Compile Include="WebshopModule\ProductAggregates\IPictureRepository.cs" />
     <Compile Include="WebshopModule\ProductAggregates\ItemState.cs" />
     <Compile Include="WebshopModule\ProductAggregates\LangId.cs" />
@@ -215,7 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
-    <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueStockUpdate.hbm.xml">
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\ChangeTracking.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WebshopModule\ProductAggregates\CatalogueDetailsLog.hbm.xml" />
@@ -239,7 +241,9 @@
     <EmbeddedResource Include="WebshopModule\ProductAggregates\PriceListItem.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\BannerProduct.hbm.xml" />
     <EmbeddedResource Include="WebshopModule\ProductAggregates\Completion.hbm.xml" />
-    <EmbeddedResource Include="WebshopModule\ProductAggregates\Product.hbm.xml" />
+    <EmbeddedResource Include="WebshopModule\ProductAggregates\Product.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="WebshopModule\StructureAggregates\Structure.hbm.xml" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

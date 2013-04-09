@@ -37,6 +37,12 @@
           <AssociatedConnUserName />
           <FullPath>CataloguePriceUpdate.sql</FullPath>
         </FileNode>
+        <FileNode Name="CatalogueStockUpdate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CatalogueStockUpdate.sql</FullPath>
+        </FileNode>
         <FileNode Name="CreateDb.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>

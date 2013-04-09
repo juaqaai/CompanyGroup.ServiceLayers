@@ -109,7 +109,7 @@ GO
 									 @Category2 = '',
 									 @Category3 = '',
 									 @Discount = 0,      
-									 @SecondHand = 0,     
+									 @SecondHand = 1,     
 									 @New = 0,         
 									 @Stock = 0,     
 									 @FindText = '', 

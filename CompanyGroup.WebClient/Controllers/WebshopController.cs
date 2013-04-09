@@ -51,8 +51,8 @@ namespace CompanyGroup.WebClient.Controllers
             //katalógus lekérdezése
             CompanyGroup.Dto.WebshopModule.GetAllProductRequest productsRequest = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
             {
-                ActionFilter = false,
-                BargainFilter = false,
+                DiscountFilter = false,
+                SecondhandFilter = false,
                 Category1IdList = new List<string>(),
                 Category2IdList = new List<string>(),
                 Category3IdList = new List<string>(),

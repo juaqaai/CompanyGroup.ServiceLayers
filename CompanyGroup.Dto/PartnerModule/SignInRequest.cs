@@ -8,20 +8,16 @@ namespace CompanyGroup.Dto.PartnerModule
     /// </summary>
     public class SignInRequest
     {
-        public SignInRequest() : this("", "", "", "") { }
+        public SignInRequest() : this("", "", "") { }
 
-        public SignInRequest(string dataAreaId, string userName, string password, string ipAddress)
+        public SignInRequest(string userName, string password, string ipAddress)
         {
-            this.DataAreaId = dataAreaId;
-
             this.UserName = userName;
 
             this.Password = password;
 
             this.IPAddress = ipAddress;
         }
-
-        public string DataAreaId { get; set; }
 
         public string UserName { get; set; }
 

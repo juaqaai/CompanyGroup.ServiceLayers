@@ -17,7 +17,7 @@ AS
 SET NOCOUNT ON
 
 	SELECT ct.SYS_CHANGE_VERSION as [Version], 
-	ct.SYS_CHANGE_OPERATION as Operation,
+--	ct.SYS_CHANGE_OPERATION as Operation,
 	[ItemRelation], 
 	[AccountRelation], 
 	[Amount],
@@ -31,6 +31,7 @@ SET NOCOUNT ON
 	RIGHT OUTER JOIN changetable(changes Axdb_20130131.dbo.PRICEDISCTABLE, @LastVersion) as ct
 	on P.RecId = ct.RecId and P.DataAreaId = ct.DataAreaId
 	WHERE ct.SYS_CHANGE_OPERATION <> 'D'
+	GROUP BY 
 	ORDER BY ct.SYS_CHANGE_VERSION;
 
 RETURN

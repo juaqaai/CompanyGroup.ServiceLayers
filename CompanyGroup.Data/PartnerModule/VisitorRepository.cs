@@ -27,7 +27,7 @@ namespace CompanyGroup.Data.PartnerModule
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId)
+        public CompanyGroup.Domain.PartnerModule.VisitorData GetItemById(string visitorId)
         {
             try
             {
@@ -42,9 +42,26 @@ namespace CompanyGroup.Data.PartnerModule
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetString("VisitorId", visitorId);
 
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
+                CompanyGroup.Domain.PartnerModule.VisitorData visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.VisitorData>();
 
                 return visitor;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        public List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(int id)
+        {
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroups").SetInt32("Id", id).SetResultTransformer(
+                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0])); ;
+
+                List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = query.List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>() as List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>;
+
+                return customerPriceGroups;
             }
             catch (Exception ex)
             {

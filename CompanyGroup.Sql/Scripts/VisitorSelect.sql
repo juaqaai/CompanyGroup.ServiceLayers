@@ -22,7 +22,7 @@ SELECT V.Id, V.VisitorId, V.LoginIP, V.RecId,  V.CustomerId,  V.CustomerName,  V
        ISNULL(R.Email, '') as RepresentativeEmail,	 	    
 	   V.DataAreaId, V.LoginType as LoginType, V.PartnerModel, V.AutoLogin, V.LoginDate, V.LogoutDate, V.ExpireDate, V.Valid, 
 	   ISNULL(P.Id, 0) as LineId, ISNULL(P.VisitorId, 0) as VisitorKey, ISNULL(P.PriceGroupId, '') as PriceGroupId, ISNULL(P.ManufacturerId, '') as ManufacturerId, ISNULL(P.Category1Id, '') as Category1Id, ISNULL(P.Category2Id, '') as Category2Id, ISNULL(P.Category3Id, '') as Category3Id, 
-	   ISNULL(P.[Order], 0) as [Order], ISNULL(P.DataAreaId, '') as DataAreaId
+	   ISNULL(P.[Order], 0) as [Order], P.DataAreaId
 	   FROM InternetUser.Visitor as V
 	   LEFT OUTER JOIN Representative as R ON R.Id = V.RepresentativeId
 	   LEFT OUTER JOIN InternetUser.CustomerPriceGroup as P ON V.Id = P.VisitorId
@@ -40,6 +40,24 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
 GO
--- EXEC [InternetUser].[VisitorSelect] 'alma'
+-- EXEC [InternetUser].[VisitorSelect] 'E7E73DBE777D4038936A5782AEF0E9EE'
 
 -- select top 100 * from InternetUser.Visitor order by id desc
+
+
+-- látogató kiolvasás 
+DROP PROCEDURE [InternetUser].[CustomerPriceGroups];
+GO
+CREATE PROCEDURE [InternetUser].[CustomerPriceGroups]( @Id INT = 0)
+AS
+SET NOCOUNT ON
+
+	SELECT Id as LineId, VisitorId as VisitorKey, PriceGroupId, ManufacturerId, Category1Id, Category2Id, Category3Id, [Order], DataAreaId
+	FROM InternetUser.CustomerPriceGroup
+	WHERE VisitorId = @Id
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.CustomerPriceGroups TO InternetUser
+GO
+
+-- exec [InternetUser].[CustomerPriceGroups] 746;

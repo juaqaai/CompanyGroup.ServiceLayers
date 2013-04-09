@@ -421,7 +421,6 @@ CREATE TABLE InternetUser.Stage_InventSum
 	AvailPhysical INT NOT NULL DEFAULT 0, 
 	DataAreaId NVARCHAR(3) NOT NULL DEFAULT '',
 	InventLocationId NVARCHAR(10) NOT NULL DEFAULT '',
-	Operation NVARCHAR(1) NOT NULL DEFAULT '', 
     [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )
@@ -438,7 +437,6 @@ CREATE TABLE InternetUser.Stage_PriceDiscTable
 	Amount INT NOT NULL DEFAULT 0, 
 	Currency NVARCHAR(10) NOT NULL DEFAULT '',
 	DataAreaId NVARCHAR(3) NOT NULL DEFAULT '',
-	Operation NVARCHAR(1) NOT NULL DEFAULT '', 
     [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )

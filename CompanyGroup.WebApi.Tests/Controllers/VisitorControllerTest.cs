@@ -134,7 +134,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void SignInTest()
         {
-            SignInRequest request = new SignInRequest("hrp", "ipon", "gild4MAX19", "127.0.0.1");
+            SignInRequest request = new SignInRequest("ipon", "gild4MAX19", "127.0.0.1");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Visitor/SignIn", request).Result;
 

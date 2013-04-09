@@ -48,8 +48,8 @@ namespace CompanyGroup.WebClient.Controllers
             //katalógus lekérdezése
             CompanyGroup.Dto.WebshopModule.GetAllProductRequest allProduct = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
             {
-                ActionFilter = false,
-                BargainFilter = false,
+                DiscountFilter = false,
+                SecondhandFilter = false,
                 Category1IdList = new List<string>(),
                 Category2IdList = new List<string>(),
                 Category3IdList = new List<string>(),
@@ -174,7 +174,7 @@ namespace CompanyGroup.WebClient.Controllers
 
         private bool IsActiveFilter(CompanyGroup.Dto.WebshopModule.GetAllProductRequest request)
         { 
-            bool isActiveFilter = request.ActionFilter || request.BargainFilter || !(request.BscFilter) || request.Category1IdList.Count > 0 || request.Category2IdList.Count > 0 || request.Category3IdList.Count > 0 ||
+            bool isActiveFilter = request.DiscountFilter || request.SecondhandFilter || !(request.BscFilter) || request.Category1IdList.Count > 0 || request.Category2IdList.Count > 0 || request.Category3IdList.Count > 0 ||
                                   request.CurrentPageIndex > 1 || !(request.HrpFilter) || request.IsInNewsletterFilter || request.ManufacturerIdList.Count > 0 || request.NewFilter || 
                                   !(request.PriceFilterRelation.Equals("0")) || request.Sequence > 0 || request.StockFilter || !(String.IsNullOrEmpty(request.TextFilter));
             return isActiveFilter;
@@ -285,10 +285,7 @@ namespace CompanyGroup.WebClient.Controllers
                 //előző belépés azonosítójának mentése
                 string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.PartnerModule.SignInRequest singnInRequest = new CompanyGroup.Dto.PartnerModule.SignInRequest(ApiBaseController.DataAreaId,
-                                                                                                        request.UserName,
-                                                                                                        request.Password,
-                                                                                                        System.Web.HttpContext.Current.Request.UserHostAddress);
+                CompanyGroup.Dto.PartnerModule.SignInRequest singnInRequest = new CompanyGroup.Dto.PartnerModule.SignInRequest(request.UserName, request.Password, System.Web.HttpContext.Current.Request.UserHostAddress);
 
                 CompanyGroup.Dto.PartnerModule.Visitor signInResponse = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest, CompanyGroup.Dto.PartnerModule.Visitor>("Visitor", "SignIn", singnInRequest);
 

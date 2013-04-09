@@ -67,7 +67,9 @@ namespace CompanyGroup.Data.Test
 
             string manufacturers = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "A169" });
 
-            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", manufacturers, "", "", "", false, false, false, false, false, "", "", 0);
+            string category1List = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "B008" });
+
+            CompanyGroup.Domain.WebshopModule.Structures structures = repository.GetList("hrp", "", category1List, "", "", false, true, false, false, false, "", "", 0);
 
             Assert.IsTrue(structures.Count > 0);            
         }

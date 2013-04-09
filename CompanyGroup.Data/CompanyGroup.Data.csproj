@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dynamics\Repository.cs" />
-    <Compile Include="MaintainModule\SyncRepository.cs" />
+    <Compile Include="WebshopModule\ChangeTrackingRepository.cs" />
     <Compile Include="NHibernateSessionModule.cs" />
     <Compile Include="NoSql\MongoHelper.cs" />
     <Compile Include="NoSql\ISettings.cs" />
@@ -119,6 +119,9 @@
       <Project>{2988EA16-FBA2-46D4-8D3A-85899FE9EBD0}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MaintainModule\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

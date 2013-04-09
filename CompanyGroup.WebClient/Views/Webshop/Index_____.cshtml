@@ -74,60 +74,55 @@
                     <div id="cus_basket"></div>
                     <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
-<table width="974" border="0" cellspacing="1" cellpadding="3">
+                    <table width="974" border="0" cellspacing="1" cellpadding="3">
                         <thead>
                             <tr>
-                                <td width="500"><strong>Termék neve</strong></td>
-                                <td>&nbsp;</td>
-                                <td><strong>Azonosító</strong></td>
-                                <td>&nbsp;</td>
-                                <td width="110"><div style="text-align:right;"><strong>Nettó egység ár</strong></div></td>
-								<td>&nbsp;</td>
-                                <td width="80"><strong>Mennyiség</strong></td>
-                                <td>&nbsp;</td>
-                                <td width="25"><strong>Cég</strong></td>
-                           	  	<td>&nbsp;</td>
-                                <td width="100"><div style="text-align:right;"><strong>Nettó összesen</strong></div></td>
-                                <td width="25">&nbsp;</td>
+                                <td width="400px"nowrap="nowrap"><strong>Termék neve</strong></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td nowrap="nowrap"><strong>Azonosító</strong></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td width="130px" align="right"nowrap="nowrap"><strong> Nettó egység ár</strong></td>
+                                <td width="60px" nowrap="nowrap"><strong>Mennyiség</strong></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td width="60px"><strong>Cég</strong></td>
+                           	  	<td nowrap="nowrap">&nbsp;</td>
+                                <td width="120px" align="right"><strong>Nettó összesen</strong></td>
+                                 <td width="50px">&nbsp;</td>
                             </tr>
-                        </thead
+                        </thead>
                         <tbody>
                             {{each( i, item ) ActiveCart.Items}}
                             <tr>
-                               <td >{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;"><!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->Leértékelt</span>{{/if}}&nbsp;<span style="width:500px; overflow:auto;" size>${item.ProductName}</span></td>
-                               <td>&nbsp;</td>
-                              <td>${item.PartNumber}</td>
-                                <td>&nbsp;</td>
-                                <td><div style="text-align:right;"><strong>${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} {{if Visitor.Currency == 'HUF'}} Ft 
+                                <td width="400px"nowrap="nowrap">{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;"><!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->Leértékelt</span>{{/if}}&nbsp;<span style="width:400px; overflow:hidden;" size>${item.ProductName}</span></td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                              <td nowrap="nowrap">${item.PartNumber}</td>
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td width="130px" align="right"nowrap="nowrap"><strong>${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} {{if Visitor.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Visitor.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Visitor.Currency == 'USD'}} $
-											{{/if}}</strong></div></td>
-											<td>&nbsp;</td>
-                                <td>
+											{{/if}}</strong></td>
+                                <td width="60px" nowrap="nowrap">
                                 <input class="cartnumber" value="${item.Quantity}" title="${item.Id}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                 db</td>
-                                <td>&nbsp;</td>
-                                <td>${companyGroup.utils.instance().toUpperCase(item.DataAreaId)}</td>
-                                <!-- <td ><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
-                                <!-- <td ><a href="javascript:void(0)" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
+                                <td nowrap="nowrap">&nbsp;</td>
+                                <td width="60px">${companyGroup.utils.instance().toUpperCase(item.DataAreaId)}</td>
+                                <!-- <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/attention.png")" border="0" title="Kötelező érvényű megrendelés!" alt=""/>&nbsp;</td> -->
+                                <!-- <td nowrap="nowrap"><a href="javascript:void(0)" title="Tétel mennyiség módosítása"><img src="@Url.Content("~/Content/Media/images/basketicons/edit.png")" style="border:0px" alt="" /></a>&nbsp;</td> -->
                               <td nowrap="nowrap">&nbsp;</td>
-                                <td>
-                                <div style="text-align:right;"><strong>${item.ItemTotal} {{if Visitor.Currency == 'HUF'}} Ft 
+                                <td width="120px" align="right"><strong>${item.ItemTotal} {{if Visitor.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Visitor.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Visitor.Currency == 'USD'}} $
-											{{/if}}</strong></div></td>
-                                <td><a href="#/removeLineFromShoppingCart/${item.Id}" title="Tétel törlése"><img src="@Url.Content("~/content/media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
+											{{/if}}</strong></td>
+                                <td width="50px"><a href="#/removeLineFromShoppingCart/${item.Id}" title="Tétel törlése"><img src="@Url.Content("~/content/media/images/basketicons/b_delete.png")" border="0" alt="" /></a></td>
                             </tr>
                             {{/each}}
                             <tr>
                             </tbody>
                     		</table>
-
-
                             <hr / style="width: 99%; margin-left:0px">
                             <span style="font-size:20px; color: rgb(8, 67, 133);">Kosár nettó összérték:&nbsp;</span><strong><span style="color: rgb(8, 67, 133); font-size:20px;">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} {{if Visitor.Currency == 'HUF'}} Ft 
 											{{/if}}
@@ -190,7 +185,7 @@
                         <tr>
                           <td ><strong>Szállítási időpont:</strong></td>
                           <td >  
-                            <input name="naptar" id="naptar" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" />
+                            <input name="naptar" id="naptar" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" />
                             <div id="div_deliverydate_notallowed">A kiszállítás időpontjáról egyeztessen személyesen kapcsolattartójával.</div>
                           </td>
                         </tr>
@@ -218,8 +213,7 @@
                             <td width="31%" style="border-style: none dotted none none; border-width:1px;"><strong>Egyedi rendelés azonosító: </strong>
                            <input type="text" name="custom_number" id="custom_number"/></td>
                             <td width="69%" ><span style="padding-left:5px;">
-                              <strong>Megjegyzés:</strong>
-                              <textarea style="width:335px; height:40px;" name="user_comment" cols="50" rows="4" class="regfields" id="user_comment">
+                              <textarea style="width:335px; height:40px;" name="user_comment" cols="50" rows="4" class="regfields" id="user_comment">Megjegyzés:
                               </textarea>
                             </span></td>
                           </tr>
@@ -640,7 +634,7 @@
 											{{/if}}</span>
 											</div>							
 				                            {{/if}}
-                                            <!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}" >Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}" >Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a-->
+                                            <!--br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Tartósbérlet : <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a><br/><a style=" color:#ffc000; text-decoration: none;"href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Csomagban: <b> ${item.SecondHandList.MinimumPrice} Ft-tól</b></a-->
                                           </td>
     		                            </tr>
 				                        </table>
@@ -657,7 +651,7 @@
 				                        <td valign="top">
 				                            <div class="cus_termekkep">
                                             {{if item.PictureId > 0}}
-				                            <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}" ><img src="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" /></a>
+				                            <a class="popupimg" href="#/showPicture/${item.ProductId}/${item.DataAreaId}/${item.ItemName}" title="${item.ItemName}"><img src="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" alt="${companyGroup.utils.instance().getPictureUrl(item.PictureId)}" /></a>
 				                            {{else}}
 				                            <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                             {{/if}}
@@ -707,7 +701,7 @@
 			              <tr>
 				                <td nowrap="nowrap">
 				                    <div class="cus_prod_table_morelink">
-				                        <a style="text-decoration:none; color:#084385;" href="#/details/${item.ProductId}/${item.DataAreaId}"  title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}"><strong>Részletes adatlap</strong></a>
+				                        <a style="text-decoration:none; color:#084385;" href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}"><strong>Részletes adatlap</strong></a>
 				                    </div>
                                 </td>
                                 <td nowrap="nowrap">
@@ -724,7 +718,7 @@
                                 </div>
                                 {{/if}}
                                 </td>
-                                <td width="100%" >{{if item.SecondHandList.Items.length > 0}}<div id="price_used"> <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}"  title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a> </div>{{/if}}</td>
+                                <td width="100%" >{{if item.SecondHandList.Items.length > 0}}<div id="price_used"> <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a> </div>{{/if}}</td>
                                 <td nowrap="nowrap" align="right">
                                     <div class="cus_prod_table_quantity">
 
@@ -765,7 +759,7 @@
 	                                        <tr>
 				                                <td class="price_used" style="text-align:right">
 										        {{if item.SecondHandList.Items.length > 0}}
-				                                <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}"  title="${item.itemName}">Leértékelt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
+				                                <a style=" color:#FFF; text-decoration:none; font-size:18px; "href="#/details/${item.ProductId}/${item.DataAreaId}" title="${item.itemName}">Leértékelt: <b> ${companyGroup.utils.instance().formatNumber(item.SecondHandList.MinimumPrice)} 
                                                 {{if Products.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Products.Currency == 'EUR'}}  € 
@@ -829,10 +823,10 @@
 				            <tr>
 				                <td nowrap="nowrap">
 				                    <div style="float:left;" class="cus_prod_table_morelink">
-				                        <a style="text-decoration:none; color:#084385;" href="#/details/${item.ProductId}/${item.DataAreaId}"  title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}"><strong>Részletes adatlap</strong></a>
+				                        <a href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Részletes adatlap</a>
 				                    </div>
                                     				                    <div id="price_used">
-				                        <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}"  title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a>
+				                        <a style="text-decoration:none; color:#333;" href="#/details/${item.ProductId}/${item.DataAreaId}" title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}">Leértékelt termék részletek</a>
 				                    </div>
                                 </td>
                                 </tr>
@@ -908,7 +902,7 @@
                         <table width="100%" border="0" cellspacing="1" cellpadding="1">
 							<tr>
 								<td valign="top">
-									<div id="cus_termekkep">
+								<div id="cus_termekkep">
                                     {{if Product.Pictures.Items.length > 0}}
                                         {{each( i, item ) Product.Pictures.Items}}
                                         <a class="popupimg" href="#/showPicture/${Product.ProductId}/${Product.DataAreaId}/${Product.ItemName}" title="${Product.ItemName}">
@@ -1035,12 +1029,12 @@
 							<ul class="tabs">
 								 <li>
 					 {{if ReverseCompatibleProducts.length  === 0}}
-									<a href="#" {{if Product.SecondHandList.Items.length === 0 && ReverseCompatibleProducts.length === 0 && CompatibleProducts.length >= 0 }}class="defaulttab"{{/if}} rel="tabs1">Kellékanyagok</a>
+									<a href="#" {{if Product.SecondHandList.Items.length === 0 && ReverseCompatibleProducts.length === 0 }}class="defaulttab"{{/if}} rel="tabs1">Kellékanyagok</a>
 									{{/if}}
 								</li> 
 								<li>
 								{{if ReverseCompatibleProducts.length  > 0}}
-									<a href="#" {{if ReverseCompatibleProducts.length > 0 && CompatibleProducts.length === 0 && Product.SecondHandList.Items.length === 0 }}class="defaulttab"{{/if}} rel="tabs2">Mihez ajánljuk</a>
+									<a href="#" {{if ReverseCompatibleProducts.length > 0 && CompatibleProducts.length === 0 }}class="defaulttab"{{/if}} rel="tabs2">Józsi kitalálja majd! :)</a>
 								{{/if}}
 								</li>
 								<!--li>
@@ -1048,7 +1042,7 @@
 								</li>-->
                                 {{if Product.SecondHandList.Items.length > 0}}
                                 <li>
-									<a href="#" {{if Product.SecondHandList.Items.length > 0 && ReverseCompatibleProducts.length >= 0 && CompatibleProducts.length >= 0}}class="defaulttab"{{/if}} rel="tabs4">Leértékelt</a>
+									<a href="#" {{if Product.SecondHandList.Items.length > 0}}class="defaulttab"{{/if}} rel="tabs4">Leértékelt</a>
 								</li>
                                 {{/if}}
 							</ul>
@@ -1067,7 +1061,7 @@
                                 <form action="#/addLineToShoppingCart" method="post">
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}"  >${item.ProductId} ${item.ItemName}</a></td>
+                                    <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}">${item.ProductId} ${item.ItemName}</a></td>
                                     <td width="115">{{if Visitor.IsValidLogin}}${item.Stock} db{{/if}}</td>
                                     <td width="115">{{if Visitor.IsValidLogin}}<strong>${item.Price}</strong>                                       	
                                             {{if Product.Currency == 'HUF'}} Ft 
@@ -1110,7 +1104,7 @@
                                 <form action="#/addLineToShoppingCart" method="post">
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}"  >${item.ProductId} ${item.ItemName}</a></td>
+                                    <td width="333"><a href="#/details/${item.ProductId}/${item.DataAreaId}">${item.ProductId} ${item.ItemName}</a></td>
                                     <td width="115">{{if Visitor.IsValidLogin}}${item.Stock} db{{/if}}</td>
                                     <td width="115">{{if Visitor.IsValidLogin}}<strong>${item.Price}</strong>                                       	
                                             {{if Product.Currency == 'HUF'}} Ft 
@@ -1196,15 +1190,11 @@
 			   <a class="fancybox-close" href="#/closed"></a>
             <p><div align="center"><h2>Rendelés visszaigazolás</h2></div></p><br />
             <p><strong>Tisztelt Partnerünk!</strong></p>
-            <p>Megrendelését a következő számú bizonylat(ok)on iktattuk :</p>
-<h3>
-
-<div id="hrporderid_txt">Az Ön HRP bizonylat száma: <span id="span_hrporderid"></span></div>
-<div id="hrpsecondhandorderid_txt">Az Ön HRP bizonylat száma: <span id="span_hrpsecondhandorderid"></span></div>
-<div id="bscorderid_txt">Az Ön BSC bizonylat száma: <span id="span_bscorderid"></span></div>
-<div id="bscsecondhandorderid_txt">Az Ön BSC bizonylat száma: <span id="span_bscsecondhandorderid"></span></div>
-
-    </h3>
+            <p>Megrendelését a  következő számú bizonylato(ko)n iktattuk :</p>
+<h3><span id="span_hrporderid"></span>
+    <span id="span_hrpsecondhandorderid"></span>
+    <span id="span_bscorderid"></span>
+    <span id="span_bscsecondhandorderid"></span></h3>
             <p><strong>Fontos tudnivaló!</strong> <br>
 Rendszerünk az  Interneten érkező megrendelések iktatásakor külön rendelés-visszaigazolást küld  aszerint, hogy a megrendelt termékből a megrendelés pillanatában volt-e szabad  raktárkészletünk vagy sem!<br>
 Eszerint  megkülönböztetünk:</p>
@@ -1257,7 +1247,10 @@ Eszerint  megkülönböztetünk:</p>
 
 			@*kosár toggle*@
 			
-
+            $('#szal_adat').hide();
+            $('#payment_option').hide();
+            $('#order_rest').hide();
+            $('.hr1').hide();
 
 
             $('.hr2').hide();

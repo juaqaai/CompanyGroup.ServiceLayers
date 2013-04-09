@@ -124,6 +124,15 @@ namespace CompanyGroup.Data
             return GetSessionFrom(Helpers.ConfigSettingsParser.GetString("ExtractInterfaceSessionFactoryConfigPath"));
         }
 
+        /// <summary>
+        /// éles rendszer (erp) adatbázis session
+        /// </summary>
+        /// <returns></returns>
+        public ISession GetLiveSystemSession()
+        {
+            return GetSessionFrom(Helpers.ConfigSettingsParser.GetString("LiveSystemSessionFactoryConfigPath"));
+        }
+
         private ISession GetSessionFrom(string sessionFactoryConfigPath)
         {
             return GetSessionFrom(sessionFactoryConfigPath, null);

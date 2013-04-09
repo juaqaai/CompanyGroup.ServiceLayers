@@ -1,7 +1,7 @@
 USE [ExtractInterface]
 GO
 
-/****** Object:  StoredProcedure [InternetUser].[CustomerPriceGroups]    Script Date: 2012.10.25. 6:48:26 ******/
+/* bejelentkezéskor hívódik meg, ezért ha változás történik a beállításokon, akkor újra ki és be kell lépni */
 SET ANSI_NULLS ON
 GO
 
@@ -36,4 +36,6 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.CustomerPriceGroupSelect TO InternetUser
 -- EXEC InternetUser.CustomerPriceGroupSelect 'V001446';	--V002020
+
+-- select * from InternetUser.Catalogue where ManufacturerId = 'A011' and Category1Id = 'B011'
 

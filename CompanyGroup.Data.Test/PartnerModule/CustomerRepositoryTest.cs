@@ -93,9 +93,9 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository();
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.SignIn("elektroplaza", "58915891", "hrp");
+            List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorData = repository.SignIn("elektroplaza", "hrp5891ep");
 
-            Assert.IsNotNull(visitor);
+            Assert.IsNotNull(visitorData);
         }
 
         [TestMethod]

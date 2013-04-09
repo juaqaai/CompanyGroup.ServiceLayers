@@ -16,9 +16,9 @@ namespace CompanyGroup.Dto.WebshopModule
 
         public List<string> Category3IdList { get; set; }
 
-        public bool ActionFilter { get; set; }
+        public bool DiscountFilter { get; set; }
 
-        public bool BargainFilter { get; set; }
+        public bool SecondhandFilter { get; set; }
 
         public bool HrpFilter { get; set; }
 
@@ -56,8 +56,8 @@ namespace CompanyGroup.Dto.WebshopModule
             this.Category2IdList = new List<string>();
             this.Category3IdList = new List<string>();
 
-            this.ActionFilter = false;
-            this.BargainFilter = false;
+            this.DiscountFilter = false;
+            this.SecondhandFilter = false;
             this.HrpFilter = false;
             this.BscFilter = false;
             this.IsInNewsletterFilter = false;

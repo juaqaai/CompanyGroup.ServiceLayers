@@ -5,7 +5,9 @@ namespace CompanyGroup.Domain.PartnerModule
 {
     public interface IVisitorRepository
     {
-        CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId);
+        CompanyGroup.Domain.PartnerModule.VisitorData GetItemById(string visitorId);
+
+        List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(int id);
 
         void Add(CompanyGroup.Domain.PartnerModule.Visitor visitor);
 

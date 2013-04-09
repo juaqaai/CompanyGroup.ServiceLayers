@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CompanyGroup.Data.Test.PartnerModule
+namespace CompanyGroup.Data.Test
 {
     /// <summary>
-    /// Summary description for VisitorRepository
+    /// UnitTest1
     /// </summary>
     [TestClass]
-    public class VisitorRepositoryTest
+    public class ChangeTrackingRepository : RepositoryBase
     {
-        public VisitorRepositoryTest()
+        public ChangeTrackingRepository()
         {
             //
             // TODO: Add constructor logic here
@@ -60,13 +60,23 @@ namespace CompanyGroup.Data.Test.PartnerModule
         #endregion
 
         [TestMethod]
-        public void GetItemById()
+        public void InventSumCTTest()
         {
-            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
+            CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository repository = new CompanyGroup.Data.WebshopModule.ChangeTrackingRepository();
 
-            CompanyGroup.Domain.PartnerModule.VisitorData visitor = repository.GetItemById("alma");    //CBB75B0D-D8C1-4863-8456-7A7DA685E164
+            CompanyGroup.Domain.WebshopModule.InventSumList result = repository.InventSumCT(0);
 
-            Assert.IsNotNull(visitor);
+            Assert.IsTrue(result.Count > 0);            
+        }
+
+        [TestMethod]
+        public void PriceDiscTableCTTest()
+        {
+            CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository repository = new CompanyGroup.Data.WebshopModule.ChangeTrackingRepository();
+
+            CompanyGroup.Domain.WebshopModule.PriceDiscTableList result = repository.PriceDiscTableCT(0);
+
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }

@@ -7,15 +7,18 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "TechnicalMetadata", "Techni
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "ExtractInterface", "ExtractInterface\ExtractInterface.ssmssqlproj", "{7699E545-DC02-453D-91EF-8A9E205231B3}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "LiveSystem", "LiveSystem\LiveSystem.ssmssqlproj", "{2C20A2AE-BA0F-4490-BE84-CDA0BE4DA79F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6A2FB402-E3A6-4DFC-9ABE-CA9105F6498B}.Default|Default.ActiveCfg = Default
-		{D0845EC2-601A-443B-A8C2-169F1FD5D35C}.Default|Default.ActiveCfg = Default
 		{DD3C2FC6-2B7E-4822-BC0E-B8F9308DDB06}.Default|Default.ActiveCfg = Default
 		{7699E545-DC02-453D-91EF-8A9E205231B3}.Default|Default.ActiveCfg = Default
+		{9F49864D-98AA-472B-B2AD-18283FE57CA1}.Default|Default.ActiveCfg = Default
+		{2C20A2AE-BA0F-4490-BE84-CDA0BE4DA79F}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

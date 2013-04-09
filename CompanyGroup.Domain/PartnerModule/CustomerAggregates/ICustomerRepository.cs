@@ -73,7 +73,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="password"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.PartnerModule.Visitor SignIn(string userName, string password, string dataAreaId);
+        List<CompanyGroup.Domain.PartnerModule.VisitorData> SignIn(string userName, string password);
 
         /// <summary>
         /// vevő létrehozása (regisztráció)

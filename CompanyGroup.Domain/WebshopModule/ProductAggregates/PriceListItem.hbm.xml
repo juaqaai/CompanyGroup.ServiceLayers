@@ -50,6 +50,7 @@
     <return-scalar column="EnglishDescription" type="System.String"/>
     <return-scalar column="ProductManagerId" type="System.Int32"/>
     <return-scalar column="ShippingDate" type="System.DateTime"/>
+    <return-scalar column="IsPurchaseOrdered" type="System.Boolean"/>
     <return-scalar column="CreatedDate" type="System.DateTime"/>
     <return-scalar column="Updated" type="System.DateTime"/>
     <return-scalar column="Available" type="System.Boolean"/>

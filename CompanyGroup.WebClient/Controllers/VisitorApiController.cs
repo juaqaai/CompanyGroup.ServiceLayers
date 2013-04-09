@@ -132,10 +132,7 @@ namespace CompanyGroup.WebClient.Controllers
                 //előző belépés azonosítójának mentése
                 string permanentObjectId = visitorData.PermanentId;
 
-                CompanyGroup.Dto.PartnerModule.SignInRequest req = new CompanyGroup.Dto.PartnerModule.SignInRequest(ApiBaseController.DataAreaId,
-                                                                                                        request.UserName,
-                                                                                                        request.Password,
-                                                                                                        System.Web.HttpContext.Current.Request.UserHostAddress);
+                CompanyGroup.Dto.PartnerModule.SignInRequest req = new CompanyGroup.Dto.PartnerModule.SignInRequest(request.UserName, request.Password, System.Web.HttpContext.Current.Request.UserHostAddress);
 
                 HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignInRequest>("Visitor", "SignIn", req);
 

@@ -41,15 +41,14 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             CompanyGroup.Helpers.DesignByContract.Require((!String.IsNullOrEmpty(request.UserName)), "The username cannot be null or empty!");
 
             //bejelentkezés 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = customerRepository.SignIn(request.UserName, request.Password, request.DataAreaId);
+            List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorDataList = customerRepository.SignIn(request.UserName, request.Password);
 
-            CompanyGroup.Helpers.DesignByContract.Ensure(visitor != null, "Visitor can not be null!");
+            CompanyGroup.Helpers.DesignByContract.Ensure(visitorDataList != null, "Visitor can not be null!");
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(visitorDataList);
 
             //kérés IP címét menteni kell
             visitor.LoginIP = request.IPAddress;
-
-            //vállalat kódja, ahov a bejelentkezés történik
-            visitor.DataAreaId = request.DataAreaId;
 
             //aktív státusz beállítása a bejelentkezést követően (passzív, aktív, permanens)
             visitor.Status = LoginStatus.Active;
@@ -134,8 +133,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
             visitorRepository.ChangeCurrency(request.VisitorId, request.Currency);
 
-            //
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(request.VisitorId);
+            //látogató adatainak kiolvasása
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
             //visitor objektum cache-ben tárolása
             CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, visitor.VisitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));

@@ -37,7 +37,6 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.CustomerController>();
             //unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.FinanceController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.InvoiceController>();
-            unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.MaintainController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.NewsletterController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.PictureController>();
             unityContainer.RegisterType<CompanyGroup.WebApi.Controllers.ProductController>();
@@ -60,7 +59,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IFinanceRepository, CompanyGroup.Data.WebshopModule.FinanceRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.INewsletterRepository, CompanyGroup.Data.WebshopModule.NewsletterRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.RegistrationModule.IRegistrationRepository, CompanyGroup.Data.RegistrationModule.RegistrationRepository>();
-            unityContainer.RegisterType<CompanyGroup.Domain.MaintainModule.ISyncRepository, CompanyGroup.Data.MaintainModule.SyncRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository, CompanyGroup.Data.WebshopModule.ChangeTrackingRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();
 
             //unityContainer.Configure<InjectedMembers>().
@@ -75,7 +74,6 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IContactPersonService, CompanyGroup.ApplicationServices.PartnerModule.ContactPersonService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IShoppingCartService, CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.IFinanceService, CompanyGroup.ApplicationServices.WebshopModule.FinanceService>();
-            unityContainer.RegisterType<CompanyGroup.ApplicationServices.MaintainModule.ISyncService, CompanyGroup.ApplicationServices.MaintainModule.SyncService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.WebshopModule.INewsletterService, CompanyGroup.ApplicationServices.WebshopModule.NewsletterService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.RegistrationModule.IRegistrationService, CompanyGroup.ApplicationServices.RegistrationModule.RegistrationService>();
             unityContainer.RegisterType<CompanyGroup.ApplicationServices.PartnerModule.IInvoiceService, CompanyGroup.ApplicationServices.PartnerModule.InvoiceService>();
