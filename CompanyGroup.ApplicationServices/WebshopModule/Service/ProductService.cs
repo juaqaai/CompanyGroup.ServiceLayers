@@ -112,6 +112,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
+            CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
+
+            List<string> excludedItems = new List<string>();
+
             //lekérdező paraméterek alapján visszaadott elemek száma
             long count = productRepository.GetListCount(dataAreaId, 
                                                          ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
@@ -126,7 +130,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                          request.Sequence, 
                                                          request.TextFilter, 
                                                          request.PriceFilter, 
-                                                         priceFilterRelation);
+                                                         priceFilterRelation,
+                                                         ConvertData.ConvertStringListToDelimitedString(excludedItems));
 
 
             CompanyGroup.Domain.WebshopModule.Products products = null;
@@ -176,7 +181,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                      priceFilterRelation, 
                                                      request.CurrentPageIndex, 
                                                      request.ItemsOnPage, 
-                                                     count);
+                                                     count,
+                                                     ConvertData.ConvertStringListToDelimitedString(excludedItems));
 
                 if (ProductService.CatalogueCacheEnabled)
                 {
@@ -217,8 +223,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 List<CompanyGroup.Domain.WebshopModule.ShoppingCart> carts = shoppingCartRepository.GetCartCollection(request.VisitorId);
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
-
-                CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
 
                 CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList = changeTrackingRepository.PriceDiscTableCT(0);
 
@@ -265,7 +269,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         x.Stock = inventSumList.GetStock(x.ProductId, x.Stock, x.DataAreaId, inventLocationId, x.StandardConfigId);
                     }
 
+                    //használt lista hozzárendelése
                     x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId, request.Currency, inventSumList) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+
+                    //akkor lehet csak igaz a használt flag beállítás, ha van 0-nál nagyobb elemszámmal rendelkező használtcikk lista a cikkhez
+                    x.SecondHand = (x.SecondHandList.Count > 0);
                 });
             }
             else
@@ -273,7 +281,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //nincs bejelentkezve állapotban a használt lista hozzárendelése termékazonosítónként
                 products.ForEach(x =>
                 {
+                    //használt lista hozzárendelése
                     x.SecondHandList = (x.SecondHand) ? this.GetSecondHandList(x.ProductId, request.Currency, new CompanyGroup.Domain.WebshopModule.InventSumList(new List<CompanyGroup.Domain.WebshopModule.InventSum>())) : new Domain.WebshopModule.SecondHandList(new List<Domain.WebshopModule.SecondHand>());
+
+                    //akkor lehet csak igaz a használt flag beállítás, ha van 0-nál nagyobb elemszámmal rendelkező használtcikk lista a cikkhez
+                    x.SecondHand = (x.SecondHandList.Count > 0);
                 });            
             }
 
@@ -285,6 +297,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             //products.AddRange(orderedList);
 
             products.ListCount = count;
+
+            //logikailag törölt elemeket ki kell szűrni a listából
+            products.RemoveEndOfSalesNoStock();
+
+            //ha a használt cikk szűrő be van kapcsolva, akkor ami nem használt cikk, azt nem kell listázni!
+            if (request.SecondhandFilter)
+            {
+                //products.RemoveNoSecondHand();
+            }
 
             CompanyGroup.Dto.WebshopModule.Products response = new ProductsToProducts().Map(products);
 
@@ -443,8 +464,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
 
-                //ha nincs a cache-ben
-                if (secondHandList == null)
+                //ha nincs a cache-ben, vagy 0 db. van a listában
+                if (secondHandList == null || secondHandList.Count.Equals(0))
                 {
                     secondHandList = productRepository.GetSecondHandList();
 
@@ -462,9 +483,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 }
 
                 //a termékazonosítóval rendelkező listát kell szűrni
-                IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+                IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> results = secondHandList.Where(x => x.ProductId.Equals(productId));
 
-                resultList.ToList().ForEach(x => 
+                List<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = results.ToList();
+
+                resultList.ForEach(x => 
                 {
                     //használt ár beállítása, 
                     decimal price = Convert.ToDecimal(x.Price);
@@ -477,7 +500,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     x.Quantity = stock;
                 });
 
-                return new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList.ToList());
+                CompanyGroup.Domain.WebshopModule.SecondHandList secondHandListResult = new CompanyGroup.Domain.WebshopModule.SecondHandList(resultList);
+
+                //azokat a sorokat távolítja el a listából, melyeknek nincsen darabszáma (használt cikk csak készlet erejéig értékesíthető)
+                secondHandListResult.RemoveNoStock();
+
+                return secondHandListResult;
             }
             catch { return new CompanyGroup.Domain.WebshopModule.SecondHandList(); }
         }
@@ -709,7 +737,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 {
                     product.Stock = inventSumList.GetStock(product.ProductId, product.Stock, product.DataAreaId, inventLocationId, product.StandardConfigId);
                 }
-
             }
             else
             {

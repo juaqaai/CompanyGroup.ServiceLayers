@@ -306,7 +306,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.ApplicationServices.WebshopModule.ProductService productService = new CompanyGroup.ApplicationServices.WebshopModule.ProductService(productRepository, shoppingCartRepository, pictureRepository, changeTrackingRepository, financeRepository, visitorRepository);
 
-            CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest() { ProductId = "B710dn", DataAreaId = "hrp", VisitorId = "" });
+            CompanyGroup.Dto.WebshopModule.Product product = productService.GetItemByProductId(new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("0021165108639", "bsc", "F191A34A6D29417D80EEC643AFB0C80A", "HUF"));
 
             Assert.IsNotNull(product);
         }

@@ -34,7 +34,7 @@ namespace CompanyGroup.Domain.Core
         public const string InnerStockHrp = "BELSO";
         public const string InnerStockBsc = "7000";
         public const string OuterStockHrp = "KULSO";
-        public const string OuterStockBsc = "1000";
+        public const string OuterStockBsc = "7000";
 
         public const string SecondhandStoreBsc = "2100";
         public const string SecondhandStoreHrp = "HASZNALT";

@@ -26,7 +26,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                Description = product.Description,
                                DescriptionEnglish = product.DescriptionEnglish,
                                Discount = product.Discount,
-                               EndOfSales = CompanyGroup.Domain.Core.Adapter.ConvertItemStateEnumToBool(product.ItemState),
+                               EndOfSales = product.EndOfSales,
                                FirstLevelCategory = new CategoryToCategory().Map(product.Structure.Category1),
                                GarantyMode = product.Garanty.Mode,
                                GarantyTime = product.Garanty.Time,

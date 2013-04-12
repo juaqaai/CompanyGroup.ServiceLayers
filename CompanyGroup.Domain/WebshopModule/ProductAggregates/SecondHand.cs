@@ -52,6 +52,7 @@ namespace CompanyGroup.Domain.WebshopModule
         public string StatusDescription { get; set; }
 
         public string DataAreaId { get; set; }
+
     }
 
     /// <summary>
@@ -65,5 +66,13 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         public SecondHandList() { }
+
+        /// <summary>
+        /// eltávolítja a listából azokat az elemeket, melyek készlete nulla
+        /// </summary>
+        public void RemoveNoStock()
+        {
+            this.RemoveAll(x => x.Quantity.Equals(0));
+        }
     }
 }

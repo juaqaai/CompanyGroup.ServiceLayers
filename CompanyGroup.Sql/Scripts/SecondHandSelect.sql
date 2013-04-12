@@ -13,7 +13,7 @@ SET NOCOUNT ON
 
 	SELECT Id, ProductId, ConfigId, InventLocationId, Quantity, Price, StatusDescription, DataAreaId
 	FROM InternetUser.SecondHand
-	WHERE Valid = 1;
+	WHERE Valid = 1 AND Quantity > 0;
 
 RETURN
 GO

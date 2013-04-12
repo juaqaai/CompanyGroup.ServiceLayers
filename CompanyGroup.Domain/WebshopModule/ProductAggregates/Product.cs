@@ -257,6 +257,27 @@ namespace CompanyGroup.Domain.WebshopModule
         public decimal CustomerPrice { get; set; }
 
         /// <summary>
+        /// kifutó cikk
+        /// </summary>
+        public bool EndOfSales
+        {
+            get { return CompanyGroup.Domain.Core.Adapter.ConvertItemStateEnumToBool(this.ItemState); }
+        }
+
+        /// <summary>
+        /// Törlésre kerüljön-e a cikk a legutolsó betöltéshez képest (kifutó és nincs belőle készlet)
+        /// </summary>
+        public bool EndOfSalesNoStock
+        {
+            get
+            {
+                bool result = (this.EndOfSales) && (!this.IsInStock);
+
+                return result;
+            }
+        }
+
+         /// <summary>
         /// képek tárolása tömbben
         /// </summary>
         //public Picture[] PictureArray { get; set; }
@@ -498,6 +519,19 @@ namespace CompanyGroup.Domain.WebshopModule
         /// lista nyitott állapotban van-e?
         /// </summary>
         public bool ListStatusOpen { get; set; }
+
+        /// <summary>
+        /// eltávolítja a logikailag törölt elemeket a listából
+        /// </summary>
+        public void RemoveEndOfSalesNoStock()
+        {
+            this.RemoveAll(x => x.EndOfSalesNoStock);
+        }
+
+        public void RemoveNoSecondHand()
+        {
+            this.RemoveAll(x => (!x.SecondHand));
+        } 
 
         /// <summary>
         /// konstruktor lapozóval   

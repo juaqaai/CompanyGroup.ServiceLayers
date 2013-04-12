@@ -10,155 +10,8 @@ companyGroup.registration = $.sammy(function () {
 
     //szerződési feltételek betöltése (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/', function (context) {
-       
-				$("#ugyintezo_container").empty();
-    var ugyintezoHtml = Mustache.to_html($('#ugyintezo_template').html(), model); 
-    $('#ugyintezo_container').html(ugyintezoHtml);	   
-	       
-	   	  	   	   				$("#compdata_container").empty();
-    var compdataHtml = Mustache.to_html($('#compdata_template').html(), model); 
-    $('#compdata_container').html(compdataHtml); 
-	         
-	  	   	   				$("#webadmin_container").empty();
-    var webadminHtml = Mustache.to_html($('#webadmin_template').html(), model); 
-    $('#webadmin_container').html(webadminHtml); 
-	   
-	   	   				$("#kapcsolattarto_container").empty();
-    var kapcsolattartoHtml = Mustache.to_html($('#kapcsolattarto_template').html(), model); 
-    $('#kapcsolattarto_container').html(kapcsolattartoHtml);
-	   
-	   				$("#datachk_container").empty();
-    var datachkHtml = Mustache.to_html($('#datachk_template').html(), model); 
-    $('#datachk_container').html(datachkHtml);	
-	
-	//a cshtml- ben lekérdeztem e visitorlogin-t ( hogy a cégnév kivan e töltve) és ketté ágazik.
-	
-	if ( visitorlogin == 0 ) {
-		
-		context.title(' HRP/BSC Regisztráció - szerződési feltételek');
-		
-		$('#tabs-2-button').hide();
-		$('#tabs-3-button').hide();
-		$('#tabs-4-button').hide();   
-		$('#tabs-5-button').hide();
-		$('#tabs-6-button').hide();
-		$('#tabs-7-button').hide();
-		$('#tab_2_ok').hide();
-		$('#tab_3_ok').hide();	 
-		$('#tab_4_ok').hide();
-		$('#tab_5_ok').hide();
-		$('#tab_6_ok').hide();
-		$('#tab_7_ok').hide();
-		$('#modify_mgs').hide();
-		$("#mail_address").hide();
-    $("#del_address").hide();
-    $("#contactperson").hide();
-    $("#finish_reg").hide()
-    $("#tabs-7").hide();
-	}
-	else {
-		
-		context.title(' HRP/BSC Cégadatmódosítás');
-
-
-		document.getElementById("reg_point_title").style.color = '#999';
-		document.getElementById("reg_point_title_2").style.color = '#999';
-		document.getElementById("reg_point_title_3").style.color = '#999';				
-
-
-		$("#tabs_7_title").hide();
-		$('#tabs-1-button').show();
-		$('#tabs-2-button_modosit').hide();
-		$('#tabs-3-button_modosit').hide();
-		$('#tabs-4-button_modosit').hide();   
-		$('#tabs-5-button_modosit').hide();
-		$('#tabs-6-button_modosit').hide();
-		$('#tabs-7-button_modosit').hide();
-		$('#tab_2_ok').hide();
-		$('#tab_3_ok').hide();	 
-		$('#tab_4_ok').hide();
-		$('#tab_5_ok').hide();
-		$('#tab_6_ok').hide();
-		$('#tab_7_ok').hide();
-		$('#modify_mgs').hide();
-		$("#mail_address").show();
-    $("#del_address").show();
-    $("#contactperson").show();
-    $("#finish_reg").hide()
-    $("#tabs-7").hide();
-	$("#add_new_delivery").hide();
-	$("#add_new_contact").hide();
-	$("#chk_del_address").hide();
-	$("#chk_mail_address").hide();
-	$("#chk_contactperson_div").hide();
-	$("#address_tip").hide();
-	$("#address_tip2").hide();
-
-
-	}
-	
-	
-	
-	
-		
-		   $("#tabs-1-button").click(function () {
-        $('#tabs-1').toggle("slow");		
-    });
-    $("#tabs-2-button").click(function () {
-        $('#tabs-2').toggle("slow");
-		$("#hr_1").toggle("slow");
-    });
-
-    $("#tabs-3-button").click(function () {
-        $('#tabs-3').toggle("slow");
-		$("#hr_2").toggle("slow");
-    });
-    $("#tabs-4-button").click(function () {
-        $('#tabs-4').toggle("slow");
-		$("#hr_3").toggle("slow");
-    });
-    $("#tabs-5-button").click(function () {
-        $('#tabs-5').toggle("slow");
-		$("#hr_4").toggle("slow");
-    });
-    $("#tabs-6-button").click(function () {
-        $('#tabs-6').toggle("slow");
-		$("#hr_5").toggle("slow");
-    });
-	
-	    $("#tabs-1-button_modosit").click(function () {
-        $('#tabs-1').toggle("slow");		
-    });
-    $("#tabs-2-button_modosit").click(function () {
-        $('#tabs-2').toggle("slow");
-		$("#hr_1").toggle("slow");
-    });
-
-    $("#tabs-3-button_modosit").click(function () {
-        $('#tabs-3').toggle("slow");
-		$("#hr_2").toggle("slow");
-    });
-    $("#tabs-4-button_modosit").click(function () {
-        $('#tabs-4').toggle("slow");
-		$("#hr_3").toggle("slow");
-    });
-    $("#tabs-5-button_modosit").click(function () {
-        $('#tabs-5').toggle("slow");
-		$("#hr_4").toggle("slow");
-    });
-    $("#tabs-6-button_modosit").click(function () {
-        $('#tabs-6').toggle("slow");
-		$("#hr_5").toggle("slow");
-    });
-
-		
-
-		
-		
-		 
-		 
-
-		$.ajax({
+        context.title(' HRP/BSC Regisztráció - szerződési feltételek');
+        $.ajax({
             url: companyGroup.utils.instance().getRegistrationApiUrl('GetRegistrationData'),
             data: {},
             type: "GET",
@@ -173,7 +26,6 @@ companyGroup.registration = $.sammy(function () {
     //események
     this.bind('run', function (e, data) {
         var context = this;
-		$("#position").chosen({ no_results_text: "Nincs találat" });
         //keresés névre, vagy cikkszámra
         $("#txt_globalsearch").live('focus', function () {
             context.globalSearchOnFocus($(this));
@@ -241,48 +93,19 @@ companyGroup.registration = $.sammy(function () {
     });
     //adatok ellenörzése
 	  this.get('#/allowdatacheck', function (context) {
-		  $("html, body").animate({ scrollTop: 0 }, 100);
-        	$("#tabs-5").show(500);
+        $("#tabs-5").show(500);
             $("#tabs-4").show(500);
             $("#tabs-3").show(500);
             $("#tabs-2").show(500);
-			$("#hr_1").hide(500);
-			$("#hr_2").hide(500);
-			$("#hr_3").hide(500);
-			$("#hr_4").hide(500);
-			$("#hr_5").hide(500);
-			
     });
     this.bind('checkData', function (e, data) {
         var context = this;
         if (data.Checked) {
-			if($('#chk_contactpersonallowreceiptofgoods').is(':checked') || $('#chk_webadminallowreceiptofgoods').is(':checked') ) { 	
-			context.redirect('#/checked');
-            context.title('HRP/BSC Regisztráció - adatok ellenörzése megtörtént');	}       
-		else {
-			 $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>Legalább egy főnél be kell jelölve lenni, hogy árut átvehet!</H2></div>', {
-                'autoDimensions': true,
-                'transitionIn': 'elastic',
-                'transitionOut': 'elastic',
-                'closeBtn': 'true',
-                'changeFade': 0,
-                'speedIn': 300,
-                'speedOut': 300,
-                'width': '150%',
-                'height': '150%',
-                'autoScale': true,
-                beforeClose: function () { $('#chk_filterByHrp').attr('checked', true); }
-            });
-			$("#chk_checkdata").prop('checked', false);
-			context.redirect('#/notchecked');
-            context.title('HRP/BSC Regisztráció - adatok ellenörzése nem történt meg');
-			$('#tab_6_ok').hide(500);
-		}
-            
+            context.redirect('#/checked');
+            context.title('HRP/BSC Regisztráció - adatok ellenörzése megtörtént');
         } else {
             context.redirect('#/notchecked');
             context.title('HRP/BSC Regisztráció - adatok ellenörzése nem történt meg');
-			$('#tab_6_ok').hide(500);
         }
     });
     //szerződési feltételek elfogadása (ha elfogadás történt, akkor az adatfeltöltésre irányít a rendszer)
@@ -317,7 +140,6 @@ companyGroup.registration = $.sammy(function () {
         var context = this;
         if (data.Checked) {
             $('#contactperson').show("slow");
-			$("#position2").chosen({ no_results_text: "Nincs találat" });
         } else {
             $('#contactperson').hide("slow");
         }
@@ -331,8 +153,6 @@ companyGroup.registration = $.sammy(function () {
         context.redirect('#/companydata');
     });
     this.get('#/authenticated', function (context) {
-
-		
         //console.log('authenticated');
     });
     //bejelentkezés panel megmutatása
@@ -386,81 +206,14 @@ companyGroup.registration = $.sammy(function () {
     });
 
     this.get('#/checked', function (context) {
-		
-	if ( visitorlogin == 0 ) {
-		
-		$("#tabs-1").hide(500);
-        $("#tabs-2").hide(500);
-        $("#tabs-3").hide(500);
-        $("#tabs-4").hide(500);
-        $("#tabs-5").hide(500);
-		$("#tabs-6").hide(500);
-        $("#finish_reg").hide(500);
-        $("#check_span").hide(500);
-		$("#tabs_7_title").show(500);
+        $("#tabs-1").toggle(500);
+        $("#tabs-2").toggle(500);
+        $("#tabs-3").toggle(500);
+        $("#tabs-4").toggle(500);
+        $("#tabs-5").toggle(500);
+        $("#finish_reg").toggle(500);
+        $("#check_span").toggle(500);
         $("#tabs-7").show(500);
-		$('#tab_6_ok').show(500);
-		$('#tabs-6-button').show(500);
-			$("#hr_1").show(500);
-			$("#hr_2").show(500);
-			$("#hr_3").show(500);
-			$("#hr_4").show(500);
-			$("#hr_5").show(500);
-		
-}
-	else{
-	
-	//itt van az adatok vizsgálata hogy egyezik a kis módosításhoz..
-	
-if ( $("#customername").text() === $("#newcustomername").text() || $("#newcustomername").text() =="" ) { var contract_modify1 = 1 } else { contract_modify1 = 0}
-if ( $("#vatnumber").text() === $("#newvatnumber").text() || $("#newvatnumber").text() ==""  ) { var contract_modify2 = 1 } else { contract_modify2 = 0}
-if ( $("#vatnumber2").text() === $("#newvatnumber2").text() || $("#newvatnumber2").text() ==""  ) { var contract_modify2_2 = 1 } else { contract_modify2_2 = 0}
-if ( $("#vatnumber3").text() === $("#newvatnumber3").text() || $("#newvatnumber3").text() ==""  ) { var contract_modify2_3 = 1 } else { contract_modify2_3 = 0}
-if ( $("#invoicezipcode").text() === $("#newinvoicezipcode").text() || $("#newinvoicezipcode").text() ==""  ) { var contract_modify3 = 1 } else { contract_modify3 = 0}
-if ( $("#invoicecity").text() === $("#newinvoicecity").text() || $("#newinvoicecity").text() ==""  ) { var contract_modify4 = 1 } else { contract_modify4 = 0}
-if ( $("#invoicestreet").text() === $("#newinvoicestreet").text() || $("#newinvoicestreet").text() ==""  ) { var contract_modify5 = 1 } else { contract_modify5 = 0}
-if ( $("#invoicecountry").text() === $("#newinvoicecountry").text() || $("#newinvoicecountry").text() ==""  ) { var contract_modify6 = 1 } else { contract_modify6 = 0}
-
-if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 1 && contract_modify2_3 === 1 && contract_modify3 === 1 && contract_modify4 === 1 && contract_modify5 === 1 && contract_modify6 === 1  ) { 
-		$("#tabs-1").hide(500);
-        $("#tabs-2").hide(500);
-        $("#tabs-3").hide(500);
-        $("#tabs-4").hide(500);
-        $("#tabs-5").hide(500);
-		$("#tabs-6").hide(500);
-        $("#finish_reg").hide(500);
-        $("#check_span").hide(500);
-        $("#tabs-7").hide(500);
-		$('#tab_6_ok').show(500);
-		$('#tabs-6-button').show(500);
-			$("#hr_1").show(500);
-			$("#hr_2").show(500);
-			$("#hr_3").show(500);
-			$("#hr_4").show(500);
-			$("#hr_5").show(500);
-			context.redirect('#/saveregistration')
-			}
-			else { 
-			$("#tabs-1").hide(500);
-        $("#tabs-2").hide(500);
-        $("#tabs-3").hide(500);
-        $("#tabs-4").hide(500);
-        $("#tabs-5").hide(500);
-		$("#tabs-6").hide(500);
-        $("#finish_reg").hide(500);
-        $("#check_span").hide(500);
-		$("#tabs_7_title").show(500);
-        $("#tabs-7").show(500);
-		$('#tab_6_ok').show(500);
-		$('#tabs-6-button').show(500);
-			$("#hr_1").show(500);
-			$("#hr_2").show(500);
-			$("#hr_3").show(500);
-			$("#hr_4").show(500);
-			$("#hr_5").show(500);
-			}
-	}
-        
     });
     this.get('#/notchecked', function (context) {
         $("#tabs-7").hide(500);
@@ -471,13 +224,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     });
     //adatrögzítő adatainak betöltése (új regisztráció hozzáadása)
     this.get('#/datarecording', function (context) {
-		 
-		if ( visitorlogin == 0 ) {
-		$("#add_new_delivery_btn").hide();
-		} else{
-		$("#add_new_delivery_btn").show();
-		}
-			
         ////console.log(context);
         $.ajax({
             type: "POST",
@@ -543,28 +289,8 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
                 if (response) {
                     if (response.Successed) {
                         setTabsVisibility(3);
-						
-					// itt olvasom be a szövegmezőkbe az eddigi adatokat	
-                    context.title('Regisztráció - törzsadatok');
-					var customername = $("#txt_customername").val();
-					var vatnumber = $("#txt_vatnumber").val();
-					var vatnumber2 = $("#txt_vatnumber2").val();
-					var vatnumber3 = $("#txt_vatnumber3").val();
-				    var invoicecountry = $("#select_invoicecountry").val();
-					var invoicezipcode = $("#txt_invoicezipcode").val() ;
-					var invoicecity = $("#txt_invoicecity").val();
-    				var invoicestreet = $("#txt_invoicestreet").val() ;
-					
-					$("#customername").text(customername);
-					$("#vatnumber").text(vatnumber);
-					$("#vatnumber2").text(vatnumber2);
-					$("#vatnumber3").text(vatnumber3);
-					$("#invoicecountry").text(invoicecountry);
-					$("#invoicecity").text(invoicecity);
-					$("#invoicestreet").text(invoicestreet);
-					$("#invoicezipcode").text(invoicezipcode);
-                    
-					} else {
+                        context.title('Regisztráció - törzsadatok');
+                    } else {
                         alert(response.Message);
                     }
                 }
@@ -579,30 +305,12 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     });
     this.get('#/companydata', function (context) {
         $("form#form_companydata").submit();
-		// validálás után az uj adatokat olvasom be
-		var newcustomername = $("#txt_customername").val();
-		var newvatnumber = $("#txt_vatnumber").val();
-		var newvatnumber2 = $("#txt_vatnumber2").val();
-		var newvatnumber3 = $("#txt_vatnumber3").val();
-		var newinvoicecountry = $("#select_invoicecountry").val();
-		var newinvoicezipcode = $("#txt_invoicezipcode").val() ;
-		var newinvoicecity = $("#txt_invoicecity").val();
-    	var newinvoicestreet = $("#txt_invoicestreet").val() ;
-		
-		$("#newcustomername").text(newcustomername);
-		$("#newvatnumber").text(newvatnumber);
-		$("#newvatnumber2").text(newvatnumber2);
-		$("#newvatnumber3").text(newvatnumber3);
-		$("#newinvoicecountry").text(newinvoicecountry);
-		$("#newinvoicecity").text(newinvoicecity);
-		$("#newinvoicestreet").text(newinvoicestreet);
-		$("#newinvoicezipcode").text(newinvoicezipcode);
     });
     //cégregisztráció adatainak validálása
     this.before({ only: { verb: 'post', path: '#/companydata'} }, function (e) {
         var error_msg = '';
-		
-		if ($("#txt_customername").val() == '') {
+
+        if ($("#txt_customername").val() == '') {
             error_msg += 'A vevőnév kitöltése kötelező! <br/>';
         }
         if ($("#txt_vatnumber").val() == '') {
@@ -638,16 +346,9 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
         $("#spanCompanyDataError").html(error_msg);
 
         return (error_msg === '');
-		
     });
     //cégregisztrációs adatlap mentése, webadmin adatainak betöltése
     this.post('#/companydata', function (context) {
-		if ( visitorlogin == 0 ) {
-		$("#add_new_contact_btn").hide();
-		} else {
-			$("#add_new_contact_btn").show();
-		}
-			
         ////console.log(context);
         var vatNumber = $("#txt_vatnumber").val() + '-' + $("#txt_vatnumber2").val() + '-' + $("#txt_vatnumber3").val();
         vatNumber = (vatNumber === '') ? $("#txt_vatnumber4").val() : vatNumber;
@@ -935,7 +636,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     });
     //előnézet betöltése, (kapcsolattartó adatainak mentése nem szükséges)
     this.post('#/preview', function (context) {
-		
         ////console.log(context);
         setTabsVisibility(6);
         context.title('Regisztráció - lezárás, szerződés nyomtatás');
@@ -944,14 +644,9 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     //regisztrációs adatok nyomtatása
     this.post('#/print', function (context) {
         ////console.log(context);
-		if($('#chk_contactpersonallowreceiptofgoods').is(':checked') || $('#chk_webadminallowreceiptofgoods').is(':checked') ) { 	
-		setTabsVisibility(7);
-        context.title('Regisztráció eredménye');	
-		}       
-		else {
-			alert("LEGALÁBB 1 főneél be kell jeölve lenni az árut átvehet!"); 
-		}
-        
+
+        setTabsVisibility(7);
+        context.title('Regisztráció eredménye');
     });
 
     this.post('#/adddeliveryaddress', function (context) {
@@ -983,8 +678,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
                     $('#txt_deliveryaddressstreet').val('');
                     $('#txt_deliveryaddresszipcode').val('');
                     context.title('Regisztráció - szállítási cím hozzáadás');
-					$("#add_new_delivery").hide();
-					$("#add_new_delivery_btn").show();  
                 }
                 else {
                     //console.log('addDeliveryAddress result failed');
@@ -1099,6 +792,7 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     });
 
     this.post('#/addcontactperson', function (context) {
+        ////console.log(context);
         var data = {
             Id: '',
             AllowOrder: $("#chk_contactpersonalloworder").is(':checked'),
@@ -1115,7 +809,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
             Newsletter: $("#chk_contactpersonnewsletter2").is(':checked'),
             Password: context.params['txt_contactpersonpassword'],
             PriceListDownload: $("#chk_contactpersonpricelistdownload").is(':checked'),
-			Position: $('#position').val(),
             RecId: 0,
             RefRecId: 0,
             SmsArriveOfGoods: false,
@@ -1140,8 +833,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
-					$("#add_new_contact").hide();
-					$("#add_new_contact_btn").show();
                 }
                 else {
                     //console.log('addContactPerson result failed');
@@ -1169,8 +860,7 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
             success: function (result) {
                 if (result) {
                     //result.Items Part1 Part2 Part3 RecId Id
-					$("#contactPersonContainer").empty();
-					$("#position3").chosen({ no_results_text: "Nincs találat" });
+                    $("#contactPersonContainer").empty();
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('Regisztráció - kapcsolattartó kiválasztás');
@@ -1203,7 +893,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
             Password: context.params['txt_contactpersonpassword'],
             PriceListDownload: $("#chk_contactpersonpricelistdownload").is(':checked'),
             RecId: context.params['recId'],
-			Position: $('#position').val(),
             RefRecId: 0,
             SmsArriveOfGoods: false,
             SmsOfDelivery: false,
@@ -1223,7 +912,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
                 if (result) {//ContactPersonId,FirstName,LastName,AllowOrder ,AllowReceiptOfGoods ,SmsArriveOfGoods,SmsOrderConfirm,SmsOfDelivery ,EmailArriveOfGoods ,EmailOfOrderConfirm ,EmailOfDelivery ,WebAdmin ,PriceListDownload 
                     ///InvoiceInfo,UserName,Password ,Newsletter,Telephone,Email ,LeftCompany,Id
                     $("#contactPersonContainer").empty();
-					$("#position3").chosen({ no_results_text: "Nincs találat" });
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('Regisztráció - kapcsolattartó módosítás');
@@ -1255,7 +943,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
                 if (result) {//ContactPersonId,FirstName,LastName,AllowOrder ,AllowReceiptOfGoods ,SmsArriveOfGoods,SmsOrderConfirm,SmsOfDelivery ,EmailArriveOfGoods ,EmailOfOrderConfirm ,EmailOfDelivery ,WebAdmin ,PriceListDownload 
                     ///InvoiceInfo,UserName,Password ,Newsletter,Telephone,Email ,LeftCompany,Id
                     $("#contactPersonContainer").empty();
-					$("#position3").chosen({ no_results_text: "Nincs találat" });
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('Regisztráció - kapcsolattartó törlés');
@@ -1271,10 +958,7 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     });
     //regisztrációs adatok mentése
     this.get('#/saveregistration', function (context) {
-		
-		
-
-		////console.log(context);
+        ////console.log(context);
         $.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getRegistrationApiUrl('Post'),
@@ -1299,10 +983,8 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
             error: function () {
                 //console.log('post call failed');
             }
-        });    
-	});
-
-
+        });
+    });
     var initRegistrationData = function (data) {
         $('#txt_datarecordingname').val(data.DataRecording.Name);
         $('#txt_datarecordingphone').val(data.DataRecording.Phone);
@@ -1376,8 +1058,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
         //$('#chkWebAdminSmsOrderConfirm').prop('checked', data.WebAdministrator.SmsOrderConfirm);
 
         $('#contactPersonContainer').html(Mustache.render($('#contactPersonTemplate').html(), data.ContactPersons));
-		
-
 
         //  $('#txtContactPersonUserName').val();
         //  $('#txtContactPersonPassword').val();
@@ -1398,9 +1078,10 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
         //  $('#chkContactPersonSmsOfDelivery').val();
         //  $('#chkContactPersonSmsOrderConfirm').val();
     }
-	
-	
-	var setTabsVisibility = function (i) {
+
+
+
+    var setTabsVisibility = function (i) {
         if (i == 1) {
             $('#tabs-1').hide();
             $('#tabs-1-button').hide();
@@ -1411,108 +1092,49 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
         }
         if (i == 2) {
             $('#tabs-2').show(500);
+            $('#tabs-1-button').show(500);
             $('#tab_1_ok').show(500);
-			$("#hr_1").hide(500);
         } else {
             $("#tabs-2").hide(500);
-			$("#hr_1").show(500);
-            
+            $('#tabs-2-button').hide(500);
         }
         if (i == 3) {
-			
-			if ( visitorlogin == 0 ) {
-
-				
-				
-			$('#tabs-3').show(500);
+            $('#tabs-3').show(500);
             $('#tabs-2-button').show(500);
             $('#tab_2_ok').show(500);
-			$("#hr_2").hide(500);
-        }
-		else {
-		
-
-			$('#tabs-2-button_modosit').show(500);
-			$('#tabs-3-button_modosit').show(500);
-            $('#tabs-4-button_modosit').show(500);
-			$('#tabs-5-button_modosit').show(500);
-            $('#tab_2_ok').show(500);
-			document.getElementById("reg_point_title").style.color = 'rgb(8, 67, 133)';
-			document.getElementById("reg_point_title_2").style.color = 'rgb(8, 67, 133)';
-			document.getElementById("reg_point_title_3").style.color = 'rgb(8, 67, 133)';
-			$('#error_mgs').hide(500);
-			$('#error_mgs_2').hide(500);
-			$('#error_mgs_3').hide(500);
-			$('#modify_mgs').show(500);
-			
-
-
-		}
         } else {
-		 
-		 $("#tabs-3").hide(500);
-			$("#hr_2").show(500);
-		}		
-           
+            $("#tabs-3").hide(500);
+            $('#tabs-3-button').hide(500);
+            $('#tab_2_ok').hide(500);
+        }
         if (i == 4) {
-			
-			if ( visitorlogin == 0 ) {
-			
-			
             $("#tabs-4").show(500);
             $('#tabs-3-button').show(500);
             $('#tab_3_ok').show(500);
-			$("#hr_3").hide(500);
-			}
-			else {
-				
-			$("#tabs-4").show(500);
-            $('#tabs-3-button').show(500);
-            $('#tab_3_ok').show(500);
-			$("#hr_3").hide(500);
-			$('#tabs-6-button_modosit').show(500);		
-			}
-				
         } else {
             $("#tabs-4").hide(500);
-			$("#hr_3").show(500);
-            
-           
+            $('#tabs-4-button').hide(500);
+            $('#tab_3_ok').hide(500);
         }
         if (i == 5) {
-			if ( visitorlogin == 0 ) {
-				
-			$("#tabs-5").show(500);
-            $('#tabs-4-button').show(500);
-            $('#tab_4_ok').show(500);
-			$("#hr_4").hide(500);
-
-        } else {
-				
-				
             $("#tabs-5").show(500);
             $('#tabs-4-button').show(500);
             $('#tab_4_ok').show(500);
-			$("#hr_4").hide(500);
-			$('#tabs-6-button_modosit').show(500);	
-		}
+
         } else {
             $("#tabs-5").hide(500);
-			$("#hr_4").show(500);
-			
-			
+            $('#tabs-5-button').hide(500);
+            $('#tab_4_ok').hide(500);
         }
         if (i == 6) {
             $("#tabs-6").show(500);
             $('#tabs-5-button').show(500);
             $('#tab_5_ok').show(500);
-			$("#hr_5").hide(500);
-		
 
         } else {
-			$("#tabs-6").hide(500);
-			$("#hr_5").show(500);
-
+            $("#tabs-6").hide(500);
+            $('#tab_5_ok').hide(500);
+            ;
         }
         if (i == 7) {
             $("#tabs-7").show(500);
@@ -1523,37 +1145,42 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     }
 
 
-		 $("#contract_btn").click(function () {
+    $("#mail_address").hide();
+    $("#del_address").hide();
+    $("#contactperson").hide();
+    $("#finish_reg").hide()
+    $("#tabs-7").hide();
+
+
+
+
+    $("#contract_btn").click(function () {
         $('#tabs-1').show("slow");
         $("#contract").hide('slow');
 
     });
-	
-	$("#add_new_delivery_btn").click(function () {
-		$("#add_new_delivery_btn").hide();
-		$("#add_new_delivery").show();
-
-		
-    });
-		$("#add_new_delivery_cancel_btn").click(function () {
-        $("#add_new_delivery_btn").show();
-		$("#add_new_delivery").hide();
-		
-    });
-	
-	$("#add_new_contact_btn").click(function () {
-		$("#add_new_contact_btn").hide();
-		$("#add_new_contact").show();
-    });
-		
-		
-		$("#add_new_contact_cancel_btn").click(function () {
-        $("#add_new_contact_btn").show('slow');
-		$("#add_new_contact").hide('slow');
-    });
 
 
- 
+    $("#tabs-1-button").click(function () {
+        $('#tabs-1').toggle("slow");
+    });
+    $("#tabs-2-button").click(function () {
+        $('#tabs-2').toggle("slow");
+    });
+
+    $("#tabs-3-button").click(function () {
+        $('#tabs-3').toggle("slow");
+    });
+    $("#tabs-4-button").click(function () {
+        $('#tabs-4').toggle("slow");
+    });
+    $("#tabs-5-button").click(function () {
+        $('#tabs-5').toggle("slow");
+    });
+    $("#tabs-6-button").click(function () {
+        $('#tabs-6').toggle("slow");
+    });
+
     $(function () {
         $("#chk_print").click(function () {
             if ($(this).is(':checked'))
@@ -1561,7 +1188,7 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
             $("#tabs-7").hide(500);
         });
     });
-	
+
 	$("a#nyomtatas").fancybox();
 	
 
@@ -1591,21 +1218,6 @@ if ( contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 
     }
     $("select").change(displayVals);
     displayVals();
-	
-	document.onkeydown = function() {    
-    switch (event.keyCode) { 
-        case 116 : //F5 button
-            event.returnValue = false;
-            event.keyCode = 0;
-            return false; 
-        case 82 : //R button
-            if (event.ctrlKey) { 
-                event.returnValue = false; 
-                event.keyCode = 0;  
-                return false; 
-            } 
-    }
-}
 
 
 

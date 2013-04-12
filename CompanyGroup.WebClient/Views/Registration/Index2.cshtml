@@ -5,23 +5,25 @@
     ViewBag.Title = "Registration";
 }
 
-	  <div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left;" id="main_content" class="zone zone-content">
+	  <div style="width:940px; margin-left:20px; margin-bottom:20px; text-align:left" id="main_content" class="zone zone-content">
         <div id="reg_header_container"></div> 
         <script id="reg_header_template" type="text/html">
 {{#IsValidLogin}}
-     <h2><strong>Cégadatmódosítás</strong></h2>
-<p><span id="spnGreeting2">Az alábbi oldalon megtalálja az adatbázisunkban szereplő cég- és kapcsolattartó adatait. </span></p>
-        <p>1., A módosításhoz fogadja el az 1., pontban lévő  szerződésés feltételeket.<br>
-          2., Majd nyissa ki azt az adatcsoportot (3-5 pontok),  amiben a változtatni kívánt adat van, és javítsa át azt az aktuálisan jó  értékre. Ha egy hiányzó adatot szeretne pótolni, vagy új elemet felvenni egy  listába (pl új szállítási cím, vagy új kapcsolattartó), szintén hasonló módon  kell eljárnia.<br>
-          3., Ha nem számlázást érintő adatokat módosít, akkor  azok frissítése és ellenőrzése után a 7., pont segítségével zárja le  adatmódosítását. Kollegáink ellenőrzik majd feldolgozzák kérését.<br>
-          4., Abban az esetben, ha Önnek még nincs velünk élő  &ldquo;Viszonteladói és Elektronikus kereskedelmi szerződése&ldquo; VAGY van, de számlázást  érintő adatot kíván módosítani (cégnév, számlázási cím, adószám), a folyamat  végén egy új szerződést fog kapni. Ekkor a 7., pontban legyen kedves &nbsp;a  nyomtatásra kattintva két példányban kinyomtatni a szerződést (ez már az Ön  által megadott adatokat fogja tartalmazni) és cégszerűen írja alá.<br>
-          4.a,. Az aláírt szerződés két eredeti példányát  juttassa el postai úton vagy személyesen a 1033 Budapest, Huszti út. 34. alatti  címünkre. <br>
-          4.b A szerződéskötéshez szükséges hivatalos  dokumentumok a következők: <br>
-          - Aláírási címpéldány, egyéni vállalkozó esetén a vállalkozói igazolvány  (mindkét esetben a szerződésen szereplő aláírással megegyező) <br>
-          Ezeket a dokumentumokat a következőképpen juttathatja el hozzánk: <br>
-          - a cégadatmódosítás &ldquo;3. Cég adatai&rdquo; pontjában lévő fájlfeltöltési lehetőségnél  elektronikusan feltöltve, vagy<br>
-          - Személyesen leadva vagy postai úton megküldve a 1033 Budapest, Huszti út. 34.  alatti címünkre, vagy<br>
-          - Faxon a (06 1) 350-1351-es faxszámra megküldve</p>
+<h2><strong>Tisztelt Partnerünk!</strong></h2>
+        <p><span id="spnGreeting2">Köszönjük, hogy viszonteladónkká kíván válni. </span></p>
+        <p>Ahhoz, hogy a regisztrációja megtörténjen, a következő lépéseket kell megtennie: </p>
+        <p></p>
+          1. Olvassa el figyelmesen az alábbi   Viszonteladói és elektronikus kereskedelmi szerződést, majd ennek   elfogadása után tovább tud lépni. <br/>
+          2. A következő oldalon adja meg a kért   adatokat, valamint töltse fel a szerződéskötéshez szükséges hivatalos   iratokat, amennyiben azok beszkennelve a rendelkezésére állnak. <br/>
+          3. Ezt követően felviheti kapcsolattartóinak adatait. <br/>
+          4. Ezután, a nyomtatásra kattintva   nyomtassa ki két példányban a szerződést (ez már az Ön által megadott   adatokat fogja tartalmazni) és cégszerűen írja alá. <br/>
+          5. Az aláírt szerződés két eredeti   példányát juttassa el postai úton vagy személyesen a 1033 Budapest,   Huszti út. 34. alatti címünkre. <br/>
+          6. A szerződéskötéshez szükséges hivatalos dokumentumok a következők: <br/>
+          - Aláírási címpéldány, egyéni vállalkozó   esetén a vállalkozói igazolvány (mindkét esetben a szerződésen szereplő   aláírással megegyező) <br/>
+          Ezeket a dokumentumokat a következőképpen juttathatja el hozzánk: <br/>
+          - A fenti 2. pontban jelzett módon a regisztrációs formanyomtatványon keresztül feltöltve,                               vagy<br/>
+          - Személyesen leadva vagy postai úton   megküldve a 1033 Budapest, Huszti út. 34. alatti címünkre,                             vagy<br/>
+          - Faxon a (06 1) 350-1351-es faxszámra megküldve          
  {{/IsValidLogin}}
  {{^IsValidLogin}}
  <h2><strong>Tisztelt leendő Partnerünk!</strong></h2>
@@ -52,7 +54,7 @@
               <h3><strong>Viszonteladói és elektronikus kereskedelmi szerződés</strong><br />
               </h3>
               <p><strong>1. Definíciók</strong></p>
-       	1.1. Honlap a Disztribútorok honlapjai: www.hrp.hu és www.bsc.hu.<br />
+        1.1. Honlap a Disztribútorok honlapjai: www.hrp.hu és www.bsc.hu.<br />
         1.2. Webáruház a Disztribútorok   Honlapján belül a terméklistát, termékinformációkat, árakat,   készletinformációt és rendelési lehetőséget tartalmazó rész. A Webáruház   adatai tájékoztató jellegűek.<br />
         1.3. Cégadminisztrátor a   Viszonteladónál kijelölt személy, aki felvehet, törölhet és módosíthat   felhasználókat a Honlap felhasználónévvel és jelszóval történt   bejelentkezés után elérhető részén.<br />
         1.4. Felhasználó a Viszonteladó   munkatársa, akit a Cégadminisztrátor beregisztrál a Honlapon.<br />
@@ -139,16 +141,7 @@
             </div>
         </div>
         <hr style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-            <div id="ugyintezo_container"></div>
-            <script id="ugyintezo_template" type="text/html">
-            {{#IsValidLogin}}
-            <h2>2. Ügyintéző adatai <a class="tooltip" href="#/userdata"><img style="cursor:pointer;" id="tabs-2-button_modosit" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			<span id="modify_mgs" style="font-size:14px; font-style:italic; "> Nyissa ki azt az adatcsoportot (3-5 pontok), amiben a változtatni kívánt adat van, és javítsa át azt az aktuálisan jó értékre.</span>
-            {{/IsValidLogin}}
-            {{^IsValidLogin}}
-            <h2>2. Ügyintéző adatai <a class="tooltip" href="#/userdata"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			{{/IsValidLogin}}
-            </script>
+            <h2>2. Ügyintéző adatai <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-2-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_2_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
             <div class="reg_tabs" id="tabs-2">
             <form action="#/datarecorder" method="post">                           
                 <table width="100%" border="0" cellpadding="5" cellspacing="2">
@@ -179,17 +172,9 @@
         </form>
         </div>
                  <hr id="hr_1" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-                 <div id="compdata_container"></div>
-            <script id="compdata_template" type="text/html">
-            {{#IsValidLogin}}
-            <h2 id="reg_point_title">3. Cég adatai <span id="error_mgs" style="font-size:14px; font-style:italic; "> (Csak az Ügyinzéző adatai kitöltése után érhető el)</span> <a class="tooltip" href="#/compdata"><img style="cursor:pointer;" id="tabs-3-button_modosit" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_3_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-            {{/IsValidLogin}}
-            {{^IsValidLogin}}
-           <h2>3. Cég adatai <a class="tooltip" href="#/compdata"><img style="cursor:pointer;" id="tabs-3-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_3_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			{{/IsValidLogin}}
-            </script>
-
-        
+        <h2>3. Cég adatai <a class="tooltip" href="#">
+        <img style="cursor:pointer;" id="tabs-3-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+        <img id="tab_3_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
         <div class="reg_tabs" id="tabs-3">
             <form action="#/companydata" method="post"> 
                 <table width="100%" border="0" cellspacing="5" cellpadding="2">
@@ -456,8 +441,6 @@
                                 <option value="TN" >TUNÉZIA</option>
                                 <option value="TR" >TÖRÖKORSZÁG</option>
                                 <option value="TW" >TAIWAN</option>
-
-
                                 <option value="UA" >UKRAJNA</option>
                                 <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
                                 <option value="VN" >VIETNAM</option>
@@ -497,7 +480,7 @@
                     <tr>
                         <td height="28">
                             <input type="checkbox" name="chk_mail_address" id="chk_mail_address" />
-                        <strong style="font-size:16px">Levelezési cím<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span id="address_tip" style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                        <strong style="font-size:16px">Levelezési cím<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
                         </tr>  
                     </table>
                     <div id="mail_address">
@@ -578,14 +561,13 @@
                             <option value="UA" >UKRAJNA</option>
                             <option value="US" >AMERIKAI EGYESÜLT ÁLLAMOK</option>
                             <option value="VN" >VIETNAM</option>
-
                             <option value="XS" >SZERBIA</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td><strong>Irányítószám :</strong></td>
                             <td><label class="error" for="txt_mailaddresszipcode" style="display:none; color:#900;">( ! )</label>
-                            <input  type="text" name="txt_mailaddresszipcode" id="txt_mailaddresszipcode" class="regfields" size="4" /></td>
+                            <input style="width:235px" type="text" name="txt_mailaddresszipcode" id="txt_mailaddresszipcode" class="regfields" size="4" /></td>
                         </tr>
                         <tr>
                             <td><strong>Város :</strong></td>
@@ -615,7 +597,7 @@
                     <tr>
                         <td>
                         <input type="checkbox" name="chk_del_address" id="chk_del_address" />
-                        <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span id="address_tip2" style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
+                        <strong style="font-size:16px">Szállítási cím/telephely<span style="color:#0159B1;font-size:12px"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0159B1;font-size:12px">Jelölje ki, amennyiben nem egyezik a számlázási címmel.</span></td>
                     </tr>
                     </table>
 
@@ -705,7 +687,7 @@
                 </tr>
                 <tr>
                     <td><strong>Irányítószám :</strong></td>
-                    <td><input type="text" name="txt_deliveryaddresszipcode" id="txt_deliveryaddresszipcode" class="regfields" size="4" /></td>
+                    <td><input style="width:235px" type="text" name="txt_deliveryaddresszipcode" id="txt_deliveryaddresszipcode" class="regfields" size="4" /></td>
                 </tr>
                 <tr>
                     <td><strong>Város :</strong></td>
@@ -716,7 +698,7 @@
                     <td><input style="width:235px" type="text" name="txt_deliveryaddressstreet" id="txt_deliveryaddressstreet" class="regfields" size="0" /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input style="float:left; vertical-align:bottom; overflow:visible; font-size:14px; display:inline; margin:0; padding:0; border:0; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5; font-family: calibri;" name="Submit" type="submit" value="Szállítási cím mentése"><div id="add_new_delivery_cancel_btn" style="margin:1px 1px 1px 10px; float:left; font-size:14px; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; "><strong>Mégse</strong></div></td>
+                    <td colspan="2"><input style="float:left; vertical-align:bottom; overflow:visible; font-size:14px; display:inline; margin:0; padding:0; border:0; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5; font-family: calibri;" name="Submit" type="submit" value="Hozzáadás"><div id="add_new_delivery_cancel_btn" style="margin:1px 1px 1px 10px; float:left; font-size:14px; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; "><strong>Mégse</strong></div></td>
                 </tr>
                 </table>
               </form>      
@@ -857,19 +839,9 @@
           </div>
 
 	                 <hr id="hr_2" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-                     <div id="webadmin_container"></div>
-            <script id="webadmin_template" type="text/html">
-            {{#IsValidLogin}}
-            <h2 id="reg_point_title_2">4. Web adminisztrátor <span id="error_mgs_2" style="font-size:14px; font-style:italic; "> (Csak az Ügyinzéző adatai kitöltése után érhető el)</span><a class="tooltip" href="#/webadmin"><img style="cursor:pointer;" id="tabs-4-button_modosit" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-            {{/IsValidLogin}}
-            {{^IsValidLogin}}
-            <h2>4. Web adminisztrátor <a class="tooltip" href="#/webadmin"><img style="cursor:pointer;" id="tabs-4-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			{{/IsValidLogin}}
-            </script>
-                     
-            
+            <h2>4. Web adminisztrátor<a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-4-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a><img id="tab_4_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px alt=""/></h2>
             <div class="reg_tabs" id="tabs-4">
-                <form  action="#/webadministrator" method="post">
+                <form action="#/webadministrator" method="post">
                 <table width="700" border="0" cellpadding="3" cellspacing="2">
                     <tr>
                         <td height="26" colspan="5"><strong style="font-size:16px">Web adminisztrátor </strong>
@@ -983,31 +955,24 @@
 							<td><input type="checkbox" name="chk_webadminemailarriveofgoods" id="chk_webadminemailarriveofgoods" /></td>
 						</tr>
 						<tr>
-							<td colspan="8"><span id="spanWebAdminDataError" style="color:#F00"></span></td>
+							<td colspan="8">&nbsp;</td>
 						</tr>
 	              </table></td></tr>
                     <tr>
-                        <td colspan="5"><input type="submit" value="Tovább" id="go_on_3"/></td>
+                        <td colspan="5"><span style="color:#F00"><input type="submit" value="Tovább" id="go_on_3"/></span></td>
                     </tr> 
                 </table>
                 </form>
             </div>
       
                      <hr id="hr_3" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-                     <div id="kapcsolattarto_container"></div>
-            <script id="kapcsolattarto_template" type="text/html">
-            {{#IsValidLogin}}
-            <h2 id="reg_point_title_3">5. Kapcsolattartók <span id="error_mgs_3" style="font-size:14px; font-style:italic; "> (Csak az Ügyinzéző adatai kitöltése után érhető el)</span> <a class="tooltip" href="#/contactperson"><img style="cursor:pointer;" id="tabs-5-button_modosit" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_5_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-            {{/IsValidLogin}}
-            {{^IsValidLogin}}
-            <h2>5. Kapcsolattartók <a class="tooltip" href="#/contactperson"><img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_5_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			{{/IsValidLogin}}
-            </script>
-
+            <h2>5. Kapcsolattartók<a class="tooltip" href="#"><img style="cursor:pointer;" alt="" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+            <img id="tab_5_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
+            
                 <div class="reg_tabs" id="tabs-5">
-                 <div id="chk_contactperson_div"><input type="checkbox" name="chk_contactperson" id="chk_contactperson" />
+                 <input type="checkbox" name="chk_contactperson" id="chk_contactperson" />
                     <strong>Kapcsolattartók hozzáadása</strong> <strong style="font-size:16px"><span style="color:#0159B1;font-size:12px"></span></strong><a class="tooltip" href="#"><img src="@Url.Content("~/Content/Media/images/help_less.png")" alt="Help" height="16" width="16" style="margin_bottom:-3;"/><span>Kapcsolattartó hozzáadása nem kötelező, de javasolt az alábbi személyek felvétele:
-                      - ügyvezető, - pénzügyi vezető, - kereskedelmi vezető, - áruátvevő, - árut rendelhet</span></a></div></p>
+                      - ügyvezető, - pénzügyi vezető, - kereskedelmi vezető, - áruátvevő, - árut rendelhet</span></a></p>
                   <div id="contactperson">
                            <div id="contactPersonContainer" ></div>
                            <p></p>    
@@ -1107,7 +1072,7 @@
 					              <td><input type="checkbox" id="chk_contactpersonemailarriveofgoods" /></td>
 					            </tr>
 					            <tr>
-					              <td colspan="8"><input style="vertical-align:bottom; overflow:visible; font-size:14px; float:left; display:inline; margin:0; padding:0; border:0; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5; font-family: calibri;" name="Submit2" type="submit" value="Kapcsolattartó mentése"><div id="add_new_contact_cancel_btn" style=" float:left; margin:1px;  font-size:14px; margin:1px 1px 1px 10px; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5;"><strong>Mégse</strong></div></td>
+					              <td colspan="8"><input style="vertical-align:bottom; overflow:visible; font-size:14px; float:left; display:inline; margin:0; padding:0; border:0; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5; font-family: calibri;" name="Submit2" type="submit" value="Hozzáadás "><div id="add_new_contact_cancel_btn" style=" float:left; margin:1px;  font-size:14px; margin:1px 1px 1px 10px; cursor:pointer; color: #0159B1; text-decoration: underline; font-weight: bold; background-color: #F5F5F5;"><strong>Mégse</strong></div></td>
 					            </tr>
 	                          </table></td></tr>
                                 <tr><td colspan="5">&nbsp;</td></tr>
@@ -1335,33 +1300,10 @@
                     <input type="button" id="btn_showdatacheck" value="Tovább"/>
                 </div>
                          <hr id="hr_4" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-                         
-                         <div id="datachk_container"></div>
-            <script id="datachk_template" type="text/html">
-            {{#IsValidLogin}}
-            <h2>6. Adatok ellenőrzése <a class="tooltip" href="#/datachk"><img style="cursor:pointer;" id="tabs-6-button_modosit" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_6_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-            {{/IsValidLogin}}
-            {{^IsValidLogin}}
-            <h2>6. Adatok ellenőrzése <a class="tooltip" href="#/datachk"><img style="cursor:pointer;" id="tabs-6-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14" alt="" /><span style="font-size:14px">Modosítás</span></a><img id="tab_6_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px" alt=""/></h2>
-			{{/IsValidLogin}}
-            </script>
-
+                <h2>6. Adatok ellenőrzése <a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-6-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+                <img id="tab_6_ok" src="@Url.Content("~/Content/Media/images/checkok.png")" width="15px" height="15px" alt=""/></h2>
                 <div class="reg_tabs" id="tabs-6">
                  <span id="check_span" style="font-size:14px; color:#FF0000; font-weight:bold;">Kérem ellenőrizze ujra, hogy minden adata helyes-e.</span>
-				 <div style="display:none">
-				 
-    <span id="customername"></span>&nbsp;<span id="newcustomername"></span></br>
-	<span id="vatnumber"></span>&nbsp;<span id="newvatnumber"></span></br>
-	<span id="vatnumber2"></span>&nbsp;<span id="newvatnumber2"></span></br>
-	<span id="vatnumber3"></span>&nbsp;<span id="newvatnumber3"></span></br>
-	<span id="invoicecountry"></span>&nbsp;<span id="newinvoicecountry"></span></br>
-    <span id="invoicecity"></span>&nbsp;<span id="newinvoicecity"></span></br>
-    <span id="invoicestreet"></span>&nbsp;<span id="newinvoicestreet"></span></br>
-    <span id="invoicezipcode"></span>&nbsp;<span id="newinvoicezipcode"></span>	</br>
-    
-    
-    				
- </div>
                  <p><span style="font-size:14px; color:#FF0000; font-weight:bold;"><a style="text-decoration:underline; color:#084385;" href="#/allowdatacheck"><strong>Adatai ellenőrzéséhez klikkeljen ide!</strong></a></span></p>
                     <p><strong>
                       <input type="checkbox" name="chk_checkdata" id="chk_checkdata" />
@@ -1370,7 +1312,7 @@
                 </div>
 
              <hr id="hr_5" style="border-style: none none dotted; border-width: 1px; width: 99%; margin-left:0px; border-bottom-color:#999; " />
-    <h2 id="tabs_7_title">7. Szerződés Feldolgozása<!--a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
+    <h2>7. Szerződés Feldolgozása<!--a class="tooltip" href="#"><img style="cursor:pointer;" id="tabs-5-button" src="@Url.Content("~/Content/Media/images/plusicon.png")" width="17" height="14"/><span style="font-size:14px">Modosítás</span></a>
     <img id="tab_6_ok" src="../Content/Media/images/checkok.png" width="15px" height="15px alt=""/--></h2>
     <div class="reg_tabs" id="tabs-7">
       <p><span style="font-size:16px; color:#084385;"><strong>A szerződést kérjük két példányban nyomtassa ki!</strong></span><br/>
@@ -1403,7 +1345,7 @@
             <a style="text-decoration:none;" href="@Url.Content("~/Webshop")"><input name="befejezes" value="Befejezés" type="button" /></a>
         </div>
 	</div>
-</div>
+    </div>
         
 @Scripts.Render("~/bundles/registration")
 @Scripts.Render("~/bundles/jqueryform")
@@ -1420,18 +1362,11 @@
 
     var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);
-	
-	   var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
-    $('#cus_header1').html(visitorInfoHtml); 
-	
-	if ($('#companyname').text() == "") {
-
-	var visitorlogin = 0;
-	} else{
-    var visitorlogin = 1; 
-	}
 
     companyGroup.registration.run('#/');
+
+    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model);
+    $('#cus_header1').html(visitorInfoHtml); 
 
     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(),model); 
     $('#usermenuContainer').html(usermenuHtml);

@@ -91,7 +91,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetItemByProductIdTest()
         {
-            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("NWA3160", "hrp", "alma", "HUF");
+            CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest request = new CompanyGroup.Dto.WebshopModule.GetItemByProductIdRequest("SCD400G", "hrp", "F191A34A6D29417D80EEC643AFB0C80A", "HUF");
 
             HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Product/GetItemByProductId", request).Result;
 

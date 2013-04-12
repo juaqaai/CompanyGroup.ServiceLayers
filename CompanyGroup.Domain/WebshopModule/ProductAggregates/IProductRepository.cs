@@ -22,6 +22,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
+        /// <param name="excludedItems"></param>
         /// <returns></returns>
         int GetListCount(string dataAreaId,
                                         string manufacturers,
@@ -36,7 +37,8 @@ namespace CompanyGroup.Domain.WebshopModule
                                         int sequence,
                                         string textFilter,
                                         string priceFilter,
-                                        int priceFilterRelation);
+                                        int priceFilterRelation, 
+                                        string excludedItems);
 
         /// <summary>
         /// lapozható terméklista lekérdezése
@@ -58,6 +60,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="currentPageIndex"></param>
         /// <param name="itemsOnPage"></param>
         /// <param name="count"></param>
+        /// <param name="excludedItems"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Products GetList(string dataAreaId,
                                                            string manufacturers,
@@ -75,7 +78,8 @@ namespace CompanyGroup.Domain.WebshopModule
                                                            int priceFilterRelation,
                                                            int currentPageIndex,
                                                            int itemsOnPage,
-                                                           long count);
+                                                           long count, 
+                                                           string excludedItems);
 
         /// <summary>
         /// terméklista lekérdezés

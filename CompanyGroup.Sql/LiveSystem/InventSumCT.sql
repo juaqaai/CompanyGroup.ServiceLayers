@@ -15,6 +15,7 @@ SET NOCOUNT ON
 	SELECT MAX(ct.SYS_CHANGE_VERSION) as [Version], 
 		   stock.ItemId,
 		   InternetUser.CalculateWebStock(stock.ItemId, ind.InventLocationId, stock.DataAreaId) as AvailPhysical,   -- stock.AvailPhysical as AvailPhysical,
+		   SUM(Stock.AvailPhysical), 
 		   stock.DataAreaId, 
 		   ISNULL(ind.InventLocationId, '') as InventLocationId, ind.ConfigId
 --		   CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('dbo.InventSum'), 'ItemId', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as ItemIdChanged, 
@@ -94,3 +95,5 @@ GO
 			invent.ITEMSTATE in ( 0, 1 ) AND 
 			ins.AvailPhysical > 0
 	GROUP BY invent.StandardConfigId, invent.ItemId, ind.InventLocationId, invent.DataAreaId*/
+
+	-- SELECT * FROM InternetUser.Catalogue where ItemState = 1 AND Stock = 0

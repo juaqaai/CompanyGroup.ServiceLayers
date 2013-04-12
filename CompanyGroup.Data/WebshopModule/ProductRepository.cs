@@ -35,6 +35,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
+        /// <param name="excludedItems"></param>
         /// <returns></returns>
         public int GetListCount(string dataAreaId,
                                 string manufacturers,
@@ -49,7 +50,8 @@ namespace CompanyGroup.Data.WebshopModule
                                 int sequence,
                                 string textFilter,
                                 string priceFilter,
-                                int priceFilterRelation)
+                                int priceFilterRelation,
+                                string excludedItems)
         {
             try
             {
@@ -64,7 +66,8 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                   .SetBoolean("Stock", stockFilter)
                                                                                   .SetString("FindText", textFilter)
                                                                                   .SetString("PriceFilter", priceFilter)
-                                                                                  .SetInt32("PriceFilterRelation", priceFilterRelation).UniqueResult<int>();
+                                                                                  .SetInt32("PriceFilterRelation", priceFilterRelation)
+                                                                                  .SetString("ExcludedItems", excludedItems).UniqueResult<int>();
                 return count;
             }
             catch (Exception ex) 
@@ -75,6 +78,7 @@ namespace CompanyGroup.Data.WebshopModule
 
         /// <summary>
         /// lapozható terméklista lekérdezése
+        /// @ExcludedItems nvarchar (250) = ''
         /// </summary>
         /// <param name="dataAreaId"></param>
         /// <param name="manufacturers"></param>
@@ -93,6 +97,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="currentPageIndex"></param>
         /// <param name="itemsOnPage"></param>
         /// <param name="count"></param>
+        /// <param name="excludedItems"></param>
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.Products GetList(string dataAreaId,
                                                                   string manufacturers,
@@ -110,7 +115,8 @@ namespace CompanyGroup.Data.WebshopModule
                                                                   int priceFilterRelation,
                                                                   int currentPageIndex,
                                                                   int itemsOnPage,
-                                                                  long count)
+                                                                  long count, 
+                                                                  string excludedItems)
         {
             try
             {
@@ -136,6 +142,7 @@ namespace CompanyGroup.Data.WebshopModule
                                                 .SetInt32("Sequence", sequence)
                                                 .SetInt32("CurrentPageIndex", currentPageIndex)
                                                 .SetInt32("ItemsOnPage", itemsOnPage)
+                                                .SetString("ExcludedItems", excludedItems)
                                                 .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Product).GetConstructors()[0]));
 

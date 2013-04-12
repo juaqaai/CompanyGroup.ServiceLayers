@@ -27,26 +27,26 @@ namespace CompanyGroup.WebClient.Controllers
             //bejelentkezett felhasználó adatainak kiolvasása
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            //struktúrák lekérdezése
-            CompanyGroup.Dto.WebshopModule.GetAllStructureRequest structuresRequest = new CompanyGroup.Dto.WebshopModule.GetAllStructureRequest()
-            {
-                DiscountFilter = false,
-                SecondhandFilter = false,
-                Category1IdList = new List<string>(),
-                Category2IdList = new List<string>(),
-                Category3IdList = new List<string>(),
-                HrpFilter = true,
-                BscFilter = true,
-                IsInNewsletterFilter = false,
-                ManufacturerIdList = new List<string>(),
-                NewFilter = false,
-                StockFilter = false,
-                TextFilter = searchText,
-                PriceFilter = "0",
-                PriceFilterRelation = "0"
-            };
+            ////struktúrák lekérdezése
+            //CompanyGroup.Dto.WebshopModule.GetAllStructureRequest structuresRequest = new CompanyGroup.Dto.WebshopModule.GetAllStructureRequest()
+            //{
+            //    DiscountFilter = false,
+            //    SecondhandFilter = false,
+            //    Category1IdList = new List<string>(),
+            //    Category2IdList = new List<string>(),
+            //    Category3IdList = new List<string>(),
+            //    HrpFilter = true,
+            //    BscFilter = true,
+            //    IsInNewsletterFilter = false,
+            //    ManufacturerIdList = new List<string>(),
+            //    NewFilter = false,
+            //    StockFilter = false,
+            //    TextFilter = searchText,
+            //    PriceFilter = "0",
+            //    PriceFilterRelation = "0"
+            //};
 
-            CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", structuresRequest);
+            //CompanyGroup.Dto.WebshopModule.Structures structures = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetAllStructureRequest, CompanyGroup.Dto.WebshopModule.Structures>("Structure", "GetStructures", structuresRequest);
 
             //katalógus lekérdezése
             CompanyGroup.Dto.WebshopModule.GetAllProductRequest productsRequest = new CompanyGroup.Dto.WebshopModule.GetAllProductRequest()
@@ -135,7 +135,7 @@ namespace CompanyGroup.WebClient.Controllers
                 deliveryAddresses = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
             }
 
-            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(structures, products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, productsRequest.Sequence, deliveryAddresses, bannerList, leasingOptions);
+            CompanyGroup.WebClient.Models.Catalogue model = new CompanyGroup.WebClient.Models.Catalogue(products, visitor, activeCart, openedShoppingCart, storedShoppingCart, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, productsRequest.Sequence, deliveryAddresses, bannerList, leasingOptions);
 
             //aktív kosár azonosítójának mentése http cookie-ba
             if (activeCart.Id > 0)

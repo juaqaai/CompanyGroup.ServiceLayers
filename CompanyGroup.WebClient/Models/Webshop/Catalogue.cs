@@ -8,7 +8,8 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class Catalogue
     {
-        public Catalogue(CompanyGroup.Dto.WebshopModule.Structures structures, 
+        public Catalogue(
+            //CompanyGroup.Dto.WebshopModule.Structures structures, 
                          CompanyGroup.Dto.WebshopModule.Products products,
                          CompanyGroup.WebClient.Models.Visitor visitor,
                          CompanyGroup.Dto.WebshopModule.ShoppingCart activeCart, 
@@ -21,7 +22,7 @@ namespace CompanyGroup.WebClient.Models
                          CompanyGroup.Dto.WebshopModule.BannerList bannerList, 
                          CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions)
         {
-            this.Structures = new CompanyGroup.WebClient.Models.Structures(structures);
+            //this.Structures = new CompanyGroup.WebClient.Models.Structures(structures);
 
             this.Products = products;   
 
@@ -46,7 +47,7 @@ namespace CompanyGroup.WebClient.Models
             this.LeasingOptions = leasingOptions;
         }
 
-        public CompanyGroup.WebClient.Models.Structures Structures { get; set; }
+        //public CompanyGroup.WebClient.Models.Structures Structures { get; set; }
 
         public CompanyGroup.Dto.WebshopModule.Products Products { get; set; }
 

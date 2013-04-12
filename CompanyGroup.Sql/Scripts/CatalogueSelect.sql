@@ -59,7 +59,8 @@ CREATE PROCEDURE [InternetUser].[CatalogueSelect] (@DataAreaId nvarchar(4) = 'hr
 												   @PriceFilter nvarchar(16) = '',
 												   @PriceFilterRelation INT = 0,	
 												   @CurrentPageIndex INT = 1, 
-												   @ItemsOnPage INT = 30  
+												   @ItemsOnPage INT = 30, 
+												   @ExcludedItems nvarchar (250) = ''  
 )
 AS
 SET NOCOUNT ON
@@ -106,6 +107,14 @@ SET NOCOUNT ON
 		SELECT CONVERT(INT, C3j) + 1, CHARINDEX(@Separator, @Category3, CONVERT(INT, C3j) + 1)
 		FROM Category3_CTE
 		WHERE C3j > 0
+	),
+	ExcludedItems_CTE(Excudedi, Excludedj)
+	AS(
+		SELECT CONVERT(INT, 0), CHARINDEX( @Separator, @ExcludedItems)
+		UNION ALL
+		SELECT CONVERT(INT, Excludedj) + 1, CHARINDEX(@Separator, @ExcludedItems, CONVERT(INT, Excludedj) + 1)
+		FROM ExcludedItems_CTE
+		WHERE Excludedj > 0
 	)
 
 	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
@@ -121,6 +130,9 @@ SET NOCOUNT ON
 		  (Catalogue.Category1Id IN (SELECT SUBSTRING(@Category1, C1i, COALESCE(NULLIF(C1j, 0), LEN(@Category1) + 1) - C1i) FROM Category1_CTE) OR (@Category1 = '')) AND
 	      (Catalogue.Category2Id IN (SELECT SUBSTRING(@Category2, C2i, COALESCE(NULLIF(C2j, 0), LEN(@Category2) + 1) - C2i) FROM Category2_CTE) OR (@Category2 = '')) AND
 		  (Catalogue.Category3Id IN (SELECT SUBSTRING(@Category3, C3i, COALESCE(NULLIF(C3j, 0), LEN(@Category3) + 1) - C3i) FROM Category3_CTE) OR (@Category3 = '')) AND
+
+		  (Catalogue.ProductId NOT IN (SELECT SUBSTRING(@ExcludedItems, Excudedi, COALESCE(NULLIF(Excludedj, 0), LEN(@ExcludedItems) + 1) - Excudedi) FROM ExcludedItems_CTE) OR (@ExcludedItems = '')) AND
+
  		  Discount = CASE WHEN @Discount = 1 THEN 1 ELSE Discount END AND  
 		  SecondHand = CASE WHEN @SecondHand = 1 THEN 1 ELSE SecondHand END AND 
 		  New = CASE WHEN @New = 1 THEN 1 ELSE New END AND  

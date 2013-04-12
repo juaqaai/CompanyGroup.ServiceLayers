@@ -74,7 +74,7 @@
                     <div id="cus_basket"></div>
                     <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
-<table width="974" border="0" cellspacing="1" cellpadding="3">
+                    <table width="974" border="0" cellspacing="1" cellpadding="3">
                         <thead>
                             <tr>
                                 <td width="500"><strong>Termék neve</strong></td>
@@ -428,10 +428,10 @@
 						        <br />
 						        <select id="manufacturerList" data-placeholder="" class="chzn-select" size="30" multiple style="width:270px;">
 							        <option value=""></option>
-							        @foreach (var manufacturer in @Model.Structures.Manufacturers)
+@*							        @foreach (var manufacturer in @Model.Structures.Manufacturers)
                                     { 
                                         <option value="@manufacturer.Id">@manufacturer.Name </option>
-                                    }
+                                    }*@
 						        </select>
 					        </div>
 					        <div id="cus_filter_2">
@@ -439,10 +439,10 @@
 						        <br />
 						        <select id="category1List" data-placeholder="" class="chzn-select" multiple style="width:270px;">
 							        <option value=""></option>
-							        @foreach (var category1 in @Model.Structures.FirstLevelCategories)
+@*							        @foreach (var category1 in @Model.Structures.FirstLevelCategories)
                                     { 
                                     <option value="@category1.Id">@category1.Name</option>
-                                    }
+                                    }*@
 						        </select>
 					        </div>
 					        <div id="cus_filter_3">
@@ -450,10 +450,10 @@
 						        <br />
 						        <select id="category2List" data-placeholder="" class="chzn-select" multiple style="width:270px;">
 							        <option value=""></option>
-							        @foreach (var category2 in @Model.Structures.SecondLevelCategories)
+@*							        @foreach (var category2 in @Model.Structures.SecondLevelCategories)
                                     { 
                                         <option value="@category2.Id">@category2.Name</option>
-                                    }
+                                    }*@
 						        </select>
 					        </div>
 					        <div id="cus_filter_4">
@@ -461,10 +461,10 @@
 						        <br />
                                 <select id="category3List" data-placeholder="" class="chzn-select" multiple style="width:270px;">
 							        <option value=""></option>
-                                    @foreach (var category3 in @Model.Structures.ThirdLevelCategories)
+@*                                    @foreach (var category3 in @Model.Structures.ThirdLevelCategories)
                                     { 
                                         <option value="@category3.Id">@category3.Name</option>
-                                    }
+                                    }*@
 						        </select>
 					        </div>
 				        </div>
@@ -475,7 +475,7 @@
                 <div id="banners_side" align="center">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div>
 
                 @*terméklista*@
-          <div id="cus_catalogue_right">
+                <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
 			            <table style = "display:none" border="0" cellspacing="0" cellpadding="0">
