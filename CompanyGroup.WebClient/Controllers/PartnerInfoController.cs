@@ -68,17 +68,17 @@ namespace CompanyGroup.WebClient.Controllers
 
             CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, true, true, true);
+            //CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, request.CanBeTaken, request.SalesStatus);
 
-            List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, List<CompanyGroup.Dto.PartnerModule.OrderInfo>>("SalesOrder", "GetOrderInfo", request);
+            //System.Net.Http.HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest, System.Net.Http.HttpResponseMessage>("SalesOrder", "GetOrderInfo", req);
 
-            //List<CompanyGroup.WebClient.Models.OrderInfo> orderInfoList = new List<CompanyGroup.WebClient.Models.OrderInfo>();
+            //CompanyGroup.Dto.PartnerModule.OrderInfoList orderInfoList = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.OrderInfoList>().Result : new CompanyGroup.Dto.PartnerModule.OrderInfoList(0, new List<CompanyGroup.Dto.PartnerModule.OrderInfo>());
 
-            //orderInfoList.AddRange(response.ConvertAll(x => new CompanyGroup.WebClient.Models.OrderInfo(x)));
+            //CompanyGroup.WebClient.Models.OrderInfoList viewModel = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList.Items, orderInfoList.OpenOrderAmount, visitor);
 
-            CompanyGroup.WebClient.Models.OrderInfoList model = new CompanyGroup.WebClient.Models.OrderInfoList(response, visitor);
+            //return Request.CreateResponse<CompanyGroup.WebClient.Models.OrderInfoList>(HttpStatusCode.OK, viewModel);
 
-            return View(model);
+            return View(visitor);
         }
 
         /// <summary>

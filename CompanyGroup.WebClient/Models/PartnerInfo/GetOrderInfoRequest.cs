@@ -10,26 +10,48 @@ namespace CompanyGroup.WebClient.Models
     {
         public GetOrderInfoRequest()
         {
-            this.OnOrder = true;
+            this.CanBeTaken = true;
 
-            this.Reserved = true;
+            this.SalesStatus = 1;
 
-            this.ReservedOrdered = true;
+            this.CustomerOrderNo = String.Empty;
+
+            this.ItemName = String.Empty;
+
+            this.ItemId = String.Empty;
+
+            this.SalesOrderId = String.Empty;
         }
 
         /// <summary>
-        /// StatusIssue mező értéke 6 (rendelés alatt)
+        /// CanBeTaken
         /// </summary>
-        public bool OnOrder { get; set; }
+        public bool CanBeTaken { get; set; }
 
         /// <summary>
-        /// StatusIssue mező értéke 4 (foglalt tényleges)
+        /// SalesStatus
         /// </summary>
-        public bool Reserved { get; set; }
+        public int SalesStatus { get; set; }
 
         /// <summary>
-        /// StatusIssue mező értéke 5 (foglalt rendelt)
+        /// vevő saját rendelés azonosító a vevő nyilvántartásában
         /// </summary>
-        public bool ReservedOrdered { get; set; }
+        public string CustomerOrderNo { get; set; }
+
+        /// <summary>
+        /// cikk neve
+        /// </summary>
+        public string ItemName { get; set; }
+
+        /// <summary>
+        /// cikk azonosítója
+        /// </summary>
+        public string ItemId { get; set; }
+
+        /// <summary>
+        /// megrendelés azonosító
+        /// </summary>
+        public string SalesOrderId { get; set; }
+
     }
 }

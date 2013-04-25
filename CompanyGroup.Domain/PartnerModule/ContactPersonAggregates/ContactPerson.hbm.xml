@@ -31,3 +31,4 @@
     exec InternetUser.ContactPersonSelect @CustomerId=:CustomerId, @ContactPersonId=:ContactPersonId, @DataAreaId=:DataAreaId
   </sql-query>
 </hibernate-mapping>
+

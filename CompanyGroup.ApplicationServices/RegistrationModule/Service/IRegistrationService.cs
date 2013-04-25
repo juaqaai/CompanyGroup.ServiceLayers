@@ -257,5 +257,12 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
         CompanyGroup.Dto.RegistrationModule.ContactPersons RemoveContactPerson(CompanyGroup.Dto.ServiceRequest.RemoveContactPerson request);
+
+        /// <summary>
+        /// Kapcsolattartó mentés
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Dto.RegistrationModule.ContactPersons SaveContactPerson(CompanyGroup.Dto.ServiceRequest.SaveContactPerson request);
     }
 }

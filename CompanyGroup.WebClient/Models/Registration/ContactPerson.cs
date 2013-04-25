@@ -30,7 +30,7 @@ namespace CompanyGroup.WebClient.Models
             this.Telephone = contactPerson.Telephone;
             this.UserName = contactPerson.UserName;
             this.WebAdmin = contactPerson.WebAdmin;
-
+            this.Positions = contactPerson.Positions;
             this.SelectedItem = this.Id.Equals(selectedId);
         }
 
@@ -142,6 +142,11 @@ namespace CompanyGroup.WebClient.Models
         public string Id { set; get; }
 
         public long RecId{ set; get; }
+
+        /// <summary>
+        /// megadott pozíciók
+        /// </summary>
+        public List<string> Positions { get; set; }
 
         /// <summary>
         /// szerkesztésre kiválasztott 

@@ -351,9 +351,38 @@ namespace CompanyGroup.WebApi.Controllers
         /// <param name="request"></param>
         [ActionName("AddContactPerson")] 
         [HttpPost]
-        public CompanyGroup.Dto.RegistrationModule.ContactPersons AddContactPerson(CompanyGroup.Dto.ServiceRequest.AddContactPerson request)
+        public HttpResponseMessage AddContactPerson(CompanyGroup.Dto.ServiceRequest.AddContactPerson request)
         {
-            return service.AddContactPerson(request);
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = service.AddContactPerson(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.ContactPersons>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
+
+        /// <summary>
+        /// kapcsolattartó mentése
+        /// </summary>
+        /// <param name="request"></param>
+        [ActionName("SaveContactPerson")]
+        [HttpPost]
+        public HttpResponseMessage SaveContactPerson(CompanyGroup.Dto.ServiceRequest.SaveContactPerson request)
+        {
+            try
+            {
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = service.SaveContactPerson(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.RegistrationModule.ContactPersons>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
         }
 
         /// <summary>

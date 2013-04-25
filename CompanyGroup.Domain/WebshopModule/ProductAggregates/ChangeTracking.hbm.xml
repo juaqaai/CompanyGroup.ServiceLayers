@@ -8,6 +8,7 @@
     <return-scalar column="DataAreaId" type="System.String"/>
     <return-scalar column="InventLocationId" type="System.String"/>
     <return-scalar column="ConfigId" type="System.String"/>
+    <return-scalar column="ItemState" type="System.Int32"/>
     exec InternetUser.InventSumCT @LastVersion=:LastVersion
   </sql-query>
   <sql-query name="InternetUser.PriceDiscTableCT" callable="true">

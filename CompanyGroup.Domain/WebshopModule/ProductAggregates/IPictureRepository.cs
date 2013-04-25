@@ -25,5 +25,12 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="id"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Picture GetInvoicePicture(int id);
+
+        /// <summary>
+        /// rendeléshez tartozó termékkép kiolvasás
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.Picture GetSalesOrderPicture(int id);
     }
 }

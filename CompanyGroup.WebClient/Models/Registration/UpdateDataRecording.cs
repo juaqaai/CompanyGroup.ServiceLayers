@@ -5,13 +5,18 @@ using System.Web;
 
 namespace CompanyGroup.WebClient.Models
 {
+    /// <summary>
+    /// adatmódosítás view model
+    /// </summary>
     public class UpdateDataRecording : CompanyGroup.Dto.ServiceResponse.UpdateDataRecording
     {
-        public UpdateDataRecording(CompanyGroup.Dto.ServiceResponse.UpdateDataRecording updateDataRecording)
+        /// <summary>
+        /// konstruktor
+        /// </summary>
+        /// <param name="updateDataRecording"></param>
+        public UpdateDataRecording(CompanyGroup.Dto.ServiceResponse.UpdateDataRecording updateDataRecording) : base(updateDataRecording.Succeeded, updateDataRecording.Message, updateDataRecording.Visitor)
         {
-            this.Message = updateDataRecording.Message;
 
-            this.Successed = updateDataRecording.Successed;
         }
     }
 }

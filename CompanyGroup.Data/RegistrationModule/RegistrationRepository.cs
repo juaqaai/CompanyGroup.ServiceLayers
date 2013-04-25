@@ -611,7 +611,8 @@ namespace CompanyGroup.Data.RegistrationModule
                                                                     .Set("WebAdministrator.SmsOrderConfirm", MongoDB.Bson.BsonBoolean.Create(webAdministrator.SmsOrderConfirm))
                                                                     .Set("WebAdministrator.Telephone", MongoDB.Bson.BsonString.Create(webAdministrator.Telephone))
                                                                     .Set("WebAdministrator.UserName", MongoDB.Bson.BsonString.Create(webAdministrator.UserName))
-                                                                    .Set("WebAdministrator.WebAdmin", MongoDB.Bson.BsonBoolean.Create(webAdministrator.WebAdmin));
+                                                                    .Set("WebAdministrator.WebAdmin", MongoDB.Bson.BsonBoolean.Create(webAdministrator.WebAdmin))
+                                                                    .Set("WebAdministrator.Positions", new MongoDB.Bson.BsonArray(MongoDB.Bson.BsonDocumentWrapper.CreateMultiple(webAdministrator.Positions)));
 
                 collection.Update(query, update);
 

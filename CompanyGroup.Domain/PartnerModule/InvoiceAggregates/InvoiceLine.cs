@@ -11,7 +11,7 @@ namespace CompanyGroup.Domain.PartnerModule
     {
         public InvoiceLine(int id, string invoiceId, DateTime itemDate, int lineNum, string itemId, string itemName, int quantity, decimal salesPrice, decimal lineAmount,
                            int quantityPhysical, int remain, int deliveryType, decimal taxAmount, decimal lineAmountMst, decimal taxAmountMst, string currencyCode,
-                           string description, long recId, bool pictureExists)
+                           string description, long recId, bool pictureExists, bool inStock, bool availableInWebShop)
         {
             this.Id = id;
             this.InvoiceId = invoiceId;
@@ -32,6 +32,8 @@ namespace CompanyGroup.Domain.PartnerModule
             this.Description = description;
             this.RecId = recId;
             this.PictureExists = pictureExists;
+            this.InStock = inStock;
+            this.AvailableInWebShop = availableInWebShop;
         }
 
         public int Id { get; set; }	
@@ -71,5 +73,9 @@ namespace CompanyGroup.Domain.PartnerModule
         public long RecId { set; get; }
 
         public bool PictureExists { set; get; }
+
+        public bool InStock { set; get; }
+
+        public bool AvailableInWebShop { set; get; }
     }
 }

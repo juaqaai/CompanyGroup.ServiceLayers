@@ -37,6 +37,7 @@ namespace CompanyGroup.Domain.RegistrationModule
         private int _NewsletterSubScription = 0;
         private string _SignatureEntityFile = String.Empty;
         private string _VatNumber = String.Empty;
+        private string _EUVatNumber = String.Empty;
         private ContactPersonCreate _WebAdministrator = new ContactPersonCreate();
         private MailAddressCreate _MailAddress = new MailAddressCreate();
         //private System.Collections.Generic.List<BankAccountReg> _bankAccounts = new System.Collections.Generic.List<BankAccountReg>();
@@ -167,6 +168,12 @@ namespace CompanyGroup.Domain.RegistrationModule
             get { return _VatNumber; }
         }
 
+        public string EUVatNumber
+        {
+            set { _EUVatNumber = value; }
+            get { return _EUVatNumber; }
+        }
+
         public ContactPersonCreate WebAdministrator
         {
             get { return _WebAdministrator; }
@@ -211,12 +218,14 @@ namespace CompanyGroup.Domain.RegistrationModule
             _NewsletterSubScription = int.Parse(reader.ReadElementString());
             _SignatureEntityFile = reader.ReadElementString();
             _VatNumber = reader.ReadElementString();
+            _EUVatNumber = reader.ReadElementString();
             //_WebAdministrator
             //_MailAddress
             //_bankAccounts
         }
 
         /// <summary>
+        /// 
         /// </summary>
         /// <param name="writer"></param>
         public void WriteXml(System.Xml.XmlWriter writer)
@@ -242,6 +251,7 @@ namespace CompanyGroup.Domain.RegistrationModule
             writer.WriteElementString("NewsletterSubScription", Convert.ToString(_NewsletterSubScription));
             writer.WriteElementString("SignatureEntityFile", _SignatureEntityFile);
             writer.WriteElementString("VatNumber", _VatNumber);
+            writer.WriteElementString("EUVatNumber", _EUVatNumber);
             writer.WriteStartElement("WebAdministrator");
             _WebAdministrator.WriteXml(writer);
             writer.WriteEndElement();

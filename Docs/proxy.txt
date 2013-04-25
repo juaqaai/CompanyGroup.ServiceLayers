@@ -1,2 +1,8 @@
 User: axproxy
 Pw: PwAxProxy
+
+
+C:\Program Files\Git\bin\git.exe push --recurse-submodules=check "CompanyGroup.ServiceLayers" master:master
+Done
+error: Failed connect to github.com:443; No error while accessing https://github.com/juhasza/CompanyGroup.ServiceLayers/info/refs
+fatal: HTTP request failed

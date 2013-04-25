@@ -777,7 +777,7 @@ companyGroup.webshop = $.sammy(function () {
             url: companyGroup.utils.instance().getWebshopApiUrl('SignIn'),
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
-            timeout: 10000,
+            timeout: 0,
             dataType: "json",
             processData: true,
             success: function (result) {

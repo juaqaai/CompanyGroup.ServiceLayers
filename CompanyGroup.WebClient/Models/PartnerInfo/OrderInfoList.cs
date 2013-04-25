@@ -8,12 +8,16 @@ namespace CompanyGroup.WebClient.Models
     /// </summary>
     public class OrderInfoList
     {
-        public OrderInfoList(List<CompanyGroup.Dto.PartnerModule.OrderInfo> items, Visitor visitor)
+        public OrderInfoList(List<CompanyGroup.Dto.PartnerModule.OrderInfo> items, decimal openOrderAmount, Visitor visitor)
         {
+            this.OpenOrderAmount = openOrderAmount;
+
             this.Items = items;
 
             this.Visitor = visitor;
         }
+
+        public decimal OpenOrderAmount { get; set; }
 
         public List<CompanyGroup.Dto.PartnerModule.OrderInfo> Items { get; set; }
 

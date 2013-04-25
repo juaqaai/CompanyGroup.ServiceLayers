@@ -34,9 +34,9 @@ namespace CompanyGroup.WebApi.Controllers
         {
             try
             {
-                List<CompanyGroup.Dto.PartnerModule.OrderInfo> response = service.GetOrderInfo(request);
+                CompanyGroup.Dto.PartnerModule.OrderInfoList response = service.GetOrderInfo(request);
 
-                return Request.CreateResponse<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>(HttpStatusCode.OK, response);
+                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.OrderInfoList>(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

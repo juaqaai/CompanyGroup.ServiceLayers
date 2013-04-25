@@ -114,7 +114,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
             CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
 
-            List<string> excludedItems = new List<string>();
+            //termékazonosítók listája, melyek nem kell hogy szerepeljenek a terméklista lekérdezés eredményében
+            List<string> excludedItems = inventSumList.NotValidItemIdList().ToList();
 
             //lekérdező paraméterek alapján visszaadott elemek száma
             long count = productRepository.GetListCount(dataAreaId, 
@@ -132,7 +133,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                          request.PriceFilter, 
                                                          priceFilterRelation,
                                                          ConvertData.ConvertStringListToDelimitedString(excludedItems));
-
 
             CompanyGroup.Domain.WebshopModule.Products products = null;
 
@@ -159,7 +159,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(request.StockFilter, cacheKey, "StockFilter");
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.TextFilter), cacheKey, request.TextFilter);
                 cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(request.VisitorId), cacheKey, request.VisitorId);
-
+                excludedItems.ForEach(x => cacheKey = CompanyGroup.Helpers.ContextKeyManager.AddToKey(!String.IsNullOrWhiteSpace(x), cacheKey, x));
                 products = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.Products>(CACHEKEY_PRODUCT);
             }
 

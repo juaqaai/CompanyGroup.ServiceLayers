@@ -198,6 +198,50 @@ namespace CompanyGroup.ApplicationServices.Test
             Assert.IsTrue(products.Items.Count > 0);
         }
 
+        /*
+                 ///     Id	VisitorId	ManufacturerId	Category1Id	Category2Id	Category3Id	PriceGroupId	Order   DataAreaId
+                ///    2370	247					                                                        3	150     bsc
+                ///    2371	247					                                                        2	170     hrp
+                ///    2372	247	        A010				                                            4	150     hrp
+                ///    2373	247	        A017				                                            4	150     hrp
+                ///    2374	247	        A029				                                            4	150     hrp
+                ///    2375	247	        A036				                                            5	140     hrp
+                ///    2376	247	        A040				                                            4	150     hrp
+                ///    2377	247	        A044				                                            5	140     hrp
+                ///    2378	247	        A052	           B007			                                5	140     hrp
+                ///    2379	247	        A057				                                            4	150     hrp
+                ///    2380	247	        A058				                                            3	160     hrp
+                ///    2381	247	        A075				                                            4	150     hrp
+                ///    2382	247	        A083	____	____	____	                                3	150     hrp
+                ///    2383	247	        A090				                                            4	150     hrp
+                ///    2384	247	        A093				                                            4	150     hrp
+                ///    2385	247	        A098				                                            4	150     hrp
+                ///    2386	247	        A102	____	____	____	                                3	150     hrp
+                ///    2387	247	        A122				                                            5	140     hrp
+                ///    2388	247	        A125				                                            3	160     hrp
+                ///    2389	247	        A133				                                            4	150     hrp
+                ///    2390	247	        A142				                                            4	150     hrp
+         */
+
+        [TestMethod]
+        public void VisitorPriceTest()
+        {
+            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = new CompanyGroup.Domain.PartnerModule.VisitorData();
+
+            List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = new List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>();
+
+            customerPriceGroups.Add(new Domain.PartnerModule.CustomerPriceGroup(2370, 247, "3",  "", "", "", "", 150, "bsc"));
+
+
+
+            visitorData.CustomerPriceGroups = customerPriceGroups;
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(new CompanyGroup.Domain.PartnerModule.VisitorData());
+
+            //List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> CustomerPriceGroups
+        }
+
+
         [TestMethod]
         public void ProductPrice()
         {
@@ -205,11 +249,13 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById("E90AB8E1307545E1879920001DC68844");
+            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById("9965656AE0234B83A7905D056D63387D");
 
             CompanyGroup.Domain.PartnerModule.Visitor visitor = new Domain.PartnerModule.Visitor(visitorData);
 
-            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("MBSPAGAEU", "hrp");
+            visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitorData.Id);
+
+            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("ACTA7B1", "hrp");
 
             decimal price = visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
                                                            product.Structure.Manufacturer.ManufacturerId, 

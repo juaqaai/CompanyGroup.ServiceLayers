@@ -2,13 +2,29 @@
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "GetContactPerson", Namespace = "CompanyGroup.Dto.ServiceRequest")]
     public class GetContactPerson
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        public GetContactPerson() : this(String.Empty, String.Empty, String.Empty) { }
+
+        /// <summary>
+        /// kapcsolattartók lekérdezése
+        /// </summary>
+        /// <param name="registrationId"></param>
+        /// <param name="visitorId"></param>
+        /// <param name="languageId"></param>
+        public GetContactPerson(string registrationId, string visitorId, string languageId)
+        {
+            this.RegistrationId = registrationId;
+
+            this.VisitorId = visitorId;
+
+            this.LanguageId = languageId;
+        }
+
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 3)]
+        public string VisitorId { get; set; }
+
         public string LanguageId { get; set; }
     }
 }

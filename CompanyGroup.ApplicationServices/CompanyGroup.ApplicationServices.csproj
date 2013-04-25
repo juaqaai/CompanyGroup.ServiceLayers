@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaintainModule\Service\IPackageService.cs" />
     <Compile Include="PartnerModule\Adapter\InvoiceInfoToInvoiceInfo.cs" />
     <Compile Include="PartnerModule\Adapter\OrderInfoToOrderInfo.cs" />
     <Compile Include="PartnerModule\Adapter\PagerToPager.cs" />
@@ -169,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MaintainModule\Adapter\" />
-    <Folder Include="MaintainModule\Service\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompanyGroup.Data\CompanyGroup.Data.csproj">

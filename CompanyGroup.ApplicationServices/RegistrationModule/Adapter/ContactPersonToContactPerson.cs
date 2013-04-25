@@ -35,7 +35,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 SmsOrderConfirm = from.SmsOrderConfirm,
                 Telephone = from.Telephone,
                 UserName = from.UserName,
-                WebAdmin = from.WebAdmin
+                WebAdmin = from.WebAdmin, 
+                Positions = from.Positions
             };
         }
 
@@ -70,7 +71,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 SmsOrderConfirm = from.SmsOrderConfirm,
                 Telephone = from.Telephone,
                 UserName = from.UserName,
-                WebAdmin = from.WebAdmin
+                WebAdmin = from.WebAdmin, 
+                Positions = from.Positions
             };
         }
     }

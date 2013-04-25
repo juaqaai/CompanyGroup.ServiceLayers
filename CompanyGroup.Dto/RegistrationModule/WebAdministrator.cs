@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.RegistrationModule
 {
+    /// <summary>
+    /// webadminisztrátor adatok DTO
+    /// </summary>
     public class WebAdministrator
     {
         public WebAdministrator(bool allowOrder, bool allowReceiptOfGoods, string contactPersonId, string email, bool emailArriveOfGoods, bool emailOfDelivery, bool emailOfOrderConfirm,
                                 string firstName, bool invoiceInfo, string lastName, bool leftCompany, bool newsletter, string password, bool priceListDownload, long recId,
-                                long refRecId, bool smsArriveOfGoods, bool smsOfDelivery, bool smsOrderConfirm, string telephone, string userName)
+                                long refRecId, bool smsArriveOfGoods, bool smsOfDelivery, bool smsOrderConfirm, string telephone, string userName, List<string> positions)
         {
             this.AllowOrder = allowOrder;
             this.AllowReceiptOfGoods = allowReceiptOfGoods;
@@ -30,9 +33,10 @@ namespace CompanyGroup.Dto.RegistrationModule
             this.SmsOrderConfirm = smsOrderConfirm;
             this.Telephone = telephone;
             this.UserName = userName;
+            this.Positions = positions;
         }
 
-        public WebAdministrator() : this(false, false, "", "", false,  false, false, "", false, "",  false, false, "", false, 0, 0,  false, false, false, "", "") { }
+        public WebAdministrator() : this(false, false, String.Empty, String.Empty, false, false, false, String.Empty, false, String.Empty, false, false, String.Empty, false, 0, 0, false, false, false, String.Empty, String.Empty, new List<string>()) { }
 
         /// <summary>
         /// kapcsolattartó egyedi azonosító
@@ -138,6 +142,11 @@ namespace CompanyGroup.Dto.RegistrationModule
         /// refRec id
         /// </summary>
         public long RefRecId { get; set; }
+
+        /// <summary>
+        /// megadott pozíciók
+        /// </summary>
+        public List<string> Positions { get; set; }
     }
 
 

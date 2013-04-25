@@ -68,7 +68,7 @@ namespace CompanyGroup.Data.Test
 
             string categories = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "B004" });
 
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, count);
+            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, count, String.Empty);
 
             Assert.IsTrue(products.Count > 0);
 

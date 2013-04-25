@@ -73,12 +73,6 @@
           <AssociatedConnUserName />
           <FullPath>CurrentVersionCT.sql</FullPath>
         </FileNode>
-        <FileNode Name="InventSumCT.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>InventSumCT.sql</FullPath>
-        </FileNode>
         <FileNode Name="InvoiceExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -97,12 +91,6 @@
           <AssociatedConnUserName />
           <FullPath>PriceDiscNotifier.sql</FullPath>
         </FileNode>
-        <FileNode Name="PriceDiscTableCT.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>PriceDiscTableCT.sql</FullPath>
-        </FileNode>
         <FileNode Name="QueryNotification.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -114,6 +102,12 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>RepresentativeExtract.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SalesOrderExtract.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SalesOrderExtract.sql</FullPath>
         </FileNode>
         <FileNode Name="SecondHandCatalogueExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -138,6 +132,18 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>StockNotifier.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SyncMetadata.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SyncMetadata.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Tables.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Tables.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

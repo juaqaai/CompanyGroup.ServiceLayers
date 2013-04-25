@@ -32,7 +32,7 @@ EXEC sp_xml_preparedocument @handle OUTPUT, @XMLDoc
 		 
 EXEC sp_xml_removedocument @handle
 
-SELECT * FROM InternetUser.Catalogue where ProductId = 'T110-11J'
+SELECT * FROM InternetUser.Catalogue where ProductId = 'G55VWIX143H'
 
 */
 

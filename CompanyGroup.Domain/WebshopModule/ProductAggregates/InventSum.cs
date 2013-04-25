@@ -10,7 +10,7 @@ namespace CompanyGroup.Domain.WebshopModule
     /// </summary>
     public class InventSum
     {
-        public InventSum(int version, string itemId, int availPhysical, string dataAreaId, string inventLocationId, string configId)
+        public InventSum(int version, string itemId, int availPhysical, string dataAreaId, string inventLocationId, string configId, int itemState)
         {
             this.Version = version;
             this.ItemId = itemId;
@@ -18,9 +18,10 @@ namespace CompanyGroup.Domain.WebshopModule
             this.DataAreaId = dataAreaId;
             this.InventLocationId = inventLocationId;
             this.ConfigId = configId;
+            this.ItemState = (ItemState)itemState;
         }
 
-        public InventSum() : this(0, String.Empty, 0, String.Empty, String.Empty, String.Empty) { }
+        public InventSum() : this(0, String.Empty, 0, String.Empty, String.Empty, String.Empty, 1) { }
 
         /// <summary>
         /// Change tracking verziószáma
@@ -51,6 +52,36 @@ namespace CompanyGroup.Domain.WebshopModule
         /// konfiguráció (ALAP)
         /// </summary>
         public string ConfigId { get; set; }
+
+        /// <summary>
+        /// 0: aktív, 1: kifutó, 2: passzív
+        /// </summary>
+        public ItemState ItemState { get; set; }
+
+        /// <summary>
+        /// A config értéke, a használt config prefix értékével egyezik?
+        /// </summary>
+        public bool IsSecondHandConfig
+        {
+            get { return this.ConfigId.StartsWith(CompanyGroup.Domain.Core.Constants.SecondHandPrefix, StringComparison.OrdinalIgnoreCase); }
+        }
+
+        /// <summary>
+        /// vagy bsc, vagy pedig hrp használt készlet a raktárkód értéke
+        /// </summary>
+        public bool IsSecondHandInventLocationId
+        {
+            get { return this.InventLocationId.Equals(CompanyGroup.Domain.Core.Constants.SecondhandStoreBsc, StringComparison.OrdinalIgnoreCase) 
+                         || this.InventLocationId.Equals(CompanyGroup.Domain.Core.Constants.SecondhandStoreHrp, StringComparison.OrdinalIgnoreCase); }
+        }
+
+        /// <summary>
+        /// kifutó-e a cikk?
+        /// </summary>
+        public bool IsEndOfSales
+        {
+            get { return this.ItemState == global::ItemState.EndOfSales; }
+        }
 
     }
 
@@ -100,6 +131,21 @@ namespace CompanyGroup.Domain.WebshopModule
                                                                                                                      && x.ConfigId.Equals(configId, StringComparison.OrdinalIgnoreCase));
 
             return (inventSum == null) ? availPhysical : inventSum.AvailPhysical;
+        }
+
+        /// <summary>
+        /// termékazonosító lista, melyek kifutó státuszúak és nincs belőlük készlet, 
+        /// vagy használt configon vannak és nincs belőlük készlet
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> NotValidItemIdList()
+        {
+            IEnumerable<InventSum> list = this.Where(x => 
+                                                    {
+                                                        return ((x.IsEndOfSales) || (x.IsSecondHandConfig) ) && x.AvailPhysical.Equals(0);
+                                                    });
+
+            return list.Select(x => x.ItemId);
         }
     }
 }

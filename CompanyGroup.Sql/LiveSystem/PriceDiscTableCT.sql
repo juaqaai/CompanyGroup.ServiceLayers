@@ -16,8 +16,13 @@ CREATE PROCEDURE InternetUser.PriceDiscTableCT( @LastVersion BIGINT = 0 )
 AS
 SET NOCOUNT ON
 
+	IF (@LastVersion = 0)
+	BEGIN
+		SET @LastVersion = ISNULL((SELECT MAX(LastVersion) FROM ExtractInterface.dbo.SyncMetadata WHERE TableName = 'PriceDiscTable' AND [Status] = 1), 0);
+	END
+
 	SELECT ct.SYS_CHANGE_VERSION as [Version], 
---	ct.SYS_CHANGE_OPERATION as Operation,
+	ct.SYS_CHANGE_OPERATION as Operation,
 	[ItemRelation], 
 	[AccountRelation], 
 	[Amount],
@@ -31,16 +36,15 @@ SET NOCOUNT ON
 	RIGHT OUTER JOIN changetable(changes Axdb_20130131.dbo.PRICEDISCTABLE, @LastVersion) as ct
 	on P.RecId = ct.RecId and P.DataAreaId = ct.DataAreaId
 	WHERE ct.SYS_CHANGE_OPERATION <> 'D'
-	GROUP BY 
 	ORDER BY ct.SYS_CHANGE_VERSION;
 
 RETURN
 
 GO
-GRANT EXECUTE ON InternetUser.PriceDiscTableCT TO InternetUser
+GRANT EXECUTE ON InternetUser.PriceDiscTableCT TO [HRP_HEADOFFICE\AXPROXY]
 GO
 
--- exec InternetUser.PriceDiscTableCT 0
+-- exec InternetUser.PriceDiscTableCT 1310
 
 /*
 select top 1 * from Axdb_20130131.dbo.PRICEDISCTABLE

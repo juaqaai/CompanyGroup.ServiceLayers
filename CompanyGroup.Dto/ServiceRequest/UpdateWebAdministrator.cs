@@ -3,16 +3,29 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "UpdateWebAdministrator", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// webadminisztrátor adatainak módosítása
+    /// </summary>
     public class UpdateWebAdministrator
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 2)]
+        /// <summary>
+        /// választott nyelv
+        /// </summary>
         public string LanguageId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "WebAdministrator", Order = 3)]
+        /// <summary>
+        /// webadminisztrátor, (kapcsolattartó)
+        /// </summary>
         public CompanyGroup.Dto.RegistrationModule.WebAdministrator WebAdministrator { get; set; }
+
+        /// <summary>
+        /// látogató azonosítója    
+        /// </summary>
+        public string VisitorId { get; set; }
     }
 }

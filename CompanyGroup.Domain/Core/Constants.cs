@@ -49,5 +49,7 @@ namespace CompanyGroup.Domain.Core
         public const string PaymentIdUtanvet = "U5";
         public const string PaymentIdElout = "ELOUT";
 
+        public const string SecondHandPrefix = "XX";
+
     }
 }

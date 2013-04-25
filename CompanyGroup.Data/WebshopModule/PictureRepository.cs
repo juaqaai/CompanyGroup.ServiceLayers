@@ -94,5 +94,28 @@ namespace CompanyGroup.Data.WebshopModule
             }
         }
 
+        public CompanyGroup.Domain.WebshopModule.Picture GetSalesOrderPicture(int id)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require((id > 0), "The PictureId parameter cannot be null!");
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SalesOrderPictureSelect")
+                                                .SetInt32("Id", id)
+                                                .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
+
+                CompanyGroup.Domain.WebshopModule.Picture picture = query.UniqueResult<CompanyGroup.Domain.WebshopModule.Picture>();
+
+                if (picture == null) return new Domain.WebshopModule.Picture();
+
+                return picture;
+            }
+            catch
+            {
+                return new CompanyGroup.Domain.WebshopModule.Picture();
+            }
+        }
+
     }
 }

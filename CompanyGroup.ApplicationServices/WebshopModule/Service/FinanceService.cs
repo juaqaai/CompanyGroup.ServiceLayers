@@ -157,14 +157,31 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Require((financeOffer != null), "FinanceOffer cannot be null!");
 
+                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financeOffer.TotalAmount);
+
+                System.Collections.Specialized.StringCollection strColl = new System.Collections.Specialized.StringCollection();
+
+                leasingOptionList.ForEach( x => {
+
+                    double d = CompanyGroup.Domain.WebshopModule.LeasingOptions.CalculateValue(x.PercentValue, financeOffer.TotalAmount);
+
+                    strColl.Add(Convert.ToString(d));
+                });
+
+                string financedAmount = CompanyGroup.Helpers.ConvertData.ConvertIntToString(financeOffer.TotalAmount);
+
+                string pdfFileWithPath = String.Format("{0}/{1}.pdf", CompanyGroup.Helpers.ConfigSettingsParser.GetString("PdfPath", ""), visitor.VisitorId);
+
+                financeRepository.CreateLeasingDocument(financedAmount, strColl, pdfFileWithPath);
+
                 //levélküldés
-                bool sendSuccess = SendFinanceOfferMail(request, financeOffer, visitor);
+                //bool sendSuccess = SendFinanceOfferMail(request, financeOffer, visitor);
 
                 //kosár beállítása finanszírozásra elküldött státuszba, ajánlathoz szükséges adatok mentése
                 financeRepository.Post(financeOffer); 
 
                 //leasing opciók lekérdezése
-                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(0);
+                leasingOptionList = financeRepository.GetLeasingByFinancedAmount(0);
 
                 //kalkuláció
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new CompanyGroup.Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
@@ -176,7 +193,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = new CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment()
                 {
                     LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                    EmaiNotification = sendSuccess,
+                    EmaiNotification = true,
                     Message = ""
                 };
 

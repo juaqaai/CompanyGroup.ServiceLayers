@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="PriceUpdater"
   DTS:PackageType="5"
-  DTS:VersionBuild="82"
-  DTS:VersionGUID="{74EE916D-7AAF-404C-BD24-4F771D1872D3}">
+  DTS:VersionBuild="91"
+  DTS:VersionGUID="{D2F101FE-2930-4096-BD15-7334193564AF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -366,6 +366,13 @@
                       cachedName="Version"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Version]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Version]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Operation]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="Operation"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Operation]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Operation]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -406,6 +413,11 @@
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Version]"
                       dataType="i4"
                       name="Version" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Operation]"
+                      dataType="wstr"
+                      length="1"
+                      name="Operation" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -732,7 +744,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{F574DD6F-2471-4875-AA20-0330579C687D}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_InsertSyncVersion ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -762,7 +774,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{F574DD6F-2471-4875-AA20-0330579C687D}"
           SQLTask:SqlStatementSource="exec dbo.usp_LastSyncVersion ?;"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -869,7 +881,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{0F29169F-F018-4105-906F-BD516B87959E}"
           SQLTask:SqlStatementSource="truncate table Web.InternetUser.Stage_PriceDiscTable;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1284,14 +1296,14 @@
           Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
           TopLeft="355,827" />
         <AnnotationLayout
-          Text="Utolsó ár szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'InventSum'&#xA;output: @LastSyncVersion AS LastSyncVersion"
+          Text="Utolsó ár szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'InventSum'&#xA;output: @LastSyncVersion AS LastSyncVersion&#xD;&#xA;ExtractInterface adatbázisban"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="281,90"
+          Size="281,106"
           Id="86d576ac-877d-4093-a97c-80d2e2051b0d"
           TopLeft="498,257" />
         <AnnotationLayout
-          Text="TechnicalMetadata adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'InventSum' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
+          Text="ExtractInterface adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'InventSum' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="542,74"
@@ -1353,6 +1365,10 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="131,42"
+          Id="Package\Data Flow Task\Row Count"
+          TopLeft="209,212" />
+        <NodeLayout
           Size="151,42"
           Id="Package\Data Flow Task\OLE DB Source"
           TopLeft="196,76" />
@@ -1361,13 +1377,31 @@
           Id="Package\Data Flow Task\Derived Column"
           TopLeft="202,334" />
         <NodeLayout
-          Size="131,42"
-          Id="Package\Data Flow Task\Row Count"
-          TopLeft="209,212" />
-        <NodeLayout
           Size="172,42"
           Id="Package\Data Flow Task\OLE DB Destination"
           TopLeft="192,458" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
+          TopLeft="277,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
           TopLeft="273,118">
@@ -1404,28 +1438,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,74.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
-          TopLeft="277,254">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

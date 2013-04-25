@@ -19,6 +19,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.Bare)]
-        List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request);
+        CompanyGroup.Dto.PartnerModule.OrderInfoList GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request);
     }
 }

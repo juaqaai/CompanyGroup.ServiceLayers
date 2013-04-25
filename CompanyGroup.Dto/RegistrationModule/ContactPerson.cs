@@ -5,12 +5,12 @@ namespace CompanyGroup.Dto.RegistrationModule
 {
     public class ContactPerson
     {
-        public ContactPerson() : this("", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, "", "", false, "", 0) { }
+        public ContactPerson() : this("", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, "", "", false, "", 0, new List<string>()) { }
 
         public ContactPerson(string contactPersonId, string firstName, string lastName,
                              bool allowOrder, bool allowReceiptOfGoods, bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery,
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, bool webAdmin, bool priceListDownload, bool invoiceInfo,
-                             string userName, string password, bool newsletter, string telephone, string email, bool leftCompany, string id, long recId)
+                             string userName, string password, bool newsletter, string telephone, string email, bool leftCompany, string id, long recId, List<string> positions)
         {
             this.ContactPersonId = contactPersonId;
             this.FirstName = firstName;
@@ -34,6 +34,7 @@ namespace CompanyGroup.Dto.RegistrationModule
             this.LeftCompany = leftCompany;
             this.Id = id;
             this.RecId = recId;
+            this.Positions = positions;
         }
 
         /// <summary>
@@ -145,8 +146,16 @@ namespace CompanyGroup.Dto.RegistrationModule
         /// AX rekord azonosító
         /// </summary>
         public long RecId { set; get; }
+
+        /// <summary>
+        /// megadott pozíciók
+        /// </summary>
+        public List<string> Positions { get; set; }
     }
 
+    /// <summary>
+    /// kapcsolattartók lista 
+    /// </summary>
     public class ContactPersons
     {
         public List<CompanyGroup.Dto.RegistrationModule.ContactPerson> Items { get; set; }
@@ -156,9 +165,13 @@ namespace CompanyGroup.Dto.RegistrationModule
             this.Items = new List<CompanyGroup.Dto.RegistrationModule.ContactPerson>();
         }
 
-        public ContactPersons(List<CompanyGroup.Dto.RegistrationModule.ContactPerson> items)
+        public ContactPersons(List<CompanyGroup.Dto.RegistrationModule.ContactPerson> items, CompanyGroup.Dto.PartnerModule.Visitor visitor)
         {
             this.Items = items;
+
+            this.Visitor = visitor;
         }
+
+        public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
     }
 }

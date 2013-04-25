@@ -14,7 +14,7 @@
                             <table align="right" id="open_order" >
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Önnek<strong> 3.200.000 Ft</strong> értékű nyitott megrendelése van. </td>
+                                <td nowrap="nowrap" style=" text-align: right;">Önnek<strong> <span id="span_openOrderAmount"></span></strong> értékű nyitott megrendelése van. </td>
                             </tr>
                             </table>
                         </td>
@@ -23,23 +23,23 @@
                     <form method="post" action="#/orderInfoByFilter">
                     <table class="szamlaszuro"  width="940" border="0" cellspacing="8" cellpadding="2">
                         <tr>
-                        <td width="138"><input type="radio" name="radio_paymenttype" value="0" />
+                        <td width="138"><input type="radio" name="radio_canbetaken" value="1" checked="checked" />
                         <strong>Azonnal elvihető</strong></td>
-                        <td colspan="5"><input type="radio" name="radio_paymenttype" value="1" checked="checked" />
+                        <td colspan="5"><input type="radio" name="radio_canbetaken" value="0"/>
                         <strong>Beszerzés után elérhető</strong></td>
                         </tr>
                         <tr>
                         <td nowrap="nowrap"><strong>Megrendelés szám:</strong></td>
-                        <td width="144" nowrap="nowrap"><input name="txt_invoiceid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td width="144" nowrap="nowrap"><input name="txt_salesorderid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td width="148" nowrap="nowrap"><strong>Terméknév:</strong></td>
                         <td width="144" nowrap="nowrap"><input name="txt_itemname" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td width="122" align="right" nowrap="nowrap"><strong>Termék azonositó</strong>:</td>
                         <td width="170" align="left" nowrap="nowrap"><input name="txt_itemid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
 				        </tr>
                         <tr>
-				        <td><strong>Vevő rendelés szám:</strong></td>
-                        <td><input name="txt_salesorderid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
-                        <td colspan="4"><strong>Egyedi rendelés  sorozattszám:</strong><input name="txt_serialnumber" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+				        <td><strong>Vevő rendelés száma:</strong></td>
+                        <td><input name="txt_customerorderno" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td colspan="4"></td>
                         </tr>
                         <tr>
                         <td colspan="6" align="right"><input type="submit" value="Keresés" />@*<input name="btn_exceldownload" type="button" value="Letöltés excel fájlba" />*@</td>
@@ -67,7 +67,12 @@
                             <table style="margin-bottom:5px;" id="dept_price" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: ${AmountOverdue} ${CurrencyCode}</strong></td>
+                                <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: ${AmountOverdue} {{if CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if CurrencyCode == 'USD'}} $
+											{{/if}}</strong></td>
                             </tr>
                             </table>
 							{{/if}}
@@ -75,7 +80,12 @@
                             <table style="margin-bottom:5px;" style id="open_order" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> ${AmountCredit} ${CurrencyCode}</strong></td>
+                                <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> ${AmountCredit} {{if CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if CurrencyCode == 'USD'}} $
+											{{/if}}</strong></td>
                             </tr>
                             </table>
 							
@@ -99,17 +109,17 @@
                         </tr>
                         <tr>
                         <td nowrap="nowrap"><strong>Számlaszám:</strong></td>
-                        <td nowrap="nowrap"><input name="txt_invoiceid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td nowrap="nowrap"><input name="txt_invoiceid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td nowrap="nowrap"><strong>Terméknév:</strong></td>
-                        <td nowrap="nowrap"><input name="txt_itemname" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td nowrap="nowrap"><input name="txt_itemname" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td align="right" nowrap="nowrap"><strong>Termék azonositó</strong>:</td>
-                        <td align="left" nowrap="nowrap"><input name="txt_itemid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td align="left" nowrap="nowrap"><input name="txt_itemid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
 					    </tr>
                         <tr>
 					    <td><strong>Vevő rendelés szám:</strong></td>
-                        <td><input name="txt_salesorderid" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><input name="txt_salesorderid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td><strong>Termék sorozattszám:</strong></td>
-                        <td><input name="txt_serialnumber" type="text" value="Kattintson ide" onfocus="if(this.value=='Kattintson ide')this.value=''" onblur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><input name="txt_serialnumber" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
                         <td><strong>Dátum:</strong></td>
                         <td><select name="select_dateintervall">
                             <option value="0" selected="selected">Összes</option>
@@ -138,7 +148,7 @@
                     </td>
                     <td><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /></td>
                     <td>
-                        <div id="dashboardtext"><a href="#/changePassword">JELSZÓVÁLTOZTATÁS</a></div>
+                        <div id="dashboardtext"><a href="#/changepassword">JELSZÓVÁLTOZTATÁS</a></div>
                         <br/>
                         <div id="changepass"></div>
                     </td>
@@ -253,13 +263,19 @@ StatusIssueIsOnOrder*@
                 {{each( i, item ) Items}}
                 <table style="margin:0px 0px 10px 0px;" id="szamla_header" width="940" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td width="287" align="left"><strong>Megrendelés száma:</strong></td>
-                    <td width="449" align="left"><strong>Megrendelés kelte:</strong></td>
-                    <td width="204" align="right" rowspan="2"><strong><a style="text-decoration:none; color:#FFF;" id="expand_btn" href="#/expand_invoice">Részletes nézet</a></strong></td>
+                    <td width="240" align="left"><strong>Megrendelés száma:</strong></td>
+                    <td width="240" align="left"><strong>Megrendelés kelte:</strong></td>
+					<td width="190" ><strong>Átvétel módja:</strong></td>
+					<td width="190" ><strong>Fizetés: </strong></td>
+					<td width="190" ><strong>Rendelés összesen: </strong></td>
+                    <td width="204" align="right" rowspan="2"><!--strong><a style="text-decoration:none; color:#FFF;" id="expand_btn" href="#/invoice_details/">Részletes nézet</a></strong--></td>
                 </tr>
 			    <tr>
-                    <td align="left">${item.SalesId}</td>
+					<td align="left">${item.SalesId}</td>
                     <td align="left">${item.CreatedDate}</td>
+					<td align="left">{{if WithDelivery}}Szállítás{{else}}Személyes átvétel{{/if}}</td>
+					<td align="left">${item.Payment}</td>
+					<td align="left">12300 Ft</td>
                 </tr>
                 </table>
 
@@ -267,11 +283,11 @@ StatusIssueIsOnOrder*@
                     <div  style="margin:0px 0px 10px 0px;" class="invoice_item_template">
                         {{each( j, line ) item.Lines}}
                         <div class="expand_heading">
-				            <table style="padding:3px" width="966" border="0" cellspacing="2" cellpadding="0">
+				            <table style="padding:3px" width="966" border="0" cellspacing="2" cellpadding="1">
 				                <tr>
 				                    <td width="100px" align="left" nowrap="nowrap">Azonosító:<br></td>
 				                    <td width="300px align="left" nowrap="nowrap">Terméknév:</td>
-				                    <td width="110px"  align="right" nowrap="nowrap">Mennyiség</td>
+				                    <td width="110px"  align="right" nowrap="nowrap">Mennyiség:</td>
 				                    <td width="110px"  align="right" nowrap="nowrap">Egységár:</td>
 				                    <td width="110px"  align="right" nowrap="nowrap">Nettó összesen:</td>
 				                    <td width="110px"  align="right" nowrap="nowrap">Bruttó összesen:</td>
@@ -281,10 +297,20 @@ StatusIssueIsOnOrder*@
 				                  <td align="left"><strong>${line.ItemId}</strong></td>
 				                  <td align="left" ><strong>${line.Name}</strong></td>
 				                  <td align="right" nowrap="nowrap"><strong>${line.Quantity}</strong></td>
-				                  <td align="right" nowrap="nowrap"><strong><span style="text-align: right;">${line.SalesPrice} ${line.CurrencyCode}</span></strong></td>
-				                  <td align="right" nowrap="nowrap"><strong>${line.LineAmount}</strong></td>
+				                  <td align="right" nowrap="nowrap"><strong><span style="text-align: right;">${line.SalesPrice} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}}</span></strong></td>
+				                  <td align="right" nowrap="nowrap"><strong>${line.LineAmount} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}} </strong></td>
 				                  <td align="right" nowrap="nowrap"><strong>bruttó ár</strong></td>
-				                  <td align="right" nowrap="nowrap"><strong>Készleten</strong></td>
+				                  <td align="right" nowrap="nowrap"><strong>{{if InStock}}Készleten{{else}}Nem elérhető{{/if}}</strong></td>
                               </tr>
 				            </table>
                         </div>
@@ -293,8 +319,8 @@ StatusIssueIsOnOrder*@
 				                <tr>
 				                    <td width="200" valign="top">
 				                        <div class="cus_termekkep">
-                                        {{if line}}
-				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getInvoicePictureUrl(line.RecId)}" alt="${companyGroup.utils.instance().getInvoicePictureUrl(line.RecId)}" /></a>
+                                        {{if PictureExists}}
+				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" alt="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" /></a>
 				                        {{else}}
 				                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                         {{/if}}
@@ -311,15 +337,17 @@ StatusIssueIsOnOrder*@
                         </div>                            		        
                         <form action="#/addLineToShoppingCart/${line.ItemId}" method="post"> 
 			            <table width="940px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-				        <tr>
+				        <tr> {{if AvailableInWebShop}}
 				            <td width="12%" nowrap="nowrap">
-				                <div class="cus_prod_table_morelink">
+				               
+								<div class="cus_prod_table_morelink">
 			                      <a href="#/details/${line.ItemId}/${line.DataAreaId}" title="Részletes termékadatlap ${line.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(line.ItemId)}">Részletes adatlap</a>
 				                </div>
+								
                             </td>
-                            <td width="0%">&nbsp;</td>
+                            <td width="0%">&nbsp;</td>{{/if}}
                             <td width="26%">
-                            {{if line}}
+                            {{if AvailableInWebShop}}
                               <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>WEBÁRUZÁZBAN ELÉRHETŐ</b></span></div>
                             {{else}}
                                 <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="used"><b>WEBÁRUZÁZBAN NEM ELÉRHETŐ</b></span></div>
@@ -327,13 +355,15 @@ StatusIssueIsOnOrder*@
                             <td width="22%"></td>
                             <td width="26%"><p>&nbsp;</p></td>
                             <td width="8%" nowrap="nowrap">
-                                <div class="cus_prod_table_quantity"><input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span></div>
+                                  {{if AvailableInWebShop}}<div class="cus_prod_table_quantity"><input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span></div>
                             </td>
                             <td width="6%" align="right" nowrap="nowrap">
-                              <div class="cus_prod_table_basket">
+                            
+							  <div class="cus_prod_table_basket">
                                 <input type="hidden" name="hidden_productid" value="${line.ItemId}" />
                                 <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" />
                               </div>
+							  {{/if}}
                             </td>
                         </tr>
                         </table>
@@ -366,6 +396,7 @@ StatusIssueIsOnOrder*@
 			        <td width="15%" align="right"> {{if Pager.NextEnabled}} <a style="text-decoration:none; color:#999;" href="#/nextInvoiceInfoPage/${Pager.NextPageIndex}">►</a> {{else}}{{/if}} </td>
 			        <td width="27%" align="right"> {{if Pager.LastEnabled}} <a style="letter-spacing:-3px; text-decoration:none; color:#999;" href="#/lastInvoiceInfoPage">►►</a> {{else}}{{/if}} </td>
 			        </tr>
+
 	            </table>
 				<br>
                 </script>
@@ -388,8 +419,18 @@ StatusIssueIsOnOrder*@
                     <td align="left" >${item.Header.InvoiceDate}</td>
                     <td align="left" >${item.Header.DueDate}</td>
                     <td align="left" >${item.Header.SourceCompany}</td>
-                    <td >${item.Header.InvoiceAmount} ${item.Header.CurrencyCode}</td>
-                    <td >{{if (item.Header.InvoiceCredit <= "00,00") }}<span style="background-color:Green; padding:1px; border-radius:2px;"> ${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}</span>{{else}}<span style="background-color:#FF0032; padding:1px; border-radius:2px;">${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}{{/if}}</span></td>
+                    <td >${item.Header.InvoiceAmount} {{if item.Header.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if item.Header.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if item.Header.CurrencyCode == 'USD'}} $
+											{{/if}}</td>
+                    <td >{{if (item.Header.InvoiceCredit <= "00,00") }}<span style="background-color:Green; padding:1px; border-radius:2px;"> ${item.Header.InvoiceCredit} ${item.Header.CurrencyCode}</span>{{else}}<span style="background-color:#FF0032; padding:1px; border-radius:2px;">${item.Header.InvoiceCredit} {{if item.Header.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if item.Header.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if item.Header.CurrencyCode == 'USD'}} $
+											{{/if}}{{/if}}</span></td>
                     </tr>
                 </table>
                 {{if item.Lines.length > 0}}
@@ -397,11 +438,11 @@ StatusIssueIsOnOrder*@
                     <div  style="margin:0px 0px 10px 0px;" class="invoice_item_template">
                         {{each( j, line ) item.Lines}}
                         <div class="expand_heading">
-				            <table style="padding:3px" width="940" border="0" cellspacing="2" cellpadding="0">
+				            <table style="padding:3px" width="940" border="0" cellspacing="2" cellpadding="1">
 				                <tr>
 				                    <td width="100px" align="left" nowrap="nowrap">Azonosító:<br></td>
 				                    <td width="500px align="left" nowrap="nowrap">Terméknév:</td>
-				                    <td width="125px"  align="right" nowrap="nowrap">Mennyiség</td>
+				                    <td width="125px"  align="right" nowrap="nowrap">Mennyiség:</td>
 				                    <td width="125px"  align="right" nowrap="nowrap">Egységár:</td>
 				                    <td width="125px"  align="right" nowrap="nowrap">Nettó összesen:</td>
 				                    <td width="110px"  align="right" nowrap="nowrap">Bruttó összesen:</td>
@@ -410,9 +451,24 @@ StatusIssueIsOnOrder*@
 				                  <td align="left"><strong>${SequenceNumber} ${line.ItemId}</span></strong></td>
 				                  <td align="left" ><strong>${line.Name}</strong></td>
 				                  <td align="right" nowrap="nowrap"><strong><span style="color:Green">${line.Quantity} db</span></strong></td>
-				                  <td align="right" nowrap="nowrap"><strong>${line.SalesPrice} ${line.CurrencyCode}</strong></td>
-				                  <td align="right" nowrap="nowrap"><span class="cus_prod_header_middle_cell"><strong><span style="">${item.InvoiceAmount} ${item.CurrencyCode}</span></strong></span></td>
-				                  <td align="right" nowrap="nowrap"><strong>${line.LineAmount} ${item.CurrencyCode}</strong></td>
+				                  <td align="right" nowrap="nowrap"><strong>${line.SalesPrice} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}}</strong></td>
+				                  <td align="right" nowrap="nowrap"><strong> ${line.LineAmount} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}} </strong></td>
+				                  <td align="right" nowrap="nowrap"><strong> ${line.LineAmount} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}} </strong></td>
                               </tr>
 				              </table>
                         </div>
@@ -422,7 +478,7 @@ StatusIssueIsOnOrder*@
 				                    <td width="200" valign="top">
 				                        <div class="cus_termekkep">
                                         {{if line.PictureExists}}
-				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getInvoicePictureUrl(line.Id)}" alt="${companyGroup.utils.instance().getInvoicePictureUrl(line.Id)}" /></a>
+				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getInvoicePictureUrl(line.Id)}" alt="${companyGroup.utils.instance().getInvoicePictureUrl(line.Id)}" /></a>
 				                        {{else}}
 				                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                         {{/if}}
@@ -440,32 +496,33 @@ StatusIssueIsOnOrder*@
                             		        
                         <form action="#/addLineToShoppingCart/${line.ItemId}" method="post"> 
 			            <table width="940px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-				        <tr>
-				            <td nowrap="nowrap">
-				                <div class="cus_prod_table_morelink">
+				        <tr> {{if AvailableInWebShop}}
+				            <td width="12%" nowrap="nowrap">
+				               
+								<div class="cus_prod_table_morelink">
 			                      <a href="#/details/${line.ItemId}/${line.DataAreaId}" title="Részletes termékadatlap ${line.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(line.ItemId)}">Részletes adatlap</a>
 				                </div>
+								
                             </td>
-                            <td>&nbsp;</td>
-                            <td width="100%">
-                            {{if line.PictureExists}}
-                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>WEBÁRUZÁZBAN ELÉRHETŐ</b></span></div>
+                            <td width="0%">&nbsp;</td>{{/if}}
+                            <td width="26%">
+                            {{if AvailableInWebShop}}
+                              <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="new"><b>WEBÁRUZÁZBAN ELÉRHETŐ</b></span></div>
                             {{else}}
                                 <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="used"><b>WEBÁRUZÁZBAN NEM ELÉRHETŐ</b></span></div>
-                            {{/if}}
-                            <p></p>
+                            {{/if}}</td>
+                            <td width="22%"></td>
+                            <td width="26%"><p>&nbsp;</p></td>
+                            <td width="8%" nowrap="nowrap">
+                                  {{if AvailableInWebShop}}<div class="cus_prod_table_quantity"><input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span></div>
                             </td>
-							{{if line.PictureExists}}
-                            <td nowrap="nowrap">
-                                <div class="cus_prod_table_quantity">
-                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span></div>
-                            </td>
-                            <td align="right" nowrap="nowrap">
-                              <div class="cus_prod_table_basket">
+                            <td width="6%" align="right" nowrap="nowrap">
+                            
+							  <div class="cus_prod_table_basket">
                                 <input type="hidden" name="hidden_productid" value="${line.ItemId}" />
                                 <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" />
-                                </div>
-								{{/if}}
+                              </div>
+							  {{/if}}
                             </td>
                         </tr>
                         </table>
@@ -680,7 +737,7 @@ StatusIssueIsOnOrder*@
 
              <h2>JELSZÓMÓDOSÍTÁS</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
                  {{#IsValidLogin}}
-                    <form id="form_changepassword" action="#/changepassword/" method="post">     
+                    <form action="#/changepassword" method="post">     
                     <table width="550" border="0" cellpadding="3" cellspacing="2">
                     {{#PersonIdNotNullOrEmpty}}
                     <tr>
@@ -695,7 +752,7 @@ StatusIssueIsOnOrder*@
                     <tr>
                         <td>Felhasználónév: </td>
                         <td>
-                            <input type="text" id="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                            <input type="text" name="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
                         </td>
                         <td style="color:#900;">*</td>
                         <td>
@@ -705,7 +762,7 @@ StatusIssueIsOnOrder*@
                     <tr>
                         <td>Régi jelszó: </td>
                         <td>
-                            <input type="text" id="txt_oldpassword", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                            <input type="text" name="txt_oldpassword", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
                         </td>
                         <td style="color:#900;">*</td>
                         <td>
@@ -715,7 +772,7 @@ StatusIssueIsOnOrder*@
                     <tr>
                         <td>Új jelszó: </td>
                         <td>
-                            <input type="text" id="txt_newpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
+                            <input type="text" name="txt_newpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
                         </td>
                         <td style="color:#900;">*</td>
                         <td>
@@ -725,7 +782,7 @@ StatusIssueIsOnOrder*@
                     <tr>
                         <td>Jelszó megerősítése: </td>
                         <td>
-                            <input type="text" id="txt_confirmpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" />
+                            <input type="text" name="txt_confirmpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" />
                         </td>
                         <td style="color:#900;">*</td>
                         <td>
@@ -788,6 +845,7 @@ StatusIssueIsOnOrder*@
                     <tr>    
                         <td>ACCESS DENIED KÉP...</td>
                     </tr>
+
                     <tr>    
                         <td><a href="javascript:void(0)" onclick="CompanyGroupCms.VisitorInfo.ShowSignInPanel()"><strong>Bejelentkezés</strong></a></td>
                     </tr>

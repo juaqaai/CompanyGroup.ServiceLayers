@@ -16,19 +16,19 @@ namespace CompanyGroup.WebClient.Models
                             CompanyGroup.Dto.RegistrationModule.InvoiceAddress invoiceAddress,
                             CompanyGroup.Dto.RegistrationModule.MailAddress mailAddress,
                             string registrationId,
-                            CompanyGroup.Dto.PartnerModule.Visitor visitor, 
+                            Visitor visitor, 
                             CompanyGroup.Dto.RegistrationModule.WebAdministrator webAdministrator, 
                             Countries countries)
         {
-            this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts, "");
+            this.BankAccounts = new CompanyGroup.WebClient.Models.BankAccounts(bankAccounts, String.Empty);
 
             this.CompanyData = new CompanyGroup.WebClient.Models.CompanyData(companyData);
 
-            this.ContactPersons = new CompanyGroup.WebClient.Models.ContactPersons(contactPersons, "");
+            this.ContactPersons = new CompanyGroup.WebClient.Models.ContactPersons(contactPersons, String.Empty);
 
             this.DataRecording = new CompanyGroup.WebClient.Models.DataRecording(dataRecording);
 
-            this.DeliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(deliveryAddresses, "");
+            this.DeliveryAddresses = new CompanyGroup.WebClient.Models.DeliveryAddresses(deliveryAddresses, String.Empty);
 
             this.InvoiceAddress = new CompanyGroup.WebClient.Models.InvoiceAddress(invoiceAddress);
 
@@ -36,11 +36,11 @@ namespace CompanyGroup.WebClient.Models
 
             this.RegistrationId = registrationId;
 
-            this.VisitorId = visitor;
-
             this.WebAdministrator = new CompanyGroup.WebClient.Models.WebAdministrator(webAdministrator);
 
             this.Countries = countries;
+
+            this.Visitor = visitor; 
         }
 
         public CompanyGroup.WebClient.Models.BankAccounts BankAccounts { get; set; }
@@ -59,10 +59,14 @@ namespace CompanyGroup.WebClient.Models
 
         public string RegistrationId { get; set; }
 
-        public CompanyGroup.Dto.PartnerModule.Visitor VisitorId { get; set; }
+        /// <summary>
+        /// bejelentkezett látogató adatai
+        /// </summary>
+        public Visitor Visitor { get; set; }
 
         public CompanyGroup.WebClient.Models.WebAdministrator WebAdministrator { get; set; }
 
         public Countries Countries { get; set; }
+
     }
 }

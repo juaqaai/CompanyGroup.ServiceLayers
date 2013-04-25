@@ -56,7 +56,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
+            //látogató adatok lekérdezése
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
             response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
 
@@ -157,7 +158,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                                                                                         x.LeftCompany,
                                                                                         x.Newsletter,
                                                                                         x.RecId, 
-                                                                                        x.RefRecId); 
+                                                                                        x.RefRecId, 
+                                                                                        x.Positions); 
                     });
 
                     registration.CompanyData = new Domain.RegistrationModule.CompanyData(customer.InvoiceCountry, customer.CustomerId, customer.CustomerName, customer.EUVatNumber, customer.Email, 
@@ -203,7 +205,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                                                                                                                 webAdmin.LeftCompany,
                                                                                                                 webAdmin.Newsletter,
                                                                                                                 webAdmin.RecId,
-                                                                                                                webAdmin.RefRecId);
+                                                                                                                webAdmin.RefRecId, 
+                                                                                                                webAdmin.Positions);
                     
                     registration.VisitorId = visitor.VisitorId;
 
@@ -310,14 +313,50 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                     InvoicePostCode = registration.InvoiceAddress.ZipCode,
                     InvoiceStreet = registration.InvoiceAddress.Street,
                     Method = visitor.IsValidLogin ? 2 : 1,
-                    NewsletterSubScription = registration.CompanyData.NewsletterToMainEmail ? 1 : 0,
                     RecId = 0,
                     RegEmail = registration.DataRecording.Email,
                     RegName = registration.DataRecording.Name,
                     RegNumber = "", //registration.DataRecording.Number,
                     RegPhone = registration.DataRecording.Phone,
+                    NewsletterSubScription = registration.CompanyData.NewsletterToMainEmail ? 1 : 0,
                     SignatureEntityFile = registration.CompanyData.SignatureEntityFile,
                     VatNumber = registration.CompanyData.VatNumber,
+                    EUVatNumber = registration.CompanyData.EUVatNumber,
+
+                    /*
+                             webAdministrator.setAllowOrder( str2int(xmlReader.readElementString2('AllowOrder')) );
+                            webAdministrator.setAllowReceiptOfGoods( str2int(xmlReader.readElementString2('AllowReceiptOfGoods')) );
+                            webAdministrator.setCellularPhone( xmlReader.readElementString2('CellularPhone') );
+                            webAdministrator.setContactPersonId( xmlReader.readElementString2('ContactPersonId') );
+                            webAdministrator.setDataAreaId( xmlReader.readElementString2('DataAreaId') );
+                            webAdministrator.setDirector( str2int(xmlReader.readElementString2('Director')) );
+                            webAdministrator.setEmail( xmlReader.readElementString2('Email') );
+                            webAdministrator.setEmailArriveOfGoods( str2int(xmlReader.readElementString2('EmailArriveOfGoods')) );
+                            webAdministrator.setEmailOfDelivery( str2int(xmlReader.readElementString2('EmailOfDelivery')) );
+                            webAdministrator.setEmailOfOrderConfirm( str2int(xmlReader.readElementString2('EmailOfOrderConfirm')) );
+                            webAdministrator.setFax( xmlReader.readElementString2('Fax') );
+                            webAdministrator.setFinanceManager( str2int(xmlReader.readElementString2('FinanceManager')) );
+                            webAdministrator.setFirstName( xmlReader.readElementString2('FirstName') );
+                            webAdministrator.setFunctionId( xmlReader.readElementString2('FunctionId') );
+                            webAdministrator.setGender( str2int(xmlReader.readElementString2('Gender')) );
+                            webAdministrator.setInvoiceInfo( str2int(xmlReader.readElementString2('InvoiceInfo')) );
+                            webAdministrator.setLastName( xmlReader.readElementString2('LastName') );
+                            webAdministrator.setLeftCompany( str2int(xmlReader.readElementString2('LeftCompany')) );
+                            webAdministrator.setMethod( str2int(xmlReader.readElementString2('Method')) );
+                            webAdministrator.setNewsletter( str2int(xmlReader.readElementString2('Newsletter')) );
+                            webAdministrator.setPhone( xmlReader.readElementString2('Phone') );
+                            webAdministrator.setPhoneLocal( xmlReader.readElementString2('PhoneLocal') );
+                            webAdministrator.setPriceListDownload( str2int(xmlReader.readElementString2('PriceListDownload')) );
+                            webAdministrator.setRecId( str2int64(xmlReader.readElementString2('RecId')) );
+                            webAdministrator.setRefRecId( str2int64(xmlReader.readElementString2('RefRecId')) );
+                            webAdministrator.setSalesManager( str2int(xmlReader.readElementString2('SalesManager')) );
+                            webAdministrator.setSimpleContact( str2int(xmlReader.readElementString2('SimpleContact')) );
+                            webAdministrator.setSimpleSales( str2int(xmlReader.readElementString2('SimpleSales')) );
+                            webAdministrator.setWebAdmin( str2int(xmlReader.readElementString2('WebAdmin')) );
+                            webAdministrator.setWebLoginName( xmlReader.readElementString2('WebLoginName') );
+                            webAdministrator.setWebPassword( xmlReader.readElementString2('WebPassword') );
+                     */
+
                     WebAdministrator = new Domain.RegistrationModule.ContactPersonCreate()
                     {
                         AllowOrder = registration.WebAdministrator.AllowOrder ? 1 : 0,
@@ -338,6 +377,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         InvoiceInfo = registration.WebAdministrator.InvoiceInfo ? 1 : 0,
                         LastName = registration.WebAdministrator.LastName,
                         LeftCompany = 0,
+                        Method = 0, 
                         Newsletter = registration.WebAdministrator.Newsletter ? 1 : 0,
                         Phone = registration.WebAdministrator.Telephone,
                         PhoneLocal = "",
@@ -363,22 +403,6 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 CompanyGroup.Domain.RegistrationModule.CustomerCreateResult customerCreateResult = this.customerRepository.Create(customer);
 
-                //string customerRegXml = this.Serialize<Shared.Web.Dynamics.Entities.CustomerReg>(reg);
-
-                //dynamics = new Shared.Web.Helpers.DynamicsConnector(CreateCustomerRegistrationService.UserName,
-                //                                                    CreateCustomerRegistrationService.Password,
-                //                                                    CreateCustomerRegistrationService.Domain,
-                //                                                    CreateCustomerRegistrationService.DataAreaId,
-                //                                                    CreateCustomerRegistrationService.Language,
-                //                                                    CreateCustomerRegistrationService.ObjectServer,
-                //                                                    CreateCustomerRegistrationService.ClassName);
-
-                //dynamics.Connect();
-
-                //object customerRegResult = dynamics.CallMethod("createCustomer", customerRegXml);
-
-                //Shared.Web.Dynamics.Entities.CustomerRegResult result = CreateCustomerRegResult(customerRegResult.ToString());
-
                 //szállítási címek felvitele
                 registration.DeliveryAddressList.ForEach(delegate(CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddr)
                 {
@@ -391,7 +415,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         DataAreaId = "hrp",
                         PostCode = deliveryAddr.ZipCode,
                         RecId = deliveryAddr.RecId,
-                        RefRecId = 0,
+                        RefRecId = customerCreateResult.RecId,
                         Street = deliveryAddr.Street
                     };
 
@@ -434,7 +458,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         PhoneLocal = "",
                         PriceListDownload = contactPerson.PriceListDownload ? 1 : 0,
                         RecId = contactPerson.RecId,
-                        RefRecId = 0,
+                        RefRecId = customerCreateResult.RecId,
                         SalesManager = 0,
                         SimpleContact = 0,
                         SimpleSales = 0,
@@ -462,7 +486,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         DataAreaId = "hrp",
                         Method = 1,
                         RecId = bankAccount.RecId,
-                        RefRecId = 0
+                        RefRecId = customerCreateResult.RecId
                     };
 
                     long bankAccountResult = customerRepository.CreateBankAccount(bankAccountCreate);
@@ -479,11 +503,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 //sikeres ERP rögzítés után
                 registrationRepository.Post(request.RegistrationId);
 
-                return new CompanyGroup.Dto.ServiceResponse.PostRegistration() { Message = "", Successed = true };
+                return new CompanyGroup.Dto.ServiceResponse.PostRegistration(true, String.Empty, customerCreateResult.RegId);
             }
             catch(Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.PostRegistration() { Message = ex.Message, Successed = false };
+                return new CompanyGroup.Dto.ServiceResponse.PostRegistration(false, ex.Message, String.Empty);
             }
         }
 
@@ -677,20 +701,22 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             {
                 CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateDataRecording request cannot be null or empty!");
 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
                 CompanyGroup.Domain.RegistrationModule.DataRecording dataRecording = new DataRecordingToDataRecording().MapDtoToDomain(request.DataRecording);
 
                 registrationRepository.UpdateDataRecording(request.RegistrationId, dataRecording);
 
-                return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording() { Message = "", Successed = true };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording(true, String.Empty, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording() { Message = ex.Message, Successed = false };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording(false, ex.Message, new CompanyGroup.Dto.PartnerModule.Visitor());
             }
         }
 
         /// <summary>
-        /// regisztrációs adatok módosítása 
+        /// regisztrációs adatok mint - cég, számla, levelezési adatok felvitele, módosítása 
         /// </summary>
         /// <param name="request"></param>
         public CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData UpdateRegistrationData(CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData request)
@@ -700,22 +726,63 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateRegistrationData request cannot be null or empty!");
 
                 request.CompanyData.CustomerId = request.CompanyData.CustomerId ?? String.Empty;
+
                 request.CompanyData.EUVatNumber = request.CompanyData.EUVatNumber ?? String.Empty;
+
                 request.CompanyData.SignatureEntityFile = request.CompanyData.SignatureEntityFile ?? String.Empty;
 
-                CompanyGroup.Domain.RegistrationModule.CompanyData companyData = new CompanyDataToCompanyData().MapDtoToDomain(request.CompanyData);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 CompanyGroup.Domain.RegistrationModule.InvoiceAddress invoiceAddress = new InvoiceAddressToInvoiceAddress().MapDtoToDomain(request.InvoiceAddress);
 
-                CompanyGroup.Domain.RegistrationModule.MailAddress mailAddress = new MailAddressToMailAddress().MapDtoToDomain(request.MailAddress);
+                CompanyGroup.Domain.RegistrationModule.CompanyData companyData = new CompanyDataToCompanyData().MapDtoToDomain(request.CompanyData);
+
+                CompanyGroup.Domain.RegistrationModule.MailAddress mailAddress = null;
+
+                //beállította a levelezési cím nem egyezik a számlázási címmel kapcsolót?
+                if (request.ModifyMailAddress)
+                {
+                    //nem egyezés beállítás esetén a megadottakat kell kiolvasni
+                    mailAddress = new MailAddressToMailAddress().MapDtoToDomain(request.MailAddress);
+                }
+                else
+                {
+                    //egyezés beállítás esetén a számlázási cím lesz a levelezési cím 
+                    mailAddress = new Domain.RegistrationModule.MailAddress(request.InvoiceAddress.City, request.InvoiceAddress.CountryRegionId, request.InvoiceAddress.ZipCode, request.InvoiceAddress.Street);
+                }
+
+                //beállította a szállítási cím nem egyezik a számlázási címmel kapcsolót, ezért a számlázási címet mint szállítási címet hozzá kell adni
+                if (request.ModifyDeliveryAddress)
+                {
+                    //ha nem adta hozzá, de kitöltötte a szállítási címet az űrlapmezők között, akkor hozzáadásra kerül
+                    if (!String.IsNullOrEmpty(request.DeliveryAddress.City) && !String.IsNullOrEmpty(request.DeliveryAddress.CountryRegionId) && !String.IsNullOrEmpty(request.DeliveryAddress.Street) && !String.IsNullOrEmpty(request.DeliveryAddress.ZipCode))
+                    {
+                        CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new CompanyGroup.Domain.RegistrationModule.DeliveryAddress(0, request.DeliveryAddress.City, request.DeliveryAddress.ZipCode, request.DeliveryAddress.Street, request.DeliveryAddress.CountryRegionId);
+
+                        registrationRepository.AddDeliveryAddress(request.RegistrationId, deliveryAddress);
+                    }
+                }
+                else
+                {
+                    CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new CompanyGroup.Domain.RegistrationModule.DeliveryAddress(0, request.InvoiceAddress.City, request.InvoiceAddress.ZipCode, request.InvoiceAddress.Street, request.InvoiceAddress.CountryRegionId);
+
+                    registrationRepository.AddDeliveryAddress(request.RegistrationId, deliveryAddress);
+                }
+                //ha nem adta hozzá, de kitöltötte a bankszámlaszámot az űrlapmezők között, akkor hozzáadásra kerül
+                if (!String.IsNullOrEmpty(request.BankAccount.Part1) && !String.IsNullOrEmpty(request.BankAccount.Part2) && !String.IsNullOrEmpty(request.BankAccount.Part3))
+                { 
+                    CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount = new CompanyGroup.Domain.RegistrationModule.BankAccount(request.BankAccount.Part1, request.BankAccount.Part2, request.BankAccount.Part3, 0);
+
+                    registrationRepository.AddBankAccount(request.RegistrationId, bankAccount);
+                }
 
                 registrationRepository.UpdateRegistrationData(request.RegistrationId, companyData, invoiceAddress, mailAddress);
 
-                return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = "", Successed = true };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = "", Successed = true, Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor) };
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = ex.Message, Successed = false };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = ex.Message, Successed = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
             }
         }
 
@@ -732,15 +799,21 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 request.WebAdministrator.ContactPersonId = request.WebAdministrator.ContactPersonId ?? String.Empty;
 
+                //üres listaelemek eltávolítása
+                request.WebAdministrator.Positions.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+                //látogató adatainak kiolvasása
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
                 CompanyGroup.Domain.RegistrationModule.WebAdministrator webAdministrator = new WebAdministratorToWebAdministrator().MapDtoToDomain(request.WebAdministrator);
 
                 registrationRepository.UpdateWebAdministrator(request.RegistrationId, webAdministrator);
 
-                return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = "", Successed = true };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = "", Succeeded = true, Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor) };
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = ex.Message, Successed = false };
+                return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = ex.Message, Succeeded = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
             }
         }
 
@@ -961,13 +1034,49 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
             CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
             List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons();
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
-            response.Items.AddRange(contactPersonList);
+            return response;
+        }
+
+        /// <summary>
+        /// kapcsolattartó mentése
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.RegistrationModule.ContactPersons SaveContactPerson(CompanyGroup.Dto.ServiceRequest.SaveContactPerson request)
+        {
+            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
+
+            request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+
+            request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
+
+            //csak akkor kell hozzáadni a kapcsolattartót, ha a kötelező mezők ki vannak töltve
+            if (!String.IsNullOrEmpty(request.ContactPerson.Email) && !String.IsNullOrEmpty(request.ContactPerson.FirstName) && !String.IsNullOrEmpty(request.ContactPerson.LastName)
+                && !String.IsNullOrEmpty(request.ContactPerson.Password) && !String.IsNullOrEmpty(request.ContactPerson.UserName))
+            {
+                CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
+
+                registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
+            }
+            //látogató kiolvasása 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+            //teljes regisztráció kiolvasása azonosító alapján
+            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+
+            //kapcsolattartó konvertálása DTO-ra
+            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+
+            //kapcsolattartó lista
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
             return response;
         }
@@ -985,7 +1094,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons();
+            //látogató kiolvasása 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
             response.Items.AddRange(contactPersonList);
 
@@ -1009,9 +1121,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons();
+            //látogató kiolvasása 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            response.Items.AddRange(contactPersonList);
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
             return response;
         }
@@ -1032,9 +1145,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
             List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons();
+            //látogató kiolvasása 
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            response.Items.AddRange(contactPersonList);
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
             return response;
         }

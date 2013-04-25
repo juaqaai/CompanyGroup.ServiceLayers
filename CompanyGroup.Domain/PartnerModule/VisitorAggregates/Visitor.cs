@@ -10,6 +10,40 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class VisitorData : CompanyGroup.Domain.Core.Entity
     {
+        public VisitorData()
+        { 
+            this.VisitorId = String.Empty;
+            this.LoginIP = String.Empty;
+            this.AutoLogin = false;
+            this.RecId = 0;
+            this.CustomerId = String.Empty;
+            this.CustomerName = String.Empty;
+            this.CustomerPriceGroups = new List<CustomerPriceGroup>();
+            this.PersonId = String.Empty;
+            this.PersonName = String.Empty;
+            this.Email = String.Empty;
+            this.LoggedIn = false;
+            this.LoginType = LoginType.None;
+            this.Permission = new PartnerModule.Permission();
+            this.PartnerModel = global::PartnerModel.None;
+            this.LoginDate = DateTime.MinValue;
+            this.LogoutDate = DateTime.MinValue;
+            this.ExpireDate = DateTime.MinValue;
+            this.Status = LoginStatus.Passive;
+            this.DataAreaId = String.Empty;
+            this.PaymTermId = String.Empty;
+            this.Currency = String.Empty;
+            this.InventLocationId = String.Empty;
+            this.InventLocationIdHrp = String.Empty;
+            this.InventLocationIdBsc = String.Empty;
+            this.LanguageId = String.Empty;
+            this.DefaultPriceGroupId  = String.Empty;
+            this.DefaultPriceGroupIdBsc = String.Empty;
+            this.DefaultPriceGroupIdHrp = String.Empty;
+            this.Representative = new Representative();
+            this.Valid = false;
+        }
+
         /// <summary>
         /// látogató azonosító
         /// </summary>
@@ -457,7 +491,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
         private string GetDefaultPriceGroupId(string dataAreaId)
         {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
+            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId, StringComparison.InvariantCultureIgnoreCase)) : null;
 
             return (visitorData == null) ? String.Empty : visitorData.DefaultPriceGroupId;
         }
@@ -545,6 +579,65 @@ namespace CompanyGroup.Domain.PartnerModule
         }
 
         /// <summary>
+        /// árkalkuláció
+        /// </summary>
+        /// <param name="price1">termék ár1</param>
+        /// <param name="price2">termék ár2</param>
+        /// <param name="price3">termék ár3</param>
+        /// <param name="price4">termék ár4</param>
+        /// <param name="price5">termék ár5</param>
+        /// <param name="manufacturerId">termék gyártó</param>
+        /// <param name="category1Id">termék jelleg1</param>
+        /// <param name="category2Id">termék jelleg2</param>
+        /// <param name="category3Id">termék jelleg3</param>
+        /// <param name="dataAreaId">termék vállalatkódja</param>
+        /// <returns></returns>
+        public decimal CalculateCustomerPrice2(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
+                                              string manufacturerId, string category1Id, string category2Id, string category3Id, string dataAreaId)
+        {
+            //szűrés vállalatkódra, azaz csak azok az árcsoprotok kerülnek az eredményhalmazba, melyek vállalatkódja egyezik a termék vállalatkódjával
+            IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x => (x.DataAreaId.Equals(dataAreaId, StringComparison.OrdinalIgnoreCase)));
+
+            //szűrt lista másolása
+            List<CustomerPriceGroup> priceGroupList = new List<CustomerPriceGroup>();
+
+            //másolás érték szerint
+            foreach (CustomerPriceGroup p in priceGroups)
+            {
+                priceGroupList.Add(new CustomerPriceGroup(p.LineId, p.VisitorKey, p.PriceGroupId, p.ManufacturerId, p.Category1Id, p.Category2Id, p.Category3Id, p.Order, p.DataAreaId));
+            }
+
+            //listaelemek üres gyártó és jelleg1 - jelleg2 - jelleg3 elemek feltöltése a termék gyártó, jelleg1 - jelleg2 - jelleg3 adataival, ha azok nem üresek
+            priceGroupList.ForEach(x => {
+                if ((String.IsNullOrEmpty(x.Category1Id) || x.Category1Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category1Id = category1Id; }             // && !String.IsNullOrEmpty(category1Id)
+                if ((String.IsNullOrEmpty(x.Category2Id) || x.Category2Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category2Id = category2Id; }             // && !String.IsNullOrEmpty(category2Id)
+                if ((String.IsNullOrEmpty(x.Category3Id) || x.Category3Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category3Id = category3Id; }             // && !String.IsNullOrEmpty(category3Id)
+                if ((String.IsNullOrEmpty(x.ManufacturerId) || x.ManufacturerId.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.ManufacturerId = manufacturerId; } // && !String.IsNullOrEmpty(manufacturerId)
+            });
+
+            // || x.ManufacturerId.Equals("____", StringComparison.OrdinalIgnoreCase)
+            IEnumerable<CustomerPriceGroup> searchResults = priceGroupList.Where(x => (x.ManufacturerId.Equals(manufacturerId, StringComparison.OrdinalIgnoreCase)) &&
+                                                                                      (x.Category1Id.Equals(category1Id, StringComparison.OrdinalIgnoreCase)) &&
+                                                                                      (x.Category2Id.Equals(category2Id, StringComparison.OrdinalIgnoreCase)) &&
+                                                                                      (x.Category3Id.Equals(category3Id, StringComparison.OrdinalIgnoreCase)));
+
+            CustomerPriceGroup priceGroup;
+
+            if (searchResults.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = searchResults.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            //alapártelmezett árat kell visszaadni
+            string defaultPriceGroup = (dataAreaId.Equals(Core.Constants.DataAreaIdHrp)) ? this.DefaultPriceGroupIdHrp : this.DefaultPriceGroupIdBsc;
+
+            return LookupPrice(price1, price2, price3, price4, price5, (String.IsNullOrEmpty(DefaultPriceGroupId) ? "2" : defaultPriceGroup));
+        }
+
+        /// <summary>
         /// vevő saját árának kalkulációja
         /// </summary>
         /// <param name="price1"></param>
@@ -587,14 +680,14 @@ namespace CompanyGroup.Domain.PartnerModule
         {
             CustomerPriceGroup priceGroup;
 
-            //vizsgálat teljes egyezésre, gyártó - jelleg1 - jelleg2 - jelleg3, vagy üres árbesorolás és termék gyártó - üres árbesorolás és termék jelleg1 - üres árbesorolás és termék jelleg2 - üres árbesorolás és termék jelleg3
+            //vizsgálat teljes egyezésre, gyártó - jelleg1 - jelleg2 - jelleg3, vagy üres árbesorolás gyártó és termék gyártó - üres árbesorolás jelleg1 és termék jelleg1 - üres árbesorolás jelleg2 és termék jelleg2 - üres árbesorolás jelleg3 és termék jelleg3
             IEnumerable<CustomerPriceGroup> priceGroups = this.CustomerPriceGroups.Where(x =>
                                                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
                                                                                         ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
                                                                                         ((x.Category3Id == category3Id) || (String.IsNullOrEmpty(x.Category3Id) && String.IsNullOrEmpty(category3Id))) &&
                                                                                         (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
-
+            //ha van találat teljes egyezésre, akkor a legalacsonyabb sorszámút kell kiolvasni
             if (priceGroups.Count() > 0)
             {
                 //sorba rendezés 1..n -ig
@@ -603,13 +696,13 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - jelleg1 - jelleg2 egyezésre, vagy üres árbesorolás és termék  gyártó - üres árbesorolás és termék jelleg1 - üres árbesorolás és termék jelleg2
+            //vizsgálat gyártó - jelleg1 - jelleg2 egyezésre, vagy üres árbesorolás gyártó és termék  gyártó - üres árbesorolás jelleg1 és termék jelleg1 - üres árbesorolás jelleg2 és termék jelleg2
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
                                                         ((x.Category2Id == category2Id) || (String.IsNullOrEmpty(x.Category2Id) && String.IsNullOrEmpty(category2Id))) &&
                                                         (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
-
+            //ha van találat teljes egyezésre, akkor a legalacsonyabb sorszámút kell kiolvasni
             if (priceGroups.Count() > 0)
             {
                 //sorba rendezés 1..n -ig
@@ -618,11 +711,22 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - jelleg1 - egyezésre, vagy üres üres árbesorolás és termék gyártó - üres árbesorolás és termék jelleg1
+            //vizsgálat gyártó - jelleg1 - egyezésre, vagy üres árbesorolás gyártó és termék gyártó - üres árbesorolás jelleg1 és termék jelleg1
             priceGroups = this.CustomerPriceGroups.Where(x =>
                                                         ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) &&
                                                         ((x.Category1Id == category1Id) || (String.IsNullOrEmpty(x.Category1Id) && String.IsNullOrEmpty(category1Id))) &&
                                                         (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
+            //ha van találat teljes egyezésre, akkor a legalacsonyabb sorszámút kell kiolvasni
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            //vizsgálat gyártó - egyezésre, vagy üres árbesorolás gyártó és termék gyártó
+            priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) && (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
 
             if (priceGroups.Count() > 0)
             {
@@ -632,9 +736,28 @@ namespace CompanyGroup.Domain.PartnerModule
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //vizsgálat gyártó - egyezésre, vagy üres árbesorolás és termék gyártó
-            priceGroups = this.CustomerPriceGroups.Where(x => ((x.ManufacturerId == manufacturerId) || (String.IsNullOrEmpty(x.ManufacturerId) && String.IsNullOrEmpty(manufacturerId))) && (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
 
+            //*****vizsgálat üres gyártó - nem üres jelleg1, jelleg2 - egyezésre
+            priceGroups = this.CustomerPriceGroups.Where(x =>
+                                                        (String.IsNullOrEmpty(x.ManufacturerId)) &&
+                                                        ((x.Category1Id == category1Id) && !String.IsNullOrEmpty(x.Category1Id)) &&
+                                                        ((x.Category2Id == category2Id) && !String.IsNullOrEmpty(x.Category2Id)) &&
+                                                        (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
+            //ha van találat teljes egyezésre, akkor a legalacsonyabb sorszámút kell kiolvasni
+            if (priceGroups.Count() > 0)
+            {
+                //sorba rendezés 1..n -ig
+                priceGroup = priceGroups.OrderBy(x => x.Order).FirstOrDefault();
+
+                return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
+            }
+
+            //*****vizsgálat üres gyártó - nem üres jelleg1 - egyezésre
+            priceGroups = this.CustomerPriceGroups.Where(x =>
+                                                        (String.IsNullOrEmpty(x.ManufacturerId)) &&
+                                                        ((x.Category1Id == category1Id) && !String.IsNullOrEmpty(x.Category1Id)) &&
+                                                        (x.DataAreaId.ToLower() == dataAreaId.ToLower()));
+            //ha van találat teljes egyezésre, akkor a legalacsonyabb sorszámút kell kiolvasni
             if (priceGroups.Count() > 0)
             {
                 //sorba rendezés 1..n -ig

@@ -31,6 +31,7 @@ namespace CompanyGroup.WebClient.Models
             this.SmsOrderConfirm = webAdministrator.SmsOrderConfirm;
             this.Telephone = webAdministrator.Telephone;
             this.UserName = webAdministrator.UserName;
+            this.Positions = webAdministrator.Positions;
         }
 
         public WebAdministrator() { }
@@ -139,6 +140,12 @@ namespace CompanyGroup.WebClient.Models
         /// refRec id
         /// </summary>
         public long RefRecId { get; set; }
+
+        /// <summary>
+        /// megadott pozíciók
+        /// </summary>
+        public List<string> Positions { get; set; }
+
     }
 
     public class RemoveContactPerson

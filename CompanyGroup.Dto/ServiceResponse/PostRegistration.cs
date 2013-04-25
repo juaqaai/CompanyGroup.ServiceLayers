@@ -11,20 +11,27 @@ namespace CompanyGroup.Dto.ServiceResponse
         /// <summary>
         /// sikeres volt-e a művelet, vagy nem
         /// </summary>
-        public bool Successed { get; set; }
+        public bool Succeeded { get; set; }
 
         /// <summary>
         /// a kérés nyelvétől függő hibaüzenet (ha nincs hiba, akkor üres) 
         /// </summary>
         public string Message { get; set; }
 
-        public PostRegistration(bool successed, string message)
+        /// <summary>
+        /// vevőregisztráció azonosító (ERP)
+        /// </summary>
+        public string CustomerRegistrationId { get; set; }
+
+        public PostRegistration(bool succeeded, string message, string customerRegistrationId)
         {
-            this.Successed = successed;
+            this.Succeeded = succeeded;
 
             this.Message = message;
+
+            this.CustomerRegistrationId = customerRegistrationId;
         }
 
-        public PostRegistration() : this(false, "") { }
+        public PostRegistration() : this(false, String.Empty, String.Empty) { }
     }
 }

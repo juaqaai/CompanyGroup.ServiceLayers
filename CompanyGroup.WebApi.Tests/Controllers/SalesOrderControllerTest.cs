@@ -17,7 +17,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetOrderInfoTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest("0FE6490DFA194BD79D93C58B0B135A20", "hu", true, true, true);
+            CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest("0FE6490DFA194BD79D93C58B0B135A20", "hu", true, 1, "", "", "", "");
 
             Uri requestUri = null;
 

@@ -15,5 +15,13 @@
     <return-scalar column="Primary" type="System.Boolean"/>
     <return-scalar column="RecId" type="System.Int64"/>
     exec InternetUser.InvoicePictureSelect @Id=:Id
-  </sql-query>  
+  </sql-query>
+  <sql-query name="InternetUser.SalesOrderPictureSelect" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="FileName" type="System.String"/>
+    <return-scalar column="Primary" type="System.Boolean"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    exec InternetUser.SalesOrderPictureSelect @Id=:Id
+  </sql-query>
 </hibernate-mapping>

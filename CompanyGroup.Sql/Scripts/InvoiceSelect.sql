@@ -170,7 +170,7 @@ SET NOCOUNT ON
 	--	   ReturnItemId, --
 	DECLARE @InvoiceId nvarchar(30) = ISNULL((SELECT InvoiceId FROM InternetUser.Invoice  WHERE Id = @Id), '');
 
-		   SELECT Id, InvoiceId, 
+		   SELECT I.Id, InvoiceId, 
 		   ItemDate,  -- datum
 		   LineNum,
 		   ItemId,  -- cikk
@@ -185,11 +185,14 @@ SET NOCOUNT ON
 		   LineAmountMst,  -- osszeg az alapertelmezett penznemben
 		   TaxAmountMst, -- afa osszege az alapertelmezett penznemben
 		   DetailCurrencyCode as CurrencyCode, 
-		   ISNULL([Description], '') as [Description],
+		   ISNULL(I.[Description], '') as [Description],
 		   ISNULL([FileName], '' ) as [FileName],
 		   ISNULL(RecId, 0) as RecId, 
-		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists
-	FROM InternetUser.Invoice 
+		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists, 
+		   CASE WHEN ISNULL(C.Stock, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as InStock, 
+		   CASE WHEN ISNULL(C.Available, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as AvailableInWebShop
+	FROM InternetUser.Invoice as I 
+		 LEFT OUTER JOIN InternetUser.Catalogue as C ON I.ItemId = C.ProductId AND I.DataAreaId = C.DataAreaId
 	WHERE InvoiceId = @InvoiceId
 	ORDER BY LineNum;
 

@@ -24,5 +24,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="maxHeight"></param>
         /// <returns></returns>
         System.IO.Stream GetInvoicePicture(int id, string maxWidth, string maxHeight);
+
+        /// <summary>
+        /// képtartalom kiolvasása megrendelés elem rekordazonosító alapján
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        System.IO.Stream GetSalesOrderPicture(int id, string maxWidth, string maxHeight);
     }
 }

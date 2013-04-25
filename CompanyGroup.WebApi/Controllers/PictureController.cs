@@ -164,5 +164,60 @@ namespace CompanyGroup.WebApi.Controllers
                 return ThrowHttpError(ex);
             }
         }
+
+
+        [HttpGet]
+        [ActionName("GetSalesOrderPicture")]
+        public HttpResponseMessage GetSalesOrderPicture()
+        {
+            string id = CompanyGroup.Helpers.QueryStringParser.GetString("Id");
+
+            string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
+
+            string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
+
+            return this.GetSalesOrderPictureById(id, maxWidth, maxHeight);
+        }
+
+        /// <summary>
+        /// számla listaelemhez tartozó kép kiolvasása stream-ként 		requestUrl	"Picture/GetInvoicePicture/5637928067/500/500"	string
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        [ActionName("GetSalesOrderPictureById")]
+        [HttpGet]
+        public HttpResponseMessage GetSalesOrderPictureById(string id, string maxWidth, string maxHeight)
+        {
+            try
+            {
+                int salesOrderLineId = 0;
+
+                if (!Int32.TryParse(id, out salesOrderLineId))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                Stream stream = this.service.GetSalesOrderPicture(salesOrderLineId, maxWidth, maxHeight);
+
+                if (stream == null)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+                result.Content = new System.Net.Http.StreamContent(stream);
+
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
     }
 }

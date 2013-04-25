@@ -7,12 +7,9 @@ using System.ServiceModel.Web;
 
 namespace CompanyGroup.ApplicationServices.PartnerModule
 {
-    //[ServiceBehavior(UseSynchronizationContext = false,
-    //                 InstanceContextMode = InstanceContextMode.PerCall,
-    //                 ConcurrencyMode = ConcurrencyMode.Multiple,
-    //                 IncludeExceptionDetailInFaults = true),
-    //                 System.ServiceModel.Activation.AspNetCompatibilityRequirements(RequirementsMode = System.ServiceModel.Activation.AspNetCompatibilityRequirementsMode.Allowed)]
-    //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
+    /// <summary>
+    /// megrendelések
+    /// </summary>
     public class SalesOrderService : ServiceBase, ISalesOrderService
     {
 
@@ -39,7 +36,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Dto.PartnerModule.OrderInfo> GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request)
+        public CompanyGroup.Dto.PartnerModule.OrderInfoList GetOrderInfo(CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest request)
         {
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
 
@@ -49,38 +46,29 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 //látogató alapján kikeresett vevő rendelések listája
-                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId);
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = salesOrderRepository.GetOrderDetailedLineInfo(visitor.CustomerId, request.CanBeTaken, request.SalesStatus, request.CustomerOrderNo, request.ItemName, request.ItemId, request.SalesOrderId);
 
-                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfosFiltered = new List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>();
+                 //megrendelés info aggregátum elkészítése
+                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfos.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
 
-                //4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt)
-                if (request.OnOrder)
-                {
-                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.OnOrder)));
-                }
-                if (request.Reserved)
-                {
-                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.ReservPhysical)));
-                }
-                if (request.ReservedOrdered)
-                {
-                    lineInfosFiltered.AddRange(lineInfos.Where(x => x.StatusIssue.Equals(StatusIssue.ReservOrdered)));
-                }
-
-                //megrendelés info aggregátum elkészítése
-                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>> groupedLineInfos = lineInfosFiltered.GroupBy(x => x.SalesId).OrderBy(x => x.Key);   //IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>>
-
-                List<CompanyGroup.Domain.PartnerModule.OrderInfo> orderInfoList = new List<CompanyGroup.Domain.PartnerModule.OrderInfo>();
+                List<CompanyGroup.Domain.PartnerModule.OrderInfo> orderInfos = new List<CompanyGroup.Domain.PartnerModule.OrderInfo>();
 
                 foreach (var lineInfo in groupedLineInfos)
                 { 
                     CompanyGroup.Domain.PartnerModule.OrderInfo orderInfo = CompanyGroup.Domain.PartnerModule.OrderInfo.Create(lineInfo.ToList());
 
-                    orderInfoList.Add(orderInfo);
+                    orderInfos.Add(orderInfo);
                 }
 
+                //nyitott rendelések összesen
+                decimal openOrderAmount = salesOrderRepository.OpenOrderAmount(visitor.CustomerId);
+
+                CompanyGroup.Domain.PartnerModule.OrderInfoList orderInfoList = new CompanyGroup.Domain.PartnerModule.OrderInfoList(openOrderAmount, orderInfos);
+
                 //konverzió dto-ra
-                return new OrderInfoToOrderInfo().Map(orderInfoList);
+                List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfoListDTO = new OrderInfoToOrderInfo().Map(orderInfoList);
+
+                return new CompanyGroup.Dto.PartnerModule.OrderInfoList(openOrderAmount, orderInfoListDTO);
             }
             catch (Exception ex)
             {

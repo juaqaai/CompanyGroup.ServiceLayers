@@ -71,6 +71,7 @@
     <Compile Include="PartnerModule\Representative.cs" />
     <Compile Include="RegistrationModule\DataRecording.cs" />
     <Compile Include="RegistrationModule\WebAdministrator.cs" />
+    <Compile Include="ServiceRequest\SaveContactPerson.cs" />
     <Compile Include="SharedModule\ApiMessage.cs" />
     <Compile Include="WebshopModule\ActivateCartRequest.cs" />
     <Compile Include="ServiceRequest\AddBankAccount.cs" />

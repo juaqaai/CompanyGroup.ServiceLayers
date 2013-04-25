@@ -19,7 +19,7 @@ SET NOCOUNT ON
 RETURN
 
 GO
-GRANT EXECUTE ON InternetUser.CurrentVersionCT TO InternetUser
+GRANT EXECUTE ON InternetUser.CurrentVersionCT TO [HRP_HEADOFFICE\AXPROXY]
 GO
 
 -- exec InternetUser.CurrentVersionCT

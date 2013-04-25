@@ -19,7 +19,8 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="payment"></param>
         /// <param name="salesHeaderType"></param>
         /// <param name="headerSalesStatus"></param>
-        public OrderInfo(string salesId, DateTime createdDate, string dataAreaId, string payment, string salesHeaderType, int headerSalesStatus)
+        /// <param name="withDelivery"></param>
+        public OrderInfo(string salesId, DateTime createdDate, string dataAreaId, string payment, string salesHeaderType, int headerSalesStatus, bool withDelivery)
         { 
             this.SalesId = salesId;
 
@@ -32,6 +33,8 @@ namespace CompanyGroup.Domain.PartnerModule
             this.SalesHeaderType = salesHeaderType;
 
             this.HeaderSalesStatus = headerSalesStatus;
+
+            this.WithDelivery = withDelivery;
 
             this.OrderLines = new List<OrderLineInfo>();
         }
@@ -67,16 +70,29 @@ namespace CompanyGroup.Domain.PartnerModule
         public int HeaderSalesStatus { set; get; }
 
         /// <summary>
+        /// szállítással rendelve?
+        /// </summary>
+        public bool WithDelivery { set; get; }
+
+        /// <summary>
         /// rendelés sorok
         /// </summary>
         public List<OrderLineInfo> OrderLines { set; get; }
 
         /// <summary>
-        /// rendelés sorok összesen 
+        /// rendelés sorok netto összesen 
         /// </summary>
-        public decimal SumAmount
+        public decimal SumAmountNetto
         {
             get { return this.OrderLines.Sum(x => x.LineAmount); }
+        }
+
+        /// <summary>
+        /// rendelés sorok brutto összesen 
+        /// </summary>
+        public decimal SumAmountBrutto
+        {
+            get { return this.OrderLines.Sum(x => (x.LineAmount * Convert.ToDecimal(1.27))); }
         }
 
         /// <summary>
@@ -101,10 +117,10 @@ namespace CompanyGroup.Domain.PartnerModule
             {
                 if (orderInfo == null)
                 {
-                    orderInfo = new OrderInfo(x.SalesId, x.CreatedDate, x.DataAreaId, x.Payment, x.SalesHeaderType, x.HeaderSalesStatus);
+                    orderInfo = new OrderInfo(x.SalesId, x.CreatedDate, x.DataAreaId, x.Payment, x.SalesHeaderType, x.SalesHeaderStatus, x.WithDelivery);
                 }
 
-                OrderLineInfo orderLineInfo = new OrderLineInfo(x.LineNum, x.ShippingDateRequested, x.ProductId, x.ProductName, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment);
+                OrderLineInfo orderLineInfo = new OrderLineInfo(x.Id, x.LineNum, x.ShippingDateRequested, x.ProductId, x.ProductName, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment, x.InStock, x.AvailableInWebShop, !String.IsNullOrEmpty(x.FileName));
 
                 orderInfo.AddOrderLine(orderLineInfo);
             });
@@ -112,6 +128,21 @@ namespace CompanyGroup.Domain.PartnerModule
             return orderInfo;
         }
 
+    }
+
+    /// <summary>
+    /// teljes megrendelés lista
+    /// </summary>
+    public class OrderInfoList : List<OrderInfo>
+    {
+        public decimal OpenOrderAmount { get; set; }
+
+        public OrderInfoList(decimal openOrderAmount, List<OrderInfo> orderInfos)
+        {
+            this.OpenOrderAmount = openOrderAmount;
+
+            this.AddRange(orderInfos);
+        }
     }
 
 

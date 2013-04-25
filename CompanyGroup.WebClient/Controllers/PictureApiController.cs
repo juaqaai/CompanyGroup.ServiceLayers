@@ -141,5 +141,38 @@ namespace CompanyGroup.WebClient.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        [ActionName("GetSalesOrderPicture")]
+        public HttpResponseMessage GetSalesOrderPicture()
+        {
+            string id = CompanyGroup.Helpers.QueryStringParser.GetString("Id");
+
+            string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
+
+            string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
+
+            return this.GetSalesOrderPictureById(id, maxWidth, maxHeight);
+        }
+
+        [HttpGet]
+        [ActionName("GetSalesOrderPictureById")]
+        public HttpResponseMessage GetSalesOrderPictureById(string id, string maxWidth, string maxHeight)
+        {
+            byte[] picture = this.DownloadData(String.Format("Picture/GetSalesOrderPicture/?Id={0}&MaxWidth={1}&MaxHeight={2}", id, maxWidth, maxHeight));
+
+            if (picture == null)
+            {
+                return Request.CreateResponse<CompanyGroup.WebClient.Models.ApiMessage>(HttpStatusCode.NotFound, new CompanyGroup.WebClient.Models.ApiMessage("Picture not found"));
+            }
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            result.Content = new ByteArrayContent(picture);
+
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+            return result;
+        }
     }
 }

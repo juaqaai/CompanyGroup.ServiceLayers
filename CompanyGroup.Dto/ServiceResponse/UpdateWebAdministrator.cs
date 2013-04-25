@@ -4,22 +4,23 @@ using System.Collections.Generic;
 namespace CompanyGroup.Dto.ServiceResponse
 {
     /// <summary>
-    /// üres válasz objektum osztály
+    /// webadminisztrátor osztály
     /// </summary>
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "UpdateWebAdministrator", Namespace = "CompanyGroup.Dto.ServiceResponse")]
     public class UpdateWebAdministrator
     {
         /// <summary>
         /// sikeres volt-e a művelet, vagy nem
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Successed", Order = 1)]
-        public bool Successed { get; set; }
+        public bool Succeeded { get; set; }
 
         /// <summary>
         /// a kérés nyelvétől függő hibaüzenet (ha nincs hiba, akkor üres) 
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Message", Order = 2)]
         public string Message { get; set; }
+
+        /// <summary>
+        /// látogató
+        /// </summary>
+        public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
     }
 }

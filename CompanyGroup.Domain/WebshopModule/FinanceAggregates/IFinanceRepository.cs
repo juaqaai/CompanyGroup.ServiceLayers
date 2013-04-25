@@ -66,5 +66,13 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         /// <param name="lineId"></param>
         void RemoveLine(int lineId);
+
+        /// <summary>
+        /// a megadott file elérési úttal elkészíti a pdf dokumentumot
+        /// </summary>
+        /// <param name="financedAmount"></param>
+        /// <param name="calcValues"></param>
+        /// <param name="pdfFileWithPath"></param>
+        void CreateLeasingDocument(string financedAmount, System.Collections.Specialized.StringCollection calcValues, string pdfFileWithPath);
     }
 }

@@ -35,7 +35,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 Telephone = from.Telephone,
                 UserName = from.UserName, 
                 RecId = from.RecId, 
-                RefRecId = from.RefRecId
+                RefRecId = from.RefRecId, 
+                Positions = from.Positions
             };
         }
 
@@ -64,7 +65,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 UserName = from.UserName, 
                 WebAdmin = true, 
                 RecId = from.RecId, 
-                RefRecId = from.RefRecId
+                RefRecId = from.RefRecId, 
+                Positions = from.Positions
             };
         }
     }

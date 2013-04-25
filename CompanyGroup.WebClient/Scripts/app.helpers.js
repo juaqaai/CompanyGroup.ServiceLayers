@@ -242,6 +242,25 @@
                         //console.log('GetVisitorInfo call failed');
                     }
                 });
+            },
+            getVisitorInfo: function (callback) {
+                $.ajax({
+                    //console.log(context);
+                    url: companyGroup.utils.instance().getVisitorApiUrl('GetVisitorInfo'),
+                    data: {},
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    timeout: 10000,
+                    dataType: "json",
+                    success: function (result) {
+                        if (callback) {
+                            callback(result);
+                        }
+                    },
+                    error: function () {
+                        //console.log('GetVisitorInfo call failed');
+                    }
+                });
             }
         });
     };

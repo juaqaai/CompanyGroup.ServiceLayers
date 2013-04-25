@@ -36,7 +36,7 @@ namespace CompanyGroup.WebApi.Controllers
             {
                 Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
 
-                //logWriter.Write("GetProducts", "Success Category");
+                logWriter.Write("GetProducts", "Success Category");
 
                 CompanyGroup.Dto.WebshopModule.Products response = this.service.GetProducts(request);
 

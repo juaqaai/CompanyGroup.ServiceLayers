@@ -25,7 +25,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 String.Format("{0:0,0.00}", from.SalesPrice),
                 String.Format("{0:0,0.00}", from.TaxAmount),
                 String.Format("{0:0,0.00}", from.TaxAmountMst),
-                from.RecId);
+                from.RecId, 
+                from.InStock, 
+                from.AvailableInWebShop);
         }
     }
 

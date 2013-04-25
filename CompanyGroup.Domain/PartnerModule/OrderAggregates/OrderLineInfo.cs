@@ -11,9 +11,11 @@ namespace CompanyGroup.Domain.PartnerModule
     /// </summary>
     public class OrderLineInfo
     {
-        public OrderLineInfo(int lineNum, DateTime shippingDateRequested, string itemId, string name, decimal salesPrice, string currencyCode,
-                              int quantity, decimal lineAmount, int salesDeliverNow, int remainSalesPhysical, StatusIssue statusIssue, string inventLocationId, string payment)
-        { 
+        public OrderLineInfo(int id, int lineNum, DateTime shippingDateRequested, string itemId, string name, decimal salesPrice, string currencyCode,
+                              int quantity, decimal lineAmount, int salesDeliverNow, int remainSalesPhysical, StatusIssue statusIssue, string inventLocationId, string payment,
+                              bool inStock, bool availableInWebShop, bool pictureExists)
+        {
+            this.Id = id;
             this.LineNum = lineNum;
             this.ShippingDateRequested = shippingDateRequested;
             this.ItemId = itemId;
@@ -27,7 +29,15 @@ namespace CompanyGroup.Domain.PartnerModule
             this.StatusIssue = statusIssue;
             this.InventLocationId = inventLocationId;
             this.Payment = payment;
+            this.InStock = inStock;
+            this.AvailableInWebShop = availableInWebShop;
+            this.PictureExists = pictureExists;
         }
+
+        /// <summary>
+        /// sorszám, egy rendelésen belül
+        /// </summary>
+        public int Id { set; get; }
 
         /// <summary>
         /// sorszám, egy rendelésen belül
@@ -70,6 +80,14 @@ namespace CompanyGroup.Domain.PartnerModule
         public decimal LineAmount { set; get; }
 
         /// <summary>
+        /// sor brutto összesen
+        /// </summary>
+        public decimal LineAmountBrutto 
+        {
+            get { return this.LineAmount * Convert.ToDecimal(1.27); }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public int SalesDeliverNow { set; get; }
@@ -93,5 +111,21 @@ namespace CompanyGroup.Domain.PartnerModule
         /// fizetési mód
         /// </summary>
         public string Payment { set; get; }
+
+        /// <summary>
+        /// készleten van-e?
+        /// </summary>
+        public bool InStock { set; get; }
+
+        /// <summary>
+        /// létezik-e a webshop-ban?
+        /// </summary>
+        public bool AvailableInWebShop { set; get; }
+
+        /// <summary>
+        /// létezik-e hozzá kép?
+        /// </summary>
+        public bool PictureExists { set; get; }
+
     }
 }

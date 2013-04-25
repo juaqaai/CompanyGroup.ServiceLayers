@@ -25,6 +25,11 @@ namespace CompanyGroup.Data.PartnerModule
             get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
         }
 
+        private NHibernate.ISession WebInterfaceSession
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
+        }
+
         /// <summary>
         /// InternetUser.cms_ProductOrderCheck( @ProductId nvarchar(20), @DataAreaId nvarchar(3), @OrderedQty int = 0) 
         /// </summary>
@@ -111,19 +116,47 @@ namespace CompanyGroup.Data.PartnerModule
 
         /// <summary>
         /// részletes vevőrendelés sorok listája
+        /// InternetUser.SalesOrderSelect(@CustomerId NVARCHAR(10), 
+		///								  @CanBeTaken BIT = 0, 	-- 0 none, 1 sold, 2 deducted (eladva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása))
+		///								  @SalesStatus INT = 1)
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId)
+        public List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId, bool canBeTaken, int salesStatus, string customerOrderNo, string itemName, string itemId, string salesOrderId)
         {
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.SalesOrderList")
-                                            .SetString("CustomerId", customerId)
-                                            .SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo).GetConstructors()[0]));
+            NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.SalesOrderSelect")
+                                                                         .SetString("CustomerId", customerId)
+                                                                         .SetBoolean("CanBeTaken", canBeTaken)
+                                                                         .SetInt32("SalesStatus", salesStatus)
+                                                                         .SetString("CustomerOrderNo", customerOrderNo)
+                                                                         .SetString("ItemName", itemName)
+                                                                         .SetString("ItemId", itemId)
+                                                                         .SetString("SalesOrderId", salesOrderId)
+                                                                         .SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo).GetConstructors()[0]));
 
             return query.List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>() as List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo>;
+        }
+
+        /// <summary>
+        /// vevő összes nyitott rendeléseinek értéke
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public decimal OpenOrderAmount(string customerId)
+        {
+            try
+            {
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.SalesOrderOpenOrderAmount").SetString("CustomerId", customerId);
+
+                return query.UniqueResult<decimal>();
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         //private static string ConvertOrderHeaderToSeparatedString(CompanyGroup.Domain.PartnerModule.SalesOrderCreate request)

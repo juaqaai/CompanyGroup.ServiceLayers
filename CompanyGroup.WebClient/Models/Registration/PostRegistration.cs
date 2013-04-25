@@ -11,7 +11,9 @@ namespace CompanyGroup.WebClient.Models
         {
             this.Message = registration.Message;
 
-            this.Successed = registration.Successed;
+            this.Succeeded = registration.Succeeded;
+
+            this.CustomerRegistrationId = registration.CustomerRegistrationId;
         }
 
         public PostRegistration() : this(new CompanyGroup.Dto.ServiceResponse.PostRegistration()) { }
@@ -19,11 +21,16 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// sikeres volt-e a művelet, vagy nem
         /// </summary>
-        public bool Successed { get; set; }
+        public bool Succeeded { get; set; }
 
         /// <summary>
         /// a kérés nyelvétől függő hibaüzenet (ha nincs hiba, akkor üres) 
         /// </summary>
         public string Message { get; set; }
+
+        /// <summary>
+        /// vevőregisztráció száma
+        /// </summary>
+        public string CustomerRegistrationId { get; set; }
     }
 }

@@ -355,6 +355,12 @@
           <AssociatedConnUserName />
           <FullPath>SalesOrderList.sql</FullPath>
         </FileNode>
+        <FileNode Name="SalesOrderSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SalesOrderSelect.sql</FullPath>
+        </FileNode>
         <FileNode Name="SecondHandCatalogueInsert.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>

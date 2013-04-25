@@ -15,7 +15,20 @@ namespace CompanyGroup.Domain.PartnerModule
         /// részletes vevőrendelés sorok listája
         /// </summary>
         /// <param name="customerId"></param>
+        /// <param name="canBeTaken"></param>
+        /// <param name="salesStatus"></param>
+        /// <param name="customerOrderNo"></param>
+        /// <param name="itemName"></param>
+        /// <param name="itemId"></param>
+        /// <param name="salesOrderId"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId);
+        List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> GetOrderDetailedLineInfo(string customerId, bool canBeTaken, int salesStatus, string customerOrderNo, string itemName, string itemId, string salesOrderId);
+
+        /// <summary>
+        /// vevő összes nyitott rendeléseinek értéke
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        decimal OpenOrderAmount(string customerId);
     }
 }

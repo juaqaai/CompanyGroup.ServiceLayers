@@ -3,16 +3,30 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "UpdateContactPerson", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// kapcsolattartó módosítás
+    /// </summary>
     public class UpdateContactPerson
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        public UpdateContactPerson() : this(String.Empty, String.Empty, new CompanyGroup.Dto.RegistrationModule.ContactPerson(), String.Empty){}
+
+        public UpdateContactPerson(string registrationId, string visitorId, CompanyGroup.Dto.RegistrationModule.ContactPerson contactPerson, string languageId)
+        {
+            this.RegistrationId = registrationId;
+
+            this.VisitorId = visitorId;
+
+            this.LanguageId = languageId;
+
+            this.ContactPerson = contactPerson;
+        }
+
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 2)]
         public string LanguageId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ContactPerson", Order = 3)]
         public CompanyGroup.Dto.RegistrationModule.ContactPerson ContactPerson { get; set; }
+
+        public string VisitorId { get; set; }
     }
 }

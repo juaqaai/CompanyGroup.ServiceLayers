@@ -127,7 +127,7 @@ namespace CompanyGroup.WebClient.Controllers
                 CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
 
                 //ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
-                if (response.Successed)
+                if (response.Succeeded)
                 {
                     visitorData.RegistrationId = String.Empty;
 
@@ -173,7 +173,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
 
-                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons, response.Visitor);
 
                 CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
 
@@ -185,7 +185,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                           response.InvoiceAddress,
                                                                                                                           response.MailAddress,
                                                                                                                           response.RegistrationId,
-                                                                                                                          response.Visitor,
+                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
                                                                                                                           response.WebAdministrator,
                                                                                                                           new CompanyGroup.WebClient.Models.Countries());
 

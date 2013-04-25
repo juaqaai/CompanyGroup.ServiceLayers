@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="StockUpdater"
   DTS:PackageType="5"
-  DTS:VersionBuild="81"
-  DTS:VersionGUID="{E54418EF-AFDD-4BF6-B258-81551B3D50C6}">
+  DTS:VersionBuild="97"
+  DTS:VersionGUID="{0E096113-2087-4598-BDB4-16FD9155786A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -47,12 +47,12 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{9A8F8C92-B058-475F-BBB7-96CAB3AFF410}"
-      DTS:IncludeInDebugDump="2345"
+      DTS:DTSID="{E9EB5ED7-FFBB-471C-BD30-DAD35C3E52A5}"
+      DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="LastSyncVersion">
       <DTS:VariableValue
-        DTS:DataType="8">0</DTS:VariableValue>
+        DTS:DataType="20">0</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -355,10 +355,8 @@
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AvailPhysical]"
-                      cachedDataType="numeric"
+                      cachedDataType="i4"
                       cachedName="AvailPhysical"
-                      cachedPrecision="28"
-                      cachedScale="12"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvailPhysical]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailPhysical]" />
                     <inputColumn
@@ -381,6 +379,25 @@
                       cachedName="Version"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Version]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Version]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ConfigId]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="ConfigId"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfigId]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ConfigId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemState]"
+                      cachedDataType="i4"
+                      cachedName="ItemState"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemState]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemState]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Status]"
+                      cachedDataType="i4"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[Status]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -416,6 +433,19 @@
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Version]"
                       dataType="i4"
                       name="Version" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfigId]"
+                      dataType="wstr"
+                      length="20"
+                      name="ConfigId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemState]"
+                      dataType="i4"
+                      name="ItemState" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      dataType="i4"
+                      name="Status" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -490,7 +520,7 @@
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
-                  name="ParameterMapping">"@LastVersion:Input",{9A8F8C92-B058-475F-BBB7-96CAB3AFF410};</property>
+                  name="ParameterMapping">"@LastVersion:Input",{E9EB5ED7-FFBB-471C-BD30-DAD35C3E52A5};</property>
               </properties>
               <connections>
                 <connection
@@ -517,14 +547,12 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailPhysical]"
-                      dataType="numeric"
+                      dataType="i4"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvailPhysical]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailPhysical]"
                       name="AvailPhysical"
-                      precision="28"
-                      scale="12"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[DataAreaId]"
@@ -555,6 +583,25 @@
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Version]"
                       name="Version"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ConfigId]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ConfigId]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ConfigId]"
+                      name="ConfigId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemState]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemState]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemState]"
+                      name="ItemState"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -581,6 +628,15 @@
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Version]"
                       dataType="i8"
                       name="Version" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ConfigId]"
+                      dataType="wstr"
+                      length="10"
+                      name="ConfigId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemState]"
+                      dataType="i4"
+                      name="ItemState" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -616,6 +672,17 @@
                       length="10"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventLocationId]"
                       name="InventLocationId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ConfigId]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ConfigId]"
+                      name="ConfigId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemState]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemState]"
+                      name="ItemState" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -696,7 +763,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{F574DD6F-2471-4875-AA20-0330579C687D}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_InsertSyncVersion ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -726,7 +793,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{F574DD6F-2471-4875-AA20-0330579C687D}"
           SQLTask:SqlStatementSource="exec dbo.usp_LastSyncVersion ?;"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -833,7 +900,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{FA186118-606F-4029-8EC3-667C0E3F0C09}"
+          SQLTask:Connection="{0F29169F-F018-4105-906F-BD516B87959E}"
           SQLTask:SqlStatementSource="truncate table Web.InternetUser.Stage_InventSum;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -996,7 +1063,7 @@
           Id="Package\Current version update"
           TopLeft="257,549" />
         <NodeLayout
-          Size="178,42"
+          Size="152,42"
           Id="Package\Data Flow Task"
           TopLeft="267,464" />
         <NodeLayout
@@ -1004,9 +1071,9 @@
           Id="Package\InsertSyncVersion"
           TopLeft="282,658" />
         <NodeLayout
-          Size="174,42"
+          Size="173,42"
           Id="Package\LastSyncVersion"
-          TopLeft="269,336" />
+          TopLeft="275,336" />
         <NodeLayout
           Size="163,42"
           Id="Package\PackageLog close"
@@ -1055,18 +1122,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="358.75,506">
+          TopLeft="343,506">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43"
+              EndConnector="18.5,43"
               Start="0,0"
-              End="0,35.5">
+              End="18.5,35.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.5" />
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="4,21.5" />
+                  <mssgle:LineSegment
+                    End="14.5,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.5,21.5"
+                    Point2="18.5,21.5"
+                    Point3="18.5,25.5" />
+                  <mssgle:LineSegment
+                    End="18.5,35.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1113,18 +1192,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="356,378">
+          TopLeft="361.5,378">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,86"
+              EndConnector="-18.5,86"
               Start="0,0"
-              End="0,78.5">
+              End="-18.5,78.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,78.5" />
+                    End="0,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39"
+                    Point2="0,43"
+                    Point3="-4,43" />
+                  <mssgle:LineSegment
+                    End="-14.5,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-14.5,43"
+                    Point2="-18.5,43"
+                    Point3="-18.5,47" />
+                  <mssgle:LineSegment
+                    End="-18.5,78.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1179,7 +1270,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="359.25,276">
+          TopLeft="362,276">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1248,10 +1339,10 @@
           Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
           TopLeft="401,881" />
         <AnnotationLayout
-          Text="Utolsó készlet szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'InventSum'&#xA;output: @LastSyncVersion AS LastSyncVersion"
+          Text="Utolsó készlet szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'InventSum'&#xA;output: @LastSyncVersion AS LastSyncVersion&#xD;&#xA;ExtractInterface adatbázisban "
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="281,90"
+          Size="281,106"
           Id="3b6fd549-57ac-4e88-9931-32db5158511c"
           TopLeft="474,331" />
         <AnnotationLayout
@@ -1276,7 +1367,7 @@
           Id="22286902-87bf-48e3-b018-fd9507b81d6f"
           TopLeft="488,542" />
         <AnnotationLayout
-          Text="TechnicalMetadata adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'InventSum' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
+          Text="ExtractInterface adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'InventSum' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="542,74"

@@ -106,6 +106,10 @@ companyGroup.utils = (function () {
             getInvoicePictureUrl: function (id) {
                 return _pictureBaseApiUrl + 'GetInvoicePicture/?Id=' + id + '&MaxWidth=500&MaxHeight=500';
             },
+            getSalesOrderPictureUrl: function (id) {
+                return _pictureBaseApiUrl + 'GetSalesOrderPicture/?Id=' + id + '&MaxWidth=500&MaxHeight=500';
+            },
+
             getRegistrationApiUrl: function (url) {
                 return _registrationBaseApiUrl + url;
             },

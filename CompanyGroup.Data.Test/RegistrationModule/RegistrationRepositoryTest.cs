@@ -48,7 +48,7 @@ namespace CompanyGroup.Data.Test
 
             MailAddress mailAddress = Factory.CreateMailAddress("", "", "", "");
 
-            WebAdministrator webAdministrator = Factory.CreateWebAdministrator("", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0);
+            WebAdministrator webAdministrator = Factory.CreateWebAdministrator("", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0, new List<string>());
 
             Registration registration = Factory.CreateRegistration("", "", "", dataRecording, companyData, invoiceAddress, mailAddress, webAdministrator, new List<BankAccount>(), new List<ContactPerson>(), new List<DeliveryAddress>());
 
@@ -107,7 +107,7 @@ namespace CompanyGroup.Data.Test
 
             CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository = new CompanyGroup.Data.RegistrationModule.RegistrationRepository(settings);
 
-            CompanyGroup.Domain.RegistrationModule.WebAdministrator webAdministrator = Factory.CreateWebAdministrator("", "Elek", "Brekk", "cjuhasz@hrp.hu", "+36 20 444 5557", "06 1 777 7778", true, true, true, true, true, true, true, true, true, true, "user1", "ppwwq", true, true, 0, 0);
+            CompanyGroup.Domain.RegistrationModule.WebAdministrator webAdministrator = Factory.CreateWebAdministrator("", "Elek", "Brekk", "cjuhasz@hrp.hu", "+36 20 444 5557", "06 1 777 7778", true, true, true, true, true, true, true, true, true, true, "user1", "ppwwq", true, true, 0, 0, new List<string>());
 
             registrationRepository.UpdateWebAdministrator(objectId, webAdministrator);
 
@@ -231,7 +231,7 @@ namespace CompanyGroup.Data.Test
                                            true, true, true,
                                            true, true, true,
                                            true, true, true,
-                                           "brekeke", "brekeke01", false, true, 0, 0);
+                                           "brekeke", "brekeke01", false, true, 0, 0, new List<string>());
 
             registrationRepository.AddContactPerson(objectId, contactPerson);
 
@@ -253,7 +253,7 @@ namespace CompanyGroup.Data.Test
                                            true, true, true,
                                            true, true, true,
                                            true, true, true,
-                                           "bbbbbbb", "brrrrrrrrrrrrrr", false, true, 0, 0);
+                                           "bbbbbbb", "brrrrrrrrrrrrrr", false, true, 0, 0, new List<string>());
 
             contactPerson.Id = MongoDB.Bson.ObjectId.Parse("505e19876ee012204c0ca5a3");
 

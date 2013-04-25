@@ -7,6 +7,15 @@ namespace CompanyGroup.Domain.RegistrationModule
 {
     /// <summary>
     /// cégregisztráció eredményadatokat összefogó osztály
+    /// 
+    ///xml = strFmt('<?xml version=\"1.0\" encoding=\"utf-16\"?>' +
+    ///      '<CustomerRegResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://Shared.Web.Dynamics.Entities/CustomerRegResult\">' +
+    ///      '<CustomerId>%1</CustomerId>' +
+    ///      '<DataAreaId>%2</DataAreaId>' +
+    ///      '<RecId>%3</RecId>' +
+    ///      '<RegId>%4</RegId>' +
+    ///      '<Result>%5</Result>' +
+    ///      '</CustomerRegResult>', _customerId, curExt(), _recId, _regId, _result);                 
     /// </summary>
     [System.Xml.Serialization.XmlRoot(ElementName = "CustomerRegResult", Namespace = "http://Shared.Web.Dynamics.Entities/CustomerRegResult")]
     public class CustomerCreateResult : System.Xml.Serialization.IXmlSerializable

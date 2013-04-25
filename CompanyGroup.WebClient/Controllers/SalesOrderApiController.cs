@@ -10,10 +10,9 @@ namespace CompanyGroup.WebClient.Controllers
     public class SalesOrderApiController : ApiBaseController
     {
         /// <summary>
-        /// nyitott vevőrendelés info lista
+        /// nyitott vevőrendelés lista
         /// </summary>
         /// <returns></returns>
-        /// 
         [HttpPost]
         [ActionName("GetOrderInfo")]
         public HttpResponseMessage GetOrderInfo(CompanyGroup.WebClient.Models.GetOrderInfoRequest request)
@@ -24,13 +23,13 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.WebClient.Models.Visitor visitor = (visitorData == null) ? new CompanyGroup.WebClient.Models.Visitor() : this.GetVisitor(visitorData);
 
-                CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, request.OnOrder, request.Reserved, request.ReservedOrdered);
+                CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest req = new CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest(visitorData.VisitorId, visitorData.Language, request.CanBeTaken, request.SalesStatus, request.CustomerOrderNo, request.ItemName, request.ItemId, request.SalesOrderId);
 
                 HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetOrderInfoRequest>("SalesOrder", "GetOrderInfo", req);
 
-                List<CompanyGroup.Dto.PartnerModule.OrderInfo> orderInfos = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.OrderInfo>>().Result : new List<CompanyGroup.Dto.PartnerModule.OrderInfo>();
+                CompanyGroup.Dto.PartnerModule.OrderInfoList orderInfoList = (response.IsSuccessStatusCode) ? response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.OrderInfoList>().Result : new CompanyGroup.Dto.PartnerModule.OrderInfoList(0, new List<CompanyGroup.Dto.PartnerModule.OrderInfo>());
 
-                CompanyGroup.WebClient.Models.OrderInfoList viewModel = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfos, visitor);
+                CompanyGroup.WebClient.Models.OrderInfoList viewModel = new CompanyGroup.WebClient.Models.OrderInfoList(orderInfoList.Items, orderInfoList.OpenOrderAmount, visitor);
 
                 return Request.CreateResponse <CompanyGroup.WebClient.Models.OrderInfoList>(HttpStatusCode.OK, viewModel);
             }

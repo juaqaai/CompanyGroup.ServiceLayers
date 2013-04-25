@@ -40,7 +40,7 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.VisitorSelect TO InternetUser
 GO
--- EXEC [InternetUser].[VisitorSelect] 'E7E73DBE777D4038936A5782AEF0E9EE'
+-- EXEC [InternetUser].[VisitorSelect] '9965656AE0234B83A7905D056D63387D'
 
 -- select top 100 * from InternetUser.Visitor order by id desc
 
@@ -60,4 +60,4 @@ GO
 GRANT EXECUTE ON InternetUser.CustomerPriceGroups TO InternetUser
 GO
 
--- exec [InternetUser].[CustomerPriceGroups] 746;
+-- exec [InternetUser].[CustomerPriceGroups] 1028;

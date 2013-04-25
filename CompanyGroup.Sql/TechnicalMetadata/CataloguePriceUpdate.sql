@@ -19,10 +19,12 @@ SET NOCOUNT ON
 		Price4 = CASE WHEN Stage.AccountRelation = '4' THEN CONVERT(INT, Stage.Amount) ELSE C.Price4 END, 
 		Price5 = CASE WHEN Stage.AccountRelation = '5' THEN CONVERT(INT, Stage.Amount) ELSE C.Price5 END 
 	FROM Web.InternetUser.Stage_PriceDiscTable as Stage
-	INNER JOIN Web.InternetUser.Catalogue as C ON Stage.ItemRelation = C.ProductId AND C.DataAreaId = Stage.DataAreaId;
+	INNER JOIN Web.InternetUser.Catalogue as C ON Stage.ItemRelation = C.ProductId AND C.DataAreaId = Stage.DataAreaId
+	WHERE Stage.Operation <> 'I';
 
 RETURN
 GO
-
+GRANT EXECUTE ON dbo.[CataloguePriceUpdate] TO [HRP_HEADOFFICE\AXPROXY]
+GO
 -- exec [dbo].[CataloguePriceUpdate]  
 -- select * from Web.InternetUser.Stage_PriceDiscTable

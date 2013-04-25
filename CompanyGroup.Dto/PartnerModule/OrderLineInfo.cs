@@ -5,6 +5,8 @@ namespace CompanyGroup.Dto.PartnerModule
 {
     public class OrderLineInfo
     {
+        public int Id { set; get; }
+
         /// <summary>
         /// szállítást ekkorra kérte
         /// </summary>     
@@ -39,6 +41,11 @@ namespace CompanyGroup.Dto.PartnerModule
         /// sor összesen
         /// </summary>
         public decimal LineAmount { set; get; }
+
+        /// <summary>
+        /// sor brutto összesen
+        /// </summary>
+        public decimal LineAmountBrutto { set; get; }
 
         /// <summary>
         /// 
@@ -82,5 +89,20 @@ namespace CompanyGroup.Dto.PartnerModule
             get { return this.StatusIssue.Equals(6); }
             set {}
         }
+
+        /// <summary>
+        /// van-e készleten?
+        /// </summary>
+        public bool InStock { set; get; }
+
+        /// <summary>
+        /// elérhető-e a webshop-ban?
+        /// </summary>
+        public bool AvailableInWebShop { set; get; }
+
+        /// <summary>
+        /// létezik-e hozzá kép?
+        /// </summary>
+        public bool PictureExists { set; get; }
     }
 }

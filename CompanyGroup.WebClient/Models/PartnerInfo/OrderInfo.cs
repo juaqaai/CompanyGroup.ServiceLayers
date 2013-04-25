@@ -19,7 +19,7 @@ namespace CompanyGroup.WebClient.Models
 
         public string SalesId { set; get; }
 
-        public DateTime CreatedDate { set; get; }
+        public string CreatedDate { set; get; }
 
         public List<CompanyGroup.WebClient.Models.OrderLineInfo> Lines { get; set; }
     }

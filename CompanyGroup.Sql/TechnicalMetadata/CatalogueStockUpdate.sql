@@ -47,7 +47,8 @@ SET NOCOUNT ON
 
 RETURN
 GO
-
+GRANT EXECUTE ON dbo.CatalogueStockUpdate TO [HRP_HEADOFFICE\AXPROXY]
+GO
 -- select * from Web.InternetUser.Stage_InventSum
 
 -- exec [dbo].[CatalogueStockUpdate]; 

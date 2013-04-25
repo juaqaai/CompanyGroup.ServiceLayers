@@ -6,15 +6,31 @@ namespace CompanyGroup.Domain.PartnerModule
 {
     /// <summary>
     /// kapcsolattartó entitás
+    /// ContactPersonId	LastName	FirstName	Email	CellularPhone	Phone	PhoneLocal	AllowOrder	AllowReceiptOfGoods	
+    /// SmsArriveOfGoods	SmsOrderConfirm	SmsOfDelivery	EmailArriveOfGoods	EmailOfOrderConfirm	EmailOfDelivery	
+    /// WebAdmin	PriceListDownload	InvoiceInfo	UserName	Password	LeftCompany	Newsletter	RecId	RefRecId
     /// </summary>
     public class ContactPerson : CompanyGroup.Domain.Core.EntityBase, IValidatableObject
     {
         public ContactPerson(string contactPersonId, string lastName, string firstName, string email, string cellularPhone, string phone, string phoneLocal,
+                             bool allowOrder, bool allowReceiptOfGoods,
+                             bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery,
+                             bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery,
+                             bool webAdmin, bool priceListDownload, bool invoiceInfo,
+                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId)
+            : this(contactPersonId, lastName, firstName, email, cellularPhone, phone, phoneLocal,
+                             allowOrder, allowReceiptOfGoods,
+                             smsArriveOfGoods, smsOrderConfirm, smsOfDelivery,
+                             emailArriveOfGoods, emailOfOrderConfirm, emailOfDelivery,
+                             webAdmin, priceListDownload, invoiceInfo,
+                             userName, password, leftCompany, newsletter, recId, refRecId, new List<string>()) { }
+
+        public ContactPerson(string contactPersonId, string lastName, string firstName, string email, string cellularPhone, string phone, string phoneLocal,
                              bool allowOrder, bool allowReceiptOfGoods, 
                              bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery, 
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, 
-                             bool webAdmin, bool priceListDownload, bool invoiceInfo, 
-                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId)
+                             bool webAdmin, bool priceListDownload, bool invoiceInfo,
+                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId, List<string> positions)
         {
             this.ContactPersonId = contactPersonId;
             this.FirstName = firstName;
@@ -38,9 +54,10 @@ namespace CompanyGroup.Domain.PartnerModule
             this.LeftCompany = leftCompany;
             this.RecId = recId;
             this.RefRecId = refRecId;
+            this.Positions = positions;
         }
 
-        public ContactPerson() : this("", "", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0) { }
+        public ContactPerson() : this("", "", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0, new List<string>()) { }
 
         /// <summary>
         /// kapcsolattartó egyedi azonosító
@@ -221,6 +238,13 @@ namespace CompanyGroup.Domain.PartnerModule
         [MongoDB.Bson.Serialization.Attributes.BsonDefaultValue("")]
         [MongoDB.Bson.Serialization.Attributes.BsonRequired]
         public long RefRecId { get; set; }
+
+        /// <summary>
+        /// megadott pozíciók
+        /// </summary>
+        [MongoDB.Bson.Serialization.Attributes.BsonElement("Positions")]
+        [MongoDB.Bson.Serialization.Attributes.BsonRequired]
+        public List<string> Positions { get; set; }
 
         /// <summary>
         /// <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/>

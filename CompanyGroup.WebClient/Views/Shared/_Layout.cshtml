@@ -97,7 +97,7 @@
 					<td width="100%">
                     {{#IsValidLogin}}
                         <span >Bejelentkezve:</span> 
-                        <strong><span>{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
+                        <strong><span id="companyname">{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
                         <span>Képviselő:</span>
                         <strong><span>{{Representative.Name}}</span></strong> 
                         <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>
@@ -170,7 +170,7 @@
 										<a href="@Url.Content("~/PartnerInfo/#/salesorderinfo")">Megrendelések</a>
 									</li>
 									<li>
-										<a href="@Url.Content("~/PartnerInfo/ForgetPassword")">Jelszó módosítás</a>
+										<a href="@Url.Content("~/PartnerInfo/#/changepassword")">Jelszó módosítás</a>
 									</li>
 								</ul>
 							</li>
@@ -462,8 +462,8 @@
                 </form>
                 <span style="color:#F00" id="forgetPasswordResult"></span><br/><br/>
                 Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:<br/><br/>
-                <strong>Balogh Zsolt</strong><br/>
-                 Email: zsbalogh@hrp.hu<br/>
+                <strong>Rávai András</strong><br/>
+                 Email: aravai@hrp.hu<br/>
                 Telefon: +36-1-452-4647<br/><br/>
                 <em>Köszönjük. HRP Hungary Kft, BSC Kft. </em>
                 </div>

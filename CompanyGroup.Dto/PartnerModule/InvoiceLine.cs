@@ -9,8 +9,8 @@ namespace CompanyGroup.Dto.PartnerModule
     /// </summary>
     public class InvoiceLine
     {
-        public InvoiceLine(int id, string invoiceId, string currencyCode, int deliveryType, string description, string itemDate, string itemId, string lineAmount, string lineAmountMst, 
-                           string itemName, bool pictureExists, int quantity, string salesPrice, string taxAmount, string taxAmountMst, long recId)
+        public InvoiceLine(int id, string invoiceId, string currencyCode, int deliveryType, string description, string itemDate, string itemId, string lineAmount, string lineAmountMst,
+                           string itemName, bool pictureExists, int quantity, string salesPrice, string taxAmount, string taxAmountMst, long recId, bool inStock, bool availableInWebShop)
         {
             this.Id = id;
             this.InvoiceId = invoiceId;
@@ -27,6 +27,9 @@ namespace CompanyGroup.Dto.PartnerModule
             this.Description = description;
             this.RecId = recId;
             this.PictureExists = pictureExists;
+
+            this.InStock = inStock;
+            this.AvailableInWebShop = availableInWebShop;
         }
 
         public int Id { get; set; }
@@ -105,5 +108,15 @@ namespace CompanyGroup.Dto.PartnerModule
         /// létezik-e kép a termékhez?
         /// </summary>
         public bool PictureExists { set; get; }
+
+        /// <summary>
+        /// készleten
+        /// </summary>
+        public bool InStock { set; get; }
+
+        /// <summary>
+        /// webshop-ban elérhető
+        /// </summary>
+        public bool AvailableInWebShop { set; get; }
     }
 }

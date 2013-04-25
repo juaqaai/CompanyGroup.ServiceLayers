@@ -6,7 +6,7 @@
 	A tárolt eljárás visszaadja a korábban aktív (1) státusszal rendelkezõ rekord azonosítóját.
 */
 
-USE TechnicalMetadata
+USE ExtractInterface
 GO
 
 SET ANSI_NULLS ON
@@ -27,8 +27,11 @@ SET NOCOUNT ON
 RETURN
 
 GO
+GRANT EXECUTE ON dbo.usp_LastSyncVersion TO [HRP_HEADOFFICE\AXPROXY]
+GO
 
 -- exec dbo.usp_LastSyncVersion 'PriceDiscTable'
+-- exec dbo.usp_LastSyncVersion 'InventSum'
 
 /*
 	TRUNCATE TABLE dbo.SyncMetadata;
@@ -52,4 +55,6 @@ SET NOCOUNT ON
 
 RETURN
 
+GO
+GRANT EXECUTE ON dbo.usp_InsertSyncVersion TO [HRP_HEADOFFICE\AXPROXY]
 GO

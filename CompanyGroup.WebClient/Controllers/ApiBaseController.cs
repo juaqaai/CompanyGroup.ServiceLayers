@@ -255,7 +255,7 @@ namespace CompanyGroup.WebClient.Controllers
         {
             try
             {
-
+                //üres a látogató azonosító
                 if (String.IsNullOrWhiteSpace(visitorData.VisitorId))
                 {
                     return new CompanyGroup.WebClient.Models.Visitor();

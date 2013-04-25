@@ -5,22 +5,60 @@ using System.Text;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "UpdateRegistrationData", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// regisztrációs adatok mint - cég, számla, (levelezési, szállítási) adatok felvitele
+    /// </summary>
     public class UpdateRegistrationData
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 2)]
+        /// <summary>
+        /// látogató azonosító
+        /// </summary>
+        public string VisitorId { get; set; }
+
+        /// <summary>
+        /// beállított nyelv
+        /// </summary>
         public string LanguageId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "CompanyData", Order = 3)]
+        /// <summary>
+        /// céges adatok
+        /// </summary>
         public CompanyGroup.Dto.RegistrationModule.CompanyData CompanyData { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "InvoiceAddress", Order = 4)]                                
+        /// <summary>
+        /// számlázási cím adatok
+        /// </summary>
+                        
         public CompanyGroup.Dto.RegistrationModule.InvoiceAddress InvoiceAddress { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "MailAddress", Order = 5)]
-        public CompanyGroup.Dto.RegistrationModule.MailAddress MailAddress { get; set; } 
+        /// <summary>
+        /// levelezési cím adatok
+        /// </summary>
+        public CompanyGroup.Dto.RegistrationModule.MailAddress MailAddress { get; set; }
+
+        /// <summary>
+        /// beállította-e a nem egyezik a levelezési cím kapcsolót
+        /// </summary>
+        public bool ModifyMailAddress { get; set; }
+
+        /// <summary>
+        /// beállította-e a nem egyezik a szállítási cím kapcsolót
+        /// </summary>
+        public bool ModifyDeliveryAddress { get; set; }
+
+        /// <summary>
+        /// szállítási cím
+        /// </summary>
+        public CompanyGroup.Dto.RegistrationModule.DeliveryAddress DeliveryAddress { get; set; }
+
+        /// <summary>
+        /// bankszámlaszám
+        /// </summary>
+        public CompanyGroup.Dto.RegistrationModule.BankAccount BankAccount { get; set; }
     }
 }

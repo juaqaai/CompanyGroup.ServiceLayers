@@ -8,20 +8,20 @@ namespace CompanyGroup.Domain.RegistrationModule
     /// </summary>
     public class ContactPerson : CompanyGroup.Domain.PartnerModule.ContactPerson, CompanyGroup.Domain.Core.INoSqlEntity
     {
-        public ContactPerson() : this("", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0) { }
+        public ContactPerson() : this("", "", "", "", "", "", false, false, false, false, false, false, false, false, false, false, false, "", "", false, false, 0, 0, new List<string>()) { }
 
         public ContactPerson(string contactPersonId, string lastName, string firstName, string email, string cellularPhone, string phone, 
                              bool allowOrder, bool allowReceiptOfGoods, 
                              bool smsArriveOfGoods, bool smsOrderConfirm, bool smsOfDelivery, 
                              bool emailArriveOfGoods, bool emailOfOrderConfirm, bool emailOfDelivery, 
                              bool webAdmin, bool priceListDownload, bool invoiceInfo,
-                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId)
+                             string userName, string password, bool leftCompany, bool newsletter, long recId, long refRecId, List<string> positions)
             : base(contactPersonId, lastName, firstName, email, cellularPhone, phone, "",
                              allowOrder, allowReceiptOfGoods, 
                              smsArriveOfGoods, smsOrderConfirm, smsOfDelivery, 
                              emailArriveOfGoods, emailOfOrderConfirm, emailOfDelivery, 
-                             webAdmin, priceListDownload, invoiceInfo, 
-                             userName, password, leftCompany, newsletter, recId, refRecId)
+                             webAdmin, priceListDownload, invoiceInfo,
+                             userName, password, leftCompany, newsletter, recId, refRecId, positions)
         {
             this.Id = MongoDB.Bson.ObjectId.GenerateNewId();
         }

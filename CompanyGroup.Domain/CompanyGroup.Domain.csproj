@@ -54,6 +54,7 @@
     <Compile Include="Core\INoSqlEntity.cs" />
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
+    <Compile Include="MaintainModule\InvoiceAggregates\IPackageRepository.cs" />
     <Compile Include="WebshopModule\ProductAggregates\PriceDiscTable.cs" />
     <Compile Include="WebshopModule\ProductAggregates\IChangeTrackingRepository.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\Invoice.cs" />
@@ -303,7 +304,6 @@
     <None Include="WebshopModule\WebshopClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MaintainModule\InvoiceAggregates\" />
     <Folder Include="PartnerModule\Services\" />
     <Folder Include="WebshopModule\PricelistAggregates\" />
     <Folder Include="WebshopModule\Services\" />

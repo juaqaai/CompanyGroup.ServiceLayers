@@ -84,7 +84,7 @@ namespace CompanyGroup.WebClient.Controllers
         }
 
         /// <summary>
-        /// regisztrációs adatok kiolvasása (betöltéskor, frissítéskor hívódik)
+        /// regisztrációs adatok kiolvasása (betöltéskor, oldalfrissítéskor hívódik)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -97,6 +97,8 @@ namespace CompanyGroup.WebClient.Controllers
 
                 //bejelentkezett felhasználó adatainak kiolvasása sütiből
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+                //CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
                 //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
                 //if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
@@ -118,7 +120,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
 
-                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons, response.Visitor);
 
                 CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
 
@@ -130,7 +132,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                           response.InvoiceAddress,
                                                                                                                           response.MailAddress,
                                                                                                                           response.RegistrationId,
-                                                                                                                          response.Visitor,
+                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
                                                                                                                           response.WebAdministrator,
                                                                                                                           this.GetCountries());
 
@@ -184,7 +186,7 @@ namespace CompanyGroup.WebClient.Controllers
                 //válaszüzenet előállítása
                 CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
 
-                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons);
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons, response.Visitor);
 
                 CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
 
@@ -196,7 +198,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                           response.InvoiceAddress,
                                                                                                                           response.MailAddress,
                                                                                                                           response.RegistrationId,
-                                                                                                                          response.Visitor,
+                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
                                                                                                                           response.WebAdministrator, 
                                                                                                                           this.GetCountries());
 
@@ -226,7 +228,7 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
 
             //ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
-            if (response.Successed)
+            if (response.Succeeded)
             {
                 visitorData.RegistrationId = String.Empty;
 
@@ -256,6 +258,7 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
+            //szervizhívás előkészítése
             CompanyGroup.Dto.ServiceRequest.UpdateDataRecording req = new CompanyGroup.Dto.ServiceRequest.UpdateDataRecording()
             {
                 RegistrationId = visitorData.RegistrationId,
@@ -294,7 +297,12 @@ namespace CompanyGroup.WebClient.Controllers
                 LanguageId = visitorData.Language,
                 CompanyData = request.CompanyData,
                 InvoiceAddress = request.InvoiceAddress,
-                MailAddress = request.MailAddress
+                MailAddress = request.MailAddress, 
+                ModifyDeliveryAddress = request.ModifyDeliveryAddress,
+                ModifyMailAddress = request.ModifyMailAddress,
+                VisitorId = visitorData.VisitorId, 
+                BankAccount = new CompanyGroup.Dto.RegistrationModule.BankAccount(request.BankAccount.Part1, request.BankAccount.Part2, request.BankAccount.Part3, request.BankAccount.RecId, request.BankAccount.Id), 
+                DeliveryAddress = new CompanyGroup.Dto.RegistrationModule.DeliveryAddress( request.DeliveryAddress.RecId, request.DeliveryAddress.City, request.DeliveryAddress.Street, request.DeliveryAddress.ZipCode, request.DeliveryAddress.CountryRegionId, request.DeliveryAddress.Id)
             };
 
             CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateRegistrationData, CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData>("Registration", "UpdateRegistrationData", req);
@@ -328,11 +336,12 @@ namespace CompanyGroup.WebClient.Controllers
             {
                 RegistrationId = visitorData.RegistrationId,
                 LanguageId = visitorData.Language,
-                WebAdministrator = new Dto.RegistrationModule.WebAdministrator(request.AllowOrder, request.AllowReceiptOfGoods, request.ContactPersonId, request.Email, request.EmailArriveOfGoods, 
-                                                                               request.EmailOfDelivery, request.EmailOfOrderConfirm, request.FirstName, request.InvoiceInfo, request.LastName, 
-                                                                               request.LeftCompany, request.Newsletter, request.Password, request.PriceListDownload, request.RecId, 
-                                                                               request.RefRecId, request.SmsArriveOfGoods, request.SmsOfDelivery, request.SmsOrderConfirm, request.Telephone, 
-                                                                               request.UserName)
+                WebAdministrator = new CompanyGroup.Dto.RegistrationModule.WebAdministrator(request.AllowOrder, request.AllowReceiptOfGoods, request.ContactPersonId, request.Email, request.EmailArriveOfGoods, 
+                                                                                            request.EmailOfDelivery, request.EmailOfOrderConfirm, request.FirstName, request.InvoiceInfo, request.LastName, 
+                                                                                            request.LeftCompany, request.Newsletter, request.Password, request.PriceListDownload, request.RecId, 
+                                                                                            request.RefRecId, request.SmsArriveOfGoods, request.SmsOfDelivery, request.SmsOrderConfirm, request.Telephone, 
+                                                                                            request.UserName, request.Positions),
+                VisitorId = visitorData.VisitorId
             };
 
             CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateWebAdministrator, CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator>("Registration", "UpdateWebAdministrator", req);
@@ -588,24 +597,55 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.AddContactPerson req = new CompanyGroup.Dto.ServiceRequest.AddContactPerson()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language,
-                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName, 
-                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods, 
-                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods, 
-                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin, 
-                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName, 
-                                                                         request.Password, request.Newsletter, request.Telephone, request.Email, 
-                                                                         request.LeftCompany, request.Id, request.RecId)
-            };
+            Dto.RegistrationModule.ContactPerson contactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
+                                                                                                          request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
+                                                                                                          request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
+                                                                                                          request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
+                                                                                                          request.PriceListDownload, request.InvoiceInfo, request.UserName,
+                                                                                                          request.Password, request.Newsletter, request.Telephone, request.Email,
+                                                                                                          request.LeftCompany, request.Id, request.RecId, request.Positions);
+
+            CompanyGroup.Dto.ServiceRequest.AddContactPerson req = new CompanyGroup.Dto.ServiceRequest.AddContactPerson(visitorData.RegistrationId, visitorData.Language, contactPerson, visitorData.VisitorId);
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "AddContactPerson", req);
 
             CompanyGroup.WebClient.Models.ContactPersons contactPersons = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
 
             return contactPersons;
+        }
+
+        /// <summary>
+        /// kapcsolattartó mentése (kapcsolattartó képernyő elhagyása)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage SaveContactPerson(CompanyGroup.WebClient.Models.ContactPerson request)
+        {
+            request.ContactPersonId = request.ContactPersonId ?? String.Empty;
+
+            //regisztrációs azonosító kiolvasása sütiből
+            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
+
+            //csak akkor kell hozzáadni, ha az adatok ki vannak töltve
+
+           Dto.RegistrationModule.ContactPerson contactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
+                                                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
+                                                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
+                                                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
+                                                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName,
+                                                                                                         request.Password, request.Newsletter, request.Telephone, request.Email,
+                                                                                                         request.LeftCompany, request.Id, request.RecId, request.Positions);
+
+            CompanyGroup.Dto.ServiceRequest.AddContactPerson req = new CompanyGroup.Dto.ServiceRequest.AddContactPerson(visitorData.RegistrationId, visitorData.Language, contactPerson, visitorData.VisitorId);
+
+            CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.AddContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "SaveContactPerson", req);
+
+            CompanyGroup.WebClient.Models.ContactPersons model = new CompanyGroup.WebClient.Models.ContactPersons(response, String.Empty);
+
+            HttpResponseMessage httpResponseMsg = Request.CreateResponse<CompanyGroup.WebClient.Models.ContactPersons>(HttpStatusCode.OK, model);
+
+            return httpResponseMsg;        
         }
 
         /// <summary>
@@ -619,11 +659,7 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.GetContactPerson req = new CompanyGroup.Dto.ServiceRequest.GetContactPerson()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language
-            };
+            CompanyGroup.Dto.ServiceRequest.GetContactPerson req = new CompanyGroup.Dto.ServiceRequest.GetContactPerson(visitorData.RegistrationId, visitorData.VisitorId, visitorData.Language);
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "GetContactPersons", req);
 
@@ -643,18 +679,15 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.UpdateContactPerson req = new CompanyGroup.Dto.ServiceRequest.UpdateContactPerson()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language,
-                ContactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
-                                                                         request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
-                                                                         request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
-                                                                         request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
-                                                                         request.PriceListDownload, request.InvoiceInfo, request.UserName,
-                                                                         request.Password, request.Newsletter, request.Telephone, request.Email,
-                                                                         request.LeftCompany, request.Id, request.RecId)
-            };
+            Dto.RegistrationModule.ContactPerson contactPerson = new Dto.RegistrationModule.ContactPerson(request.ContactPersonId, request.FirstName, request.LastName,
+                                                                                                          request.AllowOrder, request.AllowReceiptOfGoods, request.SmsArriveOfGoods,
+                                                                                                          request.SmsOrderConfirm, request.SmsOfDelivery, request.EmailArriveOfGoods,
+                                                                                                          request.EmailOfOrderConfirm, request.EmailOfDelivery, request.WebAdmin,
+                                                                                                          request.PriceListDownload, request.InvoiceInfo, request.UserName,
+                                                                                                          request.Password, request.Newsletter, request.Telephone, request.Email,
+                                                                                                          request.LeftCompany, request.Id, request.RecId, request.Positions);
+
+            CompanyGroup.Dto.ServiceRequest.UpdateContactPerson req = new CompanyGroup.Dto.ServiceRequest.UpdateContactPerson(visitorData.RegistrationId, visitorData.VisitorId, contactPerson, visitorData.Language);
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.UpdateContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "UpdateContactPerson", req);
 
@@ -674,12 +707,7 @@ namespace CompanyGroup.WebClient.Controllers
             //regisztrációs azonosító kiolvasása sütiből
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.ServiceRequest.RemoveContactPerson req = new CompanyGroup.Dto.ServiceRequest.RemoveContactPerson()
-            {
-                RegistrationId = visitorData.RegistrationId,
-                LanguageId = visitorData.Language,
-                Id = request.Id
-            };
+            CompanyGroup.Dto.ServiceRequest.RemoveContactPerson req = new CompanyGroup.Dto.ServiceRequest.RemoveContactPerson(visitorData.RegistrationId, visitorData.VisitorId, visitorData.Language, request.Id);
 
             CompanyGroup.Dto.RegistrationModule.ContactPersons response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.RemoveContactPerson, CompanyGroup.Dto.RegistrationModule.ContactPersons>("Registration", "RemoveContactPerson", req);
 

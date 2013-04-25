@@ -76,6 +76,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaintainModule\PackageRepositoryTest.cs" />
     <Compile Include="PartnerModule\ContactPersonRepositoryTest.cs" />
     <Compile Include="PartnerModule\InvoiceRepositoryTest.cs" />
     <Compile Include="PartnerModule\SalesOrderRepositoryTest.cs" />
@@ -105,9 +106,7 @@
       <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MaintainModule\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>

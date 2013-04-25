@@ -4,22 +4,34 @@ using System.Collections.Generic;
 namespace CompanyGroup.Dto.ServiceResponse
 {
     /// <summary>
-    /// üres válasz objektum osztály
+    /// adatrögzítő adatainak mentése
     /// </summary>
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "UpdateDataRecording", Namespace = "CompanyGroup.Dto.ServiceResponse")]
     public class UpdateDataRecording
     {
+        public UpdateDataRecording(bool succeeded, string message, CompanyGroup.Dto.PartnerModule.Visitor visitor)
+        {
+            this.Succeeded = succeeded;
+
+            this.Message = message;
+
+            this.Visitor = visitor;
+        }
+
+        public UpdateDataRecording() : this(false, String.Empty, new CompanyGroup.Dto.PartnerModule.Visitor()) { }
+
         /// <summary>
         /// sikeres volt-e a művelet, vagy nem
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Successed", Order = 1)]
-        public bool Successed { get; set; }
+        public bool Succeeded { get; set; }
 
         /// <summary>
         /// a kérés nyelvétől függő hibaüzenet (ha nincs hiba, akkor üres) 
         /// </summary>
-        [System.Runtime.Serialization.DataMember(Name = "Message", Order = 2)]
         public string Message { get; set; }
+
+        /// <summary>
+        /// látogató adatai
+        /// </summary>
+        public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
     }
 }

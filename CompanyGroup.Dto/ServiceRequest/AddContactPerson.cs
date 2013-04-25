@@ -3,16 +3,42 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.ServiceRequest
 {
-    [System.Runtime.Serialization.DataContract(Name = "AddContactPerson", Namespace = "CompanyGroup.Dto.ServiceRequest")]
+    /// <summary>
+    /// kapcsolattartó hozzáadása kérés adatokat összefogó osztály
+    /// </summary>
     public class AddContactPerson
     {
-        [System.Runtime.Serialization.DataMember(Name = "RegistrationId", Order = 1)]
+        public AddContactPerson() : this(String.Empty, String.Empty, new CompanyGroup.Dto.RegistrationModule.ContactPerson(), String.Empty) { }
+
+        public AddContactPerson(string registrationId, string languageId, CompanyGroup.Dto.RegistrationModule.ContactPerson contactPerson, string visitorId)
+        {
+            this.RegistrationId = registrationId;
+
+            this.LanguageId = languageId;
+
+            this.ContactPerson = contactPerson;
+
+            this.VisitorId = visitorId;
+        }
+
+        /// <summary>
+        /// regisztrációs azonosító
+        /// </summary>
         public string RegistrationId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "LanguageId", Order = 3)]
+        /// <summary>
+        /// beállított nyelv
+        /// </summary>
         public string LanguageId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "ContactPerson", Order = 2)]
+        /// <summary>
+        /// kapcsolattartó DTO
+        /// </summary>
         public CompanyGroup.Dto.RegistrationModule.ContactPerson ContactPerson { get; set; }
+
+        /// <summary>
+        /// látogató azonosító
+        /// </summary>
+        public string VisitorId { get; set; }
     }
 }
