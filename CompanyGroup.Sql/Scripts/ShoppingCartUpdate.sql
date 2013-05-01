@@ -93,11 +93,11 @@ EXEC [InternetUser].[ShoppingCartLineUpdate] 1, 1, 1;
 
 select * from InternetUser.ShoppingCartLine
 */
--- kosár "tárolt" flag beállítása
+-- kosár "tárolt" flag beállítása azoknál a kosárelemeknél, ahol a Status = 1
 DROP PROCEDURE [InternetUser].[ShoppingCartStore];
 GO
 CREATE PROCEDURE [InternetUser].[ShoppingCartStore]( @CartId INT = 0,						-- kosar fej azonosito
-													 @Name NVARCHAR(64) = '',				-- mennyiseg
+													 @Name NVARCHAR(64) = '',				-- név
 													 @Status INT = 2 						-- kosár elem státusza (Deleted = 0, Created = 1, Stored = 2, Posted = 3)
 )			
 AS
@@ -109,7 +109,7 @@ SET NOCOUNT ON
 	WHERE Id = @CartId;
 
 	UPDATE InternetUser.ShoppingCartLine SET [Status] = @Status
-	WHERE CartId = @CartId;
+	WHERE CartId = @CartId AND [Status] = 1;
 
 	SET @Ret = 1;
 
@@ -119,6 +119,7 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.[ShoppingCartStore] TO InternetUser
 GO
+
 -- kosár "aktív" flag beállítása
 DROP PROCEDURE [InternetUser].[ShoppingCartActivate];
 GO
@@ -134,7 +135,6 @@ SET NOCOUNT ON
 
 	UPDATE InternetUser.ShoppingCart SET [Active] = 1 WHERE Id = @CartId;
 
-
 	SET @Ret = 1;
 
 	SELECT @Ret as Ret;
@@ -143,7 +143,7 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.[ShoppingCartActivate] TO InternetUser
 GO
--- VisitorId beállítása
+-- VisitorId beállítása azoknál a kosaraknál, ahol a PermanentVisitorId volt beállítva
 DROP PROCEDURE [InternetUser].[ShoppingCartAssociate];
 GO
 CREATE PROCEDURE [InternetUser].[ShoppingCartAssociate]( @PermanentVisitorId NVARCHAR(64) = '',

@@ -61,6 +61,7 @@ namespace CompanyGroup.WebApi
             unityContainer.RegisterType<CompanyGroup.Domain.RegistrationModule.IRegistrationRepository, CompanyGroup.Data.RegistrationModule.RegistrationRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository, CompanyGroup.Data.WebshopModule.ChangeTrackingRepository>();
             unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IInvoiceRepository, CompanyGroup.Data.PartnerModule.InvoiceRepository>();
+            unityContainer.RegisterType<CompanyGroup.Domain.PartnerModule.IChangeTrackingRepository, CompanyGroup.Data.PartnerModule.ChangeTrackingRepository>();
 
             //unityContainer.Configure<InjectedMembers>().
 

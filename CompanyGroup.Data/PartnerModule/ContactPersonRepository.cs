@@ -3,8 +3,12 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Data.PartnerModule
 {
-    public class ContactPersonRepository : CompanyGroup.Domain.PartnerModule.IContactPersonRepository
+    public class ContactPersonRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.IContactPersonRepository
     {
+        private static readonly string ClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ChangePasswordServiceClassName", "ContactPersonService");
+
+        private readonly static string CollectionName = Helpers.ConfigSettingsParser.GetString("ChangePasswordCollectionName", "ChangePassword");
+
         /// <summary>
         /// kapcsolattartóhoz kapcsolódó műveletek konstruktor
         /// </summary>
@@ -34,7 +38,7 @@ namespace CompanyGroup.Data.PartnerModule
 
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(dataAreaId), "dataAreaId may not be null or empty");
 
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.cms_VerifyChangePassword")
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VerifyChangePassword")
                                             .SetString("ContactPersonId", contactPersonId)
                                             .SetString("UserName", userName)
                                             .SetString("OldPassword", oldPassword)
@@ -44,6 +48,35 @@ namespace CompanyGroup.Data.PartnerModule
             CompanyGroup.Domain.PartnerModule.ChangePasswordVerify result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.ChangePasswordVerify>();
 
             return result;
+        }
+
+        /// <summary>
+        /// jelszómódosítás AX  
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult Change(CompanyGroup.Domain.PartnerModule.ChangePasswordCreate request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.PartnerModule.ChangePasswordCreate>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(ContactPersonRepository.UserName,
+                                                                                                         ContactPersonRepository.Password,
+                                                                                                         ContactPersonRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         ContactPersonRepository.Language,
+                                                                                                         ContactPersonRepository.ObjectServer,
+                                                                                                         ContactPersonRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("changePwd", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult response = this.DeSerialize<CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult>(xml);
+
+            return response;
         }
 
         /// <summary>

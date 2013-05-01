@@ -1,7 +1,8 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+﻿<!DOCTYPE HTML>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
         <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
         <link href="~/Content/Media/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
@@ -471,7 +472,6 @@
 
     <script type="text/javascript">
 
-						              
 
             @RenderSection("ScriptFiles", false)
        
@@ -479,8 +479,8 @@
             companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
             companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
 			companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
-            
-
+			
+ 	       
 
             $(window).scroll(function () {
                 if ($(this).scrollTop() > 100) {
@@ -547,6 +547,7 @@
  
 			
           @RenderSection("ScriptOnReady", false) 
+		  
 			
 			$("#status").fadeOut(); // will first fade out the loading animation
             $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.

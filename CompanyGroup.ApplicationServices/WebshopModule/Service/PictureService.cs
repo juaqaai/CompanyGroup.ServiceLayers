@@ -53,6 +53,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         }
 
         /// <summary>
+        /// elsődleges kép lekérdezése
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public Stream GetPrimaryPicture(string productId, string maxWidth, string maxHeight)
+        {
+            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "The GetPrimaryPicture productId parameter can not be null!");
+
+            try
+            {
+                CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetPrimaryPicture(productId);
+
+                CompanyGroup.Helpers.DesignByContract.Ensure((picture != null), "Repository GetPrimaryPicture result cannot be null!");
+
+                byte[] buffer = this.ReadFileContent(picture);
+
+                int w = 0;
+                int h = 0;
+
+                if (!Int32.TryParse(maxWidth, out w)) { w = 0; }
+                if (!Int32.TryParse(maxHeight, out h)) { h = 0; }
+
+                return CompanyGroup.Helpers.ImageManager.ReSizeFileStreamImage(new MemoryStream(buffer), w, h, "image/jpeg");               
+            }
+            catch { return null; }
+        }
+
+        /// <summary>
         /// termékazonosítóhoz és rekordazonosítóhoz tartozó képtartalmat adja vissza 
         /// </summary>
         /// <param name="productId"></param>

@@ -67,6 +67,8 @@ GO
  select * from changetable(changes Axdb_20130131.dbo.INVENTSUM, 0) as ct
 
 /*
+  exec InternetUser.InventSumCT 0
+
  exec InternetUser.InventSumCT_Detailed 0
 
 Version	ItemId	AvailPhysical	DataAreaId	InventLocationId	ConfigId	ItemState

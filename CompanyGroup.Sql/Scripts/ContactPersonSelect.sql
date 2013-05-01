@@ -33,7 +33,7 @@ AS
 			   CONVERT( BIT, cp.EmailAruBeerkezes ) as EmailArriveOfGoods, -- email az aru beerkezeserol
 			   CONVERT( BIT, cp.EmailRendIg ) as EmailOfOrderConfirm, -- email a rendeles visszaigazolasarol
 			   CONVERT( BIT, cp.EmailAruKiszallitas ) as EmailOfDelivery, -- email az aru kiszallitasarol
-			   CONVERT( BIT, cp.WEBADMIN ) as WebAdmin,
+			   CONVERT( BIT, cp.[ADMIN] ) as WebAdmin,
 			   CONVERT( BIT, cp.Arlist ) as PriceListDownload, 
 			   CONVERT( BIT, cp.SzlaInfo ) as InvoiceInfo,
 			   ISNULL( wsui.WEBLOGINNAME, '' ) as UserName, 
@@ -55,3 +55,5 @@ GO
 
 -- exec InternetUser.ContactPersonSelect '', 'KAPCS06231', 'hrp';
 -- exec InternetUser.ContactPersonSelect 'V002020', '', 'hrp'
+
+-- exec InternetUser.ContactPersonSelect 'V001446', '', 'hrp';

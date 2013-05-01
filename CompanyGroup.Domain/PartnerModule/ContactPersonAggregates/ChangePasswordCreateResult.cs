@@ -7,9 +7,16 @@ namespace CompanyGroup.Domain.PartnerModule
     /// jelszómódosítás válaszüzenet
     /// </summary>
     [Serializable()]
-    [System.Xml.Serialization.XmlRoot(ElementName = "ChangePasswordResult", Namespace = "http://CompanyGroup.Domain.PartnerModule/ChangePasswordResult")]
-    public class ChangePasswordCreateResult // : System.Xml.Serialization.IXmlSerializable
+    [System.Xml.Serialization.XmlRoot(ElementName = "ChangePasswordResponse", Namespace = "http://CompanyGroup.Domain.PartnerModule/ChangePasswordResponse")]
+    public class ChangePasswordCreateResult : System.Xml.Serialization.IXmlSerializable
     {
+        /*
+         Üzenet (04:12:01)
+        <?xml version="1.0" encoding="utf-16"?><ChangePasswordResponse xmlns="http://CompanyGroup.Domain.PartnerModule/ChangePasswordResponse"><Code>1</Code><Message>Succeeded</Message><DataAreaId>hrp</DataAreaId></ChangePassword>
+         * 
+xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><ChangePassword xmlns=\"http://CompanyGroup.Domain.PartnerModule/ChangePasswordCreateResult\"><Code>1</Code><Message>The operation successfully completed!</Message><DataAreaId>bsc</DataAreaId></ChangePassword>"         
+         */
+
         /// <summary>
         /// jelszómódosítás válaszüzenet
         /// </summary>
@@ -22,8 +29,8 @@ namespace CompanyGroup.Domain.PartnerModule
         //    this.Message = message;
         //}
 
-        [System.Xml.Serialization.XmlElement(ElementName = "ResultCode", Order = 1)]
-        public int ResultCode { get; set; }
+        [System.Xml.Serialization.XmlElement(ElementName = "Code", Order = 1)]
+        public int Code { get; set; }
 
         [System.Xml.Serialization.XmlElement(ElementName = "Message", Order = 2)]
         public string Message { get; set; }
@@ -31,26 +38,26 @@ namespace CompanyGroup.Domain.PartnerModule
         [System.Xml.Serialization.XmlElement(ElementName = "DataAreaId", Order = 3)]
         public string DataAreaId { get; set; }
 
-        public bool Succeeded { get { return this.ResultCode.Equals(1); } }
+        public bool Succeeded { get { return this.Code.Equals(1); } }
 
-        //public void WriteXml(System.Xml.XmlWriter writer)
-        //{
-        //    writer.WriteElementString("ResultCode", String.Format("{0}", this.ResultCode));
-        //    writer.WriteElementString("Message", this.Message);
-        //    writer.WriteElementString("DataAreaId", this.DataAreaId);
-        //}
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteElementString("Code", String.Format("{0}", this.Code));
+            writer.WriteElementString("Message", this.Message);
+            writer.WriteElementString("DataAreaId", this.DataAreaId);
+        }
 
-        //public System.Xml.Schema.XmlSchema GetSchema()
-        //{
-        //    return (null);
-        //}
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return (null);
+        }
 
-        //public void ReadXml(System.Xml.XmlReader reader)
-        //{
-        //    reader.MoveToElement(); //MoveToContent
-        //    this.ResultCode = reader.ReadElementContentAsInt();
-        //    this.Message = reader.ReadElementContentAsString();
-        //    this.DataAreaId = reader.ReadElementContentAsString();
-        //}
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+            reader.MoveToContent(); 
+            this.Code = reader.ReadElementContentAsInt();
+            this.Message = reader.ReadElementContentAsString();
+            this.DataAreaId = reader.ReadElementContentAsString();
+        }
     }
 }

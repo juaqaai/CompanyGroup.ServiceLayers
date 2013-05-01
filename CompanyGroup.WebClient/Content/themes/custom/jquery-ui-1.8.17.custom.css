@@ -48,13 +48,14 @@
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-
+.number  { margin-top:5px;}
+.cartnumber { margin-top:4px; vertical-align: top; margin-right:3px; width:35px;}
 /* Component containers
 ----------------------------------*/
 .ui-widget { font-family: Verdana,Arial,sans-serif; font-size: 13px; }
 .ui-widget .ui-widget { font-size: 12px; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 12px; }
-.ui-widget-content { border: 1px solid #aaaaaa; background: #ebebea url(images/ui-bg_flat_75_ebebea_40x100.png) 50% 50% repeat-x; color: #666; }
+.ui-widget-content {  color: #666; }
 .ui-widget-content a { color: #666; }
 .ui-widget-header { border: 1px solid #aaaaaa; background: #DDDDDD url(images/ui-bg_flat_75_cccccc_40x100.png) 50% 50% repeat-x; color: #666; font-weight: bold; }
 .ui-widget-header a { color: #666; }

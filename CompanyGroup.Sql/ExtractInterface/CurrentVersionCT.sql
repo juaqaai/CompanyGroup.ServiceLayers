@@ -1,3 +1,6 @@
+/*
+legnagyobb felhasználható "CT Version" az adatok átviteléhez
+*/
 USE [Axdb_20130131]
 GO
 

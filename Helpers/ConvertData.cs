@@ -15,6 +15,11 @@ namespace CompanyGroup.Helpers
             return i.Equals(1) ? true : false;
         }
 
+        public static string ConvertBoolToString(bool b, string trueValue, string falseValue)
+        {
+            return b ? trueValue : falseValue;
+        }
+
         public static string ConvertObjectToString(object o)
         {
             try

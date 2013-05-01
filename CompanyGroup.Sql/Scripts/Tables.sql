@@ -148,7 +148,7 @@ GO
 CREATE TABLE InternetUser.CustomerPriceGroup
 (
 	Id				INT IDENTITY PRIMARY KEY,
-	VisitorId		INT NOT NULL DEFAULT 0,		
+	VisitorId		INT NOT NULL DEFAULT 0,			-- Visitor.Id
 	ManufacturerId  NVARCHAR(4) NOT NULL DEFAULT '',
 	Category1Id		NVARCHAR(4) NOT NULL DEFAULT '', 
 	Category2Id		NVARCHAR(4) NOT NULL DEFAULT '', 
@@ -444,6 +444,7 @@ CREATE TABLE InternetUser.Stage_PriceDiscTable
     [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
     [PackageLogKey]		INT NOT NULL DEFAULT 0
 )
+GO
 
 -- select * from InternetUser.SalesOrder
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.SalesOrder') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
@@ -481,3 +482,41 @@ CREATE TABLE InternetUser.SalesOrder
     [PackageLogKey]		  INT NOT NULL DEFAULT 0
 )
 GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_SalesOrder') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_SalesOrder;
+GO
+CREATE TABLE InternetUser.Stage_SalesOrder
+(
+	[Version]			  INT NOT NULL DEFAULT 0,
+	Operation			  NVARCHAR(1) NOT NULL DEFAULT '',
+	CustomerId			  NVARCHAR(20) NOT NULL DEFAULT '',
+	DataAreaId			  NVARCHAR(3) NOT NULL DEFAULT '',	
+	SalesId				  NVARCHAR(20) NOT NULL DEFAULT '',	-- BVR, VR
+	CreatedDate			  DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 	
+	ShippingDateRequested DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 
+	CurrencyCode		  NVARCHAR(20) NOT NULL DEFAULT '',
+	Payment				  NVARCHAR(60) NOT NULL DEFAULT '',	-- Átutalás 8 nap
+	SalesHeaderType		  NVARCHAR(25) NOT NULL DEFAULT '',				-- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet
+	SalesHeaderStatus	  INT NOT NULL DEFAULT 0,				-- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
+	CustomerOrderNo		  NVARCHAR(20) NOT NULL DEFAULT '',	-- vevõ rendelés száma
+	DlvTerm				  NVARCHAR(10) NOT NULL DEFAULT '',
+	
+	LineNum				  INT NOT NULL DEFAULT 0,
+	SalesStatus			  INT NOT NULL DEFAULT 0,				-- rendelés tétel állapota a szállításra és a számlázásra vonatkozóan
+	ItemId				  NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemName			  NVARCHAR(1000) NOT NULL DEFAULT '',
+	Quantity			  INT NOT NULL DEFAULT 0,				-- SalesQty
+	SalesPrice			  decimal(20,2) NOT NULL DEFAULT 0,	-- egysegar
+	LineAmount			  decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg
+	SalesDeliverNow		  INT NOT NULL DEFAULT 0,	
+	RemainSalesPhysical	  INT NOT NULL DEFAULT 0,	
+	StatusIssue			  INT NOT NULL DEFAULT 0,	
+	InventLocationId	  NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemDate			  DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), -- created date
+	[FileName]			  NVARCHAR(300) NOT NULL DEFAULT '',
+    [ExtractDate]		  DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		  INT NOT NULL DEFAULT 0
+)
+GO
+-- select * from InternetUser.Stage_SalesOrder

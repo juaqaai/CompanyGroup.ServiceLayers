@@ -56,7 +56,7 @@
                         <td>
                             <div id="invoiceSumValuesContainer"></div>
                             <script id="invoiceSumValuesTemplate" type="text/x-jquery-tmpl">
-{{if (AmountOverdue == "00,00") }}
+                            {{if (AmountOverdue == "00,00") }}
 							<table style="margin-bottom:5px;" id="no_dept" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/checkok.png")" alt="" title="" /></td>
@@ -275,7 +275,12 @@ StatusIssueIsOnOrder*@
                     <td align="left">${item.CreatedDate}</td>
 					<td align="left">{{if WithDelivery}}Szállítás{{else}}Személyes átvétel{{/if}}</td>
 					<td align="left">${item.Payment}</td>
-					<td align="left">12300 Ft</td>
+					<td align="left">${item.SumAmountBrutto} {{if item.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if item.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if item.CurrencyCode == 'USD'}} $
+											{{/if}}</td>
                 </tr>
                 </table>
 
@@ -309,7 +314,12 @@ StatusIssueIsOnOrder*@
 											{{/if}}
 											{{if line.CurrencyCode == 'USD'}} $
 											{{/if}} </strong></td>
-				                  <td align="right" nowrap="nowrap"><strong>bruttó ár</strong></td>
+                <td align="right" nowrap="nowrap"><strong>${line.LineAmountBrutto} {{if line.CurrencyCode == 'HUF'}} Ft 
+											{{/if}}
+											{{if line.CurrencyCode == 'EUR'}}  € 
+											{{/if}}
+											{{if line.CurrencyCode == 'USD'}} $
+											{{/if}}</strong></td>
 				                  <td align="right" nowrap="nowrap"><strong>{{if InStock}}Készleten{{else}}Nem elérhető{{/if}}</strong></td>
                               </tr>
 				            </table>
@@ -320,7 +330,13 @@ StatusIssueIsOnOrder*@
 				                    <td width="200" valign="top">
 				                        <div class="cus_termekkep">
                                         {{if PictureExists}}
-				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}"><img src="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" alt="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" /></a>
+				                        <a class="popupimg" href="#/showPicture/${line.ItemId}/${line.DataAreaId}/${line.ItemName}" title="${line.ItemName}">
+                                            {{if line.Id > 0}}
+                                                <img src="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" alt="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" />
+                                            {{else}}
+                                                <img src="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" alt="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" />
+                                            {{/if}}
+                                        </a>
 				                        {{else}}
 				                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
                                         {{/if}}
@@ -463,7 +479,7 @@ StatusIssueIsOnOrder*@
 											{{/if}}
 											{{if line.CurrencyCode == 'USD'}} $
 											{{/if}} </strong></td>
-				                  <td align="right" nowrap="nowrap"><strong> ${line.LineAmount} {{if line.CurrencyCode == 'HUF'}} Ft 
+				                  <td align="right" nowrap="nowrap"><strong> ${ parseFloat(line.LineAmount) + parseFloat(line.TaxAmount) } {{if line.CurrencyCode == 'HUF'}} Ft 
 											{{/if}}
 											{{if line.CurrencyCode == 'EUR'}}  € 
 											{{/if}}
@@ -734,69 +750,51 @@ StatusIssueIsOnOrder*@
 
             <script id="changePasswordTemplate" type="text/html">
 
-
-             <h2>JELSZÓMÓDOSÍTÁS</h2><img src="@Url.Content("~/Content/Media/images/dashboard_03.png")" width="44" height="44" alt="" /><br/><hr noshade="noshade" size="1" />
-                 {{#IsValidLogin}}
-                    <form action="#/changepassword" method="post">     
-                    <table width="550" border="0" cellpadding="3" cellspacing="2">
+ <h2>JELSZÓMÓDOSÍTÁS</h2>
+<br/>{{#IsValidLogin}}
+<p>Kérjük adja meg felhasználónevét, régi jelszavát és a felhasználni kívánt új jelszavát, majd válassza az "elküld" parancsot.  A rendszer az adatok ellenőrzését követően elvégzi a jelszómódosítást, majd annak eredményéről értesítést küld.</p>  </br></br>
+                    
+                    <form action="#/changepassword" method="post">
+                       
+                    <table width="358" border="0" align="center" cellpadding="3" cellspacing="2"  class="reg_tabs">
                     {{#PersonIdNotNullOrEmpty}}
-                    <tr>
-                        <td colspan="4">Kérjük adja meg felhasználónevét, régi jelszavát és a felhasználni kívánt új jelszavát, majd válassza az "elküld" parancsot. 
-                                        A rendszer az adatok ellenőrzését követően elvégzi a jelszómódosítást, majd annak eredményéről értesítést küld.<br/><br/></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan="3"><div id="changepassword_errors"></div>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td>Felhasználónév: </td>
-                        <td>
-                            <input type="text" name="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
-                        </td>
-                        <td style="color:#900;">*</td>
-                        <td>
+                        <td width="227">
+                            <input id="txt_username" class="regfields" type="text" name="txt_username" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <span style="color:#900;">*</span><br/>
                             <label class="error" for="txt_username" generated="true" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label>
                         </td>
-                    </tr>
+                      </tr>
                     <tr>
                         <td>Régi jelszó: </td>
                         <td>
-                            <input type="text" name="txt_oldpassword", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
-                        </td>
-                        <td style="color:#900;">*</td>
-                        <td>
+                            <input id="txt_oldpassword" class="regfields" type="password" name="txt_oldpassword", style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <span style="color:#900;">*</span><br/>
                             <label class="error" for="txt_oldpassword" generated="true" style="display:none; color:#900;">A régi jelszó kitöltése kötelező</label>
                         </td>
-                    </tr>
+                      </tr>
                     <tr>
                         <td>Új jelszó: </td>
                         <td>
-                            <input type="text" name="txt_newpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <br/>
-                        </td>
-                        <td style="color:#900;">*</td>
-                        <td>
+                            <input id="txt_newpassword" class="regfields" type="text" name="txt_newpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" /> <span style="color:#900;">*</span><br/>
                             <label class="error" for="txt_newpassword" generated="true" style="display:none; color:#900;">Az új jelszó kitöltése kötelező</label>
                         </td>
-                    </tr>
+                      </tr>
                     <tr>
                         <td>Jelszó megerősítése: </td>
                         <td>
-                            <input type="text" name="txt_confirmpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" />
-                        </td>
-                        <td style="color:#900;">*</td>
-                        <td>
-                            <label class="error" for="txt_confirmpassword" generated="true" style="display:none; color:#900;">A jelszó megerősítés kitöltése kötelező</label>
-                        </td>
-                    </tr>
+                            <input id="txt_confirmpassword" class="regfields" type="text" name="txt_confirmpassword" style = "padding:5px; width:200px; border:1px #bbb solid; border-radius:5px;" />
+                        <span style="color:#900;">*</span>
+                            <label class="error" for="txt_confirmpassword" generated="true" style="display:none; color:#900;">A jelszó megerősítés kitöltése kötelező</label>                        </td>
+                      </tr>
                     <tr>
                         <td></td>
                         <td>
-                            <input type="submit" value="Elküld" style="border-radius: 5px;" />
+                            <input type="submit" value="Elküld"/>
                         </td>
-                        <td></td>
-                        <td>
-                
+                      </tr>
+                                              <td width="113"></td>
+                        <td><div style="color:#900" id="changepassword_errors"></div>
                         </td>
                     </tr>
                     {{/PersonIdNotNullOrEmpty}}
@@ -816,24 +814,7 @@ StatusIssueIsOnOrder*@
                         </td>
                     </tr>
                     {{/PersonIdNotNullOrEmpty}}
-                    <tr>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_05.png")" width="46" height="56" alt="" /></td>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_06.png")" width="234" height="56" alt="" /></td>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_07.png")" width="44" height="56" alt="" /></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_13.png")" width="46" height="52" alt="" /></td>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_14.png")" width="234" height="52" alt="" /></td>
-                        <td>
-                            <img src="@Url.Content("~/Content/Media/images/dashboard_15.png")" width="44" height="52" alt="" /></td>
-                        <td></td>
-                    </tr>
+
                     </table>
                 </form>
                 {{/IsValidLogin}}

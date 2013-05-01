@@ -8,7 +8,7 @@ namespace CompanyGroup.Dto.PartnerModule
     /// </summary>
     public class SignInRequest
     {
-        public SignInRequest() : this("", "", "") { }
+        public SignInRequest() : this(String.Empty, String.Empty, String.Empty) { }
 
         public SignInRequest(string userName, string password, string ipAddress)
         {

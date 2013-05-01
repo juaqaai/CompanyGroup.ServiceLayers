@@ -10,6 +10,10 @@ companyGroup.partnerinfo = $.sammy(function () {
 
     this.setTitle('Partnerinfo -');
 
+    this.get('#/closed', function (context) {
+        //console.log(context);
+        $.fancybox.close()
+    });
     //események
     this.bind('run', function (e, data) {
         var context = this;
@@ -109,6 +113,11 @@ companyGroup.partnerinfo = $.sammy(function () {
             $("#visitorInfoTemplate").tmpl(result).appendTo("#cus_header1");
             $("#usermenuContainer").empty();
             $("#usermenuTemplate").tmpl(result).appendTo("#usermenuContainer");
+            /*var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+            $('#cus_header1').html(visitorInfoHtml);
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
+            $('#usermenuContainer').html(usermenuHtml);
+            context.redirect('#/webshop')*/
         });
     });
     //keresés
@@ -147,12 +156,30 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //adatok ellenörzése
     this.before({ only: { verb: 'post', path: '#/changepassword'} }, function (context) {
+        var error_msg = '';
         if (context.params['txt_oldpassword'] == '') {
-            console.log('txt_oldpassword cannot be empty');
-
-            return false;
+            //console.log('txt_oldpassword cannot be empty');
+            error_msg += 'A régi jelszó kitöltése kötelező! <br/>';
         }
-        return true;
+        if (context.params['txt_username'] == '') {
+            //console.log('txt_username cannot be empty');
+            error_msg += 'A vevőnév kitöltése kötelező! <br/>';
+        }
+        if (context.params['txt_newpassword'] == '') {
+            //console.log('txt_newpassword cannot be empty');
+            error_msg += 'Az új jelszó kitöltése kötelező! <br/>';
+        }
+		if (context.params['txt_newpassword'] == context.params['txt_oldpassword']) {
+            //console.log('txt_newpassword cannot be empty');
+            error_msg += 'A jelszó már használatban van! <br/>';
+        }
+        if (context.params['txt_confirmpassword'] != context.params['txt_newpassword']) {
+            //console.log('txt_confirmpassword cannot be empty');
+            error_msg += 'Nem egyeznek a jelszavak! <br/>';
+        }
+		$("#changepassword_errors").html(error_msg);
+		 return (error_msg === '');
+
     });
     //jelszócsere művelet  
     this.post('#/changepassword', function (context) {
@@ -166,24 +193,63 @@ companyGroup.partnerinfo = $.sammy(function () {
         $.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getContactPersonApiUrl('ChangePwd'),
-            data: data,
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
-            timeout: 10000,
+            timeout: 0,
             dataType: "json",
             processData: true,
             success: function (result) {
                 if (result) {
                     //console.log(result);
-                    if (result.ChangePassword.OperationSucceeded) {
+                    if (result.OperationSucceeded) {
                         context.title('"Password change succeeded!" - ');
-                        context.partial(viewPath('changepassword_succeeded'), result.ChangePassword);
-
-                        //$("#changePasswordContainer").empty();
-                        //$("#changePasswordTemplate").tmpl(result.Visitor).appendTo("#changePasswordContainer");
+					$('#txt_username').val('');
+						$('#txt_newpassword').val('') ;
+						$('#txt_newpassword').val('') ;
+						$('#txt_confirmpassword').val('') ;	
+						$('#txt_oldpassword').val('');
+						
+					$.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>'+result.Message +'</H2></div>', {
+                    'autoDimensions': true,
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'closeBtn': 'true',
+                    'changeFade': 0,
+                    'speedIn': 300,
+                    'speedOut': 300,
+                    'width': '150%',
+                    'height': '150%',
+                    'autoScale': true,
+                    beforeClose: function () {}
+					
+					
+                });
                     }
                     else {
                         context.title('"Password change failed!" - ');
-                        context.partial(viewPath('changepassword_failed'), result.ChangePassword);
+						
+						$('#txt_oldpassword').val('');
+						$('#txt_username').val('');
+						$('#txt_newpassword').val('') ;
+						$('#txt_newpassword').val('') ;
+						$('#txt_confirmpassword').val('') ;
+
+                    $.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>A jelszómódosítás sikeresen megtörtént!</H2></div>', {
+                    'autoDimensions': true,
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'closeBtn': 'true',
+                    'changeFade': 0,
+                    'speedIn': 300,
+                    'speedOut': 300,
+                    'width': '150%',
+                    'height': '150%',
+                    'autoScale': true,
+                    beforeClose: function () {}
+						
+					
+					
+                });
                     }
                 }
                 else {
@@ -438,7 +504,9 @@ companyGroup.partnerinfo = $.sammy(function () {
         $("#radio_nonpaid").prop('checked', true);
         $("#radio_overdue").prop('checked', false);
         $("#radio_overdue").prop('checked', false)
-
+        //$("#radio_nonpaid").prop('checked', true);
+        //$("#radio_overdue").prop('checked', false);
+        //$("#radio_overdue").prop('checked', false)
     });
     this.post('#/orderInfoByFilter', function (context) {
         salesOrderRequest.CustomerOrderNo = (context.params['txt_customerorderno'] === 'Kattintson ide') ? '' : context.params['txt_customerorderno'];

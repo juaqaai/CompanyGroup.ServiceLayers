@@ -157,7 +157,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //ha üres a látogató azonosító
             if (String.IsNullOrEmpty(request.VisitorId))
             {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword() { Message = CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, OperationSucceeded = false, SendMailSucceeded = false };
+                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, new CompanyGroup.Dto.PartnerModule.Visitor());
             }
 
             //látogató kikeresése
@@ -166,19 +166,19 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             //látogató belépésének ellenörzése, csak a személyi belépések esetén lehetséges a jelszómódosítás
             if (!visitor.LoginType.Equals(LoginType.Person))
             {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword() { Message = CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordNotAllowed, OperationSucceeded = false, SendMailSucceeded = false };
+                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordNotAllowed, new VisitorToVisitor().Map(visitor));
             }
 
-            //lehetséges-e a megadott adatokkal a jelszómódosítsítás művelet?
+            //lehetséges-e a megadott adatokkal a jelszómódosítás művelet?
             CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = contactPersonRepository.VerifyChangePassword(visitor.PersonId, request.UserName, request.OldPassword, request.NewPassword, visitor.DataAreaId);
 
-            //ha nem, akkor kilépés hibaüzenettel
+            //ha nem lehetséges a jelszómódosítás, akkor kilépés hibaüzenettel
             if (!verify.Success)
             {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword() { Message = verify.Message, OperationSucceeded = false, SendMailSucceeded = false };                
+                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, verify.Message, new VisitorToVisitor().Map(visitor));                
             }
 
-            //jelszómódosítsítás művelet előkészítése
+            //jelszómódosítás művelet előkészítése
             CompanyGroup.Domain.PartnerModule.ChangePasswordCreate changePasswordCreate = new CompanyGroup.Domain.PartnerModule.ChangePasswordCreate()
                                                                                               { 
                                                                                                   ContactPersonId = visitor.PersonId, 
@@ -188,7 +188,13 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                                                   WebLoginName = request.UserName 
                                                                                               };
             //jelszómódosítás AX
-            CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult = changePasswordRepository.Change(changePasswordCreate);
+            CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult = contactPersonRepository.Change(changePasswordCreate);
+
+            if (changePasswordCreateResult.Code == 0)
+            {
+                changePasswordCreateResult.Code = 1;
+                changePasswordCreateResult.Message = "The operation successfully completed!";
+            }
 
             //jelszómódosítás log hozzáadás
             CompanyGroup.Domain.PartnerModule.ChangePassword changePassword = new CompanyGroup.Domain.PartnerModule.ChangePassword()
@@ -219,7 +225,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
             string message = ( changePasswordCreateResult.Succeeded && !sendMailSucceeded ) ? CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordMailSendFailed : changePasswordCreateResult.Message;
 
-            return new CompanyGroup.Dto.PartnerModule.ChangePassword() { Message = message, OperationSucceeded = changePasswordCreateResult.Succeeded, SendMailSucceeded = sendMailSucceeded };
+            return new CompanyGroup.Dto.PartnerModule.ChangePassword( changePasswordCreateResult.Succeeded, sendMailSucceeded, message, new VisitorToVisitor().Map(visitor));
         }
 
         #region "jelszómódosítás mail küldés"
@@ -329,7 +335,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                         .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.ResultCode))
+                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.Code))
                                         .Replace("$ErrorMessage$", changePasswordCreateResult.Message);
 
                 string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ChangePasswordFailedMailTextTemplateFile);
@@ -339,7 +345,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
                                         .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.ResultCode))
+                                        .Replace("$ErrorCode$", String.Format("{0}", changePasswordCreateResult.Code))
                                         .Replace("$ErrorMessage$", changePasswordCreateResult.Message);
 
                 string toAddress = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcAddress : ContactPersonService.ChangePasswordFailedMailToAddress;

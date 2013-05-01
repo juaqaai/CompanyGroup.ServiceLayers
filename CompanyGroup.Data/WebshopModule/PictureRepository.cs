@@ -31,9 +31,9 @@ namespace CompanyGroup.Data.WebshopModule
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(productId), "The productId parameter cannot be null!");
 
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.PictureSelect")
-                                                .SetString("ProductId", productId)
-                                                .SetResultTransformer(
-                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
+                                                 .SetString("ProductId", productId)
+                                                 .SetResultTransformer(
+                                                  new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
 
                 List<CompanyGroup.Domain.WebshopModule.Picture> pictures = query.List<CompanyGroup.Domain.WebshopModule.Picture>() as List<CompanyGroup.Domain.WebshopModule.Picture>;
 
@@ -44,6 +44,36 @@ namespace CompanyGroup.Data.WebshopModule
             catch
             {
                 return new List<CompanyGroup.Domain.WebshopModule.Picture>();
+            }
+        }
+
+        /// <summary>
+        /// termékhez tartozó elsődleges kép
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></return>
+        public CompanyGroup.Domain.WebshopModule.Picture GetPrimaryPicture(string productId)
+        {
+            try
+            {
+                CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(productId), "The productId parameter cannot be null!");
+
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.PictureSelect")
+                                                 .SetString("ProductId", productId)
+                                                 .SetResultTransformer(
+                                                  new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Picture).GetConstructors()[0]));
+
+                List<CompanyGroup.Domain.WebshopModule.Picture> pictures = query.List<CompanyGroup.Domain.WebshopModule.Picture>() as List<CompanyGroup.Domain.WebshopModule.Picture>;
+
+                if (pictures == null) return new CompanyGroup.Domain.WebshopModule.Picture();
+
+                CompanyGroup.Domain.WebshopModule.Picture picture = pictures.Find(x => x.Primary);
+
+                return (picture == null) ? new CompanyGroup.Domain.WebshopModule.Picture() : picture;
+            }
+            catch
+            {
+                return new CompanyGroup.Domain.WebshopModule.Picture();
             }
         }
 

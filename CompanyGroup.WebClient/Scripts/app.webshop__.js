@@ -11,7 +11,6 @@ $('#page').html(html);
 
 */
 
-
 var companyGroup = companyGroup || {};
 
 companyGroup.webshop = $.sammy(function () {
@@ -22,6 +21,10 @@ companyGroup.webshop = $.sammy(function () {
 
     this.setTitle('HRP/BSC Webáruház -');
 
+    this.get('#/closed', function (context) {
+        //console.log(context);
+        $.fancybox.close()
+    });
     this.get('#/finance_close', function (context) {
         //console.log(context);
         $("#cus_ajanlat_finance").hide('slow');
@@ -33,30 +36,22 @@ companyGroup.webshop = $.sammy(function () {
         loadStructure(true, true, true, true);
         //részletes termékadatlap log lista
         loadCatalogueDetailsLogList();
-		$('#hidden_cartopen').val('0');
-		$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-		     $('.number').spinner();
-		
-		 
+        $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+
     });
-	    this.get('#/Index', function (context) {
+    this.get('#/Index', function (context) {
         //console.log(context);
         context.title('kezdőoldal');
         //részletes termékadatlap log lista
         loadCatalogueDetailsLogList();
-		$('#hidden_cartopen').val('0');
-		$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-		     $('.number').spinner();
-		
-		
-		 
+        $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+
     });
     //események
     this.bind('run', function (e, data) {
         var context = this;
-		
         //bal oldali választólista változása
-        $(".chzn-select").chosen(); // jQuery version
+        $(".chzn-select").chosen({ no_results_text: "Nincs találat" }); // jQuery version
         $(".chzn-select").unbind('change').bind('change', function () {
             if ($(this).attr('id') === 'manufacturerList') {
                 var manufacturerIdList = $('#manufacturerList').val();
@@ -65,7 +60,7 @@ companyGroup.webshop = $.sammy(function () {
                 loadStructure(false, true, true, true);
                 loadCatalogue();
                 showProductList(true);
-                context.redirect('#/' + manufacturerIdList + category1IdList + category2IdList + category3List);
+                context.redirect('#/' + manufacturerIdList);
                 $("html, body").animate({ scrollTop: 0 }, 100);
             } else if ($(this).attr('id') === 'category1List') {
                 var category1IdList = $('#category1List').val();
@@ -74,7 +69,7 @@ companyGroup.webshop = $.sammy(function () {
                 loadStructure(true, false, true, true);
                 loadCatalogue();
                 showProductList(true);
-                context.redirect('#/' + manufacturerIdList + category1IdList + category2IdList + category3List);
+                context.redirect('#/' + category1IdList);
                 $("html, body").animate({ scrollTop: 0 }, 100);
             } else if ($(this).attr('id') === 'category2List') {
                 var category2IdList = $('#category2List').val();
@@ -83,7 +78,7 @@ companyGroup.webshop = $.sammy(function () {
                 loadStructure(true, true, false, true);
                 loadCatalogue();
                 showProductList(true);
-                context.redirect('#/' + manufacturerIdList + category1IdList + category2IdList + category3List);
+                context.redirect('#/' + category2IdList);
                 $("html, body").animate({ scrollTop: 0 }, 100);
             } else if ($(this).attr('id') === 'category3List') {
                 var category3IdList = $('#category3List').val();
@@ -92,13 +87,10 @@ companyGroup.webshop = $.sammy(function () {
                 loadStructure(true, true, true, false);
                 loadCatalogue();
                 showProductList(true);
-                context.redirect('#/' + manufacturerIdList + category1IdList + category2IdList + category3List);
+                context.redirect('#/' + category3IdList);
                 $("html, body").animate({ scrollTop: 0 }, 100);
             }
         });
-		
-		
-		
         //alsó (ajánlott) termék lapozó 
         $('#cus_recommended_prod_content').easyPaginate({
             step: 4,
@@ -117,8 +109,7 @@ companyGroup.webshop = $.sammy(function () {
             auto: false,
             numeric: false
         });
-		
-		
+
         //$(".expand_all").toggle(function () {
         /*$(".expand_all").toggle(function () {
         $(this).addClass("expanded");
@@ -534,6 +525,9 @@ companyGroup.webshop = $.sammy(function () {
                 if (result === true) {
                     $(".toggle_container").show('slow');
 
+
+
+
                 } else {
                     $(".toggle_container").hide('slow');
 
@@ -681,22 +675,21 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (!result.Visitor.IsValidLogin) {
-					     $('.number').spinner();
-					$("#chk_onstock").prop('checked', false);
-					$("#chk_onaction").prop('checked', false);
-					$("#chk_bargain").prop('checked', false);
-					$("#chk_new").prop('checked', false);
-					
-					$('option').prop('selected', false);
-    				$('.chzn-select').trigger('liszt:updated');
-					
-					$("#txt_globalsearch").val('');
-        			$("#txt_filterbyprice").val('');
-				
+
+                    $("#chk_onstock").prop('checked', false);
+                    $("#chk_onaction").prop('checked', false);
+                    $("#chk_bargain").prop('checked', false);
+                    $("#chk_new").prop('checked', false);
+
+                    $('option').prop('selected', false);
+                    $('.chzn-select').trigger('liszt:updated');
+
+                    $("#txt_globalsearch").val('');
+                    $("#txt_filterbyprice").val('');
+
                     $("#cus_header1").empty();
                     var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result.Visitor);
                     $('#cus_header1').html(visitorInfoHtml);
-					
 
                     $("#usermenuContainer").empty();
                     var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result.Visitor);
@@ -730,7 +723,6 @@ companyGroup.webshop = $.sammy(function () {
                     $("#cus_checkout_menu").hide();
 
                     $("#hidden_cartId").val('');
-					$('#hidden_cartopen').val('0');
                     //CompanyGroupCms.ShoppingCartInfo.Instance().SetCartId('');
                     //CompanyGroupCms.ShoppingCartSummary.Instance().Init(result.Visitor.IsValidLogin, 0);
                     $("#basket_open_button").empty();
@@ -741,15 +733,14 @@ companyGroup.webshop = $.sammy(function () {
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     $("#deliveryAddressTemplate").tmpl(result.DeliveryAddresses).appendTo("#deliveryAddressContainer");
                     $("#basket_panel").hide();
-					
+                    $("#shoppingCartSummaryCaption").text('módosítása / Megrendelés');
                     var productId = $('#hidden_product_id').val();
                     var dataAreaId = $('#hidden_product_dataareaid').val();
-					$(".toggle_container").show();
-                    
+                    $(".toggle_container").show();
+
                     if (productId && dataAreaId) {
                         context.redirect('#/refreshdetails/' + productId + '/' + dataAreaId);
                     }
-					
                 }
                 else {
                     alert('SignOut result failed');
@@ -792,7 +783,6 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 if (result.Visitor.IsValidLogin) {
                     $.fancybox.close();
-					     $('.number').spinner();
 
                     //console.log(result);
                     $("#cus_header1").empty();
@@ -828,7 +818,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#negyes_szuro").show();
                     $("#cus_filter_price").show();
                     $("#cus_checkout_menu").show();
-					
+
                     $("#hidden_cartId").val(result.ActiveCart.Id);
                     //CompanyGroupCms.ShoppingCartInfo.Instance().SetCartId(result.ActiveCart.Id);
                     //CompanyGroupCms.ShoppingCartSummary.Instance().Init(result.Visitor.IsValidLogin, result.ActiveCart.SumTotal);
@@ -837,9 +827,8 @@ companyGroup.webshop = $.sammy(function () {
                     $("#cus_basket_menu").empty();
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
-					$('#hidden_cartopen').val('0');
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-					
+                    $("#basket_panel").hide();
+                    $("#shoppingCartSummaryCaption").text('módosítása / Megrendelés');
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     $("#deliveryAddressTemplate").tmpl(result.DeliveryAddresses).appendTo("#deliveryAddressContainer");
 
@@ -865,7 +854,6 @@ companyGroup.webshop = $.sammy(function () {
     });
     this.get('#/authenticated', function (context) {
         //console.log('authenticated');
-		
     });
     //bejelentkezés panel megmutatása
     this.get('#/showSignInPanel', function (context) {
@@ -922,9 +910,9 @@ companyGroup.webshop = $.sammy(function () {
             dataType: "json",
             processData: true,
             success: function (result) {
-				$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
                 $("#cus_header1").empty();
-				 var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
                 $('#cus_header1').html(visitorInfoHtml);
                 loadCatalogue();
                 loadShoppingCart();
@@ -951,7 +939,7 @@ companyGroup.webshop = $.sammy(function () {
 
     //kosár mentése
     this.post('#/saveShoppingCart', function (context) {
-		var data = {
+        var data = {
             CartId: parseInt($("input#hidden_cartId").val()),
             Name: $('#txt_cartname').val()
         };
@@ -972,9 +960,8 @@ companyGroup.webshop = $.sammy(function () {
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
-					context.redirect("#/saved")
                     //$("#deliveryAddressTemplate").tmpl(result.DeliveryAddresses).appendTo("#site_select");
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
                     if (result.LeasingOptions.Items.length == 0) {
@@ -1019,15 +1006,9 @@ companyGroup.webshop = $.sammy(function () {
         isOpen = !isOpen;
         if (isOpen) {
             $('#hidden_cartopen').val('1');
-			 $("#shoppingCartSummaryCaption").text('bezárása');
-			 $("#basket_panel").show("fast");
-			
             //$("#checkout_btn").hide();
         } else {
             $('#hidden_cartopen').val('0');
-			 $("#shoppingCartSummaryCaption").text('módosítása / Megrendelés');
-			 $("#basket_panel").hide("fast");
-			
             //$("#checkout_btn").show();
         }
         var data = {
@@ -1043,14 +1024,12 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 context.title('kosár');
-				
                 $("#cus_rendeles_feladas").hide();
-               // $("#basket_panel").slideToggle("fast");
+                $("#basket_panel").slideToggle("fast");
                 $("#active_basket").toggleClass("active");
                 $("#cus_ajanlat_finance").hide();
-                //$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-                //alert(isOpen)
-				context.redirect('#/shoppingcartopenedstatus');
+                $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                context.redirect('#/shoppingcartopenedstatus');
             },
             error: function () {
                 alert('saveShoppingCartOpenStatus call failed');
@@ -1063,62 +1042,58 @@ companyGroup.webshop = $.sammy(function () {
         $("#cus_rendeles_feladas").slideToggle();
         $("#cus_ajanlat_vegfelhasznalo").hide();
         $("#cus_ajanlat_finance").hide();
-		$("#atvetel").prop('checked', false);
-		$("#transfer").prop('checked', false);
-		$("#cash").prop('checked', false);
-		$("#kiszallitas").prop('checked', false);
-		$("#payafter").prop('checked', false);
-		$('#szal_adat').hide();
+        $("#atvetel").prop('checked', false);
+        $("#transfer").prop('checked', false);
+        $("#cash").prop('checked', false);
+        $("#kiszallitas").prop('checked', false);
+        $("#payafter").prop('checked', false);
+        $('#szal_adat').hide();
         $('#payment_option').hide();
         $('#order_rest').hide();
         $('.hr1').hide();
-		$("#span_hrporderid").html("");
-        $("#span_hrpsecondhandorderid").html("");
-        $("#span_bscorderid").html("");
-        $("#span_bscsecondhandorderid").html("");
 
         //ha valamiből nincs készleten, akkor nem választható dátum
 
 
     });
     //megrendeles állapotát menti
-     /* this.get('#/showCreateOrder/:status', function (context) {
+    /* this.get('#/showCreateOrder/:status', function (context) {
     var isOpen = ($('#hidden_cartopen').val() === '1');
-             isOpen = !isOpen;
-            if (isOpen) {
-                  $('#hidden_cartopen').val('1');
+    isOpen = !isOpen;
+    if (isOpen) {
+    $('#hidden_cartopen').val('1');
    			
-          } else {
-                    $('#hidden_cartopen').val('');
+    } else {
+    $('#hidden_cartopen').val('');
    				
-            }  
-          var data = {
-              IsOpen: context.params['status'] == 1 ? true : false
-         };
-           $.ajax({
-             type: "POST",
-            url: companyGroup.utils.instance().getShoppingCartApiUrl('SaveShoppingCartOpenStatus'),
-            data: JSON.stringify(data),
-             contentType: "application/json; charset=utf-8",
-            timeout: 10000,
-           dataType: "json",
-              processData: true,
-            success: function (result) {
- 				 $("#basket_panel").show();
-				 $("#cus_rendeles_feladas").show();
-          			 $("#cus_ajanlat_vegfelhasznalo").hide();
-          		$("#cus_ajanlat_finance").hide();
-          		context.title('rendelés feladás');
-                $("#basket_panel").slideToggle("fast");
-                  $("#active_basket").toggleClass("active");
-                 $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'módosítása' : 'bezárása');
-                 context.redirect('#/shoppingcartopenedstatus');
-             },
-            error: function () {
-                  alert('saveShoppingCartOpenStatus call failed');
-             }
-        });
-      });*/
+    }  
+    var data = {
+    IsOpen: context.params['status'] == 1 ? true : false
+    };
+    $.ajax({
+    type: "POST",
+    url: companyGroup.utils.instance().getShoppingCartApiUrl('SaveShoppingCartOpenStatus'),
+    data: JSON.stringify(data),
+    contentType: "application/json; charset=utf-8",
+    timeout: 10000,
+    dataType: "json",
+    processData: true,
+    success: function (result) {
+    $("#basket_panel").show();
+    $("#cus_rendeles_feladas").show();
+    $("#cus_ajanlat_vegfelhasznalo").hide();
+    $("#cus_ajanlat_finance").hide();
+    context.title('rendelés feladás');
+    $("#basket_panel").slideToggle("fast");
+    $("#active_basket").toggleClass("active");
+    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '') ? 'módosítása' : 'bezárása');
+    context.redirect('#/shoppingcartopenedstatus');
+    },
+    error: function () {
+    alert('saveShoppingCartOpenStatus call failed');
+    }
+    });
+    });*/
     //kosár hozzáadás
     this.get('#/addShoppingCart', function (context) {
         $.ajax({
@@ -1137,8 +1112,8 @@ companyGroup.webshop = $.sammy(function () {
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-					context.redirect("#/added")
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
                     if (result.LeasingOptions.Items.length == 0) {
@@ -1161,11 +1136,8 @@ companyGroup.webshop = $.sammy(function () {
         });
     });
     //aktív kosár elemeinek eltávolítása
-	this.get('#/removeShoppingCart', function (context) {
-		var r=confirm("Valóban törölni szeretné a kosarat?");
-			if (r==true)
- 				 {
-  				 var data = {
+    this.get('#/removeShoppingCart', function (context) {
+        var data = {
             CartId: parseInt($("input#hidden_cartId").val())
         };
         $.ajax({
@@ -1184,8 +1156,8 @@ companyGroup.webshop = $.sammy(function () {
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-					context.redirect("#/removed")
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
 
@@ -1208,16 +1180,9 @@ companyGroup.webshop = $.sammy(function () {
                 alert('removeCart call failed');
             }
         });
-  				}
-				else
- 				 {
-  				x="You pressed Cancel!";
-  				} 	
-       
     });
     //kosár mentése panel megmutatás
     this.get('#/showSaveCartPanel', function (context) {
-		context.redirect("#/savecart");
         $.fancybox({
             href: '#save_basket_win',
             closeBtn: true,
@@ -1249,7 +1214,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     //$('.cartnumber').spin();
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
                     if (result.LeasingOptions.Items.length == 0) {
@@ -1274,9 +1239,6 @@ companyGroup.webshop = $.sammy(function () {
         var stock = parseInt(context.params['hidden_stock']);
         var endofsales = context.params['hidden_endofsales'];
         var quantity = parseInt(context.params['txt_quantity']);
-		$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-		
-		
 
         var notforsale = ((quantity > stock) && (endofsales === 'true'));
         if (notforsale === true) {
@@ -1318,13 +1280,13 @@ companyGroup.webshop = $.sammy(function () {
             processData: true,
             success: function (result) {
                 if (result) {
-					$("#basket_open_button").empty();
+                    $("#basket_open_button").empty();
                     $("#shoppingCartSummaryTemplate").tmpl(result).appendTo("#basket_open_button");
-
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     //$('.cartnumber').spin();
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
                     if (result.LeasingOptions.Items.length == 0) {
@@ -1378,7 +1340,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     //$('.cartnumber').spin();
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
 
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
@@ -1442,69 +1404,55 @@ companyGroup.webshop = $.sammy(function () {
                     */
                     if (result.Created) {
                         context.title('rendelés feladás');
-						
+
                         $("#cus_rendeles_feladas").hide();
                         $("#active_basket").toggleClass("active");
-						$("#atvetel").prop('checked', false);
-						$("#transfer").prop('checked', false);
-						$("#cash").prop('checked', false);
-						$("#kiszallitas").prop('checked', false);
-						$("#payafter").prop('checked', false);
-						$('#szal_adat').hide();
-            			$('#payment_option').hide();
-            			$('#order_rest').hide();
-            			$('.hr1').hide();
-						$("#basket_panel").hide("slow");
-					    $("#span_hrporderid").html('');
-        				$("#span_hrpsecondhandorderid").html('');
-        				$("#span_bscorderid").html('');
-        				$("#span_bscsecondhandorderid").html('');
-						
-						
-					  
+                        $("#atvetel").prop('checked', false);
+                        $("#transfer").prop('checked', false);
+                        $("#cash").prop('checked', false);
+                        $("#kiszallitas").prop('checked', false);
+                        $("#payafter").prop('checked', false);
+                        $('#szal_adat').hide();
+                        $('#payment_option').hide();
+                        $('#order_rest').hide();
+                        $('.hr1').hide();
+                        $("#shoppingCartSummaryCaption").text('módosítása / Megrendelés');
+                        $("#basket_panel").hide("slow");
 
-						$("#hrporderid_txt").show();
-						$("#hrpsecondhandorderid_txt").show();
-						$("#bscorderid_txt").show();
-						$("#bscsecondhandorderid_txt").show();
-				
 
-                      //$("#span_hrporderid_text").html(($('#span_hrporderid').html() === '') ? 'Az Ön HRP bizonylat száma: ' : 'there is nothing');
-					 // $("#span_hrpsecondhandorderid_text").html(($('#span_hrpsecondhandorderid').html() === '') ? 'Az Ön HRP (leértékelt) bizonylat száma: ' : 'there is nothing');
-					 // $("#span_bscorderid_text").html(($('#span_bscorderid').html() === '') ? 'Az BSC bizonylat száma:  ' : 'there is nothing');
-					//  $("#span_bscsecondhandorderid_text").html(($('#span_bscsecondhandorderid').html() === '') ? 'Az Ön BSC (leértékelt) bizonylat száma: ' : 'there is nothing');
-					
-					//alert(result.HrpOrderId +" "+ result.HrpSecondHandOrderId +" "+ result.BscOrderId +" "+ result.BscSecondHandOrderId)
 
-					 
-					  
-					    if (result.HrpOrderId === ''){
+                        /*$("#span_hrporderid_text").html(($('#span_hrporderid').html() === '') ? 'Az Ön HRP bizonylat száma: ' : 'there is nothing');
+                        $("#span_hrpsecondhandorderid_text").html(($('#span_hrpsecondhandorderid').html() === '') ? 'Az Ön HRP (leértékelt) bizonylat száma: ' : 'there is nothing');
+                        $("#span_bscorderid_text").html(($('#span_bscorderid').html() === '') ? 'Az BSC bizonylat száma:  ' : 'there is nothing');
+                        $("#span_bscsecondhandorderid_text").html(($('#span_bscsecondhandorderid').html() === '') ? 'Az Ön BSC (leértékelt) bizonylat száma: ' : 'there is nothing');*/
 
-							$("#hrporderid_txt").hide();
-					}
-						
-						if (result.HrpSecondHandOrderId === ''){
- 
-							$("#hrpsecondhandorderid_txt").hide();
-						}
 
-						if (result.BscOrderId === ''){
+                        if (result.HrpOrderId === '') {
 
-							$("#bscorderid_txt").hide();
-						}
+                            $("#hrporderid_txt").hide();
+                        }
 
-						
-						if (result.BscSecondHandOrderId === ''){
-	
+                        if (result.HrpSecondHandOrderId === '') {
 
-							$("#bscsecondhandorderid_txt").hide();
-						}
+                            $("#hrpsecondhandorderid_txt").hide();
+                        }
+
+                        if (result.BscOrderId === '') {
+
+                            $("#bscorderid_txt").hide();
+                        }
+
+
+                        if (result.BscSecondHandOrderId === '') {
+
+
+                            $("#bscsecondhandorderid_txt").hide();
+                        }
 
                         $("#span_hrporderid").html(result.HrpOrderId);
                         $("#span_hrpsecondhandorderid").html(result.HrpSecondHandOrderId);
                         $("#span_bscorderid").html(result.BscOrderId);
                         $("#span_bscsecondhandorderid").html(result.BscSecondHandOrderId);
-						
 
                         $.fancybox('<p>A rendelés feladása sikeresen megtörtént</p>',
                         {
@@ -1526,14 +1474,13 @@ companyGroup.webshop = $.sammy(function () {
                     //console.log(result);
                     $("#basket_open_button").empty();
                     $("#shoppingCartSummaryTemplate").tmpl(result).appendTo("#basket_open_button");
+                    $("#shoppingCartSummaryCaption").text('módosítása / Megrendelés');
                     $("#cus_basket_menu").empty();
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
-					$('#hidden_cartopen').val('0');
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
                     ///$('.cartnumber').spin();
                     if (result.LeasingOptions.Items.length == 0) {
                         $("#form_financeoffer").hide();
@@ -1578,8 +1525,6 @@ companyGroup.webshop = $.sammy(function () {
                     $("#cus_basket_menu").empty();
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
-
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
@@ -1621,7 +1566,7 @@ companyGroup.webshop = $.sammy(function () {
                     $("#shoppingCartHeaderTemplate").tmpl(result).appendTo("#cus_basket_menu");
                     $("#cus_basket").empty();
                     $("#shoppingCartLineTemplate").tmpl(result).appendTo("#cus_basket");
-					$("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
+                    $("#shoppingCartSummaryCaption").text(($('#hidden_cartopen').val() === '0') ? 'módosítása / Megrendelés' : 'bezárása');
 
                     $("#leasingOptionsContainer").empty();
                     $("#leasingOptionsTemplate").tmpl(result.LeasingOptions).appendTo("#leasingOptionsContainer");
@@ -1767,10 +1712,10 @@ companyGroup.webshop = $.sammy(function () {
         $("#txt_globalsearch").val('');
         $("#txt_filterbyprice").val('');
         context.redirect('#/clearedFilters');
-		$("#chk_onstock").prop('checked', false);
-		$("#chk_onaction").prop('checked', false);
-		$("#chk_bargain").prop('checked', false);
-		$("#chk_new").prop('checked', false);
+        $("#chk_onstock").prop('checked', false);
+        $("#chk_onaction").prop('checked', false);
+        $("#chk_bargain").prop('checked', false);
+        $("#chk_new").prop('checked', false);
     });
     this.get('#/clearedFilters', function (context) {
         context.title('szűrőfeltételek törlése');
@@ -1792,36 +1737,23 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
 
     });
-	
-	this.get('#/closed', function (context) {
-        //console.log(context);
-        $.fancybox.close()
-    });
     //termék adatlap
     this.get('#/details/:productId/:dataAreaId', function (context) {
- 
-	    var productId = context.params['productId'];
+        var productId = context.params['productId'];
         var dataAreaId = context.params['dataAreaId'];
-		$("html, body").animate({ scrollTop: 0 }, 100);
+        $("html, body").animate({ scrollTop: 0 }, 100);
         $('#hidden_product_id').val(productId);
         $('#hidden_product_dataareaid').val(dataAreaId);
         loadDetails(productId, dataAreaId);
         context.title(productId + ' adatlap');
 
- 
     });
     //termék adatlap frissítése
     this.get('#/refreshdetails/:productId/:dataAreaId', function (context) {
-        
-				
-
-		var productId = context.params['productId'];
+        var productId = context.params['productId'];
         var dataAreaId = context.params['dataAreaId'];
         loadDetails(productId, dataAreaId);
         context.title(productId + ' adatlap');
-
-		
-		
     });
     //recent items
     this.get('#/getcataloguedetailsloglist', function (context) {
@@ -1903,7 +1835,7 @@ companyGroup.webshop = $.sammy(function () {
                         item.href = companyGroup.utils.instance().getBigPictureUrl(pic.Id);
                         item.title = data.ProductId;
                         arr_pics.push(item);
-						context.redirect('#/gallery')
+                        context.redirect('#/gallery')
                         $.fancybox(
                             arr_pics,
                             {

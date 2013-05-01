@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="MaintainModule\PackageRepositoryTest.cs" />
     <Compile Include="PartnerModule\ContactPersonRepositoryTest.cs" />
+    <Compile Include="PartnerModule\ChangeTrackingRepositoryTest.cs" />
     <Compile Include="PartnerModule\InvoiceRepositoryTest.cs" />
     <Compile Include="PartnerModule\SalesOrderRepositoryTest.cs" />
     <Compile Include="PartnerModule\CustomerRepositoryTest.cs" />

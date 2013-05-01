@@ -156,7 +156,7 @@ GO
 -- exec InternetUser.SignIn 'elektroplaza', 'hrp5891ep';
 -- exec InternetUser.SignIn 'ipon', 'gild4MAX19';
 -- exec InternetUser.SignIn 'plorinczy', 'pikolo';
--- select * from Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = 'elektroplaza' )	gild4MAX19
+-- select * from Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = 'joci2' )	gild4MAX19
 -- select * from AxDb.dbo.EmplTable
 
 DROP FUNCTION InternetUser.CalculatePartnerModel

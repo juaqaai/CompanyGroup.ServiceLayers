@@ -142,12 +142,12 @@ namespace CompanyGroup.WebClient.Controllers
 
                 HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
-                //check status
+                //bejelentkezés státuszának vizsgálata
                 if (!viewModel.LoggedIn)
                 {
                     viewModel.ErrorMessage = "A bejelentkezés nem sikerült!";
                 }
-                else    //SignIn process, set http cookie, etc...
+                else    
                 {
                     CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(visitor.Id), "A bejelentkezés nem sikerült! (üres azonosító)");
 
@@ -157,6 +157,9 @@ namespace CompanyGroup.WebClient.Controllers
                     CompanyGroup.Dto.WebshopModule.AssociateCartRequest associateRequest = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest(visitor.Id, permanentObjectId, visitorData.Language, visitorData.Currency);
 
                     CompanyGroup.Dto.WebshopModule.ShoppingCartInfo associateCart = this.PostJSonData<CompanyGroup.Dto.WebshopModule.AssociateCartRequest, CompanyGroup.Dto.WebshopModule.ShoppingCartInfo>("ShoppingCart", "AssociateCart", associateRequest);
+
+                    //bejelentkezéskor a korábbi regisztrációs azonosítót törölni kell
+                    visitorData.RegistrationId = String.Empty;
 
                     //visitor adatok http sütibe írása     
                     this.WriteCookie(new CompanyGroup.WebClient.Models.VisitorData(viewModel.Id, viewModel.LanguageId, visitorData.IsShoppingCartOpened, visitorData.IsCatalogueOpened, viewModel.Currency, viewModel.Id, associateCart.ActiveCart.Id, visitorData.RegistrationId));
@@ -179,7 +182,7 @@ namespace CompanyGroup.WebClient.Controllers
         }
 
         /// <summary>
-        /// kijelentkezés
+        /// kijelentkezés, VisitorId és a RegistrationId törlése
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -196,6 +199,8 @@ namespace CompanyGroup.WebClient.Controllers
                 HttpResponseMessage response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.SignOutRequest>("Visitor", "SignOut", req);
 
                 visitorData.VisitorId = String.Empty;
+
+                visitorData.RegistrationId = String.Empty;
 
                 this.WriteCookie(visitorData);
 

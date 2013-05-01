@@ -627,6 +627,5 @@ namespace CompanyGroup.Data.RegistrationModule
                 this.Disconnect();
             }
         }
-
     }
 }

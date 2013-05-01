@@ -46,6 +46,53 @@ namespace CompanyGroup.WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [ActionName("GetPrimaryPicture")]
+        public HttpResponseMessage GetPrimaryPicture()
+        {
+            string id = CompanyGroup.Helpers.QueryStringParser.GetString("Id");
+
+            string maxWidth = CompanyGroup.Helpers.QueryStringParser.GetString("MaxWidth");
+
+            string maxHeight = CompanyGroup.Helpers.QueryStringParser.GetString("MaxHeight");
+
+            return this.GetPrimaryPictureById(id, maxWidth, maxHeight);
+        }
+
+        /// <summary>
+        /// elsődleges kép lekérdezése
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        [ActionName("GetPrimaryPicture")]
+        [HttpGet]
+        public HttpResponseMessage GetPrimaryPictureById(string id, string maxWidth, string maxHeight)
+        {
+            try
+            {
+                Stream stream = this.service.GetPrimaryPicture(id, maxWidth, maxHeight);
+
+                if (stream == null)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+                result.Content = new System.Net.Http.StreamContent(stream);
+
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ThrowHttpError(ex);
+            }
+        }
+
         /// <summary>
         /// képtartalmat adja vissza 
         /// </summary>

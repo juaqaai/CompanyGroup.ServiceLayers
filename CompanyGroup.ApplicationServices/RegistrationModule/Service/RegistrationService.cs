@@ -14,6 +14,12 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
     //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()] //create instance and inject dependencies using unity container
     public class RegistrationService : ServiceCoreBase, IRegistrationService 
     {
+        private static readonly string RegistrationFilePath = Helpers.ConfigSettingsParser.GetString("RegistrationFilePath", @"c:\projects\2012\CompanyGroup.WebApi\App_Data\");
+
+        private static readonly string RegistrationTemplateFileName = Helpers.ConfigSettingsParser.GetString("RegistrationTemplateFileName", "registrationcontract.html");
+
+        private static readonly string RegistrationTemplateFilePath = Helpers.ConfigSettingsParser.GetString("RegistrationTemplateFilePath", @"c:\projects\2012\CompanyGroup.WebApi\App_Data\Templates\");
+
         private CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository;
 
         private CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository;
@@ -355,6 +361,12 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                             webAdministrator.setWebAdmin( str2int(xmlReader.readElementString2('WebAdmin')) );
                             webAdministrator.setWebLoginName( xmlReader.readElementString2('WebLoginName') );
                             webAdministrator.setWebPassword( xmlReader.readElementString2('WebPassword') );
+                     * 
+                          <option value="Igazgató">Igazgató</option>
+						  <option value="Pénzügyi vezető">Pénzügyi vezető</option>
+						  <option value="Kereskedelmi vezető">Kereskedelmi vezető</option>
+						  <option value="Kapcsolattartó">Kapcsolattartó</option>
+						  <option value="Kereskedő">Kereskedő</option>
                      */
 
                     WebAdministrator = new Domain.RegistrationModule.ContactPersonCreate()
@@ -364,13 +376,13 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         CellularPhone = registration.WebAdministrator.Telephone,
                         ContactPersonId = registration.WebAdministrator.ContactPersonId,
                         DataAreaId = "hrp",
-                        Director = 0,
+                        Director = registration.WebAdministrator.Positions.Contains("Igazgató") ? 1 : 0,
                         Email = registration.WebAdministrator.Email,
                         EmailArriveOfGoods = registration.WebAdministrator.EmailArriveOfGoods ? 1 : 0,
                         EmailOfDelivery = registration.WebAdministrator.EmailOfDelivery ? 1 : 0,
                         EmailOfOrderConfirm = registration.WebAdministrator.EmailOfOrderConfirm ? 1 : 0,
                         Fax = "",
-                        FinanceManager = 0,
+                        FinanceManager = registration.WebAdministrator.Positions.Contains("Pénzügyi vezető") ? 1 : 0,
                         FirstName = registration.WebAdministrator.FirstName,
                         FunctionId = "",
                         Gender = 0,
@@ -384,9 +396,9 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         PriceListDownload = registration.WebAdministrator.PriceListDownload ? 1 : 0,
                         RecId = 0,
                         RefRecId = 0,   //custTable RecId
-                        SalesManager = 0,
-                        SimpleContact = 0,
-                        SimpleSales = 0,
+                        SalesManager = registration.WebAdministrator.Positions.Contains("Kereskedelmi vezető") ? 1 : 0,
+                        SimpleContact = registration.WebAdministrator.Positions.Contains("Kapcsolattartó") ? 1 : 0,
+                        SimpleSales = registration.WebAdministrator.Positions.Contains("Kereskedő") ? 1 : 0,
                         WebAdmin = 1,
                         WebLoginName = registration.WebAdministrator.UserName,
                         WebPassword = registration.WebAdministrator.Password
@@ -439,13 +451,13 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         CellularPhone = contactPerson.Telephone,
                         ContactPersonId = contactPerson.ContactPersonId,
                         DataAreaId = "hrp",
-                        Director = 0,
+                        Director = registration.WebAdministrator.Positions.Contains("Igazgató") ? 1 : 0,
                         Email = contactPerson.Email,
                         EmailArriveOfGoods = contactPerson.EmailArriveOfGoods ? 1 : 0,
                         EmailOfDelivery = contactPerson.EmailOfDelivery ? 1 : 0,
                         EmailOfOrderConfirm = contactPerson.EmailOfOrderConfirm ? 1 : 0,
                         Fax = "",
-                        FinanceManager = 0,
+                        FinanceManager = registration.WebAdministrator.Positions.Contains("Pénzügyi vezető") ? 1 : 0,
                         FirstName = contactPerson.FirstName,
                         FunctionId = "",
                         Gender = 0,
@@ -459,9 +471,9 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         PriceListDownload = contactPerson.PriceListDownload ? 1 : 0,
                         RecId = contactPerson.RecId,
                         RefRecId = customerCreateResult.RecId,
-                        SalesManager = 0,
-                        SimpleContact = 0,
-                        SimpleSales = 0,
+                        SalesManager = registration.WebAdministrator.Positions.Contains("Kereskedelmi vezető") ? 1 : 0,
+                        SimpleContact = registration.WebAdministrator.Positions.Contains("Kapcsolattartó") ? 1 : 0,
+                        SimpleSales = registration.WebAdministrator.Positions.Contains("Kereskedő") ? 1 : 0,
                         WebAdmin = contactPerson.WebAdmin ? 1 : 0,
                         WebLoginName = contactPerson.UserName,
                         WebPassword = contactPerson.Password
@@ -499,6 +511,20 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                     //long.TryParse(resultCreateBankAccount.ToString(), out bankAccountRecId);
                 });
+
+                #region "regisztrációs file létrehozása, template-ből generált tartalommal"
+
+                CompanyGroup.Data.RegistrationModule.RegistrationFileRepository registrationFileRepository = new CompanyGroup.Data.RegistrationModule.RegistrationFileRepository(registration); 
+
+                string registrationHtml = registrationFileRepository.ReadRegistrationHtmlTemplate(String.Format("{0}{1}", RegistrationService.RegistrationTemplateFilePath, RegistrationService.RegistrationTemplateFileName));
+
+                string htmlContent = registrationFileRepository.RenderRegistrationDataToHtml(customerCreateResult.RegId, registrationHtml);
+
+                string registrationFileNameWithPath = System.IO.Path.Combine(RegistrationService.RegistrationFilePath, String.Format("{0}.html", customerCreateResult.RecId));
+
+                registrationFileRepository.CreateRegistrationFile(registrationFileNameWithPath, htmlContent);
+
+                #endregion
 
                 //sikeres ERP rögzítés után
                 registrationRepository.Post(request.RegistrationId);
@@ -690,6 +716,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         //}
 
         #endregion
+
+
 
         /// <summary>
         /// adatlapot kitöltő adatainak módosítása

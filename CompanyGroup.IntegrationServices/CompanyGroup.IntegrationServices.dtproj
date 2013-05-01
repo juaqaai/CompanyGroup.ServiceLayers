@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">1JUHASZA</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA25d1JbeExkqo48d/RUepQAAAAAACAAAAAAADZgAAwAAAABAAAAC5JYEunGv+/ALakqSOAYjcAAAAAASAAACgAAAAEAAAAEoCpjuZojGMdY+FuqEW0gGIAAAAXHo/QQWoS8DfpbEc09ZFmvAJIa++hCi6WHA8Wwtl/odBxe0UxmDAAoW8EBrEZa+UTigxtRMqiMRyPK0NrqjhO8jZJCUoD8YATr5efH+tbVIzvc9uovm4mxaFif6auIgn/v/l6lAVuHvUW71JbZL8TFpuhKmJtE0ZCgXZH67i5PFmGkWsTIsUkxQAAAAkavLQCD5cZ3X7wZkBWBi4a+WPyQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA25d1JbeExkqo48d/RUepQAAAAAACAAAAAAADZgAAwAAAABAAAADMVae+8Gr7qpdXRT8W3O5bAAAAAASAAACgAAAAEAAAAEXBDyUm9tcMXfGnXVHNj/CIAAAAAi7OUsjRYGH5I9HqObpeyXWdAUZvyFMPizgW9UcosAm0L9wIdsQ/KDIqJox47uvcuZEv4YwaVHo9GBH1JB+VD0n7Nsrjvr5t+PHa+Wfkit6uc9XWQqNq5rwZCGtIGBLX3yolUPXF7pDyoge8ge5JlC5gFjUprOvN2GlJX55LTqM9+lBF5RHQUxQAAABcUEXtyYcCE1JQsqgTlgai2Hq/pA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -41,6 +41,7 @@
           <SSIS:Package SSIS:Name="StockUpdater.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="PriceUpdater.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="SalesOrder.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="SalesLineUpdater.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="TechnicalMetadata.conmgr" />
@@ -711,10 +712,10 @@
                 <SSIS:Property SSIS:Name="Name">PriceUpdater</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">91</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">92</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{D2F101FE-2930-4096-BD15-7334193564AF}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{A90FC7B3-FF1A-41BA-A16D-58C88185E400}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -756,6 +757,38 @@
                 <SSIS:Parameter SSIS:Name="JobLogKey">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">{2CB8E491-0A1D-488C-A0B3-9D1EBE8354B7}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">-1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="SalesLineUpdater.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{AFC5BC52-77C7-4445-A77D-7807C34BE2C7}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">SalesLineUpdater</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">100</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{735A0975-2BB6-4F22-A384-2F8CE665DDAC}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="JobLogKey">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{68E68DE0-367A-44B3-92D6-A5B03F86D087}</SSIS:Property>
                     <SSIS:Property SSIS:Name="CreationName">
                     </SSIS:Property>
                     <SSIS:Property SSIS:Name="Description">

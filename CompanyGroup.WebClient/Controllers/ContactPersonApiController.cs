@@ -22,22 +22,15 @@ namespace CompanyGroup.WebClient.Controllers
         {
             CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-            CompanyGroup.Dto.PartnerModule.ChangePasswordRequest req = new CompanyGroup.Dto.PartnerModule.ChangePasswordRequest()
-            {
-                VisitorId = visitorData.VisitorId,
-                Language = visitorData.Language,
-                NewPassword = request.NewPassword,
-                OldPassword = request.OldPassword,
-                UserName = request.UserName
-            };
+            CompanyGroup.Dto.PartnerModule.ChangePasswordRequest req = new CompanyGroup.Dto.PartnerModule.ChangePasswordRequest(visitorData.Language, request.UserName, request.OldPassword, request.NewPassword, visitorData.VisitorId);
 
             CompanyGroup.Dto.PartnerModule.ChangePassword response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.ChangePasswordRequest, CompanyGroup.Dto.PartnerModule.ChangePassword>("ContactPerson", "ChangePassword", req);
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+            //CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
 
-            CompanyGroup.WebClient.Models.ChangePasswordResponse changePasswordResponse = new CompanyGroup.WebClient.Models.ChangePasswordResponse( response, visitor);
+            CompanyGroup.WebClient.Models.ChangePasswordResponse viewModel = new CompanyGroup.WebClient.Models.ChangePasswordResponse(response);
 
-            HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ChangePasswordResponse>(HttpStatusCode.Created, changePasswordResponse);
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse<CompanyGroup.WebClient.Models.ChangePasswordResponse>(HttpStatusCode.Created, viewModel);
 
             return httpResponseMessage;
         }

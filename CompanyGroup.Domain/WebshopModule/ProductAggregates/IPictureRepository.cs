@@ -13,6 +13,13 @@ namespace CompanyGroup.Domain.WebshopModule
         List<CompanyGroup.Domain.WebshopModule.Picture> GetListByProduct(string productId);
 
         /// <summary>
+        /// termékhez tartozó elsődleges kép
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.Picture GetPrimaryPicture(string productId);
+
+        /// <summary>
         /// kép azonosító szerint
         /// </summary>
         /// <param name="pictureId"></param>

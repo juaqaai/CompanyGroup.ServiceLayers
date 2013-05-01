@@ -16,6 +16,16 @@ companyGroup.registration = $.sammy(function () {
     //szerződési feltételek betöltése (regisztrációs adatok elkérése, template-ek feltöltése)
     this.get('#/', function (context) {
 
+        //a cshtml- ben lekérdeztem e visitorlogin-t ( hogy a cégnév kivan e töltve) és ketté ágazik.
+
+        //        if (visitorlogin == 0) {
+
+
+        //        }
+        //        else {
+
+        //        }
+
         $.ajax({
             url: companyGroup.utils.instance().getRegistrationApiUrl('GetRegistrationData'),
             data: {},
@@ -115,7 +125,7 @@ companyGroup.registration = $.sammy(function () {
     //események
     this.bind('run', function (e, data) {
         var context = this;
-        $("#select_webadminposition").chosen({ no_results_text: "Nincs találat" });
+        $("#select_position").chosen({ no_results_text: "Nincs találat" });
         //keresés névre, vagy cikkszámra
         $("#txt_globalsearch").live('focus', function () {
             context.globalSearchOnFocus($(this));
@@ -310,7 +320,7 @@ companyGroup.registration = $.sammy(function () {
         var context = this;
         if (data.Checked) {
             $('#contactperson').show("slow");
-            $(".select_position2").chosen({ no_results_text: "Nincs találat" });
+            $("#select_position2").chosen({ no_results_text: "Nincs találat" });
         } else {
             $('#contactperson').hide("slow");
         }
@@ -344,23 +354,20 @@ companyGroup.registration = $.sammy(function () {
     this.before({ only: { verb: 'post', path: '#/signin'} }, function (e) {
         return this.beforeSignIn();
     });
-    //bejelentkezés ()
+    //bejelentkezés
     this.post('#/signin', function (context) {
         this.signIn(context.params['txt_username'], context.params['txt_password'], companyGroup.utils.instance().getVisitorApiUrl('SignIn'), function (result) {
-            if (result.IsValidLogin) {
-                $.fancybox.close();
-                $("#cus_header1").empty();
-                var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
-                $('#cus_header1').html(visitorInfoHtml);
-                $("#usermenuContainer").empty();
-                var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
-                $('#usermenuContainer').html(usermenuHtml);
-                context.redirect('#/');
-            }
-            else {
-                $("#login_errors").html(result.ErrorMessage);
-                $("#login_errors").show();
-            }
+            $.fancybox.close();
+
+            $("#cus_header1").empty();
+            var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), result);
+            $('#cus_header1').html(visitorInfoHtml);
+
+            $("#usermenuContainer").empty();
+            var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
+            $('#usermenuContainer').html(usermenuHtml);
+
+            context.redirect('#/authenticated');
         });
 
     });
@@ -373,7 +380,7 @@ companyGroup.registration = $.sammy(function () {
             $('#cus_header1').html(visitorInfoHtml);
             var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), result);
             $('#usermenuContainer').html(usermenuHtml);
-            context.redirect('#/');
+
         });
     });
     //keresés
@@ -402,19 +409,18 @@ companyGroup.registration = $.sammy(function () {
                 $("#hr_3").show(500);
                 $("#hr_4").show(500);
                 $("#hr_5").show(500);
-                context.redirect('#/saveregistration_print')
+				context.redirect('#/saveregistration_print')
             }
             else {
                 //itt van az adatok vizsgálata hogy egyezik a kis módosításhoz..
-                var contract_modify1 = 0, contract_modify2 = 0, contract_modify2_2 = 0, contract_modify2_3 = 0, contract_modify3 = 0, contract_modify4 = 0, contract_modify5 = 0, contract_modify6 = 0
-                if ($("#customername").text() === $("#newcustomername").text() || $("#newcustomername").text() == "") { contract_modify1 = 1 } else { contract_modify1 = 0 }
-                if ($("#vatnumber").text() === $("#newvatnumber").text() || $("#newvatnumber").text() == "") { contract_modify2 = 1 } else { contract_modify2 = 0 }
-                if ($("#vatnumber2").text() === $("#newvatnumber2").text() || $("#newvatnumber2").text() == "") { contract_modify2_2 = 1 } else { contract_modify2_2 = 0 }
-                if ($("#vatnumber3").text() === $("#newvatnumber3").text() || $("#newvatnumber3").text() == "") { contract_modify2_3 = 1 } else { contract_modify2_3 = 0 }
-                if ($("#invoicezipcode").text() === $("#newinvoicezipcode").text() || $("#newinvoicezipcode").text() == "") { contract_modify3 = 1 } else { contract_modify3 = 0 }
-                if ($("#invoicecity").text() === $("#newinvoicecity").text() || $("#newinvoicecity").text() == "") { contract_modify4 = 1 } else { contract_modify4 = 0 }
-                if ($("#invoicestreet").text() === $("#newinvoicestreet").text() || $("#newinvoicestreet").text() == "") { contract_modify5 = 1 } else { contract_modify5 = 0 }
-                if ($("#invoicecountry").text() === $("#newinvoicecountry").text() || $("#newinvoicecountry").text() == "") { contract_modify6 = 1 } else { contract_modify6 = 0 }
+                if ($("#customername").text() === $("#newcustomername").text() || $("#newcustomername").text() == "") { var contract_modify1 = 1 } else { contract_modify1 = 0 }
+                if ($("#vatnumber").text() === $("#newvatnumber").text() || $("#newvatnumber").text() == "") { var contract_modify2 = 1 } else { contract_modify2 = 0 }
+                if ($("#vatnumber2").text() === $("#newvatnumber2").text() || $("#newvatnumber2").text() == "") { var contract_modify2_2 = 1 } else { contract_modify2_2 = 0 }
+                if ($("#vatnumber3").text() === $("#newvatnumber3").text() || $("#newvatnumber3").text() == "") { var contract_modify2_3 = 1 } else { contract_modify2_3 = 0 }
+                if ($("#invoicezipcode").text() === $("#newinvoicezipcode").text() || $("#newinvoicezipcode").text() == "") { var contract_modify3 = 1 } else { contract_modify3 = 0 }
+                if ($("#invoicecity").text() === $("#newinvoicecity").text() || $("#newinvoicecity").text() == "") { var contract_modify4 = 1 } else { contract_modify4 = 0 }
+                if ($("#invoicestreet").text() === $("#newinvoicestreet").text() || $("#newinvoicestreet").text() == "") { var contract_modify5 = 1 } else { contract_modify5 = 0 }
+                if ($("#invoicecountry").text() === $("#newinvoicecountry").text() || $("#newinvoicecountry").text() == "") { var contract_modify6 = 1 } else { contract_modify6 = 0 }
                 if (contract_modify1 === 1 && contract_modify2 === 1 && contract_modify2_2 === 1 && contract_modify2_3 === 1 && contract_modify3 === 1 && contract_modify4 === 1 && contract_modify5 === 1 && contract_modify6 === 1) {
                     $("#tabs-1").hide(500);
                     $("#tabs-2").hide(500);
@@ -452,7 +458,7 @@ companyGroup.registration = $.sammy(function () {
                     $("#hr_3").show(500);
                     $("#hr_4").show(500);
                     $("#hr_5").show(500);
-                    context.redirect('#/saveregistration_print')
+					context.redirect('#/saveregistration_print')
                 }
             }
         });
@@ -488,7 +494,7 @@ companyGroup.registration = $.sammy(function () {
             SmsOrderConfirm: false,
             Telephone: $("#txt_contactpersonphone").val(),
             UserName: $("#txt_contactpersonnusername").val(),
-            Positions: $(".select_position2").val()
+            Positions: $("#select_position2").val()
         };
         //data.RegistrationNumber = $("#txtRegistrationNumber").val();
         $.ajax({
@@ -506,7 +512,7 @@ companyGroup.registration = $.sammy(function () {
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('HRP/BSC Regisztráció - adatok ellenőrzése');
-                    $("#add_new_contact").show();
+                    $("#add_new_contact").hide();
                     $("#add_new_contact_btn").show();
                     setTabsVisibility(6);
                 }
@@ -622,11 +628,7 @@ companyGroup.registration = $.sammy(function () {
         });
     });
     this.get('#/companydata', function (context) {
-        //if ($("#txt_deliveryaddresszipcode").val() != '' && $("#txt_deliveryaddresscity").val() != '' && $("#txt_deliveryaddressstreet").val() != '') {
-            $("form#form_companydata").submit();
-        //}
-
-
+        $("form#form_companydata").submit();
         // validálás után az uj adatokat olvasom be
         var newcustomername = $("#txt_customername").val();
         var newvatnumber = $("#txt_vatnumber").val();
@@ -659,20 +661,17 @@ companyGroup.registration = $.sammy(function () {
         if ($("#txt_mainemail").val() == '') {
             error_msg += 'Az elsődleges email cím kitöltése kötelező! <br/>';
         }
-        if ($("#select_invoicecountry").val() == '') {
+        if ($("#selectInvoiceCountry").val() == '') {
             error_msg += 'A számlázási cím ország kiválasztása kötelező! <br/>';
         }
-        if ($("#txt_invoicecity").val() == '') {
+        if ($("#txtInvoiceCity").val() == '') {
             error_msg += 'A számlázási cím város kitöltése kötelező! <br/>';
         }
-        if ($("#txt_invoicestreet").val() == '') {
+        if ($("#txtInvoiceStreet").val() == '') {
             error_msg += 'A számlázási cím utca kitöltése kötelező! <br/>';
         }
-        if ($("#txt_invoicezipcode").val() == '') {
+        if ($("#txtInvoiceZipCode").val() == '') {
             error_msg += 'A számlázási cím irányítószám kitöltése kötelező! <br/>';
-        }
-        if ($("#txt_invoicephone").val() == '') {
-            error_msg += 'A telefonszám kitöltése kötelező! <br/>';
         }
         if ($("#selectMailCountry").val() == '') {
             error_msg += 'A levelezési cím ország kiválasztása kötelező! <br/>';
@@ -685,9 +684,6 @@ companyGroup.registration = $.sammy(function () {
         }
         if ($("#txtMailAddressZipCode").val() == '') {
             error_msg += 'A levelezési cím irányítószám kitöltése kötelező! <br/>';
-        }
-        if ($("#txt_deliveryaddresszipcode").val() != '' || $("#txt_deliveryaddresscity").val() != '' || $("#txt_deliveryaddressstreet").val() != '') {
-            error_msg += 'A szállítási cím kitőltése nem lett befejezve! <br/>';
         }
         $("#spanCompanyDataError").html(error_msg);
 
@@ -952,7 +948,6 @@ companyGroup.registration = $.sammy(function () {
     //kapcsolattartó adatainak betöltése, webadmin adatainak mentése 
     this.post('#/webadministrator', function (context) {
         ////console.log(context);
-        var webadminPositions = context.params['select_webadminposition'];
         var data = {
             AllowOrder: $("#chk_webadminalloworder").is(':checked'),
             AllowReceiptOfGoods: $("#chk_webadminallowreceiptofgoods").is(':checked'),
@@ -975,7 +970,7 @@ companyGroup.registration = $.sammy(function () {
             SmsOrderConfirm: false,
             Telephone: context.params['txt_webadminphone'],
             UserName: context.params['txt_webadminusername'],
-            Positions: (webadminPositions === null || webadminPositions === '') ? [] : webadminPositions
+            Positions: context.params['select_position']
         };
         //data.RegistrationNumber = $("#txtRegistrationNumber").val();
         var dataString = JSON.stringify(data);
@@ -1025,6 +1020,7 @@ companyGroup.registration = $.sammy(function () {
         }
 
     });
+
     this.post('#/adddeliveryaddress', function (context) {
         ////console.log(context);
         var data = {
@@ -1054,8 +1050,8 @@ companyGroup.registration = $.sammy(function () {
                     $('#txt_deliveryaddressstreet').val('');
                     $('#txt_deliveryaddresszipcode').val('');
                     context.title('Regisztráció - szállítási cím hozzáadás');
-                    $("#add_new_delivery").show();
-                    $("#add_new_delivery_btn").hide();
+                    $("#add_new_delivery").hide();
+                    $("#add_new_delivery_btn").show();
                 }
                 else {
                     //console.log('addDeliveryAddress result failed');
@@ -1169,20 +1165,6 @@ companyGroup.registration = $.sammy(function () {
 
     });
 
-    this.before({ only: { verb: 'post', path: '#/addcontactperson'} }, function (e) {
-
-        var error_msg = '';
-
-        if ($("#txt_contactpersonfirstname").val() != '' || $("#txt_contactpersonlastname").val() != '' || $("#txt_contactpersonemail").val() != '' || $("#txt_contactpersonpassword").val() != '' || $("#txt_contactpersonpassword").val() != '') {
-            error_msg += 'A webadminisztrátor vezetéknév kitöltése kötelező! <br/>';
-        }
-        if ($("#txt_contactpersonpassword").val() != $("#txt_contactpersonpassword2").val()) {
-            error_msg += 'A jelszó és a jelszó megerősítése mező nem egyezik! <br/>';
-        }
-        $("#spanContactPersonDataError").html(error_msg);
-
-        return (error_msg === '');
-    });
     this.post('#/addcontactperson', function (context) {
         var data = {
             Id: '',
@@ -1225,8 +1207,8 @@ companyGroup.registration = $.sammy(function () {
                     var html = Mustache.to_html($('#contactPersonTemplate').html(), result);
                     $('#contactPersonContainer').html(html);
                     context.title('Regisztráció - kapcsolattartó hozzáadás');
-                    $("#add_new_contact").show();
-                    $("#add_new_contact_btn").hide();
+                    $("#add_new_contact").hide();
+                    $("#add_new_contact_btn").show();
                 }
                 else {
                     //console.log('addContactPerson result failed');
@@ -1368,7 +1350,7 @@ companyGroup.registration = $.sammy(function () {
             success: function (result) {
                 if (result) {   //Message, Successed
                     if (result.Succeeded) {
-                        $('a#nyomtatas').trigger('click');
+                         $('a#nyomtatas').trigger('click');
                         context.title('Regisztráció - lezárás, adatok mentése sikeresen megtörtént');
                     } else {
                         alert(result.Message);
@@ -1383,8 +1365,8 @@ companyGroup.registration = $.sammy(function () {
             }
         });
     });
-
-    //regisztrációs adatok mentése
+	
+	    //regisztrációs adatok mentése
     this.get('#/saveregistration_print', function (context) {
         ////console.log(context);
         $.ajax({
@@ -1417,7 +1399,7 @@ companyGroup.registration = $.sammy(function () {
     var initRegistrationData = function (data) {
 
         if (data.Visitor.IsValidLogin) {
-            $("#tabs_7_title").hide();
+			 $("#tabs_7_title").hide();
             $('#tabs-1-button').show();
             $('#tabs-2-button_modosit').hide();
             $('#tabs-3-button_modosit').hide();
@@ -1538,10 +1520,29 @@ companyGroup.registration = $.sammy(function () {
         //$('#chkWebAdminSmsArriveOfGoods').prop('checked', data.WebAdministrator.SmsArriveOfGoods);
         //$('#chkWebAdminSmsOfDelivery').prop('checked', data.WebAdministrator.SmsOfDelivery);
         //$('#chkWebAdminSmsOrderConfirm').prop('checked', data.WebAdministrator.SmsOrderConfirm);
-        $('#select_webadminposition').val(data.WebAdministrator.Positions);
-        $("#select_webadminposition").trigger("liszt:updated");
+        $('#select_position').val(data.WebAdministrator.Positions);
+        $("#select_position").trigger("liszt:updated");
 
         $('#contactPersonContainer').html(Mustache.render($('#contactPersonTemplate').html(), data.ContactPersons));
+
+        //  $('#txtContactPersonUserName').val();
+        //  $('#txtContactPersonPassword').val();
+        //  $('#txtContactPersonPassword2').val();
+        //  $('#txtContactPersonFirstName').val();
+        //  $('#txtContactPersonLastName').val();
+        //  $('#txtContactPersonEmail').val();
+        //  $('#txtContactPersonPhone').val();
+        //  $('#chkContactPersonAllowOrder').val();
+        //  $('#chkContactPersonAllowReceiptOfGoods').val();
+        //  $('#chkContactPersonEmailArriveOfGoods').val();
+        //  $('#chkContactPersonEmailOfDelivery').val();
+        //  $('#chkContactPersonEmailOfOrderConfirm').val();
+        //  $('#chkContactPersonInvoiceInfo').val();
+        //  $('#chkContactPersonNewsletter').val();
+        //  $('#chkContactPersonPriceListDownload').val();
+        //  $('#chkContactPersonSmsArriveOfGoods').val();
+        //  $('#chkContactPersonSmsOfDelivery').val();
+        //  $('#chkContactPersonSmsOrderConfirm').val();
     }
 
     var setTabsVisibility = function (i, isValidLogin) {
@@ -1580,14 +1581,14 @@ companyGroup.registration = $.sammy(function () {
                 $('#tabs-4-button_modosit').show(500);
                 $('#tabs-5-button_modosit').show(500);
                 $('#tab_2_ok').show(500);
-                $('#reg_point_title').css('color', '#084385');
-                $('#reg_point_title_2').css('color', '#084385');
-                $('#reg_point_title_3').css('color', '#084385');
+								$('#reg_point_title').css('color', '#084385');
+								$('#reg_point_title_2').css('color', '#084385');
+								$('#reg_point_title_3').css('color', '#084385');
                 $('#error_mgs').hide(500);
                 $('#error_mgs_2').hide(500);
                 $('#error_mgs_3').hide(500);
                 $('#modify_mgs').show(500);
-                $("#hr_2").hide(500);
+				$("#hr_2").hide(500);
             }
         } else {
 
@@ -1601,14 +1602,14 @@ companyGroup.registration = $.sammy(function () {
                 $('#tabs-3-button').show(500);
                 $('#tab_3_ok').show(500);
                 $("#hr_3").hide(500);
-
+				$('#tabs-6-button_modosit').show(500);
             }
             else {
                 $("#tabs-4").show(500);
                 $('#tabs-3-button').show(500);
                 $('#tab_3_ok').show(500);
                 $("#hr_3").hide(500);
-                $('#tabs-6-button_modosit').show(500);
+                
             }
         } else {
             $("#tabs-4").hide(500);
@@ -1621,13 +1622,13 @@ companyGroup.registration = $.sammy(function () {
                 $('#tabs-4-button').show(500);
                 $('#tab_4_ok').show(500);
                 $("#hr_4").hide(500);
-
+				$('#tabs-6-button_modosit').show(500);
             } else {
                 $("#tabs-5").show(500);
                 $('#tabs-4-button').show(500);
                 $('#tab_4_ok').show(500);
                 $("#hr_4").hide(500);
-                $('#tabs-6-button_modosit').show(500);
+                
             }
         } else {
             $("#tabs-5").hide(500);

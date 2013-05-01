@@ -1,32 +1,15 @@
-@model CompanyGroup.WebClient.Models.RegistrationData
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
     <title></title>
     <style type="text/css">
-    p {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	text-align:justify;
-
-    }
-	    ul {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-
-    }
-	#szovegtorzs{
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	width: 800px;
-	margin-left: 16px;
+    #szovegtorzs {
+	    font-family: Verdana, Arial, Helvetica, sans-serif;
+	    font-size: 12px;
+	    width: 800px;
+	    margin-left: 16px;
     }
     #szovegtorzs h2 {
 	    font-size: 18px;
@@ -39,9 +22,11 @@
 	    font-weight: bold;
     }
     </style>  
+      
 </head>
 <body>
-      <div id="szovegtorzs">
+
+<div id="Div1">
 	  <p>&nbsp;</p>
           <h2 align="center">Viszonteladói és elektronikus kereskedelmi szerzõdés</h2>
           <table width="798" border="0" cellspacing="0" cellpadding="0">
@@ -50,7 +35,7 @@
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td><p><strong>szerzõdésszám: @Model.RegistrationId</strong></p></td>
+              <td><p><strong>szerzõdésszám: $ContractNumber$</strong></p></td>
               <td>&nbsp;</td>
             </tr>
             <tr>
@@ -96,12 +81,13 @@
           </table>
           <p><strong>másrészrõl a(z)</strong></p>
           <blockquote>
-            <h3><strong>Cégnév: </strong>@Model.CompanyData.CustomerName</h3>
-            <p>@String.Format("{0} {1} {2}", Model.InvoiceAddress.ZipCode, Model.InvoiceAddress.City, Model.InvoiceAddress.Street)<br />
-                Adószám: @Model.CompanyData.VatNumber<br />
+            <h3><strong>Cégnév: </strong>$CompanyName$</h3>
+            <p>$InvoiceAddressZipCode$ $InvoiceAddressCity$ $InvoiceAddressStreet$<br />
+                Adószám: $VatNumber$<br />
                 Bankszámlaszám: $BankAccount$<br />
-                Cégbejegyzés száma:@Model.CompanyData.RegistrationNumber<br />
+                Cégbejegyzés száma: $CompanyRegisterNumber$<br />
             </p>
+
           </blockquote>
           <p style="text-align:center;"> <em>mint Viszonteladó - a továbbiakban <strong>Viszonteladó</strong> 
               -</em><br />
@@ -569,103 +555,97 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="50%" valign="top"><p><strong>Ügyintézõ (adatlapot kitöltõ)</strong><br />
-        Név:@Model.DataRecording.Name
+        Név:$DataRecordingName$
         <br />
-        E-mail:@Model.DataRecording.Email<br />
-        Telefonszám:@Model.DataRecording.Phone</p>
+        E-mail:$DataRecordingEmail$<br />
+        Telefonszám:$DataRecordingPhone$</p>
       <hr align="left" width="350" />
       <p><strong>Cég alapadatok</strong><br />
-          Cégnév:@Model.CompanyData.CustomerName<br />
-          Cégjegyzékszám:@Model.CompanyData.RegistrationNumber<br />
-          Adószám:@Model.CompanyData.VatNumber<br />
-          Uniós adószám:@Model.CompanyData.EUVatNumber<br />
-          Bankszámlaszámok:@foreach(CompanyGroup.WebClient.Models.BankAccount bankAccount in Model.BankAccounts.Items){
-                               String.Format("{0}{1}{2}", bankAccount.Part1, bankAccount.Part2, bankAccount.Part3); <br />
-          }
-          Aláírási címpéldány: @Model.CompanyData.SignatureEntityFile<br /></p>
+          Cégnév:$CompanyDataCustomerName$<br />
+          Cégjegyzékszám:$CompanyDataRegistrationNumber$<br />
+          Adószám:$CompanyDataVatNumber$<br />
+          Uniós adószám:$CompanyDataEUVatNumber$<br />
+          Bankszámlaszámok:$BankAccounts$ <br />
+          Aláírási címpéldány: $CompanyDataSignatureEntityFile$<br /></p>
       <p>Központi e-mail cím:<br />
-          Hírlevél a központi e-mailre: @(Model.CompanyData.NewsletterToMainEmail ? "Igen" : "Nem")</p>
+          Hírlevél a központi e-mailre: $CompanyDataNewsletterToMainEmail$</p>
       <hr align="left" width="350" />
       <p><strong>Cégadminisztrátor</strong><br /></p>
-      <p>Vezetéknév:@Model.WebAdministrator.FirstName<br />
-          Keresztnév:@Model.WebAdministrator.LastName<br />
-          Telefon: @Model.WebAdministrator.Telephone<br />
-          Email: @Model.WebAdministrator.Email</p>
-      <p><strong>Jogosultságok:</strong> @*Model.WebAdministrator.Rights*@<br />
-      Számlainformáció: @(Model.WebAdministrator.InvoiceInfo ? "Igen" : "Nem")<br />
-@*Left Company?: @(Model.WebAdministrator.LeftCompany? "Igen" : "Nem")*@
-Árlistát letölthet: @(Model.WebAdministrator.PriceListDownload ? "Igen" : "Nem")<br />
-Árut Rendelhet: @(Model.WebAdministrator.AllowOrder ? "Igen" : "Nem") <br />
-Árut átvehet: @(Model.WebAdministrator.AllowReceiptOfGoods ? "Igen" : "Nem") <br />
-<br />
-          <strong>Pozíció:</strong> @*Model.WebAdministrator.Functions*@<br />
+      <p>Vezetéknév:$WebAdministratorFirstName$<br />
+          Keresztnév:$WebAdministratorLastName$<br />
+          Telefon: $WebAdministratorTelephone$<br />
+          Email: $WebAdministratorEmail$</p>
+      <p><strong>Jogosultságok:</strong> <br />
+        Számlainformáció: $WebAdministratorInvoiceInfo$<br />
+        Árlistát letölthet: $WebAdministratorPriceListDownload$<br />
+        Árut Rendelhet: $WebAdministratorAllowOrder$ <br />
+        Árut átvehet: $WebAdministratorAllowReceiptOfGoods$ <br />
+        <br />
+          <strong>Pozíció:</strong> $WebAdministratorPositions$<br />
           <br />
-        <strong>Hírlevél: </strong>@(Model.WebAdministrator.Newsletter ? "Igen" : "Nem")</p>
+        <strong>Hírlevél: </strong>$WebAdministratorNewsletter$</p>
       <p><strong>Automata e-mail értesítések:</strong><br />
-       <span>Email értesítés árukiszállításról: </span>@(Model.WebAdministrator.EmailArriveOfGoods ? "Igen" : "Nem")<br/>
-      <span>Email értesítés árubeérkezésrõl: </span>@(Model.WebAdministrator.EmailOfDelivery ? "Igen" : "Nem")<br/>
-      <span>Email értesítés rendelésrõl: </span>@(Model.WebAdministrator.EmailOfOrderConfirm ? "Igen" : "Nem")<br/>
+       <span>Email értesítés árukiszállításról: </span>$WebAdministratorEmailArriveOfGoods$<br/>
+      <span>Email értesítés árubeérkezésrõl: </span>$WebAdministratorEmailOfDelivery$<br/>
+      <span>Email értesítés rendelésrõl: </span>$WebAdministratorEmailOfOrderConfirm$<br/>
       </p></td>
+
       <td width="50%" valign="top"><p><strong>Számlázási cím</strong><br />
       <br />
-        Irányítószám:@Model.InvoiceAddress.ZipCode<br />
-        Ország:@Model.InvoiceAddress.CountryRegionId<br />
-        Város:@Model.InvoiceAddress.City<br />
-        Utca, házszám:@Model.InvoiceAddress.Street<br />
-        Tel.:@Model.InvoiceAddress.Phone</p>
+        Irányítószám:$InvoiceAddressZipCode$<br />
+        Ország:$InvoiceAddressCountryRegionId$<br />
+        Város:$InvoiceAddressCity$<br />
+        Utca, házszám:$InvoiceAddressStreet$<br />
+        Tel.:$InvoiceAddressPhone$</p>
       <p><strong>Levelezési cím</strong><br />
       <br />
-          Irányítószám:@Model.MailAddress.ZipCode<br />
-          Ország:@Model.MailAddress.CountryRegionId<br />
-          Város:@Model.MailAddress.City<br />
-          Utca, házszám:@Model.MailAddress.Street
+          Irányítószám: $MailAddressZipCode$<br />
+          Ország: $MailAddressCountryRegionId$<br />
+          Város: $MailAddressCity$<br />
+          Utca, házszám: $MailAddressStreet$
        </p>
       <p><strong>Szállítási cím/telephely</strong><br/>
       <br />
-      @foreach(CompanyGroup.WebClient.Models.DeliveryAddress address in Model.DeliveryAddresses.Items){ <br/>
-          <span>Irányítószám: </span>@address.ZipCode <br/>
-          <span>Ország: </span>@address.CountryRegionId <br/>
-          <span>Város: </span>@address.City <br/>
-		  <span>Utca, házszám:</span>@address.Street <br/>
-		<br/>
-      }
+      $DeliveryAddresses$
+<!--      @foreach(CompanyGroup.WebClient.Models.DeliveryAddress address in Model.DeliveryAddresses.Items){ 
+          <br/><span>Irányítószám: </span>$DeliveryAddressZipCode$ <br/>
+          <span>Ország: </span>$DeliveryAddressCountryRegionId$ <br/>
+          <span>Város: </span>$DeliveryAddressCity$ <br/>
+		  <span>Utca, házszám:</span>$DeliveryAddressStreet$ <br/><br/>
+      }-->
       </p>
       <hr align="left" width="350" />
       <p><strong>Felhasználó </strong></p>
-            <p>@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
-<span>Azonosító: </span>@person.ContactPersonId<br/>
-        <span>Vezetéknév: </span>@person.FirstName<br/>
-        <span>Keresztnév: </span>@person.LastName<br/>
-        <span>Telefon: </span>@person.Telephone<br/>
-        <span>Email: </span>@person.Email<br/>
-        <span>Jelszó: </span>@person.Password<br/>
+            <p>$ContactPersons$
+            <!--@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
+        <span>Azonosító: </span>$ContactPersonId$<br/>
+        <span>Vezetéknév: </span>$ContactPersonFirstName$<br/>
+        <span>Keresztnév: </span>$ContactPersonLastName$<br/>
+        <span>Telefon: </span>$ContactPersonTelephone$<br/>
+        <span>Email: </span>$ContactPersonEmail$<br/>
+        <span>Jelszó: </span>$ContactPersonPassword$<br/>
         <br/>
         <span><strong>Jogosultságok: </strong></span><br/>
-        <span>Számlainformáció: </span>@(person.InvoiceInfo ? "Igen" : "Nem")<br/>
-        <span>Árlistát letölthet: </span>@(person.PriceListDownload ? "Igen" : "Nem")<br/>
-        <span>Árut Rendelhet: </span>@(person.AllowOrder ? "Igen" : "Nem") <br/>
-        <span>Árut átvehet: </span>@(person.AllowReceiptOfGoods ? "Igen" : "Nem") <br/>
+        <span>Számlainformáció: </span>$ContactPersonInvoiceInfo$<br/>
+        <span>Árlistát letölthet: </span>$ContactPersonPriceListDownload$<br/>
+        <span>Árut Rendelhet: </span>$ContactPersonAllowOrder$ <br/>
+        <span>Árut átvehet: </span>$ContactPersonAllowReceiptOfGoods$ <br/>
         <br/>
         <span><strong>Pozíció: </strong></span><br/> 
         <br/>
-        <span><strong>Hírlevél: </strong></span>@(person.Newsletter ? "Igen" : "Nem")<br/>
+        <span><strong>Hírlevél: </strong></span>$ContactPersonNewsletter$<br/>
         <br/>   
         <span><strong>Automata e-mail értesítések:</strong></span><br/>     
-        <span>Email értesítés árukiszállításról: </span>@(person.EmailArriveOfGoods ? "Igen" : "Nem")<br/>
-        <span>Email értesítés árubeérkezésrõl: </span>@(person.EmailOfDelivery ? "Igen" : "Nem")<br/>
-        <span>Email értesítés rendelésrõl: </span>@(person.EmailOfOrderConfirm ? "Igen" : "Nem")<br/><br/>
-        
-        
-        
-      }      </p></td>
+        <span>Email értesítés árukiszállításról: </span>$ContactPersonEmailArriveOfGoods$<br/>
+        <span>Email értesítés árubeérkezésrõl: </span>$ContactPersonEmailOfDelivery$<br/>
+        <span>Email értesítés rendelésrõl: </span>$ContactPersonEmailOfOrderConfirm$<br/><br/>
+      }     --> </p></td>
   </tr>
 </table>
-<p>&nbsp;</p>
-<p>Budapest,
-    @DateTime.Now
-        </p>
-<p>&nbsp;</p>
-<table width="915" border="0" cellspacing="0" cellpadding="3" class="keret_tabla">
+    <p>&nbsp;</p>
+    <p>Budapest, $DateTimeNow$</p>
+    <p>&nbsp;</p>
+    <table width="915" border="0" cellspacing="0" cellpadding="3" class="keret_tabla">
   <tr>
     <td width="305" bgcolor="#CCCCCC"><div align="center">
       <p><strong>BSC Kft. részérõl</strong></p>
@@ -717,11 +697,7 @@
     <td valign="top"><div align="center"></div></td>
   </tr>
 </table>
-<p>&nbsp;</p>                
+    <p>&nbsp;</p>                
 </div>
-        <script language="javascript">
-		window.print(); 
-		</script>
-
 </body>
 </html>

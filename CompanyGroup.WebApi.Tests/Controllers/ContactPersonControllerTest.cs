@@ -35,7 +35,7 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void ChangePasswordTest()
         {
-            CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request = new CompanyGroup.Dto.PartnerModule.ChangePasswordRequest();
+            CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request = new CompanyGroup.Dto.PartnerModule.ChangePasswordRequest("hu", "ipon", "gild4MAX20", "gild4MAX19", "7514115237764B25B190CFABDF768E7C");
 
             Uri requestUri = null;
 

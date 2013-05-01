@@ -33,4 +33,6 @@ GO
 -- EXEC InternetUser.VerifyChangePassword 'KAPCS06943', 'sero', 'sero2000', 'sero2004', 'hrp';
 -- EXEC InternetUser.VerifyChangePassword '23614/SZL', 'plorinczy', 'pikolo', 'pikolo2', 'hrp';
 
--- SELECT * FROM AxDb.dbo.WebShopUserInfo WHERE (ContactPersonId = '23614/SZL') AND (WebLoginName = 'plorinczy') AND (Pwd = 'pikolo')
+EXEC InternetUser.VerifyChangePassword 'KAPCS03399', 'ipon', 'gild4MAX21', 'gild4MAX19', 'hrp';
+
+-- SELECT * FROM Axdb_20130131.dbo.WebShopUserInfo WHERE (ContactPersonId = 'KAPCS03399') AND (WebLoginName = 'ipon') AND (Pwd = 'gild4MAX19')

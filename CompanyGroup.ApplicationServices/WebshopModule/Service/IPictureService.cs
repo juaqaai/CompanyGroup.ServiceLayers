@@ -15,6 +15,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request);
 
+        /// <summary>
+        /// elsődleges kép lekérdezése
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        System.IO.Stream GetPrimaryPicture(string productId, string maxWidth, string maxHeight);
 
         /// <summary>
         /// képtartalom kiolvasása számla elem rekordazonosító alapján

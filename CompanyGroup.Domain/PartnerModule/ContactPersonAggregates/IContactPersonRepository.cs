@@ -30,5 +30,12 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
         CompanyGroup.Domain.PartnerModule.ContactPerson GetContactPerson(string contactPersonId, string dataAreaId);
+
+        /// <summary>
+        /// jelszómódosítás AX  
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult Change(CompanyGroup.Domain.PartnerModule.ChangePasswordCreate request);
     }
 }

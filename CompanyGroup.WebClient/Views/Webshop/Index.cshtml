@@ -47,7 +47,7 @@
                             <!-- <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>-->
                             <td align="right">
                             <select name="saved_shoppingcart_list" id="saved_shoppingcart_list">            
-                                <option value="">Mentett / nyitott kosarak listája</option>
+                                <option disabled selected>Mentett / nyitott kosarak listája</option>
                                 <optgroup label="Mentett kosarak">
                                     {{each( i, item ) StoredItems}}
                                     {{if item.Active}}
@@ -74,7 +74,7 @@
                     <div id="cus_basket"></div>
                     <script id="shoppingCartLineTemplate" type="text/x-jquery-tmpl">
                     {{if Visitor.IsValidLogin}}
-                    <table width="974" border="0" cellspacing="1" cellpadding="3">
+<table width="974" border="0" cellspacing="1" cellpadding="3">
                         <thead>
                             <tr>
                                 <td width="500"><strong>Termék neve</strong></td>
@@ -83,7 +83,7 @@
                                 <td>&nbsp;</td>
                                 <td width="110"><div style="text-align:right;"><strong>Nettó egység ár</strong></div></td>
 								<td>&nbsp;</td>
-                                <td width="80"><strong>Mennyiség</strong></td>
+                                <td width="110"><strong>Mennyiség</strong></td>
                                 <td>&nbsp;</td>
                                 <td width="25"><strong>Cég</strong></td>
                            	  	<td>&nbsp;</td>
@@ -106,7 +106,7 @@
 											{{/if}}</strong></div></td>
 											<td>&nbsp;</td>
                                 <td>
-                                <input class="cartnumber" value="${item.Quantity}" title="${item.Id}" style = "width: 35px; margin: 2px 0 0 6px" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
+                                <input class="cartnumber" value="${item.Quantity}" title="${item.Id}" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                 db</td>
                                 <td>&nbsp;</td>
                                 <td>${companyGroup.utils.instance().toUpperCase(item.DataAreaId)}</td>
@@ -475,7 +475,7 @@
                 <div id="banners_side" align="center">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div>
 
                 @*terméklista*@
-                <div id="cus_catalogue_right">
+          <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
 			            <table style = "display:none" border="0" cellspacing="0" cellpadding="0">
@@ -516,7 +516,7 @@
                             <td align="left">
                             {{if Visitor.IsValidLogin}}
 							  <select class="select2" name="catalogueSequence">
-                                <option value="0">Rendezés</option>
+                                <option value="0" disabled selected>Rendezés</option>
                                 <option value="14"><strong>Legnépszerűbb elöl</strong></option>
                                 <option value="15"><strong>Újdonság</strong></option>
                                 <option value="16"><strong>Akciós</strong></option>
@@ -588,7 +588,7 @@
                          </tr>
 			        </table>
 					 </script>
-
+					 
                     @*<div id="listscroll">*@
 		            <div id="cus_product_table">
 			            @* listaelemek*@
@@ -729,7 +729,7 @@
                                     <div class="cus_prod_table_quantity">
 
                                     {{if Visitor.IsValidLogin}}
-                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" /><span> db</span>
+                                    <input type="text" name="txt_quantity" class="number" size="2" value="1" style="margin-top:4px; vertical-align: top; margin-right:3px; width:35px;" /><span> db</span>
                                     {{/if}}
                                     </div>
                                 </td>
@@ -892,7 +892,8 @@
                             </select></td>
 					    </tr>
 				    </table>
-                    </script>            
+                    </script> 
+					        
                     @*részletes adatlap*@
                     <div id="cus_productdetails_table">
                     </div>
@@ -1228,6 +1229,7 @@ Eszerint  megkülönböztetünk:</p>
         }
         @section ScriptOnReady {
         //console.log('ScriptOnReady section');
+		
 
         var model = @(Html.Raw(Json.Encode(Model)));
         //console.log(model);
@@ -1345,6 +1347,7 @@ Eszerint  megkülönböztetünk:</p>
             $("#becomePartnerContainer").empty();
             var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model.Visitor);
             $('#becomePartnerContainer').html(becomePartnerHtml);
+			
 
             $("#newsletterContainer").empty();
             var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model.Visitor);
