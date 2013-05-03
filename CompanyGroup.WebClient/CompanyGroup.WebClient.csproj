@@ -51,6 +51,9 @@
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.6.1\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -190,6 +193,7 @@
     <Compile Include="Controllers\SalesOrderApiController.cs" />
     <Compile Include="Controllers\ShoppingCartApiController.cs" />
     <Compile Include="Controllers\StructureApiController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\VisitorApiController.cs" />
     <Compile Include="Controllers\WebshopApiController.cs" />
     <Compile Include="Controllers\WebshopController.cs" />
@@ -1136,7 +1140,14 @@
     <Content Include="Content\Media\images\ujdonsag.png" />
     <Content Include="Content\Media\images\usermenu.png" />
     <Content Include="Content\Media\images\warning.png" />
+    <Content Include="NuGet.exe" />
     <Content Include="Reports\WebForm1.aspx" />
+    <Content Include="Rotativa\libeay32.dll" />
+    <Content Include="Rotativa\libgcc_s_dw2-1.dll" />
+    <Content Include="Rotativa\mingwm10.dll" />
+    <Content Include="Rotativa\README.txt" />
+    <Content Include="Rotativa\ssleay32.dll" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\app.company.js" />
     <Content Include="Scripts\app.helpers.js" />
     <Content Include="Scripts\app.guide.js" />
@@ -1253,6 +1264,7 @@
     <Content Include="Views\Company\Carreer.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Content\Media\Default\RecipeJournal\78fa6518c77340858c88440d2c2201b2" />
     <None Include="Content\Media\images\_notes\filterdelete.png.mno" />
     <Content Include="Views\Company\Index.cshtml" />
@@ -1264,6 +1276,7 @@
     <Content Include="Views\Company\WasteManagement.cshtml" />
     <Content Include="Views\Webshop\Partial1.cshtml" />
     <Content Include="Views\Registration\Print.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\Report1.rdlc" />

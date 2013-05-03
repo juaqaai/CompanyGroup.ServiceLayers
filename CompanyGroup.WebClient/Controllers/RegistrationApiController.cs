@@ -228,12 +228,12 @@ namespace CompanyGroup.WebClient.Controllers
             CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
 
             //ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
-            if (response.Succeeded)
-            {
-                visitorData.RegistrationId = String.Empty;
+            //if (response.Succeeded)
+            //{
+            //    visitorData.RegistrationId = String.Empty;
 
-                this.WriteCookie(visitorData);
-            }
+            //    this.WriteCookie(visitorData);
+            //}
 
             CompanyGroup.WebClient.Models.PostRegistration model = new CompanyGroup.WebClient.Models.PostRegistration(response);
 

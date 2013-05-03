@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
     <title></title>
     <style type="text/css">
@@ -84,7 +84,7 @@
             <h3><strong>Cégnév: </strong>$CompanyName$</h3>
             <p>$InvoiceAddressZipCode$ $InvoiceAddressCity$ $InvoiceAddressStreet$<br />
                 Adószám: $VatNumber$<br />
-                Bankszámlaszám: $BankAccount$<br />
+                Bankszámlaszám: $BankAccounts$<br />
                 Cégbejegyzés száma: $CompanyRegisterNumber$<br />
             </p>
 
@@ -607,17 +607,16 @@
       <p><strong>Szállítási cím/telephely</strong><br/>
       <br />
       $DeliveryAddresses$
-<!--      @foreach(CompanyGroup.WebClient.Models.DeliveryAddress address in Model.DeliveryAddresses.Items){ 
-          <br/><span>Irányítószám: </span>$DeliveryAddressZipCode$ <br/>
+      <!-- <br/><span>Irányítószám: </span>$DeliveryAddressZipCode$ <br/>
           <span>Ország: </span>$DeliveryAddressCountryRegionId$ <br/>
           <span>Város: </span>$DeliveryAddressCity$ <br/>
 		  <span>Utca, házszám:</span>$DeliveryAddressStreet$ <br/><br/>
-      }-->
+      -->
       </p>
       <hr align="left" width="350" />
       <p><strong>Felhasználó </strong></p>
             <p>$ContactPersons$
-            <!--@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
+            <!--
         <span>Azonosító: </span>$ContactPersonId$<br/>
         <span>Vezetéknév: </span>$ContactPersonFirstName$<br/>
         <span>Keresztnév: </span>$ContactPersonLastName$<br/>
@@ -639,7 +638,7 @@
         <span>Email értesítés árukiszállításról: </span>$ContactPersonEmailArriveOfGoods$<br/>
         <span>Email értesítés árubeérkezésről: </span>$ContactPersonEmailOfDelivery$<br/>
         <span>Email értesítés rendelésről: </span>$ContactPersonEmailOfOrderConfirm$<br/><br/>
-      }     --> </p></td>
+         --> </p></td>
   </tr>
 </table>
     <p>&nbsp;</p>

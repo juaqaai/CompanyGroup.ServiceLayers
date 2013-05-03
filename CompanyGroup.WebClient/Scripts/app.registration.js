@@ -623,7 +623,7 @@ companyGroup.registration = $.sammy(function () {
     });
     this.get('#/companydata', function (context) {
         //if ($("#txt_deliveryaddresszipcode").val() != '' && $("#txt_deliveryaddresscity").val() != '' && $("#txt_deliveryaddressstreet").val() != '') {
-            $("form#form_companydata").submit();
+        $("form#form_companydata").submit();
         //}
 
 
@@ -1184,6 +1184,8 @@ companyGroup.registration = $.sammy(function () {
         return (error_msg === '');
     });
     this.post('#/addcontactperson', function (context) {
+
+        var contactPositions = context.params['select_position2'];
         var data = {
             Id: '',
             AllowOrder: $("#chk_contactpersonalloworder").is(':checked'),
@@ -1207,7 +1209,7 @@ companyGroup.registration = $.sammy(function () {
             SmsOrderConfirm: false,
             Telephone: context.params['txt_contactpersonphone'],
             UserName: context.params['txt_contactpersonnusername'],
-            Positions: context.params['select_position2']
+            Positions: (contactPositions === null || contactPositions === '') ? [] : contactPositions
         };
         //data.RegistrationNumber = $("#txtRegistrationNumber").val();
         $.ajax({

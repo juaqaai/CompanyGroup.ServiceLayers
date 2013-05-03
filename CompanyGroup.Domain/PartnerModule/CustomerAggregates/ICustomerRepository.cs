@@ -102,5 +102,20 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="request"></param>
         /// <returns></returns>
         long CreateBankAccount(CompanyGroup.Domain.RegistrationModule.BankAccountCreate request);
+
+        /// <summary>
+        /// nyomtatott regisztrációs file módosítás
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult UpdateCustomerRegistrationPrintedFile(CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFile request);
+
+        /// <summary>
+        /// kis és nagy módosításhoz szükséges regisztrációs adatok kiolvasása  
+        /// InternetUser.CustomerContractSelect( @CustomerId nvarchar(20))
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.PartnerModule.CustomerContractData GetCustomerContractData(string customerId);
     }
 }

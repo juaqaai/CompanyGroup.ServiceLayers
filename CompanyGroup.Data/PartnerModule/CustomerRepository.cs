@@ -327,5 +327,54 @@ xml = strFmt('<?xml version=\"1.0\" encoding=\"utf-16\"?>' +
 
             return bankAccountRecId;            
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult UpdateCustomerRegistrationPrintedFile(CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFile request)
+        {
+            string tmp = this.Serialize<CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFile>(request);
+
+            CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(CustomerRepository.UserName,
+                                                                                                         CustomerRepository.Password,
+                                                                                                         CustomerRepository.Domain,
+                                                                                                         request.DataAreaId,
+                                                                                                         CustomerRepository.Language,
+                                                                                                         CustomerRepository.ObjectServer,
+                                                                                                         CustomerRepository.ClassName);
+            dynamics.Connect();
+
+            object result = dynamics.CallMethod("updateCustomerRegistrationPrintedFile", tmp);    //deSerializeTest
+
+            dynamics.Disconnect();
+
+            string xml = CompanyGroup.Helpers.ConvertData.ConvertObjectToString(result);
+
+            CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult response = this.DeSerialize<CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult>(xml);
+
+            return response;        
+        }
+
+        /// <summary>
+        /// kis és nagy módosításhoz szükséges regisztrációs adatok kiolvasása  
+        /// InternetUser.CustomerContractSelect( @CustomerId nvarchar(20))
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.PartnerModule.CustomerContractData GetCustomerContractData(string customerId)
+        {
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "customerId may not be null or empty");
+
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerContractSelect")
+                                            .SetString("CustomerId", customerId)
+                                            .SetResultTransformer(
+                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerContractData).GetConstructors()[0]));
+
+            CompanyGroup.Domain.PartnerModule.CustomerContractData result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.CustomerContractData>();
+
+            return result; 
+        }
     }
 }

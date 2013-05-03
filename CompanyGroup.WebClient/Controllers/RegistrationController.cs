@@ -117,24 +117,118 @@ namespace CompanyGroup.WebClient.Controllers
             //return Redirect("~/Reports/Print.aspx");
             try
             {
-                CompanyGroup.WebClient.Models.RegistrationData model = this.GetRegistration();
+                //CompanyGroup.WebClient.Models.RegistrationData model = this.GetRegistration();
 
                 //regisztrációs azonosító kiolvasása sütiből
                 CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
 
-                CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration(visitorData.RegistrationId, visitorData.Language, visitorData.VisitorId);
+                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
 
-                CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
+                CompanyGroup.Dto.RegistrationModule.Registration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
 
-                //ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
-                if (response.Succeeded)
-                {
-                    visitorData.RegistrationId = String.Empty;
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
 
-                    CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, CookieName, visitorData);
-                }
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons, response.Visitor);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
+                                                                                                                          response.WebAdministrator,
+                                                                                                                          new CompanyGroup.WebClient.Models.Countries());
+
+                ////regisztrációs azonosító kiolvasása sütiből
+                //CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
+
+                //CompanyGroup.Dto.ServiceRequest.PostRegistration request = new CompanyGroup.Dto.ServiceRequest.PostRegistration(visitorData.RegistrationId, visitorData.Language, visitorData.VisitorId);
+
+                //CompanyGroup.Dto.ServiceResponse.PostRegistration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.PostRegistration, CompanyGroup.Dto.ServiceResponse.PostRegistration>("Registration", "Post", request);
+
+                ////ha a feladás sikeres, akkor a felhasználói sütiből a regisztrációs azonosító törlésre kerül
+                //if (response.Succeeded)
+                //{
+                //    visitorData.RegistrationId = String.Empty;
+
+                //    CompanyGroup.Helpers.CookieHelper.WriteCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Response, CookieName, visitorData);
+                //}
 
                 return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// regisztrációs adatok mentése pdf dokumentumban
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Save()
+        { 
+            try
+            {
+                CompanyGroup.WebClient.Models.RegistrationData viewModel = GetViewModel();
+
+                return new Rotativa.ViewAsPdf("Print", viewModel)
+                {
+                    FileName = String.Format("hrp_bsc_regisztracio_{0}.pdf", viewModel.RegistrationId),
+                    PageSize = Rotativa.Options.Size.A4,
+                    PageOrientation = Rotativa.Options.Orientation.Portrait,
+                    PageMargins = { Left = 0, Right = 0 }
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }        
+        }
+
+        /// <summary>
+        /// view model létrehozása
+        /// </summary>
+        /// <returns></returns>
+        private CompanyGroup.WebClient.Models.RegistrationData GetViewModel()
+        {
+            try
+            {
+                //regisztráció azonosító és visitor azonosító kiolvasása 
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
+
+                Helpers.DesignByContract.Require((!String.IsNullOrEmpty(visitorData.RegistrationId)), "Registration id can not be null, or empty");
+
+                //regisztráció során felvitt adatok lekérdezése
+                CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
+
+                CompanyGroup.Dto.RegistrationModule.Registration response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
+
+                //viewModel összeállítása
+                CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
+
+                CompanyGroup.Dto.RegistrationModule.ContactPersons contactPersons = new CompanyGroup.Dto.RegistrationModule.ContactPersons(response.ContactPersons, response.Visitor);
+
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses deliveryAddresses = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses(response.DeliveryAddresses);
+
+                CompanyGroup.WebClient.Models.RegistrationData model = new CompanyGroup.WebClient.Models.RegistrationData(bankAccounts,
+                                                                                                                          response.CompanyData,
+                                                                                                                          contactPersons,
+                                                                                                                          response.DataRecording,
+                                                                                                                          deliveryAddresses,
+                                                                                                                          response.InvoiceAddress,
+                                                                                                                          response.MailAddress,
+                                                                                                                          response.RegistrationId,
+                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
+                                                                                                                          response.WebAdministrator,
+                                                                                                                          new CompanyGroup.WebClient.Models.Countries());
+                return model;
+
             }
             catch (Exception ex)
             {

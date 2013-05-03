@@ -661,5 +661,33 @@ namespace CompanyGroup.ApplicationServices.Test
             Assert.IsNotNull(collection);
         }
 
+        private static readonly string RegistrationFilePath = Helpers.ConfigSettingsParser.GetString("RegistrationFilePath", @"c:\projects\2012\CompanyGroup.WebApi\App_Data\");
+
+        private static readonly string RegistrationTemplateFileName = Helpers.ConfigSettingsParser.GetString("RegistrationTemplateFileName", "registrationcontract.html");
+
+        private static readonly string RegistrationTemplateFilePath = Helpers.ConfigSettingsParser.GetString("RegistrationTemplateFilePath", @"c:\projects\2012\CompanyGroup.WebApi\App_Data\Templates\");
+
+        [TestMethod]
+        public void CreateRegistrationFileTest()
+        {
+            long recId = 1000;
+
+            string regId = "SZ000125";
+
+            CompanyGroup.Domain.RegistrationModule.IRegistrationRepository registrationRepository = new CompanyGroup.Data.RegistrationModule.RegistrationRepository(CompanyGroup.Data.NoSql.SettingsFactory.Create());
+
+            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey("5178d87f6ee01207b893f320");
+
+            CompanyGroup.Data.RegistrationModule.RegistrationFileRepository registrationFileRepository = new CompanyGroup.Data.RegistrationModule.RegistrationFileRepository(registration);
+
+            string registrationHtml = registrationFileRepository.ReadRegistrationHtmlTemplate(String.Format("{0}{1}", RegistrationTemplateFilePath, RegistrationTemplateFileName));
+
+            string htmlContent = registrationFileRepository.RenderRegistrationDataToHtml(regId, registrationHtml);
+
+            string registrationFileNameWithPath = System.IO.Path.Combine(RegistrationFilePath, String.Format("{0}.html", recId));
+
+            registrationFileRepository.CreateRegistrationFile(registrationFileNameWithPath, htmlContent);        
+        }
+
     }
 }

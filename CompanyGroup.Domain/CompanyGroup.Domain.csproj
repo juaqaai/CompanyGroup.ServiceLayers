@@ -55,6 +55,9 @@
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\InvoiceAggregates\IPackageRepository.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\CustomerContractData.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\CustomerRegistrationPrintedFile.cs" />
+    <Compile Include="RegistrationModule\CustomerAggregates\CustomerRegistrationPrintedFileResult.cs" />
     <Compile Include="RegistrationModule\IRegistrationFileRepository.cs" />
     <Compile Include="PartnerModule\OrderAggregates\OrderDetailedLineInfoCT.cs" />
     <Compile Include="PartnerModule\OrderAggregates\IChangeTrackingRepository.cs" />

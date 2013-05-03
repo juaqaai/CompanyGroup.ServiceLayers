@@ -39,12 +39,12 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         protected CompanyGroup.WebClient.Models.Visitor GetVisitor(CompanyGroup.WebClient.Models.VisitorData visitorData)
         {
-            Helpers.DesignByContract.Require( (visitorData != null), "VisitorData cannot be null or empty!");
-
             CompanyGroup.WebClient.Models.Visitor visitor;
 
             try
             {
+                Helpers.DesignByContract.Require((visitorData != null), "VisitorData cannot be null or empty!");
+
                 if (String.IsNullOrWhiteSpace(visitorData.VisitorId))
                 {
                     visitor = new CompanyGroup.WebClient.Models.Visitor();

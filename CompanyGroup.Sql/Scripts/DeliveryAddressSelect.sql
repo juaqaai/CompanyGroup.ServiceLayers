@@ -21,8 +21,8 @@ BEGIN
 
 	DECLARE @Ret BIT;
 
-	SET @Ret = CASE WHEN ( EXISTS ( SELECT * FROM axdb_20120614.dbo.CustTable AS Cust 
-									INNER JOIN axdb_20120614.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
+	SET @Ret = CASE WHEN ( EXISTS ( SELECT * FROM Axdb_20130131.dbo.CustTable AS Cust 
+									INNER JOIN Axdb_20130131.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
 																		   Addr.AddrTableId = 77 AND 
 																		   Addr.DataAreaID = Cust.DataAreaID AND 
 																		   Addr.Type = @AddrType
@@ -56,8 +56,8 @@ SET NOCOUNT ON
 			   Addr.Street AS Street, 
 			   Addr.ZipCode AS ZipCode, 
 			   Addr.CountryRegionId AS CountryRegionId 
-		FROM axdb_20120614.dbo.CustTable AS Cust 
-		INNER JOIN axdb_20120614.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
+		FROM Axdb_20130131.dbo.CustTable AS Cust 
+		INNER JOIN Axdb_20130131.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
 													   Addr.AddrTableId = 77 AND 
 													   Addr.DataAreaID = Cust.DataAreaID AND 
 													   Addr.Type = 2
@@ -74,8 +74,8 @@ SET NOCOUNT ON
 			   Addr.Street AS Street, 
 			   Addr.ZipCode AS ZipCode, 
 			   Addr.CountryRegionId AS CountryRegionId 
-		FROM axdb_20120614.dbo.CustTable AS Cust 
-		INNER JOIN axdb_20120614.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
+		FROM Axdb_20130131.dbo.CustTable AS Cust 
+		INNER JOIN Axdb_20130131.dbo.Address AS Addr ON Addr.AddrRecId = Cust.RecId AND 
 													   Addr.AddrTableId = 77 AND 
 													   Addr.DataAreaID = Cust.DataAreaID AND 
 													   Addr.Type = 1
@@ -93,7 +93,7 @@ SET NOCOUNT ON
 			   Cust.Street AS Street, 
 			   Cust.ZipCode AS ZipCode, 
 			   Cust.CountryRegionId AS CountryRegionId
-		FROM axdb_20120614.dbo.CustTable AS Cust 
+		FROM Axdb_20130131.dbo.CustTable AS Cust 
 		WHERE Cust.AccountNum = @CustomerId AND Cust.DataAreaId = @DataAreaId;
 	END
 

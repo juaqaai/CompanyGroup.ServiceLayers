@@ -71,36 +71,6 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         }
 
         /// <summary>
-        /// új regisztráció hozzáadása
-        /// </summary>
-        /// <param name="visitor"></param>
-        //public string Add(CompanyGroup.Dto.RegistrationModule.Registration request)
-        //{
-        //    CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration cannot be null!");
-
-        //    try
-        //    {
-        //        CompanyGroup.Domain.PartnerModule.Visitor visitor = base.GetVisitor(request.VisitorId);
-
-        //        CompanyGroup.Domain.RegistrationModule.Registration registration = new RegistrationToRegistration().MapDtoToDomain(request);
-
-        //        registration.Id = MongoDB.Bson.ObjectId.GenerateNewId();
-
-        //        registration.CompanyId = visitor.CompanyId;
-
-        //        registration.PersonId = visitor.PersonId;
-
-        //        registrationRepository.Add(registration);
-
-        //        return registration.Id.ToString();
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        throw(ex);
-        //    }
-        //}
-
-        /// <summary>
         /// új regisztráció hozzáadása 
         /// </summary>
         /// <param name="request"></param>
@@ -289,6 +259,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             return new CompanyGroup.Dto.ServiceResponse.Empty();
         }
 
+
+
         /// <summary>
         /// regisztráció elküldése
         /// </summary>
@@ -302,6 +274,16 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
 
                 CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+
+                //ha be van jelentkezve, akkor le kell kérdezni a szerződés adatait azért, hogy el lehessen dönteni kis / vagy módosításról van-e szó?
+                int registrationMethod = 1;
+
+                if (visitor.IsValidLogin)
+                {
+                    CompanyGroup.Domain.PartnerModule.CustomerContractData contractData = customerRepository.GetCustomerContractData(visitor.CustomerId);
+
+                    registrationMethod = contractData.CalculateRegistrationMethod(registration);
+                }
 
                 //vevő felvitel
                 CompanyGroup.Domain.RegistrationModule.CustomerCreate customer = new CompanyGroup.Domain.RegistrationModule.CustomerCreate()
@@ -318,7 +300,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                     InvoicePhone = registration.InvoiceAddress.Phone,
                     InvoicePostCode = registration.InvoiceAddress.ZipCode,
                     InvoiceStreet = registration.InvoiceAddress.Street,
-                    Method = visitor.IsValidLogin ? 2 : 1,
+                    Method = registrationMethod,              // 1: új, 2: módosít, 3: töröl, 4: kis módosítás
                     RecId = 0,
                     RegEmail = registration.DataRecording.Email,
                     RegName = registration.DataRecording.Name,
@@ -385,11 +367,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         FinanceManager = registration.WebAdministrator.Positions.Contains("Pénzügyi vezető") ? 1 : 0,
                         FirstName = registration.WebAdministrator.FirstName,
                         FunctionId = "",
-                        Gender = 0,
+                        Gender = 1,
                         InvoiceInfo = registration.WebAdministrator.InvoiceInfo ? 1 : 0,
                         LastName = registration.WebAdministrator.LastName,
                         LeftCompany = 0,
-                        Method = 0, 
+                        Method = visitor.IsValidLogin ? 2 : 1, 
                         Newsletter = registration.WebAdministrator.Newsletter ? 1 : 0,
                         Phone = registration.WebAdministrator.Telephone,
                         PhoneLocal = "",
@@ -451,29 +433,29 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         CellularPhone = contactPerson.Telephone,
                         ContactPersonId = contactPerson.ContactPersonId,
                         DataAreaId = "hrp",
-                        Director = registration.WebAdministrator.Positions.Contains("Igazgató") ? 1 : 0,
+                        Director = contactPerson.Positions.Contains("Igazgató") ? 1 : 0,
                         Email = contactPerson.Email,
                         EmailArriveOfGoods = contactPerson.EmailArriveOfGoods ? 1 : 0,
                         EmailOfDelivery = contactPerson.EmailOfDelivery ? 1 : 0,
                         EmailOfOrderConfirm = contactPerson.EmailOfOrderConfirm ? 1 : 0,
                         Fax = "",
-                        FinanceManager = registration.WebAdministrator.Positions.Contains("Pénzügyi vezető") ? 1 : 0,
+                        FinanceManager = contactPerson.Positions.Contains("Pénzügyi vezető") ? 1 : 0,
                         FirstName = contactPerson.FirstName,
                         FunctionId = "",
-                        Gender = 0,
+                        Gender = 1,
                         InvoiceInfo = contactPerson.InvoiceInfo ? 1 : 0,
                         LastName = contactPerson.LastName,
                         LeftCompany = 0,
-                        Method = 1,
+                        Method = visitor.IsValidLogin ? 2 : 1,
                         Newsletter = contactPerson.Newsletter ? 1 : 0,
                         Phone = contactPerson.Telephone,
                         PhoneLocal = "",
                         PriceListDownload = contactPerson.PriceListDownload ? 1 : 0,
                         RecId = contactPerson.RecId,
                         RefRecId = customerCreateResult.RecId,
-                        SalesManager = registration.WebAdministrator.Positions.Contains("Kereskedelmi vezető") ? 1 : 0,
-                        SimpleContact = registration.WebAdministrator.Positions.Contains("Kapcsolattartó") ? 1 : 0,
-                        SimpleSales = registration.WebAdministrator.Positions.Contains("Kereskedő") ? 1 : 0,
+                        SalesManager = contactPerson.Positions.Contains("Kereskedelmi vezető") ? 1 : 0,
+                        SimpleContact = contactPerson.Positions.Contains("Kapcsolattartó") ? 1 : 0,
+                        SimpleSales = contactPerson.Positions.Contains("Kereskedő") ? 1 : 0,
                         WebAdmin = contactPerson.WebAdmin ? 1 : 0,
                         WebLoginName = contactPerson.UserName,
                         WebPassword = contactPerson.Password
@@ -496,7 +478,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                     {
                         AccountNumber = bankAccount.Number,
                         DataAreaId = "hrp",
-                        Method = 1,
+                        Method = registrationMethod,
                         RecId = bankAccount.RecId,
                         RefRecId = customerCreateResult.RecId
                     };
@@ -525,6 +507,16 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 registrationFileRepository.CreateRegistrationFile(registrationFileNameWithPath, htmlContent);
 
                 #endregion
+
+                //vissza kell írni a generált file nevét az ideiglenes regisztrációs lapra
+                CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFile customerRegistrationPrintedFileRequest = new Domain.RegistrationModule.CustomerRegistrationPrintedFile() 
+                                                                                                                                    { 
+                                                                                                                                        DataAreaId = customerCreateResult.DataAreaId, 
+                                                                                                                                        FileName = String.Format("{0}.html", customerCreateResult.RecId), 
+                                                                                                                                        RecId = customerCreateResult.RecId
+                                                                                                                                    };
+
+                CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult customerRegistrationPrintedFileResult = customerRepository.UpdateCustomerRegistrationPrintedFile(customerRegistrationPrintedFileRequest);
 
                 //sikeres ERP rögzítés után
                 registrationRepository.Post(request.RegistrationId);

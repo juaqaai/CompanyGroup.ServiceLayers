@@ -33,11 +33,22 @@ namespace CompanyGroup.Data.RegistrationModule
         /// <param name="htmlContent"></param>
         public void CreateRegistrationFile(string registrationFileNameWithPath, string htmlContent)
         {
+
+//using (FileStream fs = new FileStream("test.htm", FileMode.Create)) 
+//{ 
+//    using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8)) 
+//    { 
+//        w.WriteLine("<H1>Hello</H1>"); 
+//    } 
+//} 
+
             try
             {
                 Helpers.DesignByContract.Require(!String.IsNullOrEmpty(registrationFileNameWithPath), "Registration file name with path cannot be null or empty!");
 
-                System.IO.StreamWriter streamWriter = System.IO.File.CreateText(registrationFileNameWithPath);
+                System.IO.FileStream fs = new System.IO.FileStream(registrationFileNameWithPath, System.IO.FileMode.Create, System.IO.FileAccess.Write); //System.IO.FileShare.Write,
+
+                System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fs, System.Text.Encoding.GetEncoding(28592));
 
                 System.IO.StringWriter stringWriter = new System.IO.StringWriter();
 
@@ -68,7 +79,7 @@ namespace CompanyGroup.Data.RegistrationModule
 
             registration.BankAccountList.ForEach(x =>
             {
-                bankAccountHtml += String.IsNullOrEmpty(x.Number) ? String.Format("{0} <br/>", x.Number) : String.Format("{0} - {1} - {2} <br/>", x.Part1, x.Part2, x.Part3);
+                bankAccountHtml += (!String.IsNullOrEmpty(x.Number)) ? String.Format("{0} <br/>", x.Number) : String.Format("{0} - {1} - {2} <br/>", x.Part1, x.Part2, x.Part3);
             });
 
             string deliveryAddressHtml = String.Empty;
@@ -76,10 +87,11 @@ namespace CompanyGroup.Data.RegistrationModule
             registration.DeliveryAddressList.ForEach(x =>
             {
                 string template = DeliveryAddressTemplate();
+
                 deliveryAddressHtml += template.Replace("$DeliveryAddressZipCode$", x.ZipCode)
-                                                .Replace("$DeliveryAddressCountryRegionId$", x.CountryRegionId)
-                                                .Replace("$DeliveryAddressCity$", x.City)
-                                                .Replace("$DeliveryAddressStreet$", x.Street);
+                                               .Replace("$DeliveryAddressCountryRegionId$", x.CountryRegionId)
+                                               .Replace("$DeliveryAddressCity$", x.City)
+                                               .Replace("$DeliveryAddressStreet$", x.Street);
             });
 
             string contactPersonHtml = String.Empty;
@@ -112,9 +124,11 @@ namespace CompanyGroup.Data.RegistrationModule
 
             string html = registrationHtml.Replace("$ContractNumber$", contractNumber)
                                           .Replace("$CompanyName$", registration.CompanyData.CustomerName)
-                                          .Replace("$$InvoiceAddressZipCode$", registration.InvoiceAddress.ZipCode)
+                                          .Replace("$InvoiceAddressZipCode$", registration.InvoiceAddress.ZipCode)
                                           .Replace("$InvoiceAddressCity$", registration.InvoiceAddress.City)
                                           .Replace("$InvoiceAddressStreet$", registration.InvoiceAddress.Street)
+                                          .Replace("$VatNumber$", registration.CompanyData.VatNumber)
+                                          .Replace("$CompanyRegisterNumber$", registration.CompanyData.RegistrationNumber)
                                           .Replace("$DataRecordingName$", registration.DataRecording.Name)
                                           .Replace("$DataRecordingEmail$", registration.DataRecording.Email)
                                           .Replace("$DataRecordingPhone$", registration.DataRecording.Phone)
@@ -159,21 +173,25 @@ namespace CompanyGroup.Data.RegistrationModule
         /// <param name="registrationTemplateFileNameWithPath">regisztrációs template file elérési úttal</param>
         public string ReadRegistrationHtmlTemplate(string registrationTemplateFileNameWithPath)
         {
-            System.IO.StreamReader sr = null;
-            try
-            {
-                sr = new System.IO.StreamReader(registrationTemplateFileNameWithPath);
+            CompanyGroup.Helpers.FileReader fileReader = new CompanyGroup.Helpers.FileReader(registrationTemplateFileNameWithPath, 28592);
 
-                return sr.ReadToEnd();
-            }
-            catch
-            {
-                return String.Empty;
-            }
-            finally
-            {
-                if (sr != null) { sr.Close(); }
-            }
+            return fileReader.ReadToEnd();
+
+            //System.IO.StreamReader sr = null;
+            //try
+            //{
+            //    sr = new System.IO.StreamReader(registrationTemplateFileNameWithPath);
+
+            //    return sr.ReadToEnd();
+            //}
+            //catch
+            //{
+            //    return String.Empty;
+            //}
+            //finally
+            //{
+            //    if (sr != null) { sr.Close(); }
+            //}
         }
 
         private static string DeliveryAddressTemplate()

@@ -24,4 +24,16 @@
     <return-scalar column="dtDateTime" type="System.DateTime"/>
     exec InternetUser.CustomerSelect @CustomerId=:CustomerId, @DataAreaId=:DataAreaId
   </sql-query>
+  <sql-query name="InternetUser.CustomerContractSelect" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <return-scalar column="CompanyRegisterNumber" type="System.String"/>
+    <return-scalar column="CustomerName" type="System.String"/>
+    <return-scalar column="VatNumber" type="System.String"/>
+    <return-scalar column="EuVatNumber" type="System.String"/>
+    <return-scalar column="InvoiceCountry" type="System.String"/>
+    <return-scalar column="InvoiceCity" type="System.String"/>
+    <return-scalar column="InvoiceStreet" type="System.String"/>
+    <return-scalar column="InvoiceZipCode" type="System.String"/>
+    exec InternetUser.CustomerContractSelect @CustomerId=:CustomerId
+  </sql-query>  
 </hibernate-mapping>

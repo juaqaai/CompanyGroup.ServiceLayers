@@ -148,5 +148,32 @@ namespace CompanyGroup.Data.Test.PartnerModule
 
             Assert.IsNotNull(customer);
         }
+
+        [TestMethod]
+        public void UpdateCustomerRegistrationPrintedFileTest()
+        {
+            long recId = 5637194360;
+
+            CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFile customerRegistrationPrintedFileRequest = new Domain.RegistrationModule.CustomerRegistrationPrintedFile()
+            {
+                DataAreaId = "hrp",
+                FileName = String.Format("{0}.html", recId),
+                RecId = recId
+            };
+
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository();
+
+            CompanyGroup.Domain.RegistrationModule.CustomerRegistrationPrintedFileResult customerRegistrationPrintedFileResult = repository.UpdateCustomerRegistrationPrintedFile(customerRegistrationPrintedFileRequest);        
+        }
+
+        [TestMethod]
+        public void GetCustomerContractDataTest()
+        {
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository();
+
+            CompanyGroup.Domain.PartnerModule.CustomerContractData contractData = repository.GetCustomerContractData("V006199");
+
+            Assert.IsNotNull(contractData);
+        }
     }
 }
