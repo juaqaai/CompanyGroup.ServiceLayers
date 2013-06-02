@@ -1,7 +1,7 @@
 /*
 legnagyobb felhasználható "CT Version" az adatok átviteléhez
 */
-USE [Axdb_20130131]
+USE [Axdb]
 GO
 
 SET ANSI_NULLS ON

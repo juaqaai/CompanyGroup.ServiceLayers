@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.WaitingForAutoPostSelect" callable="true">
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="ForeignKey" type="System.Int32"/>
+    <return-scalar column="ForeignKeyType" type="System.Int32"/>
+    <return-scalar column="Content" type="System.String"/>
+    <return-scalar column="CreatedDate" type="System.DateTime"/>
+    <return-scalar column="PostedDate" type="System.DateTime"/>
+    <return-scalar column="Status" type="System.Int32"/>
+    exec InternetUser.WaitingForAutoPostSelect
+  </sql-query>
+  <sql-query name="InternetUser.WaitingForAutoPostInsert" callable="true">
+    <query-param name="ForeignKey" type="System.Int32"/>
+    <query-param name="ForeignKeyType" type="System.Int32"/>
+    <query-param name="Content" type="System.String"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    exec InternetUser.WaitingForAutoPostInsert @ForeignKey=:ForeignKey, @ForeignKeyType=:ForeignKeyType, @Content=:Content
+  </sql-query>
+  <sql-query name="InternetUser.WaitingForAutoPostSetStatus" callable="true">
+    <query-param name="Id" type="System.Int32"/>
+    <query-param name="Status" type="System.Int32"/>
+    exec InternetUser.WaitingForAutoPostSetStatus @Id=:Id, @Status=:Status
+  </sql-query>  
+</hibernate-mapping>

@@ -26,10 +26,7 @@
 
 	@*	</div>*@
 @Scripts.Render("~/bundles/guide")
-@section ScriptFiles {
 
-
-}
 @section ScriptOnReady {
     companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
     companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');

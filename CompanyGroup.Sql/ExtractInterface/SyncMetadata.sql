@@ -32,6 +32,7 @@ GO
 
 -- exec dbo.usp_LastSyncVersion 'PriceDiscTable'
 -- exec dbo.usp_LastSyncVersion 'InventSum'
+-- exec dbo.usp_LastSyncVersion 'SalesOrder'
 
 /*
 	TRUNCATE TABLE dbo.SyncMetadata;

@@ -1,0 +1,18 @@
+Regisztációját rendszerünk rögzítette.
+
+Szeretettel várjuk $EventName$ rendezvényünkön!
+
+Helyszín: $Place$
+			
+Név: $PersonName$
+			
+Cégnév: $CompanyName$
+
+Telefon: $Phone$
+
+Email:$Email$
+
+$Date$ $Time$	
+
+HRP Hungary Web adminsztrátor csoport
+

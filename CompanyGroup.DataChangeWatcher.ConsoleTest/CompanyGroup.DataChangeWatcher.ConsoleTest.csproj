@@ -50,12 +50,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CompanyGroup.DataChangeWatcher\CompanyGroup.DataChangeWatcher.csproj">
-      <Project>{B0CE2451-59FA-4447-A3E7-FB6B6FF06881}</Project>
-      <Name>CompanyGroup.DataChangeWatcher</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

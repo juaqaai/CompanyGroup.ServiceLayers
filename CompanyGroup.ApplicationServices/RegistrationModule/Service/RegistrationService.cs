@@ -45,29 +45,36 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.Registration GetByKey(CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request)
         {
-            if (String.IsNullOrWhiteSpace(request.Id))
+            try
             {
-                return new CompanyGroup.Dto.RegistrationModule.Registration();
+                if (String.IsNullOrWhiteSpace(request.Id))
+                {
+                    return new CompanyGroup.Dto.RegistrationModule.Registration();
+                }
+
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.Id);
+
+                //ha nincs az azonosítóval rendelkező regisztráció, akkor új regisztráció létrehozása szükséges
+                if (registration == null)
+                {
+                    registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration();
+                }
+
+                registration.BankAccountList.ForEach(x => x.SplitBankAccount());
+
+                CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
+
+                //látogató adatok lekérdezése
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
+
+                return response;
             }
-
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.Id);
-
-            //ha nincs az azonosítóval rendelkező regisztráció, akkor új regisztráció létrehozása szükséges
-            if (registration == null)
+            catch (Exception ex)
             {
-                registration = CompanyGroup.Domain.RegistrationModule.Factory.CreateRegistration(); 
+                throw ex;
             }
-
-            registration.BankAccountList.ForEach(x => x.SplitBankAccount());
-
-            CompanyGroup.Dto.RegistrationModule.Registration response = new RegistrationToRegistration().MapDomainToDto(registration);
-
-            //látogató adatok lekérdezése
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            response.Visitor = new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor);
-
-            return response;
         }
 
         /// <summary>
@@ -77,10 +84,10 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.Registration AddNew(CompanyGroup.Dto.ServiceRequest.AddNewRegistration request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration datarecording cannot be null!");
-
             try
             {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration datarecording cannot be null!");
+
                 CompanyGroup.Domain.RegistrationModule.Registration registration = null;
 
                 //be kell-e tölteni a UI-on az adatokat?
@@ -252,11 +259,18 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <param name="id"></param>
         public CompanyGroup.Dto.ServiceResponse.Empty Remove(string id)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(id), "Registration id cannot be null or empty!");
-            
-            registrationRepository.Remove(id);
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(id), "Registration id cannot be null or empty!");
 
-            return new CompanyGroup.Dto.ServiceResponse.Empty();
+                registrationRepository.Remove(id);
+
+                return new CompanyGroup.Dto.ServiceResponse.Empty();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }            
         }
 
 
@@ -397,6 +411,12 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 CompanyGroup.Domain.RegistrationModule.CustomerCreateResult customerCreateResult = this.customerRepository.Create(customer);
 
+                //ha nem sikerült a regisztráció cégadat, webadmin és levelezési cím része, akkor nem lehet tovább menni
+                if (customerCreateResult.RecId.Equals(0))
+                {
+                    return new CompanyGroup.Dto.ServiceResponse.PostRegistration(false, "A regisztráció cégadat, webadmin és levelezési cím rögzítésekor hiba történt!", customerCreateResult.RegId);
+                }
+
                 //szállítási címek felvitele
                 registration.DeliveryAddressList.ForEach(delegate(CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddr)
                 {
@@ -525,7 +545,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             }
             catch(Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.PostRegistration(false, ex.Message, String.Empty);
+                throw ex;
+                //return new CompanyGroup.Dto.ServiceResponse.PostRegistration(false, ex.Message, String.Empty);
             }
         }
 
@@ -731,7 +752,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording(false, ex.Message, new CompanyGroup.Dto.PartnerModule.Visitor());
+                throw ex; 
+                //return new CompanyGroup.Dto.ServiceResponse.UpdateDataRecording(false, ex.Message, new CompanyGroup.Dto.PartnerModule.Visitor());
             }
         }
 
@@ -802,7 +824,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = ex.Message, Successed = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
+                throw ex;
+                //return new CompanyGroup.Dto.ServiceResponse.UpdateRegistrationData() { Message = ex.Message, Successed = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
             }
         }
 
@@ -833,7 +856,8 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             }
             catch (Exception ex)
             {
-                return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = ex.Message, Succeeded = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
+                throw ex;
+                //return new CompanyGroup.Dto.ServiceResponse.UpdateWebAdministrator() { Message = ex.Message, Succeeded = false, Visitor = new CompanyGroup.Dto.PartnerModule.Visitor() };
             }
         }
 
@@ -846,17 +870,24 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.ServiceRequest.GetDeliveryAddress request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addDeliveryAddress request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addDeliveryAddress request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
 
-            response.Items.AddRange(deliveryAddressList);
+                response.Items.AddRange(deliveryAddressList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -865,23 +896,30 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses AddDeliveryAddress(CompanyGroup.Dto.ServiceRequest.AddDeliveryAddress request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addDeliveryAddress request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addDeliveryAddress request cannot be null or empty!");
 
-            request.DeliveryAddress.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+                request.DeliveryAddress.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
 
-            CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new DeliveryAddressToDeliveryAddress().MapDtoToDomain(request.DeliveryAddress);
+                CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new DeliveryAddressToDeliveryAddress().MapDtoToDomain(request.DeliveryAddress);
 
-            registrationRepository.AddDeliveryAddress(request.RegistrationId, deliveryAddress);
+                registrationRepository.AddDeliveryAddress(request.RegistrationId, deliveryAddress);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll( x => new DeliveryAddressToDeliveryAddress().MapDomainToDto( x ) );
+                List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
 
-            response.Items.AddRange(deliveryAddressList);
+                response.Items.AddRange(deliveryAddressList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -891,21 +929,28 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses UpdateDeliveryAddress(CompanyGroup.Dto.ServiceRequest.UpdateDeliveryAddress request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateDeliveryAddress request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateDeliveryAddress request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new DeliveryAddressToDeliveryAddress().MapDtoToDomain(request.DeliveryAddress);
+                CompanyGroup.Domain.RegistrationModule.DeliveryAddress deliveryAddress = new DeliveryAddressToDeliveryAddress().MapDtoToDomain(request.DeliveryAddress);
 
-            registrationRepository.UpdateDeliveryAddress(request.RegistrationId, deliveryAddress);
+                registrationRepository.UpdateDeliveryAddress(request.RegistrationId, deliveryAddress);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
 
-            response.Items.AddRange(deliveryAddressList);
+                response.Items.AddRange(deliveryAddressList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -915,20 +960,27 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.DeliveryAddresses RemoveDeliveryAddress(CompanyGroup.Dto.ServiceRequest.RemoveDeliveryAddress request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DeliveryAddressId), "deliveryAddress id cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DeliveryAddressId), "deliveryAddress id cannot be null or empty!");
 
-            registrationRepository.RemoveDeliveryAddress(request.RegistrationId, request.DeliveryAddressId);
+                registrationRepository.RemoveDeliveryAddress(request.RegistrationId, request.DeliveryAddressId);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.DeliveryAddress> deliveryAddressList = registration.DeliveryAddressList.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
+                CompanyGroup.Dto.RegistrationModule.DeliveryAddresses response = new CompanyGroup.Dto.RegistrationModule.DeliveryAddresses();
 
-            response.Items.AddRange(deliveryAddressList);
+                response.Items.AddRange(deliveryAddressList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
@@ -941,19 +993,26 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.RegistrationModule.BankAccounts GetBankAccounts(CompanyGroup.Dto.ServiceRequest.GetBankAccounts request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            registration.BankAccountList.ForEach(x => x.SplitBankAccount());
+                registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
-            List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
 
-            response.Items.AddRange(bankAccountList);
+                response.Items.AddRange(bankAccountList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -962,25 +1021,32 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.RegistrationModule.BankAccounts AddBankAccount(CompanyGroup.Dto.ServiceRequest.AddBankAccount request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
 
-            request.BankAccount.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+                request.BankAccount.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
 
-            CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount = new BankAccountToBankAccount().MapDtoToDomain(request.BankAccount);
+                CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount = new BankAccountToBankAccount().MapDtoToDomain(request.BankAccount);
 
-            registrationRepository.AddBankAccount(request.RegistrationId, bankAccount);
+                registrationRepository.AddBankAccount(request.RegistrationId, bankAccount);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            registration.BankAccountList.ForEach(x => x.SplitBankAccount());
+                registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
-            List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
 
-            response.Items.AddRange(bankAccountList);
+                response.Items.AddRange(bankAccountList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -990,23 +1056,30 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.BankAccounts UpdateBankAccount(CompanyGroup.Dto.ServiceRequest.UpdateBankAccount request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateDeliveryAddress request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateDeliveryAddress request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount = new BankAccountToBankAccount().MapDtoToDomain(request.BankAccount);
+                CompanyGroup.Domain.RegistrationModule.BankAccount bankAccount = new BankAccountToBankAccount().MapDtoToDomain(request.BankAccount);
 
-            registrationRepository.UpdateBankAccount(request.RegistrationId, bankAccount);
+                registrationRepository.UpdateBankAccount(request.RegistrationId, bankAccount);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            registration.BankAccountList.ForEach(x => x.SplitBankAccount());
+                registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
-            List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccountList = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
 
-            response.Items.AddRange(bankAccountList);
+                response.Items.AddRange(bankAccountList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -1016,22 +1089,29 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.BankAccounts RemoveBankAccount(CompanyGroup.Dto.ServiceRequest.RemoveBankAccount request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.BankAccountId), "BankAccountId id cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.BankAccountId), "BankAccountId id cannot be null or empty!");
 
-            registrationRepository.RemoveBankAccount(request.RegistrationId, request.BankAccountId);
+                registrationRepository.RemoveBankAccount(request.RegistrationId, request.BankAccountId);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            registration.BankAccountList.ForEach(x => x.SplitBankAccount());
+                registration.BankAccountList.ForEach(x => x.SplitBankAccount());
 
-            List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccounts = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.BankAccount> bankAccounts = registration.BankAccountList.ConvertAll(x => new BankAccountToBankAccount().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
+                CompanyGroup.Dto.RegistrationModule.BankAccounts response = new CompanyGroup.Dto.RegistrationModule.BankAccounts();
 
-            response.Items.AddRange(bankAccounts);
+                response.Items.AddRange(bankAccounts);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
@@ -1044,25 +1124,32 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.RegistrationModule.ContactPersons AddContactPerson(CompanyGroup.Dto.ServiceRequest.AddContactPerson request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
 
-            request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+                request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
 
-            request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
+                request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
 
-            CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
+                CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
 
-            registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
+                registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -1072,33 +1159,40 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.ContactPersons SaveContactPerson(CompanyGroup.Dto.ServiceRequest.SaveContactPerson request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
-
-            request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
-
-            request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
-
-            //csak akkor kell hozzáadni a kapcsolattartót, ha a kötelező mezők ki vannak töltve
-            if (!String.IsNullOrEmpty(request.ContactPerson.Email) && !String.IsNullOrEmpty(request.ContactPerson.FirstName) && !String.IsNullOrEmpty(request.ContactPerson.LastName)
-                && !String.IsNullOrEmpty(request.ContactPerson.Password) && !String.IsNullOrEmpty(request.ContactPerson.UserName))
+            try
             {
-                CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
 
-                registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
+                request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+
+                request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
+
+                //csak akkor kell hozzáadni a kapcsolattartót, ha a kötelező mezők ki vannak töltve
+                if (!String.IsNullOrEmpty(request.ContactPerson.Email) && !String.IsNullOrEmpty(request.ContactPerson.FirstName) && !String.IsNullOrEmpty(request.ContactPerson.LastName)
+                    && !String.IsNullOrEmpty(request.ContactPerson.Password) && !String.IsNullOrEmpty(request.ContactPerson.UserName))
+                {
+                    CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
+
+                    registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
+                }
+                //látogató kiolvasása 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                //teljes regisztráció kiolvasása azonosító alapján
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+
+                //kapcsolattartó konvertálása DTO-ra
+                List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+
+                //kapcsolattartó lista
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+
+                return response;
             }
-            //látogató kiolvasása 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            //teljes regisztráció kiolvasása azonosító alapján
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
-
-            //kapcsolattartó konvertálása DTO-ra
-            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
-
-            //kapcsolattartó lista
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
-
-            return response;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -1108,20 +1202,27 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.ContactPersons GetContactPersons(CompanyGroup.Dto.ServiceRequest.GetContactPerson request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration addBankAccount request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            //látogató kiolvasása 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+                //látogató kiolvasása 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
-            response.Items.AddRange(contactPersonList);
+                response.Items.AddRange(contactPersonList);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -1131,22 +1232,29 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.ContactPersons UpdateContactPerson(CompanyGroup.Dto.ServiceRequest.UpdateContactPerson request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateContactPerson request cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateContactPerson request cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
+                CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
 
-            registrationRepository.UpdateContactPerson(request.RegistrationId, contactPerson);
+                registrationRepository.UpdateContactPerson(request.RegistrationId, contactPerson);
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+                List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            //látogató kiolvasása 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+                //látogató kiolvasása 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -1156,21 +1264,29 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.ContactPersons RemoveContactPerson(CompanyGroup.Dto.ServiceRequest.RemoveContactPerson request)
         {
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Id), "ContactPerson id cannot be null or empty!");
+            try
+            {
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.RegistrationId), "Registration id cannot be null or empty!");
 
-            registrationRepository.RemoveContactPerson(request.RegistrationId, request.Id);
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Id), "ContactPerson id cannot be null or empty!");
 
-            CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
+                registrationRepository.RemoveContactPerson(request.RegistrationId, request.Id);
 
-            List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
+                CompanyGroup.Domain.RegistrationModule.Registration registration = registrationRepository.GetByKey(request.RegistrationId);
 
-            //látogató kiolvasása 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+                List<CompanyGroup.Dto.RegistrationModule.ContactPerson> contactPersonList = registration.ContactPersonList.ConvertAll(x => new ContactPersonToContactPerson().MapDomainToDto(x));
 
-            CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+                //látogató kiolvasása 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-            return response;
+                CompanyGroup.Dto.RegistrationModule.ContactPersons response = new CompanyGroup.Dto.RegistrationModule.ContactPersons(contactPersonList, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion

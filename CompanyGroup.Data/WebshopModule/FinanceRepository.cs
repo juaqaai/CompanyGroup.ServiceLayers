@@ -10,9 +10,14 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// nhibernate extract interface session
         /// </summary>
-        private NHibernate.ISession Session
+        private NHibernate.ISession ExtractInterfaceSession
         {
             get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetExtractInterfaceSession(); }
+        }
+
+        private NHibernate.ISession WebInterfaceSession
+        {
+            get { return CompanyGroup.Data.NHibernateSessionManager.Instance.GetWebInterfaceSession(); }
         }
 
         /// <summary>
@@ -21,7 +26,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.ExchangeRate> GetCurrentRates()
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ExchangeRate")
+            NHibernate.IQuery query = ExtractInterfaceSession.GetNamedQuery("InternetUser.ExchangeRate")
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.ExchangeRate).GetConstructors()[0]));
 
@@ -34,7 +39,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue GetMinMaxLeasingValues()
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.MinMaxFinanceLeasingValues")
+            NHibernate.IQuery query = ExtractInterfaceSession.GetNamedQuery("InternetUser.MinMaxFinanceLeasingValues")
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.MinMaxLeasingValue).GetConstructors()[0]));
 
@@ -60,7 +65,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// <returns></returns>
         public List<CompanyGroup.Domain.WebshopModule.LeasingOption> GetLeasingByFinancedAmount(int amount)
         {
-            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.LeasingByFinancedAmount")
+            NHibernate.IQuery query = ExtractInterfaceSession.GetNamedQuery("InternetUser.LeasingByFinancedAmount")
                                              .SetInt32("FinancedAmount", amount)
                                              .SetResultTransformer(
                                              new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.LeasingOption).GetConstructors()[0]));
@@ -79,7 +84,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((offerId > 0), "The offerId parameter must be greather than zero!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.GetFinanceOffer").SetInt32("OfferId", offerId);
+                NHibernate.IQuery query = ExtractInterfaceSession.GetNamedQuery("InternetUser.GetFinanceOffer").SetInt32("OfferId", offerId);
 
                 CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer = query.UniqueResult<CompanyGroup.Domain.WebshopModule.FinanceOffer>();
 
@@ -102,7 +107,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((financeOffer != null), "The financeOffer cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.FinanceOfferInsert").SetString("VisitorId", financeOffer.VisitorId)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.FinanceOfferInsert").SetString("VisitorId", financeOffer.VisitorId)
                                                                                                   .SetString("LeasingPersonName", financeOffer.PersonName)
                                                                                                   .SetString("LeasingAddress", financeOffer.Address)
                                                                                                   .SetString("LeasingPhone", financeOffer.Phone)
@@ -125,7 +130,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((offerId > 0), "The id parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.FianceOfferSetStatus").SetInt32("OfferId", offerId)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.FianceOfferSetStatus").SetInt32("OfferId", offerId)
                                                                                                      .SetEnum("Status", CartStatus.Deleted);
 
                 int ret = query.UniqueResult<int>();
@@ -148,7 +153,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((financeOffer != null), "The financeOffer cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("OfferId", financeOffer.Id)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.ShoppingCartUpdate").SetInt32("OfferId", financeOffer.Id)
                                                                                                   .SetString("LeasingPersonName", financeOffer.PersonName)
                                                                                                   .SetString("LeasingAddress", financeOffer.Address)
                                                                                                   .SetString("LeasingPhone", financeOffer.Phone)
@@ -178,7 +183,7 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require((quantity > 0), "The quantity parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.FinanceOfferLineUpdate").SetInt32("LineId", lineId)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.FinanceOfferLineUpdate").SetInt32("LineId", lineId)
                                                                                                       .SetInt32("Quantity", quantity);
 
                 int ret = query.UniqueResult<int>();
@@ -199,7 +204,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((item != null), "The item cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.FinanceOfferLineInsert").SetInt32("OfferId", item.CartId)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.FinanceOfferLineInsert").SetInt32("OfferId", item.CartId)
                                                                                                       .SetString("ProductId", item.ProductId)
                                                                                                       .SetInt32("Quantity", item.Quantity)
                                                                                                       .SetInt32("Price", item.CustomerPrice)
@@ -225,7 +230,7 @@ namespace CompanyGroup.Data.WebshopModule
             {
                 CompanyGroup.Domain.Utils.Check.Require((lineId > 0), "The lineId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.FinanceOfferSetLineStatus").SetInt32("LineId", lineId)
+                NHibernate.IQuery query = WebInterfaceSession.GetNamedQuery("InternetUser.FinanceOfferSetLineStatus").SetInt32("LineId", lineId)
                                                                                                          .SetEnum("Status", CartItemStatus.Deleted);
 
                 int ret = query.UniqueResult<int>();

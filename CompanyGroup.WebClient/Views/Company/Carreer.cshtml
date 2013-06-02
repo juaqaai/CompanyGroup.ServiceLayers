@@ -25,7 +25,7 @@
             <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border-radius: 3px; padding: 6px; border: 1px solid #CCC; margin-bottom:20px;">
                 <tr>
                     <td width="359">
-                        <a href="#/applyform/Termékmenedzser" style="text-decoration: none;"><strong>Termékmenedzser</strong></a>
+                        <!--a href="#/applyform/Termékmenedzser" style="text-decoration: none;"></a--><strong>Termékmenedzser</strong>
                     </td>
                     <td width="134"><strong></strong></td>
                 </tr>
@@ -44,10 +44,9 @@
                             <p><strong>Elvárások</strong></p>
                             <ul type="disc">
                                 <li>•Termékmenedzseri vagy értékesítési gyakorlat </li>
-                            </ul>
-                            <ul type="disc">
+
                                 <li>•Pontosság, megbízhatóság</li>
-                                <li>Jó kommunikációs készség</li>
+                                <li>•Jó kommunikációs készség</li>
                                 <li>•Dinamikus és önálló munkavégzés</li>
                             </ul>
                             <ul type="disc">
@@ -76,7 +75,7 @@
           <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" style="background-color: #F7F7F7; border-radius: 3px; padding: 6px; border: 1px solid #CCC;">
           <tr>
                     <td width="359">
-                        <a href="#/applyform/Kereskedő" style="text-decoration: none;"><strong>Kereskedő</strong></a>
+                        <!--a href="#/applyform/Kereskedő" style="text-decoration: none;"></a--><strong>Kereskedő</strong>
                     </td>
                     <td width="134"><strong></strong></td>
                 </tr>
@@ -320,9 +319,7 @@
         </div>
     @Scripts.Render("~/bundles/carreer")
     @Scripts.Render("~/bundles/jqueryform")
-@section ScriptFiles {
 
-}
 @section ScriptOnReady {
     companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")'); companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
 

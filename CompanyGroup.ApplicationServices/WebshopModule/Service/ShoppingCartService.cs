@@ -26,11 +26,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private CompanyGroup.Domain.PartnerModule.ISalesOrderRepository salesOrderRepository;
 
+        private CompanyGroup.Domain.PartnerModule.IWaitForAutoPostRepository waitForAutoPostRepository;
+
         public ShoppingCartService(CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository, 
                                    CompanyGroup.Domain.WebshopModule.IProductRepository productRepository, 
                                    CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository,
                                    CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository,
                                    CompanyGroup.Domain.PartnerModule.ISalesOrderRepository salesOrderRepository,
+                                   CompanyGroup.Domain.PartnerModule.IWaitForAutoPostRepository waitForAutoPostRepository, 
                                    CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository) : base(financeRepository, visitorRepository)
         {
             if (shoppingCartRepository == null)
@@ -53,6 +56,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw new ArgumentNullException("SalesOrderRepository");
             }
 
+            if (waitForAutoPostRepository == null)
+            {
+                throw new ArgumentNullException("WaitForAutoPostRepository");
+            }
+
             this.shoppingCartRepository = shoppingCartRepository;
 
             this.productRepository = productRepository;
@@ -62,6 +70,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             this.customerRepository = customerRepository;
 
             this.salesOrderRepository = salesOrderRepository;
+
+            this.waitForAutoPostRepository = waitForAutoPostRepository;
         }
 
         #region "kosár műveletek"
@@ -77,12 +87,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AssociateCart(CompanyGroup.Dto.WebshopModule.AssociateCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "ShoppingCartService AssociateCart request cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "ShoppingCartService AssociateCart VisitorId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "ShoppingCartService AssociateCart request cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "ShoppingCartService AssociateCart VisitorId cannot be null, or empty!");
+
                 //visitor lekérdezés
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -158,13 +168,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo AddCart(CompanyGroup.Dto.WebshopModule.AddCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "AddCart request cannot be null!");
-
-            //ellenörzés, visitorId-re, productId-re, DataAreaId-re
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "AddCart request cannot be null!");
+
+                //ellenörzés, visitorId-re, productId-re, DataAreaId-re
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -233,17 +243,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo SaveCart(CompanyGroup.Dto.WebshopModule.SaveCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "SaveCart request cannot be null!");
-
-            //ellenörzés, visitorId-re, productId-re, DataAreaId-re
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Name), "Name cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "CartId must be greather than zero!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "SaveCart request cannot be null!");
+
+                //ellenörzés, visitorId-re, productId-re, DataAreaId-re
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.Name), "Name cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "CartId must be greather than zero!");
+
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -321,14 +331,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="cartId"></param>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo RemoveCart(CompanyGroup.Dto.WebshopModule.RemoveCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "RemoveCart request cannot be null!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "Visitor id cannot be null!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "RemoveCart request cannot be null!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "Visitor id cannot be null!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -394,15 +404,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="active"></param>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo ActivateCart(CompanyGroup.Dto.WebshopModule.ActivateCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "ActivateCart request cannot be null!");
-
-            //ellenörzés, visitorId-re, productId-re, DataAreaId-re
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "ActivateCart request cannot be null!");
+
+                //ellenörzés, visitorId-re, productId-re, DataAreaId-re
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -485,20 +495,20 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions AddLine(CompanyGroup.Dto.WebshopModule.AddLineRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "AddLine request cannot be null!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DataAreaId), "DataAreaId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.ProductId), "Product cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(request.Quantity > 0, "Quantity must be greather than zero!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "AddLine request cannot be null!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.DataAreaId), "DataAreaId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.ProductId), "Product cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(request.Quantity > 0, "Quantity must be greather than zero!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
+
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -583,31 +593,38 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         private CompanyGroup.Domain.WebshopModule.SecondHand GetSecondHand(string productId)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "ShoppingCartService GetSecondHand productId parameter cannot be null, or empty!");
-
-            CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
-
-            //ha nincs a cache-ben
-            if (secondHandList == null)
+            try
             {
-                secondHandList = productRepository.GetSecondHandList();
+                Helpers.DesignByContract.Require(!String.IsNullOrEmpty(productId), "ShoppingCartService GetSecondHand productId parameter cannot be null, or empty!");
 
-                //cache-be mentés
-                CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                CompanyGroup.Domain.WebshopModule.SecondHandList secondHandList = CompanyGroup.Helpers.CacheHelper.Get<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND);
+
+                //ha nincs a cache-ben
+                if (secondHandList == null)
+                {
+                    secondHandList = productRepository.GetSecondHandList();
+
+                    //cache-be mentés
+                    CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.WebshopModule.SecondHandList>(CACHEKEY_SECONDHAND, secondHandList, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_SECONDHAND)));
+                }
+
+                //ha nincs min dolgozni, akkor üres elemet adunk vissza
+                if (secondHandList == null)
+                {
+                    return new CompanyGroup.Domain.WebshopModule.SecondHand();
+                }
+
+                //a termékazonosítóval rendelkező listát kell szűrni
+                IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
+
+                CompanyGroup.Domain.WebshopModule.SecondHand secondHand = resultList.ToList().FirstOrDefault();
+
+                return secondHand == null ? new CompanyGroup.Domain.WebshopModule.SecondHand() : secondHand;
             }
-
-            //ha nincs min dolgozni, akkor üres elemet adunk vissza
-            if (secondHandList == null)
+            catch (Exception ex)
             {
-                return new CompanyGroup.Domain.WebshopModule.SecondHand();
+                throw ex;
             }
-
-            //a termékazonosítóval rendelkező listát kell szűrni
-            IEnumerable<CompanyGroup.Domain.WebshopModule.SecondHand> resultList = secondHandList.Where(x => x.ProductId.Equals(productId));
-
-            CompanyGroup.Domain.WebshopModule.SecondHand secondHand = resultList.ToList().FirstOrDefault();
-
-            return secondHand == null ? new CompanyGroup.Domain.WebshopModule.SecondHand() : secondHand;
         }
 
         #endregion
@@ -618,15 +635,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions RemoveLine(CompanyGroup.Dto.WebshopModule.RemoveLineRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "RemoveLine request cannot be null!");
-
-            //ellenörzés 
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null!");
-
-            Helpers.DesignByContract.Require((request.LineId > 0), "LineId cannot be null!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "RemoveLine request cannot be null!");
+
+                //ellenörzés 
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null!");
+
+                Helpers.DesignByContract.Require((request.LineId > 0), "LineId cannot be null!");
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -676,17 +693,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="request"></param>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions UpdateLineQuantity(CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request)
         {
-            //ellenörzés, 
-            Helpers.DesignByContract.Require((request != null), "UpdateLineQuantity request cannot be null!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
-
-            Helpers.DesignByContract.Require((request.LineId > 0), "Line id cannot be null!");
-
             try
             {
+                //ellenörzés, 
+                Helpers.DesignByContract.Require((request != null), "UpdateLineQuantity request cannot be null!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
+
+                Helpers.DesignByContract.Require((request.LineId > 0), "Line id cannot be null!");
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -703,11 +720,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     x.CustomerPrice = (int)price;
                 });
 
-                //finanszírozandó összeg
-                int financedAmount = shoppingCart.SumTotal;
-
                 //leasing opciók lekérdezése
-                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
+                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(shoppingCart.SumTotal);
 
                 //kalkuláció
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
@@ -715,6 +729,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.Amount = shoppingCart.SumTotal;
 
                 leasingOptions.ValidateAmount();
+
+                leasingOptions.CalculateAllValue();
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
 
@@ -739,14 +755,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetShoppingCartInfo(CompanyGroup.Dto.WebshopModule.GetShoppingCartInfoRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "GetShoppingCartInfo request cannot be null!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Invariant((request.CartId > 0), "CartId cannot be null!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "GetShoppingCartInfo request cannot be null!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Invariant((request.CartId > 0), "CartId cannot be null!");
+
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 Helpers.DesignByContract.Invariant(visitor.IsValidLogin, "ShoppingCartService GetShoppingCartInfo visitor must be logged in!");
@@ -818,14 +834,14 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCart GetCartByKey(CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "GetCartByKey request cannot be null!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "GetCartByKey request cannot be null!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "CartId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 Helpers.DesignByContract.Invariant(visitor.IsValidLogin, "ShoppingCartService GetCartByKey visitor must be logged in!");  
@@ -845,7 +861,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 return response;
             }
-            catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCart(); }
+            catch(Exception ex) { throw ex; }
         }
 
         /// <summary>
@@ -855,12 +871,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.ShoppingCartInfo GetActiveCart(CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request)
         {
-            Helpers.DesignByContract.Require((request != null), "GetActiveCart request cannot be null!");
-
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require((request != null), "GetActiveCart request cannot be null!");
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 Helpers.DesignByContract.Invariant(visitor.IsValidLogin, "ShoppingCartService GetActiveCart visitor must be logged in!");  
@@ -903,7 +919,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                                                                request.Currency);
                 return response;
             }
-            catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(); }
+            catch(Exception ex) { throw ex; }
         }
 
         #endregion
@@ -917,16 +933,22 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.OrderFulFillment CreateOrder(CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request)
         {
-            CompanyGroup.Dto.WebshopModule.OrderFulFillment response = new CompanyGroup.Dto.WebshopModule.OrderFulFillment();
+            CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateHrp = null;
+            CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateBsc = null;
 
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
-            Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
-
-            bool isValidated = false;
+            CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateHrp = null;
+            CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateBsc = null;
 
             try
             {
+                CompanyGroup.Dto.WebshopModule.OrderFulFillment response = new CompanyGroup.Dto.WebshopModule.OrderFulFillment();
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                Helpers.DesignByContract.Require((request.CartId > 0), "Cart id cannot be null!");
+
+                bool isValidated = false;
+
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -946,7 +968,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     return response;
                 }
 
-                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddressList = customerRepository.GetDeliveryAddress(visitor.CustomerId, visitor.DataAreaId);
+                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddressList = customerRepository.GetDeliveryAddress(visitor.CustomerId, "hrp");
 
                 CompanyGroup.Domain.PartnerModule.DeliveryAddress deliveryAddress = deliveryAddressList.Find(x => x.RecId.Equals(request.DeliveryAddressRecId));
 
@@ -1037,7 +1059,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //HRP AX rendelés összeállítás
                 if (hrpLines.Count > 0)
                 {
-                    CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreate = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
+                    salesOrderCreateHrp = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
                     {
                         ContactPersonId = visitor.PersonId,
                         CurrencyCode = request.Currency, 
@@ -1064,7 +1086,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     };
 
                     //összeállított rendelés elküldése AX-be
-                    salesOrderCreateResultHrp = salesOrderRepository.Create(salesOrderCreate);
+                    salesOrderCreateResultHrp = salesOrderRepository.Create(salesOrderCreateHrp);
                 }
 
                 #endregion
@@ -1078,7 +1100,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //BSC AX rendelés összeállítás
                 if (bscLines.Count > 0)
                 {
-                    CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreate = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
+                    salesOrderCreateBsc = new CompanyGroup.Domain.PartnerModule.SalesOrderCreate()
                     {
                         ContactPersonId = visitor.PersonId,
                         CurrencyCode = request.Currency,
@@ -1105,7 +1127,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                     };
 
                     //összeállított rendelés elküldése AX-be
-                    salesOrderCreateResultBsc = salesOrderRepository.Create(salesOrderCreate);
+                    salesOrderCreateResultBsc = salesOrderRepository.Create(salesOrderCreateBsc);
                 }
 
                 #endregion
@@ -1118,7 +1140,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (secondHandItemsHrp.Count > 0)
                 {
-                    CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateHrp = new CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate()
+                    secondHandOrderCreateHrp = new CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate()
                     {
                         ContactPersonId = visitor.PersonId,
                         CustomerId = visitor.CustomerId,
@@ -1132,7 +1154,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = CompanyGroup.Domain.Core.Constants.SecondhandStoreHrp,
-                        Payment = request.PaymentTerm.Equals(1) ? visitor.PaymTermId : "KP", 
+                        Payment = ConvertPaymentTermToString(request.PaymentTerm, visitor.PaymTermId), //request.PaymentTerm.Equals(1) ? visitor.PaymTermId : "KP", 
                         Lines = secondHandItemsHrp.ConvertAll<CompanyGroup.Domain.PartnerModule.SecondhandOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SecondhandOrderLineCreate() { ConfigId = x.ConfigId, ItemId = x.ProductId, Qty = x.Quantity };
@@ -1155,7 +1177,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (secondHandItemsBsc.Count > 0)
                 {
-                    CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateBsc = new CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate()
+                    secondHandOrderCreateBsc = new CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate()
                     {
                         ContactPersonId = visitor.PersonId,
                         CustomerId = visitor.CustomerId,
@@ -1169,7 +1191,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         DeliveryStreet = deliveryAddress.Street,
                         DeliveryZip = deliveryAddress.ZipCode,
                         InventLocationId = CompanyGroup.Domain.Core.Constants.SecondhandStoreBsc,
-                        Payment = request.PaymentTerm.Equals(1) ? visitor.PaymTermId : "KP",
+                        Payment = ConvertPaymentTermToString(request.PaymentTerm, visitor.PaymTermId), //request.PaymentTerm.Equals(1) ? visitor.PaymTermId : "KP",
                         Lines = secondHandItemsBsc.ConvertAll<CompanyGroup.Domain.PartnerModule.SecondhandOrderLineCreate>(x =>
                         {
                             return new CompanyGroup.Domain.PartnerModule.SecondhandOrderLineCreate() { ConfigId = x.ConfigId, ItemId = x.ProductId, Qty = x.Quantity };
@@ -1241,7 +1263,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 response.IsValidated = (salesOrderCreateResultHrp != null) || (salesOrderCreateResultBsc != null) || (secondhandOrderCreateResultBsc != null) || (secondhandOrderCreateResultHrp != null);
 
                 response.BscOrderId = (salesOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.SalesId : "";
-                response.BscSecondHandOrderId = (secondhandOrderCreateResultBsc != null) ? salesOrderCreateResultBsc.SalesId : "";
+                response.BscSecondHandOrderId = (secondhandOrderCreateResultBsc != null) ? secondhandOrderCreateResultBsc.SalesId : "";
                 response.HrpOrderId = (salesOrderCreateResultHrp != null) ? salesOrderCreateResultHrp.SalesId : "";
                 response.HrpSecondHandOrderId = (secondhandOrderCreateResultHrp != null) ? secondhandOrderCreateResultHrp.SalesId : "";
 
@@ -1249,8 +1271,47 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
             catch (Exception ex)
             {
+
+                SaveOrder(request.CartId, salesOrderCreateHrp, salesOrderCreateBsc, secondHandOrderCreateHrp, secondHandOrderCreateBsc);
+
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// elmenti a rendelést hiba esetén
+        /// </summary>
+        /// <param name="cartId"></param>
+        /// <param name="salesOrderCreateHrp"></param>
+        /// <param name="salesOrderCreateBsc"></param>
+        /// <param name="secondHandOrderCreateHrp"></param>
+        /// <param name="secondHandOrderCreateBsc"></param>
+        private void SaveOrder(int cartId, CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateHrp, 
+                                           CompanyGroup.Domain.PartnerModule.SalesOrderCreate salesOrderCreateBsc, 
+                                           CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateHrp, 
+                                           CompanyGroup.Domain.PartnerModule.SecondhandOrderCreate secondHandOrderCreateBsc)
+        {
+            try
+            {
+                if (salesOrderCreateHrp != null)
+                {
+                    waitForAutoPostRepository.WaitingForAutoPostSalesOrderInsert(cartId, 1, salesOrderCreateHrp);
+                }
+                if (salesOrderCreateBsc != null)
+                {
+                    waitForAutoPostRepository.WaitingForAutoPostSalesOrderInsert(cartId, 1, salesOrderCreateBsc);
+                }
+
+                if (secondHandOrderCreateHrp != null)
+                {
+                    waitForAutoPostRepository.WaitingForAutoPostSecondhandOrderInsert(cartId, 1, secondHandOrderCreateHrp);
+                }
+                if (secondHandOrderCreateBsc != null)
+                {
+                    waitForAutoPostRepository.WaitingForAutoPostSecondhandOrderInsert(cartId, 1, secondHandOrderCreateBsc);
+                }
+            }
+            catch { }
         }
 
         /// <summary>

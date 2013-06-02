@@ -29,3 +29,6 @@ SET NOCOUNT ON
 RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[CompatibilityExtract] TO InternetUser
+GO
+GRANT EXECUTE ON [InternetUser].[CompatibilityExtract] TO [HRP_HEADOFFICE\AXPROXY]
+GO

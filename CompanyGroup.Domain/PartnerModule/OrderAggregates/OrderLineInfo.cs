@@ -13,7 +13,7 @@ namespace CompanyGroup.Domain.PartnerModule
     {
         public OrderLineInfo(int id, int lineNum, DateTime shippingDateRequested, string itemId, string name, decimal salesPrice, string currencyCode,
                               int quantity, decimal lineAmount, int salesDeliverNow, int remainSalesPhysical, StatusIssue statusIssue, string inventLocationId, string payment,
-                              bool inStock, bool availableInWebShop, bool pictureExists)
+                              bool inStock, bool availableInWebShop, bool pictureExists, string dataAreaId)
         {
             this.Id = id;
             this.LineNum = lineNum;
@@ -32,6 +32,7 @@ namespace CompanyGroup.Domain.PartnerModule
             this.InStock = inStock;
             this.AvailableInWebShop = availableInWebShop;
             this.PictureExists = pictureExists;
+            this.DataAreaId = dataAreaId;
         }
 
         /// <summary>
@@ -126,6 +127,11 @@ namespace CompanyGroup.Domain.PartnerModule
         /// létezik-e hozzá kép?
         /// </summary>
         public bool PictureExists { set; get; }
+
+        /// <summary>
+        /// vállalatkód
+        /// </summary>
+        public string DataAreaId { set; get; }
 
     }
 }

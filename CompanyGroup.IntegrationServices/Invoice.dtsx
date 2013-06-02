@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Invoice"
   DTS:PackageType="5"
-  DTS:VersionBuild="63"
-  DTS:VersionGUID="{BBA16F41-EF7B-4928-BF7C-7BC8514ECFBA}">
+  DTS:VersionBuild="65"
+  DTS:VersionGUID="{759FA0C8-AA1B-46EE-A2C8-D9C177A5BF27}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -694,6 +694,11 @@
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CreatedDate]"
                       dataType="dbTimeStamp"
                       name="CreatedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SerialNumber]"
+                      dataType="wstr"
+                      length="40"
+                      name="SerialNumber" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -773,8 +778,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="{8BE3911C-16AC-4AFD-86D9-B41CE00D475D}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Source]"
+                  connectionManagerID="{F574DD6F-2471-4875-AA20-0330579C687D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ExtractInterface]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1137,6 +1142,27 @@
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CreatedDate]"
                       name="CreatedDate"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SerialNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SerialNumber]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SerialNumber]"
+                      name="SerialNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceAccount]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InvoiceAccount]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceAccount]"
+                      name="InvoiceAccount"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1314,6 +1340,17 @@
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CreatedDate]"
                       dataType="dbTimeStamp"
                       name="CreatedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SerialNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="SerialNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InvoiceAccount]"
+                      dataType="wstr"
+                      length="10"
+                      name="InvoiceAccount" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1321,6 +1358,12 @@
                   isErrorOut="true"
                   name="OLE DB Source Error Output">
                   <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InvoiceAccount]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InvoiceAccount]"
+                      name="InvoiceAccount" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
                       dataType="wstr"
@@ -1443,6 +1486,13 @@
                       length="300"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Name]"
                       name="Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SerialNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SerialNumber]"
+                      name="SerialNumber" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quantity]"
                       dataType="i4"
@@ -2007,13 +2057,13 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="131,42"
-          Id="Package\Data Flow Task\Row Count"
-          TopLeft="209,212" />
-        <NodeLayout
           Size="151,42"
           Id="Package\Data Flow Task\OLE DB Source"
           TopLeft="196,76" />
+        <NodeLayout
+          Size="131,42"
+          Id="Package\Data Flow Task\Row Count"
+          TopLeft="209,212" />
         <NodeLayout
           Size="155,42"
           Id="Package\Data Flow Task\Derived Column"

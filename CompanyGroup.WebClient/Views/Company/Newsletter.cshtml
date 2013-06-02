@@ -1,4 +1,4 @@
-﻿@model CompanyGroup.WebClient.Models.Newsletter
+﻿@*@model CompanyGroup.WebClient.Models.Newsletter*@
 @{
     ViewBag.Title = "Newsletter";
 }
@@ -19,21 +19,14 @@
 				<div style="width:980px; position:relative; float:left;" id="div_newsletter_container" class="wrapper">
                 </div>
                 </div>
-                </div>
+                @*</div>*@
 
-@Scripts.Render("~/bundles/newsletter")
-@section ScriptFiles {
-
-}
 @section ScriptOnReady {
-    companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
-    companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
-    companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
 
-    var model = @(Html.Raw(Json.Encode(Model)));
+    //var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);
 
-    companyGroup.newsletter.run('#/');
+    //companyGroup.newsletter.run('#/');
 	
 	$("#fancy_box_ads").fancybox({
 		'closeBtn': 'true',
@@ -42,58 +35,37 @@
         'transitionIn'		: 'none',
 		'transitionOut'		: 'none',
 		'type'				: 'iframe'
-		
-		
 	});
 
-    var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), model.Visitor);
-  	$('#cus_header1').html(visitorInfoHtml);
-
-    var usermenuHtml = Mustache.to_html($('#usermenuTemplate').html(), model.Visitor);
-  	$('#usermenuContainer').html(usermenuHtml);
-
-    $("#becomePartnerContainer").empty();
-    var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model.Visitor);
-    $('#becomePartnerContainer').html(becomePartnerHtml);
-
-    $("#newsletterContainer").empty();
-    var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model.Visitor);
-    $('#newsletterContainer').html(newsletterHtml);
-
-    $("#div_newsletter_container").empty();
-    $("#newsletter_template").tmpl(model).appendTo("#div_newsletter_container");
 }
-
-@section ScriptsInHead {
-<script id="newsletter_template" type="text/x-jquery-tmpl">
-{{each( i, item ) Items}}
-
-<div style="width:230px; position:relative; float:left; margin:5px; class="expand_heading">
-<div class="toggle_container">
-<div align="center">
-@*${item.AllowedDateTime}
-        ${item.SequenceNumber}
-        ${item.NewsletterId}
-		${item.Title}
-		${item.Description}*@
-{{if item.PicturePath.length > 0}}
-<a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img style="max-width:230px; max-height:230px;" src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
-{{else}}
-<a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
-{{/if}}
-</div>
-<div style=" margin-top:-4px; padding:3px; font-size:12px; background-color:#4874a5; color: #FFF; height:55px; text-shadow: 0px 0px 3px #000;">
-${item.Description}
-</div>
-
-</div>
-</div>
-
-{{/each}}
-</script>
-}
-
 
 @section ScriptsInBottom {
+    <script id="newsletter_template" type="text/x-jquery-tmpl">
+		{{each( i, item ) Items}}
+		
+        <div style="width:230px; position:relative; float:left; margin:5px; " class="expand_heading" >
+            <div class="toggle_container">
+                <div>
+                @*${item.AllowedDateTime}
+                        ${item.SequenceNumber}
+                        ${item.NewsletterId}
+		                ${item.Title}
+		                ${item.Description}*@
+                {{if item.PicturePath.length > 0}}
+                    <a id="fancy_box_ads_" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img style="max-width:230px; max-height:230px;" src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
+                {{else}}
+                    <a id="fancy_box_ads_" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
+                {{/if}}
+                </div>
+                <div style=" margin-top:-4px; padding:5px; font-size:14px; background-color:#f4f4f4; color: #4874a5; height:50px; border:1px solid #dddddd; border-radius:0px 0px 3px 3px; ">
+                  <strong>${item.Description}</strong>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    @Scripts.Render("~/bundles/newsletter")
 
 }
+

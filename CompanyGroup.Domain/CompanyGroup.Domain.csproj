@@ -56,6 +56,10 @@
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\InvoiceAggregates\IPackageRepository.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\CustomerContractData.cs" />
+    <Compile Include="PartnerModule\EventRegistration\IEventRegistrationRepository.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\IWaitForAutoPostRepository.cs" />
+    <Compile Include="PartnerModule\OrderAggregates\WaitingForAutoPost.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\Visitor.cs" />
     <Compile Include="RegistrationModule\CustomerAggregates\CustomerRegistrationPrintedFile.cs" />
     <Compile Include="RegistrationModule\CustomerAggregates\CustomerRegistrationPrintedFileResult.cs" />
     <Compile Include="RegistrationModule\IRegistrationFileRepository.cs" />
@@ -220,7 +224,7 @@
     <Compile Include="Utils\DesignByContract.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\CustomerPriceGroup.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\LoginType.cs" />
-    <Compile Include="PartnerModule\VisitorAggregates\Visitor.cs" />
+    <Compile Include="PartnerModule\VisitorAggregates\VisitorData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Readme.txt" />
@@ -296,6 +300,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\OrderAggregates\ProductOrderCheck.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\OrderAggregates\WaitingForAutoPost.hbm.xml" />
+    <EmbeddedResource Include="PartnerModule\EventRegistration\EventRegistration.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

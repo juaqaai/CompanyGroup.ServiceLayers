@@ -30,27 +30,25 @@ namespace CompanyGroup.WebClient.Controllers
         /// <returns></returns>
         public ActionResult Newsletter()
         {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, BaseController.CookieName);
+            //CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, BaseController.CookieName);
 
-            if (visitorData == null)
-            {
-                visitorData = new CompanyGroup.WebClient.Models.VisitorData();
-            }
+            //if (visitorData == null)
+            //{
+            //    visitorData = new CompanyGroup.WebClient.Models.VisitorData();
+            //}
 
-            CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest()
-            {
-                Language = visitorData.Language,
-                VisitorId = visitorData.VisitorId,
-                ManufacturerId = String.Empty
-            };
+            //CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request = new CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest()
+            //{
+            //    Language = visitorData.Language,
+            //    VisitorId = visitorData.VisitorId,
+            //    ManufacturerId = String.Empty
+            //};
 
-            CompanyGroup.Dto.WebshopModule.NewsletterCollection response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest, CompanyGroup.Dto.WebshopModule.NewsletterCollection>("Newsletter", "GetCollection", request);
+            //CompanyGroup.Dto.WebshopModule.NewsletterCollection response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest, CompanyGroup.Dto.WebshopModule.NewsletterCollection>("Newsletter", "GetCollection", request);
 
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+            //CompanyGroup.WebClient.Models.Newsletter viewModel = new CompanyGroup.WebClient.Models.Newsletter(response);
 
-            CompanyGroup.WebClient.Models.Newsletter viewModel = new CompanyGroup.WebClient.Models.Newsletter(response, visitor);
-
-            return View(viewModel);
+            return View();
         }
 
         /// <summary>

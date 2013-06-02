@@ -29,8 +29,8 @@ SET NOCOUNT ON
 	AS (
 	SELECT inventlng.ITEMID,
 		   inventlng.MEGJELENITESINEV 
-	FROM Axdb_20130131.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
-	INNER JOIN Axdb_20130131.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
+	FROM Axdb.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
+	INNER JOIN Axdb.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
 	WHERE Invent.DataAreaID IN ('hrp', 'bsc') AND 
 		Invent.WEBARUHAZ = 1 AND 
 		Invent.ITEMSTATE IN ( 0, 1 ) AND 
@@ -45,8 +45,8 @@ SET NOCOUNT ON
 		SELECT m.GYARTOID,
 			   m.GyartoNev,
 			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.GyartoNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish
-		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updGyartok as m WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND m.GYARTOID <> '' AND m.GyartoNev <> '' ),
 	-- angol jelleg1 név kikeresése
 	Category1_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -54,8 +54,8 @@ SET NOCOUNT ON
 		SELECT c.jelleg1Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg1id <> '' AND c.jellegNev <> '' ), 
 	-- angol jelleg2 név kikeresése
 	Category2_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -63,8 +63,8 @@ SET NOCOUNT ON
 		SELECT c.jelleg2Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg2Id <> '' AND c.jellegNev <> '' ), 
 	-- angol jelleg3 név kikeresése
 	Category3_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -72,19 +72,19 @@ SET NOCOUNT ON
 		SELECT c.jelleg3Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' ), 
 	-- készletérték kikeresése
 	Stock_CTE ( StandardConfigId, ProductId, Quantity, InventLocationId, DataAreaId )
 	AS (
 			SELECT invent.StandardConfigId, invent.ItemId, ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ), 
 				   ind.InventLocationId, invent.DataAreaId
-			FROM Axdb_20130131.dbo.InventTable as invent
-			INNER JOIN Axdb_20130131.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
+			FROM Axdb.dbo.InventTable as invent
+			INNER JOIN Axdb.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 															ind.dataAreaId = invent.DataAreaId and 
 															ind.InventLocationId in ( '7000', '2100', 'KULSO', 'HASZNALT' )		--'1000', 'BELSO', 
-			INNER JOIN Axdb_20130131.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
+			INNER JOIN Axdb.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 															ins.inventDimId = ind.inventDimId and 
 															ins.ItemId = invent.ItemId and 
 															ins.Closed = 0
@@ -107,8 +107,8 @@ SET NOCOUNT ON
 		CONVERT(INT, Purch.RemainPurchPhysical) as RemainPurchPhysical,		-- fennmaradó szállítása
 		--( SELECT SUM(Qty) FROM Axdb.dbo.InventTrans WHERE InventTransId = Purch.InventTransId AND StatusReceipt = 5 ) as Ordered,	-- rendelt
 		Purch.DataAreaId
-		FROM Axdb_20130131.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
-		INNER JOIN Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
+		FROM Axdb.dbo.PurchLine as Purch WITH (READUNCOMMITTED) 
+		INNER JOIN Axdb.dbo.InventTable as Invent WITH (READUNCOMMITTED) ON Invent.ItemId = Purch.ItemId AND Invent.DataAreaId = Purch.DataAreaId
 		WHERE Purch.ConfirmedDlv > '1900-01-01' AND 
 			Purch.BrEngedelyezes = 2 AND			-- engedélyezés státusz, 2: Engedelyezve, 3: Nemkellengedelyezni
 			Purch.PURCHASETYPE = 3 AND	
@@ -130,7 +130,7 @@ SET NOCOUNT ON
 			   CASE LanguageId WHEN 'HU' THEN 'hun' 
 			   WHEN 'en-gb' THEN 'eng'
 			   ELSE '' END	 	 
-		FROM Axdb_20130131.dbo.INVENTTXT
+		FROM Axdb.dbo.INVENTTXT
 		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
 	)
 
@@ -176,7 +176,7 @@ SET NOCOUNT ON
 					0, 
 					CONVERT(BIT, 0),
 					CONVERT(BIT, 1)			
-	FROM Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
+	FROM Axdb.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
 	LEFT OUTER JOIN EnglishProductName_CTE as EnglishProductName ON EnglishProductName.ProductId = Invent.ItemId
 	LEFT OUTER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID
 	LEFT OUTER JOIN Category1_CTE as Category1 ON Category1.CategoryId = Invent.JELLEG1ID
@@ -188,9 +188,9 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN Stock_CTE as StockOuter ON StockOuter.ProductId = Invent.ItemId AND 
 										  StockOuter.DataAreaId = Invent.DataAreaId AND 
 										  StockOuter.InventLocationId = CASE WHEN Invent.DataAreaId = 'hrp' THEN 'KULSO' ELSE '7000' END
-    LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND 
+    LEFT OUTER JOIN Axdb.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND 
 																gt.DATAAREAID = Invent.DATAAREAID
-	LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
+	LEFT OUTER JOIN Axdb.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
 																gm.DATAAREAID = Invent.DATAAREAID	
 	LEFT OUTER JOIN Description_CTE as HunDescription ON HunDescription.ProductId = Invent.ItemId AND 
 														 HunDescription.LanguageId = 'hun'

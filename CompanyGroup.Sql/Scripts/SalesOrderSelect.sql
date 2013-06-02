@@ -22,7 +22,7 @@ CREATE PROCEDURE InternetUser.SalesOrderSelect(@CustomerId NVARCHAR(10),
 		 LEFT OUTER JOIN InternetUser.Catalogue as C ON S.ItemId = C.ProductId AND s.DataAreaId = C.DataAreaId
 	WHERE CustomerId = @CustomerId  
 		  AND SalesStatus = @SalesStatus 
-		  AND 1 = CASE WHEN (@CanBeTaken = 1 AND StatusIssue = 4) OR (@CanBeTaken = 0) THEN 1 ELSE 0 END --AND 
+		  AND 1 = CASE WHEN (@CanBeTaken = 1 AND StatusIssue <= 4) OR (@CanBeTaken = 0) THEN 1 ELSE 0 END --AND 
 		  AND StatusIssue IN (4, 5, 6) 	-- 0 none, 1 sold, 2 deducted (eladva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
 		  AND CustomerOrderNo = CASE WHEN @CustomerOrderNo <> CustomerOrderNo THEN @CustomerOrderNo ELSE CustomerOrderNo END 
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END  
@@ -36,7 +36,7 @@ GO
 GRANT EXECUTE ON InternetUser.SalesOrderSelect TO InternetUser;
 
 /*
- exec InternetUser.SalesOrderSelect 'V001446', 0, 1, '', '', '', '';	-- V011682
+ exec InternetUser.SalesOrderSelect 'V002126', 0, 1, '', '', '', '';	-- V011682	V001446 V018619 5024
  select * from InternetUser.SalesOrder where CustomerId = 'V011682' AND 
 		  ItemName LIKE ItemName AND 
 		  ItemId LIKE ItemId AND 
@@ -69,22 +69,8 @@ GO
 CREATE PROCEDURE [InternetUser].[SalesOrderPictureSelect]( @Id INT = 0 )										
 AS
 SET NOCOUNT ON
-	SELECT TOP 1 *, Id, [FileName], CONVERT(BIT, 1) as [Primary], 0 as RecId
-	FROM InternetUser.SalesOrder
-	WHERE Id = @Id AND [FileName] <> '';
-RETURN
-GO
-GRANT EXECUTE ON InternetUser.SalesOrderPictureSelect TO InternetUser
-GO
 
--- exec [InternetUser].[SalesOrderPictureSelect] 10
-
-DROP PROCEDURE [InternetUser].[SalesOrderPictureSelect];
-GO
-CREATE PROCEDURE [InternetUser].[SalesOrderPictureSelect]( @Id INT = 0 )										
-AS
-SET NOCOUNT ON
-	SELECT TOP 1 *, Id, [FileName], CONVERT(BIT, 1) as [Primary], 0 as RecId
+	SELECT TOP 1 Id, [FileName], CONVERT(BIT, 1) as [Primary], 0 as RecId
 	FROM InternetUser.SalesOrder
 	WHERE Id = @Id AND [FileName] <> '';
 RETURN

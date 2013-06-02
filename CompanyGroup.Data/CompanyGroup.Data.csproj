@@ -98,6 +98,8 @@
     <Compile Include="Dynamics\Repository.cs" />
     <Compile Include="MaintainModule\PackageRepository.cs" />
     <Compile Include="PartnerModule\ChangeTrackingRepository.cs" />
+    <Compile Include="PartnerModule\EventRegistrationRepository.cs" />
+    <Compile Include="PartnerModule\WaitForAutoPostRepository.cs" />
     <Compile Include="RegistrationModule\RegistrationFileRepository.cs" />
     <Compile Include="WebshopModule\ChangeTrackingRepository.cs" />
     <Compile Include="NHibernateSessionModule.cs" />

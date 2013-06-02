@@ -21,7 +21,7 @@ SET NOCOUNT ON
 	SET @ItemState = 0;
 
 	--		ModuleType : készlet vagy ModuleType : vevõi rendelés
-	IF (EXISTS(SELECT * FROM Axdb_20130131.dbo.InventTableModule WHERE ItemId = @ProductId AND DataAreaId = @DataAreaId AND ModuleType in ( 0, 2 ) AND Blocked = 1))
+	IF (EXISTS(SELECT * FROM Axdb.dbo.InventTableModule WHERE ItemId = @ProductId AND DataAreaId = @DataAreaId AND ModuleType in ( 0, 2 ) AND Blocked = 1))
 	BEGIN
 		SET @Ret = -5;	-- le van állítva a cikk
 		SET @AvailableQty = 0;
@@ -30,7 +30,7 @@ SET NOCOUNT ON
 	END
 
 	SELECT @StandardConfigId = invent.StandardConfigId, @WebShop = invent.WEBARUHAZ, @ItemState = invent.ITEMSTATE
-	FROM Axdb_20130131.dbo.InventTable as invent		
+	FROM Axdb.dbo.InventTable as invent		
 	WHERE invent.ItemId = @ProductId and invent.DataAreaID = @DataAreaId;
 
 	IF ISNULL(@StandardConfigId, '') = ''
@@ -62,8 +62,8 @@ SET NOCOUNT ON
 	SET @Amount2 = 0;
 
 	SELECT @Amount = ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 )
-	FROM Axdb_20130131.dbo.InventDim AS ind 
-	INNER JOIN Axdb_20130131.dbo.InventSum AS ins on ins.DataAreaId = ind.DataAreaId and 
+	FROM Axdb.dbo.InventDim AS ind 
+	INNER JOIN Axdb.dbo.InventSum AS ins on ins.DataAreaId = ind.DataAreaId and 
 													ins.inventDimId = ind.inventDimId and 
 													ins.ItemId = @ProductId and 
 													ins.Closed = 0
@@ -77,8 +77,8 @@ SET NOCOUNT ON
 	IF (@DataAreaId = 'ser')
 	BEGIN
 		SELECT @Amount2 = ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 )
-		FROM Axdb_20130131.dbo.InventDim AS ind
-		INNER JOIN Axdb_20130131.dbo.InventSum AS ins on ins.DataAreaId = ind.DataAreaId and 
+		FROM Axdb.dbo.InventDim AS ind
+		INNER JOIN Axdb.dbo.InventSum AS ins on ins.DataAreaId = ind.DataAreaId and 
 														ins.inventDimId = ind.inventDimId and 
 														ins.ItemId = @ProductId and 
 														ins.Closed = 0

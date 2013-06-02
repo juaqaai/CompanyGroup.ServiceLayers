@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="InternetUser.EventRegistrationAddNew" callable="true">
+    <query-param name="EventId" type="System.String"/>
+    <query-param name="EventName" type="System.String"/>
+    <query-param name="Xml" type="System.String"/>
+    <return-scalar column="Id" type="System.Int64"/>
+    exec InternetUser.EventRegistrationAddNew @EventId=:EventId, @EventName=:EventName, @Xml=:Xml
+  </sql-query>
+</hibernate-mapping>  

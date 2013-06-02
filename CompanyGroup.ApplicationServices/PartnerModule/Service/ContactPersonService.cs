@@ -73,21 +73,24 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.ContactPerson GetContactPersonById(CompanyGroup.Dto.PartnerModule.GetContactPersonByIdRequest request)
         {
-            //ha üres a látogató azonosító
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
-
             try
             {
+                //ha üres a látogató azonosító
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.VisitorId), CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull);
+
                 //látogató kikeresése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-                CompanyGroup.Domain.PartnerModule.ContactPerson contactPerson = contactPersonRepository.GetContactPerson(visitor.PersonId, visitor.DataAreaId);
+                CompanyGroup.Domain.PartnerModule.ContactPerson contactPerson = contactPersonRepository.GetContactPerson(visitor.PersonId, "hrp");
 
                 CompanyGroup.Dto.PartnerModule.ContactPerson result = new ContactPersonToContactPerson().MapToPartnerModuleContactPerson(contactPerson);
 
                 return result;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
         }
 
         /// <summary>
@@ -154,78 +157,85 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.ChangePassword ChangePassword(CompanyGroup.Dto.PartnerModule.ChangePasswordRequest request)
         {
-            //ha üres a látogató azonosító
-            if (String.IsNullOrEmpty(request.VisitorId))
+            try
             {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, new CompanyGroup.Dto.PartnerModule.Visitor());
+                //ha üres a látogató azonosító
+                if (String.IsNullOrEmpty(request.VisitorId))
+                {
+                    return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.validationVisitorIdCannotBeNull, new CompanyGroup.Dto.PartnerModule.Visitor());
+                }
+
+                //látogató kikeresése
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                //látogató belépésének ellenörzése, csak a személyi belépések esetén lehetséges a jelszómódosítás
+                if (!visitor.LoginType.Equals(LoginType.Person))
+                {
+                    return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordNotAllowed, new VisitorToVisitor().Map(visitor));
+                }
+
+                //lehetséges-e a megadott adatokkal a jelszómódosítás művelet?
+                CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = contactPersonRepository.VerifyChangePassword(visitor.PersonId, request.UserName, request.OldPassword, request.NewPassword, "hrp");
+
+                //ha nem lehetséges a jelszómódosítás, akkor kilépés hibaüzenettel
+                if (!verify.Success)
+                {
+                    return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, verify.Message, new VisitorToVisitor().Map(visitor));
+                }
+
+                //jelszómódosítás művelet előkészítése
+                CompanyGroup.Domain.PartnerModule.ChangePasswordCreate changePasswordCreate = new CompanyGroup.Domain.PartnerModule.ChangePasswordCreate()
+                                                                                                  {
+                                                                                                      ContactPersonId = visitor.PersonId,
+                                                                                                      DataAreaId = "hrp",
+                                                                                                      NewPassword = request.NewPassword,
+                                                                                                      OldPassword = request.OldPassword,
+                                                                                                      WebLoginName = request.UserName
+                                                                                                  };
+                //jelszómódosítás AX
+                CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult = contactPersonRepository.Change(changePasswordCreate);
+
+                if (changePasswordCreateResult.Code == 0)
+                {
+                    changePasswordCreateResult.Code = 1;
+                    changePasswordCreateResult.Message = "The operation successfully completed!";
+                }
+
+                //jelszómódosítás log hozzáadás
+                CompanyGroup.Domain.PartnerModule.ChangePassword changePassword = new CompanyGroup.Domain.PartnerModule.ChangePassword()
+                                                                                    {
+                                                                                        CreatedDate = DateTime.Now,
+                                                                                        DataAreaId = "hrp",
+                                                                                        NewPassword = request.NewPassword,
+                                                                                        OldPassword = request.OldPassword,
+                                                                                        UserName = request.UserName,
+                                                                                        Status = changePasswordCreateResult.Succeeded ? Domain.PartnerModule.ChangePasswordStatus.Active : Domain.PartnerModule.ChangePasswordStatus.Failed,
+                                                                                        VisitorId = visitor.Id.ToString(),
+                                                                                        Id = MongoDB.Bson.ObjectId.GenerateNewId()
+                                                                                    };
+
+                changePasswordRepository.Add(changePassword);
+
+                bool sendMailSucceeded = false;
+
+                //levél elküldése sikeres esetben
+                if (changePasswordCreateResult.Succeeded)
+                {
+                    sendMailSucceeded = this.SendChangePasswordMail(changePassword, visitor);
+                }
+                else
+                {
+                    sendMailSucceeded = this.SendChangePasswordFailedMail(changePassword, visitor, changePasswordCreateResult);
+                }
+
+                string message = (changePasswordCreateResult.Succeeded && !sendMailSucceeded) ? CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordMailSendFailed : changePasswordCreateResult.Message;
+
+                return new CompanyGroup.Dto.PartnerModule.ChangePassword(changePasswordCreateResult.Succeeded, sendMailSucceeded, message, new VisitorToVisitor().Map(visitor));
             }
-
-            //látogató kikeresése
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            //látogató belépésének ellenörzése, csak a személyi belépések esetén lehetséges a jelszómódosítás
-            if (!visitor.LoginType.Equals(LoginType.Person))
+            catch (Exception ex)
             {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordNotAllowed, new VisitorToVisitor().Map(visitor));
+                throw ex;
             }
-
-            //lehetséges-e a megadott adatokkal a jelszómódosítás művelet?
-            CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = contactPersonRepository.VerifyChangePassword(visitor.PersonId, request.UserName, request.OldPassword, request.NewPassword, visitor.DataAreaId);
-
-            //ha nem lehetséges a jelszómódosítás, akkor kilépés hibaüzenettel
-            if (!verify.Success)
-            {
-                return new CompanyGroup.Dto.PartnerModule.ChangePassword(false, false, verify.Message, new VisitorToVisitor().Map(visitor));                
-            }
-
-            //jelszómódosítás művelet előkészítése
-            CompanyGroup.Domain.PartnerModule.ChangePasswordCreate changePasswordCreate = new CompanyGroup.Domain.PartnerModule.ChangePasswordCreate()
-                                                                                              { 
-                                                                                                  ContactPersonId = visitor.PersonId, 
-                                                                                                  DataAreaId = visitor.DataAreaId, 
-                                                                                                  NewPassword = request.NewPassword, 
-                                                                                                  OldPassword = request.OldPassword, 
-                                                                                                  WebLoginName = request.UserName 
-                                                                                              };
-            //jelszómódosítás AX
-            CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult changePasswordCreateResult = contactPersonRepository.Change(changePasswordCreate);
-
-            if (changePasswordCreateResult.Code == 0)
-            {
-                changePasswordCreateResult.Code = 1;
-                changePasswordCreateResult.Message = "The operation successfully completed!";
-            }
-
-            //jelszómódosítás log hozzáadás
-            CompanyGroup.Domain.PartnerModule.ChangePassword changePassword = new CompanyGroup.Domain.PartnerModule.ChangePassword()
-                                                                                {
-                                                                                    CreatedDate = DateTime.Now,
-                                                                                    DataAreaId = visitor.DataAreaId,
-                                                                                    NewPassword = request.NewPassword,
-                                                                                    OldPassword = request.OldPassword, 
-                                                                                    UserName = request.UserName,
-                                                                                    Status = changePasswordCreateResult.Succeeded ? Domain.PartnerModule.ChangePasswordStatus.Active : Domain.PartnerModule.ChangePasswordStatus.Failed,
-                                                                                    VisitorId = visitor.Id.ToString(),
-                                                                                    Id = MongoDB.Bson.ObjectId.GenerateNewId()
-                                                                                };
-
-            changePasswordRepository.Add(changePassword);
-
-            bool sendMailSucceeded = false;
-
-            //levél elküldése sikeres esetben
-            if (changePasswordCreateResult.Succeeded)
-            {
-                sendMailSucceeded = this.SendChangePasswordMail(changePassword, visitor);
-            }
-            else
-            {
-                sendMailSucceeded = this.SendChangePasswordFailedMail(changePassword, visitor, changePasswordCreateResult);
-            }
-
-            string message = ( changePasswordCreateResult.Succeeded && !sendMailSucceeded ) ? CompanyGroup.Domain.Resources.Messages.verification_ChangePasswordMailSendFailed : changePasswordCreateResult.Message;
-
-            return new CompanyGroup.Dto.PartnerModule.ChangePassword( changePasswordCreateResult.Succeeded, sendMailSucceeded, message, new VisitorToVisitor().Map(visitor));
         }
 
         #region "jelszómódosítás mail küldés"
@@ -277,8 +287,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$OldPassword$", changePassword.OldPassword)
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
-                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString()));
+                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
+                                        //.Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString())
 
                 string tmpPlain = ContactPersonService.PlainText(ContactPersonService.ChangePasswordMailTextTemplateFile);
                 string plain = tmpPlain.Replace("$PersonName$", visitor.PersonName)
@@ -286,8 +296,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                         .Replace("$OldPassword$", changePassword.OldPassword)
                                         .Replace("$WebLoginName$", changePassword.UserName)
                                         .Replace("$Date$", String.Format("{0}.{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
-                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                        .Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString()));
+                                        .Replace("$Time$", String.Format("{0}.{1}.{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
+                                        //.Replace("$UndoChangePasswordUrl$", String.Format(ContactPersonService.UndoChangePasswordUrl, changePassword.Id.ToString()));
 
                 string toAddress = ContactPersonService.TestMode ? ContactPersonService.ChangePasswordMailBCcAddress : visitor.Email;
 
@@ -309,7 +319,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                logWriter.Write(String.Format("ContactPersonServoice SendChangePasswordMail {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
+
                 return false;
             }
 
@@ -368,7 +381,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                logWriter.Write(String.Format("ContactPersonServoice SendChangePasswordFailedMail {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
+
                 return false;
             }
 
@@ -383,38 +399,45 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.ForgetPassword ForgetPassword(CompanyGroup.Dto.PartnerModule.ForgetPasswordRequest request)
         {
-            //ha üres a felhasználónév 
-            if (String.IsNullOrEmpty(request.UserName))
+            try
             {
-                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull);
+                //ha üres a felhasználónév 
+                if (String.IsNullOrEmpty(request.UserName))
+                {
+                    return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, CompanyGroup.Domain.Resources.Messages.verification_UserNameCannotBeNull);
+                }
+
+                //lehetséges-e a megadott adatokkal az elfelejtett jelszó művelet? Van-e ilyen felhasználó?
+                CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword = contactPersonRepository.GetForgetPassword(request.UserName);
+
+                string message = forgetPassword.GetMessage(request.Language);
+
+                //ha nem, akkor kilépés hibaüzenettel
+                if (!forgetPassword.Succeedeed)
+                {
+                    return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, message);
+                }
+
+                bool sent = false;
+
+                //levél elküldése dbManagers-nek sikertelen esetben
+                if (!forgetPassword.Succeedeed)
+                {
+                    this.SendForgetPasswordFailedMail(forgetPassword, message);
+                }
+                else
+                {
+                    sent = this.SendForgetPasswordMail(forgetPassword);
+
+                    if (!sent) { message = (request.Language.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish)) ? "Sending email failed!" : "Az email küldés nem sikerült!"; }
+                }
+
+                return new CompanyGroup.Dto.PartnerModule.ForgetPassword((forgetPassword.Succeedeed && sent), message);
             }
-
-            //lehetséges-e a megadott adatokkal az elfelejtett jelszó művelet? Van-e ilyen felhasználó?
-            CompanyGroup.Domain.PartnerModule.ForgetPassword forgetPassword = contactPersonRepository.GetForgetPassword(request.UserName);
-
-            string message = forgetPassword.GetMessage(request.Language);
-
-            //ha nem, akkor kilépés hibaüzenettel
-            if (!forgetPassword.Succeedeed)
+            catch (Exception ex)
             {
-                return new CompanyGroup.Dto.PartnerModule.ForgetPassword(false, message);
+                throw ex;
             }
-
-            bool sent = false; 
-
-            //levél elküldése dbManagers-nek sikertelen esetben
-            if (!forgetPassword.Succeedeed)
-            {
-                this.SendForgetPasswordFailedMail(forgetPassword, message);
-            }
-            else
-            {
-                sent = this.SendForgetPasswordMail(forgetPassword);
-
-                if (!sent) { message = (request.Language.Equals(CompanyGroup.Domain.Core.Constants.LanguageEnglish)) ? "Sending email failed!" : "Az email küldés nem sikerült!"; }
-            }
-
-            return new CompanyGroup.Dto.PartnerModule.ForgetPassword((forgetPassword.Succeedeed && sent), message);
         }
 
         #region "Elfelejtett jelszó email küldés"
@@ -478,14 +501,17 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 mailSettings.BccAddressList.Add(ContactPersonService.ForgetPasswordMailBCcName, ContactPersonService.ForgetPasswordMailBCcAddress);
 
-                mailSettings.ToAddressList.Add(toAddress, toName);
+                mailSettings.ToAddressList.Add(toName, toAddress);
 
                 return this.SendMail(mailSettings);
 
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                logWriter.Write(String.Format("ContactPersonServoice SendForgetPasswordMail {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
+
                 return false;
             }
 
@@ -533,7 +559,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                logWriter.Write(String.Format("ContactPersonServoice SendForgetPasswordFailedMail {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
+
                 return false;
             }
 

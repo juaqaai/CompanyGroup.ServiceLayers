@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Picture"
   DTS:PackageType="5"
-  DTS:VersionBuild="47"
-  DTS:VersionGUID="{86902E8F-C46A-4877-AA36-04169264CA7A}">
+  DTS:VersionBuild="48"
+  DTS:VersionGUID="{4BBA0CDA-4AD2-466F-9D75-27851604C27B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -417,8 +417,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="{8BE3911C-16AC-4AFD-86D9-B41CE00D475D}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Source]"
+                  connectionManagerID="{F574DD6F-2471-4875-AA20-0330579C687D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ExtractInterface]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1088,7 +1088,7 @@
     design-time-name="Package\Data Flow Task">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="151,42"
           Id="Package\Data Flow Task\OLE DB Source"
@@ -1124,9 +1124,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1148,9 +1146,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -1172,9 +1168,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

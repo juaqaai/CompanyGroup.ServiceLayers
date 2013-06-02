@@ -120,7 +120,7 @@ namespace CompanyGroup.Domain.PartnerModule
                     orderInfo = new OrderInfo(x.SalesId, x.CreatedDate, x.DataAreaId, x.Payment, x.SalesHeaderType, x.SalesHeaderStatus, x.WithDelivery);
                 }
 
-                OrderLineInfo orderLineInfo = new OrderLineInfo(x.Id, x.LineNum, x.ShippingDateRequested, x.ProductId, x.ProductName, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment, x.InStock, x.AvailableInWebShop, !String.IsNullOrEmpty(x.FileName));
+                OrderLineInfo orderLineInfo = new OrderLineInfo(x.Id, x.LineNum, x.ShippingDateRequested, x.ProductId, x.ProductName, x.SalesPrice, x.CurrencyCode, x.Quantity, x.LineAmount, x.SalesDeliverNow, x.RemainSalesPhysical, x.StatusIssue, x.InventLocationId, x.Payment, x.InStock, x.AvailableInWebShop, !String.IsNullOrEmpty(x.FileName), x.DataAreaId);
 
                 orderInfo.AddOrderLine(orderLineInfo);
             });

@@ -29,6 +29,8 @@ namespace CompanyGroup.Domain.WebshopModule
             this.PresentValue = presentValue;
 
             this.InterestRate = interestRate;
+
+            this.CalculatedValue = 0;
         }
 
         public LeasingOption() : this(0, 0, 0, 0, 0, 0, 0) { }
@@ -67,6 +69,11 @@ namespace CompanyGroup.Domain.WebshopModule
         /// kamat
         /// </summary>
         public double InterestRate { get; set; }
+
+        /// <summary>
+        /// számított érték
+        /// </summary>
+        public double CalculatedValue { get; set; }
       
     }
 
@@ -131,7 +138,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="i">finanszírozandó összeg</param>
+        /// <param name="amount">finanszírozandó összeg</param>
         /// <param name="d">GetLeasingByFinancedAmount lekérdezés eredményeképpen előállt PercentValue adatbázis mező érték</param>
         /// <returns></returns>
         public static double CalculateValue(double d, double amount)
@@ -147,5 +154,28 @@ namespace CompanyGroup.Domain.WebshopModule
             }
             return ret;
         }
+
+        /// <summary>
+        /// beállítja az összes CalculatedValue nevű mező értékét
+        /// </summary>
+        /// <param name="amount"></param>
+        public void CalculateAllValue(double amount)
+        {
+            this.ForEach( x => {
+                
+                x.CalculatedValue = CalculateValue(x.PercentValue, amount);
+                
+            });
+        }
+
+        /// <summary>
+        /// beállítja az összes CalculatedValue nevű mező értékét az Amount mező alapján
+        /// </summary>
+        public void CalculateAllValue()
+        {
+            this.CalculateAllValue(this.Amount);
+        }
+
+
     }
 }

@@ -28,12 +28,12 @@ SET NOCOUNT ON
 				   CellularPhone as Mobile, 
 				   PhoneLocal as Extension, 
 				   Email
-			FROM Axdb_20130131.dbo.EmplTable 
+			FROM Axdb.dbo.EmplTable 
 			WHERE DataAreaId = 'HUN'
 RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[RepresentativeExtract] TO InternetUser
-
 GO
-
+GRANT EXECUTE ON [InternetUser].[RepresentativeExtract] TO [HRP_HEADOFFICE\AXPROXY]
+GO
 -- EXEC [InternetUser].[RepresentativeExtract];

@@ -1,10 +1,10 @@
 
--- CT engedélyezése adatbázisra
-ALTER DATABASE Axdb_20130131
+-- CT engedélyezése adatbázisra	Axdb_20130131
+ALTER DATABASE Axdb
 
 SET CHANGE_TRACKING = ON
 
-(CHANGE_RETENTION = 30 HOURS, AUTO_CLEANUP = ON)
+(CHANGE_RETENTION = 24 HOURS, AUTO_CLEANUP = ON)
 
 -- CT engedélyezése táblára
 ALTER TABLE dbo.INVENTSUM
@@ -25,6 +25,17 @@ ENABLE CHANGE_TRACKING
 
 WITH (TRACK_COLUMNS_UPDATED = ON)
 
+ALTER TABLE dbo.CustInvoiceJour
+
+ENABLE CHANGE_TRACKING
+
+WITH (TRACK_COLUMNS_UPDATED = ON)
+
+ALTER TABLE Axdb.dbo.CustTransOpen
+
+DISABLE CHANGE_TRACKING
+
+WITH (TRACK_COLUMNS_UPDATED = ON)
 -- 
 select * from sys.change_tracking_databases 
 

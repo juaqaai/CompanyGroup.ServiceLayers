@@ -23,14 +23,15 @@ BEGIN
 		   MEGJEGYZES AS [Description], HTMLFILE AS [HtmlPath], LEJARATDATUMA AS [EndDate], 
 		   NAGYKEP AS [PicturePath], ENGEDELYEZESDATUMA AS [AllowedDate], 
 		   ENGEDELYEZESIDEJE AS [AllowedTime]  
-	FROM axdb_20120614.dbo.UPDHERLEV
+	FROM Axdb.dbo.UPDHERLEV
 	WHERE DATAAREAID = CASE WHEN @DataAreaId = '' THEN DATAAREAID ELSE @DataAreaId END AND
 		  --ENGEDELYEZVE = 2 AND -- 0: osszes, 1: csak a meg nem kikuldottek, 2: csak a kikuldottek, 
 		  ENGEDELYEZO <> '' AND
 		  ELKULDVE = 1 AND 
-		  HIRLEVID = CASE WHEN @BusinessUnitId = '' THEN HIRLEVID ELSE ( SELECT TOP 1 HIRLEVID FROM axdb_20120614.dbo.UPDHIRLEVJELLEG WHERE TEMAID = @BusinessUnitId ) END AND
-		  HIRLEVID = CASE WHEN @ManufacturerId = '' THEN HIRLEVID ELSE ( SELECT TOP 1 HIRLEVID FROM axdb_20120614.dbo.UPDHIRLEVGYARTO WHERE GYARTONEV = @ManufacturerId ) END
+		  HIRLEVID = CASE WHEN @BusinessUnitId = '' THEN HIRLEVID ELSE ( SELECT TOP 1 HIRLEVID FROM Axdb.dbo.UPDHIRLEVJELLEG WHERE TEMAID = @BusinessUnitId ) END AND
+		  HIRLEVID = CASE WHEN @ManufacturerId = '' THEN HIRLEVID ELSE ( SELECT TOP 1 HIRLEVID FROM Axdb.dbo.UPDHIRLEVGYARTO WHERE GYARTONEV = @ManufacturerId ) END
 		  AND WEBRE = 1
+		  AND DATEDIFF(month, ENGEDELYEZESDATUMA, GETDATE()) < 4
 	ORDER BY HIRLEVID DESC
 
 END
@@ -39,4 +40,4 @@ GO
 GRANT EXECUTE ON InternetUser.NewsletterSelect TO InternetUser
 GO
 
--- exec [InternetUser].[NewsletterSelect] 10, 'hrp', '', '';
+-- exec [InternetUser].[NewsletterSelect] 0, 'hrp', '', '';

@@ -14,9 +14,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     //[CompanyGroup.ApplicationServices.InstanceProviders.UnityInstanceProviderServiceBehavior()]
     public class FinanceService : ServiceBase, IFinanceService
     {
+        private CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository;
+
         public FinanceService(CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository,
+                              CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository, 
                               CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository) : base(financeRepository, visitorRepository)
         {
+            this.shoppingCartRepository = shoppingCartRepository;
         }
 
         private static readonly string OfferingMailSubject = Helpers.ConfigSettingsParser.GetString("OfferingMailSubject", "HRP Finance ajánlatkérés üzenet");
@@ -130,9 +134,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request)
+        public CompanyGroup.Dto.WebshopModule.FinanceOfferResponse CreateFinanceOffer(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "FinanceService CreateFinanceOffer request cannot be null, or empty!");
+            Helpers.DesignByContract.Require((request != null), "FinanceService CreateFinanceOffer request cannot be null, or empty!");
 
             Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "FinanceService CreateFinanceOffer VisitorId parameter cannot be null, or empty!");
 
@@ -144,57 +148,51 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
                 //kosár tartalom lekérdezése, levélküldés
-                Domain.WebshopModule.FinanceOffer financeOfferToAdd = new Domain.WebshopModule.FinanceOffer()
-                {
-                    Address = request.Address,
-                    NumOfMonth = request.NumOfMonth,
-                    PersonName = request.PersonName,
-                    Phone = request.Phone,
-                    StatNumber = request.StatNumber
-                };
+                CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.OfferId);
 
-                CompanyGroup.Domain.WebshopModule.FinanceOffer financeOffer = financeRepository.GetFinanceOffer(request.OfferId);
+                Helpers.DesignByContract.Require((shoppingCart != null), "FinanceOffer shoppingcart cannot be null!");
 
-                Helpers.DesignByContract.Require((financeOffer != null), "FinanceOffer cannot be null!");
+                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(shoppingCart.SumTotal);
 
-                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financeOffer.TotalAmount);
+                //System.Collections.Specialized.StringCollection strColl = new System.Collections.Specialized.StringCollection();
 
-                System.Collections.Specialized.StringCollection strColl = new System.Collections.Specialized.StringCollection();
+                //leasingOptionList.ForEach( x => {
 
-                leasingOptionList.ForEach( x => {
+                //    double d = CompanyGroup.Domain.WebshopModule.LeasingOptions.CalculateValue(x.PercentValue, shoppingCart.SumTotal);
 
-                    double d = CompanyGroup.Domain.WebshopModule.LeasingOptions.CalculateValue(x.PercentValue, financeOffer.TotalAmount);
+                //    strColl.Add(Convert.ToString(d));
+                //});
 
-                    strColl.Add(Convert.ToString(d));
-                });
+                //string financedAmount = CompanyGroup.Helpers.ConvertData.ConvertIntToString(financeOffer.TotalAmount);
 
-                string financedAmount = CompanyGroup.Helpers.ConvertData.ConvertIntToString(financeOffer.TotalAmount);
+                //string pdfFileWithPath = String.Format("{0}/{1}.pdf", CompanyGroup.Helpers.ConfigSettingsParser.GetString("PdfPath", ""), visitor.VisitorId);
 
-                string pdfFileWithPath = String.Format("{0}/{1}.pdf", CompanyGroup.Helpers.ConfigSettingsParser.GetString("PdfPath", ""), visitor.VisitorId);
-
-                financeRepository.CreateLeasingDocument(financedAmount, strColl, pdfFileWithPath);
+                //financeRepository.CreateLeasingDocument(financedAmount, strColl, pdfFileWithPath);
 
                 //levélküldés
                 //bool sendSuccess = SendFinanceOfferMail(request, financeOffer, visitor);
 
                 //kosár beállítása finanszírozásra elküldött státuszba, ajánlathoz szükséges adatok mentése
-                financeRepository.Post(financeOffer); 
+                //financeRepository.Post(financeOffer); 
 
                 //leasing opciók lekérdezése
-                leasingOptionList = financeRepository.GetLeasingByFinancedAmount(0);
+                //leasingOptionList = financeRepository.GetLeasingByFinancedAmount(0);
 
                 //kalkuláció
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new CompanyGroup.Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
 
-                leasingOptions.Amount = 0;
+                // CalculatedValue értékeket állítja be
+                leasingOptions.CalculateAllValue(shoppingCart.SumTotal);
 
-                leasingOptions.ValidateAmount();
+                //leasingOptions.Amount = 0;
 
-                CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = new CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment()
+                //leasingOptions.ValidateAmount();
+
+                CompanyGroup.Dto.WebshopModule.FinanceOfferResponse response = new CompanyGroup.Dto.WebshopModule.FinanceOfferResponse()
                 {
                     LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
                     EmaiNotification = true,
-                    Message = ""
+                    Message = String.Empty
                 };
 
                 return response;
@@ -324,8 +322,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
-                return false;
+                throw ex;
+                //return false;
             }
 
         }

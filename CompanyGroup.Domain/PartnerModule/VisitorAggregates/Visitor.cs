@@ -1,48 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CompanyGroup.Domain.PartnerModule
 {
     /// <summary>
-    /// Kijelentkezett, vagy bejelentkezett látogató entitás
     /// </summary>
-    public class VisitorData : CompanyGroup.Domain.Core.Entity
+    /// <example>
+    /// Id VisitorId LoginIP RecId CustomerId CustomerName  
+    /// PersonId    PersonName   Email                                                                                                
+    /// IsWebAdministrator InvoiceInfoEnabled PriceListDownloadEnabled CanOrder RecieveGoods PaymTermIdBsc PaymTermIdHrp Currency   LanguageId DefaultPriceGroupIdHrp DefaultPriceGroupIdBsc InventLocationIdHrp InventLocationIdBsc 
+    /// RepresentativeId RepresentativeName RepresentativePhone RepresentativeMobile RepresentativeExtension RepresentativeEmail
+    /// LoginType RightHrp RightBsc ContractHrp ContractBsc CartId RegistrationId  IsCatalogueOpened IsShoppingCartOpened AutoLogin LoginDate LogoutDate ExpireDate
+    /// Valid
+    /// </example>
+    public class Visitor : CompanyGroup.Domain.Core.Entity, System.ComponentModel.DataAnnotations.IValidatableObject
     {
-        public VisitorData()
-        { 
-            this.VisitorId = String.Empty;
-            this.LoginIP = String.Empty;
-            this.AutoLogin = false;
-            this.RecId = 0;
-            this.CustomerId = String.Empty;
-            this.CustomerName = String.Empty;
-            this.CustomerPriceGroups = new List<CustomerPriceGroup>();
-            this.PersonId = String.Empty;
-            this.PersonName = String.Empty;
-            this.Email = String.Empty;
-            this.LoggedIn = false;
-            this.LoginType = LoginType.None;
-            this.Permission = new PartnerModule.Permission();
-            this.PartnerModel = global::PartnerModel.None;
-            this.LoginDate = DateTime.MinValue;
-            this.LogoutDate = DateTime.MinValue;
-            this.ExpireDate = DateTime.MinValue;
-            this.Status = LoginStatus.Passive;
-            this.DataAreaId = String.Empty;
-            this.PaymTermId = String.Empty;
-            this.Currency = String.Empty;
-            this.InventLocationId = String.Empty;
-            this.InventLocationIdHrp = String.Empty;
-            this.InventLocationIdBsc = String.Empty;
-            this.LanguageId = String.Empty;
-            this.DefaultPriceGroupId  = String.Empty;
-            this.DefaultPriceGroupIdBsc = String.Empty;
-            this.DefaultPriceGroupIdHrp = String.Empty;
-            this.Representative = new Representative();
-            this.Valid = false;
-        }
 
         /// <summary>
         /// látogató azonosító
@@ -53,11 +26,6 @@ namespace CompanyGroup.Domain.PartnerModule
         /// login ip address
         /// </summary>
         public string LoginIP { get; set; }
-
-        /// <summary>
-        /// automatikus belépés beállítása megtörtént?
-        /// </summary>
-        public bool AutoLogin { get; set; }
 
         /// <summary>
         /// ax record id
@@ -75,10 +43,9 @@ namespace CompanyGroup.Domain.PartnerModule
         public string CustomerName { get; set; }
 
         /// <summary>
-        /// profil kiolvasás, beállítás
+        /// vevőhöz tartozó árbesorolások 
         /// </summary>
-        //public CompanyGroup.Domain.PartnerModule.Profile Profile { get; private set; }
-        public IList<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> CustomerPriceGroups { get; set; }
+        public List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> CustomerPriceGroups { get; set; }
 
         /// <summary>
         /// személy azonosítója
@@ -111,9 +78,49 @@ namespace CompanyGroup.Domain.PartnerModule
         public Permission Permission { get; set; }
 
         /// <summary>
-        /// partnermodel (None = 0, Hrp = 1, Bsc = 2, Both = 3)
+        /// van-e jogosultság a hrp-ben?
         /// </summary>
-        public PartnerModel PartnerModel { get; set; }
+        public bool RightHrp { get; set; }
+
+        /// <summary>
+        /// van-e jogosultság a bsc-ben?
+        /// </summary>
+        public bool RightBsc { get; set; }
+
+        /// <summary>
+        /// van-e szerződés a hrp-ben?
+        /// </summary>
+        public bool ContractHrp { get; set; }
+
+        /// <summary>
+        /// van-e szerződés a bsc-ben?
+        /// </summary>
+        public bool ContractBsc { get; set; }
+
+        /// <summary>
+        /// aktív kosár azonosízó
+        /// </summary>
+        public int CartId { get; set; }
+
+        /// <summary>
+        /// regisztráció azonosítója?
+        /// </summary>
+        public string RegistrationId { get; set; }
+
+        /// <summary>
+        /// nyitva van-e a katalógus?
+        /// </summary>
+        public bool IsCatalogueOpened { get; set; }
+
+        /// <summary>
+        /// nyitva van-e a kosár lista?
+        /// </summary>
+        public bool IsShoppingCartOpened { get; set; }
+
+        /// <summary>
+        /// automatikus belépés beállítása megtörtént?
+        /// </summary>
+        public bool AutoLogin { get; set; }
 
         /// <summary>
         /// Visitor bejegyzés keletkezésének időpontja
@@ -133,14 +140,14 @@ namespace CompanyGroup.Domain.PartnerModule
         public LoginStatus Status { set; get; }
 
         /// <summary>
-        /// vállalat
+        /// vevő fizetési feltétele hrp vállalatban
         /// </summary>
-        public string DataAreaId { set; get; }
+        public string PaymTermIdHrp { set; get; }
 
         /// <summary>
-        /// vevő fizetési feltétele
+        /// vevő fizetési feltétele hrp vállalatban
         /// </summary>
-        public string PaymTermId { set; get; }
+        public string PaymTermIdBsc { set; get; }
 
         /// <summary>
         /// alapértelmezett valutanem
@@ -148,17 +155,12 @@ namespace CompanyGroup.Domain.PartnerModule
         public string Currency { set; get; }
 
         /// <summary>
-        /// alapértelmezett raktár
-        /// </summary>
-        public string InventLocationId { set; get; }
-
-        /// <summary>
-        /// hrp alapértelmezett raktár
+        /// alapértelmezett raktár hrp vállalatban
         /// </summary>
         public string InventLocationIdHrp { set; get; }
 
         /// <summary>
-        /// bsc alapértelmezett raktár
+        /// alapértelmezett raktár bsc vállalatban
         /// </summary>
         public string InventLocationIdBsc { set; get; }
 
@@ -168,17 +170,12 @@ namespace CompanyGroup.Domain.PartnerModule
         public string LanguageId { set; get; }
 
         /// <summary>
-        /// árbesorolás 
-        /// </summary>
-        public string DefaultPriceGroupId { set; get; }
-
-        /// <summary>
-        /// bsc árbesorolás 
+        /// árbesorolás bsc vállalatban
         /// </summary>
         public string DefaultPriceGroupIdBsc { set; get; }
 
         /// <summary>
-        /// hrp árbesorolás 
+        /// árbesorolás hrp vállalatban
         /// </summary>
         public string DefaultPriceGroupIdHrp { set; get; }
 
@@ -192,156 +189,210 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         public bool Valid { set; get; }
 
-    }
-
-    public class Visitor : CompanyGroup.Domain.PartnerModule.VisitorData, IValidatableObject
-    {
-        public Visitor(CompanyGroup.Domain.PartnerModule.VisitorData visitorData)
+        public Visitor(int id, string visitorId, string loginIP, long recId, string customerId, string customerName, string personId, string personName, string email, bool isWebAdministrator, bool invoiceInfoEnabled,
+                       bool priceListDownloadEnabled, bool canOrder, bool recieveGoods, string paymTermIdBsc, string paymTermIdHrp, string currency,
+                       string languageId, string defaultPriceGroupIdHrp, string defaultPriceGroupIdBsc, string inventLocationIdHrp, string inventLocationIdBsc,
+                       string representativeId, string representativeName, string representativePhone, string representativeMobile, string representativeExtension, string representativeEmail,
+                       int loginType, bool rightHrp, bool rightBsc, bool contractHrp, bool contractBsc, int cartId, string registrationId, bool isCatalogueOpened, bool isShoppingCartOpened,
+                       bool autoLogin, DateTime loginDate, DateTime logoutDate, DateTime expireDate, bool valid)
         {
-            this.SetVisitor(visitorData);
-
-            this.PartnerModel = visitorData.PartnerModel;
-
-            this.Permission = visitorData.Permission;
-
-            this.PaymTermId = visitorData.PaymTermId;
-
-            this.Representative = visitorData.Representative;
-
-            this.LanguageId = visitorData.LanguageId;
-
-            this.DefaultPriceGroupIdBsc = visitorData.DefaultPriceGroupIdBsc ?? "2";
-
-            this.DefaultPriceGroupIdHrp = visitorData.DefaultPriceGroupIdHrp ?? "2";
-
-            this.InventLocationIdBsc = visitorData.InventLocationIdBsc ?? "7000";
-
-            this.InventLocationIdHrp = visitorData.InventLocationIdHrp ?? "KULSO";
+            this.Id = id;
+            this.VisitorId = visitorId;
+            this.LoginIP = loginIP;
+            this.RecId = recId;
+            this.CustomerId = customerId;
+            this.CustomerName = customerName;
+            this.PersonId = personId;
+            this.PersonName = personName;
+            this.Email = email;
+            this.Permission = new Permission(isWebAdministrator, invoiceInfoEnabled, priceListDownloadEnabled, canOrder, recieveGoods);
+            this.PaymTermIdBsc = paymTermIdBsc;
+            this.PaymTermIdHrp = paymTermIdHrp;
+            this.Currency = currency;
+            this.LanguageId = languageId;
+            this.DefaultPriceGroupIdHrp = defaultPriceGroupIdHrp;
+            this.DefaultPriceGroupIdBsc = defaultPriceGroupIdBsc;
+            this.InventLocationIdHrp = inventLocationIdHrp;
+            this.InventLocationIdBsc = inventLocationIdBsc;
+            this.Representative = new Representative(representativeId, representativeName, representativePhone, representativeMobile, representativeExtension, representativeEmail);
+            this.LoginType = (LoginType)loginType;
+            this.RightHrp = rightHrp;
+            this.RightBsc = rightBsc;
+            this.ContractHrp = contractHrp;
+            this.ContractBsc = contractBsc;
+            this.CartId = cartId;
+            this.RegistrationId = registrationId;
+            this.IsCatalogueOpened = isCatalogueOpened;
+            this.IsShoppingCartOpened = isShoppingCartOpened;
+            this.AutoLogin = autoLogin;
+            this.LoginDate = loginDate;
+            this.LogoutDate = logoutDate;
+            this.ExpireDate = expireDate;
+            this.Valid = valid;
         }
 
+        /// <summary>
+        /// létrehozás a bejelentkezés eredményeként létező visitorDataList-ből
+        /// </summary>
+        /// <param name="visitorDataList"></param>
         public Visitor(List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorDataList)
         {
-            this.visitorDataList = visitorDataList;
+            //this.visitorDataList = visitorDataList;
 
-            VisitorData visitorData = FindVisitorData();
+            VisitorData visitorDataHrp = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp)) : new VisitorData();
 
-            this.SetVisitor(visitorData);
+            visitorDataHrp = visitorDataHrp ?? new VisitorData();
 
-            this.PartnerModel = CalculatePartnerModel();
+            VisitorData visitorDataBsc = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc)) : new VisitorData();
 
-            this.Permission = CreatePermission(GetPermissionBsc(), GetPermissionHrp());
+            visitorDataBsc = visitorDataBsc ?? new VisitorData();
 
-            this.PaymTermId = CreatePaymTermId(GetPaymTermIdHrp(), GetPaymTermIdBsc());
+            this.SetVisitor(visitorDataHrp, visitorDataBsc);
 
-            this.Representative = CreateRepresentative(GetRepresentativeHrp(), GetRepresentativeBsc());
-
-            this.LanguageId = CreateLanguageId(GetLanguageIdHrp(), GetLanguageIdBsc());
-
-            this.DefaultPriceGroupIdBsc = GetDefaultPriceGroupId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
-
-            this.DefaultPriceGroupIdHrp = GetDefaultPriceGroupId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-
-            this.InventLocationIdHrp = GetInventLocationId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-
-            this.InventLocationIdBsc = GetInventLocationId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
         }
 
-        private void SetVisitor(CompanyGroup.Domain.PartnerModule.VisitorData visitorData)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visitorDataHrp"></param>
+        /// <param name="visitorDataBsc"></param>
+        private void SetVisitor(CompanyGroup.Domain.PartnerModule.VisitorData visitorDataHrp, CompanyGroup.Domain.PartnerModule.VisitorData visitorDataBsc)
         {
-            this.AutoLogin = visitorData.AutoLogin;
+            /*
+                    public string VisitorId { get; set; }
+                    public bool LoggedIn { get; set; }
 
-            this.Currency = visitorData.Currency;
+                    public int CartId { get; set; }
+                    public string RegistrationId { get; set; }
+                    public bool IsCatalogueOpened { get; set; }
+                    public bool IsShoppingCartOpened { get; set; }
+             */
+            this.RightHrp = visitorDataHrp.RightHrp || visitorDataBsc.RightHrp;
 
-            this.CustomerId = visitorData.CustomerId;
+            this.RightBsc = visitorDataHrp.RightBsc || visitorDataBsc.RightBsc;
 
-            this.CustomerName = visitorData.CustomerName;
+            this.ContractHrp = visitorDataHrp.ContractHrp || visitorDataBsc.ContractHrp;
 
-            this.CustomerPriceGroups = visitorData.CustomerPriceGroups;
+            this.ContractBsc = visitorDataHrp.ContractBsc || visitorDataBsc.ContractBsc;
 
-            this.DataAreaId = visitorData.DataAreaId;
+            this.AutoLogin = visitorDataHrp.AutoLogin || visitorDataBsc.AutoLogin;
 
-            this.DefaultPriceGroupId = visitorData.DefaultPriceGroupId;
+            this.Currency = !String.IsNullOrEmpty(visitorDataHrp.Currency) ? visitorDataHrp.Currency : visitorDataBsc.Currency;
 
-            this.Email = visitorData.Email;
+            this.CustomerId = !String.IsNullOrEmpty(visitorDataHrp.CustomerId) ? visitorDataHrp.CustomerId : visitorDataBsc.CustomerId;
 
-            this.ExpireDate = visitorData.ExpireDate;
+            this.CustomerName = !String.IsNullOrEmpty(visitorDataHrp.CustomerName) ? visitorDataHrp.CustomerName : visitorDataBsc.CustomerName;
 
-            this.Id = visitorData.Id;
+            //this.CustomerPriceGroups = visitorData.CustomerPriceGroups;
 
-            this.InventLocationId = visitorData.InventLocationId;
+            this.DefaultPriceGroupIdBsc = visitorDataBsc.DefaultPriceGroupId;
 
-            this.LoginDate = visitorData.LoginDate;
+            this.DefaultPriceGroupIdHrp = visitorDataHrp.DefaultPriceGroupId;
 
-            this.LoginIP = visitorData.LoginIP;
+            this.Email = !String.IsNullOrEmpty(visitorDataHrp.Email) ? visitorDataHrp.Email : visitorDataBsc.Email;
 
-            this.LoginType = visitorData.LoginType;
+            this.ExpireDate = (visitorDataHrp.ExpireDate != null) ? visitorDataHrp.ExpireDate : visitorDataBsc.ExpireDate;
 
-            this.LogoutDate = visitorData.LogoutDate;
+            this.Id = (visitorDataHrp.Id > 0) ? visitorDataHrp.Id : visitorDataBsc.Id;
 
-            this.PersonId = visitorData.PersonId;
+            this.InventLocationIdHrp = visitorDataHrp.InventLocationId;
 
-            this.PersonName = visitorData.PersonName;
+            this.InventLocationIdBsc = visitorDataBsc.InventLocationId;
 
-            this.RecId = visitorData.RecId;
+            this.LoginDate = (visitorDataHrp.LoginDate != null) ? visitorDataHrp.LoginDate : visitorDataBsc.LoginDate;
 
-            this.Status = visitorData.Status;
+            this.LoginIP = !String.IsNullOrEmpty(visitorDataHrp.LoginIP) ? visitorDataHrp.LoginIP : visitorDataBsc.LoginIP;
 
-            this.Valid = visitorData.Valid;
+            this.LoginType = (visitorDataHrp.LoginType >= visitorDataBsc.LoginType) ? visitorDataHrp.LoginType : visitorDataBsc.LoginType;
 
-            this.VisitorId = visitorData.VisitorId;        
+            this.LogoutDate = (visitorDataHrp.LogoutDate != null) ? visitorDataHrp.LogoutDate : visitorDataBsc.LogoutDate;
+
+            this.PersonId = !String.IsNullOrEmpty(visitorDataHrp.PersonId) ? visitorDataHrp.PersonId : visitorDataBsc.PersonId;
+
+            this.PersonName = !String.IsNullOrEmpty(visitorDataHrp.PersonName) ? visitorDataHrp.PersonName : visitorDataBsc.PersonName;
+
+            this.RecId = (visitorDataHrp.RecId > 0) ? visitorDataHrp.RecId : visitorDataBsc.RecId;
+
+            this.Status = (visitorDataHrp.Status >= visitorDataBsc.Status) ? visitorDataHrp.Status : visitorDataBsc.Status;
+
+            this.Valid = (visitorDataHrp.Valid) ? visitorDataHrp.Valid : visitorDataBsc.Valid;
+
+            this.VisitorId = !String.IsNullOrEmpty(visitorDataHrp.VisitorId) ? visitorDataHrp.VisitorId : visitorDataBsc.VisitorId;
+
+            this.PaymTermIdHrp = visitorDataHrp.PaymTermId;
+
+            this.PaymTermIdBsc = visitorDataBsc.PaymTermId;
+
+            //jogosultság beállítás - 
+            this.Permission = CreatePermission(visitorDataHrp.Permission, visitorDataBsc.Permission);
+
+            this.Representative = CreateRepresentative(visitorDataHrp.Representative, visitorDataBsc.Representative);
+
+            //hrp beállításait részesíti előnyben
+            this.LanguageId = String.IsNullOrEmpty(visitorDataHrp.LanguageId) ? visitorDataBsc.LanguageId : visitorDataHrp.LanguageId;
+
+            this.CartId = (visitorDataHrp.CartId > 0) ? visitorDataHrp.CartId : visitorDataBsc.CartId;
+
+            this.RegistrationId = String.IsNullOrEmpty(visitorDataHrp.RegistrationId) ? visitorDataBsc.RegistrationId : visitorDataHrp.RegistrationId;
         }
 
-        private VisitorData FindVisitorData()
-        {
-            VisitorData result = null;
+        //private VisitorData FindVisitorData(string dataAreaId)
+        //{
+        //    VisitorData result = null;
 
-            if (visitorDataList.Count > 0) 
-            {
-                result = visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp));
+        //    if (visitorDataList.Count > 0)
+        //    {
+        //        result = visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp));
 
-                if (result == null)
-                {
-                    result = visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc));
-                }
-            }
+        //        if (result == null)
+        //        {
+        //            result = visitorDataList.Find(x => x.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc));
+        //        }
+        //    }
 
-            return (result == null) ? new VisitorData() : result;  
-        }
+        //    return (result == null) ? new VisitorData() : result;
+        //}
 
         /// <summary>
         /// bejelentkezés hívás eredménye
         /// </summary>
-        private List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorDataList;
+        //private List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorDataList;
 
         #region "Permission"
 
-        /// <summary>
-        /// hrp vállalat jogosultság beállítás
-        /// </summary>
-        private Permission GetPermissionHrp()
-        {
-            return GetPermission(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-        }
+        ///// <summary>
+        ///// hrp vállalat jogosultság beállítás
+        ///// </summary>
+        //private Permission GetPermissionHrp()
+        //{
+        //    return GetPermission(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+        //}
+
+        ///// <summary>
+        ///// bsc vállalat jogosultság beállítás
+        ///// </summary>
+        //private Permission GetPermissionBsc()
+        //{
+        //    return GetPermission(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+        //}
+
+        //private Permission GetPermission(string dataAreaId)
+        //{
+        //    VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
+
+        //    return (visitorData == null) ? new Permission() : visitorData.Permission;
+        //}
 
         /// <summary>
-        /// bsc vállalat jogosultság beállítás
+        /// a nagyobb jogosultságbeállítás lesz érvényben
         /// </summary>
-        private Permission GetPermissionBsc()
-        {
-            return GetPermission(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc); 
-        }
-
-        private Permission GetPermission(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
-
-            return (visitorData == null) ? new Permission() : visitorData.Permission;        
-        }
-
+        /// <param name="permissionBsc"></param>
+        /// <param name="permissionHrp"></param>
+        /// <returns></returns>
         private Permission CreatePermission(CompanyGroup.Domain.PartnerModule.Permission permissionBsc, CompanyGroup.Domain.PartnerModule.Permission permissionHrp)
         {
-            return new Permission(permissionHrp.IsWebAdministrator || permissionBsc.IsWebAdministrator, 
-                                  permissionHrp.InvoiceInfoEnabled || permissionBsc.InvoiceInfoEnabled, 
+            return new Permission(permissionHrp.IsWebAdministrator || permissionBsc.IsWebAdministrator,
+                                  permissionHrp.InvoiceInfoEnabled || permissionBsc.InvoiceInfoEnabled,
                                   permissionHrp.PriceListDownloadEnabled || permissionBsc.PriceListDownloadEnabled,
                                   permissionHrp.CanOrder || permissionBsc.CanOrder,
                                   permissionHrp.RecieveGoods || permissionBsc.RecieveGoods);
@@ -351,84 +402,102 @@ namespace CompanyGroup.Domain.PartnerModule
 
         #region "PaymTermId"
 
-        /// <summary>
-        /// bsc fizetési feltételek beállítás
-        /// </summary>
-        private string GetPaymTermIdBsc()
-        {
-            return GetPaymTermId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc); 
-        }
+        ///// <summary>
+        ///// bsc fizetési feltételek beállítás
+        ///// </summary>
+        //private string GetPaymTermIdBsc()
+        //{
+        //    return GetPaymTermId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+        //}
+
+        ///// <summary>
+        ///// hrp fizetési feltételek beállítás
+        ///// </summary>
+        //private string GetPaymTermIdHrp()
+        //{
+        //    return GetPaymTermId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+        //}
+
+        //private string GetPaymTermId(string dataAreaId)
+        //{
+        //    VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
+
+        //    return (visitorData == null) ? String.Empty : visitorData.PaymTermId;
+        //}
 
         /// <summary>
-        /// hrp fizetési feltételek beállítás
+        /// fizetési feltételek kalkuláció      
         /// </summary>
-        private string GetPaymTermIdHrp()
+        public string PaymTermId
         {
-            return GetPaymTermId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp); 
-        }
-
-        private string GetPaymTermId(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
-
-            return (visitorData == null) ? String.Empty : visitorData.PaymTermId;
-        }
-
-        private string CreatePaymTermId(string paymTermIdHrp, string paymTermIdBsc)
-        {
-            if (!String.IsNullOrEmpty(paymTermIdBsc) && !String.IsNullOrEmpty(paymTermIdHrp))
+            get
             {
-                return paymTermIdHrp.StartsWith("ATUT") ? paymTermIdHrp : paymTermIdBsc;
+                if (!String.IsNullOrEmpty(this.PaymTermIdBsc) && !String.IsNullOrEmpty(this.PaymTermIdHrp))
+                {
+                    return this.PaymTermIdHrp.StartsWith("ATUT") ? this.PaymTermIdHrp : this.PaymTermIdBsc;
+                }
+                if (String.IsNullOrEmpty(this.PaymTermIdBsc) && !String.IsNullOrEmpty(this.PaymTermIdHrp))
+                {
+                    return this.PaymTermIdHrp;
+                }
+                if (!String.IsNullOrEmpty(this.PaymTermIdBsc) && String.IsNullOrEmpty(this.PaymTermIdHrp))
+                {
+                    return this.PaymTermIdBsc;
+                }
+                return CompanyGroup.Domain.Core.Constants.PaymentIdKP;
             }
-            if (String.IsNullOrEmpty(paymTermIdBsc) && !String.IsNullOrEmpty(paymTermIdHrp))
-            {
-                return paymTermIdHrp;
-            }
-            if (!String.IsNullOrEmpty(paymTermIdBsc) && String.IsNullOrEmpty(paymTermIdHrp))
-            {
-                return paymTermIdBsc;
-            }
-            return CompanyGroup.Domain.Core.Constants.PaymentIdKP;
         }
 
         #endregion
 
         #region "Representative"
 
-        /// <summary>
-        /// hrp vállalat képviselő beállítás
-        /// </summary>
-        public Representative GetRepresentativeHrp()
-        {
-            return GetRepresentative(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-        }
+        ///// <summary>
+        ///// hrp vállalat képviselő beállítás
+        ///// </summary>
+        //public Representative GetRepresentativeHrp()
+        //{
+        //    return GetRepresentative(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+        //}
+
+        ///// <summary>
+        ///// bsc vállalat képviselő beállítás
+        ///// </summary>
+        //public Representative GetRepresentativeBsc()
+        //{
+        //    return GetRepresentative(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+        //}
+
+        //private Representative GetRepresentative(string dataAreaId)
+        //{
+        //    VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
+
+        //    return (visitorData == null) ? new Representative() : visitorData.Representative;
+        //}
 
         /// <summary>
-        /// bsc vállalat képviselő beállítás
+        /// ha van hrp-s adat, akkor azt adja vissza
         /// </summary>
-        public Representative GetRepresentativeBsc()
-        {
-            return GetRepresentative(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
-        }
-
-        private Representative GetRepresentative(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
-
-            return (visitorData == null) ? new Representative() : visitorData.Representative;
-        }
-
+        /// <param name="representativeBsc"></param>
+        /// <param name="representativeHrp"></param>
+        /// <returns></returns>
         private Representative CreateRepresentative(CompanyGroup.Domain.PartnerModule.Representative representativeBsc, CompanyGroup.Domain.PartnerModule.Representative representativeHrp)
         {
             return new Representative(!String.IsNullOrEmpty(representativeHrp.Id) ? representativeHrp.Id : representativeBsc.Id,
                                       !String.IsNullOrEmpty(representativeHrp.Name) ? representativeHrp.Name : representativeBsc.Name,
-                                      CreatePhoneNumber(!String.IsNullOrEmpty(representativeHrp.Phone) ? representativeHrp.Phone : representativeBsc.Phone, !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension), 
+                                      CreatePhoneNumber(!String.IsNullOrEmpty(representativeHrp.Phone) ? representativeHrp.Phone : representativeBsc.Phone, !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension),
                                       !String.IsNullOrEmpty(representativeHrp.Mobile) ? representativeHrp.Mobile : representativeBsc.Mobile,
-                                      !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension, 
+                                      !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension,
                                       !String.IsNullOrEmpty(representativeHrp.Email) ? representativeHrp.Email : representativeBsc.Email
                                       );
         }
 
+        /// <summary>
+        /// telefonszám előállítása 
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         private static string CreatePhoneNumber(string phone, string extension)
         {
             if (String.IsNullOrEmpty(phone) && String.IsNullOrEmpty(extension))
@@ -445,56 +514,6 @@ namespace CompanyGroup.Domain.PartnerModule
         }
 
         #endregion
-
-        #region "InventLocationId"
-
-        private string GetInventLocationId(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
-
-            return (visitorData == null) ? String.Empty : visitorData.InventLocationId;
-        }
-
-        #endregion
-
-        #region "LanguageId"
-
-        /// <summary>
-        /// bsc alapértelmezett nyelv
-        /// </summary>
-        private string GetLanguageIdBsc()
-        {
-            return GetLanguageId(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);        
-        }
-
-        /// <summary>
-        /// hrp alapértelmezett nyelv
-        /// </summary>
-        private string GetLanguageIdHrp()
-        {
-            return GetLanguageId(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);        
-        }
-
-        private string GetLanguageId(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId)) : null;
-
-            return (visitorData == null) ? String.Empty : visitorData.LanguageId;
-        }
-
-        private string CreateLanguageId(string languageIdHrp, string languageIdBsc)
-        {
-            return String.IsNullOrEmpty(languageIdHrp) ? languageIdBsc : languageIdHrp;
-        }
-
-        #endregion
-
-        private string GetDefaultPriceGroupId(string dataAreaId)
-        {
-            VisitorData visitorData = (visitorDataList.Count > 0) ? visitorDataList.Find(x => x.DataAreaId.Equals(dataAreaId, StringComparison.InvariantCultureIgnoreCase)) : null;
-
-            return (visitorData == null) ? String.Empty : visitorData.DefaultPriceGroupId;
-        }
 
         /// <summary>
         /// bejelentkezés érvényes-e, vagy sem?
@@ -531,7 +550,7 @@ namespace CompanyGroup.Domain.PartnerModule
 
             bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
 
-            this.LoggedIn = DateTime.Now.CompareTo(this.ExpireDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent);
+            this.LoggedIn = DateTime.Now.CompareTo(this.ExpireDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); // && this.Valid;
         }
 
         /// <summary>
@@ -579,6 +598,17 @@ namespace CompanyGroup.Domain.PartnerModule
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a">termék adata</param>
+        /// <param name="b">árbesorolás</param>
+        /// <returns></returns>
+        private static bool CompareItems(string a, string b)
+        {
+            return a.Equals(b, StringComparison.OrdinalIgnoreCase) || b.Equals("____", StringComparison.OrdinalIgnoreCase) || String.IsNullOrEmpty(b);
+        }
+
+        /// <summary>
         /// árkalkuláció
         /// </summary>
         /// <param name="price1">termék ár1</param>
@@ -592,7 +622,7 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="category3Id">termék jelleg3</param>
         /// <param name="dataAreaId">termék vállalatkódja</param>
         /// <returns></returns>
-        public decimal CalculateCustomerPrice2(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
+        public decimal CalculateCustomerPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
                                               string manufacturerId, string category1Id, string category2Id, string category3Id, string dataAreaId)
         {
             //szűrés vállalatkódra, azaz csak azok az árcsoprotok kerülnek az eredményhalmazba, melyek vállalatkódja egyezik a termék vállalatkódjával
@@ -604,37 +634,26 @@ namespace CompanyGroup.Domain.PartnerModule
             //másolás érték szerint
             foreach (CustomerPriceGroup p in priceGroups)
             {
-                priceGroupList.Add(new CustomerPriceGroup(p.LineId, p.VisitorKey, p.PriceGroupId, p.ManufacturerId, p.Category1Id, p.Category2Id, p.Category3Id, p.Order, p.DataAreaId));
+                if (CompareItems(category1Id, p.Category1Id) && CompareItems(category2Id, p.Category2Id) && CompareItems(category3Id, p.Category3Id) && CompareItems(manufacturerId, p.ManufacturerId))
+                {
+                    priceGroupList.Add(new CustomerPriceGroup(p.LineId, p.VisitorKey, p.PriceGroupId, p.ManufacturerId, p.Category1Id, p.Category2Id, p.Category3Id, p.Order, p.DataAreaId));
+                }
             }
-
-            //listaelemek üres gyártó és jelleg1 - jelleg2 - jelleg3 elemek feltöltése a termék gyártó, jelleg1 - jelleg2 - jelleg3 adataival, ha azok nem üresek
-            priceGroupList.ForEach(x => {
-                if ((String.IsNullOrEmpty(x.Category1Id) || x.Category1Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category1Id = category1Id; }             // && !String.IsNullOrEmpty(category1Id)
-                if ((String.IsNullOrEmpty(x.Category2Id) || x.Category2Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category2Id = category2Id; }             // && !String.IsNullOrEmpty(category2Id)
-                if ((String.IsNullOrEmpty(x.Category3Id) || x.Category3Id.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.Category3Id = category3Id; }             // && !String.IsNullOrEmpty(category3Id)
-                if ((String.IsNullOrEmpty(x.ManufacturerId) || x.ManufacturerId.Equals("____", StringComparison.OrdinalIgnoreCase))) { x.ManufacturerId = manufacturerId; } // && !String.IsNullOrEmpty(manufacturerId)
-            });
-
-            // || x.ManufacturerId.Equals("____", StringComparison.OrdinalIgnoreCase)
-            IEnumerable<CustomerPriceGroup> searchResults = priceGroupList.Where(x => (x.ManufacturerId.Equals(manufacturerId, StringComparison.OrdinalIgnoreCase)) &&
-                                                                                      (x.Category1Id.Equals(category1Id, StringComparison.OrdinalIgnoreCase)) &&
-                                                                                      (x.Category2Id.Equals(category2Id, StringComparison.OrdinalIgnoreCase)) &&
-                                                                                      (x.Category3Id.Equals(category3Id, StringComparison.OrdinalIgnoreCase)));
 
             CustomerPriceGroup priceGroup;
 
-            if (searchResults.Count() > 0)
+            if (priceGroupList.Count > 0)
             {
-                //sorba rendezés 1..n -ig
-                priceGroup = searchResults.OrderBy(x => x.Order).FirstOrDefault();
+                //sorba rendezés 1..n -ig, legelső elem kiolvasása
+                priceGroup = priceGroupList.OrderBy(x => x.Order).FirstOrDefault();
 
                 return LookupPrice(price1, price2, price3, price4, price5, priceGroup.PriceGroupId);
             }
 
-            //alapártelmezett árat kell visszaadni
+            //kikeresés nem volt sikeres, ezért a vevő alapértelmezett árát kell visszaadni
             string defaultPriceGroup = (dataAreaId.Equals(Core.Constants.DataAreaIdHrp)) ? this.DefaultPriceGroupIdHrp : this.DefaultPriceGroupIdBsc;
 
-            return LookupPrice(price1, price2, price3, price4, price5, (String.IsNullOrEmpty(DefaultPriceGroupId) ? "2" : defaultPriceGroup));
+            return LookupPrice(price1, price2, price3, price4, price5, (String.IsNullOrEmpty(defaultPriceGroup) ? "2" : defaultPriceGroup));
         }
 
         /// <summary>
@@ -675,7 +694,7 @@ namespace CompanyGroup.Domain.PartnerModule
         ///    2390	247	        A142				                                            4	150     hrp
         /// ]]>
         /// <returns></returns>
-        public decimal CalculateCustomerPrice(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
+        public decimal CalculateCustomerPrice2(decimal price1, decimal price2, decimal price3, decimal price4, decimal price5,
                                               string manufacturerId, string category1Id, string category2Id, string category3Id, string dataAreaId)
         {
             CustomerPriceGroup priceGroup;
@@ -803,36 +822,12 @@ namespace CompanyGroup.Domain.PartnerModule
         }
 
         /// <summary>
-        /// bool canRead = ((PermissionTypes.Read & admin.Permissions) == PermissionTypes.Read);
-        /// </summary>
-        /// <returns></returns>
-        public PartnerModel CalculatePartnerModel()
-        {
-            PartnerModel result = global::PartnerModel.None;
-
-            if (this.visitorDataList.Exists(x => (x.PartnerModel & global::PartnerModel.Bsc) == global::PartnerModel.Bsc))
-            {
-                result = global::PartnerModel.Bsc;
-            }
-            if (this.visitorDataList.Exists(x => (x.PartnerModel & global::PartnerModel.Hrp) == global::PartnerModel.Hrp))
-            {
-                result = global::PartnerModel.Hrp;
-            }
-            if (this.visitorDataList.Exists(x => (x.PartnerModel & global::PartnerModel.Hrp) == global::PartnerModel.Hrp && (x.PartnerModel & global::PartnerModel.Bsc) == global::PartnerModel.Bsc))
-            {
-                result = global::PartnerModel.Both;
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// hrp vállalatban jogosultság létezik-e?
         /// </summary>
         /// <returns></returns>
         public bool IsAuthorizedInHrp()
         {
-            return this.PartnerModel.Equals(PartnerModel.Hrp) || this.PartnerModel.Equals(PartnerModel.Both);
+            return this.RightHrp;
         }
 
         /// <summary>
@@ -841,34 +836,22 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <returns></returns>
         public bool IsAuthorizedInBsc()
         {
-            return this.PartnerModel.Equals(PartnerModel.Bsc) || this.PartnerModel.Equals(PartnerModel.Both);
+            return this.RightBsc;
         }
 
         /// <summary>
         /// visszaadja azt a vállalatkód listát, melyben a bejelentkezett felhasználó megtalálható
+        /// (ha az egyik vállalatban megtalálható, akkor benne kell legyen a másikban is)
         /// </summary>
         /// <returns></returns>
         public List<string> AuthorizedDataAreaList()
         {
             List<string> dataAreaList = new List<string>();
 
-            if (this.PartnerModel.Equals(PartnerModel.Both))
-            {
-                dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
+            dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
 
-                dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
-            }
-            else
-            {
-                if (this.PartnerModel.Equals(PartnerModel.Hrp))
-                {
-                    dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
-                }
-                if (this.PartnerModel.Equals(PartnerModel.Bsc))
-                {
-                    dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
-                }
-            }
+            dataAreaList.Add(CompanyGroup.Domain.Core.Constants.DataAreaIdBsc);
+
             return dataAreaList;
         }
 
@@ -877,13 +860,13 @@ namespace CompanyGroup.Domain.PartnerModule
         /// </summary>
         /// <param name="validationContext"><see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/></param>
         /// <returns><see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/></returns>
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
-            List<ValidationResult> validationResults = new List<ValidationResult>();
+            List<System.ComponentModel.DataAnnotations.ValidationResult> validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
 
             if (this.IsTransient())
             {
-                validationResults.Add(new ValidationResult(CompanyGroup.Domain.Resources.Messages.validation_ItemIdCannotBeNull, new string[] { "ObjectId" }));
+                validationResults.Add(new System.ComponentModel.DataAnnotations.ValidationResult(CompanyGroup.Domain.Resources.Messages.validation_ItemIdCannotBeNull, new string[] { "ObjectId" }));
             }
 
             return validationResults;

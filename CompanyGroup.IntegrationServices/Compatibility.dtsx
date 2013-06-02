@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Compatibility"
   DTS:PackageType="5"
-  DTS:VersionBuild="49"
-  DTS:VersionGUID="{B8D1A2FC-505C-4044-B4F9-62B19AAB876D}">
+  DTS:VersionBuild="50"
+  DTS:VersionGUID="{AF5396CF-BC12-47F1-B17D-E73480C30E4A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -399,8 +399,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="{8BE3911C-16AC-4AFD-86D9-B41CE00D475D}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Source]"
+                  connectionManagerID="{F574DD6F-2471-4875-AA20-0330579C687D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ExtractInterface]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -980,39 +980,17 @@
           Id="Package\Data Flow Task\OLE DB Source"
           TopLeft="196,76" />
         <NodeLayout
-          Size="131,42"
-          Id="Package\Data Flow Task\Row Count"
-          TopLeft="209,212" />
-        <NodeLayout
           Size="155,42"
           Id="Package\Data Flow Task\Derived Column"
           TopLeft="202,334" />
         <NodeLayout
+          Size="131,42"
+          Id="Package\Data Flow Task\Row Count"
+          TopLeft="209,212" />
+        <NodeLayout
           Size="172,42"
           Id="Package\Data Flow Task\OLE DB Destination"
           TopLeft="192,458" />
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
-          TopLeft="277,254">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
           TopLeft="273,118">
@@ -1049,6 +1027,28 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
+          TopLeft="277,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Catalogue"
   DTS:PackageType="5"
-  DTS:VersionBuild="55"
-  DTS:VersionGUID="{C3EAA8FB-3E4B-4B49-A1AA-DF807D982FF7}">
+  DTS:VersionBuild="68"
+  DTS:VersionGUID="{7556AEAD-27FF-4313-83C8-705AA2D5849E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -34,7 +34,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="DestinationTable">
       <DTS:VariableValue
-        DTS:DataType="8">[InternetUser].[Catalogue]</DTS:VariableValue>
+        DTS:DataType="8">[InternetUser].[Stage_Catalogue]</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -587,12 +587,6 @@
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Valid]" />
                     <inputColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
-                      cachedDataType="i4"
-                      cachedName="Sequence"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
-                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
-                    <inputColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SearchContent]"
                       cachedDataType="wstr"
                       cachedLength="126"
@@ -600,17 +594,23 @@
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
                       lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]" />
                     <inputColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
+                      cachedDataType="bool"
+                      cachedName="IsPurchaseOrdered"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
+                    <inputColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Stock]"
                       cachedDataType="i4"
                       cachedName="Stock"
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
                     <inputColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
-                      cachedDataType="bool"
-                      cachedName="IsPurchaseOrdered"
-                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
-                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
+                      cachedDataType="i4"
+                      cachedName="Sequence"
+                      externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -619,10 +619,6 @@
                       dataType="wstr"
                       length="80"
                       name="Name" />
-                    <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
-                      dataType="i4"
-                      name="Id" />
                     <externalMetadataColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductId]"
                       dataType="wstr"
@@ -809,21 +805,21 @@
                       dataType="i4"
                       name="PackageLogKey" />
                     <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
-                      dataType="i4"
-                      name="Sequence0" />
-                    <externalMetadataColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
                       dataType="nText"
                       name="SearchContent" />
+                    <externalMetadataColumn
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                     <externalMetadataColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
                     <externalMetadataColumn
-                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
-                      dataType="bool"
-                      name="IsPurchaseOrdered" />
+                      refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      dataType="i4"
+                      name="Sequence0" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -903,8 +899,8 @@
               <connections>
                 <connection
                   refId="Package\Catalogue extract\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="{8BE3911C-16AC-4AFD-86D9-B41CE00D475D}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Source]"
+                  connectionManagerID="{F574DD6F-2471-4875-AA20-0330579C687D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ExtractInterface]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1816,6 +1812,40 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Catalogue remove duplicates"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Catalogue remove duplicates execute SQL Task"
+      DTS:DTSID="{1541A26F-4A4A-4175-A8C8-42EF3FF8148A}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Catalogue remove duplicates"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0F29169F-F018-4105-906F-BD516B87959E}"
+          SQLTask:SqlStatementSource="exec [InternetUser].[CatalogueRemoveDuplicates];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Catalogue"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Load Catalogue Execute SQL Task"
+      DTS:DTSID="{915E3F35-EE6C-40B4-B760-BD345221DCEC}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Catalogue"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0F29169F-F018-4105-906F-BD516B87959E}"
+          SQLTask:SqlStatementSource="EXEC [InternetUser].[CatalogueLoad];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\PackageLog close"
       DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
       DTS:Description="Execute SQL Task"
@@ -2416,12 +2446,6 @@
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Valid]" />
                     <inputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
-                      cachedDataType="i4"
-                      cachedName="Sequence"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
-                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
-                    <inputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SearchContent]"
                       cachedDataType="wstr"
                       cachedLength="126"
@@ -2429,17 +2453,23 @@
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
                       lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]" />
                     <inputColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
+                      cachedDataType="bool"
+                      cachedName="IsPurchaseOrdered"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
+                    <inputColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Stock]"
                       cachedDataType="i4"
                       cachedName="Stock"
                       externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
                     <inputColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsPurchaseOrdered]"
-                      cachedDataType="bool"
-                      cachedName="IsPurchaseOrdered"
-                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
-                      lineageId="Package\Secondhand catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsPurchaseOrdered]" />
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sequence]"
+                      cachedDataType="i4"
+                      cachedName="Sequence"
+                      externalMetadataColumnId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      lineageId="Package\Secondhand catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[Sequence]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2448,10 +2478,6 @@
                       dataType="wstr"
                       length="80"
                       name="Name" />
-                    <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
-                      dataType="i4"
-                      name="Id" />
                     <externalMetadataColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductId]"
                       dataType="wstr"
@@ -2638,21 +2664,21 @@
                       dataType="i4"
                       name="PackageLogKey" />
                     <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
-                      dataType="i4"
-                      name="Sequence0" />
-                    <externalMetadataColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
                       dataType="nText"
                       name="SearchContent" />
+                    <externalMetadataColumn
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
+                      dataType="bool"
+                      name="IsPurchaseOrdered" />
                     <externalMetadataColumn
                       refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
                       dataType="i4"
                       name="Stock" />
                     <externalMetadataColumn
-                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsPurchaseOrdered]"
-                      dataType="bool"
-                      name="IsPurchaseOrdered" />
+                      refId="Package\Secondhand catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sequence0]"
+                      dataType="i4"
+                      name="Sequence0" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2732,8 +2758,8 @@
               <connections>
                 <connection
                   refId="Package\Secondhand catalogue extract\OLE DB Source.Connections[OleDbConnection]"
-                  connectionManagerID="{8BE3911C-16AC-4AFD-86D9-B41CE00D475D}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Source]"
+                  connectionManagerID="{F574DD6F-2471-4875-AA20-0330579C687D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ExtractInterface]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3645,13 +3671,13 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Truncate table"
+      DTS:refId="Package\Truncate stage table"
       DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
       DTS:Description="Execute SQL Task"
       DTS:DTSID="{AFC9F9C3-7255-4DF7-B2D1-576165E7EA4A}"
       DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Truncate table"
+      DTS:ObjectName="Truncate stage table"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
@@ -3696,7 +3722,7 @@
       DTS:From="Package\PackageLog start"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Truncate table" />
+      DTS:To="Package\Truncate stage table" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
@@ -3718,25 +3744,41 @@
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
       DTS:DTSID="{BF9C8F5C-666F-4136-B6FB-25370283F5C9}"
-      DTS:From="Package\Truncate table"
+      DTS:From="Package\Truncate stage table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
       DTS:To="Package\Catalogue extract" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{543AA695-99F9-491B-8EC6-8EB55F94DF73}"
+      DTS:DTSID="{A70DE1FD-C122-4BFD-9370-9BEBB3AFA257}"
       DTS:From="Package\Secondhand catalogue extract"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
-      DTS:To="Package\UpdateCatalogueSequence" />
+      DTS:To="Package\Catalogue remove duplicates" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
       DTS:CreationName=""
-      DTS:DTSID="{B30832AB-D55A-4195-8970-0F0218D03573}"
-      DTS:From="Package\UpdateCatalogueSequence"
+      DTS:DTSID="{D4D72E24-13D8-4D67-884A-84F93DF9A411}"
+      DTS:From="Package\Load Catalogue"
+      DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 5"
+      DTS:To="Package\UpdateCatalogueSequence" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{D17C898F-B25F-4AD5-8F9C-15E15AD2383E}"
+      DTS:From="Package\UpdateCatalogueSequence"
+      DTS:ObjectName="Constraint 6"
       DTS:To="Package\PackageLog close" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{85BECE4F-7499-49AA-814D-49CF83E658DE}"
+      DTS:From="Package\Catalogue remove duplicates"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Load Catalogue" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
     <DTS:EventHandler
@@ -3822,13 +3864,21 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="179,42"
+          Size="163,42"
           Id="Package\Catalogue extract"
-          TopLeft="236,314" />
+          TopLeft="256,311.777777777778" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Catalogue remove duplicates"
+          TopLeft="235.555555555556,507.777777777778" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\Load Catalogue"
+          TopLeft="229.206349206349,592.380952380953" />
         <NodeLayout
           Size="163,42"
           Id="Package\PackageLog close"
-          TopLeft="108,639" />
+          TopLeft="109.428571428571,770.428571428571" />
         <NodeLayout
           Size="241,45"
           Id="Package\PackageLog start"
@@ -3836,24 +3886,24 @@
         <NodeLayout
           Size="222,42"
           Id="Package\Secondhand catalogue extract"
-          TopLeft="212,405" />
+          TopLeft="232,408.333333333333" />
         <NodeLayout
-          Size="170,42"
-          Id="Package\Truncate table"
+          Size="177,42"
+          Id="Package\Truncate stage table"
           TopLeft="247,214" />
         <NodeLayout
           Size="206,42"
           Id="Package\UpdateCatalogueSequence"
-          TopLeft="216,510" />
+          TopLeft="240.444444444445,673.333333333333" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="230.333333333333,107">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="101.666666666667,107"
+              EndConnector="105.166666666667,107"
               Start="0,0"
-              End="101.666666666667,99.5">
+              End="105.166666666667,99.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -3864,37 +3914,37 @@
                     Point2="0,43.2234130255565"
                     Point3="4,43.2234130255565" />
                   <mssgle:LineSegment
-                    End="97.6666666666667,43.2234130255565" />
+                    End="101.166666666667,43.2234130255565" />
                   <mssgle:CubicBezierSegment
-                    Point1="97.6666666666667,43.2234130255565"
-                    Point2="101.666666666667,43.2234130255565"
-                    Point3="101.666666666667,47.2234130255565" />
+                    Point1="101.166666666667,43.2234130255565"
+                    Point2="105.166666666667,43.2234130255565"
+                    Point3="105.166666666667,47.2234130255565" />
                   <mssgle:LineSegment
-                    End="101.666666666667,99.5" />
+                    End="105.166666666667,99.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="42.8333333333333,48.2234130255565,16,16"
+              BoundingBox="44.5833333333333,48.2234130255565,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="324.25,356">
+          TopLeft="340.25,353.777777777778">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,49"
+              EndConnector="0,54.5555555555555"
               Start="0,0"
-              End="0,41.5">
+              End="0,47.0555555555555">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,41.5" />
+                    End="0,47.0555555555555" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3909,50 +3959,50 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="11,532"
+              EndConnector="12.4285714285714,663.428571428571"
               Start="0,0"
-              End="11,524.5">
+              End="12.4285714285714,655.928571428571">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,260.964954727994" />
+                    End="0,326.423536454566" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,260.964954727994"
-                    Point2="0,264.964954727994"
-                    Point3="4,264.964954727994" />
+                    Point1="0,326.423536454566"
+                    Point2="0,330.423536454566"
+                    Point3="4,330.423536454566" />
                   <mssgle:LineSegment
-                    End="7,264.964954727994" />
+                    End="8.42857142857144,330.423536454566" />
                   <mssgle:CubicBezierSegment
-                    Point1="7,264.964954727994"
-                    Point2="11,264.964954727994"
-                    Point3="11,268.964954727994" />
+                    Point1="8.42857142857144,330.423536454566"
+                    Point2="12.4285714285714,330.423536454566"
+                    Point3="12.4285714285714,334.423536454566" />
                   <mssgle:LineSegment
-                    End="11,524.5" />
+                    End="12.4285714285714,655.928571428571" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-2.5,269.964954727994,16,16"
+              BoundingBox="-1.78571428571428,335.423536454566,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="328.75,256">
+          TopLeft="336.5,256">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,58"
+              EndConnector="0,55.7777777777778"
               Start="0,0"
-              End="0,50.5">
+              End="0,48.2777777777778">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,50.5" />
+                    End="0,48.2777777777778" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3963,18 +4013,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="321,447">
+          TopLeft="343.277777777778,450.333333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,63"
+              EndConnector="0,57.4444444444445"
               Start="0,0"
-              End="0,55.5">
+              End="0,49.9444444444445">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,55.5" />
+                    End="0,49.9444444444445" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3985,30 +4035,74 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="319,552">
+          TopLeft="343.825396825397,634.380952380953">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-103.666666666667,87"
+              EndConnector="0,38.9523809523804"
               Start="0,0"
-              End="-103.666666666667,79.5">
+              End="0,31.4523809523804">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.6925880923451" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,47.6925880923451"
-                    Point2="0,51.6925880923451"
-                    Point3="-4,51.6925880923451" />
+                    End="0,31.4523809523804" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="343.444444444445,715.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-126.68253968254,55.0952380952385"
+              Start="0,0"
+              End="-126.68253968254,47.5952380952385">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-99.6666666666667,51.6925880923451" />
+                    End="0,28.7358097552511" />
                   <mssgle:CubicBezierSegment
-                    Point1="-99.6666666666667,51.6925880923451"
-                    Point2="-103.666666666667,51.6925880923451"
-                    Point3="-103.666666666667,55.6925880923451" />
+                    Point1="0,28.7358097552511"
+                    Point2="0,32.7358097552511"
+                    Point3="-4,32.7358097552511" />
                   <mssgle:LineSegment
-                    End="-103.666666666667,79.5" />
+                    End="-122.68253968254,32.7358097552511" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-122.68253968254,32.7358097552511"
+                    Point2="-126.68253968254,32.7358097552511"
+                    Point3="-126.68253968254,36.7358097552511" />
+                  <mssgle:LineSegment
+                    End="-126.68253968254,47.5952380952385" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="343.880952380952,549.777777777778">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.6031746031748"
+              Start="0,0"
+              End="0,35.1031746031748">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.1031746031748" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4028,30 +4122,30 @@
           Text="[dbo].[usp_PackageLog_Close] &#xA;input: &#xA;@PackageLogKey INT, &#xA;@RowCount INT &#xA;output:"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="193,106"
+          Size="277,106"
           Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
-          TopLeft="434,615" />
+          TopLeft="465.269841269841,751.031746031746" />
         <AnnotationLayout
           Text="EXEC [InternetUser].[SecondHandCatalogueExtract];"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="302,42"
           Id="31cf1f0c-88e7-4580-b04a-6173fb489917"
-          TopLeft="461,397" />
+          TopLeft="482.111111111111,403.666666666667" />
         <AnnotationLayout
           Text="EXEC [InternetUser].[CatalogueExtract];"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="283,42"
           Id="d9e5a58f-6c86-457e-a80f-7fd68cded854"
-          TopLeft="468,315" />
+          TopLeft="488,315" />
         <AnnotationLayout
           Text="EXEC  [InternetUser].[UpdateCatalogueSequence]"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="290,42"
           Id="73a1e93f-8df5-432c-a2c1-d6e775fa52c9"
-          TopLeft="484,504" />
+          TopLeft="494.952380952381,677.650793650794" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -4088,13 +4182,13 @@
           Id="Package\Catalogue extract\Derived Column"
           TopLeft="202,334" />
         <NodeLayout
-          Size="160,42"
-          Id="Package\Catalogue extract\Row Count"
-          TopLeft="193,212" />
-        <NodeLayout
           Size="172,42"
           Id="Package\Catalogue extract\OLE DB Destination"
           TopLeft="192,458" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Catalogue extract\Row Count"
+          TopLeft="193,212" />
         <EdgeLayout
           Id="Package\Catalogue extract.Paths[Row Count Output 1]"
           TopLeft="276.25,254">
@@ -4199,13 +4293,13 @@
           Id="Package\Secondhand catalogue extract\Derived Column"
           TopLeft="202,334" />
         <NodeLayout
-          Size="160,42"
-          Id="Package\Secondhand catalogue extract\Row Count"
-          TopLeft="193,212" />
-        <NodeLayout
           Size="172,42"
           Id="Package\Secondhand catalogue extract\OLE DB Destination"
           TopLeft="192,458" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Secondhand catalogue extract\Row Count"
+          TopLeft="193,212" />
         <EdgeLayout
           Id="Package\Secondhand catalogue extract.Paths[Row Count Output 1]"
           TopLeft="276.25,254">

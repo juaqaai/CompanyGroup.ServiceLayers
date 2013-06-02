@@ -35,11 +35,11 @@ AS
 		   Cust.mZipCode AS MailZipCode, 
 		   CONVERT( SMALLDATETIME, ISNULL( tmp.ModifiedDate, GetDate() ) ) as dtDateTime
 
-	FROM Axdb_20130131.dbo.CustTable AS Cust
-		 LEFT OUTER JOIN Axdb_20130131.dbo.updTmpCustTable as tmp ON tmp.CustRegId = Cust.RegAzon AND tmp.CustRegId <> '' AND tmp.DataAreaId = 'hun'
+	FROM Axdb.dbo.CustTable AS Cust
+		 LEFT OUTER JOIN Axdb.dbo.updTmpCustTable as tmp ON tmp.CustRegId = Cust.RegAzon AND tmp.CustRegId <> '' AND tmp.DataAreaId = 'hun'
 	WHERE Cust.DataAreaId = @DataAreaId AND 
 		  Cust.AccountNum = @CustomerId AND
-		  EXISTS ( SELECT TOP 1 CASE WHEN CONVERT( BIT, HRP ) = 1 OR CONVERT( BIT, BSC ) = 1 THEN 1 ELSE 0 END FROM Axdb_20130131.dbo.CustTable WHERE DataAreaID IN ('Hrp', 'Bsc') AND AccountNum = @CustomerId );
+		  EXISTS ( SELECT TOP 1 CASE WHEN CONVERT( BIT, HRP ) = 1 OR CONVERT( BIT, BSC ) = 1 THEN 1 ELSE 0 END FROM Axdb.dbo.CustTable WHERE DataAreaID IN ('Hrp', 'Bsc') AND AccountNum = @CustomerId );
 
 	RETURN
 GO
@@ -47,3 +47,9 @@ GRANT EXECUTE ON InternetUser.CustomerSelect TO InternetUser
 GO
 
 -- exec InternetUser.CustomerSelect 'V002020', 'hrp';
+/*
+select * from Axdb.dbo.CustTable as c
+left outer join Axdb.dbo.WebshopUserInfo as w1 on w1.CUSTACCOUNT = c.ACCOUNTNUM
+where c.DataAreaId IN ('hrp', 'bsc') and c.STATISTICSGROUP NOT IN ('Archiv', 'Archív', 'Arhiv') and c.Bsc = 1 and c.HRP = 0
+and WebLoginName <> '' and Pwd <> '' and  (RightHrp = 1 OR RightBsc = 1 ) AND w1.DataAreaId = 'hun'
+*/

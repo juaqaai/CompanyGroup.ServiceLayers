@@ -45,7 +45,8 @@
     <Reference Include="ImageResizer.Plugins.Watermark">
       <HintPath>..\Binaries\ImageResizer.Plugins.Watermark.dll</HintPath>
     </Reference>
-    <Reference Include="MailMergeLib">
+    <Reference Include="MailMergeLib, Version=4.2.4838.39628, Culture=neutral, PublicKeyToken=72761fc898c1a6fb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Binaries\MailMergeLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -175,6 +176,7 @@
     <Compile Include="Controllers\ApiBaseController.cs" />
     <Compile Include="Controllers\ContactPersonController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\EventRegistrationController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -194,6 +196,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Templates\eventregister.html" />
+    <Content Include="App_Data\Templates\eventregister.txt" />
     <Content Include="App_Data\Templates\registrationcontract.html" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -335,6 +339,9 @@
   <ItemGroup>
     <Content Include="ExtractInterface.config" />
     <Content Include="WebInterface.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\SendMail.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -32,7 +32,16 @@ EXEC sp_xml_preparedocument @handle OUTPUT, @XMLDoc
 		 
 EXEC sp_xml_removedocument @handle
 
-SELECT * FROM InternetUser.Catalogue where ProductId = 'G55VWIX143H'
+SELECT Category1Id, Category1Name FROM InternetUser.Catalogue 
+where ManufacturerName = 'Panasonic' 
+group by Category1Id, Category1Name
+
+Category1Name
+Fényképezõgép, kamera
+Irodatechnika
+Monitor
+Multifunkciós készülék
+Szórakoztató elektronika
 
 */
 
@@ -197,41 +206,7 @@ update InternetUser.Catalogue set New = 1 WHERE Description like '%new%' Categor
 */
 
 GO
--- cikkek rendezés beállítása
-DROP PROCEDURE [InternetUser].[UpdateCatalogueSequence];
-GO
-CREATE PROCEDURE [InternetUser].[UpdateCatalogueSequence]
-AS
 
-	SET NOCOUNT ON;
-	UPDATE InternetUser.Catalogue SET Sequence0 = NULL;
-
-	WITH Sequence0_CTE (Id, Sequence, AverageInventory, Discount, Category1Id)
-	AS (
-		SELECT Id, ROW_NUMBER() OVER (ORDER BY AverageInventory DESC), AverageInventory, Discount, Category1Id 
-		FROM InternetUser.Catalogue WHERE Category1Id = 'B011'
-	)
-	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence FROM Sequence0_CTE WHERE InternetUser.Catalogue.Id = Sequence0_CTE.Id)
-	WHERE Discount = 1 AND AverageInventory > 0 AND Stock > 0;
-
-	DECLARE @RowNumber INT = (SELECT MAX(Sequence0) FROM InternetUser.Catalogue);  
-
-	WITH Remain_CTE (Id, Sequence, AverageInventory, Discount, Category1Id)
-	AS (
-		SELECT Id, ROW_NUMBER() OVER (ORDER BY AverageInventory DESC, Discount DESC), AverageInventory, Discount, Category1Id 
-		FROM InternetUser.Catalogue WHERE Sequence0 IS NULL
-	)
-
-	UPDATE InternetUser.Catalogue SET Sequence0 = (SELECT Sequence + @RowNumber FROM Remain_CTE WHERE InternetUser.Catalogue.Id = Remain_CTE.Id)
-	WHERE Sequence0 IS NULL;
-
-RETURN
-GO
-GRANT EXECUTE ON InternetUser.UpdateCatalogueSequence TO InternetUser
-GO
--- EXEC  [InternetUser].[UpdateCatalogueSequence]
--- SELECT * FROM InternetUser.Catalogue where ProductId = '45f-00012''0021165103764' order by Partnumber 
---where Sequence0 IS NULL ORDER BY Sequence0
 	
 /*
 

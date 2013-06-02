@@ -23,7 +23,7 @@ SET NOCOUNT ON
 
 		SELECT jelleg1id as CategoryId, 
 			   jellegNev  as CategoryName
-		FROM Axdb_20130131.dbo.updJelleg1 WITH (READUNCOMMITTED)
+		FROM Axdb.dbo.updJelleg1 WITH (READUNCOMMITTED)
 		WHERE DataAreaId = 'hun' AND jelleg1id <> '' AND jellegNev <> ''
 		ORDER BY CategoryId, CategoryName;
 

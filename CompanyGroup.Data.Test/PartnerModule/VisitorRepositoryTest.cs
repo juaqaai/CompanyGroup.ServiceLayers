@@ -64,7 +64,23 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
 
-            CompanyGroup.Domain.PartnerModule.VisitorData visitor = repository.GetItemById("alma");    //CBB75B0D-D8C1-4863-8456-7A7DA685E164
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = repository.GetItemById("865D102B5C834B99858C390B269C68A6");    //CBB75B0D-D8C1-4863-8456-7A7DA685E164
+
+            Assert.IsNotNull(visitor);
+        }
+
+        [TestMethod]
+        public void InsertTest()
+        {
+            CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository = new CompanyGroup.Data.PartnerModule.CustomerRepository();
+
+            List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorDatas = customerRepository.SignIn("ipon", "gild4MAX19");
+
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(visitorDatas); 
+
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository repository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
+
+            repository.Add(visitor);    
 
             Assert.IsNotNull(visitor);
         }

@@ -8,20 +8,29 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class ShoppingCartAndLeasingOptions
     {
-        public ShoppingCartAndLeasingOptions()
+        public ShoppingCartAndLeasingOptions() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0, new CompanyGroup.Dto.WebshopModule.LeasingOptions(), String.Empty, false)
         {
-            this.Items = new List<ShoppingCartItem>();
-            this.SumTotal = 0;
-            this.Id = 0;
-            this.Shipping = new Shipping();
-            this.PaymentTerms = 0;
-            this.DeliveryTerms = 0;
+        }
 
-            this.LeasingOptions = new CompanyGroup.Dto.WebshopModule.LeasingOptions();
+        public ShoppingCartAndLeasingOptions(List<ShoppingCartItem> items, double sumTotal, int id, Shipping shipping, int paymentTerms, int deliveryTerms, CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, string currency, bool allInStock)
+        {
+            this.Items = items;
 
-            this.Currency = String.Empty;
+            this.SumTotal = sumTotal;
 
-            this.AllInStock = false;
+            this.Id = id;
+
+            this.Shipping = shipping;
+
+            this.PaymentTerms = paymentTerms;
+
+            this.DeliveryTerms = deliveryTerms;
+
+            this.LeasingOptions = leasingOptions;
+
+            this.Currency = currency;
+
+            this.AllInStock = allInStock;
         }
 
         public List<ShoppingCartItem> Items { get; set; }

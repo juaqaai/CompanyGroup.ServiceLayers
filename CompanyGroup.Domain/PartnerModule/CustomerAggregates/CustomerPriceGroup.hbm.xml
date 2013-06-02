@@ -15,7 +15,15 @@
   </class>
   <sql-query name="InternetUser.CustomerPriceGroupSelect" callable="true">
     <query-param name="CustomerId" type="System.String"/>
-    <return class="CustomerPriceGroup"></return>    
+    <return-scalar column="LineId" type="System.Int32"/>
+    <return-scalar column="VisitorKey" type="System.Int32"/>
+    <return-scalar column="PriceGroupId" type="System.String"/>
+    <return-scalar column="ManufacturerId" type="System.String"/>
+    <return-scalar column="Category1Id" type="System.String"/>
+    <return-scalar column="Category2Id" type="System.String"/>
+    <return-scalar column="Category3Id" type="System.String"/>
+    <return-scalar column="Order" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
     exec InternetUser.CustomerPriceGroupSelect @CustomerId=:CustomerId
   </sql-query>
   <sql-query name="InternetUser.CustomerPriceGroupInsert" callable="true">

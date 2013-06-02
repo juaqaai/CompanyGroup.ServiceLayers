@@ -36,8 +36,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                                      request.DateIntervall,  
                                                                                                                                      request.Sequence, 
                                                                                                                                      request.CurrentPageIndex, 
-                                                                                                                                     request.ItemsOnPage, 
-                                                                                                                                     request.Items);
+                                                                                                                                     request.ItemsOnPage );
 
                 CompanyGroup.Dto.PartnerModule.InvoiceInfo response = this.PostJSonData<CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest, CompanyGroup.Dto.PartnerModule.InvoiceInfo>("Invoice", "GetInvoiceInfo", req);
 

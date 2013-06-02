@@ -1,0 +1,92 @@
+﻿@model CompanyGroup.WebClient.Models.FinanceOfferResponse
+
+@{
+    ViewBag.Title = "FinanceOffer";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Finanszírozási ajánlat</title>
+    <style>
+	body {
+	font-family:calibri;
+	font-size:24px;
+	color: rgb(8, 67, 133);
+	margin-left: 25px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+	#main { width:910px; padding:40px; } 
+	#image { width:990px; padding:0px; }
+	</style>	  
+<script src="@Url.Content("~/Scripts/Lib/jquery-1.7.1.js")"></script>	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	
+	 $(".finance_price").text(function(index, text){
+			return text.replace(/(\s+)?...$/, '');
+			});
+});
+	
+	
+
+	</script>
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<div id="image" align="center" ><img  src="@Url.Content("~/Content/Media/images/header_finance.jpg")" width="990" height="114"></div>
+<div id="main">
+<h1>Finanszírozási ajánlat</h1>
+
+  <h2><strong>A konfiguráció nettó vételára: @Model.SumTotal Ft</strong></h2>
+    
+
+<table width="0" border="0" align="center" cellpadding="10" cellspacing="0" style="background-color:#F5F5F5; border:#999 solid thin; border-radius:3px;">
+                            <tr>
+                              <td colspan="2" style="background-color:#09F; color:#FFF"><div align="center"><strong>Tartós bérlet</strong></div></td>
+                            </tr>
+                            <tr>
+                              <td style="background-color:#999; color:#FFF"><div align="center"><strong>futamidő<br>(hónap)</strong></div></td>
+                              <td style="background-color:#999; color:#FFF"><div align="center"><strong>havidíj<br>(nettó)</strong></div></td>
+                            </tr>
+                            @foreach (var item in Model.Items) { 
+                            <tr >
+                              <td><div align="center"><strong>@item.NumOfMonth </strong></div></td>
+                              <td><div align="center"><strong><span class="finance_price">@String.Format("{0}", item.CalculatedValue)</span> Ft</strong></div></td>
+
+                           </tr>
+                               } 
+                            </table>
+                            <br>
+            <br>
+
+
+      <p>Ajánlatunkat ajánlati kötöttség nélkül tettük meg!<br>
+  Az ügylet megkötéséhez a refinanszírozó jóváhagyása szükséges.</p>
+ 
+        <p><strong>A tartós bérlet alapvetői jellemzői</strong></p>
+      <ul>
+          <li>Az ÁFA a havi díjakat terheli </li>
+         <li>
+             A terméket a bérbeadó aktiválja 
+         </li>
+        <li>  A havi díj költségként elszámolható </li>
+        </ul>
+      <p><br>
+        <strong>Ha bármilyen kérdése merülne fel a konstrukciót illetően, forduljon hozzánk bizalommal! </strong><br>
+
+      <p><em><strong>www.hrpfinance.hu</strong></em><br>
+              mail: <a href="mailto:berlet@hrpfinance.hu">berlet@hrpfinance.hu</a>
+      <p>&nbsp;</p>
+    </ul>        
+      </div>
+</body>
+</html>
+

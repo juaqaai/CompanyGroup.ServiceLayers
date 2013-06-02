@@ -31,6 +31,18 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
+        <FileNode Name="CustInvoiceJourCT.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustInvoiceJourCT.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CustTransOpenCT.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustTransOpenCT.sql</FullPath>
+        </FileNode>
         <FileNode Name="InventSumCT.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>

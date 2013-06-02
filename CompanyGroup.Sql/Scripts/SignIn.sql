@@ -4,30 +4,72 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 
+/*
+A belépésnél maradt egy elvarratlan szál:
+Ha az ax-ben vevõhöz tartozó belépési azonosítóval akarok bejelentkezni, és a vevõn az alábbi helyzet áll fenn: 
+jelszón HRP, BSC pipa bennt, Vevõn a HRP-ben a staisztikai csoport Vevõ, a BSC-ben arhív és a vevõn a HRP, BSC pipa NINCS berakva, akkor az interneten a bejelentkezés ablak NEM írja ki, 
+hogy sikertelen bejelentkezés, és ott marad felül. 
+De ha becsukom a bejelentkezõ ablakot és F5-tel frissítem az oldalt, akkor meg be vagyok jelentkezve! 
+Ez rossz, mivel a vevõn mindkét cégben NINCS bent a Hrp, BSC pipa, ez NEM beengedhetõ vevõ és neki is ki kéne írni, hogy sikertelen bejelentkezés.
+*/
+
 DROP PROCEDURE [InternetUser].[SignIn];
 GO
 CREATE PROCEDURE [InternetUser].[SignIn]
 	@UserName nvarchar(32) = '',
 	@Password nvarchar(32) = ''
 AS
+		DECLARE @VirtualDataAreaId nvarchar(3) = 'hun', 
+				@RecId bigint = 0, 
+				@CustomerId nvarchar(10),
+				@PersonId nvarchar(10), 
+				@RightHrp BIT = 0, 
+				@RightBsc BIT = 0;
 
-DECLARE @RecId bigint, 
-		@CompanyId nvarchar(10),
-		@PersonId nvarchar(10);
+		--@CustomerName nvarchar(60) = '',
+		--@CustomerEmail nvarchar(80) = '',
+		--@PersonName nvarchar(60) = '',
+		--@PersonEmail nvarchar(80) = '',
+		--@CanOrder bit = 0,
+		--@RecieveGoods bit = 0,
+		--@PriceListDownloadEnabled bit = 0,
+		--@IsAdministrator bit = 0,
+		--@InvoiceInfoEnabled bit = 0,
+		--@PaymTermId nvarchar(10) = '',
+		--@Currency nvarchar(10) = '', 
+		--@LanguageId nvarchar(10) = '', 
+		--@DefaultPriceGroupId nvarchar(10) = '', 
+		--@InventLocationId nvarchar(10) = '',
 
-		DECLARE @VirtualDataAreaId nvarchar(3) = 'hun';	--InternetUser.GetVirtualDataAreaId( @DataAreaId );
-
+		-- van-e jogosultsága a hrp-be, vagy a bsc-be belépni? Ha van, akkor a @RecId, @CustomerId, @PersonId NULL-tól eltérõ értéket kap
 		SELECT @RecId = RecId,
-			   @CompanyId = CustAccount, 
-			   @PersonId = ContactPersonId 
-		FROM Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
+			   @CustomerId = CustAccount, 
+			   @PersonId = ContactPersonId, 
+			   @RightHrp = RightHrp,
+			   @RightBsc = RightBsc
+		FROM Axdb.dbo.WebShopUserInfo WHERE ( WebLoginName = @UserName ) AND 
 											( Pwd = @Password ) AND 
 											( RightHrp = 1 OR RightBsc = 1 ) AND 
 											( DataAreaId = @VirtualDataAreaId );
 
 		IF ( ISNULL(@PersonId, '') <> '' ) -- kapcsolattartokent, szemelyes belepes
 		BEGIN
-			SELECT 0 as Id, '' as VisitorId, '' as LoginIP,
+
+/*
+VisitorId, LoginIP, RecId, CustomerId, CustomerName, PersonId, PersonName, Email,  
+IsWebAdministrator,  InvoiceInfoEnabled,  PriceListDownloadEnabled, CanOrder, RecieveGoods,  
+PaymTermIdBsc, PaymTermIdHrp, Currency, LanguageId, DefaultPriceGroupIdHrp, DefaultPriceGroupIdBsc, InventLocationIdHrp, InventLocationIdBsc, 
+RepresentativeId,  LoginType, RightHrp, RightBsc, ContractHrp, ContractBsc, CartId, RegistrationId, IsCatalogueOpened, IsShoppingCartOpened, 
+AutoLogin, LoginDate, LogoutDate, [ExpireDate], Valid
+
+SELECT ROW_NUMBER() OVER(ORDER BY SalesYTD DESC) AS Row, 
+    FirstName, LastName, ROUND(SalesYTD,2,1) AS "Sales YTD" 
+FROM Sales.vSalesPerson
+WHERE TerritoryName IS NOT NULL AND SalesYTD <> 0;
+
+*/
+			SELECT ROW_NUMBER() OVER(ORDER BY Cust.DataAreaId DESC) as Id, 
+				   '' as VisitorId, '' as LoginIP,
 				   ISNULL(@RecId, 0) as RecId, 
 				   CustomerId = Cp.CustAccount, 
 				   CustomerName = ISNULL( Cust.Name, '' ), 
@@ -52,30 +94,38 @@ DECLARE @RecId bigint,
 				   RepresentativeEmail = ISNULL(Empl.Email, ''), 
 				   Cust.DataAreaId, 
 				   LoginType = 2, 
-				   PartnerModel = InternetUser.CalculatePartnerModel( Cust.Hrp, Cust.Bsc, Cust.DataAreaId ), 
+				   --PartnerModel = InternetUser.CalculatePartnerModel( Cust.Hrp, Cust.Bsc, Cust.DataAreaId ), 
+				   CONVERT(BIT, ISNULL(@RightHrp, 0)) as RightHrp, 
+				   CONVERT(BIT, ISNULL(@RightBsc, 0)) as RightBsc,
+				   CONVERT(BIT, ISNULL(Cust.Hrp, 0)) as ContractHrp, 
+				   CONVERT(BIT, ISNULL(Cust.Bsc, 0)) as ContractBsc,
+				   0 as CartId, '' as RegistrationId, CONVERT(BIT, 0) as IsCatalogueOpened, CONVERT(BIT, 0) as IsShoppingCartOpened, 
 				   CONVERT(BIT, 0) as AutoLogin, 
 				   GETDATE() as LoginDate, 
-				   CONVERT(DateTime, 0) as LogoutDate, 
-				   DATEADD(day, 1, GetDate()) as ExpireDate, 
-				   CASE WHEN Cust.DATAAREAID = 'hrp' AND Cust.Hrp = 1 THEN CONVERT(BIT, 1) ELSE
-					   CASE WHEN Cust.DATAAREAID = 'bsc' AND Cust.Bsc = 1 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END
+				   CONVERT(DateTime, '1753.02.01') as LogoutDate, 
+				   DATEADD(day, 1, GetDate()) as [ExpireDate], 
+				   CASE WHEN Cust.DATAAREAID = 'hrp' AND Cust.Hrp = 1 
+						THEN CONVERT(BIT, 1) 
+						ELSE
+							CASE WHEN Cust.DATAAREAID = 'bsc' AND Cust.Bsc = 1 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END
 				   END as Valid
-			FROM Axdb_20130131.dbo.CustTable as Cust 
-				 INNER JOIN Axdb_20130131.dbo.ContactPerson as Cp ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID 
+			FROM Axdb.dbo.CustTable as Cust 
+				 INNER JOIN Axdb.dbo.ContactPerson as Cp ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = @VirtualDataAreaId	--Cust.DataAreaID 
 				 LEFT OUTER JOIN AxDb.dbo.EmplTable as Empl ON  EmplId = Cust.Kepviselo AND Empl.DataAreaId = @VirtualDataAreaId
 			WHERE Cp.LeftCompany = 0 AND Cust.StatisticsGroup <> 'Arhív' AND Cust.StatisticsGroup <> 'Archív' AND
 				  Cust.DataAreaID IN ('hrp', 'bsc') AND 
 				  cp.ContactPersonId = @PersonId AND 
-				  cp.CustAccount = CASE WHEN ISNULL(@CompanyId, '') = '' THEN cp.CustAccount ELSE @CompanyId END; 
+				  cp.CustAccount = CASE WHEN ISNULL(@CustomerId, '') = '' THEN cp.CustAccount ELSE @CustomerId END; 
 
-				  -- select * from Axdb_20130131.dbo.CustTable where AccountNum = 'V001446'
-				  -- select * from Axdb_20130131.dbo.ContactPerson where ContactPersonId = 'KAPCS03399'
+				  -- select * from Axdb.dbo.CustTable where AccountNum = 'V001446'
+				  -- select * from Axdb.dbo.ContactPerson where ContactPersonId = 'KAPCS03399'
 		END
 		ELSE
 		BEGIN
-			IF ( ISNULL(@CompanyId, '') <> '' )	-- cegkent lep be
+			IF ( ISNULL(@CustomerId, '') <> '' )	-- cegkent lep be
 	  		BEGIN
-				SELECT 0 as Id, '' as VisitorId, '' as LoginIP,
+				SELECT ROW_NUMBER() OVER(ORDER BY Cust.DataAreaId DESC) as Id,
+					   '' as VisitorId, '' as LoginIP,
 					   ISNULL(@RecId, 0) as RecId, 
 					   CustomerId = AccountNum, 
 					   CustomerName = ISNULL( Cust.Name, '' ), 
@@ -100,18 +150,25 @@ DECLARE @RecId bigint,
 					   RepresentativeEmail = ISNULL(Empl.Email, ''), 
 					   Cust.DataAreaId, 
 					   LoginType = 1, 
-					   PartnerModel = InternetUser.CalculatePartnerModel( Cust.Hrp, Cust.Bsc, Cust.DataAreaId ), 
+					   --PartnerModel = InternetUser.CalculatePartnerModel( Cust.Hrp, Cust.Bsc, Cust.DataAreaId ), 
+					   CONVERT(BIT, ISNULL(@RightHrp, 0)) as RightHrp, 
+				       CONVERT(BIT, ISNULL(@RightBsc, 0)) as RightBsc,
+				       CONVERT(BIT, ISNULL(Cust.Hrp, 0)) as ContractHrp, 
+				       CONVERT(BIT, ISNULL(Cust.Bsc, 0)) as ContractBsc,
+					   0 as CartId, '' as RegistrationId, CONVERT(BIT, 0) as IsCatalogueOpened, CONVERT(BIT, 0) as IsShoppingCartOpened, 
 					   CONVERT(BIT, 0) as AutoLogin, 
 					   GETDATE() as LoginDate, 
-					   CONVERT(DateTime, 0) as LogoutDate, 
-					   DATEADD(day, 1, GetDate()) as ExpireDate, 
-					   CASE WHEN Cust.DATAAREAID = 'hrp' AND Cust.Hrp = 1 THEN CONVERT(BIT, 1) ELSE
-						   CASE WHEN Cust.DATAAREAID = 'bsc' AND Cust.Bsc = 1 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END
+					   CONVERT(DateTime, '1753.02.01') as LogoutDate, 
+					   DATEADD(day, 1, GetDate()) as [ExpireDate], 
+					   CASE WHEN Cust.DATAAREAID = 'hrp' AND Cust.Hrp = 1 
+							THEN CONVERT(BIT, 1) 
+							ELSE
+								CASE WHEN Cust.DATAAREAID = 'bsc' AND Cust.Bsc = 1 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END
 					   END as Valid
-				FROM Axdb_20130131.dbo.CustTable as Cust 
+				FROM Axdb.dbo.CustTable as Cust 
 					 LEFT OUTER JOIN AxDb.dbo.EmplTable as Empl ON  EmplId = Cust.Kepviselo AND Empl.DataAreaId = @VirtualDataAreaId
 				WHERE Cust.StatisticsGroup <> 'Arhív' AND Cust.StatisticsGroup <> 'Archív' AND
-					  Cust.DataAreaID IN ('hrp', 'bsc') AND ACCOUNTNUM = @CompanyId;
+					  Cust.DataAreaID IN ('hrp', 'bsc') AND ACCOUNTNUM = @CustomerId;
 			END
 			ELSE
 			BEGIN
@@ -140,12 +197,17 @@ DECLARE @RecId bigint,
 						'' as RepresentativeEmail, 
 						''  as DataAreaId,
 						0 as LoginType, 
-						0 as PartnerModel,
+						--0 as PartnerModel,
+						CONVERT(BIT, ISNULL(@RightHrp, 0)) as RightHrp, 
+						CONVERT(BIT, ISNULL(@RightBsc, 0)) as RightBsc,
+						CONVERT(BIT, 0) as ContractHrp, 
+						CONVERT(BIT, 0) as ContractBsc,
+						0 as CartId, '' as RegistrationId, CONVERT(BIT, 0) as IsCatalogueOpened, CONVERT(BIT, 0) as IsShoppingCartOpened, 
 						CONVERT(BIT, 0) as AutoLogin, 
 						GETDATE() as LoginDate, 
-						CONVERT(DateTime, 0) as LogoutDate, 
-						DATEADD(day, 1, GetDate()) as ExpireDate, 
-						CONVERT(BIT, 1) as Valid;
+						CONVERT(DateTime, '1753.02.01') as LogoutDate, 
+						DATEADD(day, 1, GetDate()) as [ExpireDate], 
+						CONVERT(BIT, 0) as Valid;
 			END
 		END
 
@@ -156,9 +218,55 @@ GO
 -- exec InternetUser.SignIn 'elektroplaza', 'hrp5891ep';
 -- exec InternetUser.SignIn 'ipon', 'gild4MAX19';
 -- exec InternetUser.SignIn 'plorinczy', 'pikolo';
--- select * from Axdb_20130131.dbo.WebShopUserInfo WHERE ( WebLoginName = 'joci2' )	gild4MAX19
--- select * from AxDb.dbo.EmplTable
+-- exec InternetUser.SignIn 'nador', '4koszeG';
+-- exec InternetUser.SignIn 'netlogic', 'hrppass123';
+-- exec InternetUser.SignIn 'kekszinfo', '8mmks812';
+-- exec InternetUser.SignIn 'Mysoft', '3689478';
 
+-- www.111.hu	0hfvmb1l
+
+-- select * from Axdb.dbo.WebShopUserInfo WHERE ( WebLoginName = 'joci2' ) -- V000276	kincsesfoto, gild4MAX19
+select * from Axdb.dbo.WebShopUserInfo WHERE CUSTACCOUNT = 'V002095'
+-- select * from AxDb.dbo.CustTable where Bsc = 1 and Hrp = 1 AccountNum = 'V002095' -- V002319
+/*
+select * FROM Axdb.dbo.CustTable as Cust 
+INNER JOIN Axdb.dbo.ContactPerson as Cp ON Cust.AccountNum = Cp.CustAccount AND Cp.DataAreaID = 'hun'
+where Cp.CONTACTPERSONID = 'KAPCS06504'	-- 24517/SZL
+
+*/
+
+/*
+;
+with Duplicates1(WebLoginName, pwd, ContactPersonId, CUSTACCOUNT )
+as (select WebLoginName, pwd, ContactPersonId, CUSTACCOUNT
+from Axdb.dbo.WebShopUserInfo
+where CUSTACCOUNT <> '' and WebLoginName <> '' and pwd <> ''
+group by WebLoginName, pwd, ContactPersonId, CUSTACCOUNT
+having count(*) > 1), 
+Duplicates2(WebLoginName, pwd, ContactPersonId, CUSTACCOUNT )
+as (select WebLoginName, pwd, ContactPersonId, CUSTACCOUNT
+from Axdb.dbo.WebShopUserInfo
+where ContactPersonId <> '' and WebLoginName <> '' and pwd <> ''
+group by WebLoginName, pwd, ContactPersonId, CUSTACCOUNT
+having count(*) > 1)
+select * from Duplicates1
+union all 
+select * from Duplicates2
+
+select Duplicates.WebLoginName, C.NAME  from Duplicates 
+left outer join Axdb.dbo.CustTable as C on C.AccountNum = Duplicates.CUSTACCOUNT 
+
+where Duplicates.CUSTACCOUNT <> '' and C.STATISTICSGROUP <> 'Archív' and C.STATISTICSGROUP <> 'Arhív'
+
+select count(*)
+from Axdb.dbo.WebShopUserInfo
+group by WebLoginName, pwd
+*/
+
+/*
+kiszámítja, hogy a partner melyik vállalatban van regisztrálva
+0: egyikben sem, 1: csak a hrp-ben, 2: csak a bsc-ben, 3: mindkét vállalatban
+*/
 DROP FUNCTION InternetUser.CalculatePartnerModel
 GO
 CREATE FUNCTION InternetUser.CalculatePartnerModel( @Hrp INT, @Bsc INT, @DataAreaId NVARCHAR(3))

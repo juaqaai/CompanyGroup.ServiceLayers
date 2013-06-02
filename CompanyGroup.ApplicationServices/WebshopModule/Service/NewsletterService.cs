@@ -31,10 +31,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterCollection(CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request)
         {
-            Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
-
             try
             {
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
                 //látogató lekérdezése
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
@@ -55,10 +55,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.WebshopModule.NewsletterCollection newsletterCollection = new CompanyGroup.Domain.WebshopModule.NewsletterCollection(newsletters);
 
-                //válasz elkészítése
-                CompanyGroup.Dto.WebshopModule.NewsletterCollection result = new CompanyGroup.Dto.WebshopModule.NewsletterCollection();
+                List<CompanyGroup.Dto.WebshopModule.Newsletter> items = newsletterCollection.Newsletters.ConvertAll(x => new NewsletterToNewsletter().Map(x));
 
-                result.Items = newsletterCollection.Newsletters.ConvertAll(x => new NewsletterToNewsletter().Map(x));
+                //válasz elkészítése
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection result = new CompanyGroup.Dto.WebshopModule.NewsletterCollection(items, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
 
                 return result;
             }

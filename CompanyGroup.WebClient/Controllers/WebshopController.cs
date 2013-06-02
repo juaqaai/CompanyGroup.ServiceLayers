@@ -162,6 +162,42 @@ namespace CompanyGroup.WebClient.Controllers
         }
 
         /// <summary>
+        /// finanszírozási ajánlat elküldése
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("CreateFinanceOffer")]
+        public ActionResult CreateFinanceOffer(FormCollection formCollection)
+        {
+            try
+            {
+                CompanyGroup.WebClient.Models.VisitorData visitorData = CompanyGroup.Helpers.CookieHelper.ReadCookie<CompanyGroup.WebClient.Models.VisitorData>(System.Web.HttpContext.Current.Request, CookieName);
+
+                if (visitorData == null) { visitorData = new CompanyGroup.WebClient.Models.VisitorData(); }
+
+                //CompanyGroup.WebClient.Models.CreateFinanceOfferRequest request
+
+                int numOfMonth = Helpers.ConvertData.ConvertStringToInt( formCollection.Get("radio_selectNumOfMonth"), 0);
+
+                CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest req = new CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest(visitorData.VisitorId, visitorData.Language, numOfMonth, visitorData.CartId);
+
+                CompanyGroup.Dto.WebshopModule.FinanceOfferResponse response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest, CompanyGroup.Dto.WebshopModule.FinanceOfferResponse>("Finance", "CreateFinanceOffer", req);
+
+                CompanyGroup.WebClient.Models.FinanceOfferResponse viewModel = new CompanyGroup.WebClient.Models.FinanceOfferResponse(response.LeasingOptions.Items, response.Message, response.LeasingOptions.SumTotal);
+
+                return new Rotativa.ViewAsPdf("FinanceOffer", viewModel)
+                {
+                    FileName = String.Format("finanszirozasi_ajanlat_{0}_{1}_{2}_{3}_{4}.pdf", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Minute, DateTime.Now.Second),
+                    PageSize = Rotativa.Options.Size.A4,
+                    PageOrientation = Rotativa.Options.Orientation.Portrait,
+                    PageMargins = { Left = 0, Right = 0 }
+                };
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
         /// árlista letöltése
         /// </summary>
         /// <returns></returns>

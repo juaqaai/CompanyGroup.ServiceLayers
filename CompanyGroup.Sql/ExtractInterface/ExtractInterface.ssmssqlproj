@@ -79,6 +79,18 @@
           <AssociatedConnUserName />
           <FullPath>InvoiceExtract.sql</FullPath>
         </FileNode>
+        <FileNode Name="InvoiceOpenTransactionSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InvoiceOpenTransactionSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="InvoiceOpenTransactionUpdate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InvoiceOpenTransactionUpdate.sql</FullPath>
+        </FileNode>
         <FileNode Name="PictureExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>

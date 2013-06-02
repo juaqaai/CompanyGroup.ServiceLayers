@@ -104,5 +104,10 @@ namespace CompanyGroup.Dto.PartnerModule
         /// létezik-e hozzá kép?
         /// </summary>
         public bool PictureExists { set; get; }
+
+        /// <summary>
+        /// vállalatkód
+        /// </summary>
+        public string DataAreaId { set; get; }
     }
 }

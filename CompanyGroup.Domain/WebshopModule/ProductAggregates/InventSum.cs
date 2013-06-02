@@ -142,7 +142,7 @@ namespace CompanyGroup.Domain.WebshopModule
         {
             IEnumerable<InventSum> list = this.Where(x => 
                                                     {
-                                                        return ((x.IsEndOfSales) || (x.IsSecondHandConfig) ) && x.AvailPhysical.Equals(0);
+                                                        return ((x.IsEndOfSales) || (x.IsSecondHandConfig)) && x.AvailPhysical.Equals(0);
                                                     });
 
             return list.Select(x => x.ItemId);

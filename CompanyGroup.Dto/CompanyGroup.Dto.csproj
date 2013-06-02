@@ -46,6 +46,7 @@
     <Compile Include="PartnerModule\BankAccount.cs" />
     <Compile Include="PartnerModule\ChangePassword.cs" />
     <Compile Include="PartnerModule\ContactPerson.cs" />
+    <Compile Include="PartnerModule\EventRegistration.cs" />
     <Compile Include="PartnerModule\GetDetailedInvoiceInfoRequest.cs" />
     <Compile Include="PartnerModule\ForgetPassword.cs" />
     <Compile Include="PartnerModule\Invoice.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="WebshopModule\BannerProduct.cs" />
     <Compile Include="WebshopModule\FinanceOffer.cs" />
     <Compile Include="WebshopModule\OrderFulFillment.cs" />
-    <Compile Include="WebshopModule\FinanceOfferFulFillment.cs" />
+    <Compile Include="WebshopModule\FinanceOfferResponse.cs" />
     <Compile Include="WebshopModule\ShoppingCartAndLeasingOptions.cs" />
     <Compile Include="WebshopModule\LeasingOptions.cs" />
     <Compile Include="WebshopModule\ShoppingCartInfo2.cs" />

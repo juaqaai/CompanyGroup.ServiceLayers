@@ -20,6 +20,8 @@ namespace CompanyGroup.WebClient.Controllers
     {
         private readonly static string ServiceBaseAddress = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ServiceBaseAddress", "http://1Juhasza/CompanyGroup.WebApi/api/");
 
+        private readonly static string ServiceReadOnlyBaseAddress = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ServiceReadOnlyBaseAddress", "http://srv3/CompanyGroup.WebApi/api/");
+
         protected readonly static string DataAreaId = CompanyGroup.Helpers.ConfigSettingsParser.GetString("DataAreaId", "hrp");
 
         protected readonly static string CookieName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("CookieName", "companygroup_hrpbsc");

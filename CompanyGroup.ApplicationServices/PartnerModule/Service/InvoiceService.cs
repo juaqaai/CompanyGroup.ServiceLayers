@@ -81,7 +81,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 return result;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
         }
 
         /// <summary>
@@ -115,7 +118,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 return result;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
         }
 
         /// <summary>
@@ -137,7 +143,10 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                         return new CompanyGroup.Dto.PartnerModule.InvoiceSumAmount(String.Format("{0:0,0.00}", x.AmountCredit), String.Format("{0:0,0.00}", x.AmountOverdue), x.CurrencyCode);
                     });
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
         }
     }
 }

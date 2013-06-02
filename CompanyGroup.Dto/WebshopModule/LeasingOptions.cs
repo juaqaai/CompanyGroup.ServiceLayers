@@ -5,52 +5,88 @@ using System.Text;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "LeasingOption", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// lízing opció
+    /// </summary>
     public class LeasingOption
     {
-        int financeparameterid = 0;
-        int numofmonth = 0;
-        double calculatedvalue = 0;
-
-        [System.Runtime.Serialization.DataMember(Name = "FinanceParameterId", Order = 1)]
-        public int FinanceParameterId
-        {
-            get { return financeparameterid; }
-            set { financeparameterid = value; }
+        /// <summary>
+        /// lízing opció
+        /// </summary>
+        public LeasingOption() : this(0, 0, String.Empty)
+        { 
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "NumOfMonth", Order = 2)]
-        public int NumOfMonth
+        /// <summary>
+        /// lízing opció
+        /// </summary>
+        /// <param name="financeparameterid"></param>
+        /// <param name="numofmonth"></param>
+        /// <param name="calculatedvalue"></param>
+        public LeasingOption(int financeparameterid, int numofmonth, string calculatedvalue)
         {
-            get { return numofmonth; }
-            set { numofmonth = value; }
+            this.FinanceParameterId = financeparameterid;
+
+            this.NumOfMonth = numofmonth;
+
+            this.CalculatedValue = calculatedvalue;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "CalculatedValue", Order = 3)]
-        public double CalculatedValue
-        {
-            get { return calculatedvalue; }
-            set { calculatedvalue = value; }
-        }
+        /// <summary>
+        /// választott futamidő azonosító
+        /// </summary>
+        public int FinanceParameterId { get; set; }
+
+        /// <summary>
+        /// választott futamidő hónapokban
+        /// </summary>
+        public int NumOfMonth { get; set; }
+
+        /// <summary>
+        /// kalkulált finanszírozandó összed
+        /// </summary>
+        public string CalculatedValue { get; set; }
     }
 
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "LeasingOptions", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// lízing opciók
+    /// </summary>
     public class LeasingOptions
     {
-        public LeasingOptions()
-        {
-            this.Items = new List<LeasingOption>();
+        /// <summary>
+        /// lízing opciók
+        /// </summary>
+        public LeasingOptions() : this(new List<LeasingOption>(), String.Empty, String.Empty) { }
 
-            this.Message = "";
+        /// <summary>
+        /// lízing opciók
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="message"></param>
+        /// <param name="sumTotal"></param>
+        public LeasingOptions(List<LeasingOption> items, string message, string sumTotal)
+        {
+            this.Items = items;
+
+            this.Message = message;
+
+            this.SumTotal = sumTotal;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "Items", Order = 1)]
+        /// <summary>
+        /// lízing opció elem lista 
+        /// </summary>
         public List<LeasingOption> Items { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Message", Order = 2)]
+        /// <summary>
+        /// üzenet
+        /// </summary>
         public string Message { get; set; }
+
+        /// <summary>
+        /// finanszírozandó netto összeg 
+        /// </summary>
+        public string SumTotal { get; set; }
     }
 
 

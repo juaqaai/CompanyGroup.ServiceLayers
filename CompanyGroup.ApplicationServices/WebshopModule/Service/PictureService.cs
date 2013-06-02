@@ -12,6 +12,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
     /// </summary>
     public class PictureService : IPictureService
     {
+        private const string CACHEKEY_PICTURE = "picture";
+
+        /// <summary>
+        /// struktúra cache időtartama percben
+        /// </summary>
+        private const double CACHE_EXPIRATION_PICTURE = 2880d;
+
+        private static readonly bool PictureCacheEnabled = Helpers.ConfigSettingsParser.GetBoolean("PictureCacheEnabled", true);
+
         private CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository;
 
         public PictureService(CompanyGroup.Domain.WebshopModule.IPictureRepository pictureRepository)
@@ -31,12 +40,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <returns></returns>
         public CompanyGroup.Dto.WebshopModule.Pictures GetListByProduct(CompanyGroup.Dto.WebshopModule.PictureFilterRequest request) 
         {
-            CompanyGroup.Helpers.DesignByContract.Require((request != null), "The GetListByProduct request parameter can not be null!");
-
-            CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.ProductId), "The GetListByProduct request parameter can not be null!");
-
             try
             {
+                CompanyGroup.Helpers.DesignByContract.Require((request != null), "The GetListByProduct request parameter can not be null!");
+
+                CompanyGroup.Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.ProductId), "The GetListByProduct request parameter can not be null!");
+
                 List<CompanyGroup.Domain.WebshopModule.Picture> pictureList = pictureRepository.GetListByProduct(request.ProductId);
 
                 CompanyGroup.Helpers.DesignByContract.Ensure((pictureList != null), "Repository GetListByProduct result cannot be null!");
@@ -49,7 +58,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 return new PicturesToPictures().Map(pictures);
             }
-            catch { return new CompanyGroup.Dto.WebshopModule.Pictures(); }
+            catch(Exception ex) 
+            { 
+                throw ex; 
+            }
         }
 
         /// <summary>
@@ -69,7 +81,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Helpers.DesignByContract.Ensure((picture != null), "Repository GetPrimaryPicture result cannot be null!");
 
-                byte[] buffer = this.ReadFileContent(picture);
+                byte[] buffer = this.ReadCachedFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -119,7 +131,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (picture == null) { return null; }
 
-                byte[] buffer = this.ReadFileContent(picture);
+                byte[] buffer = this.ReadCachedFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -149,7 +161,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (picture == null) { return null; }
 
-                byte[] buffer = this.ReadFileContent(picture);
+                byte[] buffer = this.ReadCachedFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -179,7 +191,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (picture == null) { return null; }
 
-                byte[] buffer = this.ReadFileContent(picture);
+                byte[] buffer = this.ReadCachedFileContent(picture);
 
                 int w = 0;
                 int h = 0;
@@ -203,7 +215,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
-                CompanyGroup.Helpers.DesignByContract.Require((id > 0), "The PictureService GetInvoicePicture request recId parameter can not be null!");
+                CompanyGroup.Helpers.DesignByContract.Require((id > 0), "The PictureService GetInvoicePicture request Id parameter can not be null!");
 
                 CompanyGroup.Domain.WebshopModule.Picture picture = pictureRepository.GetSalesOrderPicture(id);
 
@@ -222,9 +234,57 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             catch { return null; }
         }
 
+        /// <summary>
+        /// cache-elve kiolvassa byte tömbben a képet 
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <returns></returns>
+        private byte[] ReadCachedFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
+        {
+            byte[] buffer = null;
+
+            try
+            {
+                string cacheKey = String.Empty;
+
+                //cache kiolvasás, ha engedélyezett a kiolvasás
+                if (PictureService.PictureCacheEnabled)
+                {
+                    string itemKey = String.Format("{0}_{1}", picture.Id, picture.RecId);
+
+                    cacheKey = CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_PICTURE, itemKey);
+
+                    buffer = CompanyGroup.Helpers.CacheHelper.Get<byte[]>(cacheKey);
+                }
+
+                //ha nem sikerült a cache kiolvasása, akkor olvasás file-ból
+                if (buffer == null)
+                {
+                    buffer = this.ReadFileContent(picture);
+
+                    //cache-be mentés
+                    if ((PictureService.PictureCacheEnabled) && (buffer != null))
+                    {
+                        CompanyGroup.Helpers.CacheHelper.Add<byte[]>(cacheKey, buffer, DateTime.Now.AddMinutes(CompanyGroup.Helpers.CacheHelper.CalculateAbsExpirationInMinutes(CACHE_EXPIRATION_PICTURE)));
+                    }
+                }
+
+                return buffer;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// file megosztáson lévő képet felolvassa byte tömbbe, cache használat nélkül
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <returns></returns>
         private byte[] ReadFileContent(CompanyGroup.Domain.WebshopModule.Picture picture)
         {
-            byte[] buffer;
+            byte[] buffer = null;
 
             FileStream fileStream = null;
 
@@ -234,18 +294,17 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-                int length = (int) fileStream.Length;  // get file length
+                int length = (int) fileStream.Length;  
 
-                buffer = new byte[length];            // create buffer
+                buffer = new byte[length];            
 
-                int count;                            // actual number of bytes read
+                int count;                            
 
-                int sum = 0;                          // total number of bytes read
+                int sum = 0;                          
 
-                // read until Read method returns 0 (end of the stream has been reached)
                 while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
                 {
-                    sum += count;  // sum is a buffer offset for next reading
+                    sum += count;  
                 }
 
                 return buffer;

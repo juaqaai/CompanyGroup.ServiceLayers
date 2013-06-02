@@ -69,12 +69,12 @@ namespace CompanyGroup.ApplicationServices
         {
             try
             {
-                CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById(visitorId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById(visitorId);
 
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(visitorData);
+                //CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(visitorData);
 
 
-                visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitorData.Id);
+                visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitor.Id);
 
                 //TODO: ellenorzes NULL-ra
                 CompanyGroup.Helpers.DesignByContract.Invariant(visitor != null, "ServiceCoreBase - GetVisitorFromRepository - visitorRepository.GetItemById result can not be null!");
@@ -218,8 +218,8 @@ namespace CompanyGroup.ApplicationServices
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("A levél elküldése nem sikerült", ex);
-                return false;
+                throw ex;
+                //return false;
             }
 
         }

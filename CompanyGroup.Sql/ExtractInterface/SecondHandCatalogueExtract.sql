@@ -27,12 +27,12 @@ SET NOCOUNT ON
 	-- WITH XXConfig_CTE(ConfigId, InventLocationId, InventDimId, ProductId, StatusDescription, DataAreaId)
 	--AS (
 	--	SELECT cfg.configId, idim.InventLocationId, idim.InventDimId, cfg.ItemId, cfg.Name, cfg.dataAreaId 
-	--	FROM Axdb_20130131.dbo.ConfigTable as cfg 
-	--	INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+	--	FROM Axdb.dbo.ConfigTable as cfg 
+	--	INNER JOIN Axdb.dbo.InventDim as idim ON cfg.configId = idim.configId and 
 	--													  cfg.dataAreaId = idim.dataAreaId AND 
 	--													  cfg.ConfigId like 'xx%' AND 
 	--													  idim.InventLocationId IN ('HASZNALT', '2100')
-	--	--INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND 
+	--	--INNER JOIN Axdb.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND 
 	--	--												   ins.DataAreaId = idim.DataAreaId AND 
 	--	--												   ins.ItemId = cfg.ItemId )
 	--	WHERE cfg.dataareaid IN ('bsc', 'hrp') -- AND ins.Closed = 0 
@@ -51,17 +51,17 @@ SET NOCOUNT ON
 	(
 		--SELECT c.ConfigId, c.InventLocationId, c.ProductId, CONVERT( INT, SUM(ins.AvailPhysical) ), InternetUser.GetSecondHandPrice( c.DataAreaId, c.ProductId, c.ConfigId ), c.StatusDescription, c.DataAreaId
 		--FROM XXConfig_CTE as c 
-		--INNER JOIN Axdb_20130131.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
-		--INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
+		--INNER JOIN Axdb.dbo.InventDim AS ind ON ( ind.configId = c.ConfigId and ind.DataAreaId = c.DataAreaId AND ind.InventLocationId IN ('HASZNALT', '2100') )
+		--INNER JOIN Axdb.dbo.InventSum AS ins ON ( ins.inventDimId = ind.InventDimId AND ins.DataAreaId = ind.DataAreaId AND ins.ItemId = c.ProductId )
 		--WHERE ins.Closed = 0 
 		--GROUP BY c.ConfigId, c.InventLocationId, c.ProductId, c.StatusDescription, c.DataAreaId
 
 		SELECT cfg.ConfigId, idim.InventLocationId, cfg.ItemId, CONVERT(INT, ins.AvailPhysical), InternetUser.GetSecondHandPrice( cfg.DataAreaId, cfg.ItemId, cfg.ConfigId ), cfg.Name, cfg.dataAreaId
-		FROM Axdb_20130131.dbo.ConfigTable as cfg 
-		INNER JOIN Axdb_20130131.dbo.InventDim as idim ON cfg.configId = idim.configId and 
+		FROM Axdb.dbo.ConfigTable as cfg 
+		INNER JOIN Axdb.dbo.InventDim as idim ON cfg.configId = idim.configId and 
 														cfg.dataAreaId = idim.dataAreaId 
 														
-		INNER JOIN Axdb_20130131.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND ins.DataAreaId = idim.DataAreaId AND ins.ItemId = cfg.ItemId )
+		INNER JOIN Axdb.dbo.InventSum AS ins ON ( ins.inventDimId = idim.InventDimId AND ins.DataAreaId = idim.DataAreaId AND ins.ItemId = cfg.ItemId )
 		WHERE cfg.dataareaid IN ('bsc', 'hrp') and ins.Closed = 0 AND ins.AvailPhysical > 0 AND   
 			  cfg.ConfigId like 'xx%' AND idim.InventLocationId IN ('HASZNALT', '2100')
 	),
@@ -74,7 +74,7 @@ SET NOCOUNT ON
 			   WHEN 'en-gb' THEN 'eng'
 			   ELSE '' END, 
 			   DataAreaId 	 
-		FROM Axdb_20130131.dbo.INVENTTXT
+		FROM Axdb.dbo.INVENTTXT
 		WHERE DataAreaId IN ('hrp', 'bsc') AND ItemId <> '' AND Txt <> ''
 	), 
 	-- angol termékleírás 
@@ -83,8 +83,8 @@ SET NOCOUNT ON
 		SELECT inventlng.ITEMID,
 			   inventlng.MEGJELENITESINEV, 
 			   inventlng.DataAreaId
-		FROM Axdb_20130131.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
-		INNER JOIN Axdb_20130131.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
+		FROM Axdb.dbo.UPDINVENTLNG as inventlng WITH (READUNCOMMITTED) 
+		INNER JOIN Axdb.dbo.InventTable as invent WITH (READUNCOMMITTED) on inventlng.ITEMID = invent.ITEMID and inventlng.LANGUAGEID = 'en-gb'
 		WHERE Invent.DataAreaID IN ('hrp', 'bsc') AND 
 			Invent.WEBARUHAZ = 1 AND 
 			Invent.ITEMSTATE IN ( 0, 1 ) AND 
@@ -100,8 +100,8 @@ SET NOCOUNT ON
 			   m.GyartoNev,
 			   CASE WHEN em.MegJelenitesiNev IS NULL THEN m.GyartoNev ELSE em.MegJelenitesiNev END as ManufacturerNameEnglish, 
 			   m.SourceCompany
-		FROM Axdb_20130131.dbo.updGyartok as m WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updGyartok as m WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updGyartokLng as em WITH (READUNCOMMITTED) on m.GYARTOID = em.GYARTOID and em.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND m.GYARTOID <> '' AND m.GyartoNev <> ''	),
 	-- termékkategória 1 lekérdezése
 	Category1_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -109,8 +109,8 @@ SET NOCOUNT ON
 		SELECT c.jelleg1Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg1 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg1Lng as ec WITH (READUNCOMMITTED) on c.jelleg1id = ec.jelleg1id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg1id <> '' AND c.jellegNev <> '' ), 
 	-- termékkategória 2 lekérdezése
 	Category2_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -118,8 +118,8 @@ SET NOCOUNT ON
 		SELECT c.jelleg2Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg2 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg2Lng as ec WITH (READUNCOMMITTED) on c.jelleg2Id = ec.jelleg2Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg2Id <> '' AND c.jellegNev <> '' ), 
 	-- termékkategória 3 lekérdezése
 	Category3_CTE(CategoryId, CategoryName, CategoryNameEnglish)
@@ -127,8 +127,8 @@ SET NOCOUNT ON
 		SELECT c.jelleg3Id, 
 			   c.jellegNev,
 			   CASE WHEN ec.MegJelenitesiNev IS NULL THEN c.jellegNev ELSE ec.MegJelenitesiNev END
-		FROM Axdb_20130131.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
-		LEFT OUTER JOIN Axdb_20130131.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
+		FROM Axdb.dbo.updJelleg3 as c WITH (READUNCOMMITTED) 
+		LEFT OUTER JOIN Axdb.dbo.updJelleg3Lng as ec WITH (READUNCOMMITTED) on c.jelleg3Id = ec.jelleg3Id and ec.LanguageId = 'en-gb'
 		WHERE DataAreaId = 'hun' AND c.jelleg3Id <> '' AND c.jellegNev <> '' )
 
 	SELECT DISTINCT Invent.ItemId as ProductId, 
@@ -173,7 +173,7 @@ SET NOCOUNT ON
 					0 as PictureId, 
 					CONVERT(BIT, 1) as SecondHand,
 					CONVERT(BIT, 1)	as Valid	
-	FROM Axdb_20130131.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
+	FROM Axdb.dbo.InventTable as Invent WITH (READUNCOMMITTED) 
 	INNER JOIN Manufacturer_CTE as Manufacturer ON Manufacturer.ManufacturerId = Invent.GYARTOID AND Manufacturer.SourceCompany = Invent.DataAreaId
 
 	INNER JOIN SecondHandStock_CTE as SecondHandStock ON SecondHandStock.ProductId = Invent.ItemId AND 
@@ -183,9 +183,9 @@ SET NOCOUNT ON
 	LEFT OUTER JOIN Category2_CTE as Category2 ON Category2.CategoryId = Invent.JELLEG2ID
 	LEFT OUTER JOIN Category3_CTE as Category3 ON Category3.CategoryId = Invent.JELLEG3ID
 
-    LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND 
+    LEFT OUTER JOIN Axdb.dbo.UPDJOTALLASIDEJE as gt ON gt.UPDJOTALLASIDEJEID = Invent.UPDJOTALLASIDEJEID AND 
 																gt.DATAAREAID = Invent.DATAAREAID
-	LEFT OUTER JOIN Axdb_20130131.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
+	LEFT OUTER JOIN Axdb.dbo.UPDJOTALLASMODJA as gm ON gm.UPDJOTALLASMODJAID = Invent.UPDJOTALLASMODJAID AND 
 																gm.DATAAREAID = Invent.DATAAREAID	
 	LEFT OUTER JOIN Description_CTE as HunDescription ON HunDescription.ProductId = Invent.ItemId AND 
 														 HunDescription.LanguageId = 'hun' AND 
@@ -196,7 +196,7 @@ SET NOCOUNT ON
 	--LEFT OUTER JOIN InternetUser.Catalogue as Catalogue ON Catalogue.ProductId = SecondHandStock.ProductId AND 
 	--													   Catalogue.DataAreaId = SecondHandStock.DataAreaId														 	
 
-	WHERE SecondHandStock.Quantity > 0 AND SecondHandStock.Price > 0 AND Invent.ItemId NOT IN( SELECT C.ItemId FROM Axdb_20130131.dbo.InventTable as C WHERE C.DataAreaId IN ('bsc', 'hrp') AND 
+	WHERE SecondHandStock.Quantity > 0 AND SecondHandStock.Price > 0 AND Invent.ItemId NOT IN( SELECT C.ItemId FROM Axdb.dbo.InventTable as C WHERE C.DataAreaId IN ('bsc', 'hrp') AND 
 																																							 C.WEBARUHAZ = 1 AND 
 																																							 C.ITEMSTATE IN ( 0, 1 ) AND 
 																																							  --1 = CASE WHEN Invent.ItemState = 1 AND ( @InnerStock + @OuterStock ) > 0 THEN 1 ELSE 0 END AND
@@ -209,5 +209,8 @@ SET NOCOUNT ON
 RETURN
 GO
 GRANT EXECUTE ON [InternetUser].[SecondHandCatalogueExtract] TO [InternetUser];
+GO
+GRANT EXECUTE ON [InternetUser].[SecondHandCatalogueExtract] TO [HRP_HEADOFFICE\AXPROXY]
+GO
 -- EXEC [InternetUser].[SecondHandCatalogueExtract];
 -- select * from InternetUser.Catalogue where Available = 0

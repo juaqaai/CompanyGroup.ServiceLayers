@@ -39,9 +39,16 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.AddressZipCodes GetAddressZipCodes(CompanyGroup.Dto.PartnerModule.AddressZipCodeRequest request)
         {
-            List<CompanyGroup.Domain.PartnerModule.AddressZipCode> addressZipCodes = customerRepository.GetAddressZipCode(request.DataAreaId, request.Prefix);
+            try
+            {
+                List<CompanyGroup.Domain.PartnerModule.AddressZipCode> addressZipCodes = customerRepository.GetAddressZipCode(request.DataAreaId, request.Prefix);
 
-            return new AddressZipCodeToAddressZipCode().Map(addressZipCodes);
+                return new AddressZipCodeToAddressZipCode().Map(addressZipCodes);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -52,56 +59,63 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.RegistrationModule.Registration GetCustomerRegistration(CompanyGroup.Dto.PartnerModule.GetCustomerRegistrationRequest request)
         {
-            //ha üres a látogató azonosító
-            if (String.IsNullOrEmpty(request.VisitorId))
+            try
             {
-                return new CompanyGroup.Dto.RegistrationModule.Registration();
+                //ha üres a látogató azonosító
+                if (String.IsNullOrEmpty(request.VisitorId))
+                {
+                    return new CompanyGroup.Dto.RegistrationModule.Registration();
+                }
+
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                //ha nincs bejelentkezve
+                if (!visitor.IsValidLogin)
+                {
+                    return new CompanyGroup.Dto.RegistrationModule.Registration();
+                }
+
+                CompanyGroup.Dto.RegistrationModule.Registration result = new CompanyGroup.Dto.RegistrationModule.Registration();
+
+                List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = customerRepository.GetBankAccounts(visitor.CustomerId, request.DataAreaId);
+
+                List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = customerRepository.GetContactPersons(visitor.CustomerId, request.DataAreaId);
+
+                CompanyGroup.Domain.PartnerModule.Customer customer = customerRepository.GetCustomer(visitor.CustomerId, request.DataAreaId);
+
+                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
+
+                CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = customerRepository.GetMailAddress(visitor.CustomerId, request.DataAreaId);
+
+                //válasz objektum feltöltés
+                result.BankAccounts = bankAccounts.ConvertAll(x => new BankAccountToBankAccount().Map(x));
+
+                List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersonList = contactPersons.FindAll(x => x.WebAdmin == false);
+
+                result.ContactPersons = contactPersonList.ConvertAll(x => new ContactPersonToContactPerson().Map(x));
+
+                result.CompanyData = new CustomerToCustomer().Map(customer);
+
+                result.DataRecording = new Dto.RegistrationModule.DataRecording() { Email = "", Name = "", Phone = "" };
+
+                result.DeliveryAddresses = deliveryAddresses.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToRegistrationModuleDto(x));
+
+                result.InvoiceAddress = new CustomerToInvoiceAddress().Map(customer);
+
+                result.MailAddress = new MailAddressToMailAddress().Map(mailAddress);
+
+                CompanyGroup.Domain.PartnerModule.ContactPerson webAdministrator = contactPersons.FirstOrDefault(x => x.WebAdmin == true);
+
+                result.WebAdministrator = (webAdministrator == null) ? new ContactPersonToWebAdministrator().Map(new CompanyGroup.Domain.PartnerModule.ContactPerson()) : new ContactPersonToWebAdministrator().Map(webAdministrator);
+
+                result.Visitor = new VisitorToVisitor().Map(visitor);
+
+                return result;
             }
-
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            //ha nincs bejelentkezve
-            if (!visitor.IsValidLogin)
+            catch (Exception ex)
             {
-                return new CompanyGroup.Dto.RegistrationModule.Registration();
+                throw ex;
             }
-
-            CompanyGroup.Dto.RegistrationModule.Registration result = new CompanyGroup.Dto.RegistrationModule.Registration();
-
-            List<CompanyGroup.Domain.PartnerModule.BankAccount> bankAccounts = customerRepository.GetBankAccounts(visitor.CustomerId, request.DataAreaId);
-
-            List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersons = customerRepository.GetContactPersons(visitor.CustomerId, request.DataAreaId);
-
-            CompanyGroup.Domain.PartnerModule.Customer customer = customerRepository.GetCustomer(visitor.CustomerId, request.DataAreaId);
-
-            List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
-
-            CompanyGroup.Domain.PartnerModule.MailAddress mailAddress = customerRepository.GetMailAddress(visitor.CustomerId, request.DataAreaId);
-
-            //válasz objektum feltöltés
-            result.BankAccounts = bankAccounts.ConvertAll(x => new BankAccountToBankAccount().Map(x));
-
-            List<CompanyGroup.Domain.PartnerModule.ContactPerson> contactPersonList = contactPersons.FindAll(x => x.WebAdmin == false);
-
-            result.ContactPersons = contactPersonList.ConvertAll(x => new ContactPersonToContactPerson().Map(x));
-
-            result.CompanyData = new CustomerToCustomer().Map(customer);
-
-            result.DataRecording = new Dto.RegistrationModule.DataRecording() { Email = "", Name = "", Phone = "" };
-
-            result.DeliveryAddresses = deliveryAddresses.ConvertAll(x => new DeliveryAddressToDeliveryAddress().MapDomainToRegistrationModuleDto(x));
-
-            result.InvoiceAddress = new CustomerToInvoiceAddress().Map(customer);
-
-            result.MailAddress = new MailAddressToMailAddress().Map(mailAddress);
-
-            CompanyGroup.Domain.PartnerModule.ContactPerson webAdministrator = contactPersons.FirstOrDefault(x => x.WebAdmin == true);
-
-            result.WebAdministrator = (webAdministrator == null) ? new ContactPersonToWebAdministrator().Map(new CompanyGroup.Domain.PartnerModule.ContactPerson()) : new ContactPersonToWebAdministrator().Map(webAdministrator);
-
-            result.Visitor = new VisitorToVisitor().Map(visitor);
-
-            return result;
         }
 
         /// <summary>
@@ -111,19 +125,26 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Dto.PartnerModule.DeliveryAddresses GetDeliveryAddresses(CompanyGroup.Dto.PartnerModule.GetDeliveryAddressesRequest request)
         {
-            CompanyGroup.Dto.PartnerModule.DeliveryAddresses result = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
-
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-            if (visitor.IsValidLogin)
+            try
             {
+                CompanyGroup.Dto.PartnerModule.DeliveryAddresses result = new CompanyGroup.Dto.PartnerModule.DeliveryAddresses();
 
-                List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-                result.Items.AddRange(deliveryAddresses.ConvertAll( x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x) ));
+                if (visitor.IsValidLogin)
+                {
+
+                    List<CompanyGroup.Domain.PartnerModule.DeliveryAddress> deliveryAddresses = customerRepository.GetDeliveryAddress(visitor.CustomerId, request.DataAreaId);
+
+                    result.Items.AddRange(deliveryAddresses.ConvertAll( x => new DeliveryAddressToDeliveryAddress().MapDomainToDto(x) ));
+                }
+
+                return result;
             }
-
-            return result;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

@@ -151,39 +151,6 @@ namespace CompanyGroup.WebClient.Controllers
             return new CompanyGroup.WebClient.Models.ShoppingCartInfo(response.StoredItems, response.OpenedItems, response.ActiveCart, response.LeasingOptions, visitor, visitorData.IsCatalogueOpened, visitorData.IsShoppingCartOpened, response.Currency);
         }
 
-        /// <summary>
-        /// finanszírozási ajánlat elküldése
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("CreateFinanceOffer")]
-        public CompanyGroup.WebClient.Models.FinanceOfferFulFillment CreateFinanceOffer( CompanyGroup.WebClient.Models.CreateFinanceOffer request)
-        {
-            CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
-
-            CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest req = new CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest()
-            {
-                Address = request.Address,
-                NumOfMonth = request.NumOfMonth,
-                PersonName = request.PersonName,
-                Phone = request.Phone,
-                StatNumber = request.StatNumber,
-                VisitorId = visitorData.VisitorId
-            };
-
-            CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment response = this.PostJSonData<CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest, CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment>("ShoppingCart", "CreateFinanceOffer", req);
-
-            //aktív kosár azonosítójának mentése http cookie-ba
-            //visitorData.CartId = response..Id;
-
-            //this.WriteCookie(visitorData);
-
-            CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
-
-            return new CompanyGroup.WebClient.Models.FinanceOfferFulFillment(response, visitorData.IsCatalogueOpened, visitorData.IsShoppingCartOpened, visitor);
-        }
-
         [HttpPost]
         [ActionName("CreateOrder")]
         public CompanyGroup.WebClient.Models.OrderFulFillment CreateOrder(CompanyGroup.WebClient.Models.CreateOrder request)

@@ -15,7 +15,7 @@ AS
 SET NOCOUNT ON
 
 	SELECT PaymentPeriodId, NumOfMonth 
-	FROM Axdb_20130131.dbo.FinancePaymentPeriod
+	FROM Axdb.dbo.FinancePaymentPeriod
 	ORDER BY PaymentPeriodId; 
 
 RETURN
@@ -33,7 +33,7 @@ GO
 CREATE PROCEDURE InternetUser.MinMaxFinanceLeasingValues
 AS
 SET NOCOUNT ON
-	SELECT MIN(FromValue) as MinValue, MAX(ToValue) as MaxValue FROM Axdb_20130131.dbo.FinanceLeasingIntervall;
+	SELECT MIN(FromValue) as MinValue, MAX(ToValue) as MaxValue FROM Axdb.dbo.FinanceLeasingIntervall;
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.MinMaxFinanceLeasingValues TO InternetUser
@@ -61,15 +61,15 @@ SET NOCOUNT ON
 	/*
 	Finanszírozási összegnek megfelelõen kiválasztja azt az egy intervallumot, amivel a számítás történik
 	*/
-	SELECT @IntervallD = LeasingIntervalId FROM Axdb_20130131.dbo.FinanceLeasingIntervall where @FinancedAmount between FromValue and ToValue;
+	SELECT @IntervallD = LeasingIntervalId FROM Axdb.dbo.FinanceLeasingIntervall where @FinancedAmount between FromValue and ToValue;
 
 	SET @IntervallD = ISNULL(@IntervallD, 0);
 
 	SELECT FinanceParameterId as Id, fli.FromValue as IntervalFrom, fli.ToValue as IntervalTo,
 		   fpp.NumOfMonth, PercentValue, InterestRate, PresentValue
-	FROM Axdb_20130131.dbo.FinanceParameter as fp 
-	INNER JOIN Axdb_20130131.dbo.FinancePaymentPeriod as fpp on fp.PAYMENTPERIODID = fpp.PAYMENTPERIODID
-	INNER JOIN Axdb_20130131.dbo.FINANCELEASINGINTERVALL as fli on fli.LEASINGINTERVALID = fp.LEASINGINTERVALID
+	FROM Axdb.dbo.FinanceParameter as fp 
+	INNER JOIN Axdb.dbo.FinancePaymentPeriod as fpp on fp.PAYMENTPERIODID = fpp.PAYMENTPERIODID
+	INNER JOIN Axdb.dbo.FINANCELEASINGINTERVALL as fli on fli.LEASINGINTERVALID = fp.LEASINGINTERVALID
 	WHERE fp.LeasingIntervalId = @IntervallD AND @IntervallD > 0;
 
 /*	select FinanceParameterId, fp.LeasingIntervalId, fp.PaymentPeriodId, InterestRate, PresentValue, NumOfMonth, PercentValue 
@@ -102,9 +102,9 @@ AS
 SET NOCOUNT ON
 
 	select @Ret = COUNT(*) -- NumOfMonth, PercentValue 
-	from Axdb_20130131.dbo.FinanceParameter as fp
-	inner join Axdb_20130131.dbo.FinancePaymentPeriod as fpp on fp.PaymentPeriodId = fpp.PaymentPeriodId
-	inner join Axdb_20130131.dbo.FinanceLeasingIntervall as fli on fp.LeasingIntervalId = fli.LeasingIntervalId
+	from Axdb.dbo.FinanceParameter as fp
+	inner join Axdb.dbo.FinancePaymentPeriod as fpp on fp.PaymentPeriodId = fpp.PaymentPeriodId
+	inner join Axdb.dbo.FinanceLeasingIntervall as fli on fp.LeasingIntervalId = fli.LeasingIntervalId
 	where @FinancedAmount between fli.FromValue and fli.ToValue; 
 
 RETURN

@@ -226,19 +226,13 @@ namespace CompanyGroup.ApplicationServices.Test
         [TestMethod]
         public void VisitorPriceTest()
         {
-            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = new CompanyGroup.Domain.PartnerModule.VisitorData();
+            //CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor();
 
-            List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = new List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>();
+            //List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = new List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>();
 
-            customerPriceGroups.Add(new Domain.PartnerModule.CustomerPriceGroup(2370, 247, "3",  "", "", "", "", 150, "bsc"));
+            //customerPriceGroups.Add(new Domain.PartnerModule.CustomerPriceGroup(2370, 247, "3",  "", "", "", "", 150, "bsc"));
 
-
-
-            visitorData.CustomerPriceGroups = customerPriceGroups;
-
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = new CompanyGroup.Domain.PartnerModule.Visitor(new CompanyGroup.Domain.PartnerModule.VisitorData());
-
-            //List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> CustomerPriceGroups
+            //visitor.CustomerPriceGroups = customerPriceGroups;
         }
 
 
@@ -249,11 +243,9 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.WebshopModule.ProductRepository productRepository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Domain.PartnerModule.VisitorData visitorData = visitorRepository.GetItemById("9965656AE0234B83A7905D056D63387D");
+            CompanyGroup.Domain.PartnerModule.Visitor visitor = visitorRepository.GetItemById("9965656AE0234B83A7905D056D63387D");
 
-            CompanyGroup.Domain.PartnerModule.Visitor visitor = new Domain.PartnerModule.Visitor(visitorData);
-
-            visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitorData.Id);
+            visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitor.Id);
 
             CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("ACTA7B1", "hrp");
 
@@ -463,9 +455,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.AssociateCartRequest request = new CompanyGroup.Dto.WebshopModule.AssociateCartRequest("503a0aad6ee01209a42e0c41", "alma", "hu", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
@@ -490,9 +484,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.AddCartRequest request = new CompanyGroup.Dto.WebshopModule.AddCartRequest("hu", "5039d7e66ee01213b0c8c201", "kosar neve", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
@@ -517,9 +513,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.AddLineRequest request = new CompanyGroup.Dto.WebshopModule.AddLineRequest();
 
@@ -551,9 +549,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest request = new CompanyGroup.Dto.WebshopModule.GetCartByKeyRequest("hu", 1, "5039d7e66ee01213b0c8c201", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
@@ -575,9 +575,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.GetActiveCartRequest request = new CompanyGroup.Dto.WebshopModule.GetActiveCartRequest("hu", "5039d7e66ee01213b0c8c201", CompanyGroup.Domain.Core.Constants.CurrencyHuf);
 
@@ -602,9 +604,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest request = new CompanyGroup.Dto.WebshopModule.UpdateLineQuantityRequest();
 
@@ -632,9 +636,11 @@ namespace CompanyGroup.ApplicationServices.Test
 
             CompanyGroup.Data.PartnerModule.SalesOrderRepository salesOrderRepository = new Data.PartnerModule.SalesOrderRepository();
 
+            CompanyGroup.Data.PartnerModule.WaitForAutoPostRepository waitForAutoPostRepository = new Data.PartnerModule.WaitForAutoPostRepository();
+
             CompanyGroup.Data.WebshopModule.FinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
 
-            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, financeRepository);
+            CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService service = new CompanyGroup.ApplicationServices.WebshopModule.ShoppingCartService(shoppingCartRepository, productRepository, visitorRepository, customerRepository, salesOrderRepository, waitForAutoPostRepository, financeRepository);
 
             CompanyGroup.Dto.WebshopModule.SalesOrderCreateRequest request = new Dto.WebshopModule.SalesOrderCreateRequest(705, "HUF", "HU", "", 500, "", true, 1, 1, "", "");
 

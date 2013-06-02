@@ -1,0 +1,480 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics Class: a(z) SalesOrderService eltávolítva
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #SalesOrderService
+    PROPERTIES
+      Name                #SalesOrderService
+      Extends             #SalesAutoCreate
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #/*
+        #vevőrendelés létrehozása
+        #*/
+        #class SalesOrderService extends SalesAutoCreate
+        #{
+        #    //rendelés adatokat összefogó objektum osztály
+        #    SalesOrderEntity salesOrderEntity;
+        #
+        #    CustAccount      custAcc;
+        #    SalesType        salesType;
+        #    SalesStatus      salesStatus;
+        #    ListEnumerator   lstEnum;
+        #    int              currentIndex;
+        #
+        #    #define.SalesOrderSchemaUrl( 'http://CompanyGroup.Domain.WebshopModule/SalesOrder' )
+        #
+        #    #define.SchemaResponseUrl( 'http://CompanyGroup.Domain.WebshopModule/SalesOrderResponse' )
+        #}
+      ENDSOURCE
+      SOURCE #constructSalesLineEntity
+        #public SalesLineEntity constructSalesLineEntity(XmlReader reader)
+        #{
+        #    SalesLineEntity entity;
+        #    ;
+        #
+        #    entity = new SalesLineEntity();
+        #    entity.setItemId(reader.readElementString());
+        #    entity.setQty( str2num( reader.readElementString()));
+        #    //reader.moveToContent();
+        #    return entity;
+        #}
+      ENDSOURCE
+      SOURCE #constructSalesOrderResponse
+        #str constructSalesOrderResponse(SalesId _SalesId = '', int _code = 0, str _msg = '')
+        #{
+        #    str xml;
+        #
+        #    XmlTextWriter writer;
+        #
+        #    ;
+        #
+        #    writer = XmlTextWriter::newXml();
+        #
+        #    writer.formatting(XmlFormatting::None);
+        #
+        #    writer.writeStartDocument();
+        #
+        #    writer.writeStartElement2('SalesOrderResponse', #SchemaResponseUrl);
+        #
+        #    writer.writeElementString('SalesId', _SalesId);
+        #
+        #    writer.writeElementString('Code', int2str(_code));
+        #
+        #    writer.writeElementString('Message', _msg);
+        #
+        #    writer.writeElementString('DataAreaId', curext());
+        #
+        #    writer.writeEndDocument();
+        #
+        #    xml = writer.writeToString();
+        #
+        #    writer.close();
+        #
+        #    return xml;
+        #}
+      ENDSOURCE
+      SOURCE #createSalesLine
+        #void  createSalesLine()
+        #{
+        #    ;
+        #    salesLine.createLine(NoYes::No,             // Validate
+        #                         NoYes::No,             // initFromSalesTable
+        #                         NoYes::No,             // initFromInventTable
+        #                         NoYes::No,             // calcInventQty
+        #                         NoYes::No,            // searchMarkup
+        #                         NoYes::no             // searchPrice
+        #                         );
+        #}
+      ENDSOURCE
+      SOURCE #createSalesOrder
+        #str createSalesOrder(str xml)
+        #{
+        #    SalesId salesId;
+        #    ;
+        #
+        #    try
+        #    {
+        #        if (!xml)
+        #        {
+        #            return this.constructSalesOrderResponse('', -1, 'The createSalesOrder xml parameter value is empty!');
+        #        }
+        #
+        #        this.deserialize(xml);
+        #
+        #        changeCompany(salesOrderEntity.getDataAreaId())
+        #        {
+        #            //salesOrderEntity ellenörzése kell ide
+        #
+        #            lstEnum = salesOrderEntity.getItems().getEnumerator();
+        #
+        #            this.create();
+        #
+        #            salesId = this.getSalesTable().SalesId;
+        #
+        #            //SalesId ellenörzése
+        #            if (salesId)
+        #            {
+        #                return this.constructSalesOrderResponse(salesId, 1, 'The createSalesOrder process completed successfully!');
+        #            }
+        #            else
+        #            {
+        #                return this.constructSalesOrderResponse('', -2, 'The createSalesOrder process failed!');
+        #            }
+        #        }
+        #    }
+        #    catch(Exception::Warning )
+        #    {
+        #        return this.constructSalesOrderResponse('', -3, 'The createSalesOrder process failed!');
+        #    }
+        #    catch(Exception::Error )
+        #    {
+        #        return this.constructSalesOrderResponse('', -4, 'The createSalesOrder process failed!');
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #deserialize
+        #//paraméter xml alapján elkészíti a vevőrendelés objektumot tételekkel együtt
+        #void deserialize(str xml)
+        #{
+        #    XmlTextReader xmlReader;
+        #
+        #    SalesLineEntity lineEntity;
+        #
+        #    str 250 deliveryAddress = '';
+        #
+        #    int lineCount = 0, i = 0;
+        #    ;
+        #
+        #    xmlReader = XmlTextReader::newXml(xml);
+        #
+        #    xmlReader.whitespaceHandling(XmlWhitespaceHandling::None);
+        #
+        #    xmlReader.moveToContent();
+        #
+        #    while( ( xmlReader.nodeType() != XmlNodeType::Element ) && !xmlReader.eof() )
+        #    {
+        #        xmlReader.read();
+        #    }
+        #
+        #    xmlReader.readStartElement3('SalesOrder', #SalesOrderSchemaUrl);
+        #
+        #    salesOrderEntity = new SalesOrderEntity();
+        #
+        #    if (!xmlReader.eof() && xmlReader.isStartElement())
+        #    {
+        #
+        #/*
+        #        string _ContactPersonId = String.Empty;
+        #        CurrencyCode
+        #        string _CustomerId = String.Empty;
+        #        string _CustomerOrderNo = String.Empty;
+        #        string _CustomerRef = String.Empty;
+        #        string _DataAreaId = String.Empty;
+        #        string _DeliveryCity = String.Empty;
+        #        string _DeliveryCompanyName = String.Empty;
+        #        string _DeliveryDate = String.Empty;
+        #        string _DeliveryEmail = String.Empty;
+        #        string _DeliveryPersonName = String.Empty;
+        #        string _DeliveryStreet = String.Empty;
+        #        string _DeliveryZip = String.Empty;
+        #        string _InventLocationId = String.Empty;
+        #        int _LineCount = 0;
+        #        string _Payment = String.Empty;
+        #        bool _RequiredDelivery = false;
+        #        int _SalesSource = 0;
+        #*/
+        #        salesOrderEntity.setContactPersonId( xmlReader.readElementString2('ContactPersonId'));
+        #
+        #        salesOrderEntity.setCurrencyCode( xmlReader.readElementString2('CurrencyCode'));
+        #
+        #        salesOrderEntity.setCustAccount(xmlReader.readElementString2('CustomerId'));
+        #
+        #        salesOrderEntity.setCustomerOrderNo(xmlReader.readElementString2('CustomerOrderNo'));
+        #
+        #        salesOrderEntity.setCustomerRef(xmlReader.readElementString2('CustomerRef'));
+        #
+        #        salesOrderEntity.setDataAreaId(xmlReader.readElementString2('DataAreaId'));
+        #
+        #        salesOrderEntity.setDeliveryCity(xmlReader.readElementString2('DeliveryCity'));
+        #
+        #       salesOrderEntity.setDeliveryCompanyName(xmlReader.readElementString2('DeliveryCompanyName'));
+        #
+        #        salesOrderEntity.setDeliveryDate(str2date( xmlReader.readElementString2('DeliveryDate'), 321 ));
+        #
+        #        salesOrderEntity.setDeliveryEmail(xmlReader.readElementString2('DeliveryEmail'));
+        #
+        #        salesOrderEntity.setDeliveryPersonName(xmlReader.readElementString2('DeliveryPersonName'));
+        #
+        #        salesOrderEntity.setDeliveryStreet(xmlReader.readElementString2('DeliveryStreet'));
+        #
+        #        salesOrderEntity.setDeliveryZipCode(xmlReader.readElementString2('DeliveryZip'));
+        #
+        #        //deliveryAddress = salesOrderEntity.getDeliveryZipCode() + ' ' + salesOrderEntity.getDeliveryCity() + ' ' + salesOrderEntity.getDeliveryStreet();
+        #        deliveryAddress = strFmt( '%1 %2 %3', salesOrderEntity.getDeliveryZipCode(), salesOrderEntity.getDeliveryCity(), salesOrderEntity.getDeliveryStreet() );
+        #
+        #        salesOrderEntity.setDeliveryAddress(deliveryAddress);
+        #
+        #        salesOrderEntity.setInventLocationId(xmlReader.readElementString2('InventLocationId'));
+        #
+        #        lineCount = str2int(xmlReader.readElementString2('LineCount'));
+        #
+        #        salesOrderEntity.setPayment(xmlReader.readElementString2('Payment'));
+        #
+        #        salesOrderEntity.setRequiredDelivery(str2int( xmlReader.readElementString2('RequiredDelivery')));
+        #
+        #        salesOrderEntity.setSalesSource(str2int( xmlReader.readElementString2('SalesSource')));
+        #
+        #        if (lineCount > 0) {
+        #
+        #            xmlReader.readStartElement();
+        #
+        #            xmlReader.readStartElement();
+        #
+        #            for(i=1; i<=lineCount; i++)
+        #            {
+        #
+        #                lineEntity = new SalesLineEntity();
+        #
+        #                lineEntity.setConfigId(xmlReader.readElementString2('ConfigId'));
+        #
+        #                lineEntity.setItemId(xmlReader.readElementString2('ItemId'));
+        #
+        #                lineEntity.setQty( str2num(xmlReader.readElementString2('Qty')) );
+        #
+        #                salesOrderEntity.addItem(lineEntity);
+        #            }
+        #
+        #            xmlReader.readEndElement();
+        #
+        #            xmlReader.readEndElement();
+        #        }
+        #    }
+        #
+        #    xmlReader.close();
+        #}
+      ENDSOURCE
+      SOURCE #deSerializeTest
+        #SalesOrderEntity deSerializeTest(str xml)
+        #{
+        #    ;
+        #
+        #    this.deserialize(xml);
+        #
+        #    return salesOrderEntity;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesOrderEntity
+        #SalesOrderEntity getSalesOrderEntity()
+        #{
+        #    ;
+        #    return salesOrderEntity;
+        #}
+      ENDSOURCE
+      SOURCE #getSalesTable
+        #SalesTable getSalesTable()
+        #{
+        #    ;
+        #    return SalesTable;
+        #}
+      ENDSOURCE
+      SOURCE #invoiceAccount
+        #CustInvoiceAccount invoiceAccount()
+        #{
+        #    ;
+        #    return salesOrderEntity.getCustAccount();
+        #}
+      ENDSOURCE
+      SOURCE #nextRecord
+        #void nextRecord()
+        #{
+        #    ;
+        #}
+      ENDSOURCE
+      SOURCE #recordExist
+        #boolean recordExist()
+        #{
+        #    ;
+        #    return lstEnum.moveNext();
+        #}
+      ENDSOURCE
+      SOURCE #salesType
+        #SalesType salesType()
+        #{
+        #    ;
+        #    return salesType;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setCust
+        #void setCust()
+        #{
+        #    ;
+        #    CustTable = CustTable::find(salesOrderEntity.getCustAccount());
+        #}
+      ENDSOURCE
+      SOURCE #setSalesLine
+        #void  setSalesLine()
+        #{
+        #    updCalcPrice    updCalcPrice;
+        #    SalesLineEntity salesLineEntity;
+        #    InventDim _inventDim;
+        #    str company;
+        #    ;
+        #
+        #    super();
+        #
+        #    salesLineEntity = lstEnum.current();
+        #
+        #    salesLineEntity.replaceConfigIdIfEmpty();
+        #
+        #    salesline.clear();
+        #
+        #    salesline.initFromSalesTable(salestable);
+        #
+        #    salesline.ItemId = salesLineEntity.getItemId();
+        #
+        #    salesline.initFromInventTable( Inventtable::find( salesLineEntity.getItemId() ) );
+        #
+        #    salesline.SalesQty = salesLineEntity.getQty();
+        #
+        #    salesline.QtyOrdered = salesLineEntity.getQty();
+        #
+        #    company = curext();
+        #
+        #    if (company == 'hrp')
+        #    {
+        #    select firstonly _inventDim where _inventDim.configId == salesLineEntity.getConfigId() &&
+        #                                      _inventDim.InventLocationId == 'KULSO' && _inventDim.wMSLocationId == ''; //salesOrderEntity.getInventLocationId();
+        #    }
+        #    else
+        #    {
+        #    select firstonly _inventDim where _inventDim.configId == salesLineEntity.getConfigId() &&
+        #                                      _inventDim.InventLocationId == '7000' && _inventDim.wMSLocationId == '';
+        #    }
+        #
+        #    salesline.initItemDim( _inventDim );
+        #
+        #    updCalcPrice = new updCalcPrice( salesLineEntity.getItemId(), salesOrderEntity.getCustAccount(), '', '', salesLineEntity.getQty() );
+        #
+        #    updCalcPrice.calculate( salesLineEntity.getConfigId() );
+        #
+        #    salesline.SalesPrice = updCalcPrice.getCalculatedPrice();
+        #
+        #    if (!salesLine.origPriceGroupId)
+        #    {
+        #        salesLine.origPriceGroupId = updCalcPrice.getAccountRelation();
+        #    }
+        #
+        #    if ( !salesLine.origPrice )
+        #    {
+        #        salesLine.origPrice = updCalcPrice.getCalculatedPrice();
+        #    }
+        #
+        #    salesLine.lineAmount = salesLine.calcLineAmountForced();
+        #
+        #    this.createSalesLine();
+        #
+        #    salesLine.OrderAttarolas( salesline.QtyOrdered );
+        #
+        #    //salesLine.InventDimId
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setSalesTable
+        #void  setSalesTable()
+        #{
+        #    NumberSeq       num;
+        #    SalesIdBase     tmpSalesId;
+        #    str 10 dlvTermCaption = 'RAKTÁRBÓL';
+        #    ;
+        #
+        #    If ( custAcc != salesOrderEntity.getCustAccount() )
+        #    {
+        #        if (!custTable)
+        #        {
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.clear();
+        #        salesTable.initValue();
+        #
+        #        num = NumberSeq::newGetNum(SalesParameters::numRefSalesId());
+        #        tmpSalesId = num.num();
+        #
+        #        if (SalesTable::exist(tmpSalesId))
+        #        {
+        #            num.abort();
+        #            checkFailed("@SYS55111");
+        #            checkFailed(strfmt("@SYS55112", tmpSalesId));
+        #            throw error("@SYS23020");
+        #        }
+        #
+        #        salesTable.salesId = tmpSalesId;
+        #
+        #        salesTable.custAccount      = custTable.accountNum;
+        #        salesTable.initFromCustTable();
+        #
+        #        salesTable.SalesType       = this.salesType();
+        #
+        #        salesTable.ContactPersonId = salesOrderEntity.getContactPersonId();
+        #        salesTable.initFromContactInfo();
+        #
+        #        salesTable.Email = salesOrderEntity.getDeliveryEmail();
+        #
+        #        if ( salesOrderEntity.getRequiredDelivery() == NoYes::Yes )
+        #        {
+        #            dlvTermCaption = 'KISZALL';
+        #        }
+        #        else
+        #        {
+        #            dlvTermCaption = 'RAKTÁRBÓL';
+        #        }
+        #
+        #        //if (_SecondHandCart.getRequiredDelivery())
+        #        //{
+        #//          salesTable.DeliveryDate    = AxBasketTable.KiszalitasDatum;
+        #            salesTable.ShippingDateRequested = salesOrderEntity.getDeliveryDate();
+        #            salesTable.DlvTerm         = dlvTermCaption;
+        #            salesTable.DeliveryCity    = salesOrderEntity.getDeliveryCity();
+        #            salesTable.DeliveryName    = salesOrderEntity.getDeliveryCompanyName();
+        #            salesTable.DeliveryStreet  = salesOrderEntity.getDeliveryStreet();
+        #            salesTable.DeliveryZipCode = salesOrderEntity.getDeliveryZipCode();
+        #            salesTable.DeliveryAddress = salesOrderEntity.getDeliveryAddress();
+        #            salesTable.InventLocationId = salesOrderEntity.getInventLocationId();
+        #            salesTable.Payment = salesOrderEntity.getPayment();
+        #        //}
+        #
+        #        salesTable.SalesSource = salesOrderEntity.getSalesSource();
+        #        //salesTable.NemKellSzamla = ( salesOrderEntity.getSalesSource() == SalesSource::Xml ) ? NoYes::Yes : NoYes::No;
+        #        salesTable.NemKellSzamla = custTable.NemkellSzla;
+        #
+        #        salesTable.SalesHeaderType = 'Standard';
+        #
+        #        salesTable.AutoTorles = NoYes::Yes;
+        #
+        #        salesTable.VevoRendelesSzama = salesOrderEntity.getCustomerOrderNo();
+        #
+        #        salesTable.CustomerRef = salesOrderEntity.getCustomerRef();
+        #
+        #        salesTable.SalesType = SalesType::Sales;
+        #
+        #        salesTable.insert();
+        #
+        #        custAcc = salesOrderEntity.getCustAccount();
+        #    }
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END

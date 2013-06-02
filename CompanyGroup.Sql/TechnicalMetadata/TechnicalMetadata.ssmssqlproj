@@ -55,11 +55,23 @@
           <AssociatedConnUserName />
           <FullPath>Functions.sql</FullPath>
         </FileNode>
+        <FileNode Name="InvoiceUpdate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>InvoiceUpdate.sql</FullPath>
+        </FileNode>
         <FileNode Name="Procedures.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Procedures.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SalesOrderInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SalesOrderInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="SalesOrderUpdate.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
@@ -67,11 +79,23 @@
           <AssociatedConnUserName />
           <FullPath>SalesOrderUpdate.sql</FullPath>
         </FileNode>
+        <FileNode Name="SQLQuery1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SQLQuery1.sql</FullPath>
+        </FileNode>
         <FileNode Name="Tables.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Tables.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Test.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Test.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

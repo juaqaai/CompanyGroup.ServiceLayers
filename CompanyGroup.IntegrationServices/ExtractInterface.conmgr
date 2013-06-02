@@ -3,6 +3,10 @@
   DTS:ObjectName="ExtractInterface"
   DTS:DTSID="{F574DD6F-2471-4875-AA20-0330579C687D}"
   DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="InitialCatalog">@[$Project::ExtractInterface_DbName]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="ServerName">@[$Project::ExtractInterface_ServerName]</DTS:PropertyExpression>
   <DTS:ObjectData>
     <DTS:ConnectionManager
       DTS:ConnectionString="Data Source=AXDB\HRPAXDB;Initial Catalog=ExtractInterface;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />

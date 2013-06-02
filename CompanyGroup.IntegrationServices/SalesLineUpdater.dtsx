@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="SalesLineUpdater"
   DTS:PackageType="5"
-  DTS:VersionBuild="100"
-  DTS:VersionGUID="{735A0975-2BB6-4F22-A384-2F8CE665DDAC}">
+  DTS:VersionBuild="109"
+  DTS:VersionGUID="{4DDFF15D-574E-43C9-B3D5-8B5FE1EB29E0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -334,13 +334,6 @@
                       cachedName="CustomerId"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerId]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CusomerOrderNo]"
-                      cachedDataType="wstr"
-                      cachedLength="20"
-                      cachedName="CusomerOrderNo"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerOrderNo]"
-                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CusomerOrderNo]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DlvTerm]"
                       cachedDataType="wstr"
@@ -786,16 +779,6 @@
                       name="SalesHeaderStatus"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CusomerOrderNo]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CusomerOrderNo]"
-                      length="20"
-                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CusomerOrderNo]"
-                      name="CusomerOrderNo"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[DlvTerm]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
@@ -945,6 +928,16 @@
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Version]"
                       name="Version"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerOrderNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerOrderNo]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerOrderNo]"
+                      name="CustomerOrderNo"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -990,11 +983,6 @@
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesHeaderStatus]"
                       dataType="i4"
                       name="SalesHeaderStatus" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CusomerOrderNo]"
-                      dataType="wstr"
-                      length="20"
-                      name="CusomerOrderNo" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DlvTerm]"
                       dataType="wstr"
@@ -1065,6 +1053,11 @@
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Version]"
                       dataType="i8"
                       name="Version" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerOrderNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="CustomerOrderNo" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1135,11 +1128,11 @@
                       lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesHeaderStatus]"
                       name="SalesHeaderStatus" />
                     <outputColumn
-                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CusomerOrderNo]"
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerOrderNo]"
                       dataType="wstr"
                       length="20"
-                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CusomerOrderNo]"
-                      name="CusomerOrderNo" />
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerOrderNo]"
+                      name="CustomerOrderNo" />
                     <outputColumn
                       refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DlvTerm]"
                       dataType="wstr"
@@ -1604,10 +1597,6 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="165,42"
-          Id="Package\SalesOrderUpdate"
-          TopLeft="293,693" />
-        <NodeLayout
           Size="209,42"
           Id="Package\Current version update"
           TopLeft="281,485" />
@@ -1631,6 +1620,10 @@
           Size="241,45"
           Id="Package\PackageLog start"
           TopLeft="71,62" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\SalesOrderUpdate"
+          TopLeft="293,693" />
         <NodeLayout
           Size="177,42"
           Id="Package\Truncate stage table"
@@ -1876,31 +1869,31 @@
           Id="b78ada30-6b21-45a7-8bf1-c56a04982d6c"
           TopLeft="355,827" />
         <AnnotationLayout
-          Text="Utolsó ár szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'InventSum'&#xA;output: @LastSyncVersion AS LastSyncVersion&#xA;ExtractInterface adatbázisban"
+          Text="Utolsó szinkronizált állapot azonosítója&#xA;dbo.usp_LastSyncVersion &#xA;input: @TableName nvarchar(32) = 'SalesOrder'&#xA;output: @LastSyncVersion AS LastSyncVersion&#xA;ExtractInterface adatbázisban"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="281,106"
+          Size="282,106"
           Id="86d576ac-877d-4093-a97c-80d2e2051b0d"
           TopLeft="498,257" />
         <AnnotationLayout
-          Text="ExtractInterface adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'InventSum' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
+          Text="ExtractInterface adatbázis SyncMetadata táblájának műveletei.&#xA;dbo.usp_InsertSyncVersion( @LastVersion BIGINT = 0, @TableName nvarchar(32) = 'SalesOrder' )&#xA;Korábbi bejegyzések passzívra állítása, új sor beszúrása"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="542,74"
+          Size="543,90"
           Id="0b200108-5c83-477c-a46b-e4e79f6f842f"
           TopLeft="507,576" />
         <AnnotationLayout
-          Text="InternetUser.Stage_PriceDiscTable truncate Web adatbázisban "
+          Text="Web.InternetUser.Stage_SalesOrder; truncate Web adatbázisban "
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="360,42"
+          Size="372,42"
           Id="abe9864d-b7d0-4681-8b63-129e89c9f82e"
           TopLeft="493,178" />
         <AnnotationLayout
-          Text="AXDB-n meghívja a következő tárolt eljárást: InternetUser.SalesLineCT( @LastVersion BIGINT = 0 )&#xA;Eredményét beilleszti a Web.InternetUser.Stage_SalesOrder stage táblába"
+          Text="AXDB-n meghívja a legutolsó szinkronizáció óta létrejött változásokat lekérdező tárolt eljárást: InternetUser.SalesLineCT( @LastVersion BIGINT = 0 )&#xA;Eredményét beilleszti a Web.InternetUser.Stage_SalesOrder stage táblába"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="545,58"
+          Size="823,58"
           Id="b45e669a-bcaf-4e64-982c-ec046b00d61f"
           TopLeft="492,379" />
         <AnnotationLayout
@@ -1914,7 +1907,7 @@
           Text="Web adatbázis SalesOrder tábla mezőinek frissítése"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="301,42"
+          Size="301,58"
           Id="1762468c-1d78-4736-8861-2f1df980c3d8"
           TopLeft="522,688" />
       </GraphLayout>
@@ -1949,17 +1942,39 @@
           Id="Package\Data Flow Task\OLE DB Source"
           TopLeft="196,76" />
         <NodeLayout
-          Size="155,42"
-          Id="Package\Data Flow Task\Derived Column"
-          TopLeft="202,334" />
-        <NodeLayout
           Size="131,42"
           Id="Package\Data Flow Task\Row Count"
           TopLeft="209,212" />
         <NodeLayout
+          Size="155,42"
+          Id="Package\Data Flow Task\Derived Column"
+          TopLeft="202,334" />
+        <NodeLayout
           Size="172,42"
           Id="Package\Data Flow Task\OLE DB Destination"
           TopLeft="192,458" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
+          TopLeft="277,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
           TopLeft="273,118">
@@ -1996,28 +2011,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,74.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Row Count Output 1]"
-          TopLeft="277,254">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

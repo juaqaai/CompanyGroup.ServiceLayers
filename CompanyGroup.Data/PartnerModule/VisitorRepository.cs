@@ -27,22 +27,17 @@ namespace CompanyGroup.Data.PartnerModule
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.PartnerModule.VisitorData GetItemById(string visitorId)
+        public CompanyGroup.Domain.PartnerModule.Visitor GetItemById(string visitorId)
         {
             try
             {
                 CompanyGroup.Domain.Utils.Check.Require(!String.IsNullOrWhiteSpace(visitorId), "The visitorId parameter cannot be null!");
 
-                //Guid guid;
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetString("VisitorId", visitorId)
+                                                 .SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.Visitor).GetConstructors()[0]));
 
-                //if (!Guid.TryParse(visitorId, out guid))
-                //{
-                //    return new CompanyGroup.Domain.PartnerModule.Visitor();
-                //}
-
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorSelect").SetString("VisitorId", visitorId);
-
-                CompanyGroup.Domain.PartnerModule.VisitorData visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.VisitorData>();
+                //CompanyGroup.Domain.PartnerModule.VisitorData visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.VisitorData>();
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = query.UniqueResult<CompanyGroup.Domain.PartnerModule.Visitor>();
 
                 return visitor;
             }
@@ -57,7 +52,7 @@ namespace CompanyGroup.Data.PartnerModule
             try
             {
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroups").SetInt32("Id", id).SetResultTransformer(
-                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0])); ;
+                                            new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
 
                 List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = query.List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>() as List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>;
 
@@ -90,18 +85,25 @@ namespace CompanyGroup.Data.PartnerModule
                         .SetBoolean("PriceListDownloadEnabled", visitor.Permission.PriceListDownloadEnabled)
                         .SetBoolean("CanOrder", visitor.Permission.CanOrder)
                         .SetBoolean("RecieveGoods", visitor.Permission.RecieveGoods)
-                        .SetString("PaymTermId", visitor.PaymTermId)
+                        .SetString("PaymTermIdBsc", visitor.PaymTermIdBsc)
+                        .SetString("PaymTermIdHrp", visitor.PaymTermIdHrp)
                         .SetString("Currency", visitor.Currency)
                         .SetString("LanguageId", visitor.LanguageId)
-                        .SetString("DefaultPriceGroupId", visitor.DefaultPriceGroupId)
-                        .SetString("InventLocationId", visitor.InventLocationId)
+                        .SetString("DefaultPriceGroupIdHrp", visitor.DefaultPriceGroupIdHrp)
+                        .SetString("DefaultPriceGroupIdBsc", visitor.DefaultPriceGroupIdBsc)
+                        .SetString("InventLocationIdHrp", visitor.InventLocationIdHrp)
+                        .SetString("InventLocationIdBsc", visitor.InventLocationIdBsc)
                         .SetString("RepresentativeId", visitor.Representative.Id)
-                        .SetString("DataAreaId", visitor.DataAreaId)
                         .SetEnum("LoginType", visitor.LoginType)
-                        .SetEnum("PartnerModel", visitor.PartnerModel)
-                        .SetBoolean("AutoLogin", visitor.AutoLogin)
-                        .SetDateTime("LoginDate", visitor.LoginDate)
-                        .SetDateTime("ExpireDate", visitor.ExpireDate).SetResultTransformer(
+                        .SetBoolean("RightHrp", visitor.RightHrp)
+                        .SetBoolean("RightBsc", visitor.RightBsc)
+                        .SetBoolean("ContractHrp", visitor.ContractHrp)
+                        .SetBoolean("ContractBsc", visitor.ContractBsc)
+                        .SetInt32("CartId", visitor.CartId)
+                        .SetString("RegistrationId", visitor.RegistrationId)
+                        .SetBoolean("IsCatalogueOpened", visitor.IsCatalogueOpened)
+                        .SetBoolean("IsShoppingCartOpened", visitor.IsShoppingCartOpened)
+                        .SetBoolean("AutoLogin", visitor.AutoLogin).SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.VisitorInsertResult).GetConstructors()[0]));
 
                 CompanyGroup.Domain.PartnerModule.VisitorInsertResult result = query.UniqueResult<CompanyGroup.Domain.PartnerModule.VisitorInsertResult>();

@@ -17,7 +17,7 @@ namespace CompanyGroup.Data
 
         protected static readonly string Language = CompanyGroup.Helpers.ConfigSettingsParser.GetString("Language", "en-gb");
 
-        protected static readonly string ObjectServer = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ObjectServer", "AXOS3@AXOS3:2799");
+        protected static readonly string ObjectServer = CompanyGroup.Helpers.ConfigSettingsParser.GetString("ObjectServer", "AXOS1@AXOS1:2713");    //AXOS3@AXOS3:2799
 
         #endregion
 

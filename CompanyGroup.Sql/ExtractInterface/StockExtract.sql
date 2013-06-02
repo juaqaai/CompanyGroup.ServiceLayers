@@ -23,11 +23,11 @@ AS
 SET NOCOUNT ON
 	;			
 			SELECT ISNULL( CONVERT( INT, SUM(ins.AvailPhysical) ), 0 ) as Stock
-			FROM Axdb_20130131.dbo.InventTable as invent
-			INNER JOIN Axdb_20130131.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
+			FROM Axdb.dbo.InventTable as invent
+			INNER JOIN Axdb.dbo.InventDim AS ind on ind.configId = invent.StandardConfigId and 
 															 ind.dataAreaId = invent.DataAreaId and 
 															 ind.InventLocationId in ( '7000', '2100', 'KULSO', 'HASZNALT' ) -- '1000', 'BELSO', 
-			INNER JOIN Axdb_20130131.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
+			INNER JOIN Axdb.dbo.InventSum AS ins on ins.DataAreaId = invent.DataAreaId and 
 															ins.inventDimId = ind.inventDimId and 
 															ins.ItemId = invent.ItemId and 
 															ins.Closed = 0

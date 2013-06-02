@@ -8,6 +8,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 {
     public interface IFinanceService
     {
-        CompanyGroup.Dto.WebshopModule.FinanceOfferFulFillment CreateFinanceOffer(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request);
+        CompanyGroup.Dto.WebshopModule.FinanceOfferResponse CreateFinanceOffer(CompanyGroup.Dto.WebshopModule.CreateFinanceOfferRequest request);
     }
 }

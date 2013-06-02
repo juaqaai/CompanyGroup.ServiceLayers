@@ -7,7 +7,7 @@ namespace CompanyGroup.Data.PartnerModule
 {
     public class SalesOrderRepository : RepositoryBase, CompanyGroup.Domain.PartnerModule.ISalesOrderRepository
     {
-        private static readonly string OrderServiceClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("OrderServiceClassName", "SalesOrderService");
+        private static readonly string OrderServiceClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("OrderServiceClassName", "SalesOrderServiceWeb");
 
         private static readonly string SecondhandOrderServiceClassName = CompanyGroup.Helpers.ConfigSettingsParser.GetString("SecondhandOrderServiceClassName", "SecondhandOrderService");
 

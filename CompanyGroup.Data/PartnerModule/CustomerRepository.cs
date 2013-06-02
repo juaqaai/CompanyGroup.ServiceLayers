@@ -167,7 +167,7 @@ namespace CompanyGroup.Data.PartnerModule
             CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "CustomerId may not be null or empty");
 
             NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerPriceGroupSelect")
-                                            .SetString("CustomerId", customerId);   //.SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
+                                            .SetString("CustomerId", customerId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup).GetConstructors()[0]));
 
             List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> customerPriceGroups = query.List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>() as List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup>;
 

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE HTML>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en">
     <head>
         <meta charset="utf-8" />
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-        <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
+        <title>@ViewBag.Title - HRP - BSC WEBSHOP -</title>
         <link href="~/Content/Media/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 		<meta content="hu" name="content-language" />
@@ -13,23 +13,14 @@
         <meta name="expires" content="7 days" />
         <meta name="owner" content="HRP Hungary Kft." />
         <meta name="copyright" content="HRP Hungary Kft." /><meta name="publisher" content="HRP Hungary Kft." />
-        <!-- [if IE]>
-        <meta http-equiv="imagetoolbar" content="no" />
-        <meta name="MSSmartTagsPreventParsing" content="true" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<![endif]-->
-		<!--[if lt IE 10]>
-		<link rel="stylesheet" type="text/css" href="~/Content/themes/custom/hrp_bsc_html_css.css" />
-		<![endif]-->
-
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width" />
 
         @Styles.Render("~/Content/css")
 
+       @Scripts.Render("~/bundles/modernizr")
 
-
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/jquery")
+@*      @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/jqueryui")
         @Scripts.Render("~/bundles/jqueryval")         
         @Scripts.Render("~/bundles/sammy")
@@ -49,19 +40,21 @@
         @Scripts.Render("~/bundles/prettynumber")
         @Scripts.Render("~/bundles/skinner")
         @Scripts.Render("~/bundles/apputils")
-        @Scripts.Render("~/bundles/helpers")
+        @Scripts.Render("~/bundles/helpers")*@
 
-
-        
-
-        @RenderSection("ScriptsInHead", required: false)
-    
+        @Scripts.Render("~/bundles/jquery",
+                        "~/bundles/jqueryui", 
+                        "~/bundles/lib",
+                        "~/Scripts/lib/require.js",
+                        "~/bundles/app")
     </head>
-    <body>
+	<!--[if IE 7 ]> <body class="ie7> <![endif]-->
+<!--[if IE 8 ]> <body class="ie8> <![endif]-->
+<!--[if gt IE 9]><!--><body><!--<![endif]-->
 	<div id="preloader_site">
 
 	<div align="center" id="status">
-	<img src="@Url.Content("~/Content/Media/images/ajax-loader.gif")" alt="" /><br><br>
+	<img src="@Url.Content("~/Content/Media/images/ajax-loader.gif")" alt="" /><br/><br/>
 	<img src="@Url.Content("~/Content/Media/images/loading_logos.jpg")" alt="" />
 	</div>
 
@@ -100,9 +93,12 @@
                         <span >Bejelentkezve:</span> 
                         <strong><span id="companyname">{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
                         <span>Képviselő:</span>
-                        <strong><span>{{Representative.Name}}</span></strong> 
-                        <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>
-                        <strong><span>{{Representative.Phone}}</span></strong>
+                        <strong><span>{{Representative.Name}}</span></strong>
+						<span>email:</span>
+                        <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>                      
+						<span>Telefon:</span>
+                        <strong><span>{{Representative.Phone}} </span></strong>
+						<strong><span>{{#Representative.Mobile}} , {{/Representative.Mobile}}{{Representative.Mobile}}</span></strong>
                         <a style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" id="anchor_signout" href="#/signOut"><strong>Kijelentkezés</strong></a>
                     {{/IsValidLogin}}
                     {{^IsValidLogin}}
@@ -123,7 +119,7 @@
                             <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             </a></strong>
-                            <strong><a href="#/changeCurrency/EUR">
+                            <!--strong><a href="#/changeCurrency/EUR">
                             {{#CurrencyIsEur}}
                             <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px; border-radius:3px;">EUR</span>
                             {{/CurrencyIsEur}}
@@ -137,7 +133,7 @@
                             {{^CurrencyIsUsd}}
                             <span id="currency_usd" style="background: #666; padding: 2px; border-radius:3px;">USD</span>
                             {{/CurrencyIsUsd}}
-                            </a></strong>
+                            </a></strong-->
                         {{/IsValidLogin}}
                     </td>
 				</tr>
@@ -181,11 +177,21 @@
 						<td >
                             <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
-							<select class="select1">
+							<select style="cursor:default;" class="select1">
   							<option value="#">Név vagy cikkszám</option>
 							</select> 
                             <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                             <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" name="txt_globalsearch" id="txt_globalsearch" value="keresés a termékek között" size="27"/>
+                            <input type="submit" value="" class="imgClass" />
+                            </div>
+                            </form>
+							<form id="form_searchInFiltered" action="#/searchInFiltered" method="post">
+                            <div class="inputwrapper">
+							<select style="cursor:default;" class="select1">
+  							<option value="#">Keresés a szürésben</option>
+							</select> 
+                            <label class="error" for="txt_globalsearch_filter" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" name="txt_globalsearch" id="txt_globalsearch" value="" size="27"/>
                             <input type="submit" value="" class="imgClass" />
                             </div>
                             </form>
@@ -453,7 +459,7 @@
             </div>
             <div style="display:none;">
                 <div style="width:250px; padding:15px;" id="div_forgetpassword">
-                <a class="fancybox-close" href="#/closed"></a>
+                <!--a class="fancybox-close" href="#/closed"></a-->
                 <span style="font-size:24px; color:#084385;" ><strong>Jelszóemlékeztető</strong></span><br><br>
                 Kérem adja meg felhasználó nevét. A hozzáférési adatait elküldjük a rendszerünkben regisztrált felhasználónévhez tartozó e-mail címre.<br/><br/>
                 <strong>Felhasználónév:</strong><br/><br/>
@@ -470,17 +476,40 @@
                 </div>
             </div>
 
+    <script language="javascript" type="text/javascript">
+        companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
+        companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
+        companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
+
+        companyGroup.utils.instance().setWebshopBaseUrl('@Url.Content("~/Webshop/")');
+        companyGroup.utils.instance().setWebshopBaseApiUrl('@Url.Content("~/api/WebshopApi/")');
+        companyGroup.utils.instance().setPictureBaseApiUrl('@Url.Content("~/api/PictureApi/")');
+        companyGroup.utils.instance().setNewsletterApiUrl('@Url.Content("~/api/NewsletterApi/")');
+
+        companyGroup.utils.instance().setStructureBaseApiUrl('@Url.Content("~/api/StructureApi/")');
+        companyGroup.utils.instance().setDownloadPriceListUrl('@Url.Content("~/Webshop/DownloadPriceList")');
+        companyGroup.utils.instance().setShoppingCartBaseApiUrl('@Url.Content("~/api/ShoppingCartApi/")');
+    </script>
+
+    @RenderSection("ScriptsInBottom", false)
+
     <script type="text/javascript">
-
-
-            @RenderSection("ScriptFiles", false)
-       
-        
-            companyGroup.utils.instance().setCustomerBaseApiUrl('@Url.Content("~/api/CustomerApi/")');
-            companyGroup.utils.instance().setVisitorBaseApiUrl('@Url.Content("~/api/VisitorApi/")');
-			companyGroup.utils.instance().setContactPersonBaseApiUrl('@Url.Content("~/api/ContactPersonApi/")');
-			
- 	       
+	$("#form_searchInFiltered").hide();
+			if (navigator.cookieEnabled==false)
+	{
+	$.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>Sütik engedélyezése</H2><p>Kérem engedélyezze a sütiket a böngészőjében a továbblépés érdekében.</p><!--a style="text-decoration:none; color:#FFF;" href="#/closed"><input type="button" value="Bezárás" /></a--></div>', {
+                    'autoDimensions': true,
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'closeBtn': 'false',
+                    'changeFade': 0,
+                    'speedIn': 300,
+                    'speedOut': 300,                 
+					'width': '150%',
+                    'height': '150%',
+                    'autoScale': true,
+                });
+	}
 
             $(window).scroll(function () {
                 if ($(this).scrollTop() > 100) {
@@ -495,17 +524,10 @@
                 return false;
             });
 
-
-
             $('#preloader').ajaxStart(function () {
                 $('#preloader').fadeIn('100');
             }).ajaxStop(function () {
                 $('#preloader').fadeOut('100');
-            });
-
-            $('#forget_password').fancybox({
-                transitionIn: 'fade',
-                transitionOut: 'fade'
             });
 
 
@@ -553,7 +575,8 @@
             $("#preloader_site").delay(50).fadeOut("slow"); // will fade out the white DIV that covers the website.
 
 
-        @RenderSection("ScriptsInBottom", false)
+
     </script>
     </body>
+
 </html>

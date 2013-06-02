@@ -218,7 +218,7 @@
       <SSIS:Property
         SSIS:Name="CreationName"></SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Description"></SSIS:Property>
+        SSIS:Name="Description">Axdb, Axdb_20130131</SSIS:Property>
       <SSIS:Property
         SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
       <SSIS:Property
@@ -226,7 +226,7 @@
       <SSIS:Property
         SSIS:Name="Sensitive">0</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">Axdb_20130131</SSIS:Property>
+        SSIS:Name="Value">Axdb</SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
@@ -236,6 +236,48 @@
     <SSIS:Properties>
       <SSIS:Property
         SSIS:Name="ID">{7759f73d-98d0-4a24-ac5c-77fc868985e6}</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Description"></SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Value">AXDB\HRPAXDB</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="ExtractInterface_DbName">
+    <SSIS:Properties>
+      <SSIS:Property
+        SSIS:Name="ID">{72a995db-4672-491f-a6a4-882069e421d3}</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Description"></SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="Value">ExtractInterface</SSIS:Property>
+      <SSIS:Property
+        SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="ExtractInterface_ServerName">
+    <SSIS:Properties>
+      <SSIS:Property
+        SSIS:Name="ID">{c077baca-901a-4aa0-abb3-85fca58b7b9e}</SSIS:Property>
       <SSIS:Property
         SSIS:Name="CreationName"></SSIS:Property>
       <SSIS:Property

@@ -53,7 +53,9 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 //vevőrendelések változáskövetése   
                 List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfoCT> lineInfosCt = changeTrackingRepository.SalesLineCT(0);
 
-                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = lineInfosCt.ConvertAll(x =>
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfoCT>  lineInfosCtCustomer = lineInfosCt.Where( y => y.CustomerId.Equals(visitor.CustomerId, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                List<CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo> lineInfos = lineInfosCtCustomer.ConvertAll(x =>
                 {
                     return new CompanyGroup.Domain.PartnerModule.OrderDetailedLineInfo(0, x.DataAreaId, x.SalesId, x.CreatedDate, x.ShippingDateRequested, x.CurrencyCode, x.Payment,
                                                                                        x.SalesHeaderType, x.SalesHeaderStatus, x.CustomerOrderNo, x.WithDelivery, x.LineNum, x.SalesStatus,

@@ -93,7 +93,7 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.ICustomerRepository repository = new CompanyGroup.Data.PartnerModule.CustomerRepository();
 
-            List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorData = repository.SignIn("elektroplaza", "hrp5891ep");
+            List<CompanyGroup.Domain.PartnerModule.VisitorData> visitorData = repository.SignIn("ipon", "gild4MAX19"); //elektroplaza hrp5891ep
 
             Assert.IsNotNull(visitorData);
         }

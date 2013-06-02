@@ -35,8 +35,8 @@ namespace CompanyGroup.Data.RegistrationModule
 
                 MongoCollection<CompanyGroup.Domain.RegistrationModule.Registration> collection = this.GetCollection(RegistrationRepository.CollectionName);
 
-                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", ConvertStringToBsonObjectId(id)),
-                                                                      MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(Convert.ToInt32(CompanyGroup.Domain.RegistrationModule.RegistrationStatus.Created))));
+                IMongoQuery query = MongoDB.Driver.Builders.Query.And(MongoDB.Driver.Builders.Query.EQ("_id", ConvertStringToBsonObjectId(id)));
+                                                                      //MongoDB.Driver.Builders.Query.EQ("Status", MongoDB.Bson.BsonInt32.Create(Convert.ToInt32(CompanyGroup.Domain.RegistrationModule.RegistrationStatus.Created))));
 
                 CompanyGroup.Domain.RegistrationModule.Registration registration = collection.FindOne(query);
 

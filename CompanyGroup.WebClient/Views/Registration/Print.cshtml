@@ -99,7 +99,7 @@
             <h3><strong>Cégnév: </strong>@Model.CompanyData.CustomerName</h3>
             <p>@String.Format("{0} {1} {2}", Model.InvoiceAddress.ZipCode, Model.InvoiceAddress.City, Model.InvoiceAddress.Street)<br />
                 Adószám: @Model.CompanyData.VatNumber<br />
-                Bankszámlaszám: $BankAccount$<br />
+                Bankszámlaszám: @String.Format("{0}", (Model.BankAccounts.Items.Count > 0) ? Model.BankAccounts.Items.FirstOrDefault().Part1 + Model.BankAccounts.Items.FirstOrDefault().Part2 + Model.BankAccounts.Items.FirstOrDefault().Part3 : String.Empty)<br />
                 Cégbejegyzés száma:@Model.CompanyData.RegistrationNumber<br />
             </p>
           </blockquote>
@@ -580,10 +580,13 @@
           Adószám:@Model.CompanyData.VatNumber<br />
           Uniós adószám:@Model.CompanyData.EUVatNumber<br />
           Bankszámlaszámok:@foreach(CompanyGroup.WebClient.Models.BankAccount bankAccount in Model.BankAccounts.Items){
-                               String.Format("{0}{1}{2}", bankAccount.Part1, bankAccount.Part2, bankAccount.Part3); <br />
-          }
+                               
+							   @String.Format("{0}{1}{2}", bankAccount.Part1, bankAccount.Part2, bankAccount.Part3);
+
+							   <br /> 
+          }<br />
           Aláírási címpéldány: @Model.CompanyData.SignatureEntityFile<br /></p>
-      <p>Központi e-mail cím:<br />
+      <p>Központi e-mail cím: @(Model.CompanyData.MainEmail)<br />
           Hírlevél a központi e-mailre: @(Model.CompanyData.NewsletterToMainEmail ? "Igen" : "Nem")</p>
       <hr align="left" width="350" />
       <p><strong>Cégadminisztrátor</strong><br /></p>
@@ -598,7 +601,11 @@
 Árut Rendelhet: @(Model.WebAdministrator.AllowOrder ? "Igen" : "Nem") <br />
 Árut átvehet: @(Model.WebAdministrator.AllowReceiptOfGoods ? "Igen" : "Nem") <br />
 <br />
-          <strong>Pozíció:</strong> @*Model.WebAdministrator.Functions*@<br />
+          <strong>Pozíció:</strong>@foreach(string pos in @Model.WebAdministrator.Positions)
+                                    {
+                                        @pos;
+                                        <br/> 
+                                    } 
           <br />
         <strong>Hírlevél: </strong>@(Model.WebAdministrator.Newsletter ? "Igen" : "Nem")</p>
       <p><strong>Automata e-mail értesítések:</strong><br />
@@ -633,12 +640,12 @@
       <hr align="left" width="350" />
       <p><strong>Felhasználó </strong></p>
             <p>@foreach(CompanyGroup.WebClient.Models.ContactPerson person in Model.ContactPersons.Items){
-<span>Azonosító: </span>@person.ContactPersonId<br/>
+
         <span>Vezetéknév: </span>@person.FirstName<br/>
         <span>Keresztnév: </span>@person.LastName<br/>
         <span>Telefon: </span>@person.Telephone<br/>
         <span>Email: </span>@person.Email<br/>
-        <span>Jelszó: </span>@person.Password<br/>
+        
         <br/>
         <span><strong>Jogosultságok: </strong></span><br/>
         <span>Számlainformáció: </span>@(person.InvoiceInfo ? "Igen" : "Nem")<br/>
@@ -646,7 +653,11 @@
         <span>Árut Rendelhet: </span>@(person.AllowOrder ? "Igen" : "Nem") <br/>
         <span>Árut átvehet: </span>@(person.AllowReceiptOfGoods ? "Igen" : "Nem") <br/>
         <br/>
-        <span><strong>Pozíció: </strong></span><br/> 
+        <span><strong>Pozíció: </strong></span>foreach (string pos in person.Positions)
+                                               {
+                                                   @pos 
+                                                   <br/> 
+                                               }
         <br/>
         <span><strong>Hírlevél: </strong></span>@(person.Newsletter ? "Igen" : "Nem")<br/>
         <br/>   
@@ -661,8 +672,7 @@
   </tr>
 </table>
 <p>&nbsp;</p>
-<p>Budapest,
-    @DateTime.Now
+<p>Budapest, @DateTime.Now.ToString("yyyy.MM.dd")
         </p>
 <p>&nbsp;</p>
 <table width="915" border="0" cellspacing="0" cellpadding="3" class="keret_tabla">

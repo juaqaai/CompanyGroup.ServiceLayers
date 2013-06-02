@@ -13,18 +13,21 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
-                return new CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions()
-                {
-                    Id = shoppingCart.Id,
-                    Items = shoppingCart.Items.ToList().ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, shoppingCart.Currency)),
-                    SumTotal = shoppingCart.SumTotal,
-                    DeliveryTerms = Convert.ToInt32(shoppingCart.DeliveryTerms),
-                    PaymentTerms = Convert.ToInt32(shoppingCart.PaymentTerms),
-                    Shipping = new ShippingToShipping().Map(shoppingCart.Shipping), 
-                    LeasingOptions = new LeasingOptionsToLeasingOptions().Map(leasingOptions),
-                    AllInStock = shoppingCart.AllInStock,
-                    Currency = shoppingCart.Currency
-                };
+                List<CompanyGroup.Dto.WebshopModule.ShoppingCartItem> items = shoppingCart.Items.ToList().ConvertAll(x => new ShoppingCartItemToShoppingCartItem().Map(x, shoppingCart.Currency));
+
+                CompanyGroup.Dto.WebshopModule.Shipping shipping = new ShippingToShipping().Map(shoppingCart.Shipping);
+
+                CompanyGroup.Dto.WebshopModule.LeasingOptions options = new LeasingOptionsToLeasingOptions().Map(leasingOptions);
+
+                return new CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions(items, 
+                                                                                        shoppingCart.SumTotal, 
+                                                                                        shoppingCart.Id, 
+                                                                                        shipping, 
+                                                                                        Convert.ToInt32(shoppingCart.PaymentTerms), 
+                                                                                        Convert.ToInt32(shoppingCart.DeliveryTerms), 
+                                                                                        options, 
+                                                                                        shoppingCart.Currency, 
+                                                                                        shoppingCart.AllInStock);
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions(); }
         }

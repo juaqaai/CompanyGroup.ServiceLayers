@@ -24,14 +24,6 @@
     <property name="LanguageId" />
     <property name="DefaultPriceGroupId" />
     <property name="InventLocationId" />
-    <property name="DataAreaId" />
-    <property name="LoginType" />
-    <property name="PartnerModel" />
-    <property name="AutoLogin" />
-    <property name="LoginDate" />
-    <property name="LogoutDate" />
-    <property name="ExpireDate" />
-    <property name="Valid" />
     <component name="Representative" class="Representative">
       <property name="Id" column="RepresentativeId" />
       <property name="Name" column="RepresentativeName" />
@@ -39,11 +31,22 @@
       <property name="Mobile" column="RepresentativeMobile" />
       <property name="Extension" column="RepresentativeExtension" />
       <property name="Email" column="RepresentativeEmail" />
-    </component>
-    <bag name="CustomerPriceGroups">
-      <key column="Id" />
-      <one-to-many class="CustomerPriceGroup" />
-    </bag>   
+    </component>     
+    <property name="DataAreaId" />
+    <property name="LoginType" />
+    <property name="RightHrp" />
+    <property name="RightBsc" />
+    <property name="ContractHrp" />
+    <property name="ContractBsc" />
+    <property name="CartId" />
+    <property name="RegistrationId" />
+    <property name="IsCatalogueOpened" />
+    <property name="IsShoppingCartOpened" />
+    <property name="AutoLogin" />
+    <property name="LoginDate" />
+    <property name="LogoutDate" />
+    <property name="ExpireDate" />
+    <property name="Valid" />
   </class>
   <sql-query name="InternetUser.SignIn" callable="true">
     <query-param name="UserName" type="System.String"/>
@@ -68,9 +71,48 @@
   </sql-query>
   <sql-query name="InternetUser.VisitorSelect" callable="true">
     <query-param name="VisitorId" type="System.String"/>
-    <!--<return class="Visitor"></return>-->
-    <return alias="V" class="VisitorData"></return>
-    <return-join alias="P" property="V.CustomerPriceGroups"></return-join>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="VisitorId" type="System.String"/>
+    <return-scalar column="LoginIP" type="System.String"/>
+    <return-scalar column="RecId" type="System.Int64"/>
+    <return-scalar column="CustomerId" type="System.String"/>
+    <return-scalar column="CustomerName" type="System.String"/>
+    <return-scalar column="PersonId" type="System.String"/>
+    <return-scalar column="PersonName" type="System.String"/>
+    <return-scalar column="Email" type="System.String"/>
+    <return-scalar column="IsWebAdministrator" type="System.Boolean"/>
+    <return-scalar column="InvoiceInfoEnabled" type="System.Boolean"/>
+    <return-scalar column="PriceListDownloadEnabled" type="System.Boolean"/>
+    <return-scalar column="CanOrder" type="System.Boolean"/>
+    <return-scalar column="RecieveGoods" type="System.Boolean"/>
+    <return-scalar column="PaymTermIdBsc" type="System.String"/>
+    <return-scalar column="PaymTermIdHrp" type="System.String"/>
+    <return-scalar column="Currency" type="System.String"/>
+    <return-scalar column="LanguageId" type="System.String"/>
+    <return-scalar column="DefaultPriceGroupIdHrp" type="System.String"/>
+    <return-scalar column="DefaultPriceGroupIdBsc" type="System.String"/>
+    <return-scalar column="InventLocationIdHrp" type="System.String"/>
+    <return-scalar column="InventLocationIdBsc" type="System.String"/>
+    <return-scalar column="RepresentativeId" type="System.String"/>
+    <return-scalar column="RepresentativeName" type="System.String"/>
+    <return-scalar column="RepresentativePhone" type="System.String"/>
+    <return-scalar column="RepresentativeMobile" type="System.String"/>
+    <return-scalar column="RepresentativeExtension" type="System.String"/>
+    <return-scalar column="RepresentativeEmail" type="System.String"/>
+    <return-scalar column="LoginType" type="System.Int32"/>
+    <return-scalar column="RightHrp" type="System.Boolean"/>
+    <return-scalar column="RightBsc" type="System.Boolean"/>
+    <return-scalar column="ContractHrp" type="System.Boolean"/>
+    <return-scalar column="ContractBsc" type="System.Boolean"/>
+    <return-scalar column="CartId" type="System.Int32"/>
+    <return-scalar column="RegistrationId" type="System.String"/>
+    <return-scalar column="IsCatalogueOpened" type="System.Boolean"/>
+    <return-scalar column="IsShoppingCartOpened" type="System.Boolean"/>
+    <return-scalar column="AutoLogin" type="System.Boolean"/>
+    <return-scalar column="LoginDate" type="System.DateTime"/>
+    <return-scalar column="LogoutDate" type="System.DateTime"/>
+    <return-scalar column="ExpireDate" type="System.DateTime"/>
+    <return-scalar column="Valid" type="System.Boolean"/>                                                                                                          
     exec InternetUser.VisitorSelect @VisitorId=:VisitorId
   </sql-query>
   <sql-query name="InternetUser.VisitorInsert" callable="true">
@@ -86,20 +128,27 @@
     <query-param name="PriceListDownloadEnabled" type="System.Boolean"/>
     <query-param name="CanOrder" type="System.Boolean"/>
     <query-param name="RecieveGoods" type="System.Boolean"/>
-    <query-param name="PaymTermId" type="System.String"/>
+    <query-param name="PaymTermIdBsc" type="System.String"/>
+    <query-param name="PaymTermIdHrp" type="System.String"/>
     <query-param name="Currency" type="System.String"/>
     <query-param name="LanguageId" type="System.String"/>
-    <query-param name="DefaultPriceGroupId" type="System.String"/>
-    <query-param name="InventLocationId" type="System.String"/>
+    <query-param name="DefaultPriceGroupIdHrp" type="System.String"/>
+    <query-param name="DefaultPriceGroupIdBsc" type="System.String"/>
+    <query-param name="InventLocationIdHrp" type="System.String"/>
+    <query-param name="InventLocationIdBsc" type="System.String"/>
     <query-param name="RepresentativeId" type="System.String"/>
-    <query-param name="DataAreaId" type="System.String"/>
     <query-param name="LoginType" type="System.Int32"/>
-    <query-param name="PartnerModel" type="System.Int32"/>
+    <query-param name="RightHrp" type="System.Boolean"/>
+    <query-param name="RightBsc" type="System.Boolean"/>
+    <query-param name="ContractHrp" type="System.Boolean"/>
+    <query-param name="ContractBsc" type="System.Boolean"/>
+    <query-param name="CartId" type="System.Int32"/>
+    <query-param name="RegistrationId" type="System.String"/>
+    <query-param name="IsCatalogueOpened" type="System.Boolean"/>
+    <query-param name="IsShoppingCartOpened" type="System.Boolean"/>
     <query-param name="AutoLogin" type="System.Boolean"/>
-    <query-param name="LoginDate" type="System.DateTime"/>
-    <query-param name="ExpireDate" type="System.DateTime"/>
     <return-scalar column="Id" type="System.Int32"/>
-    <return-scalar column="VisitorId" type="System.String"/>    
+    <return-scalar column="VisitorId" type="System.String"/>
     exec InternetUser.VisitorInsert @LoginIP=:LoginIP,
                                     @RecId=:RecId,
                                     @CustomerId=:CustomerId,
@@ -112,18 +161,25 @@
                                     @PriceListDownloadEnabled=:PriceListDownloadEnabled,
                                     @CanOrder=:CanOrder,
                                     @RecieveGoods=:RecieveGoods,
-                                    @PaymTermId=:PaymTermId,
+                                    @PaymTermIdBsc=:PaymTermIdBsc,
+                                    @PaymTermIdHrp=:PaymTermIdHrp,
                                     @Currency=:Currency,
                                     @LanguageId=:LanguageId,
-                                    @DefaultPriceGroupId=:DefaultPriceGroupId,
-                                    @InventLocationId=:InventLocationId,
+                                    @DefaultPriceGroupIdHrp=:DefaultPriceGroupIdHrp,
+                                    @DefaultPriceGroupIdBsc=:DefaultPriceGroupIdBsc,
+                                    @InventLocationIdHrp=:InventLocationIdHrp,
+                                    @InventLocationIdBsc=:InventLocationIdBsc,
                                     @RepresentativeId=:RepresentativeId,
-                                    @DataAreaId=:DataAreaId,
                                     @LoginType=:LoginType,
-                                    @PartnerModel=:PartnerModel,
-                                    @AutoLogin=:AutoLogin,
-                                    @LoginDate=:LoginDate,
-                                    @ExpireDate=:ExpireDate
+                                    @RightHrp=:RightHrp,
+                                    @RightBsc=:RightBsc,
+                                    @ContractHrp=:ContractHrp,
+                                    @ContractBsc=:ContractBsc,
+                                    @CartId=:CartId,
+                                    @RegistrationId=:RegistrationId,
+                                    @IsCatalogueOpened=:IsCatalogueOpened,
+                                    @IsShoppingCartOpened=:IsShoppingCartOpened,
+                                    @AutoLogin=:AutoLogin
   </sql-query>
   <sql-query name="InternetUser.VisitorDisableStatus" callable="true">
     <query-param name="VisitorId" type="System.String"/>

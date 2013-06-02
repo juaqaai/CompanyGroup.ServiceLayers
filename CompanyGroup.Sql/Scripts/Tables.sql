@@ -109,7 +109,7 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Visi
 GO
 CREATE TABLE InternetUser.Visitor
 (
-	Id							INT IDENTITY PRIMARY KEY,					-- egyedi GUID azonosito
+	Id							INT IDENTITY PRIMARY KEY,						-- egyedi azonosito
 	VisitorId					NVARCHAR(64) NOT NULL DEFAULT CONVERT(NVARCHAR(64), NEWID()), 
 	LoginIP						NVARCHAR (32) NOT NULL DEFAULT '' ,				-- ip cim
 	RecId						BIGINT NOT NULL DEFAULT 0 ,						-- WebShopUserInfo.RecId bigint mezo (idegen kulcs)
@@ -123,19 +123,30 @@ CREATE TABLE InternetUser.Visitor
 	PriceListDownloadEnabled	BIT NOT NULL DEFAULT 1, 
 	CanOrder					BIT NOT NULL DEFAULT 1, 
 	RecieveGoods				BIT NOT NULL DEFAULT 1,
-	PaymTermId					NVARCHAR(10) NOT NULL DEFAULT '', 
-	Currency					NVARCHAR(10) NOT NULL		DEFAULT '', 
+	PaymTermIdBsc				NVARCHAR(10) NOT NULL DEFAULT '', 
+	PaymTermIdHrp				NVARCHAR(10) NOT NULL DEFAULT '', 
+	Currency					NVARCHAR(10) NOT NULL DEFAULT '', 
 	LanguageId					NVARCHAR(10) NOT NULL DEFAULT '', 
-	DefaultPriceGroupId			NVARCHAR(4) NOT NULL DEFAULT '',
-	InventLocationId			NVARCHAR(10) NOT NULL DEFAULT '', 
+	DefaultPriceGroupIdHrp		NVARCHAR(4) NOT NULL DEFAULT '',
+	DefaultPriceGroupIdBsc		NVARCHAR(4) NOT NULL DEFAULT '',
+	InventLocationIdHrp			NVARCHAR(10) NOT NULL DEFAULT '', 
+	InventLocationIdBsc			NVARCHAR(10) NOT NULL DEFAULT '', 
 	RepresentativeId			INT NOT NULL DEFAULT 0,
-	DataAreaId					NVARCHAR(3) NOT NULL DEFAULT '',				-- vallalatkod hrp; bsc; srv
+--	DataAreaId					NVARCHAR(3) NOT NULL DEFAULT '',				-- vallalatkod hrp; bsc; srv
 	LoginType					INT NOT NULL DEFAULT 0,							-- bejelentkezes modja =1: ceges; =2: szemelyes; =3: alkalmazott
-	PartnerModel				INT NOT NULL DEFAULT 0,							-- partner model (None = 0, Hrp = 1, Bsc = 2, Both = 3)
+--	PartnerModel				INT NOT NULL DEFAULT 0,							-- partner model (None = 0, Hrp = 1, Bsc = 2, Both = 3)
+	RightHrp					BIT NOT NULL DEFAULT 0,							-- jogosultság a hrp-ben
+	RightBsc					BIT NOT NULL DEFAULT 0,							-- jogosultság a bsc-ben
+	ContractHrp					BIT NOT NULL DEFAULT 0,							-- hrp szerzõdés
+	ContractBsc					BIT NOT NULL DEFAULT 0,							-- bsc szerzõdés
+	CartId						INT NOT NULL DEFAULT 0,
+	RegistrationId				NVARCHAR(64) NOT NULL DEFAULT '', 
+	IsCatalogueOpened			BIT NOT NULL DEFAULT 1,
+	IsShoppingCartOpened		BIT NOT NULL DEFAULT 0,
 	AutoLogin					BIT NOT NULL DEFAULT 0,							-- automatikus bejelentkezes (session nem jar le soha)
 	LoginDate					DATETIME NOT NULL DEFAULT GETDATE(),			-- bejelentkezes idopontja
 	LogoutDate					DATETIME NOT NULL DEFAULT CONVERT(DATETIME, 0),	-- kijelentkezes idopontja
-	ExpireDate					DATETIME NOT NULL DEFAULT CONVERT(DATETIME, 0), -- lejárat dátuma és ideje 
+	[ExpireDate]				DATETIME NOT NULL DEFAULT CONVERT(DATETIME, 0), -- lejárat dátuma és ideje 
 	Valid						BIT NOT NULL DEFAULT 1
 )
 GO
@@ -203,8 +214,7 @@ CREATE TABLE InternetUser.Catalogue
 	Category3Id				nvarchar(4) not null default '',		-- updStruktura jelleg3 id
 	Category3Name			nvarchar(80) not null default '', 		-- updStruktura jelleg3 nev 
 	Category3EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
-	InnerStock				int not null default 0,
-	OuterStock				int not null default 0,
+	Stock					int not null default 0,
 	AverageInventory		int not null default 0,
 	Price1					int not null default 0,					-- axapta inventory amount1
 	Price2					int not null default 0,					-- axapta inventory amount2
@@ -234,6 +244,64 @@ CREATE TABLE InternetUser.Catalogue
 )
 GO
 */
+
+-- Stage_Catalogue tábla (adatok áttöltése ide történik)
+-- select * from InternetUser.Stage_Catalogue
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_Catalogue') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_Catalogue;
+GO
+CREATE TABLE InternetUser.Stage_Catalogue
+(	
+	ProductId				nvarchar(20) not null default '',			
+	AxStructCode			nvarchar(16) not null default '', 
+	DataAreaId				nvarchar(3) not null default '',		-- hrp / bsc 
+	StandardConfigId		nvarchar(20) not null default '', 
+	Name					nvarchar(80) not null default '',					
+	EnglishName				nvarchar(80) not null default '',
+	PartNumber				nvarchar(20) not null default '',		-- dbo.GYARTOICIKKSZAMOK.GYARTOICIKKSZAM
+	ManufacturerId			nvarchar(4) not null default '',		-- updStruktura gyarto id
+	ManufacturerName		nvarchar(80) not null default '',		-- updStruktura gyarto nev 
+	ManufacturerEnglishName nvarchar(80) not null default '',		-- updStruktura gyarto nev 
+	Category1Id				nvarchar(4) not null default '',		-- updStruktura jelleg1 id	
+	Category1Name			nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
+	Category1EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
+	Category2Id				nvarchar(4) not null default '',		-- updStruktura jelleg2 id
+	Category2Name			nvarchar(80) not null default '', 		-- updStruktura jelleg2 nev 
+	Category2EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
+	Category3Id				nvarchar(4) not null default '',		-- updStruktura jelleg3 id
+	Category3Name			nvarchar(80) not null default '', 		-- updStruktura jelleg3 nev 
+	Category3EnglishName	nvarchar(80) not null default '', 		-- updStruktura jelleg1 nev 
+	Stock					int not null default 0,
+	AverageInventory		int not null default 0,
+	Price1					int not null default 0,					-- axapta inventory amount1
+	Price2					int not null default 0,					-- axapta inventory amount2
+	Price3					int not null default 0,					-- axapta inventory amount3
+	Price4					int not null default 0,					-- axapta inventory amount4
+	Price5					int not null default 0,					-- axapta inventory amount5
+	Garanty					nvarchar(32) not null default '',		-- axapta inventory garancia
+	GarantyMode				nvarchar(32) not null default '',		-- axapta inventory garancia
+	Discount				bit not null default 0,					-- axapta inventory Akcios
+	New						bit not null default 0,
+	ItemState				int not null default 0,					-- axapta ItemState mezo 0 : aktiv, 1 : kifuto, 2 : passziv	
+	[Description]			nvarchar(max) not null default '',		-- axapta inventtxt txt dbo.INVENTTXT.TXT
+	EnglishDescription		nvarchar(max) not null default '',
+	SearchContent 			nvarchar(max) not null default '',
+	ProductManagerId		int not null default 0,					-- termekhez kapcsolt termekmanager
+	ShippingDate			SmallDateTime not null default GetDate(),
+	IsPurchaseOrdered		bit not null default 0,	
+	CreatedDate				SmallDateTime not null default GetDate(),		
+	Updated					SmallDateTime not null default GetDate(),
+	Available				bit not null default 1,					-- kereskedelmi forgalomban elerheto-e a termek
+	PictureId				int not null default 0,
+	SecondHand				bit not null default 0,					-- elerheto-e a termek hasznalt konfig-on,
+	Valid					bit not null default 1, 
+    [ExtractDate] datetime2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]			int not null default 0, 
+	Sequence0				int not null default 0
+)
+GO
+
 -- termekkatalogus log tabla
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CatalogueRequestLog') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.CatalogueRequestLog;
@@ -410,6 +478,104 @@ CREATE TABLE InternetUser.Invoice
 )
 GO
 
+-- select * from InternetUser.Stage_Invoice
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_Invoice') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_Invoice;
+GO
+CREATE TABLE InternetUser.Stage_Invoice
+(
+	[Version] INT NOT NULL DEFAULT 0,
+	Operation NVARCHAR(1) NOT NULL DEFAULT '',
+	CustomerId			NVARCHAR(20) NOT NULL DEFAULT '',
+	DataAreaId			NVARCHAR(3) NOT NULL DEFAULT '',	
+	SalesId				NVARCHAR(20) NOT NULL DEFAULT '',	-- BVR, VR
+	InvoiceDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 	
+	DueDate				DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 
+	InvoiceAmount		decimal(20,2) NOT NULL DEFAULT 0, 
+	InvoiceCredit		decimal(20,2) NOT NULL DEFAULT 0,
+	CurrencyCode		NVARCHAR(20) NOT NULL DEFAULT '',
+	InvoiceId			NVARCHAR(20) NOT NULL DEFAULT '', 
+	Payment				NVARCHAR(60) NOT NULL DEFAULT '',	-- Átutalás 8 nap
+	SalesType			INT NOT NULL DEFAULT 0,				-- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet
+	CusomerRef			NVARCHAR(300) NOT NULL DEFAULT '',
+	InvoicingName		NVARCHAR(80) NOT NULL DEFAULT '',
+	InvoicingAddress	NVARCHAR(250) NOT NULL DEFAULT '',
+	ContactPersonId		NVARCHAR(20) NOT NULL DEFAULT '',
+	Printed				INT NOT NULL DEFAULT 0,	
+	ReturnItemId		NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0),
+	LineNum				INT NOT NULL DEFAULT 0,
+	ItemId				NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemName			NVARCHAR(300) NOT NULL DEFAULT '',
+	SerialNumber		NVARCHAR(40) NOT NULL DEFAULT '',
+	Quantity			INT NOT NULL DEFAULT 0,
+	SalesPrice			decimal(20,2) NOT NULL DEFAULT 0,	-- egysegar
+	LineAmount			decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg
+	QuantityPhysical	INT NOT NULL DEFAULT 0,				-- mennyiseg
+	Remain				INT NOT NULL DEFAULT 0,				-- fennmarado mennyiseg
+	DeliveryType		INT NOT NULL DEFAULT 0,	
+	TaxAmount			decimal(20,2) NOT NULL DEFAULT 0,
+	LineAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg az alapertelmezett penznemben
+	TaxAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- afa osszege az alapertelmezett penznemben
+	DetailCurrencyCode  NVARCHAR(20) NOT NULL DEFAULT '',
+	Debit				BIT NOT NULL DEFAULT 0, 
+	[Description]		NVARCHAR(4000) NOT NULL DEFAULT '',
+	[FileName]			NVARCHAR(300) NOT NULL DEFAULT '',
+	RecId				BIGINT NOT NULL DEFAULT 0, 
+	CreatedDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0),
+    [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		INT NOT NULL DEFAULT 0
+)
+GO
+
+-- select * from InternetUser.Stage_InvoiceOpenTransaction
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_InvoiceOpenTransaction') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.Stage_InvoiceOpenTransaction;
+GO
+CREATE TABLE InternetUser.Stage_InvoiceOpenTransaction
+(
+	CustomerId			NVARCHAR(20) NOT NULL DEFAULT '',
+	DataAreaId			NVARCHAR(3) NOT NULL DEFAULT '',	
+	SalesId				NVARCHAR(20) NOT NULL DEFAULT '',	-- BVR, VR
+	InvoiceDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 	
+	DueDate				DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0), 
+	InvoiceAmount		decimal(20,2) NOT NULL DEFAULT 0, 
+	InvoiceCredit		decimal(20,2) NOT NULL DEFAULT 0,
+	CurrencyCode		NVARCHAR(20) NOT NULL DEFAULT '',
+	InvoiceId			NVARCHAR(20) NOT NULL DEFAULT '', 
+	Payment				NVARCHAR(60) NOT NULL DEFAULT '',	-- Átutalás 8 nap
+	SalesType			INT NOT NULL DEFAULT 0,				-- sor tipusa, 0 napló, 1 árajánlat, 2 elõfizetés, 3 értékesítés, 4 viszáru, 5 keretrendelés, 6 cikkszükséglet
+	CusomerRef			NVARCHAR(300) NOT NULL DEFAULT '',
+	InvoicingName		NVARCHAR(80) NOT NULL DEFAULT '',
+	InvoicingAddress	NVARCHAR(250) NOT NULL DEFAULT '',
+	ContactPersonId		NVARCHAR(20) NOT NULL DEFAULT '',
+	Printed				INT NOT NULL DEFAULT 0,	
+	ReturnItemId		NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0),
+	LineNum				INT NOT NULL DEFAULT 0,
+	ItemId				NVARCHAR(20) NOT NULL DEFAULT '',
+	ItemName			NVARCHAR(300) NOT NULL DEFAULT '',
+	SerialNumber		NVARCHAR(40) NOT NULL DEFAULT '',
+	Quantity			INT NOT NULL DEFAULT 0,
+	SalesPrice			decimal(20,2) NOT NULL DEFAULT 0,	-- egysegar
+	LineAmount			decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg
+	QuantityPhysical	INT NOT NULL DEFAULT 0,				-- mennyiseg
+	Remain				INT NOT NULL DEFAULT 0,				-- fennmarado mennyiseg
+	DeliveryType		INT NOT NULL DEFAULT 0,	
+	TaxAmount			decimal(20,2) NOT NULL DEFAULT 0,
+	LineAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- osszeg az alapertelmezett penznemben
+	TaxAmountMst		decimal(20,2) NOT NULL DEFAULT 0,	-- afa osszege az alapertelmezett penznemben
+	DetailCurrencyCode  NVARCHAR(20) NOT NULL DEFAULT '',
+	Debit				BIT NOT NULL DEFAULT 0, 
+	[Description]		NVARCHAR(4000) NOT NULL DEFAULT '',
+	[FileName]			NVARCHAR(300) NOT NULL DEFAULT '',
+	RecId				BIGINT NOT NULL DEFAULT 0, 
+	CreatedDate			DATETIME NOT NULL DEFAULT CONVERT(DateTime, 0),
+    [ExtractDate]		DATETIME2 NOT NULL DEFAULT GetDate(), 		
+    [PackageLogKey]		INT NOT NULL DEFAULT 0
+)
+GO
+
 -- InventSum stage tábla
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Stage_InventSum') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Stage_InventSum;
@@ -520,3 +686,33 @@ CREATE TABLE InternetUser.Stage_SalesOrder
 )
 GO
 -- select * from InternetUser.Stage_SalesOrder
+
+-- select * from InternetUser.WaitingForAutoPost
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.WaitingForAutoPost') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.WaitingForAutoPost;
+GO
+CREATE TABLE InternetUser.WaitingForAutoPost
+(
+	Id					  INT IDENTITY NOT NULL PRIMARY KEY,
+	ForeignKey			  INT NOT NULL DEFAULT 0,				-- vagy a ShoppingCart.Id, vagy a Registration.Id
+	ForeignKeyType		  INT NOT NULL DEFAULT 0,				-- 1: kosár, 2: regisztráció
+	Content				  XML NOT NULL DEFAULT '', 
+	CreatedDate			  DateTime NOT NULL DEFAULT GETDATE(),  
+	PostedDate			  DateTime NOT NULL DEFAULT GETDATE(),  -- rendszerve beküldés ideje
+	[Status]			  INT NOT NULL DEFAULT 0,				-- 0: törölt, 1: aktív, 2: beküldött
+)
+GO
+
+-- select * from InternetUser.EventRegistration;
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.EventRegistration') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.EventRegistration;
+GO
+CREATE TABLE InternetUser.EventRegistration
+(
+	Id					INT IDENTITY NOT NULL PRIMARY KEY,
+	EventId				NVARCHAR(20) NOT NULL DEFAULT '',
+	EventName			NVARCHAR(300) NOT NULL DEFAULT '',	 
+	[Xml]				NVARCHAR(MAX) NOT NULL DEFAULT '',				
+	CreatedDate			DATETIME NOT NULL DEFAULT GETDATE(), 
+	Valid				BIT NOT NULL DEFAULT 1
+)

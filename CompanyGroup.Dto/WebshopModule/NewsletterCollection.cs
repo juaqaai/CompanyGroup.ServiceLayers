@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace CompanyGroup.Dto.WebshopModule
 {
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "Newsletter", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// hírlevél elem
+    /// </summary>
     public class Newsletter
     {
         public Newsletter()
@@ -19,41 +20,39 @@ namespace CompanyGroup.Dto.WebshopModule
             this.Body = String.Empty;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "NewsletterId", Order = 1)]
         public string NewsletterId { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Title", Order = 2)]
         public string Title { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Description", Order = 3)]
         public string Description { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "HtmlPath", Order = 4)]
         public string HtmlPath { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "EndDateTime", Order = 5)]
         public string EndDateTime { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "PicturePath", Order = 6)]
-        public string PicturePath { get; set; }
+         public string PicturePath { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "AllowedDateTime", Order = 7)]
         public string AllowedDateTime { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Body", Order = 8)]
         public string Body { get; set; }
     }
 
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "NewsletterCollection", Namespace = "CompanyGroup.Dto.WebshopModule")]
+    /// <summary>
+    /// hírlevél lekérdezése eredménye
+    /// </summary>
     public class NewsletterCollection
     {
-        public NewsletterCollection()
+        public NewsletterCollection() : this(new List<Newsletter>(), new CompanyGroup.Dto.PartnerModule.Visitor()) { }
+
+        public NewsletterCollection(List<Newsletter> items, CompanyGroup.Dto.PartnerModule.Visitor visitor)
         {
-            this.Items = new List<Newsletter>();
+            this.Items = items;
+
+            this.Visitor = visitor;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "Items", Order = 1)]
         public List<Newsletter> Items { get; set; }
+
+        public CompanyGroup.Dto.PartnerModule.Visitor Visitor { get; set; }
     }
 }

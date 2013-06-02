@@ -53,7 +53,8 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                            SalesDeliverNow = from.SalesDeliverNow, 
                            AvailableInWebShop = from.AvailableInWebShop, 
                            InStock = from.InStock,
-                           PictureExists = from.PictureExists                    
+                           PictureExists = from.PictureExists, 
+                           DataAreaId = from.DataAreaId
                        };
         }
     }

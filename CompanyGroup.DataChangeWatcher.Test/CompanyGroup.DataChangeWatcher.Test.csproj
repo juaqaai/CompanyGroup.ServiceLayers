@@ -49,12 +49,6 @@
     <Compile Include="UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CompanyGroup.DataChangeWatcher\CompanyGroup.DataChangeWatcher.csproj">
-      <Project>{B0CE2451-59FA-4447-A3E7-FB6B6FF06881}</Project>
-      <Name>CompanyGroup.DataChangeWatcher</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

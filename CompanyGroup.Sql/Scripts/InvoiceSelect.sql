@@ -168,7 +168,17 @@ SET NOCOUNT ON
 	--	   ContactPersonId,  -- kapcsolattarto
 	--	   Printed,  --
 	--	   ReturnItemId, --
+	;
+
 	DECLARE @InvoiceId nvarchar(30) = ISNULL((SELECT InvoiceId FROM InternetUser.Invoice  WHERE Id = @Id), '');
+
+	WITH CTE (Id, Stock, Available)
+	AS (
+		SELECT DISTINCT I.Id, Stock, Available 
+		FROM InternetUser.Catalogue as C
+		INNER JOIN InternetUser.Invoice as I ON I.ItemId = C.ProductId AND I.DataAreaId = C.DataAreaId
+		WHERE I.Id = @Id
+	)
 
 		   SELECT I.Id, InvoiceId, 
 		   ItemDate,  -- datum
@@ -189,10 +199,12 @@ SET NOCOUNT ON
 		   ISNULL([FileName], '' ) as [FileName],
 		   ISNULL(RecId, 0) as RecId, 
 		   CASE WHEN FileName <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists, 
-		   CASE WHEN ISNULL(C.Stock, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as InStock, 
-		   CASE WHEN ISNULL(C.Available, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as AvailableInWebShop
+		   CASE WHEN ISNULL(CTE.Stock, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as InStock, 
+		   CASE WHEN ISNULL(CTE.Available, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as AvailableInWebShop, 
+		   I.DataAreaId
 	FROM InternetUser.Invoice as I 
-		 LEFT OUTER JOIN InternetUser.Catalogue as C ON I.ItemId = C.ProductId AND I.DataAreaId = C.DataAreaId
+		 -- LEFT OUTER JOIN InternetUser.Catalogue as C ON I.ItemId = C.ProductId AND I.DataAreaId = C.DataAreaId
+		 LEFT OUTER JOIN CTE ON CTE.Id = I.Id
 	WHERE InvoiceId = @InvoiceId
 	ORDER BY LineNum;
 
@@ -201,10 +213,13 @@ GO
 GRANT EXECUTE ON InternetUser.InvoiceDetailsSelect TO InternetUser
 GO
 
--- exec InternetUser.InvoiceDetailsSelect 3012
+-- exec InternetUser.InvoiceDetailsSelect 1186
+-- select * from InternetUser.Catalogue where ProductId = 'T5D-01736'
 
 -- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
 /*
+select top 1000 * from InternetUser.Invoice where InvoiceId = 'BI004821/13'
+
 EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',	
 									@Debit = 0,				--0: mind, 1 kifizetetlen
 									@OverDue = 0,				--0: mind, 1 lejart 
@@ -283,9 +298,9 @@ GO
 
 -- exec [InternetUser].[InvoicePictureSelect] 30014;
 
-DROP PROCEDURE [InternetUser].[InvoiceSelect];
+DROP PROCEDURE [InternetUser].[InvoiceSelect2];
 GO
-CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	--vevokod
+CREATE PROCEDURE [InternetUser].[InvoiceSelect2]( @CustomerId NVARCHAR(10) = '',	--vevokod
 											     @Debit BIT = 0,				--0: mind, 1 kifizetetlen
 											     @OverDue BIT = 0,				--0: mind, 1 lejart 
 												 @ItemId NVARCHAR(20) = '', 
@@ -293,7 +308,7 @@ CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	
 												 @SalesId NVARCHAR(20) = '',
 												 @SerialNumber NVARCHAR(40) = '',
 												 @InvoiceId NVARCHAR(20) = '',
-												 @DateIntervall INT = 0,
+												 @DateIntervall INT = 0,	-- 30, 60, 90, 180, 365
 												 @Sequence int = 0,	
 												 @CurrentPageIndex INT = 1, 
 												 @ItemsOnPage INT = 30 )
@@ -302,60 +317,88 @@ CREATE PROCEDURE [InternetUser].[InvoiceSelect]( @CustomerId NVARCHAR(10) = '',	
 AS
 SET NOCOUNT ON
 
-	SELECT MIN(Id) as Id, 
-		   InvoiceDate,  -- szamla datuma
-		   DataAreaId as SourceCompany,  
+	SELECT I.Id, 
+		   I.InvoiceDate,  -- szamla datuma
+		   I.DataAreaId as SourceCompany,  
 		   DueDate,  -- esedekesseg
 		   InvoiceAmount,  -- szamla vegosszege
            InvoiceCredit,  -- szamla tartozas
 		   CurrencyCode,  
-		   InvoiceId,  -- szla. szama
-		   SUM(LineAmount) as LineAmount,
-		   SUM(TaxAmount) as TaxAmount,  --
-		   SUM(LineAmountMst) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
-		   SUM(TaxAmountMst) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
-		   --DetailCurrencyCode
-		   CASE WHEN DATEDIFF(d, GETDATE(), DueDate) > 0 THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as OverDue
-	FROM InternetUser.Invoice 
+		   I.InvoiceId,  -- szla. szama
+		   --SUM(LineAmount) as LineAmount,
+		   --SUM(TaxAmount) as TaxAmount,  --
+		   --SUM(LineAmountMst) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   --SUM(TaxAmountMst) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   CASE WHEN DATEDIFF(d, GETDATE(), DueDate) > 0 THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as OverDue, 
+		   I.LineNum, 
+		   I.ItemDate, 
+		   I.ItemId,  -- cikk
+		   I.ItemName,  -- cikk neve
+		   I.Quantity,  -- mennyiseg
+		   I.SalesPrice,  -- egysegar
+		   I.QuantityPhysical,  -- mennyiseg
+		   I.Remain,  -- fennmarado mennyiseg
+		   I.DeliveryType, -- 
+		   I.LineAmount,  -- osszeg
+		   I.TaxAmount,  --
+		   I.LineAmountMst,  -- osszeg az alapertelmezett penznemben
+		   I.TaxAmountMst, -- afa osszege az alapertelmezett penznemben
+		   I.DetailCurrencyCode as CurrencyCode, 
+		   ISNULL(I.[Description], '') as [Description],
+		   ISNULL(I.[FileName], '' ) as [FileName],
+		   ISNULL(I.RecId, 0) as RecId, 
+		   CASE WHEN I.[FileName] <> '' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as PictureExists, 
+		   CASE WHEN ISNULL(C.Stock, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as InStock, 
+		   CASE WHEN ISNULL(C.Available, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as AvailableInWebShop, 
+		   I.DataAreaId
+	FROM InternetUser.Invoice as I
+	LEFT OUTER JOIN InternetUser.Catalogue as C ON I.ItemId = C.ProductId -- AND I.DataAreaId = C.DataAreaId 
 	WHERE CustomerId = @CustomerId 
 		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
-		  AND 1 = CASE WHEN (@OverDue = 1 AND DueDate <= GETDATE() AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END
+		  AND 1 = CASE WHEN (@OverDue = 1 AND DATEDIFF(d, DueDate, GetDate()) > 0 AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END	--  DueDate <= GETDATE()
 		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
 		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
 		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
 		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
-		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
-	GROUP BY InvoiceDate, DataAreaId, DueDate, InvoiceAmount, InvoiceCredit, CurrencyCode, InvoiceId
+		  AND 1 = CASE WHEN @DateIntervall <> 0 AND (DATEDIFF(d, InvoiceDate, GetDate()) > @DateIntervall) THEN 0 ELSE 1 END
+	--GROUP BY InvoiceDate, DataAreaId, DueDate, InvoiceAmount, InvoiceCredit, CurrencyCode, InvoiceId
 
-		  -- AND H.INVOICEDATE BETWEEN @dtDateFrom AND @dtDateTo
-	ORDER BY 
-	CASE WHEN @Sequence =  0 THEN --,
-		InvoiceDate END DESC,
-	CASE WHEN @Sequence =  1 THEN -- ,
-		InvoiceDate END ASC
+	ORDER BY InvoiceDate DESC, DueDate DESC, InvoiceId, LineNum
+	--CASE WHEN @Sequence =  0 THEN
+	--	InvoiceDate END DESC,
+	--CASE WHEN @Sequence =  1 THEN
+	--	InvoiceDate END ASC
 	OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
 	FETCH NEXT @ItemsOnPage ROWS ONLY;
 
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.InvoiceSelect TO InternetUser
+GRANT EXECUTE ON InternetUser.InvoiceSelect2 TO InternetUser
 GO
-/* BI001213/13,  BC001256/10 */
--- EXEC InternetUser.InvoiceSelect 'V001446', 1, 1; 
+
+/* BI001213/13,  BC001256/10 
+
+select DATEDIFF(d, GetDate() - 1, GetDate())
+
+select top 100 * from InternetUser.Invoice
+*/
+
+-- EXEC InternetUser.InvoiceSelect2 'V001446', 1, 1; 
 /*
-EXEC [InternetUser].[InvoiceSelect] @CustomerId = 'V001446',	
+V000135
+EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',	
 									@Debit = 0,				--0: mind, 1 kifizetetlen
-									@OverDue = 1,				--0: mind, 1 lejart 
+									@OverDue = 0,				--0: mind, 1 lejart 
 									@ItemId = '', 
 									@ItemName = '',	-- monitor
 									@SalesId = '',
 									@SerialNumber = '',
 									@InvoiceId = '',	--HI057773
-									@DateIntervall = 0,
+									@DateIntervall = 2,
 									@Sequence = 0, 
 									@CurrentPageIndex = 1, 
-									@ItemsOnPage = 3000;
+									@ItemsOnPage = 30;
 */
 DROP PROCEDURE [InternetUser].[InvoiceSelect3];
 GO
@@ -408,27 +451,30 @@ SET NOCOUNT ON
 	WITH CTE (AmountCredit, AmountOverdue, CurrencyCode)
 	AS (
 	SELECT --SUM(InvoiceAmount) as SumInvoiceAmount,  -- szamla vegosszege
-		   SUM(InvoiceCredit) as AmountCredit,  -- szamla tartozas
+		   MAX(InvoiceCredit) as AmountCredit,  -- szamla tartozas
 		   0 as AmountOverdue, 
 		   --'Credit' as InvoiceType,
 		   CurrencyCode  
 	FROM InternetUser.Invoice
 	WHERE CustomerId = @CustomerId 
-	GROUP BY CurrencyCode
+	GROUP BY InvoiceId, CurrencyCode
 	UNION ALL
 	SELECT --SUM(InvoiceAmount) as SumInvoiceAmount,  -- szamla vegosszege
 		   0 as AmountCredit, 
-		   SUM(InvoiceCredit) as AmountOverdue,  -- szamla tartozas
+		   MAX(InvoiceCredit) as AmountOverdue,  -- szamla tartozas
 		   --'Overdue' as InvoiceType,
 		   CurrencyCode  
 	FROM InternetUser.Invoice
 	WHERE CustomerId = @CustomerId  AND 
-		  DueDate <= GETDATE()
-	GROUP BY CurrencyCode )
+		  -- DueDate < GETDATE() 
+		  DATEDIFF(d, DueDate, GetDate()) > 0
+	GROUP BY InvoiceId, CurrencyCode )
 	SELECT SUM(AmountCredit) as AmountCredit, SUM(AmountOverdue) as AmountOverdue, CurrencyCode FROM CTE GROUP BY CurrencyCode;
 
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.[InvoiceSumValues] TO InternetUser
 GO
--- EXEC [InternetUser].[InvoiceSumValues] 'V001446'
+-- EXEC [InternetUser].[InvoiceSumValues] 'V000276', --V003829 326412.00 'V006074'; 'V001446'	AmountCredit	89612.00
+-- select * from InternetUser.Invoice where CustomerId = 'V003829'
+select DATEDIFF(d, GetDate(), GetDate() + 1)

@@ -2,7 +2,7 @@
 Lekérdezi az árváltozásokat a legutolsó szinkronizáció óta
 */
 
-USE [Axdb_20130131]
+USE [Axdb]
 GO
 
 SET ANSI_NULLS ON
@@ -29,11 +29,11 @@ SET NOCOUNT ON
 	[Currency],
 	p.[DataAreaId]
 --	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('dbo.PRICEDISCTABLE'), 'Amount', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as AmountChanged, 
---	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb_20130131.dbo.PRICEDISCTABLE'), 'Currency', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as CurrencyChanged, 
---	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb_20130131.dbo.PRICEDISCTABLE'), 'ItemRelation', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as ItemRelationChanged, 
---	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb_20130131.dbo.PRICEDISCTABLE'), 'AccountRelation', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as AccountRelationChanged 
-	FROM Axdb_20130131.dbo.PRICEDISCTABLE as P 
-	RIGHT OUTER JOIN changetable(changes Axdb_20130131.dbo.PRICEDISCTABLE, @LastVersion) as ct
+--	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb.dbo.PRICEDISCTABLE'), 'Currency', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as CurrencyChanged, 
+--	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb.dbo.PRICEDISCTABLE'), 'ItemRelation', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as ItemRelationChanged, 
+--	CHANGE_TRACKING_IS_COLUMN_IN_MASK (columnproperty(object_id('Axdb.dbo.PRICEDISCTABLE'), 'AccountRelation', 'ColumnId') ,ct.SYS_CHANGE_COLUMNS) as AccountRelationChanged 
+	FROM Axdb.dbo.PRICEDISCTABLE as P 
+	RIGHT OUTER JOIN changetable(changes Axdb.dbo.PRICEDISCTABLE, @LastVersion) as ct
 	on P.RecId = ct.RecId and P.DataAreaId = ct.DataAreaId
 	WHERE ct.SYS_CHANGE_OPERATION <> 'D'
 	ORDER BY ct.SYS_CHANGE_VERSION;
@@ -43,10 +43,11 @@ RETURN
 GO
 GRANT EXECUTE ON InternetUser.PriceDiscTableCT TO [HRP_HEADOFFICE\AXPROXY]
 GO
-
+GRANT EXECUTE ON InternetUser.PriceDiscTableCT TO InternetUser
+GO
 -- exec InternetUser.PriceDiscTableCT 1310
 
 /*
-select top 1 * from Axdb_20130131.dbo.PRICEDISCTABLE
-select * from changetable(changes Axdb_20130131.dbo.PRICEDISCTABLE, 0) as ct
+select top 1 * from Axdb.dbo.PRICEDISCTABLE
+select * from changetable(changes Axdb.dbo.PRICEDISCTABLE, 0) as ct
 */

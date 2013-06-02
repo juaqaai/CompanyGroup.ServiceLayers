@@ -11,8 +11,10 @@
           <li>
 		        <table  border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td width="100" height="100" align="center" ><a href="@String.Format("#/details/{0}/{1}", Url.Encode(banner.ProductId), banner.DataAreaId)">
-                    <img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=100&MaxHeight=100", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a>
+                    <td width="100" height="100" align="center" >@if ( banner.PictureId > 0) {  <a href="@String.Format("#/details/{0}/{1}", Url.Encode(banner.ProductId), banner.DataAreaId)">
+                    <img src="@Url.Content("~/api/PictureApi/GetPictureItem/?")@String.Format("PictureId={0}&MaxWidth=100&MaxHeight=100", banner.PictureId)" alt="@banner.ItemName" title="@banner.ItemName" /></a>}
+                    @if ( banner.PictureId == 0) { <a href="@String.Format("#/details/{0}/{1}", Url.Encode(banner.ProductId), banner.DataAreaId)"><img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="100" height="100" alt="" /></a>} <!--{{if item.PictureId > 0}}{{else}}<img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="100" height="100" alt="" />{{/if}}-->
+                      
                     </td>
                 </tr>
                 <tr>
@@ -40,7 +42,7 @@
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 		    <td style="padding-right:5px" width="50px" height="50px">
-                <a href="#/details/${item.ProductId}/${item.DataAreaId}"><img src="${companyGroup.utils.instance().getSmallThumbnailPictureUrl(item.PictureId)}" alt="${item.ProductName}" title="${item.ProductName}" /></a>
+                {{if item.PictureId > 0}}<a href="#/details/${item.ProductId}/${item.DataAreaId}"><img src="${companyGroup.utils.instance().getSmallThumbnailPictureUrl(item.PictureId)}" alt="${item.ProductName}" title="${item.ProductName}" /></a>{{else}}<a href="#/details/${item.ProductId}/${item.DataAreaId}"><img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="50" height="50" alt="" /></a>{{/if}}
             </td>
             <td>
                 <div style="height:50px; overflow:hidden;"><span style="color:#000;">${item.ProductName}</span></div>
@@ -51,3 +53,7 @@
 		{{/each}}
     </ul>
   </script>
+  
+
+  
+  

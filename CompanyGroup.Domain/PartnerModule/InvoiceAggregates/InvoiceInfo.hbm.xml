@@ -67,6 +67,7 @@
     <return-scalar column="PictureExists" type="System.Boolean"/>
     <return-scalar column="InStock" type="System.Boolean"/>
     <return-scalar column="AvailableInWebShop" type="System.Boolean"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
     exec InternetUser.InvoiceDetailsSelect @Id=:Id
   </sql-query>
   <sql-query name="InternetUser.InvoiceSumValues" callable="true">

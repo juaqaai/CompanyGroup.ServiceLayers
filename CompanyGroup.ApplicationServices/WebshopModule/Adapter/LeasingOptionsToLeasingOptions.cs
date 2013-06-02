@@ -16,23 +16,25 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         {
             try
             {
-                return new CompanyGroup.Dto.WebshopModule.LeasingOptions()
-                {
-                    Items = from.ToList().ConvertAll( x=> LeasingOptionToLeasingOption(x, from.Amount)),
-                    Message = from.Message
-                };
+                List<CompanyGroup.Dto.WebshopModule.LeasingOption> items = from.ToList().ConvertAll( x => LeasingOptionToLeasingOption(x) ); 
+
+                string sumTotal = String.Format("{0:0,0.00}", from.Amount);
+
+                return new CompanyGroup.Dto.WebshopModule.LeasingOptions(items, from.Message, sumTotal);
             }
             catch { return new CompanyGroup.Dto.WebshopModule.LeasingOptions(); }
         }
 
-        private static CompanyGroup.Dto.WebshopModule.LeasingOption LeasingOptionToLeasingOption(CompanyGroup.Domain.WebshopModule.LeasingOption from, double amount)
+        /// <summary>
+        ///  domain LeasingOption -> DTO LeasingOption  
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
+        private CompanyGroup.Dto.WebshopModule.LeasingOption LeasingOptionToLeasingOption(CompanyGroup.Domain.WebshopModule.LeasingOption from)
         {
-            return new CompanyGroup.Dto.WebshopModule.LeasingOption() 
-                       { 
-                           CalculatedValue = CompanyGroup.Domain.WebshopModule.LeasingOptions.CalculateValue(from.PercentValue, amount), 
-                           FinanceParameterId = from.Id, 
-                           NumOfMonth = from.NumOfMonth 
-                       };
+            string calculatedValue = String.Format("{0:0,0.00}", from.CalculatedValue);
+
+            return new CompanyGroup.Dto.WebshopModule.LeasingOption(from.Id, from.NumOfMonth, calculatedValue);
         }
 
 
