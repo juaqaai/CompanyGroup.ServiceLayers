@@ -264,7 +264,8 @@ SET NOCOUNT ON
 		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
 		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
 		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
-		  AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+		  -- AND 1 = CASE WHEN @DateIntervall = 1 AND (DATEDIFF(d, InvoiceDate, CreatedDate) > 37) THEN 0 ELSE 1 END
+		  AND 1 = CASE WHEN @DateIntervall <> 0 AND (DATEDIFF(d, InvoiceDate, GetDate()) > @DateIntervall) THEN 0 ELSE 1 END
 	--GROUP BY InvoiceId
 RETURN
 GO

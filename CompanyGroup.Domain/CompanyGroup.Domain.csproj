@@ -57,6 +57,7 @@
     <Compile Include="MaintainModule\InvoiceAggregates\IPackageRepository.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\CustomerContractData.cs" />
     <Compile Include="PartnerModule\EventRegistration\IEventRegistrationRepository.cs" />
+    <Compile Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
     <Compile Include="PartnerModule\OrderAggregates\IWaitForAutoPostRepository.cs" />
     <Compile Include="PartnerModule\OrderAggregates\WaitingForAutoPost.cs" />
     <Compile Include="PartnerModule\VisitorAggregates\Visitor.cs" />

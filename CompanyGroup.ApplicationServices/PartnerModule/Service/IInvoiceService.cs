@@ -19,12 +19,6 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
         CompanyGroup.Dto.PartnerModule.InvoiceInfo GetInvoiceInfo(CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request);
 
         /// <summary>
-        /// számla kiolvasása
-        /// </summary>
-        /// <returns></returns>
-        CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request);
-
-        /// <summary>
         /// összes tartozás, lejárt tartozás, pénznem lista
         /// </summary>
         /// <param name="visitorId"></param>

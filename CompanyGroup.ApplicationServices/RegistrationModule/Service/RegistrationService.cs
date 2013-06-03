@@ -385,7 +385,7 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                         InvoiceInfo = registration.WebAdministrator.InvoiceInfo ? 1 : 0,
                         LastName = registration.WebAdministrator.LastName,
                         LeftCompany = 0,
-                        Method = visitor.IsValidLogin ? 2 : 1, 
+                        Method = registrationMethod, 
                         Newsletter = registration.WebAdministrator.Newsletter ? 1 : 0,
                         Phone = registration.WebAdministrator.Telephone,
                         PhoneLocal = "",

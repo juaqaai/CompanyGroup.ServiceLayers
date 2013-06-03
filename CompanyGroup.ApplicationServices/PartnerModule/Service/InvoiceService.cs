@@ -40,31 +40,23 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 CompanyGroup.Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "The visitor must be logged in!");
 
-                //számla fejléc elemek lista
-                List<CompanyGroup.Domain.PartnerModule.InvoiceHeader> invoiceHeaders = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue,
-                                                                                                                 request.ItemId, request.ItemName, request.InvoiceId, request.SerialNumber,
-                                                                                                                 request.SalesId, request.DateIntervall, request.Sequence,
-                                                                                                                 request.CurrentPageIndex, request.ItemsOnPage);
+                //számla lista
+                List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoiceDetailedLineInfo = invoiceRepository.GetList(visitor.CustomerId, request.Debit, request.Overdue,
+                                                                                                                                    request.ItemId, request.ItemName, request.InvoiceId, request.SerialNumber,
+                                                                                                                                    request.SalesId, request.DateIntervall, request.Sequence,
+                                                                                                                                    request.CurrentPageIndex, request.ItemsOnPage);
+                //group by InvoiceId
+                IEnumerable<IGrouping<string, CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo>> groupedInvoiceDetailedLineInfo = invoiceDetailedLineInfo.GroupBy(x => x.InvoiceId).OrderByDescending(x => x.Key);
 
-                List<CompanyGroup.Domain.PartnerModule.InvoiceLine> invoiceLines = new List<Domain.PartnerModule.InvoiceLine>();
+                List<CompanyGroup.Domain.PartnerModule.Invoice> invoices = new List<Domain.PartnerModule.Invoice>();
 
-                request.Items.ForEach(x =>
+                //domain számla lista létrehozás 
+                foreach( var lineInfo in groupedInvoiceDetailedLineInfo )
                 {
-                    invoiceLines.AddRange(invoiceRepository.GetDetails(x));
-                });
-
-
-                List<CompanyGroup.Domain.PartnerModule.Invoice> invoices = new List<CompanyGroup.Domain.PartnerModule.Invoice>();
-
-                invoiceHeaders.ForEach(x =>
-                {
-                    IEnumerable<CompanyGroup.Domain.PartnerModule.InvoiceLine> lines = invoiceLines.Where(y => y.InvoiceId.Equals(x.InvoiceId));
-
-                    CompanyGroup.Domain.PartnerModule.Invoice invoice = new Domain.PartnerModule.Invoice(x, lines);
+                    CompanyGroup.Domain.PartnerModule.Invoice invoice = Domain.PartnerModule.Invoice.Create(lineInfo.ToList());
 
                     invoices.Add(invoice);
-
-                });
+                };
 
                 //elemek száma
                 int count = invoiceRepository.GetListCount(visitor.CustomerId, request.Debit, request.Overdue,
@@ -73,48 +65,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
 
                 CompanyGroup.Domain.PartnerModule.Pager pager = new Domain.PartnerModule.Pager(request.CurrentPageIndex, count, request.ItemsOnPage);
 
-                CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = new CompanyGroup.Domain.PartnerModule.InvoiceInfo(count, pager, 0, false);
+                CompanyGroup.Domain.PartnerModule.InvoiceInfo invoiceInfo = new CompanyGroup.Domain.PartnerModule.InvoiceInfo(count, pager, 0);
 
                 invoiceInfo.AddRange(invoices);
 
                 CompanyGroup.Dto.PartnerModule.InvoiceInfo result = new InvoiceInfoToInvoiceInfo().Map(invoiceInfo, request.ItemsOnPage);
-
-                return result;
-            }
-            catch (Exception ex) 
-            { 
-                throw ex; 
-            }
-        }
-
-        /// <summary>
-        /// vevőhöz tartozó számla lista kiolvasása
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request)
-        {
-            try
-            {
-                CompanyGroup.Helpers.DesignByContract.Require((request.Id > 0), "The id cannot be null!");
-
-                //látogató kiolvasása
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
-
-                List<CompanyGroup.Domain.PartnerModule.InvoiceLine> invoiceLines = invoiceRepository.GetDetails(request.Id);
-
-                //List<CompanyGroup.Domain.PartnerModule.Invoice> invoiceInfo = new List<CompanyGroup.Domain.PartnerModule.InvoiceInfo>();
-
-                //foreach (var lineInfo in groupedLineInfos)
-                //{
-                //    CompanyGroup.Domain.PartnerModule.InvoiceInfo info = CompanyGroup.Domain.PartnerModule.InvoiceInfo.Create(lineInfo.ToList());
-
-                //    invoiceInfo.Add(info);
-                //}
-
-                List<CompanyGroup.Dto.PartnerModule.InvoiceLine> lines = invoiceLines.ConvertAll(x => new InvoiceLineToInvoiceLine().Map(x));
-
-                CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed result = new Dto.PartnerModule.InvoiceInfoDetailed(lines);
 
                 return result;
             }

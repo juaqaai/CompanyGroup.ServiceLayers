@@ -64,20 +64,10 @@ namespace CompanyGroup.Data.Test.PartnerModule
         {
             CompanyGroup.Domain.PartnerModule.IInvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository();
 
-            List<CompanyGroup.Domain.PartnerModule.InvoiceHeader> invoices = repository.GetList("V001446", true, true, "", "", "", "", "" , 0, 0, 1, 30);
+            List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> invoices = repository.GetList("V001446", true, true, "", "", "", "", "" , 0, 0, 1, 30);
 
             Assert.IsTrue(invoices.Count > 0);
         }
-
-        [TestMethod]
-        public void GetDetailsTest()
-        {
-            CompanyGroup.Domain.PartnerModule.IInvoiceRepository repository = new CompanyGroup.Data.PartnerModule.InvoiceRepository();
-
-            List<CompanyGroup.Domain.PartnerModule.InvoiceLine> lines = repository.GetDetails(3001);
-
-            Assert.IsTrue(lines.Count > 0);
-         }
 
         [TestMethod]
         public void GetListCountTest()

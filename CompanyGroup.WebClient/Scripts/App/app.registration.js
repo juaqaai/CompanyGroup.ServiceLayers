@@ -738,9 +738,9 @@ companyGroup.registration = $.sammy(function () {
         if ($("#txt_customername").val() == '') {
             error_msg += 'A vevőnév kitöltése kötelező! <br/>';
         }
-        //if ($("#txt_vatnumber").val() == '') {
-        //		error_msg += 'Az adószám kitöltése kötelező! <br/>';
-        //}
+   if ($("#txt_vatnumber").val() == '') {
+        	error_msg += 'Az adószám kitöltése kötelező! <br/>';
+        }
         if ($("#txt_mainemail").val() == '') {
             error_msg += 'Az elsődleges email cím kitöltése kötelező! <br/>';
         }

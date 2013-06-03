@@ -1271,8 +1271,8 @@ $(".finance_price").text(function(index, text){
     });
     //szűrés ár szerint
     this.post('#/filterbyprice', function (context) {
-        catalogueRequest.PriceFilter = parseInt($('#txt_filterbyprice').val(), 0);
-        catalogueRequest.PriceFilterRelation = parseInt($('#select_filterbyprice').val(), 0);
+        catalogueRequest.PriceFilter = parseInt(context.params['txt_filterbyprice'], 0);
+        catalogueRequest.PriceFilterRelation = parseInt(context.params['select_filterbyprice'], 0);
         loadStructure(true, true, true, true);
         loadCatalogue();
         showProductList(true);
@@ -2261,6 +2261,8 @@ $(".finance_price").text(function(index, text){
     //árlista letöltés
     this.get('#/downloadPriceList', function (context) {
         //console.log('downloadPriceList');
+        catalogueRequest.PriceFilter = $('#txt_filterbyprice').val();
+        catalogueRequest.PriceFilterRelation = $('#select_filterbyprice').val();
         window.location = companyGroup.utils.instance().getDownloadPriceListUrl() + '?' + $.param(catalogueRequest);
         //        $.ajax({
         //            type: "GET",

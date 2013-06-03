@@ -17,34 +17,34 @@ namespace CompanyGroup.WebApi.Tests.Controllers
         [TestMethod]
         public void GetListTest()
         {
-            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest("visitorId", "HU", true, true, "", "", "", "", "", 0, 0, 0, 0, new List<int>());
+            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest("94A7414E5C5C47719641E6CC7E20D77C", "HU", true, false, "", "", "", "", "", 0, 0, 1, 100);
 
-            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Invoice/GetList", request).Result;
+            HttpResponseMessage response = CreateHttpClient().PostAsJsonAsync("Invoice/GetInvoiceInfo", request).Result;
 
-            List<CompanyGroup.Dto.PartnerModule.InvoiceInfo> invoiceInfo = response.Content.ReadAsAsync<List<CompanyGroup.Dto.PartnerModule.InvoiceInfo>>().Result;
+            CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.InvoiceInfo>().Result;
 
             Assert.IsNotNull(invoiceInfo);
         }
 
-        [TestMethod]
-        public void GetByIdTest()
-        {
-            long count = 0;
+        //[TestMethod]
+        //public void GetByIdTest()
+        //{
+        //    long count = 0;
 
-            HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Invoice/GetById/{0}", "3001")).Result;
+        //    HttpResponseMessage response = CreateHttpClient().GetAsync(String.Format("Invoice/GetById/{0}", "3001")).Result;
 
-            if (response.IsSuccessStatusCode)
-            {
-                CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.InvoiceInfo>().Result;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo = response.Content.ReadAsAsync<CompanyGroup.Dto.PartnerModule.InvoiceInfo>().Result;
 
-                count = invoiceInfo.ListCount;
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-            }
+        //        count = invoiceInfo.ListCount;
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+        //    }
 
-            Assert.IsTrue(count > 0);
-        }
+        //    Assert.IsTrue(count > 0);
+        //}
     }
 }

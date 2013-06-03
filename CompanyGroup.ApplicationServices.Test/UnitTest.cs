@@ -695,5 +695,23 @@ namespace CompanyGroup.ApplicationServices.Test
             registrationFileRepository.CreateRegistrationFile(registrationFileNameWithPath, htmlContent);        
         }
 
+        [TestMethod]
+        public void GetInvoiceInfoTest()
+        {
+            CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest request = new CompanyGroup.Dto.PartnerModule.GetInvoiceInfoRequest("94A7414E5C5C47719641E6CC7E20D77C", "HU", true, false, "", "", "", "", "", 0, 0, 1, 100);
+
+            CompanyGroup.Domain.PartnerModule.IInvoiceRepository invoiceRepository = new CompanyGroup.Data.PartnerModule.InvoiceRepository();
+
+            CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository = new CompanyGroup.Data.PartnerModule.VisitorRepository();
+
+            CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository = new CompanyGroup.Data.WebshopModule.FinanceRepository();
+
+            CompanyGroup.ApplicationServices.PartnerModule.InvoiceService service = new CompanyGroup.ApplicationServices.PartnerModule.InvoiceService(invoiceRepository, financeRepository, visitorRepository);
+
+            CompanyGroup.Dto.PartnerModule.InvoiceInfo invoiceInfo = service.GetInvoiceInfo(request);
+
+            Assert.IsNotNull(invoiceInfo);
+        }
+
     }
 }

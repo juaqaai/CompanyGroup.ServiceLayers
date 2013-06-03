@@ -41,16 +41,9 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <param name="currentPageIndex"></param>
         /// <param name="itemsOnPage"></param>
         /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.InvoiceHeader> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
-                                                                      string invoiceId, string serialNumber, string salesId, int dateIntervall,
-                                                                      int sequence, int currentPageIndex, int itemsOnPage);
-
-        /// <summary>
-        /// számla listaelemek kiolvasása 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        List<CompanyGroup.Domain.PartnerModule.InvoiceLine> GetDetails(int id);
+        List<CompanyGroup.Domain.PartnerModule.InvoiceDetailedLineInfo> GetList(string customerId, bool debit, bool overdue, string itemId, string itemName,
+                                                                                string invoiceId, string serialNumber, string salesId, int dateIntervall,
+                                                                                int sequence, int currentPageIndex, int itemsOnPage);
 
         /// <summary>
         /// Összes tartozás, összes lejárt tartozás

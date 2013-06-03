@@ -57,30 +57,6 @@ namespace CompanyGroup.WebApi.Controllers
         }
 
         /// <summary>
-        /// számla elem kiolvasása 
-        /// </summary>
-        /// <returns></returns>
-        [ActionName("GetDetails")]
-        [HttpPost]
-        public HttpResponseMessage GetDetails(CompanyGroup.Dto.PartnerModule.GetDetailedInvoiceInfoRequest request)
-        {
-            try
-            {
-                CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed response = service.GetDetails(request);
-
-                return Request.CreateResponse<CompanyGroup.Dto.PartnerModule.InvoiceInfoDetailed>(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
-
-                logWriter.Write(String.Format("InvoiceController GetDetails {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
-
-                return ThrowHttpError(ex);
-            }
-        }
-
-        /// <summary>
         /// összes tartozás, lejárt tartozás, pénznem lista
         /// </summary>
         /// <param name="customerId"></param>

@@ -112,6 +112,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GlobalServicesTest", "http:
 		SlnRelativePath = "..\2008\WebSites\GlobalServicesTest\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubDistribution", "SubDistribution\SubDistribution.csproj", "{D4D8E39F-7E23-4B2E-A122-418AD740189E}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CompanyGroup.vsmdi
@@ -398,6 +400,21 @@ Global
 		{792A5807-7F4C-4B92-82E2-F1C3CE3BE0B5}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{792A5807-7F4C-4B92-82E2-F1C3CE3BE0B5}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{792A5807-7F4C-4B92-82E2-F1C3CE3BE0B5}.Release|x86.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Development|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Development|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Development|x86.ActiveCfg = Debug|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -418,6 +435,7 @@ Global
 		{B30FD063-1790-4E66-B251-E5EAB44D6499} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
 		{3A132538-2971-4B26-8B3D-E574BCC6C428} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
 		{CA26C542-B450-4890-9A48-8B03FC18371F} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
+		{D4D8E39F-7E23-4B2E-A122-418AD740189E} = {57D64E3D-D026-4C87-AB0E-990C9C07B119}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35

@@ -367,7 +367,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     });
     //számlainformációk szűrése paraméterek alapján
     this.post('#/invoiceinfoByFilter', function (context) {
-        console.log(context.params['radio_paymenttype']);
+        //console.log(context.params['radio_paymenttype']);
         $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').show();
         var paymenttype = parseInt(context.params['radio_paymenttype']);

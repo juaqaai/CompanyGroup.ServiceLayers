@@ -23,6 +23,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                         };
         }
 
+        /// <summary>
+        /// Domain számla -> DTO számla
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         private CompanyGroup.Dto.PartnerModule.Invoice MapInvoiceToInvoice(CompanyGroup.Domain.PartnerModule.Invoice from)
         {
             return new CompanyGroup.Dto.PartnerModule.Invoice()
@@ -33,6 +38,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             };
         }
 
+        /// <summary>
+        /// Domain számla fejléc -> DTO számla fejléc
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         private CompanyGroup.Dto.PartnerModule.InvoiceHeader MapInvoiceHeaderToInvoiceHeader(CompanyGroup.Domain.PartnerModule.InvoiceHeader from)
         {
             string invoiceMonth = (from.InvoiceDate.Month < 10) ? String.Format("0{0}", from.InvoiceDate.Month) : String.Format("{0}", from.InvoiceDate.Month);
@@ -57,6 +67,11 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                     String.Format(((Math.Round(from.TaxAmountMst) == from.TaxAmountMst) ? "{0:0}" : "{0:0.00}"), from.TaxAmountMst));
         }
 
+        /// <summary>
+        /// Domain számla tétel -> DTO számla tétel
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         private CompanyGroup.Dto.PartnerModule.InvoiceLine MapInvoiceLineToInvoiceLine(CompanyGroup.Domain.PartnerModule.InvoiceLine from)
         {
             string month = (from.ItemDate.Month < 10) ? String.Format("0{0}", from.ItemDate.Month) : String.Format("{0}", from.ItemDate.Month);
