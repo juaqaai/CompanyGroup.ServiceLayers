@@ -82,6 +82,6 @@ companyGroup.company = $.sammy(function () {
     });
     //keresés
     this.post('#/searchByTextFilter', function (context) {
-        this.searchByText(context.params['txt_globalsearch']);		
+        this.searchByText(context.params['txt_globalsearch']);
     });
 });
