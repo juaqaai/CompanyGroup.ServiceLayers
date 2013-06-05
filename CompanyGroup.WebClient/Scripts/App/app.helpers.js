@@ -213,7 +213,14 @@
                         if (result) {
                             var arr_suggestions = [];
                             $.each(result.Items, function (i, val) {
-                                var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image"><a><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + ' alt="" /></a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '">' + val.ProductName + '</a></div></td></tr></table></div>';
+                                 var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image">';
+								if ( val.PictureId > 0 ) { 
+								inner_html += '<a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + '" alt="" />';
+								}
+								else { 
+								inner_html += '<img src="../Content/Media/images/nopic.jpg"  width="50" height="50" alt="" /> ';
+								}  
+								inner_html += '</a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '">' + val.ProductName + '</a></div></td></tr></table></div>';  
                                 arr_suggestions.push({ label: inner_html, value: val.ProductName });
                             });
                             response(arr_suggestions);

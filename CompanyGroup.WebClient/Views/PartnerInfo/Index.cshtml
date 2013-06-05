@@ -67,13 +67,13 @@
                             <table style="margin-bottom:5px;" id="dept_price" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: ${AmountOverdue} {{if CurrencyCode == 'HUF'}} Ft 
+                     <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountOverdue}</span>  Ft 
 											{{/if}}
-											{{if CurrencyCode == 'EUR'}}  € 
+											{{if CurrencyCode == 'EUR'}} ${AmountOverdue} € 
 											{{/if}}
-											{{if CurrencyCode == 'USD'}} $
+											{{if CurrencyCode == 'USD'}} ${AmountOverdue} $
 											{{/if}}</strong></td>
-                            </tr>
+           
                             </table>
 							{{/if}}
 							
@@ -81,11 +81,11 @@
                             <table style="margin-bottom:5px;" id="open_order" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> ${AmountCredit} {{if CurrencyCode == 'HUF'}} Ft 
+                     <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountCredit}</span> Ft 
 											{{/if}}
-											{{if CurrencyCode == 'EUR'}}  € 
+											{{if CurrencyCode == 'EUR'}}${AmountCredit} € 
 											{{/if}}
-											{{if CurrencyCode == 'USD'}} $
+											{{if CurrencyCode == 'USD'}}${AmountCredit} $
 											{{/if}}</strong></td>
                             </tr>
                             </table><br><br>
@@ -427,7 +427,8 @@ StatusIssueIsOnOrder*@
                     <td width="190px" align="left" ><strong>Számla kibocsájtó:</strong></td>
                     <td width="190px" ><strong>Számla összértéke: </strong></td>
                     <td width="190px" ><strong>Bruttó össz. tartozás:</strong></td>
-                    <td width="140px" align="right" rowspan="2" ><strong><a style="text-decoration:none; color:#FFF;" id="expand_btn" href="#/invoice_details/${item.Header.Id}">Részletes nézet</a></strong></td>
+                    <td width="140px" align="right" rowspan="2" ><strong><a id="invoice_id_${item.Header.Id}_open" style="text-decoration:none; color:#FFF;" id="expand_btn" href="#/invoice_details/${item.Header.Id}/1">Részletes nézet</a>
+					<a id="invoice_id_${item.Header.Id}_close" class="invoice_id_close" style="text-decoration:none; color:#FFF;" id="expand_btn" href="#/invoice_details/${item.Header.Id}/2">Bezárás</a></strong></td>
                     </tr>
 					<tr>
                     <td align="left" >${item.Header.InvoiceId}</td>
@@ -449,7 +450,7 @@ StatusIssueIsOnOrder*@
                     </tr>
                 </table>
                 {{if item.Lines.length > 0}}
-                <div class="toggle_container_invoice">
+                <div class="toggle_container_invoice" id="toggle_container_invoice_${item.Header.Id}">
                     <div  style="margin:0px 0px 10px 0px;" class="invoice_item_template">
                         {{each( j, line ) item.Lines}}
                         <div class="expand_heading">

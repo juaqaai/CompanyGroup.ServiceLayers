@@ -930,7 +930,7 @@
                           <option  value="Igazgató" >Igazgató</option>
 						  <option  value="Pénzügyi vezető">Pénzügyi vezető</option>
 						  <option  value="Kereskedelmi vezető">Kereskedelmi vezető</option>
-						  <option  value="Kapcsolattartó" SELECTED >Kapcsolattartó</option>
+						  <option  value="Kapcsolattartó">Kapcsolattartó</option>
 						  <option  value="Kereskedő">Kereskedő</option>
 						  <option  value="Áruszállító">Áruszállító</option>
 				      </select>
@@ -1387,16 +1387,16 @@
     <div class="reg_tabs" id="tabs-7">
       <p><span style="font-size:16px; color:#084385;"><strong>A szerződést kérjük két példányban nyomtassa ki!</strong></span><table style="margin:0px 0px 10px 30px " width="200" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <th width="170" scope="col"><form name="f_print" method="post" action="@Url.Content("~/Registration/Print")" target="_blank" />
+    <td width="170" scope="col"><form name="f_print" method="post" action="@Url.Content("~/Registration/Print")" target="_blank" />
         <input type="hidden" value="" class="vsz_number" name="vsznumber_1" />
         <input type="image" value="nyomtatás" src="@Url.Content("~/Content/Media/images/print_icon.png")"/>
         
-        </form> </th>
-    <th width="177" scope="col"><form name="f_save" method="post" action="@Url.Content("~/Registration/Save")">
+        </form> </td>
+    <td width="177" scope="col"><form name="f_save" method="post" action="@Url.Content("~/Registration/Save")">
         <input type="hidden" value="" class="vsz_number" name="vsznumber_2" />
         <input type="image" value="mentés" src="@Url.Content("~/Content/Media/images/save_icon.png")"  />
         
-        </form> </th>
+        </form> </td>
   </tr>
   <tr>
     <th scope="col">Nyomtatás</th>

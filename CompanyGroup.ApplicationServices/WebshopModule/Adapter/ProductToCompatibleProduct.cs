@@ -23,7 +23,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                DataAreaId = product.DataAreaId, 
                                Description = product.Description,
                                DescriptionEnglish = product.DescriptionEnglish,
-                               Stock = product.Stock,
+                               Stock = product.Stock, 
                                IsInStock = product.IsInStock,
                                ItemName = product.ProductName,
                                ItemNameEnglish = product.ProductNameEnglish, 

@@ -1015,7 +1015,6 @@
 					$(this).parents('.fancybox-wrap').width('100%').removeClass('fancybox-tmp').show();
 
 					F._afterLoad();
-
 				});
 			}
 
@@ -1178,7 +1177,6 @@
 				height     = current.height,
 				minWidth   = current.minWidth,
 				minHeight  = current.minHeight,
-
 				maxWidth   = current.maxWidth,
 				maxHeight  = current.maxHeight,
 				scrolling  = current.scrolling,

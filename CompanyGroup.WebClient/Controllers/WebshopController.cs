@@ -301,7 +301,7 @@ namespace CompanyGroup.WebClient.Controllers
 
                 CreateHeader(ws, ref rowIndex, dt);
                 CreateData(ws, ref rowIndex, dt);
-                CreateFooter(ws, ref rowIndex, dt);
+                //CreateFooter(ws, ref rowIndex, dt);
 
                 //AddComment(ws, 5, 10, "Zeeshan Umar's Comments", "Zeeshan Umar");
 

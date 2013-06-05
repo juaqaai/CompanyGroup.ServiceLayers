@@ -842,6 +842,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 request.WebAdministrator.ContactPersonId = request.WebAdministrator.ContactPersonId ?? String.Empty;
 
+                if (request.WebAdministrator.Positions == null)
+                {
+                    request.WebAdministrator.Positions = new List<string>();
+                }
+
                 //üres listaelemek eltávolítása
                 request.WebAdministrator.Positions.RemoveAll(x => String.IsNullOrWhiteSpace(x));
 
@@ -1132,6 +1137,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
 
                 request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
 
+                if (request.ContactPerson.Positions == null)
+                {
+                    request.ContactPerson.Positions = new List<string>();
+                }
+
                 CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
 
                 registrationRepository.AddContactPerson(request.RegistrationId, contactPerson);
@@ -1166,6 +1176,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
                 request.ContactPerson.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
 
                 request.ContactPerson.ContactPersonId = request.ContactPerson.ContactPersonId ?? String.Empty;
+
+                if (request.ContactPerson.Positions == null)
+                {
+                    request.ContactPerson.Positions = new List<string>();
+                }
 
                 //csak akkor kell hozzáadni a kapcsolattartót, ha a kötelező mezők ki vannak töltve
                 if (!String.IsNullOrEmpty(request.ContactPerson.Email) && !String.IsNullOrEmpty(request.ContactPerson.FirstName) && !String.IsNullOrEmpty(request.ContactPerson.LastName)
@@ -1235,6 +1250,11 @@ namespace CompanyGroup.ApplicationServices.RegistrationModule
             try
             {
                 CompanyGroup.Helpers.DesignByContract.Require((request != null), "Registration updateContactPerson request cannot be null or empty!");
+
+                if (request.ContactPerson.Positions == null)
+                {
+                    request.ContactPerson.Positions = new List<string>();
+                }
 
                 CompanyGroup.Domain.RegistrationModule.ContactPerson contactPerson = new ContactPersonToContactPerson().MapDtoToDomain(request.ContactPerson);
 

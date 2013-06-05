@@ -43,6 +43,9 @@ GRANT EXECUTE ON InternetUser.SalesOrderSelect TO InternetUser;
 		  SalesId LIKE SalesId 
 
 -- select CASE WHEN DlvTerm = 'KISZALL' THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as WithDelivery, * from InternetUser.SalesOrder where DlvTerm <> ''
+
+select * FROM InternetUser.SalesOrder where SalesId = 'VR657874'
+select * from InternetUser.Stage_SalesOrder where SalesId = 'VR657874'
 */
 
 GO

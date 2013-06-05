@@ -6602,7 +6602,7 @@ $.widget("ui.menu", {
 	select: function( event ) {
 		this._trigger("selected", event, { item: this.active });
 		$("form#form_searchByTextFilter").submit(); 
-		 $("#txt_globalsearch").val('');
+		$("#txt_globalsearch").val('');
 	}
 });
 

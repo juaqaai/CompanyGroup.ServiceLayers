@@ -341,7 +341,7 @@ companyGroup.webshop = $.sammy(function () {
 							
                                 var inner_html = '<div class="list_item_container"><table border="0" cellpadding="5" cellspacing="0"><tr><td><div class="image">';
 								if ( val.PictureId > 0 ) { 
-								inner_html += '<img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + '" alt="" />';
+								inner_html += '<a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '"><img src="' + companyGroup.utils.instance().getThumbnailPictureUrl(val.PictureId) + '" alt="" />';
 								}
 								else { 
 								inner_html += '<img src="../Content/Media/images/nopic.jpg"  width="50" height="50" alt="" /> ';
@@ -727,6 +727,7 @@ companyGroup.webshop = $.sammy(function () {
         var productIds = context.params['hidden_productid'];
 	});
 	this.post('#/expand_item', function (context) {
+	 $(this).next(".toggle_container").slideToggle("slow");
 	var productIds = context.params['hidden_productid'];
 		 $("#container_" + productIds).toggle('slow');
 		 context.redirect('#/item_expanded')
@@ -749,10 +750,10 @@ companyGroup.webshop = $.sammy(function () {
             success: function (result) {
                 if (result === true) {
                     $(".toggle_container").show('slow');
-					//$(".item_expand").hide('slow');
+					$(".item_expand").hide('slow');
                 } else {
                     $(".toggle_container").hide('slow');
-					//$(".item_expand").show('slow');
+					$(".item_expand").show('slow');
 					
 
 

@@ -52,9 +52,9 @@
 		                ${item.Title}
 		                ${item.Description}*@
                 {{if item.PicturePath.length > 0}}
-                    <a id="fancy_box_ads_" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img style="max-width:230px; max-height:230px;" src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
+                    <a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img style="max-width:230px; max-height:230px;" src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
                 {{else}}
-                    <a id="fancy_box_ads_" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
+                    <a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
                 {{/if}}
                 </div>
                 <div style=" margin-top:-4px; padding:5px; font-size:14px; background-color:#f4f4f4; color: #4874a5; height:50px; border:1px solid #dddddd; border-radius:0px 0px 3px 3px; ">

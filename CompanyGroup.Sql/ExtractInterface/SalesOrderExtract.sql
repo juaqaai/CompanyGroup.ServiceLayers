@@ -103,18 +103,19 @@ SET NOCOUNT ON;
 		GROUP BY ItemId, [FileName], ELSODLEGESKEP
 		HAVING ELSODLEGESKEP = 1 AND COUNT(*) = 1 AND ItemId <> ''
 	),
-	SalesLineCTE (SalesId, LineNum, SalesStatus, ProductId, ProductName, SalesPrice, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, InventLocationId, ItemDate, FileName)
+	SalesLineCTE (SalesId, LineNum, SalesStatus, ProductId, ProductName, SalesPrice, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, CanBeTaken, InventLocationId, ItemDate, FileName)
 	AS  ( select sl.SalesId, 
    			     CONVERT( INT, sl.LineNum )as LineNum,
 				 sl.SalesStatus, 
 				 sl.ItemId,
 				 sl.Name,
 				 CONVERT( INT, sl.SalesPrice ) as SalesPrice,
-				 CONVERT( INT, ABS( it.Qty ) ) as Quantity,
+				 CONVERT( INT, (it.Qty) * -1 ) as Quantity,
 				 CONVERT( INT, sl.LineAmount ) as LineAmount, 
 				 CONVERT( INT, sl.SalesDeliverNow ) as SalesDeliverNow, 
 				 CONVERT( INT, sl.RemainSalesPhysical ) as RemainSalesPhysical, 
-				 it.StatusIssue as StatusIssue, 
+				 CASE WHEN (it.STATUSRECEIPT > 0) THEN 4 ELSE it.StatusIssue END as StatusIssue, 
+				 CASE WHEN (it.StatusIssue IN (2, 3, 4)) OR (it.STATUSRECEIPT > 0) THEN 1 ELSE 0 END as CanBeTaken, 
 				 id.InventLocationId, 
 				 sl.CreatedDate, 
 				 ISNULL(picture.[FileName], '') as [FileName]
@@ -125,7 +126,9 @@ SET NOCOUNT ON;
 				 where sl.DataAreaId IN ('bsc', 'hrp') and 
 						--sl.SalesStatus = 1 and	-- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
 						id.InventLocationId IN ( 'BELSO', 'KULSO', '1000', '7000', 'HASZNALT', '2100' ) and 
-						it.StatusIssue IN (2, 3, 4, 5, 6)	-- 0 none, 1 sold (eladva), 2 deducted (levonva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
+						-- it.StatusIssue IN (2, 3, 4, 5, 6)	-- 0 none, 1 sold (eladva), 2 deduced (levonva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
+						(it.StatusIssue IN (2, 3, 4, 5, 6) OR it.STATUSRECEIPT IN (2, 3, 4, 5) )
+
 	), 
 	SalesHeaderCTE (CustomerId, DataAreaId, SalesId, CreatedDate, ShippingDateRequested, CurrencyCode, Payment, SalesHeaderType, SalesHeaderStatus, CusomerOrderNo, DlvTerm) AS (
 		select st.CustAccount, st.DataAreaId, st.SalesId, st.CreatedDate, st.ShippingDateRequested, st.CurrencyCode, Pt.[Description], st.SalesHeaderType, st.SalesStatus, st.VEVORENDELESSZAMA, st.DLVTERM
@@ -142,7 +145,7 @@ SET NOCOUNT ON;
 		 -- where SalesHeaderCTE.CustomerId = 'V005024'
 
 	group by CustomerId, DataAreaId, SalesHeaderCTE.SalesId, SalesLineCTE.SalesId, CreatedDate, ShippingDateRequested, CurrencyCode,	Payment,	SalesHeaderType,	SalesHeaderStatus,	CusomerOrderNo,	DlvTerm,	
-			 LineNum,	SalesStatus,	ProductId,	ProductName,	SalesPrice,	LineAmount,	SalesDeliverNow,	RemainSalesPhysical,	InventLocationId,	ItemDate,	[FileName]
+			 LineNum,	SalesStatus,	ProductId,	ProductName,	SalesPrice,	LineAmount,	SalesDeliverNow,	RemainSalesPhysical, CanBeTaken, InventLocationId,	ItemDate,	[FileName]
 
 	order by SalesHeaderCTE.CreatedDate, SalesLineCTE.SalesId, SalesLineCTE.LineNum;
 
@@ -154,3 +157,29 @@ GO
 GRANT EXECUTE ON [InternetUser].SalesOrderExtract TO [HRP_HEADOFFICE\AXPROXY]
 GO
 -- exec InternetUser.SalesOrderExtract 
+
+/**/
+		select sl.SalesId, 
+   			   CONVERT( INT, sl.LineNum )as LineNum,
+			   sl.SalesStatus, 
+			   sl.ItemId,
+			   sl.Name,
+			   CONVERT( INT, sl.SalesPrice ) as SalesPrice,
+				 CONVERT( INT, (it.Qty) * -1 ) as Quantity,
+				 CONVERT( INT, sl.LineAmount ) as LineAmount, 
+				 CONVERT( INT, sl.SalesDeliverNow ) as SalesDeliverNow, 
+				 CONVERT( INT, sl.RemainSalesPhysical ) as RemainSalesPhysical, 
+				 it.StatusIssue as StatusIssue, 
+				 id.InventLocationId, 
+				 sl.CreatedDate
+				 from Axdb.dbo.SALESLINE as sl
+				 INNER JOIN Axdb.dbo.InventTrans as it ON sl.DataAreaID = it.DataAreaID and sl.InventTransId = it.InventTransId
+				 INNER JOIN Axdb.dbo.InventDim AS id ON id.InventDimId = sl.InventDimId AND id.DataAreaId = sl.DataAreaId
+				 where sl.DataAreaId IN ('bsc', 'hrp') and 
+						--sl.SalesStatus = 1 and	-- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
+						id.InventLocationId IN ( 'BELSO', 'KULSO', '1000', '7000', 'HASZNALT', '2100' ) and 
+						(it.StatusIssue IN (2, 3, 4, 5, 6) OR it.STATUSRECEIPT IN (2, 3, 4, 5) ) and 
+						 sl.SALESID = 'VR657874' -- 'VR658457' -- 'VR660917'
+						 
+						 
+

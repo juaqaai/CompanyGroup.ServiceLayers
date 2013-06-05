@@ -19,7 +19,7 @@ SET NOCOUNT ON
 		FROM InternetUser.Compatibility WITH (READUNCOMMITTED)
 		WHERE DataAreaId = @DataAreaId AND ProductId = @ProductId;
 	ELSE
-		SELECT ProductId, DataAreaId, CompatibleProductId, CompatibilityType
+		SELECT ProductId as CompatibleProductId, DataAreaId, CompatibleProductId as ProductId, CompatibilityType
 		FROM InternetUser.Compatibility
 		WHERE DataAreaId = @DataAreaId AND CompatibleProductId = @ProductId;		
 RETURN
@@ -27,8 +27,8 @@ GO
 GRANT EXECUTE ON InternetUser.CompatibilityList TO InternetUser
 GO
 
--- EXEC InternetUser.CompatibilityList 'hrp', 'A500-1DN', 1;
--- EXEC InternetUser.CompatibilityList 'hrp', 'LFBKAH531-3', 1
+-- EXEC InternetUser.CompatibilityList 'hrp', 'KYFS1320D', 1;
+-- EXEC InternetUser.CompatibilityList 'hrp', 'KYCB130', 1
 
 /*
 select * from InternetUser.Compatibility where ProductId = 'LFBKAH531-3'

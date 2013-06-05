@@ -346,6 +346,7 @@ companyGroup.partnerinfo = $.sammy(function () {
     this.get('#/invoiceinfo/:paymenttype', function (context) {
         $('#orderInfoFilter').hide();
         $('#invoiceInfoFilter').show();
+		$('.invoice_id_close').hide();
         var paymenttype = parseInt(context.params['paymenttype']);
         invoiceInfoRequest.Debit = (paymenttype === 1);
         invoiceInfoRequest.Overdue = (paymenttype === 2);
@@ -354,22 +355,42 @@ companyGroup.partnerinfo = $.sammy(function () {
         this.invoiceSumValues(function (result) {
             $('#invoiceSumValuesContainer').empty();
             $("#invoiceSumValuesTemplate").tmpl(result).appendTo("#invoiceSumValuesContainer");
+			$(".price_huf").text(function(index, text){
+			return text.replace(/(\s+)?...$/, '');
+			});
         });
     });
     //számla info részletek 
-    this.get('#/invoice_details/:id', function (context) {
+    this.get('#/invoice_details/:id/1', function (context) {
+	var id = parseInt(context.params['id']);  
+	$('#toggle_container_invoice_' + id).show('slow');
+	$('#invoice_id_' + id + '_close').show();
+	$('#invoice_id_' + id + '_open').hide();
         //$('#orderInfoFilter').hide();
         //$('#invoiceInfoFilter').show();
         //invoiceInfoRequest.Items.push(parseInt(context.params['id']));
         //loadInvoiceInfoByFilter();
         //context.title('Számla információ - részletek');
-        //context.redirect("#/details_open");
+        context.redirect("#/details_open");
+    });
+	    //számla info részletek 
+    this.get('#/invoice_details/:id/2', function (context) {
+	var id = parseInt(context.params['id']);  
+	$('#toggle_container_invoice_' + id).hide('slow');
+	$('#invoice_id_' + id + '_close').hide();
+	$('#invoice_id_' + id + '_open').show();
+        //$('#orderInfoFilter').hide();
+        //$('#invoiceInfoFilter').show();
+        //invoiceInfoRequest.Items.push(parseInt(context.params['id']));
+        //loadInvoiceInfoByFilter();
+        //context.title('Számla információ - részletek');
+        context.redirect("#/details_open");
     });
     //számlainformációk szűrése paraméterek alapján
     this.post('#/invoiceinfoByFilter', function (context) {
         //console.log(context.params['radio_paymenttype']);
         $('#orderInfoFilter').hide();
-        $('#invoiceInfoFilter').show();
+
         var paymenttype = parseInt(context.params['radio_paymenttype']);
         invoiceInfoRequest.Debit = (paymenttype === 1);
         invoiceInfoRequest.Overdue = (paymenttype === 2);
@@ -563,6 +584,8 @@ companyGroup.partnerinfo = $.sammy(function () {
 
                 $('#invoicePagerContainer').empty();
                 $("#invoicePagerTemplate").tmpl(response).appendTo("#invoicePagerContainer");
+				$('.toggle_container_invoice').hide();
+				$('.invoice_id_close').hide();
                 //                var html = Mustache.to_html($('#invoiceTemplate').html(), response);
                 //                $('#main_container').html(html);
             },

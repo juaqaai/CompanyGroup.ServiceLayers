@@ -42,7 +42,7 @@ SET NOCOUNT ON
 	--	GROUP BY ItemId, [FileName], ELSODLEGESKEP
 	--	HAVING ELSODLEGESKEP = 1 AND COUNT(*) = 1 AND ItemId <> ''
 	--),
-	SalesLineCTE ([Version], Operation, InventTransId, DataAreaId, SalesId, LineNum, SalesStatus, ProductId, ProductName, SalesPrice, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, InventLocationId, ItemDate, [FileName])
+	SalesLineCTE ([Version], Operation, InventTransId, DataAreaId, SalesId, LineNum, SalesStatus, ProductId, ProductName, SalesPrice, Quantity, LineAmount, SalesDeliverNow, RemainSalesPhysical, StatusIssue, CanBeTaken, InventLocationId, ItemDate, [FileName])
 	AS  ( select CTE.[Version], 
 				 CTE.Operation,
 				 sl.InventTransId,
@@ -53,11 +53,12 @@ SET NOCOUNT ON
 				 sl.ItemId,
 				 sl.Name,
 				 CONVERT( INT, sl.SalesPrice ) as SalesPrice,
-				 CONVERT( INT, ABS( it.Qty ) ) as Quantity,
+				 CONVERT( INT, (it.Qty * -1) ) as Quantity,
 				 CONVERT( INT, sl.LineAmount ) as LineAmount, 
 				 CONVERT( INT, sl.SalesDeliverNow ) as SalesDeliverNow, 
 				 CONVERT( INT, sl.RemainSalesPhysical ) as RemainSalesPhysical, 
-				 it.StatusIssue as StatusIssue, 
+				 CASE WHEN (it.STATUSRECEIPT > 0) THEN 4 ELSE it.StatusIssue END as StatusIssue, 
+				 CASE WHEN (it.StatusIssue IN (2, 3, 4)) OR (it.STATUSRECEIPT > 0) THEN 1 ELSE 0 END as CanBeTaken, 
 				 id.InventLocationId, 
 				 sl.CreatedDate, 
 				 ISNULL(picture.[FileName], '') as [FileName]
@@ -69,21 +70,30 @@ SET NOCOUNT ON
 				 where sl.DataAreaId IN ('bsc', 'hrp') and 
 						--sl.SalesStatus = 1 and	-- 1: Nyitott rendelés (backorder), 2: Szállítva (delivered), 3: Számlázva (Invoiced), 4: Érvénytelenítve (Canceled)
 						id.InventLocationId IN ( 'BELSO', 'KULSO', '1000', '7000', 'HASZNALT', '2100' ) and 
-						it.StatusIssue IN (1, 2, 3, 4, 5, 6)	-- 0 none, 1 sold, 2 deducted (eladva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
+						--it.StatusIssue IN (1, 2, 3, 4, 5, 6)	-- 0 none, 1 sold, 2 deducted (eladva), 3 picked (kivéve), 4 ReservPhysical (foglalt tényleges), 5 ReservOrdered (foglalt rendelt), 6 OnOrder (rendelés alatt), 7 Quotation issue (árajánlat kiadása)
+						(it.StatusIssue IN (2, 3, 4, 5, 6) OR it.STATUSRECEIPT IN (2, 3, 4, 5) )
 	) 
 	-- select * from SalesLineCTE;
 
-
 	-- SalesHeaderCTE (CustomerId, DataAreaId, SalesId, CreatedDate, ShippingDateRequested, CurrencyCode, Payment, SalesHeaderType, SalesHeaderStatus, CustomerOrderNo, DlvTerm) AS (
 		select SalesLineCTE.Operation, SalesLineCTE.[Version], 
-			   st.CustAccount as CustomerId, st.DataAreaId, st.SalesId, st.CreatedDate, st.ShippingDateRequested, st.CurrencyCode, Pt.[Description] as Payment, st.SalesHeaderType, st.SalesStatus as SalesHeaderStatus, st.VEVORENDELESSZAMA as CustomerOrderNo, st.DLVTERM as DlvTerm,
-			   SalesLineCTE.LineNum, SalesLineCTE.SalesStatus, SalesLineCTE.ProductId, SalesLineCTE.ProductName, SalesLineCTE.SalesPrice, SalesLineCTE.Quantity, SalesLineCTE.LineAmount, 
-			   SalesLineCTE.SalesDeliverNow, SalesLineCTE.RemainSalesPhysical, SalesLineCTE.StatusIssue, SalesLineCTE.InventLocationId, SalesLineCTE.ItemDate, SalesLineCTE.[FileName]
+			   st.CustAccount as CustomerId, st.DataAreaId, st.SalesId, st.CreatedDate, st.ShippingDateRequested, st.CurrencyCode, Pt.[Description] as Payment, 
+			   st.SalesHeaderType, st.SalesStatus as SalesHeaderStatus, st.VEVORENDELESSZAMA as CustomerOrderNo, st.DLVTERM as DlvTerm,
+			   SalesLineCTE.LineNum, SalesLineCTE.SalesStatus, SalesLineCTE.ProductId, SalesLineCTE.ProductName, SalesLineCTE.SalesPrice, SUM(SalesLineCTE.Quantity) as Quantity, (SUM(SalesLineCTE.Quantity) * SalesLineCTE.SalesPrice) as LineAmount, -- SalesLineCTE.LineAmount, 
+			   SalesLineCTE.SalesDeliverNow, SalesLineCTE.RemainSalesPhysical, MAX(SalesLineCTE.StatusIssue) as StatusIssue, SalesLineCTE.InventLocationId, SalesLineCTE.ItemDate, SalesLineCTE.[FileName]
 		from Axdb.dbo.SalesTable as st 
 		inner join SalesLineCTE on SalesLineCTE.SalesId = st.SalesId
 		inner join Axdb.dbo.PAYMTERM AS pt ON st.Payment = pt.PaymTermId AND Pt.DATAAREAID = 'mst'
 		where st.SalesType = 3 and 
 			  st.DataAreaId IN ('bsc', 'hrp')
+
+	group by SalesLineCTE.Operation, SalesLineCTE.[Version], st.CustAccount, st.DataAreaId, st.SalesId, st.CreatedDate, st.ShippingDateRequested, st.CurrencyCode, Pt.[Description],	
+			 st.SalesHeaderType, st.SalesStatus, st.VEVORENDELESSZAMA,	st.DlvTerm,	
+			 SalesLineCTE.LineNum, SalesLineCTE.SalesStatus, SalesLineCTE.ProductId, SalesLineCTE.ProductName, SalesLineCTE.SalesPrice,	SalesLineCTE.LineAmount,	
+			 SalesLineCTE.SalesDeliverNow, SalesLineCTE.RemainSalesPhysical, CanBeTaken, SalesLineCTE.InventLocationId,	SalesLineCTE.ItemDate, SalesLineCTE.[FileName]
+
+	order by st.CreatedDate, st.SalesId, SalesLineCTE.LineNum;
+
 	--)
 
 
