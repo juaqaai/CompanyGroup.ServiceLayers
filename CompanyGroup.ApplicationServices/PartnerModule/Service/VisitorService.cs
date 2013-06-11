@@ -65,7 +65,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 }
 
                 //telesales mint képviselő adatainak beállítása 
-                visitor.Representative.SetDefault();
+                visitor.Representatives.SetDefaults();
 
                 //bejelentkezett visitor-t tárolni kell
                 visitorRepository.Add(visitor);

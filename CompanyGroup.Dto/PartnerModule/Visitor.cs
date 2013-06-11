@@ -17,7 +17,7 @@ namespace CompanyGroup.Dto.PartnerModule
             this.Permission = new Permission();
             this.Roles = new List<string>();
             this.History = new List<string>();
-            this.Representative = new Representative();
+            this.Representatives = new Representatives();
             this.PaymTermId = String.Empty;
             this.Currency = String.Empty;
             this.InventLocationBsc = String.Empty;
@@ -102,7 +102,7 @@ namespace CompanyGroup.Dto.PartnerModule
         /// <summary>
         /// képviselő
         /// </summary>
-        public Representative Representative { set; get; }
+        public Representatives Representatives { set; get; }
 
         /// <summary>
         /// jogosult a HRP-ben vásárolni

@@ -88,7 +88,7 @@ namespace CompanyGroup.ApplicationServices
                 //cache-be mentés csak akkor, ha érvényes a login
                 if (visitor.IsValidLogin)
                 {
-                    visitor.Representative.SetDefault();
+                    visitor.Representatives.SetDefaults();
 
                     CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(CACHEKEY_VISITOR, visitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
                 }

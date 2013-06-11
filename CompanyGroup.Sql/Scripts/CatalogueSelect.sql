@@ -170,9 +170,9 @@ SET NOCOUNT ON
 	CASE WHEN @Sequence = 7 THEN  
 		Price5 END DESC, 
 	CASE WHEN @Sequence = 8 THEN   
-		Stock END ASC, 
+		Sequence1 END ASC, 
 	CASE WHEN @Sequence = 9 THEN    
-		Stock END DESC, 
+		Sequence1 END DESC, 
 	CASE WHEN @Sequence = 12 THEN  
 		Garanty END ASC, 
 	CASE WHEN @Sequence = 13 THEN  

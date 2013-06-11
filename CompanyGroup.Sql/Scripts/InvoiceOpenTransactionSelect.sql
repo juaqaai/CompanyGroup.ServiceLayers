@@ -11,8 +11,8 @@ SET NOCOUNT ON
 	Quantity, SalesPrice, LineAmount, QuantityPhysical, Remain, DeliveryType, TaxAmount, LineAmountMst, TaxAmountMst, DetailCurrencyCode, 
 	Debit, Description, FileName, RecId, CreatedDate, ExtractDate, PackageLogKey, CONVERT(nvarchar(40), SerialNumber) as SerialNumber
 	
-	 FROM InternetUser.Invoice 
-	WHERE Debit = 1
+	FROM InternetUser.Invoice 
+	WHERE Debit = 1 OR InvoiceCredit <> 0 -- and invoiceId = 'HI018878/13'
 
 RETURN
 GO

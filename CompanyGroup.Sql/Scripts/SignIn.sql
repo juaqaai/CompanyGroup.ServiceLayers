@@ -222,11 +222,24 @@ GO
 -- exec InternetUser.SignIn 'netlogic', 'hrppass123';
 -- exec InternetUser.SignIn 'kekszinfo', '8mmks812';
 -- exec InternetUser.SignIn 'Mysoft', '3689478';
+-- exec InternetUser.SignIn 'reveszg', 'Domonkos2000'
+
+select ACCOUNTNUM, KEPVISELO, count(ACCOUNTNUM), count(KEPVISELO)
+from AXDB.dbo.CUSTTABLE 
+where DataAreaID IN ('hrp', 'bsc') and STATISTICSGROUP <> 'Archív' and STATISTICSGROUP <> 'Arhív' and KEPVISELO <> '' -- ACCOUNTNUM = 'V002095'
+group by ACCOUNTNUM, KEPVISELO
+having count(KEPVISELO) = 1 and count(ACCOUNTNUM) = 1
+order by ACCOUNTNUM, KEPVISELO
+
+select ACCOUNTNUM, KEPVISELO from AXDB.dbo.CUSTTABLE where ACCOUNTNUM = 'V001565'
 
 -- www.111.hu	0hfvmb1l
 
 -- select * from Axdb.dbo.WebShopUserInfo WHERE ( WebLoginName = 'joci2' ) -- V000276	kincsesfoto, gild4MAX19
-select * from Axdb.dbo.WebShopUserInfo WHERE CUSTACCOUNT = 'V002095'
+select * from Axdb.dbo.WebShopUserInfo WHERE CUSTACCOUNT = 'V016645'	--V001565
+
+select * from Axdb.dbo.WebShopUserInfo WHERE ContactPersonId = 'KAPCS05327'
+
 -- select * from AxDb.dbo.CustTable where Bsc = 1 and Hrp = 1 AccountNum = 'V002095' -- V002319
 /*
 select * FROM Axdb.dbo.CustTable as Cust 

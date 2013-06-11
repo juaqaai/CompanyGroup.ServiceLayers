@@ -20,7 +20,7 @@ namespace CompanyGroup.WebClient.Models
             this.Permission = new Dto.PartnerModule.Permission();
             this.Roles = new List<string>();
             this.History = new List<string>();
-            this.Representative = new Dto.PartnerModule.Representative();
+            this.Representatives = new Dto.PartnerModule.Representatives();
             this.PaymTermId = String.Empty;
             this.Currency = "HUF";
             this.InventLocationBsc = String.Empty;
@@ -46,7 +46,7 @@ namespace CompanyGroup.WebClient.Models
             this.Permission = visitor.Permission;
             this.Roles = visitor.Roles;
             this.History = visitor.History;
-            this.Representative = visitor.Representative;
+            this.Representatives = visitor.Representatives;
             this.PaymTermId = visitor.PaymTermId;
             this.Currency = visitor.Currency;
             this.InventLocationBsc = visitor.InventLocationBsc;
@@ -152,7 +152,7 @@ namespace CompanyGroup.WebClient.Models
         /// <summary>
         /// képviselő
         /// </summary>
-        public CompanyGroup.Dto.PartnerModule.Representative Representative { set; get; }
+        public CompanyGroup.Dto.PartnerModule.Representatives Representatives { set; get; }
 
         /// <summary>
         /// jogosult a HRP-ben vásárolni

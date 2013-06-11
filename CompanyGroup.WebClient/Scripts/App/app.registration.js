@@ -266,7 +266,7 @@ companyGroup.registration = $.sammy(function () {
         var context = this;
         if (data.Checked) {
             if ($('#chk_contactpersonallowreceiptofgoods').is(':checked') || $('#chk_webadminallowreceiptofgoods').is(':checked')) {
-                context.redirect('#/checked');
+                context.trigger('checked_registration');
                 context.title('HRP/BSC Regisztráció - adatok ellenörzése megtörtént');
             }
             else {
@@ -432,7 +432,7 @@ companyGroup.registration = $.sammy(function () {
         this.searchByText(context.params['txt_globalsearch']);
     });
     //ellenörzés    
-    this.get('#/checked', function (context) {
+    this.bind('checked_registration', function (e, data) {
 
         this.getVisitorInfo(function (result) {
             if (result.IsValidLogin == 0) {
@@ -453,7 +453,7 @@ companyGroup.registration = $.sammy(function () {
                 $("#hr_3").show(500);
                 $("#hr_4").show(500);
                 $("#hr_5").show(500);
-                context.redirect('#/saveregistration_print')
+                saveregistration_print()
             }
             else {
                 //itt van az adatok vizsgálata hogy egyezik a kis módosításhoz..
@@ -483,7 +483,7 @@ companyGroup.registration = $.sammy(function () {
                     $("#hr_3").show(500);
                     $("#hr_4").show(500);
                     $("#hr_5").show(500);
-                    context.redirect('#/saveregistration')
+                    saveregistration()
                 }
                 else {
                     $("#tabs-1").hide(500);
@@ -503,7 +503,7 @@ companyGroup.registration = $.sammy(function () {
                     $("#hr_3").show(500);
                     $("#hr_4").show(500);
                     $("#hr_5").show(500);
-                    context.redirect('#/saveregistration_print')
+                    saveregistration_print()
                 }
             }
         });
@@ -1480,9 +1480,10 @@ companyGroup.registration = $.sammy(function () {
         });
     });
     //regisztrációs adatok mentése
-    this.get('#/saveregistration', function (context) {
+    var saveregistration = function (context) {
         ////console.log(context);
-        $.ajax({
+
+		$.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getRegistrationApiUrl('Post'),
             data: {},
@@ -1509,12 +1510,13 @@ companyGroup.registration = $.sammy(function () {
                 //console.log('post call failed');
             }
         });
-    });
+    };
 
     //regisztrációs adatok mentése
-    this.get('#/saveregistration_print', function (context) {
+     var saveregistration_print = function (context) {
         ////console.log(context);
-        $.ajax({
+
+			$.ajax({
             type: "POST",
             url: companyGroup.utils.instance().getRegistrationApiUrl('Post'),
             data: {},
@@ -1528,6 +1530,7 @@ companyGroup.registration = $.sammy(function () {
 					$('#registration_num').html(result.CustomerRegistrationId);
 					$('.vsz_number').val(result.CustomerRegistrationId);
                         context.title('Regisztráció - lezárás, adatok mentése sikeresen megtörtént');
+						
                     } else {
                         alert(result.Message);
                     }
@@ -1540,7 +1543,10 @@ companyGroup.registration = $.sammy(function () {
                 //console.log('post call failed');
             }
         });
-    });
+
+		
+
+    };
 
 
     var initRegistrationData = function (data) {
@@ -1668,7 +1674,7 @@ companyGroup.registration = $.sammy(function () {
         //$('#chkWebAdminSmsOfDelivery').prop('checked', data.WebAdministrator.SmsOfDelivery);
         //$('#chkWebAdminSmsOrderConfirm').prop('checked', data.WebAdministrator.SmsOrderConfirm);
         $('#select_webadminposition').val(data.WebAdministrator.Positions);
-        $("#select_webadminposition").trigger("liszt:updated");
+        $('#select_webadminposition').trigger('liszt:updated');
 
         $('#contactPersonContainer').html(Mustache.render($('#contactPersonTemplate').html(), data.ContactPersons));
     }
@@ -1816,6 +1822,13 @@ companyGroup.registration = $.sammy(function () {
             $("#tabs-7").hide(500);
         });
     });
+	
+	$(function () {
+        $("#submit_webadmin").click(function () {
+				$("form#submit_webadministrator").submit(); 
+        });
+    });
+
 
     $("a#nyomtatas").fancybox();
 
@@ -1839,9 +1852,14 @@ companyGroup.registration = $.sammy(function () {
         if (singleValues != "HU") {
             $("#foreign_vat").show(500);
             $("#hun_vat").hide(500);
+			// $("input.txt_vatnumber4").attr('id', 'txt_vatnumber');
+			// $("input.txt_vatnumber").attr('id', 'txt_vatnumber4');
         } else {
             $("#foreign_vat").hide(500);
             $("#hun_vat").show(500);
+			//$("input.txt_vatnumber4").attr('id', 'txt_vatnumber');
+			//$("input.txt_vatnumber").attr('id', 'txt_vatnumber4');
+
         }
     }
     $("select").change(displayVals);

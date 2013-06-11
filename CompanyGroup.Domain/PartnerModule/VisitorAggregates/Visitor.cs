@@ -180,9 +180,9 @@ namespace CompanyGroup.Domain.PartnerModule
         public string DefaultPriceGroupIdHrp { set; get; }
 
         /// <summary>
-        /// képviselő
+        /// képviselők lista
         /// </summary>
-        public Representative Representative { set; get; }
+        public Representatives Representatives { set; get; }
 
         /// <summary>
         /// látogatás bejegyzés akkor érvényes, ha a lejárat ideje nagyobb mint az aktuális dátum - idő értéke
@@ -214,7 +214,7 @@ namespace CompanyGroup.Domain.PartnerModule
             this.DefaultPriceGroupIdBsc = defaultPriceGroupIdBsc;
             this.InventLocationIdHrp = inventLocationIdHrp;
             this.InventLocationIdBsc = inventLocationIdBsc;
-            this.Representative = new Representative(representativeId, representativeName, representativePhone, representativeMobile, representativeExtension, representativeEmail);
+            this.Representatives = new Representatives(new Representative(representativeId, representativeName, representativePhone, representativeMobile, representativeExtension, representativeEmail));
             this.LoginType = (LoginType)loginType;
             this.RightHrp = rightHrp;
             this.RightBsc = rightBsc;
@@ -248,7 +248,6 @@ namespace CompanyGroup.Domain.PartnerModule
             visitorDataBsc = visitorDataBsc ?? new VisitorData();
 
             this.SetVisitor(visitorDataHrp, visitorDataBsc);
-
         }
 
         /// <summary>
@@ -326,7 +325,7 @@ namespace CompanyGroup.Domain.PartnerModule
             //jogosultság beállítás - 
             this.Permission = CreatePermission(visitorDataHrp.Permission, visitorDataBsc.Permission);
 
-            this.Representative = CreateRepresentative(visitorDataHrp.Representative, visitorDataBsc.Representative);
+            this.Representatives = CreateRepresentatives(visitorDataHrp.Representative, visitorDataBsc.Representative);
 
             //hrp beállításait részesíti előnyben
             this.LanguageId = String.IsNullOrEmpty(visitorDataHrp.LanguageId) ? visitorDataBsc.LanguageId : visitorDataHrp.LanguageId;
@@ -476,20 +475,31 @@ namespace CompanyGroup.Domain.PartnerModule
         //}
 
         /// <summary>
-        /// ha van hrp-s adat, akkor azt adja vissza
+        /// ha van hrp-s kapcsolattartó és nincs bsc-s, akkor a hrp-t adja vissza. 
+        /// ha van bsc-s kapcsolattartó és nincs hrp-s, akkor a bsc-t adja vissza. 
+        /// ha van hrp-s és bsc-s, akkor 
         /// </summary>
         /// <param name="representativeBsc"></param>
         /// <param name="representativeHrp"></param>
         /// <returns></returns>
-        private Representative CreateRepresentative(CompanyGroup.Domain.PartnerModule.Representative representativeBsc, CompanyGroup.Domain.PartnerModule.Representative representativeHrp)
+        private Representatives CreateRepresentatives(CompanyGroup.Domain.PartnerModule.Representative representativeBsc, CompanyGroup.Domain.PartnerModule.Representative representativeHrp)
         {
-            return new Representative(!String.IsNullOrEmpty(representativeHrp.Id) ? representativeHrp.Id : representativeBsc.Id,
-                                      !String.IsNullOrEmpty(representativeHrp.Name) ? representativeHrp.Name : representativeBsc.Name,
-                                      CreatePhoneNumber(!String.IsNullOrEmpty(representativeHrp.Phone) ? representativeHrp.Phone : representativeBsc.Phone, !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension),
-                                      !String.IsNullOrEmpty(representativeHrp.Mobile) ? representativeHrp.Mobile : representativeBsc.Mobile,
-                                      !String.IsNullOrEmpty(representativeHrp.Extension) ? representativeHrp.Extension : representativeBsc.Extension,
-                                      !String.IsNullOrEmpty(representativeHrp.Email) ? representativeHrp.Email : representativeBsc.Email
-                                      );
+            //nem egyezik a hrp-s képviselő a bsc-s képviselővel
+            if (!representativeHrp.Id.Equals(representativeBsc.Id, StringComparison.OrdinalIgnoreCase) && !String.IsNullOrEmpty(representativeHrp.Id) && !String.IsNullOrEmpty(representativeBsc.Id))
+            {
+                return new Representatives(new Representative(representativeHrp.Id, representativeHrp.Name, CreatePhoneNumber(representativeHrp.Phone, representativeHrp.Extension), representativeHrp.Mobile, representativeHrp.Extension, representativeHrp.Email), 
+                                           new Representative(representativeBsc.Id, representativeBsc.Name, CreatePhoneNumber(representativeBsc.Phone, representativeBsc.Extension), representativeBsc.Mobile, representativeBsc.Extension, representativeBsc.Email));
+            }
+
+            if (!String.IsNullOrEmpty(representativeHrp.Id))
+            {
+                return new Representatives(new Representative(representativeHrp.Id, representativeHrp.Name, CreatePhoneNumber(representativeHrp.Phone, representativeHrp.Extension), representativeHrp.Mobile, representativeHrp.Extension, representativeHrp.Email));
+            }
+            if (!String.IsNullOrEmpty(representativeBsc.Id))
+            {
+                return new Representatives(new Representative(representativeBsc.Id, representativeBsc.Name, representativeBsc.Phone, representativeBsc.Mobile, representativeBsc.Extension, representativeBsc.Email));
+            }
+            return new Representatives();
         }
 
         /// <summary>

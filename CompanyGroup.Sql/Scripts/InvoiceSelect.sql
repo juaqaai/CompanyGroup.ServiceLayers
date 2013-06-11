@@ -382,10 +382,10 @@ GO
 
 select DATEDIFF(d, GetDate() - 1, GetDate())
 
-select top 100 * from InternetUser.Invoice
+select top 100 * from InternetUser.Invoice where invoiceId = 'HI018878/13' 
 */
 
--- EXEC InternetUser.InvoiceSelect2 'V001446', 1, 1; 
+-- EXEC InternetUser.InvoiceSelect2 'V016645', 1, 1; 
 /*
 V000135
 EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',	

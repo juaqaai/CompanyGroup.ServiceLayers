@@ -72,6 +72,8 @@ namespace CompanyGroup.Data.PartnerModule
         {
             try
             {
+                string representativeId = visitor.Representatives.Count > 0 ? visitor.Representatives[0].Id : String.Empty;
+
                 NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.VisitorInsert")
                         .SetString("LoginIP", visitor.LoginIP)
                         .SetInt64("RecId", visitor.RecId)
@@ -93,7 +95,7 @@ namespace CompanyGroup.Data.PartnerModule
                         .SetString("DefaultPriceGroupIdBsc", visitor.DefaultPriceGroupIdBsc)
                         .SetString("InventLocationIdHrp", visitor.InventLocationIdHrp)
                         .SetString("InventLocationIdBsc", visitor.InventLocationIdBsc)
-                        .SetString("RepresentativeId", visitor.Representative.Id)
+                        .SetString("RepresentativeId", representativeId)
                         .SetEnum("LoginType", visitor.LoginType)
                         .SetBoolean("RightHrp", visitor.RightHrp)
                         .SetBoolean("RightBsc", visitor.RightBsc)

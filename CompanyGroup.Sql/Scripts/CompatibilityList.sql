@@ -15,13 +15,15 @@ CREATE PROCEDURE InternetUser.CompatibilityList( @DataAreaId nvarchar (3),
 AS
 SET NOCOUNT ON
 	IF ( @Reverse = 0 )	-- kellékanyag
-		SELECT ProductId, DataAreaId, CompatibleProductId,  CompatibilityType
-		FROM InternetUser.Compatibility WITH (READUNCOMMITTED)
-		WHERE DataAreaId = @DataAreaId AND ProductId = @ProductId;
+		SELECT Compatibility.ProductId, Compatibility.DataAreaId, Compatibility.CompatibleProductId,  Compatibility.CompatibilityType
+		FROM InternetUser.Compatibility as Compatibility WITH (READUNCOMMITTED)
+		INNER JOIN InternetUser.Catalogue as Catalogue ON Compatibility.CompatibleProductId = Catalogue.ProductId
+		WHERE Compatibility.DataAreaId = @DataAreaId AND Compatibility.ProductId = @ProductId;
 	ELSE
-		SELECT ProductId as CompatibleProductId, DataAreaId, CompatibleProductId as ProductId, CompatibilityType
-		FROM InternetUser.Compatibility
-		WHERE DataAreaId = @DataAreaId AND CompatibleProductId = @ProductId;		
+		SELECT Compatibility.ProductId as CompatibleProductId, Compatibility.DataAreaId, Compatibility.CompatibleProductId as ProductId, Compatibility.CompatibilityType
+		FROM InternetUser.Compatibility as Compatibility
+		INNER JOIN InternetUser.Catalogue as Catalogue ON Compatibility.ProductId = Catalogue.ProductId
+		WHERE Compatibility.DataAreaId = @DataAreaId AND CompatibleProductId = @ProductId;		
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.CompatibilityList TO InternetUser

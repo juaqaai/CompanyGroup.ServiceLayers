@@ -5,8 +5,6 @@ using System.Text;
 
 namespace CompanyGroup.Dto.PartnerModule
 {
-    [Serializable]
-    [System.Runtime.Serialization.DataContract(Name = "Representative", Namespace = "CompanyGroup.Dto.PartnerModule")]
     public class Representative
     {
         public Representative()
@@ -18,19 +16,29 @@ namespace CompanyGroup.Dto.PartnerModule
             this.Mobile = String.Empty;
         }
 
-        [System.Runtime.Serialization.DataMember(Name = "Id", Order = 1)]
         public string Id { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Name", Order = 2)]
         public string Name { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Email", Order = 3)]
         public string Email { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Phone", Order = 4)]
         public string Phone { get; set; }
 
-        [System.Runtime.Serialization.DataMember(Name = "Mobile", Order = 5)]
         public string Mobile { get; set; }
+    }
+
+    /// <summary>
+    /// képviselők DTO
+    /// </summary>
+    public class Representatives
+    {
+        public Representatives()
+        {
+            this.Items = new List<Representative>();
+        }
+
+        public List<Representative> Items { get; set; }
+
+
     }
 }

@@ -24,7 +24,6 @@ namespace SubDistribution
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;
-
         }
     }
 }

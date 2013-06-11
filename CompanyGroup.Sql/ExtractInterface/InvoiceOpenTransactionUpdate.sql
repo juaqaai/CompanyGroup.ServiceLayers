@@ -90,7 +90,8 @@ SET NOCOUNT ON
 	) as Transactions
 	ON (Stage.InvoiceId = Transactions.InvoiceId AND Stage.LineNum = Transactions.LineNum)
 	WHEN MATCHED THEN	-- számlaszám és számla sor alapján egyezés esetén a Stage tábla tartozás mezõ értékének frissítése
-		UPDATE SET Stage.InvoiceCredit = Transactions.InvoiceCredit
+		UPDATE SET Stage.InvoiceCredit = Transactions.InvoiceCredit, 
+				   Stage.Debit = CASE WHEN Transactions.InvoiceCredit <> 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END
 	WHEN NOT MATCHED BY TARGET THEN	-- ha nincs a Stage táblában, de van a Transactions táblában, akkor fel kell venni a Stage-be.
 	  INSERT ( [CustomerId] ,[DataAreaId] ,[SalesId] ,[InvoiceDate] ,[DueDate]
 				,[InvoiceAmount] ,[InvoiceCredit] ,[CurrencyCode] ,[InvoiceId] ,[Payment]
@@ -109,7 +110,7 @@ SET NOCOUNT ON
 				,Transactions.[DetailCurrencyCode] ,Transactions.[Debit] ,Transactions.[Description] ,Transactions.[FileName] ,Transactions.[RecId]
 				,Transactions.[CreatedDate] ,Convert(SmallDateTime, GetDate()) ,-1)
 	WHEN NOT MATCHED BY SOURCE THEN		-- ha nincs benne a Transactions táblában, de benne van a Stage-ben, akkor törlés
-		UPDATE SET Stage.InvoiceCredit = 0;
+		UPDATE SET Stage.InvoiceCredit = 0, Stage.Debit = CONVERT(BIT, 0);
 
 RETURN
 GO

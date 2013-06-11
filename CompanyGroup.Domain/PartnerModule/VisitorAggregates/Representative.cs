@@ -65,4 +65,37 @@ namespace CompanyGroup.Domain.PartnerModule
             }
         }
     }
+
+    /// <summary>
+    /// képviselők (lehetséges, hogy a hrp és a bsc képviselő nem ugyanaz)
+    /// </summary>
+    public class Representatives : List<Representative>
+    {
+        public Representatives(Representative representative)
+        {
+            this.Add(representative);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="representativeBsc"></param>
+        /// <param name="representativeHrp"></param>
+        public Representatives(Representative representativeBsc, Representative representativeHrp)
+        {
+            this.Add(representativeBsc);
+
+            this.Add(representativeHrp);
+        }
+
+        public Representatives() { }
+
+        /// <summary>
+        /// képviselő alapértelmezett értékre történő beállítása
+        /// </summary>
+        public void SetDefaults()
+        {
+            this.ForEach( x => x.SetDefault());
+        }
+    }
 }

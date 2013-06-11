@@ -31,7 +31,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                   PaymTermId = from.PaymTermId,
                                                                   BscAuthorized = from.IsAuthorizedInBsc(),
                                                                   HrpAuthorized = from.IsAuthorizedInHrp(),
-                                                                  Representative = ConvertRepresentative(from.Representative)
+                                                                  Representatives = ConvertRepresentatives(from.Representatives)
             };
         }
 
@@ -54,6 +54,15 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
             histories.ToList().ForEach(h => to.Add(h.Url));
 
             return to;
+        }
+
+        private CompanyGroup.Dto.PartnerModule.Representatives ConvertRepresentatives(CompanyGroup.Domain.PartnerModule.Representatives representative)
+        {
+            CompanyGroup.Dto.PartnerModule.Representatives response = new Dto.PartnerModule.Representatives();
+
+            response.Items = representative.ConvertAll(x => ConvertRepresentative(x));
+
+             return response;
         }
 
         private CompanyGroup.Dto.PartnerModule.Representative ConvertRepresentative(CompanyGroup.Domain.PartnerModule.Representative representative)

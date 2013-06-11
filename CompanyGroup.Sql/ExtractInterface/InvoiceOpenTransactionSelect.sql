@@ -55,7 +55,7 @@ SELECT [CustomerId]
       ,[CreatedDate]
       ,[ExtractDate]
       ,[PackageLogKey]
-  FROM [ExtractInterface].[dbo].[Stage_InvoiceOpenTransaction]
+  FROM [ExtractInterface].[dbo].[Stage_InvoiceOpenTransaction] -- WHERE invoiceId = 'HI018878/13'
 
   RETURN
 GO

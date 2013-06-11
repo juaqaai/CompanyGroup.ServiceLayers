@@ -22,14 +22,40 @@ namespace SubDistribution.Controllers
 
                 string result = response.Content.ReadAsStringAsync().Result;
 
-                //string result = response.Content.ReadAsAsync<string>().Result;
+                System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                xmlDoc.LoadXml(result);
+
+
+                //SubDistribution.Models.Product result = response.Content.ReadAsAsync<SubDistribution.Models.Product>().Result;
+
+               //System.Net.Http.Formatting.XmlMediaTypeFormatter formatter = new System.Net.Http.Formatting.XmlMediaTypeFormatter();
+
+               //List<SubDistribution.Models.Product> products = this.Deserialize<List<SubDistribution.Models.Product>>(formatter, result);
+
+                return Request.CreateResponse(HttpStatusCode.OK, xmlDoc);
             }
             catch (Exception ex)
             {
                 return ThrowHttpError(ex);
             }
+        }
+
+        private T Deserialize<T>(System.Net.Http.Formatting.MediaTypeFormatter formatter, string str) where T : class
+        {
+            // Write the serialized string to a memory stream.
+            System.IO.Stream stream = new System.IO.MemoryStream();
+
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(stream);
+
+            writer.Write(str);
+
+            writer.Flush();
+
+            stream.Position = 0;
+
+            // Deserialize to an object of type T
+            return formatter.ReadFromStreamAsync(typeof(T), stream, null, null).Result as T;
         }
 
         //// GET api/values
