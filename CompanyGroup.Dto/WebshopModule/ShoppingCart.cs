@@ -5,11 +5,11 @@ namespace CompanyGroup.Dto.WebshopModule
 {
     public class ShoppingCart
     {
-        public ShoppingCart() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0, false)
+        public ShoppingCart() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0, false, false, false)
         {
         }
 
-        public ShoppingCart(List<ShoppingCartItem> items, double sumTotal, int id, Shipping shipping, int paymentTerms, int deliveryTerms, bool allInStock)
+        public ShoppingCart(List<ShoppingCartItem> items, double sumTotal, int id, Shipping shipping, int paymentTerms, int deliveryTerms, bool allInStock, bool hasNotEnoughSecondHandStock, bool hasNotEnoughEndOfSalesStock)
         {
             this.Items = items;
             this.SumTotal = sumTotal;
@@ -18,6 +18,8 @@ namespace CompanyGroup.Dto.WebshopModule
             this.PaymentTerms = paymentTerms;
             this.DeliveryTerms = deliveryTerms;
             this.AllInStock = allInStock;
+            this.HasNotEnoughSecondHandStock = hasNotEnoughSecondHandStock;
+            this.HasNotEnoughEndOfSalesStock = hasNotEnoughEndOfSalesStock;
         }
 
         public List<ShoppingCartItem> Items { get; set; }
@@ -36,5 +38,17 @@ namespace CompanyGroup.Dto.WebshopModule
         /// minden termék a kosárban raktáron van-e?
         /// </summary>
         public bool AllInStock { get; set; }
+
+        /// <summary>
+        /// van-e olyan leértékelt cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughSecondHandStock { get; set; }
+
+        /// <summary>
+        /// van-e olyan kifutó cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughEndOfSalesStock { get; set; }
     }
 }

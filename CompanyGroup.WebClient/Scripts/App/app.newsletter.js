@@ -10,6 +10,7 @@ companyGroup.newsletter = $.sammy(function () {
 
     this.get('#/', function (context) {
         context.title('hírlevelek');
+		
         companyGroup.newsletterDataService.getNewsletterList(
             { success: function (response) {
                 var visitorInfoHtml = Mustache.to_html($('#visitorInfoTemplate').html(), response.Visitor);
@@ -52,7 +53,7 @@ companyGroup.newsletter = $.sammy(function () {
             html: 'html'
         });
     });
-    this.get('#/closed', function (context) {
+	this.get('#/closed', function (context) {
         //console.log(context);
         $.fancybox.close()
     });
@@ -105,6 +106,26 @@ companyGroup.newsletter = $.sammy(function () {
     this.post('#/searchByTextFilter', function (context) {
         this.searchByText(context.params['txt_globalsearch']);
     });
+	
+	
+	
+	this.post('#/newsletterload', function (context) {
+		$("#feeds").fadeIn('slow');
+		$('#div_newsletter_container').css('width', '260px');
+		$("#frame").attr("src", "https://www.hrp.hu/Articles/"+ context.params['linkId']);
+		$("html, body").animate({ scrollTop: 0 }, 100);
+	});
+	
+	this.get('#/newsletter_unload', function (context) {
+		$("html, body").animate({ scrollTop: 0 }, 100);
+		$("#feeds").hide();
+		$(".scroll_close").hide();
+		
+		$("#frame").attr("src", "");
+		$('#div_newsletter_container').css('width', '980px');
+		
+		context.redirect("#/unloaded")
+	});
 
     $(function () {
         $('#fader img:not(:first)').hide();

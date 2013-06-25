@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "CompanyGroup.IntegrationServices", "CompanyGroup.IntegrationServices.dtproj", "{929C8C2A-4FCE-4D0E-8052-A17757A9361E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{929C8C2A-4FCE-4D0E-8052-A17757A9361E}.Development|Default.ActiveCfg = Development
+		{929C8C2A-4FCE-4D0E-8052-A17757A9361E}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

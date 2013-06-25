@@ -8,11 +8,13 @@ namespace CompanyGroup.Dto.WebshopModule
     /// </summary>
     public class ShoppingCartAndLeasingOptions
     {
-        public ShoppingCartAndLeasingOptions() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0, new CompanyGroup.Dto.WebshopModule.LeasingOptions(), String.Empty, false)
+        public ShoppingCartAndLeasingOptions() : this(new List<ShoppingCartItem>(), 0, 0, new Shipping(), 0, 0, new CompanyGroup.Dto.WebshopModule.LeasingOptions(), String.Empty, false, false, false)
         {
         }
 
-        public ShoppingCartAndLeasingOptions(List<ShoppingCartItem> items, double sumTotal, int id, Shipping shipping, int paymentTerms, int deliveryTerms, CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, string currency, bool allInStock)
+        public ShoppingCartAndLeasingOptions(List<ShoppingCartItem> items, double sumTotal, int id, Shipping shipping, int paymentTerms, int deliveryTerms, 
+                                             CompanyGroup.Dto.WebshopModule.LeasingOptions leasingOptions, string currency, bool allInStock,
+                                             bool hasNotEnoughSecondHandStock, bool hasNotEnoughEndOfSalesStock)
         {
             this.Items = items;
 
@@ -31,10 +33,20 @@ namespace CompanyGroup.Dto.WebshopModule
             this.Currency = currency;
 
             this.AllInStock = allInStock;
+
+            this.HasNotEnoughSecondHandStock = hasNotEnoughSecondHandStock;
+
+            this.HasNotEnoughEndOfSalesStock = hasNotEnoughEndOfSalesStock;
         }
 
+        /// <summary>
+        /// kosár elemek
+        /// </summary>
         public List<ShoppingCartItem> Items { get; set; }
 
+        /// <summary>
+        /// kosár összesen
+        /// </summary>
         public double SumTotal { get; set; }
 
         public int Id { get; set; }
@@ -45,6 +57,9 @@ namespace CompanyGroup.Dto.WebshopModule
 
         public int PaymentTerms { get; set; }
 
+        /// <summary>
+        /// lízing opciók
+        /// </summary>
         public CompanyGroup.Dto.WebshopModule.LeasingOptions LeasingOptions { get; set; }
 
         /// <summary>
@@ -56,5 +71,17 @@ namespace CompanyGroup.Dto.WebshopModule
         /// minden termék a kosárban raktáron van-e?
         /// </summary>
         public bool AllInStock { get; set; }
+
+        /// <summary>
+        /// van-e olyan leértékelt cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughSecondHandStock { get; set; }
+
+        /// <summary>
+        /// van-e olyan kifutó cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughEndOfSalesStock { get; set; }
     }
 }

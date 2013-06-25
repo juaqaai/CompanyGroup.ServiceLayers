@@ -28,12 +28,15 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
         private CompanyGroup.Domain.PartnerModule.IWaitForAutoPostRepository waitForAutoPostRepository;
 
+        private CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository changeTrackingRepository;
+
         public ShoppingCartService(CompanyGroup.Domain.WebshopModule.IShoppingCartRepository shoppingCartRepository, 
                                    CompanyGroup.Domain.WebshopModule.IProductRepository productRepository, 
                                    CompanyGroup.Domain.PartnerModule.IVisitorRepository visitorRepository,
                                    CompanyGroup.Domain.PartnerModule.ICustomerRepository customerRepository,
                                    CompanyGroup.Domain.PartnerModule.ISalesOrderRepository salesOrderRepository,
                                    CompanyGroup.Domain.PartnerModule.IWaitForAutoPostRepository waitForAutoPostRepository, 
+                                   CompanyGroup.Domain.WebshopModule.IChangeTrackingRepository changeTrackingRepository, 
                                    CompanyGroup.Domain.WebshopModule.IFinanceRepository financeRepository) : base(financeRepository, visitorRepository)
         {
             if (shoppingCartRepository == null)
@@ -61,6 +64,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw new ArgumentNullException("WaitForAutoPostRepository");
             }
 
+            if (changeTrackingRepository == null)
+            {
+                throw new ArgumentNullException("ChangeTrackingRepository");
+            }
+
             this.shoppingCartRepository = shoppingCartRepository;
 
             this.productRepository = productRepository;
@@ -72,6 +80,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             this.salesOrderRepository = salesOrderRepository;
 
             this.waitForAutoPostRepository = waitForAutoPostRepository;
+
+            this.changeTrackingRepository = changeTrackingRepository;
         }
 
         #region "kosár műveletek"
@@ -707,17 +717,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //látogató kiolvasása
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
 
-                Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService UpdateLineQuantity visitor must be logged in!"); 
+                Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService UpdateLineQuantity visitor must be logged in!");
 
-                shoppingCartRepository.UpdateLineQuantity(request.LineId, request.Quantity);
+                CompanyGroup.Domain.WebshopModule.Product product =  productRepository.GetItemByShoppingCartLineId(request.LineId);
+
+                CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
+
+                //rendelkezésre álló mennyiség
+                int stock = inventSumList.GetStock(product.ProductId, product.Stock, product.DataAreaId, product.InventLocationId, product.StandardConfigId);
+
+                string notEnoughEndOfSalesProductId = String.Empty;
+
+                //ha a cikk kifutó és a rendelkezésre álló mennyiség kisebb mint a rendelni kívánt mennyiség, akkor nem lehet kosarat módosítani
+                if ( (product.EndOfSales) && (request.Quantity > stock))
+                {
+                    notEnoughEndOfSalesProductId = product.ProductId;
+                }
+                else
+                {
+                    shoppingCartRepository.UpdateLineQuantity(request.LineId, request.Quantity);
+                }
 
                 CompanyGroup.Domain.WebshopModule.ShoppingCart shoppingCart = shoppingCartRepository.GetShoppingCart(request.CartId);
 
-                //valutanem szerinti összeg beállítás
+                //valutanem szerinti összeg beállítás és kifutó cikk esetén nincs elegendő készlet beállítás
                 shoppingCart.GetItems().ForEach(x =>
                 {
                     decimal price = this.ChangePrice(x.CustomerPrice, request.Currency);
                     x.CustomerPrice = (int)price;
+
+                    x.NotEnoughEndOfSalesStock = (x.ProductId.Equals(notEnoughEndOfSalesProductId, StringComparison.OrdinalIgnoreCase));
                 });
 
                 //leasing opciók lekérdezése

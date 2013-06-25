@@ -6,25 +6,25 @@
 		</div>
 		<div id="content" class="group">
 			<div class="zone zone-content">
-			    <input type="hidden" id="hidden_cartId" value="" />
+			<input type="hidden" id="hidden_cartId" value="" />
                 <input type="hidden" id="hidden_cartopen" value="" />
                 <div id="basket_open_button"></div>
 				<script id="shoppingCartSummaryTemplate" type="text/x-jquery-tmpl">
                 {{if Visitor.IsValidLogin && Visitor.Permission.CanOrder}}
                 <div align="right">
-				<table align="right" id="active_basket" border="0" cellpadding="0" cellspacing="0">
+                <table align="right" id="active_basket" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-						<td><img src="@Url.Content("~/Content/Media/images/basket_2.png")" alt=""/></td>
+						<td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}"><img src="@Url.Content("~/Content/Media/images/basket_2.png")" alt=""/></a></td>
 						<td class="active_basket_middle_cell" nowrap="nowrap">
-						<div class="btn_basket_slide">
+						<a href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}" class="btn_basket_slide">
                             <span style="color: #000">Aktív kosár: </span><span style="color: #900">${companyGroup.utils.instance().formatNumber(ActiveCart.SumTotal)} {{if Visitor.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Visitor.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Visitor.Currency == 'USD'}} $
-											{{/if}} </span></div>
+											{{/if}} </span></a>
                         </td>
-							<td><div align="center" id="modify_btn" class="open_cart"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">módosítása / Megrendelés</span></div></td>
+							<td><a style="text-decoration:none;" href="#/saveShoppingCartOpenStatus/{{if ShoppingCartOpenStatus}}0{{else}}1{{/if}}"><div align="center" id="modify_btn"><span>Kosár <span id="shoppingCartSummaryCaption" style="color: #000">{{if ShoppingCartOpenStatus}}bezárása{{else}}módosítása / Megrendelés{{/if}}</span></div></a></td>
                     </tr>
                 </table>
 				</div>
@@ -36,22 +36,12 @@
                     {{if Visitor.IsValidLogin && Visitor.Permission.CanOrder}}
                     <table width="974" border="0" cellspacing="0" cellpadding="2">
                         <tr>
-							 <!--{{if ActiveCart.SumTotal == 0 }}  -->
-							<td nowrap="nowrap">&nbsp;<a href="#/addShoppingCart"><img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></a></td>
+                            <td nowrap="nowrap">&nbsp;<a href="#/addShoppingCart"><img src="@Url.Content("~/Content/Media/images/basketicons/new.png")" alt="" /></a></td>
                             <td nowrap="nowrap"><a href="#/addShoppingCart">Új kosár</a>&nbsp;</td>
                             <td nowrap="nowrap"><a href="#/removeShoppingCart"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete.png")" alt="" /></a></td>
-                            <td nowrap="nowrap"><a href="#/removeShoppingCart">Aktív kosár törlése</a></td>
-							<td nowrap="nowrap"><a href="#/showSaveCartPanel"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></a></td>
+                            <td nowrap="nowrap"><a href="#/removeShoppingCart">Aktív kosár törlése</a>&nbsp;</td>
+                            <td nowrap="nowrap"><a href="#/showSaveCartPanel"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save.png")" alt="" /></a></td>
                             <td nowrap="nowrap"><a id="basket_save" href="#/showSaveCartPanel">Aktív kosár mentése</a>&nbsp;</td>
-							<!-- {{else}} -->
-							<!--<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/new_in.png")" alt="" /></td>
-                            <td nowrap="nowrap" style="color:#cccccc;"><strong>Új kosár</strong></td>
-                            <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_delete_in.png")" alt="" /></td>
-                            <td nowrap="nowrap" style="color:#cccccc;"><strong>Aktív kosár törlése</strong></td>
-							<td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/b_save_in.png")" alt="" /></td>
-                            <td nowrap="nowrap" style="color:#cccccc;"><strong>Aktív kosár mentése</strong></td>-->
-							 <!-- {{/if}}-->
-							
                             <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/basketicons/import.png")" alt="" /></td>
                             <!-- <td nowrap="nowrap"><a id="new_site" href="#add_new_site">new site</a></td> -->
                             <!-- <td nowrap="nowrap" width="100%"><a id="import_win" href="#import_basket_list_win" >Lista fájl importálása</a></td>-->
@@ -104,19 +94,17 @@
                         <tbody>
                             {{each( i, item ) ActiveCart.Items}}
                             <tr>
-                               <td >{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;">
-                                   <!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->
-                                   Leértékelt</span>{{/if}}&nbsp;<span style="width:500px; overflow:auto;">${item.ProductName}</span></td>
+                               <td >{{if item.IsInSecondHand}}<span style="background-color:#999; padding:3px 6px 3px 6px; border-radius:4px; color:#FFF;"><!--<img src="@Url.Content("~/Content/Media/images/icon-sale.png")" title="${item.ConfigId} - ${item.InventLocationId}" alt="${item.ConfigId} - ${item.InventLocationId}"/>-->Leértékelt</span>{{/if}}&nbsp;<span style="width:500px; overflow:auto;" size>${item.ProductName}</span></td>
                                <td>&nbsp;</td>
                               <td>${item.ProductId}</td>
                                 <td>&nbsp;</td>
                                 <td><div style="text-align:right;"><strong>${companyGroup.utils.instance().formatNumber(item.CustomerPrice)} {{if Visitor.Currency == 'HUF'}} Ft 
-									{{/if}}
-									{{if Visitor.Currency == 'EUR'}}  € 
-									{{/if}}
-									{{if Visitor.Currency == 'USD'}} $
-									{{/if}}</strong></div></td>
-								<td>&nbsp;</td>
+											{{/if}}
+											{{if Visitor.Currency == 'EUR'}}  € 
+											{{/if}}
+											{{if Visitor.Currency == 'USD'}} $
+											{{/if}}</strong></div></td>
+											<td>&nbsp;</td>
                                 <td>
                                 <input type="number" class="cartnumber" name="cart_quantity" value="${item.Quantity}" title="${item.Id}" />@*<img src="@Url.Content("~/Content/Media/images/spin-button.png")">*@
                                 db</td>
@@ -203,8 +191,7 @@
                           <td ><strong>Szállítási időpont:</strong></td>
                           <td >  
                             <input name="naptar" id="naptar" type="text" value="Kattintson ide" readonly="readonly" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" />
-                            <input type="hidden" value="" name="itison" id="itison">
-							<div id="div_deliverydate_notallowed"></div> 
+                            <div id="div_deliverydate_notallowed"></div> 
 							
 							<script id="contactperson_template" type="text/html">
 							<span>Kosarában olyan termék is szerepel, amely jelenleg "rendelhető" státuszban van. Így pontos kiszállítási dátum nem válaszható. 
@@ -318,7 +305,7 @@
                           <p>Mi most megmutatjuk Önnek, havonta mekkora összeget kellene  fizetnie, ha ezt a megoldást választaná. Ha tetszik a konstrukció, néhány mező  kitöltésével el is mentheti pdf formátumba az eredményt. Ha felkeltettük  érdeklődését, akkor pontosított árajánlat kérési lehetőséget, és további részleteket  a </strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a> weboldalon talál!</p>
                           <br/>
                         </div>
-                        <span id="finance_message" style="color:red;"><strong>A megadott érték 200 000 Ft és 30 000 000 Ft határok közötti egész szám legyen!</strong></span>
+						<span id="finance_message" style="color:red;"><strong>A megadott érték 200 000 Ft és 30 000 000 Ft határok közötti egész szám legyen!</strong></span>
 						<form action="@Url.Content("~/Webshop/CreateFinanceOffer")" method="post" id="form_financeoffer">
                         <table width="750px" border="0" cellspacing="0" cellpadding="0">
                         <tr>
@@ -385,7 +372,7 @@
 		              <p><strong>Ha bármilyen kérdése merülne fel a konstrukciót illetően, forduljon hozzánk bizalommal! további részletek:</strong> <a href="http://www.hrpfinance.hu" target="_blank" style="color: rgb(8, 67, 133); text-decoration:none;"><strong>www.hrpfinance.hu</strong></a></p>
 		              <a style="text-decoration:none" href="#/finance_close"><input name="close" type="button" value="Bezárás" /></a>
                     </div>  
-                    <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
+                      <script id="leasingOptionsTemplate" type="text/x-jquery-tmpl">
                         {{if Message.length > 0}}
                             <strong>${Message}</strong>
                         {{else}}
@@ -402,6 +389,7 @@
                               <td><div align="center"><input class="radiohitel" type="radio" name="radio_selectNumOfMonth" value="${item.FinanceParameterId}" style="padding-top: 5px;"/>
                                 <strong>${item.NumOfMonth} honap</strong></div></td>
                               <td><div align="center"><strong><span class="finance_price">${item.CalculatedValue}</span> Ft</strong></div></td>
+
                             </tr>
                             {{/each}}
                             </table>
@@ -413,7 +401,7 @@
                         <td></td>
                       </tr>
                     </table>
-                    </div>
+</div>
                 </div>
                 <div id="cus_catalogue_left">
 		            <div id="cus_banner_table">
@@ -450,7 +438,7 @@
 					        <div id="cus_filter_1">
 						        Gyártók kiválasztása
 						        <br />
-						        <select id="manufacturerList" data-placeholder="" class="chzn-select" size="30" multiple style="width:270px;" >
+						        <select id="manufacturerList" data-placeholder="" class="chzn-select" size="30" multiple style="width:270px;">
 							        <option value=""></option>
 @*							        @foreach (var manufacturer in @Model.Structures.Manufacturers)
                                     { 
@@ -495,9 +483,11 @@
                         <div id="banner_table"></div> 
 					 </div>
   					</div>
+                
                 <div id="banners_side" align="center">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div>
+
                 @*terméklista*@
-                <div id="cus_catalogue_right">
+          <div id="cus_catalogue_right">
 		            @* listarendezési panel *@
 		            <div id="cus_list_order_panel">
 			            <table style = "display:none" border="0" cellspacing="0" cellpadding="0">
@@ -627,7 +617,7 @@
                         <div class="expand_heading">
 				            <table width="695" border="0" cellspacing="0" cellpadding="0" class="expand_heading_table1">
 				                <tr>
-								
+
 				                    <td valign="top"><form  class="item_expand" action="#/expand_item" method="post">
 								<input type="hidden" name="hidden_productid" value="${item.ProductId}" /> 
 								<input type="image"  src="@Url.Content("~/Content/Media/images/plusicon.png")" alt="kosár" border="0" align="absmiddle" />
@@ -729,11 +719,10 @@
 				                    </tr>
 				                </table>
                                 </div>
-                            </div>
-							
+                            </div>			        
                             <form action="#/addLineToShoppingCart" method="post"> 
 			                <table width="695px" border="0" cellspacing="1" cellpadding="0" class="expand_heading_table2">
-			                <tr>
+			              <tr>
 				                <td nowrap="nowrap">
 				                    <div class="cus_prod_table_morelink">
 				                        <a style="text-decoration:none; color:#084385;" href="#/details/${item.ProductId}/${item.DataAreaId}"  title="Részletes termékadatlap ${item.ItemName} ${companyGroup.utils.instance().getProductDetailsUrl(item.ProductId)}"><strong>Részletes adatlap</strong></a>
@@ -777,7 +766,7 @@
                                 </td>
                             </tr>
                             </table>
-                        </form>
+                            </form>
                         {{else}}
                         @*hasznalt*@
 						   						    <div class="expand_heading">
@@ -973,43 +962,47 @@
 								<table width="130" border="0" cellspacing="1" cellpadding="2">
 								  <tr>
 										<td nowrap="nowrap">
-										    <span style="font-size:24px; padding:5px;" class="price">Ár: <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)}</strong>
+										<span style="font-size:24px; padding:5px;" class="price">Ár: <strong> ${companyGroup.utils.instance().formatNumber(Product.Price)}</strong>
                                         	{{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Product.Currency == 'USD'}} $
-											{{/if}}</span>
-											<br/><br/>
+											{{/if}}
+											</span>
+											<br><br>
 											
 										{{if Product.SecondHandList.Items.length > 0 && Visitor.IsValidLogin}}
-                                        <span class="price_used" style=" text-decoration: none; font-size:14px; color:#FFF; padding:3px;" >Leértékelt:<strong> ${companyGroup.utils.instance().formatNumber(Product.SecondHandList.MinimumPrice)} </strong>
+                                       <span class="price_used" style=" text-decoration: none; font-size:14px; color:#FFF; padding:3px;" >Leértékelt:<strong> ${companyGroup.utils.instance().formatNumber(Product.SecondHandList.MinimumPrice)} </strong>
+
+                                        
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
 											{{/if}}
 											{{if Product.Currency == 'USD'}} $
-											{{/if}} -tól</span>
+											{{/if}} -tól</a></span>
                                         {{/if}}
 										</td>
 									</tr>
                                     <tr>
 										<td>&nbsp;</td>
 									</tr>
+
                                     <tr>
 									<td>
-                                        <table align="left" width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td>
-                                            {{if Product.Discount}}
-                                                    <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
-                                            {{/if}}</td>
-                                            <td align="left">
-                                            {{if Product.New}}
-                                                <div class="cus_prod_table_morelink" style="margin-left:0px;"><span class="new"><b>ÚJDONSÁG!</b></span></div>
-                                            {{/if}}	</td>
-                                        </tr>
-                                        </table>
+                                    <table align="left" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td>
+                                        {{if Product.Discount}}
+                                                <div class="cus_prod_table_morelink" style="margin-left:15px;"><span class="action"><b>AKCIÓS!<b></span>
+                                        {{/if}}</td>
+                                        <td align="left">
+                                        {{if Product.New}}
+                                            <div class="cus_prod_table_morelink" style="margin-left:0px;"><span class="new"><b>ÚJDONSÁG!</b></span></div>
+                                        {{/if}}	</td>
+                                    </tr>
+                                    </table>
                                     </td>
 									</tr>
 									<tr>
@@ -1023,29 +1016,29 @@
 				                                        <span><b>Rendelhető</b></span>
                                                     {{/if}}
                                                 {{/if}}                                            
-                                            </p>
-                                        </td>
+                                                </p>
+                                            </td>
 									</tr>
                                     </table>
 									{{if Product.Available && Visitor.Permission.CanOrder}}
                                     <form action="#/addLineToShoppingCart" method="post">
-                                        <table align="left" border="0" cellpadding="5" cellspacing="1">
-					                        <tr>
-                                                <td align="right">
-                                                <div class="cus_prod_table_quantity">
-                                                <input type="number" name="txt_quantity" class="number" size="2" value="1" style="margin-top:4px; ; margin-right:3px; width:35px;" /><span> db</span>
-                                                </div>
-                                                </td>
-                                                <td align="right" >
-                                            <div class="cus_prod_table_basket">
-                                            <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /></div></td>
-									        </tr>
-								        </table>
-                                        <input type="hidden" name="hidden_productid" value="${Product.ProductId}" />
-                                        <input type="hidden" name="hidden_stock" value="${Product.Stock}" />
-                                        <input type="hidden" name="hidden_endofsales" value="${Product.EndOfSales}" />
-                                        <input type="hidden" name="hidden_secondhand" value="0" />
-                                        <input type="hidden" name="hidden_dataareaid" value="${Product.DataAreaId}" />
+                                    <table align="left" border="0" cellpadding="5" cellspacing="1">
+					                    <tr>
+                                            <td align="right">
+                                            <div class="cus_prod_table_quantity">
+                                            <input type="number" name="txt_quantity" class="number" size="2" value="1" style="margin-top:4px; ; margin-right:3px; width:35px;" /><span> db</span>
+                                            </div>
+                                            </td>
+                                            <td align="right" >
+                                        <div class="cus_prod_table_basket">
+                                        <input type="image" class="basketicon" src="@Url.Content("~/Content/Media/images/basket.png")" alt="kosár" border="0" align="absmiddle" /></div></td>
+									    </tr>
+								    </table>
+                                    <input type="hidden" name="hidden_productid" value="${Product.ProductId}" />
+                                    <input type="hidden" name="hidden_stock" value="${Product.Stock}" />
+                                    <input type="hidden" name="hidden_endofsales" value="${Product.EndOfSales}" />
+                                    <input type="hidden" name="hidden_secondhand" value="0" />
+                                    <input type="hidden" name="hidden_dataareaid" value="${Product.DataAreaId}" />
                                     </form>
 									{{/if}}
                                {{/if}}
@@ -1095,7 +1088,7 @@
                                 <tr>
                                     <td width="500"><a href="#/details/${item.ProductId}/${item.DataAreaId}"  >${item.ProductId} ${item.ItemName}</a></td>
                                     <td align="right" width="50">{{if Visitor.IsValidLogin}}${item.Stock} db{{/if}}</td>
-                                    <td align="right" width="70">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)}</strong>                                       	
+                                                                     <td align="right" width="70">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)}</strong>      	
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
@@ -1138,7 +1131,7 @@
                                 <tr>
                                     <td width="500"><a href="#/details/${item.ProductId}/${item.DataAreaId}"  >${item.ProductId} ${item.ItemName}</a></td>
                                     <td align="right" width="50">{{if Visitor.IsValidLogin}}${item.Stock} db{{/if}}</td>
-                                    <td align="right" width="70">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)}</strong>                                       	
+                                        <td align="right" width="70">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)}</strong>                        	
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
@@ -1186,7 +1179,7 @@
                                     <tr>
                                         <td width="70">${item.Quantity} db</td>
                                         <td width="720">${item.StatusDescription}</td>
-                                        <td width="100">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)} </strong>
+                                <td width="100">{{if Visitor.IsValidLogin}}<strong>${companyGroup.utils.instance().formatNumber(item.Price)} </strong>
                                             {{if Product.Currency == 'HUF'}} Ft 
 											{{/if}}
 											{{if Product.Currency == 'EUR'}}  € 
@@ -1285,8 +1278,11 @@ Eszerint  megkülönböztetünk:</p>
 
         //companyGroup.webshop.run('#/');
     
-			$('#basket_panel').hide();
-			
+            $('#berlet').priceFormat({
+            prefix: 'R$ ',
+            centsSeparator: ',',
+            thousandsSeparator: '.'
+            });	
 
 			@*kosár toggle*@
             
@@ -1294,10 +1290,8 @@ Eszerint  megkülönböztetünk:</p>
 			
 
             $('.hr2').hide();
-			
-			
-			$("#form_searchInFiltered").hide();
             
+			$("#form_searchInFiltered").hide();
             $("#kiszallitas").change(function () {
 			$("#naptar").val("Kattintson ide")
 			$('#szal_adat').show("slow");
@@ -1373,7 +1367,14 @@ Eszerint  megkülönböztetünk:</p>
 
             $("input#hidden_cartId").val(model.ActiveCart.Id);
 
-            
+            $('#hidden_cartopen').val('');
+
+            if (model.ShoppingCartOpenStatus && model.Visitor.IsValidLogin) { 
+                $('#basket_panel').show();
+            }
+            else {
+                $('#basket_panel').hide();
+            }
 
             $("#becomePartnerContainer").empty();
             var becomePartnerHtml = Mustache.to_html($('#becomePartnerTemplate').html(), model.Visitor);
@@ -1382,9 +1383,4 @@ Eszerint  megkülönböztetünk:</p>
             $("#newsletterContainer").empty();
             var newsletterHtml = Mustache.to_html($('#newsletterTemplate').html(), model.Visitor);
             $('#newsletterContainer').html(newsletterHtml);
-			
-
-
-
-       
 }

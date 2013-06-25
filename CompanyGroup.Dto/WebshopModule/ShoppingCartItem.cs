@@ -97,5 +97,15 @@ namespace CompanyGroup.Dto.WebshopModule
         ///// van-e a cikkre beszerzési rendelés?
         ///// </summary>
         //public bool PurchaseInProgress { get; set; }
+
+        /// <summary>
+        /// nincs elegendő kifutó készlet
+        /// </summary>
+        public bool NotEnoughEndOfSalesStock { get; set; }
+
+        /// <summary>
+        /// nincs elegendő használt készlet
+        /// </summary>
+        public bool NotEnoughSecondHandStock { get; set; }
     }
 }

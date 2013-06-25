@@ -33,6 +33,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             this.structureRepository = structureRepository;
         }
 
+        private string CreateTextFilterCondition(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                return String.Empty;
+            }
+
+            System.Text.StringBuilder textFilterCondition = new System.Text.StringBuilder();
+
+            string[] textFilterList = System.Text.RegularExpressions.Regex.Split(value, @"\s+");
+
+            for (int index = 0; index < textFilterList.Length; index++)
+            {
+                textFilterCondition.Append("\"");
+
+                textFilterCondition.Append(textFilterList[index]);
+
+                textFilterCondition.Append("*");
+
+                textFilterCondition.Append("\"");
+
+                if (index < textFilterList.Length - 1)
+                {
+                    textFilterCondition.Append(" AND ");
+                }
+            }
+
+            return textFilterCondition.ToString();
+        }
+
         /// <summary>
         /// struktúrák lekérdezése
         /// </summary>
@@ -76,6 +106,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
+                //szöveges kereső paraméter FULL TEXT SEARCH paraméterré alakítása "ASUS*" AND "számítógép*"
+                string textFilter = CreateTextFilterCondition(request.TextFilter);
+
                 CompanyGroup.Domain.WebshopModule.Structures structures = null;
 
                 string cacheKey = String.Empty;
@@ -110,7 +143,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                              request.IsInNewsletterFilter,
                                                              request.NewFilter,
                                                              request.StockFilter,
-                                                             request.TextFilter,
+                                                             textFilter,
                                                              request.PriceFilter,
                                                              priceFilterRelation);
 

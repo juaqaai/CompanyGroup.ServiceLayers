@@ -318,10 +318,51 @@ CREATE PROCEDURE [InternetUser].[InvoiceSelect2]( @CustomerId NVARCHAR(10) = '',
 AS
 SET NOCOUNT ON
 
+	;
+	WITH InvoiceHeaders (InvoiceId, InvoiceDate, DueDate) AS
+	(
+		SELECT InvoiceId, MAX(InvoiceDate), MAX(DueDate)
+		FROM InternetUser.Invoice 
+		-- WHERE CustomerId = 'V003378'	--@CustomerId 
+		WHERE CustomerId = @CustomerId 
+		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
+		  AND 1 = CASE WHEN (@OverDue = 1 AND DATEDIFF(d, DueDate, GetDate()) > 0 AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END	--  DueDate <= GETDATE()
+		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
+		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
+		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
+		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
+		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
+		  AND 1 = CASE WHEN @DateIntervall <> 0 AND (DATEDIFF(d, InvoiceDate, GetDate()) > @DateIntervall) THEN 0 ELSE 1 END
+		GROUP BY InvoiceId
+		ORDER BY MAX(InvoiceDate) DESC, MAX(DueDate) DESC, InvoiceId
+		OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
+		FETCH NEXT @ItemsOnPage ROWS ONLY
+	)
+	-- SELECT * FROM InvoiceHeaders
+	/*InvoiceHeadersOnly (InvoiceId, InvoiceDate, DueDate, LineNum) AS
+	(
+		SELECT I.InvoiceId --, ROW_NUMBER() OVER (ORDER BY InvoiceDate DESC, DueDate DESC, InvoiceId, LineNum) AS RowNum
+		FROM InternetUser.Invoice as I
+		INNER JOIN InvoiceHeaders T ON I.InvoiceId = T.InvoiceId
+		--WHERE CustomerId = 'V003378'	--@CustomerId 
+		GROUP BY I.InvoiceId
+		ORDER BY InvoiceDate DESC, DueDate DESC, I.InvoiceId, LineNum
+		OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
+		FETCH NEXT @ItemsOnPage ROWS ONLY
+	)
+	*/
+
+	-- WHERE RowNum BETWEEN @CurrentPageIndex AND @ItemsOnPage
+	/*
+	SELECT InvoiceId 
+	FROM InternetUser.Invoice 
+	WHERE CustomerId = 'V003378'	--@CustomerId 
+	GROUP BY InvoiceId;
+	*/
 	SELECT I.Id, 
 		   I.InvoiceDate,  -- szamla datuma
 		   I.DataAreaId as SourceCompany,  
-		   DueDate,  -- esedekesseg
+		   I.DueDate,  -- esedekesseg
 		   InvoiceAmount,  -- szamla vegosszege
            InvoiceCredit,  -- szamla tartozas
 		   CurrencyCode,  
@@ -330,7 +371,7 @@ SET NOCOUNT ON
 		   --SUM(TaxAmount) as TaxAmount,  --
 		   --SUM(LineAmountMst) as LineAmountMst,  -- osszeg az alapertelmezett penznemben
 		   --SUM(TaxAmountMst) as TaxAmountMst, -- afa osszege az alapertelmezett penznemben
-		   CASE WHEN DATEDIFF(d, GETDATE(), DueDate) > 0 THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as OverDue, 
+		   CASE WHEN DATEDIFF(d, GETDATE(), I.DueDate) > 0 THEN CONVERT(BIT, 0) ELSE CONVERT(BIT, 1) END as OverDue, 
 		   I.LineNum, 
 		   I.ItemDate, 
 		   I.ItemId,  -- cikk
@@ -353,25 +394,26 @@ SET NOCOUNT ON
 		   CASE WHEN ISNULL(C.Available, 0) > 0 THEN CONVERT(BIT, 1) ELSE CONVERT(BIT, 0) END as AvailableInWebShop, 
 		   I.DataAreaId
 	FROM InternetUser.Invoice as I
+	INNER JOIN InvoiceHeaders as H ON I.InvoiceId = H.InvoiceId
 	LEFT OUTER JOIN InternetUser.Catalogue as C ON I.ItemId = C.ProductId -- AND I.DataAreaId = C.DataAreaId 
-	WHERE CustomerId = @CustomerId 
+	ORDER BY InvoiceDate DESC, DueDate DESC, InvoiceId, LineNum
+/*	WHERE CustomerId = @CustomerId 
 		  AND Debit = CASE WHEN @Debit = 1 THEN @Debit ELSE Debit  END
-		  AND 1 = CASE WHEN (@OverDue = 1 AND DATEDIFF(d, DueDate, GetDate()) > 0 AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END	--  DueDate <= GETDATE()
+		  AND 1 = CASE WHEN (@OverDue = 1 AND DATEDIFF(d, I.DueDate, GetDate()) > 0 AND InvoiceCredit > 0) OR (@OverDue = 0) THEN 1 ELSE 0 END	--  DueDate <= GETDATE()
 		  AND ItemId LIKE CASE WHEN @ItemId <> '' THEN '%' + @ItemId + '%' ELSE ItemId END
 		  AND ItemName LIKE CASE WHEN @ItemName <> '' THEN '%' + @ItemName + '%' ELSE ItemName END
 		  AND SalesId LIKE CASE WHEN @SalesId <> '' THEN '%' + @SalesId + '%' ELSE SalesId END
 		  AND SerialNumber LIKE CASE WHEN @SerialNumber <> '' THEN '%' + @SerialNumber + '%' ELSE [SerialNumber] END
-		  AND InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE InvoiceId END
-		  AND 1 = CASE WHEN @DateIntervall <> 0 AND (DATEDIFF(d, InvoiceDate, GetDate()) > @DateIntervall) THEN 0 ELSE 1 END
+		  AND I.InvoiceId LIKE CASE WHEN @InvoiceId <> '' THEN '%' + @InvoiceId + '%' ELSE I.InvoiceId END
+		  AND 1 = CASE WHEN @DateIntervall <> 0 AND (DATEDIFF(d, I.InvoiceDate, GetDate()) > @DateIntervall) THEN 0 ELSE 1 END
 	--GROUP BY InvoiceDate, DataAreaId, DueDate, InvoiceAmount, InvoiceCredit, CurrencyCode, InvoiceId
-
-	ORDER BY InvoiceDate DESC, DueDate DESC, InvoiceId, LineNum
+	*/
 	--CASE WHEN @Sequence =  0 THEN
 	--	InvoiceDate END DESC,
 	--CASE WHEN @Sequence =  1 THEN
 	--	InvoiceDate END ASC
-	OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
-	FETCH NEXT @ItemsOnPage ROWS ONLY;
+	-- OFFSET (@CurrentPageIndex - 1) * @ItemsOnPage ROWS
+	-- FETCH NEXT @ItemsOnPage ROWS ONLY;
 
 RETURN
 GO
@@ -388,7 +430,7 @@ select top 100 * from InternetUser.Invoice where invoiceId = 'HI018878/13'
 -- EXEC InternetUser.InvoiceSelect2 'V016645', 1, 1; 
 /*
 V000135
-EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',	
+EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V003378',	
 									@Debit = 0,				--0: mind, 1 kifizetetlen
 									@OverDue = 0,				--0: mind, 1 lejart 
 									@ItemId = '', 
@@ -396,7 +438,7 @@ EXEC [InternetUser].[InvoiceSelect2] @CustomerId = 'V001446',
 									@SalesId = '',
 									@SerialNumber = '',
 									@InvoiceId = '',	--HI057773
-									@DateIntervall = 2,
+									@DateIntervall = 0,
 									@Sequence = 0, 
 									@CurrentPageIndex = 1, 
 									@ItemsOnPage = 30;

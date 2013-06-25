@@ -18,7 +18,9 @@ namespace CompanyGroup.WebClient.Models
                                                                  shoppingCartAndLeasingOptions.Shipping, 
                                                                  shoppingCartAndLeasingOptions.PaymentTerms,
                                                                  shoppingCartAndLeasingOptions.DeliveryTerms, 
-                                                                 shoppingCartAndLeasingOptions.AllInStock);
+                                                                 shoppingCartAndLeasingOptions.AllInStock,
+                                                                 shoppingCartAndLeasingOptions.HasNotEnoughSecondHandStock, 
+                                                                 shoppingCartAndLeasingOptions.HasNotEnoughEndOfSalesStock);
 
             this.LeasingOptions = shoppingCartAndLeasingOptions.LeasingOptions;
         }

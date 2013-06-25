@@ -7,12 +7,12 @@
   DTS:CreatorName="HRP_HEADOFFICE\JuhaszA"
   DTS:DTSID="{2FA4B813-2955-40B3-8B9F-5DAE17E6FF3E}"
   DTS:ExecutableType="SSIS.Package.3"
-  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LastModifiedProductVersion="11.0.3368.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="Catalogue"
   DTS:PackageType="5"
-  DTS:VersionBuild="68"
-  DTS:VersionGUID="{7556AEAD-27FF-4313-83C8-705AA2D5849E}">
+  DTS:VersionBuild="69"
+  DTS:VersionGUID="{216CDB9A-30BD-40F0-9C56-4D40AB3512E3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:PackageParameters>
@@ -110,6 +110,66 @@
                       cachedLength="20"
                       cachedName="ProductId"
                       lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[DataAreaId]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="DataAreaId"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[DataAreaId]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[EnglishName]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="EnglishName"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[EnglishName]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[ManufacturerName]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="ManufacturerName"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ManufacturerName]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Category1Name]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="Category1Name"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category1Name]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Category2Name]"
+                      cachedDataType="wstr"
+                      cachedLength="35"
+                      cachedName="Category2Name"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category2Name]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Category3Name]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Category3Name"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category3Name]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Garanty]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Garanty"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Garanty]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[GarantyMode]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="GarantyMode"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[GarantyMode]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="1000"
+                      cachedName="Description"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]" />
+                    <inputColumn
+                      refId="Package\Catalogue extract\Derived Column.Inputs[Derived Column Input].Columns[EnglishDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="1000"
+                      cachedName="EnglishDescription"
+                      lineageId="Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[EnglishDescription]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -171,7 +231,7 @@
                       dataType="wstr"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="126"
+                      length="2385"
                       lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]"
                       name="SearchContent"
                       truncationRowDisposition="FailComponent">
@@ -180,13 +240,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]} + " | " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]} + " | " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]}</property>
+                          name="Expression">#{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductId]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[DataAreaId]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[PartNumber]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Name]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[EnglishName]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[ManufacturerName]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category1Name]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category2Name]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category3Name]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Garanty]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[GarantyMode]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]} + " " + #{Package\Catalogue extract\OLE DB Source.Outputs[OLE DB Source Output].Columns[EnglishDescription]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">Name + " | " + PartNumber + " | " + ProductId</property>
+                          name="FriendlyExpression">ProductId + " " + DataAreaId + " " + PartNumber + " " + Name + " " + EnglishName + " " + ManufacturerName + " " + Category1Name + " " + Category2Name + " " + Category3Name + " " + Garanty + " " + GarantyMode + " " + Description + " " + EnglishDescription</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -589,7 +649,7 @@
                     <inputColumn
                       refId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SearchContent]"
                       cachedDataType="wstr"
-                      cachedLength="126"
+                      cachedLength="2385"
                       cachedName="SearchContent"
                       externalMetadataColumnId="Package\Catalogue extract\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SearchContent]"
                       lineageId="Package\Catalogue extract\Derived Column.Outputs[Derived Column Output].Columns[SearchContent]" />
@@ -4178,17 +4238,17 @@
           Id="Package\Catalogue extract\OLE DB Source"
           TopLeft="196,76" />
         <NodeLayout
-          Size="155,42"
-          Id="Package\Catalogue extract\Derived Column"
-          TopLeft="202,334" />
+          Size="160,42"
+          Id="Package\Catalogue extract\Row Count"
+          TopLeft="193,212" />
         <NodeLayout
           Size="172,42"
           Id="Package\Catalogue extract\OLE DB Destination"
           TopLeft="192,458" />
         <NodeLayout
-          Size="160,42"
-          Id="Package\Catalogue extract\Row Count"
-          TopLeft="193,212" />
+          Size="155,42"
+          Id="Package\Catalogue extract\Derived Column"
+          TopLeft="202,334" />
         <EdgeLayout
           Id="Package\Catalogue extract.Paths[Row Count Output 1]"
           TopLeft="276.25,254">

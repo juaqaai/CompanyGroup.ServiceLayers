@@ -27,7 +27,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 ProductId = from.ProductId,
                 Quantity = from.Quantity, 
                 ProductName = from.ProductName,
-                Stock = from.Stock   
+                Stock = from.Stock, 
+                NotEnoughEndOfSalesStock = from.NotEnoughEndOfSalesStock, 
+                NotEnoughSecondHandStock = from.NotEnoughSecondHandStock
             };
         }
     }

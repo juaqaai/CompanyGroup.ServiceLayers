@@ -43,7 +43,7 @@ GO
 -- cikkek lista
 DROP PROCEDURE [InternetUser].[CatalogueCompletionSelect];
 GO
-CREATE PROCEDURE [InternetUser].[CatalogueCompletionSelect] (@Prefix nvarchar(16) = '', 
+CREATE PROCEDURE [InternetUser].[CatalogueCompletionSelect] (@Prefix nvarchar(64) = '', 
 															 @DataAreaId nvarchar(4) = 'hrp',
 												   @Manufacturers nvarchar (250) = '',
 												   @Category1 nvarchar (250) = '',
@@ -52,8 +52,7 @@ CREATE PROCEDURE [InternetUser].[CatalogueCompletionSelect] (@Prefix nvarchar(16
 															 @Discount bit = 0,      
 															 @SecondHand bit = 0,     
 															 @New bit = 0,         
-															 @Stock bit = 0,     
-															 @FindText nvarchar(64) = '', 
+															 @Stock bit = 0,
 															 @PriceFilter nvarchar(16) = '',
 															 @PriceFilterRelation INT = 0  
 )
@@ -61,6 +60,9 @@ AS
 SET NOCOUNT ON
 
 	SET ROWCOUNT 30;
+
+	IF ISNULL(@Prefix, '') = '' 
+		SET @Prefix = '""';
 
 	DECLARE @Separator varchar(1) = ',';
 
@@ -121,7 +123,9 @@ SET NOCOUNT ON
 		1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
-		SearchContent LIKE CASE WHEN @Prefix <> '' THEN '%' + @Prefix + '%' ELSE SearchContent END
+		-- SearchContent LIKE CASE WHEN @Prefix <> '' THEN '%' + @Prefix + '%' ELSE SearchContent END
+		1 = CASE WHEN @Prefix = '""' OR CONTAINS(SearchContent, @Prefix) THEN 1 ELSE 0 END 
+		--1 = CASE WHEN @FindText = '""' OR CONTAINS(SearchContent, @FindText) THEN 1 ELSE 0 END
 	ORDER BY Name;
 			
 RETURN
@@ -129,7 +133,7 @@ GO
 GRANT EXECUTE ON InternetUser.CatalogueCompletionSelect TO InternetUser
 -- EXEC InternetUser.CatalogueCompletionSelect @Prefix = 'DELL', @Stock = 1;
 /*
-EXEC InternetUser.CatalogueCompletionSelect  @Prefix = 'Zy', @StructureXml = '
+EXEC InternetUser.CatalogueCompletionSelect  @Prefix = '"ASUS*" AND "számítógép*"', @StructureXml = '
 <Structure>
 <Manufacturer>
     <Id>A142</Id>

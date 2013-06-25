@@ -17,9 +17,9 @@ companyGroup.partnerinfo = $.sammy(function () {
     //események
     this.bind('run', function (e, data) {
         var context = this;
-        //szűrés azonnal elvihetőre
+        //szűrés azonnal elvihetőre, Józsi kérésére mégis fel lett cserélve...
         $("input[name='radio_canbetaken']").live('change', function () {
-            var checked = $(this).val() == '1' ? true : false;
+            var checked = $(this).val() == '0' ? true : false;
             context.trigger('filterByCanBeTaken', { Checked: checked });
         });
         $("input[name='radio_paymenttype']").live('change', function () {
@@ -72,6 +72,7 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#main_container').empty();
                 var html = Mustache.to_html($('#dashboardTemplate').html(), response);
                 $('#main_container').html(html);
+				
             },
             error: function () {
                 //console.log('GetVisitorInfo call failed');
@@ -359,6 +360,7 @@ companyGroup.partnerinfo = $.sammy(function () {
 			return text.replace(/(\s+)?...$/, '');
 			});
         });
+		
     });
     //számla info részletek 
     this.get('#/invoice_details/:id/1', function (context) {
@@ -366,6 +368,8 @@ companyGroup.partnerinfo = $.sammy(function () {
 	$('#toggle_container_invoice_' + id).show('slow');
 	$('#invoice_id_' + id + '_close').show();
 	$('#invoice_id_' + id + '_open').hide();
+
+	
         //$('#orderInfoFilter').hide();
         //$('#invoiceInfoFilter').show();
         //invoiceInfoRequest.Items.push(parseInt(context.params['id']));
@@ -390,7 +394,6 @@ companyGroup.partnerinfo = $.sammy(function () {
     this.post('#/invoiceinfoByFilter', function (context) {
         //console.log(context.params['radio_paymenttype']);
         $('#orderInfoFilter').hide();
-
         var paymenttype = parseInt(context.params['radio_paymenttype']);
         invoiceInfoRequest.Debit = (paymenttype === 1);
         invoiceInfoRequest.Overdue = (paymenttype === 2);
@@ -581,7 +584,6 @@ companyGroup.partnerinfo = $.sammy(function () {
                 $('#span_AllOverdueDebts').html(response.AllOverdueDebts);
                 $('#span_TotalNettoCredit').html(response.TotalNettoCredit);
                 $("#invoiceInfoTemplate").tmpl(response).appendTo("#main_container");
-
                 $('#invoicePagerContainer').empty();
                 $("#invoicePagerTemplate").tmpl(response).appendTo("#invoicePagerContainer");
 				$('.toggle_container_invoice').hide();

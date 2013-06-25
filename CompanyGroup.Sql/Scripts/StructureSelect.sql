@@ -23,6 +23,9 @@ CREATE PROCEDURE [InternetUser].[StructureSelect] (@DataAreaId nvarchar(4) = 'hr
 AS
 SET NOCOUNT ON
 
+	IF ISNULL(@FindText, '') = '' 
+		SET @FindText = '""';
+
 	DECLARE @Separator varchar(1) = ',';
 
 	WITH Manufacturers_CTE (Mi, Mj)
@@ -75,6 +78,9 @@ SET NOCOUNT ON
 		  (Catalogue.Category1Id IN (SELECT SUBSTRING(@Category1, C1i, COALESCE(NULLIF(C1j, 0), LEN(@Category1) + 1) - C1i) FROM Category1_CTE) OR (@Category1 = '')) AND
 	      (Catalogue.Category2Id IN (SELECT SUBSTRING(@Category2, C2i, COALESCE(NULLIF(C2j, 0), LEN(@Category2) + 1) - C2i) FROM Category2_CTE) OR (@Category2 = '')) AND
 		  (Catalogue.Category3Id IN (SELECT SUBSTRING(@Category3, C3i, COALESCE(NULLIF(C3j, 0), LEN(@Category3) + 1) - C3i) FROM Category3_CTE) OR (@Category3 = '')) AND
+
+--		  (Catalogue.ProductId NOT IN (SELECT SUBSTRING(@ExcludedItems, Excudedi, COALESCE(NULLIF(Excludedj, 0), LEN(@ExcludedItems) + 1) - Excudedi) FROM ExcludedItems_CTE) OR (@ExcludedItems = '')) AND
+
 		  Discount = CASE WHEN @Discount = 1 THEN 1 ELSE Discount END AND  
 		  SecondHand = CASE WHEN @SecondHand = 1 THEN 1 ELSE SecondHand END AND  
 		  New = CASE WHEN @New = 1 THEN 1 ELSE New END AND  
@@ -84,15 +90,9 @@ SET NOCOUNT ON
 		  1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
-		( Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Name END OR 
-		ProductId LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ProductId END OR 
-		PartNumber LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE PartNumber END OR
-		Description LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Description END OR
-		ManufacturerName LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE ManufacturerName END OR
-		Category1Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category1Name END OR
-		Category2Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category2Name END OR 
-		Category3Name LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE Category3Name END
-		)
+		  -- SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END
+		  1 = CASE WHEN @FindText = '""' OR CONTAINS(SearchContent, @FindText) THEN 1 ELSE 0 END
+
 	GROUP BY ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 			Category1Id, Category1Name, Category1EnglishName, 
 			Category2Id, Category2Name, Category2EnglishName, 
@@ -105,14 +105,14 @@ GRANT EXECUTE ON InternetUser.StructureSelect TO InternetUser
 GO
 /* EXEC InternetUser.StructureSelect @DataAreaId = '',
 									 @Manufacturers = '',
-									 @Category1 = 'B008',													      
-									 @Category2 = '',
+									 @Category1 = '',	-- B008												      
+									 @Category2 = '',	
 									 @Category3 = '',
 									 @Discount = 0,      
-									 @SecondHand = 1,     
+									 @SecondHand = 0,     
 									 @New = 0,         
 									 @Stock = 0,     
-									 @FindText = '', 
+									 @FindText = '"ASUS*"', 
 									 @PriceFilter = '',
 									 @PriceFilterRelation = 0;
 

@@ -215,6 +215,12 @@ WHERE TerritoryName IS NOT NULL AND SalesYTD <> 0;
 GO
 GRANT EXECUTE ON InternetUser.SignIn TO InternetUser
 GO
+
+--SELECT * 
+--FROM Axdb.dbo.WebShopUserInfo
+--INNER JOIN Axdb.dbo.CustTable
+-- WHERE (RIGHTHRP = 1 AND RIGHTBSC = 0) OR (RIGHTHRP = 0 AND RIGHTBSC = 1)
+
 -- exec InternetUser.SignIn 'elektroplaza', 'hrp5891ep';
 -- exec InternetUser.SignIn 'ipon', 'gild4MAX19';
 -- exec InternetUser.SignIn 'plorinczy', 'pikolo';
@@ -223,6 +229,7 @@ GO
 -- exec InternetUser.SignIn 'kekszinfo', '8mmks812';
 -- exec InternetUser.SignIn 'Mysoft', '3689478';
 -- exec InternetUser.SignIn 'reveszg', 'Domonkos2000'
+-- exec InternetUser.SignIn '22', '22'
 
 select ACCOUNTNUM, KEPVISELO, count(ACCOUNTNUM), count(KEPVISELO)
 from AXDB.dbo.CUSTTABLE 
@@ -235,7 +242,7 @@ select ACCOUNTNUM, KEPVISELO from AXDB.dbo.CUSTTABLE where ACCOUNTNUM = 'V001565
 
 -- www.111.hu	0hfvmb1l
 
--- select * from Axdb.dbo.WebShopUserInfo WHERE ( WebLoginName = 'joci2' ) -- V000276	kincsesfoto, gild4MAX19
+-- select * from Axdb.dbo.WebShopUserInfo WHERE ( WebLoginName = 'lacika' ) -- V000276	kincsesfoto, gild4MAX19
 select * from Axdb.dbo.WebShopUserInfo WHERE CUSTACCOUNT = 'V016645'	--V001565
 
 select * from Axdb.dbo.WebShopUserInfo WHERE ContactPersonId = 'KAPCS05327'

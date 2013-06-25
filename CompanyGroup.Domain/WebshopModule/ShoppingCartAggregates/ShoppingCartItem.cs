@@ -217,6 +217,16 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
+        /// nincs elegendő kifutó készlet
+        /// </summary>
+        public bool NotEnoughEndOfSalesStock { get; set; }
+
+        /// <summary>
+        /// nincs elegendő használt készlet
+        /// </summary>
+        public bool NotEnoughSecondHandStock { get; set; }
+
+        /// <summary>
         /// érvényesség ellenőrzés  
         /// </summary>
         /// <param name="validationContext"><see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate"/></param>

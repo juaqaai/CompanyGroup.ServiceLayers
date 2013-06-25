@@ -130,10 +130,14 @@ a.tooltip span { border-radius:2px; -moz-border-radius: 2px; -webkit-border-radi
      opacity:.90;*/
     z-index: 6800;
     margin-top: -14px;
-    padding-top: 10px;
+    padding-top: 7px;
     position: fixed;
-	padding-bottom: 8px;
+	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 2px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 2px rgba(0, 0, 0, 0.4);	
 }
+
+
 #cus_background {
     position: fixed;
 	width: 100%;
@@ -174,7 +178,7 @@ a.tooltip span { border-radius:2px; -moz-border-radius: 2px; -webkit-border-radi
 #cus_header2 {
 	width: 1000px;
 	height: 75px;
-	padding-top: 20px;
+
 	background: #084385;
 	background :url('../../Media/images/header.jpg') no-repeat fixed center top rgb(8, 67, 133);
 	margin:0px auto;
@@ -184,7 +188,7 @@ a.tooltip span { border-radius:2px; -moz-border-radius: 2px; -webkit-border-radi
     position: absolute;
     width: 960px;
     z-index: 5900;
-    margin-top: -120px;
+    margin-top: -117px;
 	margin-left: 20px;
     padding-top: 6px;
 }
@@ -259,7 +263,7 @@ a.tooltip span { border-radius:2px; -moz-border-radius: 2px; -webkit-border-radi
     width: 1000px;
 	min-height: 100%;
     padding-top: 5px;
-	padding-bottom:60px;
+	padding-bottom:70px;
     /*-webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);
     -moz-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);
     box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.8);*/
@@ -339,7 +343,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }*/
 #cus_banner_table.fixed {
   position: fixed;
-  top: 40px;
+  top: 55px;
 }
 #cus_banner_table hr {
     color: #f00;
@@ -356,6 +360,21 @@ border-radius: 4px;
 	width: 695px;
     margin-left: 0px;
     margin-top:5px;
+
+}
+.btn_header {
+
+border-style:none; 
+background: #666; 
+padding:3px; 
+padding-right:6px; 
+margin-left:5px; 
+margin-right:5px; 
+border-radius:3px;"
+filter: ''; /* clear the filter since it's the reason for the border-radius missing */
+/* SVG as background image (IE9/Chrome/Safari/Opera) */ 
+background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9ImcyODQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiM3MDcwNzAiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM0NTQ1NDUiIG9mZnNldD0iMSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2cyODQpIiAvPgo8L3N2Zz4=');
+
 
 }
 

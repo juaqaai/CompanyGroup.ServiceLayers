@@ -74,6 +74,9 @@ CREATE PROCEDURE [InternetUser].[CatalogueSelect] (@DataAreaId nvarchar(4) = 'hr
 AS
 SET NOCOUNT ON
 
+	IF ISNULL(@FindText, '') = '' 
+		SET @FindText = '""';
+
 	-- DECLARE @Xml Xml = CONVERT(Xml, @StructureXml);
 	DECLARE @Separator varchar(1) = ',';
 
@@ -151,7 +154,9 @@ SET NOCOUNT ON
 		  1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
-		  SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END
+		  -- SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END
+		  1 = CASE WHEN @FindText = '""' OR CONTAINS(SearchContent, @FindText) THEN 1 ELSE 0 END
+
 	ORDER BY 
 	CASE WHEN @Sequence =  0 THEN --átlagos életkor csökkenõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
 		Sequence0 END ASC,
@@ -191,10 +196,10 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @Category3 = '',
 								  @Discount = 0,      
 								  @SecondHand = 0,     
-								  @New = 1,         
+								  @New = 0,         
 								  @Stock = 0,     
 								  @Sequence = 0,	
-								  @FindText = '', 
+								  @FindText = '"ASUS*"', 
 								  @PriceFilter = '0',
 								  @PriceFilterRelation = 0,	
 								  @CurrentPageIndex = 1, 
@@ -222,12 +227,13 @@ GO
 	SELECT SUBSTRING(@str, i, COALESCE(NULLIF(j, 0), LEN(@str) + 1) - i) as value
 	FROM CTE */
 
-
-	UPDATE InternetUser.Catalogue SET Valid = 0 
+/*
+UPDATE InternetUser.Catalogue SET Valid = 0 
 WHERE id IN
 (SELECT Id, ProductId  FROM (SELECT  Id , ProductId, RANK() OVER (PARTITION BY ProductId, DataAreaId, Name, EnglishName, PartNumber, Available ORDER BY Id) AS rank
 FROM InternetUser.Catalogue) AS t
 WHERE rank <> 1 order by ProductId)
+*/
 
 /*
 select * from InternetUser.Catalogue where ShippingDate <> Convert(DateTime, 0)

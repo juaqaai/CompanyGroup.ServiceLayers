@@ -399,6 +399,27 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
+        /// visszaadja a termékhez tartozó raktárkódot
+        /// </summary>
+        public string InventLocationId
+        {
+            get 
+            {
+                string inventLocationId = String.Empty; 
+                //hrp-s cikk
+                if (this.DataAreaId.Equals(CompanyGroup.Domain.Core.Constants.DataAreaIdHrp, StringComparison.OrdinalIgnoreCase))
+                {
+                    inventLocationId = (this.SecondHand) ? CompanyGroup.Domain.Core.Constants.SecondhandStoreHrp : CompanyGroup.Domain.Core.Constants.OuterStockHrp;
+                }
+                else
+                {
+                    inventLocationId = (this.SecondHand) ? CompanyGroup.Domain.Core.Constants.SecondhandStoreBsc : CompanyGroup.Domain.Core.Constants.OuterStockBsc;
+                }
+                return inventLocationId;
+            }
+        }
+
+        /// <summary>
         /// nem lemonható termék megrendelés esetén
         /// </summary>
         //[MongoDB.Bson.Serialization.Attributes.BsonElement("CannotCancel", Order = 18)]

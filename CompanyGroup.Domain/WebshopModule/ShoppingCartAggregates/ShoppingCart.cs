@@ -277,6 +277,54 @@ namespace CompanyGroup.Domain.WebshopModule
         }
 
         /// <summary>
+        /// van-e olyan kifutó cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughEndOfSalesStock
+        {
+            get
+            {
+                if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
+                {
+                    return false;
+                }
+
+                return this.Items.ToList().Exists(x =>
+                {
+                    if (x == null)
+                    {
+                        return false;
+                    }
+                    return x.NotEnoughEndOfSalesStock;
+                });
+            }
+        }
+
+        /// <summary>
+        /// van-e olyan leértékelt cikk a kosárban, aminek nincs elég készlete?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasNotEnoughSecondHandStock
+        {
+            get
+            {
+                if (this.Items == null || this.Items.Count.Equals(0) || this.Items[0] == null)
+                {
+                    return false;
+                }
+
+                return this.Items.ToList().Exists(x =>
+                {
+                    if (x == null)
+                    {
+                        return false;
+                    }
+                    return x.NotEnoughSecondHandStock;
+                });
+            }
+        }
+
+        /// <summary>
         /// elemek kiolvasása
         /// </summary>
         /// <returns></returns>

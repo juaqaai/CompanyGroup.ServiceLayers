@@ -83,6 +83,36 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             this.changeTrackingRepository = changeTrackingRepository;
         }
 
+        private string CreateTextFilterCondition(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                return String.Empty;
+            }
+
+            System.Text.StringBuilder textFilterCondition = new System.Text.StringBuilder();
+
+            string[] textFilterList = System.Text.RegularExpressions.Regex.Split(value, @"\s+");
+
+            for (int index = 0; index < textFilterList.Length; index++)
+            {
+                textFilterCondition.Append("\"");
+
+                textFilterCondition.Append(textFilterList[index]);
+
+                textFilterCondition.Append("*");
+
+                textFilterCondition.Append("\"");
+
+                if (index < textFilterList.Length - 1)
+                {
+                    textFilterCondition.Append(" AND ");
+                }
+            }
+
+            return textFilterCondition.ToString();
+        }
+
         /// <summary>
         /// összes, a feltételeknek megfelelő termékelem leválogatása 
         /// </summary>
@@ -114,6 +144,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
+                //szöveges kereső paraméter FULL TEXT SEARCH paraméterré alakítása "ASUS*" AND "számítógép*"
+                string textFilter = CreateTextFilterCondition(request.TextFilter);
+
                 CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
 
                 //termékazonosítók listája, melyek nem kell hogy szerepeljenek a terméklista lekérdezés eredményében
@@ -131,7 +164,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                              request.NewFilter,
                                                              request.StockFilter,
                                                              request.Sequence,
-                                                             request.TextFilter,
+                                                             textFilter,
                                                              request.PriceFilter,
                                                              priceFilterRelation,
                                                              ConvertData.ConvertStringListToDelimitedString(excludedItems));
@@ -178,7 +211,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                          request.NewFilter,
                                                          request.StockFilter,
                                                          request.Sequence,
-                                                         request.TextFilter,
+                                                         textFilter,
                                                          request.PriceFilter,
                                                          priceFilterRelation,
                                                          request.CurrentPageIndex,
@@ -824,7 +857,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 int.TryParse(request.PriceFilterRelation, out priceFilterRelation);
 
-                CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetCompletionList(request.Prefix,
+                //szöveges kereső paraméter FULL TEXT SEARCH paraméterré alakítása "ASUS*" AND "számítógép*"
+                string prefix = CreateTextFilterCondition(request.Prefix);
+
+                CompanyGroup.Domain.WebshopModule.CompletionList result = productRepository.GetCompletionList(prefix,
                                                                                                               dataAreaId,
                                                                                                               ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
                                                                                                               ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
@@ -835,7 +871,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                                               request.IsInNewsletterFilter,
                                                                                                               request.NewFilter,
                                                                                                               request.StockFilter,
-                                                                                                              request.TextFilter,
                                                                                                               request.PriceFilter,
                                                                                                               priceFilterRelation);
 

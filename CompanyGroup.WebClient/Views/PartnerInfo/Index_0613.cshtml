@@ -23,10 +23,10 @@
                     <form id="megrendeles" method="post" action="#/orderInfoByFilter">
                     <table  width="940" height="106" border="0" cellpadding="2" cellspacing="0" class="reg_tabs">
                         <tr>
-                        <td height="31" colspan="3"><input type="radio" id="canbetaken_checked" name="radio_canbetaken" value="1" />
-                        <strong>Összes nyitott rendelés</strong>&nbsp;&nbsp;
-                        <input name="radio_canbetaken" type="radio" value="0"checked/>
-                        <strong>Azonnal elvihető rendelés</strong></td>
+                        <td height="31" colspan="3"><input type="radio" name="radio_canbetaken" value="1" checked="checked" />
+                        <strong>Azonnal elvihető</strong>&nbsp;&nbsp;
+                        <input type="radio" name="radio_canbetaken" value="0"/>
+                        <strong>Beszerzés után elérhető</strong></td>
                         </tr>
                         <tr>
                         <td height="32" nowrap="nowrap"><strong>Megrendelés szám:&nbsp;&nbsp;
@@ -62,18 +62,18 @@
                         <td>
                             <div id="invoiceSumValuesContainer"></div>
                             <script id="invoiceSumValuesTemplate" type="text/x-jquery-tmpl">
-						
+							
 							{{if AmountOverdue == "00,00"}}{{else}}
                             <table style="margin-bottom:5px;" id="dept_price" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountOverdue}</span>  Ft 
+                     <td nowrap="nowrap" style=" text-align: right;">Ezekből határidőn túli összesen: {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountOverdue}</span>  Ft 
 											{{/if}}
 											{{if CurrencyCode == 'EUR'}} ${AmountOverdue} € 
 											{{/if}}
 											{{if CurrencyCode == 'USD'}} ${AmountOverdue} $
 											{{/if}}</strong></td>
-                            </tr>
+           
                             </table>
 							{{/if}}
 							
@@ -81,7 +81,7 @@
                             <table style="margin-bottom:5px;" id="open_order" align="right">
                             <tr>
                                 <td nowrap="nowrap"><img src="@Url.Content("~/Content/Media/images/warning.png")" alt="" title="" /></td>
-                                <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountCredit}</span> Ft 
+                     <td nowrap="nowrap" style=" text-align: right;">Az Ön fizetendő számláinak összege:<strong> {{if CurrencyCode == 'HUF'}}<span class="price_huf">${AmountCredit}</span> Ft 
 											{{/if}}
 											{{if CurrencyCode == 'EUR'}}${AmountCredit} € 
 											{{/if}}
@@ -97,41 +97,41 @@
                     </table>
                     <form id="szamla" method="post" action="#/invoiceinfoByFilter">
                     <table class="reg_tabs" width="940" height="108" border="0" cellpadding="0" cellspacing="2">
-  <tr>
-    <td height="20"><input id="radio_all" type="radio" name="radio_paymenttype" value="0" />
-    <strong>Összes számla </strong></td>
-    <td><input id="radio_nonpaid" type="radio" name="radio_paymenttype" value="1" checked="checked" />
-    <strong> Kifizetetlen számlák</strong></td>
-    <td><input id="radio_overdue" type="radio" name="radio_paymenttype" value="2" />
-    <strong>Lejárt számlák</strong></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="20"><strong>Számlaszám:</strong></td>
-    <td><input id="txt_invoiceid_invoice" name="txt_invoiceid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
-    <td><strong>Terméknév:</strong></td>
-    <td><input id="txt_itemname_invoice" name="txt_itemname" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
-    <td><strong>Termékazonosító</strong>:</td>
-    <td><input id="txt_itemid_invoice" name="txt_itemid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
-  </tr>
-  <tr>
-    <td height="20"><strong>Vevő rendelés szám:</strong></td>
-    <td><input id="txt_salesorderid_invoice" name="txt_salesorderid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
-    <!--td><strong>Termék sorozatszám:</strong></td>
-    <td><input id="txt_serialnumber_invoice" name="txt_serialnumber" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td-->
-    <td><strong>Dátum:</strong></td>
-    <td><select name="select_dateintervall">
-      <option value="0" selected="selected">Összes</option>
-      <option value="30">30 napon belüli</option>
+                      <tr>
+                        <td height="20"><input id="radio_all" type="radio" name="radio_paymenttype" value="0" />
+                        <strong>Összes számla </strong></td>
+                        <td><input id="radio_nonpaid" type="radio" name="radio_paymenttype" value="1" checked="checked" />
+                        <strong> Kifizetetlen számlák</strong></td>
+                        <td><input id="radio_overdue" type="radio" name="radio_paymenttype" value="2" />
+                        <strong>Lejárt számlák</strong></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td height="20"><strong>Számlaszám:</strong></td>
+                        <td><input id="txt_invoiceid_invoice" name="txt_invoiceid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><strong>Terméknév:</strong></td>
+                        <td><input id="txt_itemname_invoice" name="txt_itemname" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <td><strong>Termékazonosító</strong>:</td>
+                        <td><input id="txt_itemid_invoice" name="txt_itemid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                      </tr>
+                      <tr>
+                        <td height="20"><strong>Vevő rendelés szám:</strong></td>
+                        <td><input id="txt_salesorderid_invoice" name="txt_salesorderid" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td>
+                        <!--td><strong>Termék sorozatszám:</strong></td>
+                        <td><input id="txt_serialnumber_invoice" name="txt_serialnumber" type="text" value="Kattintson ide" onFocus="if(this.value=='Kattintson ide')this.value=''" onBlur="if(this.value=='')this.value='Kattintson ide'" /></td-->
+                        <td><strong>Dátum:</strong></td>
+                        <td><select name="select_dateintervall">
+                          <option value="0" selected="selected">Összes</option>
+                          <option value="30">30 napon belüli</option>
 	                      <option value="60">60 napon belüli</option>
-	  <option value="90">90 napon belüli</option>
+	                      <option value="90">90 napon belüli</option>
 	                      <option value="180">180 napon belüli</option>
 	                      <option value="365">1 éven belüli</option>
-    </select></td>
-  </tr>
-</table>
+                        </select></td>
+                      </tr>
+                    </table>
 
                     
     </form><br><a  style="text-decoration:none;" href="#/kereses_szamla"><input type="button" value="Keresés" /></a><a  style="text-decoration:none;" href="#/kereses_torlese_szamla"><input type="button" value="Keresés törlése" /></a><h3 style="margin-left:3px; color: #666;">Elemek száma: <span id="span_invoicecount"></span></h3>
@@ -332,13 +332,9 @@ StatusIssueIsOnOrder*@
 				                <tr>
 				                    <td width="200" valign="top">
 				                        <div class="cus_termekkep">
-
                                         {{if PictureExists}}
-				                        <a class="popupimg" href="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" title="${line.ItemName}">
-
-                                              <img src="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" alt="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" />
-                                           
-
+										<a class="popupimg" href="${companyGroup.utils.instance().getSalesOrderPictureUrl(line.Id)}" title="${line.ItemName}">
+										<img src="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" alt="${companyGroup.utils.instance().getPrimaryPictureUrl(line.ItemId)}" />
                                         </a>
 				                        {{else}}
 				                        <img src="@Url.Content("~/Content/Media/images/nopic.jpg")" width="180" height="134" alt="" />
@@ -546,7 +542,6 @@ StatusIssueIsOnOrder*@
                             </td-->
                         </tr>
                         </table>
-
                         </form> 
                         {{/each}}   
                     </div>

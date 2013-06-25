@@ -266,9 +266,9 @@ namespace CompanyGroup.Domain.PartnerModule
                     public bool IsCatalogueOpened { get; set; }
                     public bool IsShoppingCartOpened { get; set; }
              */
-            this.RightHrp = visitorDataHrp.RightHrp || visitorDataBsc.RightHrp;
+            this.RightHrp = (visitorDataHrp.RightHrp || visitorDataBsc.RightHrp); // && (visitorDataHrp.ContractHrp || visitorDataBsc.ContractHrp);
 
-            this.RightBsc = visitorDataHrp.RightBsc || visitorDataBsc.RightBsc;
+            this.RightBsc = (visitorDataHrp.RightBsc || visitorDataBsc.RightBsc); //&& (visitorDataHrp.ContractBsc || visitorDataBsc.ContractBsc);
 
             this.ContractHrp = visitorDataHrp.ContractHrp || visitorDataBsc.ContractHrp;
 
@@ -560,7 +560,12 @@ namespace CompanyGroup.Domain.PartnerModule
 
             bool companyLoginOK = (loginType == LoginType.Company) && (!String.IsNullOrWhiteSpace(this.CustomerId)) && (!String.IsNullOrWhiteSpace(this.CustomerName));
 
-            this.LoggedIn = DateTime.Now.CompareTo(this.ExpireDate) < 1 && (loginType > 0) && (personalLoginOK || companyLoginOK) && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); // && this.Valid;
+            this.LoggedIn = DateTime.Now.CompareTo(this.ExpireDate) < 1 
+                            && (loginType > 0) 
+                            && (personalLoginOK || companyLoginOK)
+                            && (this.RightHrp || this.RightBsc)
+                            && (this.ContractHrp || this.ContractBsc)
+                            && (this.Status == LoginStatus.Active || this.Status == LoginStatus.Permanent); // && this.Valid;
         }
 
         /// <summary>

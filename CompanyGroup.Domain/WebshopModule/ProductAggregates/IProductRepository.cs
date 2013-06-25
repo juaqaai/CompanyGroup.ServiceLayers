@@ -101,7 +101,6 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="isInNewsletterFilter"></param>
         /// <param name="newFilter"></param>
         /// <param name="stockFilter"></param>
-        /// <param name="textFilter"></param>
         /// <param name="priceFilter"></param>
         /// <param name="priceFilterRelation"></param>
         /// <returns></returns>
@@ -116,7 +115,6 @@ namespace CompanyGroup.Domain.WebshopModule
                                                                            bool isInNewsletterFilter,
                                                                            bool newFilter,
                                                                            bool stockFilter,
-                                                                           string textFilter,
                                                                            string priceFilter,
                                                                            int priceFilterRelation);
 
@@ -175,6 +173,13 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
         CompanyGroup.Domain.WebshopModule.Product GetItem(string productId, string dataAreaId);
+
+        /// <summary>
+        /// InternetUser.ItemSelectByShoppingCartLineId @LineId=:LineId
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int lineId);
 
         /// <summary>
         /// mihez jó, és mi jó hozzá 

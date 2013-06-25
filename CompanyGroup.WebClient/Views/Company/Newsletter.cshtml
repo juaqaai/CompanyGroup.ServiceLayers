@@ -16,12 +16,57 @@
 			
            <div align="center" style="width:300px; position:relative; float:left; padding-top:15px;">@{Html.RenderPartial("~/Views/Webshop/Partial1.cshtml");}</div-->       
 <div  style="width:980px; margin:10px; margin-bottom:0px;" id="main_content" class="zone zone-content">
-				<div style="width:980px; position:relative; float:left;" id="div_newsletter_container" class="wrapper">
+				</div><div id="feeds" style=" float:left; z-index:3; background:#FFF; margin-left:35px;"><iframe id="frame" src="" width="700" height="7000" frameBorder="0" >
+				</iframe></div>
+				<div style=" width:980px; position:relative; float:right;" id="div_newsletter_container" class="wrapper">
+				
+                
                 </div>
-                </div>
+				<a href="#/newsletter_unload" class="scroll_close" >Hírlevél bezárása</a>
+				<style>
+.scroll_close	{ 
+display:none; 
+position:fixed;
+right:10px;
+bottom:90px;
+font-size:14px;
+color: #FFF;
+background:#06C; /* reset the background, just in case */
+filter: ''; /* clear the filter since it's the reason for the border-radius missing */
+/* SVG as background image (IE9/Chrome/Safari/Opera) */ 
+background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc5NDUiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNFRDI4MjgiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM5RTA2MDYiIG9mZnNldD0iMSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c5NDUpIiAvPgo8L3N2Zz4=');
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+text-shadow: 1px 1px 2px #333;
+font-weight:bold;
+text-decoration:none;
+border:0px solid #900; 
+padding:10px;
+-webkit-box-shadow: 0px 7px 11px rgba(50, 50, 50, 0.75);
+-moz-box-shadow:    0px 7px 11px rgba(50, 50, 50, 0.75);
+box-shadow:         0px 7px 11px rgba(50, 50, 50, 0.75);
+
+}
+
+</style>
+
                 @*</div>*@
 
 @section ScriptOnReady {
+
+				$(window).scroll(function () {
+				
+				if ( $("#feeds").is(':visible') ) {
+                if ($(this).scrollTop() > 100) {
+                    $('.scroll_close').fadeIn();
+                } else {
+                    $('.scroll_close').fadeOut();
+                }
+				}
+            });
+
+$("#feeds").hide();
 
     //var model = @(Html.Raw(Json.Encode(Model)));
     //console.log(model);
@@ -43,8 +88,10 @@
     <script id="newsletter_template" type="text/x-jquery-tmpl">
 		{{each( i, item ) Items}}
 		
-        <div style="width:230px; position:relative; float:left; margin:5px; " class="expand_heading" >
-            <div class="toggle_container">
+        
+		<div style="width:230px; position:relative; float:left; margin:5px; " class="expand_heading" >
+           
+			<div class="toggle_container">
                 <div>
                 @*${item.AllowedDateTime}
                         ${item.SequenceNumber}
@@ -52,9 +99,12 @@
 		                ${item.Title}
 		                ${item.Description}*@
                 {{if item.PicturePath.length > 0}}
-                    <a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" title="${item.Title}"><img style="max-width:230px; max-height:230px;" src="https://www.hrp.hu/Articles/${item.PicturePath}" alt="${item.PicturePath}" /></a>
+					<form action="#/newsletterload" method="post">
+					<input type="hidden" value="${item.HtmlPath}" name="linkId" />
+                    <input style="max-width:230px;" type="image" src="https://www.hrp.hu/Articles/${item.PicturePath}" />
+					</form>
                 {{else}}
-                    <a id="fancy_box_ads" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
+                    <a id="fancy_box_ads_" class="popupimg" href="https://www.hrp.hu/Articles/${item.HtmlPath}" target="_blank" max-width="240px" title="${item.Title}"><img src="@Url.Content("~/Content/Media/images/demopic.jpg")" width="100px" height="100px" alt="" /></a>
                 {{/if}}
                 </div>
                 <div style=" margin-top:-4px; padding:5px; font-size:14px; background-color:#f4f4f4; color: #4874a5; height:50px; border:1px solid #dddddd; border-radius:0px 0px 3px 3px; ">

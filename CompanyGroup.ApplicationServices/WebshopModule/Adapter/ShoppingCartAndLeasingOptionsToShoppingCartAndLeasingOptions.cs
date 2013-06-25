@@ -27,7 +27,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                                         Convert.ToInt32(shoppingCart.DeliveryTerms), 
                                                                                         options, 
                                                                                         shoppingCart.Currency, 
-                                                                                        shoppingCart.AllInStock);
+                                                                                        shoppingCart.AllInStock, 
+                                                                                        shoppingCart.HasNotEnoughSecondHandStock, 
+                                                                                        shoppingCart.HasNotEnoughEndOfSalesStock);
             }
             catch { return new CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions(); }
         }

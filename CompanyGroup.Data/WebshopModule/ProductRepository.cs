@@ -190,7 +190,6 @@ namespace CompanyGroup.Data.WebshopModule
                                                                                   bool isInNewsletterFilter,
                                                                                   bool newFilter,
                                                                                   bool stockFilter,
-                                                                                  string textFilter,
                                                                                   string priceFilter,
                                                                                   int priceFilterRelation)
         {
@@ -211,7 +210,6 @@ namespace CompanyGroup.Data.WebshopModule
                                                                 .SetBoolean("SecondHand", secondHandFilter)
                                                                 .SetBoolean("New", newFilter)
                                                                 .SetBoolean("Stock", stockFilter)
-                                                                .SetString("FindText", textFilter)
                                                                 .SetString("PriceFilter", priceFilter)
                                                                 .SetInt32("PriceFilterRelation", priceFilterRelation)
                                                                 .SetResultTransformer(
@@ -500,6 +498,30 @@ namespace CompanyGroup.Data.WebshopModule
                                                 .SetString("DataAreaId", dataAreaId)
                                                 .SetString("ProductId", productId)
                                                 .SetResultTransformer(
+                                                new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Product).GetConstructors()[0]));
+
+                CompanyGroup.Domain.WebshopModule.Product product = query.UniqueResult<CompanyGroup.Domain.WebshopModule.Product>();
+
+                return product;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// InternetUser.ItemSelectByShoppingCartLineId @LineId=:LineId
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        public CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int lineId)
+        {
+            try
+            {
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ItemSelectByShoppingCartLineId")
+                                                 .SetInt32("LineId", lineId)
+                                                 .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Product).GetConstructors()[0]));
 
                 CompanyGroup.Domain.WebshopModule.Product product = query.UniqueResult<CompanyGroup.Domain.WebshopModule.Product>();

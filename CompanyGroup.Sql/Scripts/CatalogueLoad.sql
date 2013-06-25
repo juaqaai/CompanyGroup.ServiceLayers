@@ -1,6 +1,9 @@
 USE [Web]
 GO
-/****** Object:  StoredProcedure [InternetUser].[CatalogueLoad]    Script Date: 2013.05.26. 23:48:19 ******/
+/* 
+	Object:  StoredProcedure exec [InternetUser].[CatalogueLoad]    
+	select * from InternetUser.Catalogue;
+*/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -63,6 +66,7 @@ SET NOCOUNT ON
 			,[Sequence0]
 			,[SearchContent]
 			,[IsPurchaseOrdered]
+			,0
 		 FROM InternetUser.Stage_Catalogue;
 	END
 

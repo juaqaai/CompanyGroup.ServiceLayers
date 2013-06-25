@@ -29,6 +29,9 @@ CREATE PROCEDURE [InternetUser].[ProductListCount] (@DataAreaId nvarchar(4) = 'h
 AS
 SET NOCOUNT ON
 
+	IF ISNULL(@FindText, '') = '' 
+		SET @FindText = '""';
+
 	DECLARE @Separator varchar(1) = ',';
 
 	WITH Manufacturers_CTE (Mi, Mj)
@@ -96,12 +99,13 @@ SET NOCOUNT ON
 		1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
         1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
-		SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END;
+		-- SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END;
+		1 = CASE WHEN @FindText = '""' OR CONTAINS(SearchContent, @FindText) THEN 1 ELSE 0 END;
 			
 RETURN
 GO
 GRANT EXECUTE ON InternetUser.ProductListCount TO InternetUser
--- EXEC InternetUser.[ProductListCount] @Stock = 1;
+-- EXEC InternetUser.[ProductListCount] @FindText = '"ASUS*"';
 /*
 EXEC InternetUser.[ProductListCount]  
 

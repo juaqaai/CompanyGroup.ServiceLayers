@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-        <title>@ViewBag.Title - HRP - BSC WEBSHOP</title>
+        <title>@ViewBag.Title - HRP - BSC WEBSHOP -</title>
         <link href="~/Content/Media/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 		<meta content="hu" name="content-language" />
@@ -13,39 +13,9 @@
         <meta name="expires" content="7 days" />
         <meta name="owner" content="HRP Hungary Kft." />
         <meta name="copyright" content="HRP Hungary Kft." /><meta name="publisher" content="HRP Hungary Kft." />
-        <!-- [if IE]>
-        <meta http-equiv="imagetoolbar" content="no" />
-        <meta name="MSSmartTagsPreventParsing" content="true" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<![endif]-->
-		<!--[if lt IE 10]>
-		<link rel="stylesheet" type="text/css" href="~/Content/themes/custom/hrp_bsc_html_css.css" />
-		<![endif]-->
-
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width" />
-		<script src="http://wcetdesigns.com/assets/javascript/jquery/cookie-plugin.js"></script>
-		
-		<script>
-		function remember_me(){
-		var c = $("#check"); //INPUT CHECKBOX
 
-		//IF CHECKBOX IS SET, COOKIE WILL BE SET
-		if(c.is(":checked")){
-		var u = $("#txt_username").val(); //VALUE OF USERNAME
-		var p = $("#txt_password").val(); //VALUE OF PASSWORD
-		$.cookie("username", e, { expires: 3650 }); //SETS IN DAYS (10 YEARS)
-		$.cookie("password", p, { expires: 3650 }); //SETS IN DAYS (10 YEARS)
-		}
-		}
-		//NEXT PAGE LOAD, THE USERNAME & PASSWORD WILL BE SHOWN IN THEIR FIELDS
-			function load_em(){
-		var e = $.cookie("username"); //"USERNAME" COOKIE
-		var p = $.cookie("password"); //"PASSWORD" COOKIE
-
-		$("#txt_username").val(e); //FILLS WITH "USERNAME" COOKIE
-		$("#txt_password").val(p); //FILLS WITH "PASSWORD" COOKIE
-		}
-		</script>
         @Styles.Render("~/Content/css")
 
        @Scripts.Render("~/bundles/modernizr")
@@ -78,7 +48,9 @@
                         "~/Scripts/lib/require.js",
                         "~/bundles/app")
     </head>
-    <body>
+	<!--[if IE 7 ]> <body class="ie7> <![endif]-->
+<!--[if IE 8 ]> <body class="ie8> <![endif]-->
+<!--[if gt IE 9]><!--><body><!--<![endif]-->
 	<div id="preloader_site">
 
 	<div align="center" id="status">
@@ -113,35 +85,41 @@
         <div id="cus_background"></div>
 		<div id="div1"></div>
 
-        <script id="visitorInfoTemplate" type="text/x-jquery-tmpl">
-				<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
+        <script id="visitorInfoTemplate" type="text/html">
+			<table id="cus_header1_table" width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="100%">
-						{{#IsValidLogin}}
-						<table >
-						<tr><td style="paddign-right:10px"><a class="btn_header" id="anchor_signout" href="#/signOut"><strong lang="hun" >Kijelentkezés</strong></a></td>
-						<td nowrap="nowrap" ><span lang="hun" >Bejelentkezve:<strong><span> {{PersonName}}</span></strong></span>  <strong><span id="companyname">{{CompanyName}}</span></strong></td>
-						</tr>
-						</table>
-						{{/IsValidLogin}}
+                    {{#IsValidLogin}}
+                        <span >Bejelentkezve:</span> 
+                        <strong><span id="companyname">{{CompanyName}}</span> <span>{{PersonName}}</span></strong>
+                        <span>Képviselő:</span>
+                        <strong><span>{{Representative.Name}}</span></strong>
+						<span>email:</span>
+                        <a href="mailto:{{Representative.Email}}">{{Representative.Email}}</a>                      
+						<span>Telefon:</span>
+                        <strong><span>{{Representative.Phone}} </span></strong>
+						<strong><span>{{#Representative.Mobile}} , {{/Representative.Mobile}}{{Representative.Mobile}}</span></strong>
+                        <a style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" id="anchor_signout" href="#/signOut"><strong>Kijelentkezés</strong></a>
+                    {{/IsValidLogin}}
                     {{^IsValidLogin}}
-                        <a id="loginwin" class="btn_header"   href="#/showSignInPanel"><img  src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" alt="" /><strong lang="hun"> Bejelentkezés </strong></a>
-						<a id="loginwin" class="btn_header"   href="@Url.Content("~/Registration/Index")"><strong lang="hun"> Regisztráció </strong></a>
+                        <a id="loginwin"  style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" href="#/showSignInPanel"><img  src="@Url.Content("~/Content/Media/images/login.png")" align="absmiddle" alt="" /><strong> Bejelentkezés </strong></a>
+						<a id="loginwin"  style="border-style:none; background: #666; padding:3px; padding-right:6px; margin-left:5px; border-radius:3px;" href="@Url.Content("~/Registration/Index")"><strong> Regisztráció </strong></a>
                     {{/IsValidLogin}}
                     </td>
-					<td nowrap="nowrap"><div class="btn_header"  id="anchor_signout" ><strong lang="hun" >Angol</strong></div></td>
+					<td nowrap="nowrap">&nbsp;</td>
+					<!--<td nowrap="nowrap">Nyelv&nbsp;</td-->
 					<td nowrap="nowrap">
                         <!--<strong><a href="#/changeLanguage/{{InverseLanguageId}}"><span id="inverse_language_id" style="background: #900; padding: 2px; margin-right: 10px;">{{InverseLanguageId}}</span></a></strong-->
                         {{#IsValidLogin}}
-                            <span lang="hun">Pénznem</span><strong><a href="#/changeCurrency/HUF">
+                            Pénznem <strong><a href="#/changeCurrency/HUF">
                             {{#CurrencyIsHuf}}
                             <span id="currency_huf" style="background: #900; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             {{^CurrencyIsHuf}}
-                            <span id="currency_huf"  style="background: #666; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
+                            <span id="currency_huf" style="background: #666; padding: 2px; margin-right: 2px; border-radius:3px;">HUF</span>
                             {{/CurrencyIsHuf}}
                             </a></strong>
-                            <strong><a href="#/changeCurrency/EUR">
+                            <!--strong><a href="#/changeCurrency/EUR">
                             {{#CurrencyIsEur}}
                             <span id="currency_eur" style="background: #900; padding: 2px; margin-right: 2px; border-radius:3px;">EUR</span>
                             {{/CurrencyIsEur}}
@@ -155,22 +133,11 @@
                             {{^CurrencyIsUsd}}
                             <span id="currency_usd" style="background: #666; padding: 2px; border-radius:3px;">USD</span>
                             {{/CurrencyIsUsd}}
-                            </a></strong>
+                            </a></strong-->
                         {{/IsValidLogin}}
                     </td>
 				</tr>
 			</table>
-			{{#IsValidLogin}}
-			<div style="width:100%; background:#666; margin-top:2px;"><div id="cus_header1_table" style="margin-left:auto; margin-right:auto; font-size:13px; padding-left:19px; padding-top:2px; padding-bottom:2px; width:1000px;"><span lang="hun" >Képviselő:{{#Representatives.Items}}</span>
-                        <strong><a href="mailto:{{Email}}"> {{Name}}</a></strong>
-						<span>email:</span>
-                        <a href="mailto:{{Email}}"><strong>{{Email}}</strong></a>
-                        <span lang="hun" >Telefon:</span>
-                        <strong><span>{{Phone}} </span></strong>
-						<strong><span>{{#Mobile}} , {{/Mobile}}{{Mobile}} ,</span></strong>{{/Representatives.Items}} 
-						</div><div> 
-						
-						{{/IsValidLogin}}
         </script>
 
 		</div>
@@ -186,19 +153,21 @@
                         {{#IsValidLogin}}
                         <ul id="usermenu">
 							<li>
-								<div lang="hun" id="cus_usermenu_text">Adatkezelő</div>
+								<div id="cus_usermenu_text">
+									Adatkezelő
+								</div>
 								<ul>
 									<li>
-										<a lang="hun" href="@Url.Content("~/Registration/")">Adatlap / Módosítás</a>
+										<a href="@Url.Content("~/Registration/")">Adatlap / Módosítás</a>
 									</li>
 									<li>
-										<a lang="hun" href="@Url.Content("~/PartnerInfo/#/invoiceinfo/1")">Számlák</a>
+										<a href="@Url.Content("~/PartnerInfo/#/invoiceinfo/1")">Számlák</a>
 									</li>
 									<li>
-										<a lang="hun" href="@Url.Content("~/PartnerInfo/#/salesorderinfo")">Megrendelések</a>
+										<a href="@Url.Content("~/PartnerInfo/#/salesorderinfo")">Megrendelések</a>
 									</li>
 									<li>
-										<a lang="hun" href="@Url.Content("~/PartnerInfo/#/changepassword")">Jelszó módosítás</a>
+										<a href="@Url.Content("~/PartnerInfo/#/changepassword")">Jelszó módosítás</a>
 									</li>
 								</ul>
 							</li>
@@ -209,19 +178,19 @@
                             <form id="form_searchByTextFilter" action="#/searchByTextFilter" method="post">
                             <div class="inputwrapper">
 							<select style="cursor:default;" class="select1">
-  							<option value="#" lang="hun" >Név vagy cikkszám</option>
+  							<option value="#">Név vagy cikkszám</option>
 							</select> 
-                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;" lang="hun" >A mező kitöltése kötelező</label>
-                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" name="txt_globalsearch" id="txt_globalsearch" value="" size="27"/>
+                            <label class="error" for="txt_globalsearch" style="display:none; color:#900;">A mező kitöltése kötelező</label>
+                            <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" name="txt_globalsearch" id="txt_globalsearch" value="keresés a termékek között" size="27"/>
                             <input type="submit" value="" class="imgClass" />
                             </div>
                             </form>
 							<form id="form_searchInFiltered" action="#/searchInFiltered" method="post">
                             <div class="inputwrapper">
 							<select style="cursor:default;" class="select1">
-  							<option value="#" lang="hun" >Keresés a szürésben</option>
+  							<option value="#">Keresés a szürésben</option>
 							</select> 
-                            <label class="error" for="txt_globalsearch_filter" style="display:none; color:#900;" lang="hun" >A mező kitöltése kötelező</label>
+                            <label class="error" for="txt_globalsearch_filter" style="display:none; color:#900;">A mező kitöltése kötelező</label>
                             <input style="border: 0px; margin-left:6px; margin-top:4px" type="text" class="" name="txt_globalsearch" id="txt_globalsearch" value="" size="27"/>
                             <input type="submit" value="" class="imgClass" />
                             </div>
@@ -231,27 +200,27 @@
 				</table>
 	
 			</div>
-			<div id="szlogen" lang="hun" >…több, mint <strong lang="hun" >disztribúció</strong></div>
+			<div id="szlogen" >…több, mint <strong>disztribúció</strong></div>
 			<div id="cus_logo_and_pages_menu"><a href="@Url.Content("~/Webshop/Index")"><img style="border-style:none;" src="@Url.Content("~/Content/Media/images/hrp_bsc_logo.png")" alt="" /></a>    
-				<a href="#" class="scrollup" lang="hun" >Lap tetejére</a>
+				<a href="#" class="scrollup">Lap tetejére</a>
 			    <div id="cus_ax_nav">
 					 <ul id="menu-bar">
 					    <li>
-						    <a href="@Url.Content("~/Webshop/Index")" lang="hun" >Webáruház</a>
+						    <a href="@Url.Content("~/Webshop/Index")">Webáruház</a>
 					    </li>
 			            <li id="newsletterContainer">
                         </li>
 					    <li>
-						    <a href="@Url.Content("#")" lang="hun" >Céginformáció</a>
+						    <a href="@Url.Content("#")">Céginformáció</a>
 							<ul>
 							    <li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Index")" lang="hun" >Bemutatkozás</a> 
+								   <a rel="nofollow" href="@Url.Content("~/Company/Index")">Bemutatkozás</a> 
 							    </li>
 								<li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Contact")" lang="hun" >Elérhetőségünk</a> 
+								   <a rel="nofollow" href="@Url.Content("~/Company/Contact")">Elérhetőségünk</a> 
 							    </li>
 								<li>
-								   <a rel="nofollow" href="@Url.Content("~/Company/Wastemanagement")" lang="hun" >Hulladékkezelés</a> 
+								   <a rel="nofollow" href="@Url.Content("~/Company/Wastemanagement")">Hulladékkezelés</a> 
 							    </li>
 						    </ul>
 					    </li> 
@@ -259,51 +228,46 @@
 					    </li>
 						
 						 <li>
-						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank" lang="hun" >Szerviz</a>
+						    <a rel="nofollow" href="http://www.fixdirect.hu" target="_blank">Szerviz</a>
 					    </li>
 						    
 					    <li>
-						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")" lang="hun" >Karrier</a>
+						    <a rel="nofollow" href="@Url.Content("~/Company/Carreer")">Karrier</a>
 					    </li>
 						<li>
-						    <a rel="nofollow" href="@Url.Content("#/")" lang="hun" >Tájékoztató</a>
+						    <a rel="nofollow" href="@Url.Content("#/")">Tájékoztató</a>
 							<ul>
 							    <li>
-								   <a href="@Url.Content("~/Company/Guide/#/termOfUse")" lang="hun" >felhasználási feltételek</a> 
+								   <a href="@Url.Content("~/Company/Guide/#/termOfUse")">felhasználási feltételek</a> 
 							    </li>
                                 <li>
-								   <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")" lang="hun" >szállítási és fizetési feltételek</a>
+								   <a href="@Url.Content("~/Company/Guide/#/deliveryAndPaymentOptions")">szállítási és fizetési feltételek</a>
 							    </li>
 								 <li>
-								   <a href="@Url.Content("~/Company/Guide/#/dataProtection")" lang="hun" >adatvédelmi nyilatkozat</a> 
+								   <a href="@Url.Content("~/Company/Guide/#/dataProtection")">adatvédelmi nyilatkozat</a> 
 							    </li>
 								<li>
-								   <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")" lang="hun" >visszáru feltételek</a>
+								   <a href="@Url.Content("~/Company/Guide/#/returnItemConditions")">visszáru feltételek</a>
 							    </li>
                                 <li>
-								   <a href="@Url.Content("~/Company/Guide/#/garantyValidation")" lang="hun" >garancia érvényesítése</a>
+								   <a href="@Url.Content("~/Company/Guide/#/garantyValidation")">garancia érvényesítése</a>
 							    </li>
                                 <li>
-								   <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")" lang="hun" >vásárlás a webáruházban</a>
+								   <a href="@Url.Content("~/Company/Guide/#/shoppingInTheWebshop")">vásárlás a webáruházban</a>
 							    </li>
 						    </ul>
 					    </li> 
 				    </ul>
 					<script id="becomePartnerTemplate" type="text/html">
 					{{#IsValidLogin}}
-
                         <!--a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok módosítása">Adatmódosítás</a-->
 					{{/IsValidLogin}}
-					<style> #cus_header2 { padding-top: 35px; } </style>
-					
 					{{^IsValidLogin}}
-					
-					<style> #cus_header2 { padding-top: 15px; } </style>
 					    <!--a href="@Url.Content("~/Registration/Index")" title="Regisztrációs adatok megadása">Partnerré válás</a-->
 					{{/IsValidLogin}}
 					</script>
                     <script id="newsletterTemplate" type="text/html">
-					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")" lang="hun" >Akciók</a>{{/IsValidLogin}}
+					{{#IsValidLogin}}<a href="@Url.Content("~/Company/Newsletter")">Akciók</a>{{/IsValidLogin}}
 
 
 				   </script>
@@ -376,19 +340,19 @@
 			<div style="display: none;">
                 <div id="import_basket_list_win">
 				<form id="basketlist_import" name="basketlist_import" enctype="multipart/form-data" method="post" action="#/importShoppingCart">
-				  <strong lang="hun" >Lista fájl importálása kosárba</strong><br /><br />
+				  <strong>Lista fájl importálása kosárba</strong><br /><br />
 				  <table border="0" cellspacing="3" cellpadding="10">
 				    <tr>
-				      <td lang="hun" >Fájl kiválasztása</td>
+				      <td>Fájl kiválasztása</td>
 				      <td><input type="file" name="import_basket_file" id="import_basket_file" /></td>
 				    </tr>
 				    <tr>
-				      <td lang="hun" >Kosár elnevezése</td>
+				      <td>Kosár elnevezése</td>
 				      <td><input type="text" size="32" name="import_basket_name" id="import_basket_name" disabled="disabled" /></td>
 				    </tr>
 				    <tr>
 				      <td>&nbsp;</td>
-				      <td><input type="submit" name="button" id="button" value="Feltöltés indítása" lang="hun" /></td>
+				      <td><input type="submit" name="button" id="button" value="Feltöltés indítása" /></td>
 				    </tr>
 				  </table>
 				</form>
@@ -445,18 +409,18 @@
 			<div style="display: none;">
                 <div id="save_basket_win">
 				    <form id="form_savecart" enctype="multipart/form-data" method="post" action="#/saveShoppingCart">
-				      <strong lang="hun" >Kosár mentése</strong><br /><br />
+				      <strong>Kosár mentése</strong><br /><br />
                       <div id="savecart_errors"></div>
 				      <table border="0" cellspacing="3" cellpadding="10">
 				        <tr>
-				          <td lang="hun" >Kosár elnevezése</td>
+				          <td>Kosár elnevezése</td>
 				          <td><input type="text" size="32" name="txt_cartname" id="txt_cartname" />
-                          <label class="error" for="txt_cartname" style="display:none; color:#900;" lang="hun" >A kosárnév kitöltése kötelező</label>
+                          <label class="error" for="txt_cartname" style="display:none; color:#900;">A kosárnév kitöltése kötelező</label>
                           </td>
 				        </tr>
 				        <tr>
 				          <td>&nbsp;</td>
-				          <td><input type="submit" value="Kosár mentése" lang="hun" /></td>
+				          <td><input type="submit" value="Kosár mentése" /></td>
 				        </tr>
 				      </table>
 				    </form>
@@ -468,25 +432,25 @@
 				<div id="div_login">
 				<a class="fancybox-close" href="#/closed"></a>
                     <form action="#/signin" id="form_login" method="post"> 
-                        <h2 lang="hun">Bejelentkezés</h2>
+                        <h2>Bejelentkezés</h2>
                         <br />
-                        <span lang="hun" >Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni. </span>
+                        Partnereink az alábbi mezök kitöltésével tudnak bejelentkezni.
                         <br />
                         <br />
 
-                        <div style="margin-top:20px;"><strong lang="hun" >Felhasználónév:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_username" name="txt_username" class="form-login" title="felhasználónév" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_username" style="display:none; color:#900;" lang="hun" >A felhasználónév kitöltése kötelező</label></div>
+                        <div style="margin-top:20px;"><strong>Felhasználónév:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_username" name="txt_username" class="form-login" title="felhasználónév" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_username" style="display:none; color:#900;">A felhasználónév kitöltése kötelező</label></div>
 
-                        <div><strong lang="hun" >Jelszó:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="jelszó" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_password" style="display:none; color:#900;" lang="hun" >A jelszó kitöltése kötelező</label></div>
+                        <div><strong>Jelszó:</strong></div><div style="margin-top:5px; margin-bottom:5px;"><input id="txt_password" name="txt_password" type="password" class="form-login" title="jelszó" value="" size="30" maxlength="100" /><br/><label class="error" for="txt_password" style="display:none; color:#900;">A jelszó kitöltése kötelező</label></div>
                         <p></p><br />
                           <span class="login-box-options">
-                          <input id="check" type="checkbox">
-                            <span lang="hun" >Emlékezzen rám </span>
-                          <a id="forget_password" href="#/showForgetPasswordPanel" style="color:#084385; text-decoration: none; margin-left:30px;"><strong lang="hun" >Elfelejtett jelszó?</strong></a></span>
+                          <input type="checkbox" name="1" value="1" />
+                            Emlékezzen rám
+                          <a id="forget_password" href="#/showForgetPasswordPanel" style="color:#084385; text-decoration: none; margin-left:30px;"><strong>Elfelejtett jelszó?</strong></a></span>
                           <br />
                           <br />
                           <button type="submit"><!--img style="border-style:none;" src="#" width="103" height="42" style="margin-left:90px;" /-->Belépés</button>
                         <br />
-                        <p lang="hun" >Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#084385; text-decoration: none;"><strong lang="hun" >Regisztráljon!</strong></a></p>
+                        <p>Még nem partnerünk? <a href="@Url.Content("~/Registration/Index")" style="color:#084385; text-decoration: none;"><strong>Regisztráljon!</strong></a></p>
                         <div id="login_errors"></div>
                         @Html.AntiForgeryToken() 
                         </form>	
@@ -496,19 +460,19 @@
             <div style="display:none;">
                 <div style="width:250px; padding:15px;" id="div_forgetpassword">
                 <!--a class="fancybox-close" href="#/closed"></a-->
-                <span lang="hun" style="font-size:24px; color:#084385;" ><strong lang="hun">Jelszóemlékeztető</strong></span><br><br>
-                <span lang="hun"> <spanKérem adja meg felhasználó nevét. A hozzáférési adatait elküldjük a rendszerünkben regisztrált felhasználónévhez tartozó e-mail címre.</span><br/><br/>
-                <strong lang="hun" >Felhasználónév:</strong><br/><br/>
+                <span style="font-size:24px; color:#084385;" ><strong>Jelszóemlékeztető</strong></span><br><br>
+                Kérem adja meg felhasználó nevét. A hozzáférési adatait elküldjük a rendszerünkben regisztrált felhasználónévhez tartozó e-mail címre.<br/><br/>
+                <strong>Felhasználónév:</strong><br/><br/>
                 <form action="#/sendforgetpassword" method="post">
                 <input type="text" size="24" name="txt_forgetpassword_username" class="regfields" />
                 <input type="submit" value="Küldés" />
                 </form>
                 <span style="color:#F00" id="forgetPasswordResult"></span><br/><br/>
-                <span lang="hun">Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:</span><br/><br/>
+                Amennyiben továbbra is problémája van a bejelentkezéssel, kérje web adminisztrátorunk segítségét:<br/><br/>
                 <strong>Rávai András</strong><br/>
                  Email: aravai@hrp.hu<br/>
                 Telefon: +36-1-452-4647<br/><br/>
-                <em lang="hun" >Köszönjük. HRP Hungary Kft, BSC Kft. </em>
+                <em>Köszönjük. HRP Hungary Kft, BSC Kft. </em>
                 </div>
             </div>
 
@@ -530,15 +494,7 @@
     @RenderSection("ScriptsInBottom", false)
 
     <script type="text/javascript">
-	
-	//function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-	//$(document).on("keydown", disableF5);
-	
-	
-			$(".item_expand").hide();
-			
-			$("#form_searchInFiltered").hide();
-				
+	$("#form_searchInFiltered").hide();
 			if (navigator.cookieEnabled==false)
 	{
 	$.fancybox('<div align="center" style="width:250px; padding:10px;"><H2>Sütik engedélyezése</H2><p>Kérem engedélyezze a sütiket a böngészőjében a továbblépés érdekében.</p><!--a style="text-decoration:none; color:#FFF;" href="#/closed"><input type="button" value="Bezárás" /></a--></div>', {
@@ -548,8 +504,8 @@
                     'closeBtn': 'false',
                     'changeFade': 0,
                     'speedIn': 300,
-                    'speedOut': 300,
-                    'width': '150%',
+                    'speedOut': 300,                 
+					'width': '150%',
                     'height': '150%',
                     'autoScale': true,
                 });
@@ -621,6 +577,6 @@
 
 
     </script>
-
     </body>
+
 </html>

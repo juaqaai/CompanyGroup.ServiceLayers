@@ -26,3 +26,28 @@ GO
 GRANT EXECUTE ON InternetUser.ItemSelect TO InternetUser
 -- EXEC InternetUser.ItemSelect @ProductId = 'RLA-00005', @DataAreaId = 'bsc';
 -- SELECT * FROM InternetUser.Catalogue WHERE DataAreaId = 'bsc' AND 
+GO
+
+DROP PROCEDURE [InternetUser].[ItemSelectByShoppingCartLineId];
+GO
+CREATE PROCEDURE [InternetUser].[ItemSelectByShoppingCartLineId] (@LineId INT = 0)
+AS
+SET NOCOUNT ON
+
+	SELECT TOP 1 Catalogue.Id, Catalogue.ProductId, AxStructCode,	Catalogue.DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
+			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
+			Stock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
+			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, IsPurchaseOrdered, Catalogue.CreatedDate, Updated, Available, PictureId, SecondHand, Valid
+	FROM InternetUser.Catalogue as Catalogue
+	INNER JOIN InternetUser.ShoppingCartLine as CartLine ON Catalogue.ProductId = CartLine.ProductId AND Catalogue.DataAreaId = CartLine.DataAreaId
+	WHERE CartLine.Id = @LineId;
+			
+RETURN
+GO
+GRANT EXECUTE ON InternetUser.ItemSelectByShoppingCartLineId TO InternetUser
+
+/*
+select top 1000 * from InternetUser.ShoppingCartLine order by Id desc
+
+EXEC [InternetUser].[ItemSelectByShoppingCartLineId] 8348;
+*/
