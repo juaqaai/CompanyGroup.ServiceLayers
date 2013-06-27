@@ -157,6 +157,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
@@ -230,6 +232,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.Amount = shoppingCart.SumTotal;
 
                 leasingOptions.ValidateAmount();
+
+                leasingOptions.CalculateAllValue();
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
@@ -320,6 +324,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
@@ -392,6 +398,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
@@ -459,6 +467,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.Amount = shoppingCart.SumTotal;
 
                 leasingOptions.ValidateAmount();
+
+                leasingOptions.CalculateAllValue();
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
@@ -578,6 +588,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
 
                 response.Currency = request.Currency;  
@@ -685,9 +697,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.ShoppingCartAndLeasingOptions response = new ShoppingCartAndLeasingOptionsToShoppingCartAndLeasingOptions().Map(shoppingCart, leasingOptions);
 
-                response.Currency = request.Currency;  
+                response.Currency = request.Currency;
 
                 return response;
             }
@@ -824,6 +838,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 leasingOptions.ValidateAmount();
 
+                leasingOptions.CalculateAllValue();
+
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 
                 CompanyGroup.Dto.WebshopModule.ShoppingCartInfo response = new CompanyGroup.Dto.WebshopModule.ShoppingCartInfo(storedOpenedShoppingCarts.StoredItems,
@@ -938,6 +954,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 leasingOptions.Amount = shoppingCart.SumTotal;
 
                 leasingOptions.ValidateAmount();
+
+                leasingOptions.CalculateAllValue();
 
                 CompanyGroup.Dto.WebshopModule.StoredOpenedShoppingCartCollection storedOpenedShoppingCarts = new ShoppingCartHeaderCollectionToStoredOpenedShoppingCartCollection().Map(shoppingCartHeaderCollection);
 

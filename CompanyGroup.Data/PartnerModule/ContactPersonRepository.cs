@@ -57,18 +57,19 @@ namespace CompanyGroup.Data.PartnerModule
         /// <returns></returns>
         public CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult Change(CompanyGroup.Domain.PartnerModule.ChangePasswordCreate request)
         {
+            /*
             string tmp = this.Serialize<CompanyGroup.Domain.PartnerModule.ChangePasswordCreate>(request);
 
             CompanyGroup.Helpers.DynamicsConnector dynamics = new CompanyGroup.Helpers.DynamicsConnector(ContactPersonRepository.UserName,
                                                                                                          ContactPersonRepository.Password,
                                                                                                          ContactPersonRepository.Domain,
-                                                                                                         request.DataAreaId,
+                                                                                                         CompanyGroup.Domain.Core.Constants.DataAreaIdHrp,
                                                                                                          ContactPersonRepository.Language,
                                                                                                          ContactPersonRepository.ObjectServer,
                                                                                                          ContactPersonRepository.ClassName);
             dynamics.Connect();
 
-            object result = dynamics.CallMethod("changePwd", tmp);    //deSerializeTest
+            object result = dynamics.CallMethod("changePwd", tmp); 
 
             dynamics.Disconnect();
 
@@ -77,6 +78,19 @@ namespace CompanyGroup.Data.PartnerModule
             CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult response = this.DeSerialize<CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult>(xml);
 
             return response;
+             */
+
+            CompanyGroup.Domain.Utils.Check.Require((request != null), "Request can not be null or empty!");
+
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ChangePassword")
+                                             .SetString("ContactPersonId", request.ContactPersonId)
+                                             .SetString("WebLoginName", request.WebLoginName)
+                                             .SetString("OldPassword", request.OldPassword)
+                                             .SetString("NewPassword", request.NewPassword);
+
+            int code = query.UniqueResult<int>();
+
+            return CompanyGroup.Domain.PartnerModule.ChangePasswordCreateResult.Create(code, request.DataAreaId);
         }
 
         /// <summary>

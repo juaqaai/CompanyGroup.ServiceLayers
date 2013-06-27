@@ -175,7 +175,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 }
 
                 //lehetséges-e a megadott adatokkal a jelszómódosítás művelet?
-                CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = contactPersonRepository.VerifyChangePassword(visitor.PersonId, request.UserName, request.OldPassword, request.NewPassword, "hrp");
+                CompanyGroup.Domain.PartnerModule.ChangePasswordVerify verify = contactPersonRepository.VerifyChangePassword(visitor.PersonId, request.UserName, request.OldPassword, request.NewPassword, CompanyGroup.Domain.Core.Constants.DataAreaIdHrp);
 
                 //ha nem lehetséges a jelszómódosítás, akkor kilépés hibaüzenettel
                 if (!verify.Success)
@@ -187,7 +187,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 CompanyGroup.Domain.PartnerModule.ChangePasswordCreate changePasswordCreate = new CompanyGroup.Domain.PartnerModule.ChangePasswordCreate()
                                                                                                   {
                                                                                                       ContactPersonId = visitor.PersonId,
-                                                                                                      DataAreaId = "hrp",
+                                                                                                      DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp,
                                                                                                       NewPassword = request.NewPassword,
                                                                                                       OldPassword = request.OldPassword,
                                                                                                       WebLoginName = request.UserName
@@ -205,7 +205,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                 CompanyGroup.Domain.PartnerModule.ChangePassword changePassword = new CompanyGroup.Domain.PartnerModule.ChangePassword()
                                                                                     {
                                                                                         CreatedDate = DateTime.Now,
-                                                                                        DataAreaId = "hrp",
+                                                                                        DataAreaId = CompanyGroup.Domain.Core.Constants.DataAreaIdHrp,
                                                                                         NewPassword = request.NewPassword,
                                                                                         OldPassword = request.OldPassword,
                                                                                         UserName = request.UserName,

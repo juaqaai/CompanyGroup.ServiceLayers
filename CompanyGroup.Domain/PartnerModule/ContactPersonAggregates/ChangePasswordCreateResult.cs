@@ -59,5 +59,19 @@ xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><ChangePassword xmlns=\"http:/
             this.Message = reader.ReadElementContentAsString();
             this.DataAreaId = reader.ReadElementContentAsString();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static ChangePasswordCreateResult Create(int code, string dataAreaId)
+        {
+            string message = code.Equals(1) ? "Change password operation successfully completed!" : "Change password operation failed!";
+
+            return new ChangePasswordCreateResult() { Code = code, DataAreaId = dataAreaId, Message = message };
+        }
     }
 }

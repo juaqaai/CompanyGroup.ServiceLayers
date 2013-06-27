@@ -305,6 +305,9 @@
     <EmbeddedResource Include="PartnerModule\EventRegistration\EventRegistration.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePassword.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="Readme.txt" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\AddressZipCode.hbm.xml" />
     <EmbeddedResource Include="PartnerModule\CustomerAggregates\Customer.hbm.xml">

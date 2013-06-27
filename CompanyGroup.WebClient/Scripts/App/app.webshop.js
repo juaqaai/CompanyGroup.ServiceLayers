@@ -143,6 +143,7 @@ companyGroup.webshop = $.sammy(function () {
                 catalogueRequest.ManufacturerIdList = (manufacturerIdList === null || manufacturerIdList === '') ? [] : manufacturerIdList;
                 catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(false, true, true, true);
+			
                 loadCatalogue();
                 showProductList(true);
 				
@@ -160,6 +161,7 @@ companyGroup.webshop = $.sammy(function () {
                 catalogueRequest.Category1IdList = (category1IdList === null || category1IdList === '') ? [] : category1IdList;
                 catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, false, true, true);
+				
                 loadCatalogue();
                 showProductList(true);
                 context.redirect('#/' +  manufacturerIdList2 +    category1IdList2  +   category2IdList2  +   category3IdList2 );
@@ -176,6 +178,7 @@ companyGroup.webshop = $.sammy(function () {
                 catalogueRequest.Category2IdList = (category2IdList === null || category2IdList === '') ? [] : category2IdList;
                 catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, true, false, true);
+			
                 loadCatalogue();
                 showProductList(true);
                 context.redirect('#/' +  manufacturerIdList2 +    category1IdList2  +   category2IdList2  +   category3IdList2 );
@@ -192,6 +195,7 @@ companyGroup.webshop = $.sammy(function () {
                 catalogueRequest.Category3IdList = (category3IdList === null || category3IdList === '') ? [] : category3IdList;
                 catalogueRequest.CurrentPageIndex = 1;
                 loadStructure(true, true, true, false);
+			
                 loadCatalogue();
                 showProductList(true);
                 context.redirect('#/' +  manufacturerIdList2 +    category1IdList2  +   category2IdList2  +   category3IdList2 );
@@ -254,16 +258,16 @@ companyGroup.webshop = $.sammy(function () {
 
         });
         //keresés névre, vagy cikkszámra 
-        $("#txt_globalsearch").live('focus', function () {
-            if ('keresés a termékek között' === $(this).val()) {
-                $(this).val(''); //fókuszba kerül a keresés mező
-            }
-        }).live('blur', function () {   //elveszti a fókuszt a keresés mező
-            var text = $(this).val();
-            if (!text) {
-                $(this).val('keresés a termékek között');
-            }
-        });
+        //$("#txt_globalsearch").live('focus', function () {
+         //   if ('keresés a termékek között' === $(this).val()) {
+        //        $(this).val(''); //fókuszba kerül a keresés mező
+        //    }
+     //   }).live('blur', function () {   //elveszti a fókuszt a keresés mező
+      //      var text = $(this).val();
+       //     if (!text) {
+       //         $(this).val('keresés a termékek között');
+       //     }
+     //   });
         //rendezés stílusbeállítás
         //$('.select2').skinner({'type':'left'});
         //kosárlista kiválasztott elem beállítása
@@ -321,7 +325,7 @@ companyGroup.webshop = $.sammy(function () {
 								inner_html += '<img src="../Content/Media/images/nopic.jpg"  width="50" height="50" alt="" /> ';
 								}  
 								inner_html += '</a></div></td><td><div class="label"><strong></strong></div><div class="description"><a href="#/details/' + val.ProductId + '/' + val.DataAreaId + '">' + val.ProductName + '</a></div></td></tr></table></div>';  
-                                arr_suggestions.push({ label: inner_html, value: val.ProductName });
+                                arr_suggestions.push({ label: inner_html, value: val.ProductId});
                             });
                             response(arr_suggestions);
                         }
@@ -468,6 +472,7 @@ companyGroup.webshop = $.sammy(function () {
         showProductList(true);
         $("html, body").animate({ scrollTop: 0 }, 100)
     });
+    //szűrés hrp termékekre
     this.bind('filterByHrp', function (e, data) {
         if (data.HrpChecked || data.BscChecked) {
             catalogueRequest.HrpFilter = data.HrpChecked;
@@ -493,6 +498,7 @@ companyGroup.webshop = $.sammy(function () {
             });
         }
     });
+    //szűrés bsc termékekre
     this.bind('filterByBsc', function (e, data) {
         if (data.HrpChecked || data.BscChecked) {
             catalogueRequest.BscFilter = data.BscChecked;
