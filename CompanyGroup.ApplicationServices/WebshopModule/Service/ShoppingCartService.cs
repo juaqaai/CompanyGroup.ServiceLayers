@@ -145,10 +145,9 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.ShoppingCartHeaderCollection shoppingCartHeaderCollection = new Domain.WebshopModule.ShoppingCartHeaderCollection(shoppingCartHeaders);
 
                 //finanszírozandó összeg
-                int financedAmount = Convert.ToInt32(shoppingCart.SumTotal);
 
                 //leasing opciók lekérdezése
-                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(financedAmount);
+                List<CompanyGroup.Domain.WebshopModule.LeasingOption> leasingOptionList = financeRepository.GetLeasingByFinancedAmount(shoppingCart.SumTotal);
 
                 //leasing kalkuláció
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
@@ -535,7 +534,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService AddLine visitor must be logged in!");
 
                 //termék lekérdezés, vizsgálat
-                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(request.ProductId, request.DataAreaId);
+                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(visitor.Id, request.ProductId, request.DataAreaId);
 
                 Helpers.DesignByContract.Invariant(product != null, "productRepository.GetItem result cannot be null!");
 
@@ -733,7 +732,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "ShoppingCartService UpdateLineQuantity visitor must be logged in!");
 
-                CompanyGroup.Domain.WebshopModule.Product product =  productRepository.GetItemByShoppingCartLineId(request.LineId);
+                CompanyGroup.Domain.WebshopModule.Product product =  productRepository.GetItemByShoppingCartLineId(visitor.Id, request.LineId);
 
                 CompanyGroup.Domain.WebshopModule.InventSumList inventSumList = changeTrackingRepository.InventSumCT(0);
 

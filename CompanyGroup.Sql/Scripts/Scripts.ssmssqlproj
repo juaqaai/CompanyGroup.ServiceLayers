@@ -259,17 +259,17 @@
           <AssociatedConnUserName />
           <FullPath>CustomerPriceGroupInsert.sql</FullPath>
         </FileNode>
-        <FileNode Name="CustomerPriceGroupSelect.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>CustomerPriceGroupSelect.sql</FullPath>
-        </FileNode>
         <FileNode Name="CustomerSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>CustomerSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CustomerSpecialPriceInsert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustomerSpecialPriceInsert.sql</FullPath>
         </FileNode>
         <FileNode Name="DeliveryAddressSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
@@ -468,12 +468,6 @@
           <AssociatedConnSrvName>srv2</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>ShoppingCartUpdate.sql</FullPath>
-        </FileNode>
-        <FileNode Name="SignIn.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>SignIn.sql</FullPath>
         </FileNode>
         <FileNode Name="StructureSelect.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:srv2:True</AssociatedConnectionMoniker>

@@ -7,12 +7,12 @@
   DTS:CreatorName="HRP_HEADOFFICE\juhasza"
   DTS:DTSID="{64854914-CFA1-41FD-983D-7D67DFF7A570}"
   DTS:ExecutableType="SSIS.Package.3"
-  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LastModifiedProductVersion="11.0.3368.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="WebLoader"
   DTS:PackageType="5"
-  DTS:VersionBuild="21"
-  DTS:VersionGUID="{C21C983E-1EAA-4AC4-95E1-F9B1B8049082}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{BB69D5A1-E914-4F11-A38F-D8C610522305}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables>
@@ -89,6 +89,27 @@
             SQLTask:DataType="20"
             SQLTask:ParameterSize="-1" />
         </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Picture"
+      DTS:CreationName="SSIS.ExecutePackageTask.3"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{06badd6a-3dfc-4ff2-b2e4-709b9539610a}"
+      DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Picture"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Picture.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>JobLogKey</ParameterName>
+            <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -178,27 +199,6 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Web staging sequence container\Picture"
-          DTS:CreationName="SSIS.ExecutePackageTask.3"
-          DTS:Description="Execute Package Task"
-          DTS:DTSID="{176d1b04-91b8-4815-975e-b80ecc7fbcac}"
-          DTS:ExecutableType="SSIS.ExecutePackageTask.3"
-          DTS:LocaleID="-1"
-          DTS:ObjectName="Picture"
-          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
-          <DTS:Variables />
-          <DTS:ObjectData>
-            <ExecutePackageTask>
-              <UseProjectReference>True</UseProjectReference>
-              <PackageName>Picture.dtsx</PackageName>
-              <ParameterAssignment>
-                <ParameterName>JobLogKey</ParameterName>
-                <BindedVariableOrParameterName>User::JobLogKey</BindedVariableOrParameterName>
-              </ParameterAssignment>
-            </ExecutePackageTask>
-          </DTS:ObjectData>
-        </DTS:Executable>
-        <DTS:Executable
           DTS:refId="Package\Web staging sequence container\Representative"
           DTS:CreationName="SSIS.ExecutePackageTask.3"
           DTS:Description="Execute Package Task"
@@ -255,11 +255,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{855755CD-3614-43F6-981D-F394FA904162}"
+      DTS:DTSID="{5C267456-C0E9-43C4-93E2-CA25444621FA}"
       DTS:From="Package\Web staging sequence container"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
-      DTS:To="Package\JobLog close" />
+      DTS:To="Package\Picture" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
@@ -268,6 +268,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Web staging sequence container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{16B9171F-9676-4A71-B825-BF923AE669FC}"
+      DTS:From="Package\Picture"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\JobLog close" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
     <DTS:EventHandler
@@ -349,7 +357,7 @@
         <NodeLayout
           Size="140,59"
           Id="Package\JobLog close"
-          TopLeft="233,731" />
+          TopLeft="235.222222222222,844.333333333333" />
         <NodeLayout
           Size="138,42"
           Id="Package\JobLog start"
@@ -373,10 +381,6 @@
           Size="156,42"
           Id="Package\Web staging sequence container\Invoice"
           TopLeft="374,96" />
-        <NodeLayout
-          Size="135,42"
-          Id="Package\Web staging sequence container\Picture"
-          TopLeft="39,17" />
         <NodeLayout
           Size="158,42"
           Id="Package\Web staging sequence container\Representative"
@@ -406,28 +410,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,101.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="305.75,665">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,66"
-              Start="0,0"
-              End="0,58.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,58.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -471,7 +453,55 @@
           FontInfo="{assembly:Null}"
           Size="167,74"
           Id="2e1ca605-6266-46e5-b3a2-24a1cd7fe615"
-          TopLeft="446,731" />
+          TopLeft="444.888888888889,841" />
+        <NodeLayout
+          Size="135,42"
+          Id="Package\Picture"
+          TopLeft="233.333333333333,751.111111111111" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="304.666666666667,665">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,86.111111111111"
+              Start="0,0"
+              End="0,78.611111111111">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,78.611111111111" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="303.027777777778,793.111111111111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.2222222222222"
+              Start="0,0"
+              End="0,43.7222222222222">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.7222222222222" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>

@@ -170,6 +170,20 @@ CREATE TABLE InternetUser.CustomerPriceGroup
 )
 GO
 
+-- speciális árak
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.CustomerSpecialPrice') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	DROP TABLE InternetUser.CustomerSpecialPrice;
+GO
+CREATE TABLE InternetUser.CustomerSpecialPrice
+(
+	Id				INT IDENTITY PRIMARY KEY,
+	VisitorId		INT NOT NULL DEFAULT 0,			-- Visitor.Id
+	ProductId		NVARCHAR(20) NOT NULL DEFAULT '',
+	Price			INT NOT NULL DEFAULT 1, 
+	DataAreaId		NVARCHAR(3) NOT NULL DEFAULT '',
+)
+GO
+
 -- select * from InternetUser.Representative;
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'InternetUser.Representative') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 	DROP TABLE InternetUser.Representative;

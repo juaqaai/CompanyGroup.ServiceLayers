@@ -169,6 +169,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                              priceFilterRelation,
                                                              ConvertData.ConvertStringListToDelimitedString(excludedItems));
 
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
+
                 CompanyGroup.Domain.WebshopModule.Products products = null;
 
                 string cacheKey = String.Empty;
@@ -200,7 +202,8 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 if (products == null)
                 {
-                    products = productRepository.GetList(dataAreaId,
+                    products = productRepository.GetList(visitor.Id,
+                                                         dataAreaId,
                                                          ConvertData.ConvertStringListToDelimitedString(request.ManufacturerIdList),
                                                          ConvertData.ConvertStringListToDelimitedString(request.Category1IdList),
                                                          ConvertData.ConvertStringListToDelimitedString(request.Category2IdList),
@@ -249,7 +252,6 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 //}));
 
                 //ha nincs bejelentkezve, akkor a VisitorId üres
-                CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
 
                 //érvényes belépés esetén ár, valutanem, kosár, hírlevél akció kalkulálása 
                 if (visitor.IsValidLogin)
@@ -259,20 +261,20 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                     CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 
+                    //legutolsó frissítés óta az árazásban történt változások
                     CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList = changeTrackingRepository.PriceDiscTableCT(0);
 
                     products.ForEach(x =>
                     {
                         decimal price = 0; int price1 = 0; int price2 = 0; int price3 = 0; int price4 = 0; int price5 = 0;
 
-                        //egyedi ár beállítás CT-ben ha van, akkor kiolvasásra kerül
+                        //vevőkódhoz rendelt egyedi ár beállítás CT-ben ha van, akkor kiolvasásra kerül
                         if (priceDiscTableList.IsInList(x.ProductId, x.DataAreaId, visitor.CustomerId))
                         {
                             price = priceDiscTableList.GetPrice(x.ProductId, x.DataAreaId, visitor.CustomerId);
                         }
 
                         //ha nincs egyedi beállítás a termékre, akkor lehet 1..5 intervallum érték változás a CT-ben, 
-                        //vagy a termékhez rendelt 1..5 árral kell kalkulálni
                         if (price.Equals(0))
                         {
                             price1 = priceDiscTableList.GetPrice(x.ProductId, x.DataAreaId, "1");
@@ -281,14 +283,21 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                             price4 = priceDiscTableList.GetPrice(x.ProductId, x.DataAreaId, "4");
                             price5 = priceDiscTableList.GetPrice(x.ProductId, x.DataAreaId, "5");
 
-                            //ha nincs 1..5 intervallum érték változás a CT-ben, akkor a termékhez rendelt 1..5 ár lesz értékül adva
-                            if (price1.Equals(0)) { price1 = x.Prices.Price1; }
-                            if (price2.Equals(0)) { price2 = x.Prices.Price2; }
-                            if (price3.Equals(0)) { price3 = x.Prices.Price3; }
-                            if (price4.Equals(0)) { price4 = x.Prices.Price4; }
-                            if (price5.Equals(0)) { price5 = x.Prices.Price5; }
+                            //ha van 1..5 intervallum érték változás a CT-ben, akkor ezzel kell számolni
+                            if (!price1.Equals(0) || !price2.Equals(0) || !price3.Equals(0) || !price4.Equals(0) || !price5.Equals(0))
+                            {
+                                if (price1.Equals(0)) { price1 = x.Prices.Price1; }
+                                if (price2.Equals(0)) { price2 = x.Prices.Price2; }
+                                if (price3.Equals(0)) { price3 = x.Prices.Price3; }
+                                if (price4.Equals(0)) { price4 = x.Prices.Price4; }
+                                if (price5.Equals(0)) { price5 = x.Prices.Price5; }
 
-                            price = visitor.CalculateCustomerPrice(price1, price2, price3, price4, price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId, x.DataAreaId);
+                                price = visitor.CalculateCustomerPrice(price1, price2, price3, price4, price5, x.Structure.Manufacturer.ManufacturerId, x.Structure.Category1.CategoryId, x.Structure.Category2.CategoryId, x.Structure.Category3.CategoryId, x.DataAreaId);
+                            }
+                            else
+                            {
+                                price = x.CustomerPrice;
+                            }
                         }
 
                         x.CustomerPrice = this.ChangePrice(price, request.Currency);
@@ -726,12 +735,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 Helpers.DesignByContract.Require(!String.IsNullOrEmpty(request.DataAreaId), "ProductService GetItemByProductId request.DataAreaId cannot be null, or empty!");
 
-                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(request.ProductId, request.DataAreaId);
-
-                Helpers.DesignByContract.Ensure((product != null), "ProductService productRepository.GetItem result can not be null!");
-
                 //ha nincs bejelentkezve, akkor a VisitorId üres
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
+
+                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(visitor.Id, request.ProductId, request.DataAreaId);
+
+                Helpers.DesignByContract.Ensure((product != null), "ProductService productRepository.GetItem result can not be null!");
 
                 if (visitor.IsValidLogin)
                 {
@@ -761,7 +770,10 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                         price4 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "4");
                         price5 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "5");
 
-                        //ha nincs 1..5 intervallum érték változás a CT-ben, akkor a termékhez rendelt 1..5 ár lesz értékül adva
+
+                        //ha van 1..5 intervallum érték változás a CT-ben, akkor ezzel kell számolni
+                        if (!price1.Equals(0) || !price2.Equals(0) || !price3.Equals(0) || !price4.Equals(0) || !price5.Equals(0))
+                        {
                         if (price1.Equals(0)) { price1 = product.Prices.Price1; }
                         if (price2.Equals(0)) { price2 = product.Prices.Price2; }
                         if (price3.Equals(0)) { price3 = product.Prices.Price3; }
@@ -774,6 +786,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                                                                product.Structure.Category2.CategoryId,
                                                                product.Structure.Category3.CategoryId,
                                                                product.DataAreaId);
+                        }
+                        else
+                        {
+                            price = product.CustomerPrice;
+                        }
                     }
 
                     product.CustomerPrice = this.ChangePrice(price, request.Currency);
@@ -892,9 +909,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 CompanyGroup.Domain.PartnerModule.Visitor visitor = String.IsNullOrEmpty(request.VisitorId) ? CompanyGroup.Domain.PartnerModule.Factory.CreateVisitor() : this.GetVisitor(request.VisitorId);
 
-                result.Items = this.GetCompatibilityList(request.ProductId, request.DataAreaId, request.VisitorId, visitor);
+                CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList = changeTrackingRepository.PriceDiscTableCT(0);
 
-                result.ReverseItems = this.GetReverseCompatibilityList(request.ProductId, request.DataAreaId, request.VisitorId, visitor);
+                result.Items = this.GetCompatibilityList(request.ProductId, request.DataAreaId, request.VisitorId, priceDiscTableList, visitor);
+
+                result.ReverseItems = this.GetReverseCompatibilityList(request.ProductId, request.DataAreaId, request.VisitorId, priceDiscTableList, visitor);
 
                 return result;
             }
@@ -904,7 +923,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
         }
 
-        private List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> GetCompatibilityList(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.PartnerModule.Visitor visitor)
+        private List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> GetCompatibilityList(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList, CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {
             try
             {
@@ -912,7 +931,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, false);
 
-                compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, visitor)));
+                compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, priceDiscTableList, visitor)));
 
                 return result;
             }
@@ -922,7 +941,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
         }
 
-        private List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> GetReverseCompatibilityList(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.PartnerModule.Visitor visitor)
+        private List<CompanyGroup.Dto.WebshopModule.CompatibleProduct> GetReverseCompatibilityList(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList, CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {
             try
             {
@@ -930,7 +949,7 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                 List<CompanyGroup.Domain.WebshopModule.CompatibilityItem> compatibilityItems = productRepository.GetCompatibilityItemList(productId, dataAreaId, true);
 
-                compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, visitor)));
+                compatibilityItems.ForEach(x => result.Add(this.GetCompatibleProduct(x.ProductId, x.DataAreaId, visitorId, priceDiscTableList, visitor)));
 
                 return result;
             }
@@ -940,11 +959,11 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
             }
         }
 
-        private CompanyGroup.Dto.WebshopModule.CompatibleProduct GetCompatibleProduct(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.PartnerModule.Visitor visitor)
+        private CompanyGroup.Dto.WebshopModule.CompatibleProduct GetCompatibleProduct(string productId, string dataAreaId, string visitorId, CompanyGroup.Domain.WebshopModule.PriceDiscTableList priceDiscTableList, CompanyGroup.Domain.PartnerModule.Visitor visitor)
         {
             try
             {
-                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(productId, dataAreaId);
+                CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(visitor.Id, productId, dataAreaId);
 
                 if (product == null) { return new CompanyGroup.Dto.WebshopModule.CompatibleProduct(); }
 
@@ -954,16 +973,48 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
 
                     CompanyGroup.Domain.WebshopModule.ShoppingCartCollection shoppingCartCollection = new CompanyGroup.Domain.WebshopModule.ShoppingCartCollection(carts);
 
-                    product.CustomerPrice = visitor.CalculateCustomerPrice(product.Prices.Price1,
-                                                                           product.Prices.Price2,
-                                                                           product.Prices.Price3,
-                                                                           product.Prices.Price4,
-                                                                           product.Prices.Price5,
-                                                                           product.Structure.Manufacturer.ManufacturerId,
-                                                                           product.Structure.Category1.CategoryId,
-                                                                           product.Structure.Category2.CategoryId,
-                                                                           product.Structure.Category3.CategoryId,
-                                                                           product.DataAreaId);
+                    decimal price = 0; int price1 = 0; int price2 = 0; int price3 = 0; int price4 = 0; int price5 = 0;
+
+                    //egyedi ár beállítás CT-ben ha van, akkor kiolvasásra kerül
+                    if (priceDiscTableList.IsInList(product.ProductId, product.DataAreaId, visitor.CustomerId))
+                    {
+                        price = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, visitor.CustomerId);
+                    }
+
+                    //ha nincs egyedi beállítás a termékre, akkor lehet 1..5 intervallum érték változás a CT-ben, 
+                    //vagy a termékhez rendelt 1..5 árral kell kalkulálni
+                    if (price.Equals(0))
+                    {
+                        price1 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "1");
+                        price2 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "2");
+                        price3 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "3");
+                        price4 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "4");
+                        price5 = priceDiscTableList.GetPrice(product.ProductId, product.DataAreaId, "5");
+
+
+                        //ha van 1..5 intervallum érték változás a CT-ben, akkor ezzel kell számolni
+                        if (!price1.Equals(0) || !price2.Equals(0) || !price3.Equals(0) || !price4.Equals(0) || !price5.Equals(0))
+                        {
+                            if (price1.Equals(0)) { price1 = product.Prices.Price1; }
+                            if (price2.Equals(0)) { price2 = product.Prices.Price2; }
+                            if (price3.Equals(0)) { price3 = product.Prices.Price3; }
+                            if (price4.Equals(0)) { price4 = product.Prices.Price4; }
+                            if (price5.Equals(0)) { price5 = product.Prices.Price5; }
+
+                            price = visitor.CalculateCustomerPrice(price1, price2, price3, price4, price5,
+                                                                   product.Structure.Manufacturer.ManufacturerId,
+                                                                   product.Structure.Category1.CategoryId,
+                                                                   product.Structure.Category2.CategoryId,
+                                                                   product.Structure.Category3.CategoryId,
+                                                                   product.DataAreaId);
+                        }
+                        else
+                        {
+                            price = product.CustomerPrice;
+                        }
+                    }
+
+                    product.CustomerPrice = price;
                     //product.CustomerPrice = this.ChangePrice(price, request.Currency);
 
                     product.IsInNewsletter = false;

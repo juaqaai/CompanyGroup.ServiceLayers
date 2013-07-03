@@ -80,6 +80,11 @@ namespace CompanyGroup.Dto.PartnerModule
         public string PaymTermId { set; get; }
 
         /// <summary>
+        /// engedélyezett-e az átutalásos fizetési mód, vagy sem
+        /// </summary>
+        public bool PaymtermTransferEnabled { get; set; }
+
+        /// <summary>
         /// alapértelmezett valutanem
         /// </summary>
         public string Currency { set; get; }

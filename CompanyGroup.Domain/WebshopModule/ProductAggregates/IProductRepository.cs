@@ -43,6 +43,7 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// lapozható terméklista lekérdezése
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="dataAreaId"></param>
         /// <param name="manufacturers"></param>
         /// <param name="category1"></param>
@@ -62,7 +63,8 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="count"></param>
         /// <param name="excludedItems"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.Products GetList(string dataAreaId,
+        CompanyGroup.Domain.WebshopModule.Products GetList(int visitorKey, 
+                                                           string dataAreaId,
                                                            string manufacturers,
                                                            string category1,
                                                            string category2,
@@ -169,17 +171,19 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <summary>
         /// termékelem lekérdezés termékazonosító és vállalatkód alapján
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="productId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.Product GetItem(string productId, string dataAreaId);
+        CompanyGroup.Domain.WebshopModule.Product GetItem(int visitorKey, string productId, string dataAreaId);
 
         /// <summary>
-        /// InternetUser.ItemSelectByShoppingCartLineId @LineId=:LineId
+        /// InternetUser.ItemSelectByShoppingCartLineId 
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int lineId);
+        CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int visitorKey, int lineId);
 
         /// <summary>
         /// mihez jó, és mi jó hozzá 

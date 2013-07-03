@@ -29,6 +29,7 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                                                                   InventLocationHrp = from.InventLocationIdHrp, 
                                                                   LanguageId = from.LanguageId,
                                                                   PaymTermId = from.PaymTermId,
+                                                                  PaymtermTransferEnabled = from.PaymtermTransferEnabled, 
                                                                   BscAuthorized = from.IsAuthorizedInBsc(),
                                                                   HrpAuthorized = from.IsAuthorizedInHrp(),
                                                                   Representatives = ConvertRepresentatives(from.Representatives)

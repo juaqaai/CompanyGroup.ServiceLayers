@@ -14,5 +14,14 @@ namespace CompanyGroup.Domain.WebshopModule
         /// <param name="manufacturerId"></param>
         /// <returns></returns>
         List<CompanyGroup.Domain.WebshopModule.Newsletter> GetNewsletterList(int topN, string dataAreaId, string businessUnitId, string manufacturerId);
+
+        /// <summary>
+        /// Hírlevél lista azonosítók alapján
+        /// </summary>
+        /// <param name="topN"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="newsletterIdList"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.WebshopModule.Newsletter> GetNewsletterListByFilter(int topN, string dataAreaId, string newsletterIdList);
     }
 }

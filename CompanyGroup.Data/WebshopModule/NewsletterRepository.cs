@@ -42,5 +42,24 @@ namespace CompanyGroup.Data.WebshopModule
 
             return query.List<CompanyGroup.Domain.WebshopModule.Newsletter>() as List<CompanyGroup.Domain.WebshopModule.Newsletter>;
         }
+
+        /// <summary>
+        /// [InternetUser].[NewsletterSelectCondition]( @TopN INT = 0, @DataAreaId nvarchar(3) = '', @NewsletterIdList nvarchar (250) = '' )
+        /// </summary>
+        /// <param name="topN"></param>
+        /// <param name="dataAreaId"></param>
+        /// <param name="newsletterIdList"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.WebshopModule.Newsletter> GetNewsletterListByFilter(int topN, string dataAreaId, string newsletterIdList)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.NewsletterSelectCondition")
+                                             .SetInt32("TopN", topN)
+                                             .SetString("DataAreaId", dataAreaId)
+                                             .SetString("NewsletterIdList", newsletterIdList)
+                                             .SetResultTransformer(
+                                             new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Newsletter).GetConstructors()[0]));
+
+            return query.List<CompanyGroup.Domain.WebshopModule.Newsletter>() as List<CompanyGroup.Domain.WebshopModule.Newsletter>;
+        }
     }
 }

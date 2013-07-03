@@ -182,11 +182,13 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 CompanyGroup.Domain.WebshopModule.LeasingOptions leasingOptions = new CompanyGroup.Domain.WebshopModule.LeasingOptions(this.GetMinMaxLeasingValue(), leasingOptionList);
 
                 // CalculatedValue értékeket állítja be
-                leasingOptions.CalculateAllValue(shoppingCart.SumTotal);
+                //leasingOptions.CalculateAllValue(shoppingCart.SumTotal);
 
-                //leasingOptions.Amount = 0;
+                leasingOptions.Amount = shoppingCart.SumTotal;
 
-                //leasingOptions.ValidateAmount();
+                leasingOptions.ValidateAmount();
+
+                leasingOptions.CalculateAllValue();
 
                 CompanyGroup.Dto.WebshopModule.FinanceOfferResponse response = new CompanyGroup.Dto.WebshopModule.FinanceOfferResponse()
                 {

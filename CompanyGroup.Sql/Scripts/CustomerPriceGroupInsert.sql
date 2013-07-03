@@ -1,3 +1,13 @@
+/* =============================================
+	description	   : Web adatbázisban a CustomerPriceGroup táblába beírja a bejelentkezett felhasználóhoz tartozó árbesorolásokat
+	running script : exec [InternetUser].[CustomerPriceGroupInsert]
+	version		   : 1.0
+	created by	   : JUHATT
+	modified by	   :
+	created date   : 2013.06.30.
+	modified date  :
+	modify reason  :
+ ============================================= */
 USE [Web]
 GO
 SET ANSI_NULLS ON

@@ -14,5 +14,12 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
         /// <param name="request"></param>
         /// <returns></returns>
         CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterCollection(CompanyGroup.Dto.WebshopModule.GetNewsletterCollectionRequest request);
+
+        /// <summary>
+        /// hírlevél lista hírlevél azonosító paraméterek alapján
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterListByFilter(CompanyGroup.Dto.WebshopModule.GetNewsletterListByFilterRequest request);
     }
 }

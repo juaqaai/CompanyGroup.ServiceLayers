@@ -84,6 +84,17 @@ namespace CompanyGroup.ApplicationServices.PartnerModule
                     visitorRepository.AddCustomerPriceGroup(x);
                 });
 
+                //vevőhöz tartozó egyedi árak lekérdezése 
+                List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice> customerSpecialPrices = customerRepository.GetCustomerSpecialPrices(visitor.CustomerId);
+
+                //vevőhöz tartozó egyedi árak bejelentkezéshez történő hozzáadása
+                customerSpecialPrices.ForEach( x => 
+                {
+                    x.VisitorKey = visitor.Id;
+
+                    visitorRepository.AddCustomerSpecialPrice(x);
+                });
+
                 //visitor objektum cache-ben tárolása
                 CompanyGroup.Helpers.CacheHelper.Add<CompanyGroup.Domain.PartnerModule.Visitor>(CompanyGroup.Helpers.ContextKeyManager.CreateKey(ServiceCoreBase.CACHEKEY_VISITOR, visitor.VisitorId), visitor, DateTime.Now.AddHours(ServiceCoreBase.AuthCookieExpiredHours));
 

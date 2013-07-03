@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.CatalogueSelect" callable="true">
+  <sql-query name="InternetUser.CatalogueSelect2" callable="true">
+    <query-param name="VisitorKey" type="System.Int32"/>
     <query-param name="DataAreaId" type="System.String"/>
     <query-param name="Manufacturers" type="System.String"/>
     <query-param name="Category1" type="System.String"/>
@@ -44,6 +45,7 @@
     <return-scalar column="Price3" type="System.Int32"/>
     <return-scalar column="Price4" type="System.Int32"/>
     <return-scalar column="Price5" type="System.Int32"/>
+    <return-scalar column="CustomerPrice" type="System.Int32"/>
     <return-scalar column="Garanty" type="System.String"/>
     <return-scalar column="GarantyMode" type="System.String"/>
     <return-scalar column="Discount" type="System.Boolean"/>
@@ -60,6 +62,6 @@
     <return-scalar column="PictureId" type="System.Int32"/>
     <return-scalar column="SecondHand" type="System.Boolean"/>
     <return-scalar column="Valid" type="System.Boolean"/>
-    exec InternetUser.CatalogueSelect @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @Sequence=:Sequence, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation, @CurrentPageIndex=:CurrentPageIndex, @ItemsOnPage=:ItemsOnPage, @ExcludedItems=:ExcludedItems
+    exec InternetUser.CatalogueSelect2 @VisitorKey=:VisitorKey, @DataAreaId=:DataAreaId, @Manufacturers=:Manufacturers, @Category1=:Category1, @Category2=:Category2, @Category3=:Category3, @Discount=:Discount, @SecondHand=:SecondHand, @New=:New, @Stock=:Stock, @Sequence=:Sequence, @FindText=:FindText, @PriceFilter=:PriceFilter, @PriceFilterRelation=:PriceFilterRelation, @CurrentPageIndex=:CurrentPageIndex, @ItemsOnPage=:ItemsOnPage, @ExcludedItems=:ExcludedItems
   </sql-query>
 </hibernate-mapping>

@@ -48,5 +48,30 @@ namespace CompanyGroup.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// hírlevél gyűjetemény lekérdezése hírlevél azonosítók alapján 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("GetNewsletterListByFilter")]
+        public HttpResponseMessage GetNewsletterListByFilter(CompanyGroup.Dto.WebshopModule.GetNewsletterListByFilterRequest request)
+        {
+            try
+            {
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection response = service.GetNewsletterListByFilter(request);
+
+                return Request.CreateResponse<CompanyGroup.Dto.WebshopModule.NewsletterCollection>(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter logWriter = Microsoft.Practices.EnterpriseLibrary.Common.Configuration.EnterpriseLibraryContainer.Current.GetInstance<Microsoft.Practices.EnterpriseLibrary.Logging.LogWriter>();
+
+                logWriter.Write(String.Format("NewsletterController GetNewsletterListByFilter {0} {1} {2}", ex.Message, ex.Source, ex.StackTrace), "Failure Category");
+
+                return ThrowHttpError(ex);
+            }
+        }
+
     }
 }

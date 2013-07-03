@@ -80,6 +80,7 @@ namespace CompanyGroup.Data.WebshopModule
         /// lapozható terméklista lekérdezése
         /// @ExcludedItems nvarchar (250) = ''
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="dataAreaId"></param>
         /// <param name="manufacturers"></param>
         /// <param name="category1"></param>
@@ -99,7 +100,8 @@ namespace CompanyGroup.Data.WebshopModule
         /// <param name="count"></param>
         /// <param name="excludedItems"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.Products GetList(string dataAreaId,
+        public CompanyGroup.Domain.WebshopModule.Products GetList(int visitorKey, 
+                                                                  string dataAreaId,
                                                                   string manufacturers,
                                                                   string category1,
                                                                   string category2,
@@ -126,7 +128,8 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require((itemsOnPage > 0), "The itemsOnPage parameter must be a positive number!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueSelect")
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CatalogueSelect2")
+                                                .SetInt32("VisitorKey", visitorKey)
                                                 .SetString("DataAreaId", dataAreaId)
                                                 .SetString("Manufacturers", manufacturers)
                                                 .SetString("Category1", category1)
@@ -483,10 +486,11 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         ///  termékelem kiolvasása termékazonosító és vállalatkód szerint
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="productId"></param>
         /// <param name="dataAreaId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.Product GetItem(string productId, string dataAreaId)
+        public CompanyGroup.Domain.WebshopModule.Product GetItem(int visitorKey, string productId, string dataAreaId)
         {
             try
             {
@@ -494,7 +498,8 @@ namespace CompanyGroup.Data.WebshopModule
 
                 CompanyGroup.Domain.Utils.Check.Require((dataAreaId != null), "The dataAreaId parameter cannot be null!");
 
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ItemSelect")
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ItemSelect2")
+                                                .SetInt32("VisitorKey", visitorKey)
                                                 .SetString("DataAreaId", dataAreaId)
                                                 .SetString("ProductId", productId)
                                                 .SetResultTransformer(
@@ -513,13 +518,15 @@ namespace CompanyGroup.Data.WebshopModule
         /// <summary>
         /// InternetUser.ItemSelectByShoppingCartLineId @LineId=:LineId
         /// </summary>
+        /// <param name="visitorKey"></param>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        public CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int lineId)
+        public CompanyGroup.Domain.WebshopModule.Product GetItemByShoppingCartLineId(int visitorKey, int lineId)
         {
             try
             {
-                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ItemSelectByShoppingCartLineId")
+                NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.ItemSelectByShoppingCartLineId2")
+                                                 .SetInt32("VisitorKey", visitorKey)
                                                  .SetInt32("LineId", lineId)
                                                  .SetResultTransformer(
                                                 new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.WebshopModule.Product).GetConstructors()[0]));

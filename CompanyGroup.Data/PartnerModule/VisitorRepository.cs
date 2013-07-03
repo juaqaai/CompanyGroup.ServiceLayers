@@ -146,6 +146,20 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
+        /// speciális vevői ár hozzáadása
+        /// </summary>
+        /// <param name="customerSpecialPrice"></param>
+        public void AddCustomerSpecialPrice(CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice customerSpecialPrice)
+        {
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerSpecialPriceInsert")
+                                                            .SetInt32("VisitorKey", customerSpecialPrice.VisitorKey)
+                                                            .SetString("ProductId", customerSpecialPrice.ProductId)
+                                                            .SetInt32("Price", customerSpecialPrice.Price)
+                                                            .SetString("DataAreaId", customerSpecialPrice.DataAreaId);
+            query.UniqueResult();
+        }
+
+        /// <summary>
         /// bejelentkezett státusz állapot törlése, kijelentkezés 
         /// </summary>
         /// <param name="visitorId"></param>

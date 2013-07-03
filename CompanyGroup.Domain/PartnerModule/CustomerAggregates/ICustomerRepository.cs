@@ -67,6 +67,13 @@ namespace CompanyGroup.Domain.PartnerModule
         List<CompanyGroup.Domain.PartnerModule.CustomerPriceGroup> GetCustomerPriceGroups(string customerId);
 
         /// <summary>
+        /// vevőhöz tartozó ár kivételek lista
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice> GetCustomerSpecialPrices(string customerId);
+
+        /// <summary>
         /// vevői bejelentkezés
         /// </summary>
         /// <param name="userName"></param>

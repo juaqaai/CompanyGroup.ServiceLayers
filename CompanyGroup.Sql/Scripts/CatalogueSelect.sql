@@ -51,10 +51,24 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- cikkek lista
-DROP PROCEDURE [InternetUser].[CatalogueSelect];
+
+/* Create a table type. */
+DROP TYPE CustomerPriceGroupTableType;
 GO
-CREATE PROCEDURE [InternetUser].[CatalogueSelect] (@DataAreaId nvarchar(4) = 'hrp',
+CREATE TYPE CustomerPriceGroupTableType AS TABLE 
+( 
+	PriceGroupId NVARCHAR(4),
+	StructureCode NVARCHAR(16),									
+	Sequence INT, 
+	DataAreaId NVARCHAR(3)
+);
+GO
+
+-- cikkek lista
+DROP PROCEDURE [InternetUser].[CatalogueSelect2];
+GO
+CREATE PROCEDURE [InternetUser].[CatalogueSelect2] (@VisitorKey int = 0,
+													@DataAreaId nvarchar(4) = 'hrp',
 												   @Manufacturers nvarchar (250) = '',
 												   @Category1 nvarchar (250) = '',
 												   @Category2 nvarchar (250) = '',
@@ -76,6 +90,19 @@ SET NOCOUNT ON
 
 	IF ISNULL(@FindText, '') = '' 
 		SET @FindText = '""';
+
+	DECLARE @CustomerPriceGroup AS CustomerPriceGroupTableType;
+
+	INSERT INTO @CustomerPriceGroup (PriceGroupId, StructureCode, Sequence, DataAreaId)
+	SELECT PriceGroupId, 
+		   CONCAT( CASE WHEN ManufacturerId = '' THEN '____' ELSE ManufacturerId END,  
+		   CASE WHEN Category1Id = '' THEN '____' ELSE Category1Id END, 
+		   CASE WHEN Category2Id = '' THEN '____' ELSE Category2Id END, 
+		   CASE WHEN Category3Id = '' THEN '____' ELSE Category3Id END ) , 
+		   [Order], 
+		   DataAreaId  
+	FROM InternetUser.CustomerPriceGroup
+	WHERE VisitorId = @VisitorKey;
 
 	-- DECLARE @Xml Xml = CONVERT(Xml, @StructureXml);
 	DECLARE @Separator varchar(1) = ',';
@@ -129,11 +156,14 @@ SET NOCOUNT ON
 		WHERE Excludedj > 0
 	)
 
-	SELECT Catalogue.Id, ProductId, AxStructCode,	DataAreaId,	StandardConfigId, Name,	EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
+	SELECT Catalogue.Id, Catalogue.ProductId, AxStructCode,	Catalogue.DataAreaId, StandardConfigId, Name, EnglishName, PartNumber, ManufacturerId, ManufacturerName, ManufacturerEnglishName,	
 			Category1Id, Category1Name, Category1EnglishName, Category2Id, Category2Name, Category2EnglishName, Category3Id, Category3Name, Category3EnglishName, 
-			Stock, AverageInventory,	Price1,	Price2,	Price3,	Price4,	Price5,	Garanty, GarantyMode, 
-			Discount, New, ItemState, Description, EnglishDescription, ProductManagerId, ShippingDate, IsPurchaseOrdered, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
+			Stock, AverageInventory, 
+			Price1, Price2, Price3, Price4, Price5, InternetUser.CalculateCustomerPrice(AxStructCode, ISNULL(P.Price, 0), Price1, Price2, Price3, Price4, Price5, Catalogue.DataAreaId, @CustomerPriceGroup) as CustomerPrice, 
+			Garanty, GarantyMode, 
+			Discount, New, ItemState, [Description], EnglishDescription, ProductManagerId, ShippingDate, IsPurchaseOrdered, CreatedDate, Updated, Available, PictureId, SecondHand, Valid
 	FROM InternetUser.Catalogue as Catalogue
+	LEFT OUTER JOIN InternetUser.CustomerSpecialPrice as P ON Catalogue.ProductId = P.ProductId AND Catalogue.DataAreaId = P.DataAreaId AND P.VisitorId = @VisitorKey
 	--LEFT OUTER JOIN Manufacturers_CTE as Manufacturers ON Catalogue.ManufacturerId = Manufacturers.Id
 	--LEFT OUTER JOIN Category1_CTE as Category1 ON Catalogue.Category1Id = Category1.Id
 	--LEFT OUTER JOIN Category2_CTE as Category2 ON Catalogue.Category2Id = Category2.Id
@@ -153,7 +183,7 @@ SET NOCOUNT ON
 		  1 = CASE WHEN @Stock = 1 AND Stock <= 0 THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 1 AND Price5 < CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
 		  1 = CASE WHEN @PriceFilterRelation = 2 AND Price5 > CONVERT(INT, @PriceFilter) THEN 0 ELSE 1 END AND
-		  DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE DataAreaId END AND 
+		  Catalogue.DataAreaId = CASE WHEN @DataAreaId <> '' THEN @DataAreaId ELSE Catalogue.DataAreaId END AND 
 		  -- SearchContent LIKE CASE WHEN @FindText <> '' THEN '%' + @FindText + '%' ELSE SearchContent END
 		  1 = CASE WHEN @FindText = '""' OR CONTAINS(SearchContent, @FindText) THEN 1 ELSE 0 END
 
@@ -163,17 +193,17 @@ SET NOCOUNT ON
 	CASE WHEN @Sequence =  1 THEN -- átlagos életkor növekvõ, akciós csökkenõ, gyártó növekvõ, termékazonosító szerint növekvõleg,
 		Sequence0 END DESC, 
 	CASE WHEN @Sequence =  2 THEN -- azonosito novekvo
-		ProductId END ASC,
+		Catalogue.ProductId END ASC,
 	CASE WHEN @Sequence = 3 THEN -- azonosito csokkeno 
-		ProductId END DESC, 
+		Catalogue.ProductId END DESC, 
 	CASE WHEN @Sequence = 4 THEN  -- nev szerint novekvo
 		Name END DESC,
 	CASE WHEN @Sequence = 5 THEN  -- nev szerint csokkeno
 		Name END ASC, 
 	CASE WHEN @Sequence = 6 THEN  
-		Price5 END ASC,
+		InternetUser.CalculateCustomerPrice(AxStructCode, ISNULL(P.Price, 0), Price1, Price2, Price3, Price4, Price5, Catalogue.DataAreaId, @CustomerPriceGroup) END ASC,
 	CASE WHEN @Sequence = 7 THEN  
-		Price5 END DESC, 
+		InternetUser.CalculateCustomerPrice(AxStructCode, ISNULL(P.Price, 0), Price1, Price2, Price3, Price4, Price5, Catalogue.DataAreaId, @CustomerPriceGroup) END DESC, 
 	CASE WHEN @Sequence = 8 THEN   
 		Sequence1 END ASC, 
 	CASE WHEN @Sequence = 9 THEN    
@@ -187,10 +217,11 @@ SET NOCOUNT ON
 			
 RETURN
 GO
-GRANT EXECUTE ON InternetUser.CatalogueSelect TO InternetUser
+GRANT EXECUTE ON InternetUser.CatalogueSelect2 TO InternetUser
 /*
-EXEC InternetUser.CatalogueSelect @DataAreaId = '',		
-								  @Manufacturers = '',			-- A098,A142
+EXEC InternetUser.CatalogueSelect2 @VisitorKey = 44826,
+								  @DataAreaId = '',		
+								  @Manufacturers = 'A075,A142',			-- A098,A142
 								  @Category1 = '',				--  B004,B021									      
 								  @Category2 = '',
 								  @Category3 = '',
@@ -198,21 +229,78 @@ EXEC InternetUser.CatalogueSelect @DataAreaId = '',
 								  @SecondHand = 0,     
 								  @New = 0,         
 								  @Stock = 0,     
-								  @Sequence = 0,	
-								  @FindText = '"ASUS*"', 
+								  @Sequence = 6,	
+								  @FindText = '',			-- "ASUS*"
 								  @PriceFilter = '0',
 								  @PriceFilterRelation = 0,	
 								  @CurrentPageIndex = 1, 
 								  @ItemsOnPage = 50
 
-EXEC InternetUser.CatalogueSelect @Sequence = 0
+EXEC InternetUser.CatalogueSelect2 @Sequence = 7
 
 update InternetUser.Catalogue set New = 1 WHERE Description like '%new%' Category1Id = 'B011'
 */
 
 GO
+DROP FUNCTION InternetUser.CalculateCustomerPrice;
+GO
+CREATE FUNCTION InternetUser.CalculateCustomerPrice(@AxStructCode nvarchar(16), 
+														 @SpecialPrice INT, 
+														 @Price1 INT, 
+														 @Price2 INT, 
+														 @Price3 INT, 
+														 @Price4 INT, 
+														 @Price5 INT, 
+														 @DataAreaId nvarchar(3), 
+														 @CustomerPriceGroup CustomerPriceGroupTableType READONLY)
+RETURNS INT
+AS
+BEGIN
 
-	
+	IF (@SpecialPrice > 0)
+	BEGIN
+		RETURN @SpecialPrice;
+	END
+
+	DECLARE @Result nvarchar(4);
+
+	SET @Result = ISNULL((SELECT TOP 1 PriceGroupId 
+						  FROM @CustomerPriceGroup 
+						  WHERE @AxStructCode LIKE StructureCode  
+								AND DataAreaId = @DataAreaId
+						  ORDER BY Sequence), '2');
+
+	RETURN CASE WHEN @Result = '1' THEN @Price1
+				WHEN @Result = '2' THEN @Price2
+				WHEN @Result = '3' THEN @Price3
+				WHEN @Result = '4' THEN @Price4
+				WHEN @Result = '5' THEN @Price5
+			ELSE @Price2 END;
+END
+GO
+GRANT EXECUTE ON InternetUser.CalculateCustomerPrice TO InternetUser
+GO
+
+/*
+	DECLARE @CustomerPriceGroup AS CustomerPriceGroupTableType;
+
+	INSERT INTO @CustomerPriceGroup (PriceGroupId, StructureCode, Sequence, DataAreaId)
+	SELECT PriceGroupId, 
+		   CONCAT( CASE WHEN ManufacturerId = '' THEN '____' ELSE ManufacturerId END,  
+		   CASE WHEN Category1Id = '' THEN '____' ELSE Category1Id END, 
+		   CASE WHEN Category2Id = '' THEN '____' ELSE Category2Id END, 
+		   CASE WHEN Category3Id = '' THEN '____' ELSE Category3Id END ) as StructureCode, 
+		   [Order], 
+		   DataAreaId  
+	FROM InternetUser.CustomerPriceGroup
+	WHERE VisitorId = 44826;
+
+	SELECT TOP 1 * FROM @CustomerPriceGroup 
+	WHERE  'A075____________' LIKE StructureCode
+	ORDER BY Sequence
+ */
+
+-- SELECT * FROM InternetUser.Catalogue	WHERE ManufacturerId = 'A075'
 /*
 
 	DECLARE @str nvarchar(max) = 'hello, hello2, hello3', @sep nvarchar(1) = ',';

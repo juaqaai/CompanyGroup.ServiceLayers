@@ -67,6 +67,44 @@ namespace CompanyGroup.ApplicationServices.WebshopModule
                 throw(ex);
             }
         }
+
+        /// <summary>
+        /// hírlevél lista hírlevél azonosító paraméterek alapján
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CompanyGroup.Dto.WebshopModule.NewsletterCollection GetNewsletterListByFilter(CompanyGroup.Dto.WebshopModule.GetNewsletterListByFilterRequest request)
+        {
+            try
+            {
+
+                Helpers.DesignByContract.Require(!String.IsNullOrWhiteSpace(request.VisitorId), "VisitorId cannot be null, or empty!");
+
+                //látogató lekérdezése
+                CompanyGroup.Domain.PartnerModule.Visitor visitor = this.GetVisitor(request.VisitorId);
+
+                CompanyGroup.Helpers.DesignByContract.Ensure(visitor != null, "Visitor can not be null!");
+
+                CompanyGroup.Helpers.DesignByContract.Ensure(visitor.IsValidLogin, "Visitor must be logged in!");
+
+                request.NewsletterIdList.RemoveAll(x => String.IsNullOrWhiteSpace(x));
+
+                List<CompanyGroup.Domain.WebshopModule.Newsletter> newsletters = newsletterRepository.GetNewsletterListByFilter(CompanyGroup.Helpers.ConfigSettingsParser.GetInt("NewsletterListLimit", 0), String.Empty, CompanyGroup.Helpers.ConvertData.ConvertStringListToDelimitedString(request.NewsletterIdList));
+
+                CompanyGroup.Domain.WebshopModule.NewsletterCollection newsletterCollection = new CompanyGroup.Domain.WebshopModule.NewsletterCollection(newsletters);
+
+                List<CompanyGroup.Dto.WebshopModule.Newsletter> items = newsletterCollection.Newsletters.ConvertAll(x => new NewsletterToNewsletter().Map(x));
+
+                //válasz elkészítése
+                CompanyGroup.Dto.WebshopModule.NewsletterCollection result = new CompanyGroup.Dto.WebshopModule.NewsletterCollection(items, new CompanyGroup.ApplicationServices.PartnerModule.VisitorToVisitor().Map(visitor));
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 
 

@@ -175,6 +175,23 @@ namespace CompanyGroup.Data.PartnerModule
         }
 
         /// <summary>
+        /// vevőhöz tartozó ár kivételek lista
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice> GetCustomerSpecialPrices(string customerId)
+        {
+            CompanyGroup.Domain.Utils.Check.Require(!string.IsNullOrEmpty(customerId), "CustomerId may not be null or empty");
+
+            NHibernate.IQuery query = Session.GetNamedQuery("InternetUser.CustomerSpecialPriceSelect")
+                                            .SetString("CustomerId", customerId).SetResultTransformer(new NHibernate.Transform.AliasToBeanConstructorResultTransformer(typeof(CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice).GetConstructors()[0]));
+
+            List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice> customerSpecialPrices = query.List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice>() as List<CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice>;
+
+            return customerSpecialPrices;
+        }
+
+        /// <summary>
         /// bejelentkezés
         /// </summary>
         /// <param name="userName"></param>

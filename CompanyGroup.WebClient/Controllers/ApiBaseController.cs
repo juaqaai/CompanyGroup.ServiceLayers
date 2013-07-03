@@ -281,7 +281,27 @@ namespace CompanyGroup.WebClient.Controllers
                 }
             }
             catch (Exception ex) { return new CompanyGroup.WebClient.Models.Visitor() { ErrorMessage = ex.Message }; }
-        }        
+        }
+
+        public static bool ListContainsAnotherListItem<T>(IList<T> list1, IList<T> list2, bool displayIfEmpty)
+        {
+            if (list1.Count.Equals(0) && displayIfEmpty)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                for (int j = 0; j < list2.Count; j++)
+                {
+                    if (list1[i].Equals(list2[j]))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         #region "cookie funkciók - ReadCookie, WriteCookie"
 

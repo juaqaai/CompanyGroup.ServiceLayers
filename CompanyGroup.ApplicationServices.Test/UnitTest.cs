@@ -247,7 +247,7 @@ namespace CompanyGroup.ApplicationServices.Test
 
             visitor.CustomerPriceGroups = visitorRepository.GetCustomerPriceGroups(visitor.Id);
 
-            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem("ACTA7B1", "hrp");
+            CompanyGroup.Domain.WebshopModule.Product product = productRepository.GetItem(visitor.Id, "ACTA7B1", "hrp");
 
             decimal price = visitor.CalculateCustomerPrice(product.Prices.Price1, product.Prices.Price2, product.Prices.Price3, product.Prices.Price4, product.Prices.Price5,
                                                            product.Structure.Manufacturer.ManufacturerId, 

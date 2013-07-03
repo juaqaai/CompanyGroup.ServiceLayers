@@ -20,12 +20,13 @@ namespace CompanyGroup.Domain.PartnerModule
         /// <summary>
         /// vevő árcsoport hozzáadás
         /// </summary>
-        /// <param name="visitorId"></param>
-        /// <param name="manufacturerId"></param>
-        /// <param name="category1Id"></param>
-        /// <param name="category2Id"></param>
-        /// <param name="category3Id"></param>
-        /// <param name="order"></param>
+        /// <param name="customerPriceGroup"></param>
         void AddCustomerPriceGroup(CompanyGroup.Domain.PartnerModule.CustomerPriceGroup customerPriceGroup);
+
+        /// <summary>
+        /// speciális vevői ár hozzáadása
+        /// </summary>
+        /// <param name="customerSpecialPrice"></param>
+        void AddCustomerSpecialPrice(CompanyGroup.Domain.PartnerModule.CustomerSpecialPrice customerSpecialPrice);
     }
 }

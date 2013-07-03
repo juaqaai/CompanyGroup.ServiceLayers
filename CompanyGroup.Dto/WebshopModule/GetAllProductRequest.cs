@@ -58,8 +58,8 @@ namespace CompanyGroup.Dto.WebshopModule
 
             this.DiscountFilter = false;
             this.SecondhandFilter = false;
-            this.HrpFilter = false;
-            this.BscFilter = false;
+            this.HrpFilter = true;
+            this.BscFilter = true;
             this.IsInNewsletterFilter = false;
             this.NewFilter = false;
             this.StockFilter = false;

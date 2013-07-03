@@ -73,6 +73,18 @@
           <AssociatedConnUserName />
           <FullPath>CurrentVersionCT.sql</FullPath>
         </FileNode>
+        <FileNode Name="CustomerPriceGroupSelect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustomerPriceGroupSelect.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CustomerSpecialPrices.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>CustomerSpecialPrices.sql</FullPath>
+        </FileNode>
         <FileNode Name="InvoiceExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
@@ -132,6 +144,12 @@
           <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>SecondHandExtract.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SignIn.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AXDB\HRPAXDB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SignIn.sql</FullPath>
         </FileNode>
         <FileNode Name="StockExtract.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AXDB\HRPAXDB:True</AssociatedConnectionMoniker>

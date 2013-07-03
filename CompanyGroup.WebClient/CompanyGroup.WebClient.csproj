@@ -225,6 +225,7 @@
     <Compile Include="Models\Company\ChangeCurrencyRequest.cs" />
     <Compile Include="Models\Company\EventRegistration.cs" />
     <Compile Include="Models\Company\NewsletterCollection.cs" />
+    <Compile Include="Models\Company\NewsletterListByFilterRequest.cs" />
     <Compile Include="Models\PartnerInfo\AddressZipCodes.cs" />
     <Compile Include="Models\PartnerInfo\ChangePasswordRequest.cs" />
     <Compile Include="Models\PartnerInfo\ForgetPasswordRequest.cs" />

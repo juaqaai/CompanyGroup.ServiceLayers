@@ -55,6 +55,7 @@
     <Compile Include="Core\MailSettings.cs" />
     <Compile Include="Core\NoSqlEntity.cs" />
     <Compile Include="MaintainModule\InvoiceAggregates\IPackageRepository.cs" />
+    <Compile Include="PartnerModule\CustomerAggregates\CustomerSpecialPrice.cs" />
     <Compile Include="PartnerModule\CustomerAggregates\CustomerContractData.cs" />
     <Compile Include="PartnerModule\EventRegistration\IEventRegistrationRepository.cs" />
     <Compile Include="PartnerModule\InvoiceAggregates\InvoiceDetailedLineInfo.cs" />
@@ -306,6 +307,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PartnerModule\ContactPersonAggregates\ChangePassword.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartnerModule\CustomerAggregates\CustomerSpecialPrice.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Readme.txt" />

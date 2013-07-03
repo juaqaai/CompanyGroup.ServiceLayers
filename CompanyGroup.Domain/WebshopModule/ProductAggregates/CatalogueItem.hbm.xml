@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-  <sql-query name="InternetUser.ItemSelect" callable="true">
+  <sql-query name="InternetUser.ItemSelect2" callable="true">
+    <query-param name="VisitorKey" type="System.Int32"/>
     <query-param name="DataAreaId" type="System.String"/>
     <query-param name="ProductId" type="System.String"/>  
     <return-scalar column="Id" type="System.Int32"/>
@@ -30,6 +31,7 @@
     <return-scalar column="Price3" type="System.Int32"/>
     <return-scalar column="Price4" type="System.Int32"/>
     <return-scalar column="Price5" type="System.Int32"/>
+    <return-scalar column="CustomerPrice" type="System.Int32"/>
     <return-scalar column="Garanty" type="System.String"/>
     <return-scalar column="GarantyMode" type="System.String"/>
     <return-scalar column="Discount" type="System.Boolean"/>    
@@ -46,9 +48,10 @@
     <return-scalar column="PictureId" type="System.Int32"/>
     <return-scalar column="SecondHand" type="System.Boolean"/>
     <return-scalar column="Valid" type="System.Boolean"/>
-    exec InternetUser.ItemSelect @DataAreaId=:DataAreaId, @ProductId=:ProductId
+    exec InternetUser.ItemSelect2 @VisitorKey=:VisitorKey, @DataAreaId=:DataAreaId, @ProductId=:ProductId
   </sql-query>
-  <sql-query name="InternetUser.ItemSelectByShoppingCartLineId" callable="true">
+  <sql-query name="InternetUser.ItemSelectByShoppingCartLineId2" callable="true">
+    <query-param name="VisitorKey" type="System.Int32"/>
     <query-param name="LineId" type="System.Int32"/>
     <return-scalar column="Id" type="System.Int32"/>
     <return-scalar column="ProductId" type="System.String"/>
@@ -77,6 +80,7 @@
     <return-scalar column="Price3" type="System.Int32"/>
     <return-scalar column="Price4" type="System.Int32"/>
     <return-scalar column="Price5" type="System.Int32"/>
+    <return-scalar column="CustomerPrice" type="System.Int32"/>    
     <return-scalar column="Garanty" type="System.String"/>
     <return-scalar column="GarantyMode" type="System.String"/>
     <return-scalar column="Discount" type="System.Boolean"/>
@@ -93,6 +97,6 @@
     <return-scalar column="PictureId" type="System.Int32"/>
     <return-scalar column="SecondHand" type="System.Boolean"/>
     <return-scalar column="Valid" type="System.Boolean"/>
-    exec InternetUser.ItemSelectByShoppingCartLineId @LineId=:LineId
+    exec InternetUser.ItemSelectByShoppingCartLineId2 @VisitorKey=:VisitorKey, @LineId=:LineId
   </sql-query>
 </hibernate-mapping>

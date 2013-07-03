@@ -15,4 +15,18 @@
     <return-scalar column="AllowedTime" type="System.Int32"/>
     exec InternetUser.NewsletterSelect @TopN=:TopN, @DataAreaId=:DataAreaId, @BusinessUnitId=:BusinessUnitId, @ManufacturerId=:ManufacturerId
   </sql-query>
+  <sql-query name="InternetUser.NewsletterSelectCondition" callable="true">
+    <query-param name="TopN" type="System.Int32"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    <query-param name="NewsletterIdList" type="System.String"/>
+    <return-scalar column="Id" type="System.String"/>
+    <return-scalar column="Title" type="System.String"/>
+    <return-scalar column="Description" type="System.String"/>
+    <return-scalar column="HtmlPath" type="System.String"/>
+    <return-scalar column="EndDate" type="System.DateTime"/>
+    <return-scalar column="PicturePath" type="System.String"/>
+    <return-scalar column="AllowedDate" type="System.DateTime"/>
+    <return-scalar column="AllowedTime" type="System.Int32"/>
+    exec InternetUser.NewsletterSelectCondition @TopN=:TopN, @DataAreaId=:DataAreaId, @NewsletterIdList=:NewsletterIdList
+  </sql-query>
 </hibernate-mapping>

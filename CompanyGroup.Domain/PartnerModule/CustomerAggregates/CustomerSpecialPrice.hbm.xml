@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="CompanyGroup.Domain" namespace="CompanyGroup.Domain.PartnerModule" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="CustomerSpecialPrice" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="VisitorKey" />
+    <property name="ProductId" />
+    <property name="Price" />
+    <property name="DataAreaId" />
+  </class>
+  <sql-query name="InternetUser.CustomerSpecialPriceSelect" callable="true">
+    <query-param name="CustomerId" type="System.String"/>
+    <return-scalar column="Id" type="System.Int32"/>
+    <return-scalar column="VisitorKey" type="System.Int32"/>
+    <return-scalar column="ProductId" type="System.String"/>
+    <return-scalar column="Price" type="System.Int32"/>
+    <return-scalar column="DataAreaId" type="System.String"/>
+    exec InternetUser.CustomerSpecialPriceSelect @CustomerId=:CustomerId
+  </sql-query>
+  <sql-query name="InternetUser.CustomerSpecialPriceInsert" callable="true">
+    <query-param name="VisitorKey" type="System.Int32"/>
+    <query-param name="ProductId" type="System.String"/>
+    <query-param name="Price" type="System.Int32"/>
+    <query-param name="DataAreaId" type="System.String"/>
+    exec InternetUser.CustomerSpecialPriceInsert @VisitorKey=:VisitorKey, @ProductId=:ProductId, @Price=:Price, @DataAreaId=:DataAreaId
+  </sql-query>  
+</hibernate-mapping>

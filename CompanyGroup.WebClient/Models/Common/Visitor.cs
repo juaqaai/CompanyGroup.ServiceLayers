@@ -22,6 +22,7 @@ namespace CompanyGroup.WebClient.Models
             this.History = new List<string>();
             this.Representatives = new Dto.PartnerModule.Representatives();
             this.PaymTermId = String.Empty;
+            this.PaymtermTransferEnabled = false;
             this.Currency = "HUF";
             this.InventLocationBsc = String.Empty;
             this.InventLocationHrp = String.Empty;
@@ -48,6 +49,7 @@ namespace CompanyGroup.WebClient.Models
             this.History = visitor.History;
             this.Representatives = visitor.Representatives;
             this.PaymTermId = visitor.PaymTermId;
+            this.PaymtermTransferEnabled = visitor.PaymtermTransferEnabled; 
             this.Currency = visitor.Currency;
             this.InventLocationBsc = visitor.InventLocationBsc;
             this.InventLocationHrp = visitor.InventLocationHrp;
@@ -128,6 +130,11 @@ namespace CompanyGroup.WebClient.Models
         /// fizetési feltételek
         /// </summary>
         public string PaymTermId { set; get; }
+
+        /// <summary>
+        /// engedélyezett-e az átutalásos fizetési mód, vagy sem
+        /// </summary>
+        public bool PaymtermTransferEnabled { get; set; }
 
         /// <summary>
         /// alapértelmezett valutanem

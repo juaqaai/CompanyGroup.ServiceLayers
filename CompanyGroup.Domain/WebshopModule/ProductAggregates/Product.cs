@@ -25,7 +25,7 @@ namespace CompanyGroup.Domain.WebshopModule
                        string category1Id, string category1Name, string category1EnglishName, 
                        string category2Id, string category2Name, string category2EnglishName, 
                        string category3Id, string category3Name, string category3EnglishName,	
-                       int stock, int averageInventory, int price1, int price2, int price3, int price4, int price5, 
+                       int stock, int averageInventory, int price1, int price2, int price3, int price4, int price5, int customerPrice, 
                        string garantyTime, string garantyMode, 
                        bool discount, bool newItem, int itemState, string description, string englishDescription, int productManagerId,
                        DateTime shippingDate, bool isPurchaseOrdered, DateTime createdDate, DateTime updated, bool available, int pictureId, bool secondHand, bool valid)
@@ -57,6 +57,8 @@ namespace CompanyGroup.Domain.WebshopModule
             this.AverageInventory = averageInventory;
 
             this.Prices = new Prices(price1, price2, price3, price4, price5, "HUF");
+
+            this.CustomerPrice = customerPrice;
 
             this.Garanty = new Garanty(garantyTime, garantyMode);
 
@@ -90,7 +92,7 @@ namespace CompanyGroup.Domain.WebshopModule
 
             this.Comparable = false;
 
-            this.CustomerPrice = 0;
+            this.CustomerPrice = customerPrice;
 
             this.IsInCart = false;
 
@@ -102,7 +104,7 @@ namespace CompanyGroup.Domain.WebshopModule
                                    String.Empty, String.Empty, String.Empty,
                                    String.Empty, String.Empty, String.Empty,
                                    String.Empty, String.Empty, String.Empty,
-                                   0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0, 
                                    String.Empty, String.Empty,
                                    false, false, 0, String.Empty, String.Empty, 0,
                                    DateTime.MinValue, false, DateTime.MinValue, DateTime.MinValue, false, 0, false, false) { }
@@ -249,12 +251,12 @@ namespace CompanyGroup.Domain.WebshopModule
         /// </summary>
         public bool Valid { get; set; }
 
-        #region "nem tárolt tagok"
-
         /// <summary>
         /// vevőre érvényes ár, kalkulált érték
         /// </summary>
         public decimal CustomerPrice { get; set; }
+
+        #region "nem tárolt tagok"
 
         /// <summary>
         /// kifutó cikk

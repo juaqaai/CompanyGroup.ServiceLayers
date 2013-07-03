@@ -68,7 +68,7 @@ namespace CompanyGroup.Data.Test
 
             string categories = Helpers.ConvertData.ConvertStringListToDelimitedString(new List<string>() { "B004" });
 
-            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList("hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, count, String.Empty);
+            CompanyGroup.Domain.WebshopModule.Products products = repository.GetList(0, "hrp", "", categories, "", "", false, false, false, false, false, 0, "", "", 1, 1, 30, count, String.Empty);
 
             Assert.IsTrue(products.Count > 0);
 
@@ -80,7 +80,7 @@ namespace CompanyGroup.Data.Test
         {
             CompanyGroup.Domain.WebshopModule.IProductRepository repository = new CompanyGroup.Data.WebshopModule.ProductRepository();
 
-            CompanyGroup.Domain.WebshopModule.Product product = repository.GetItem("WX950BTHDTRU", "hrp");
+            CompanyGroup.Domain.WebshopModule.Product product = repository.GetItem(0, "WX950BTHDTRU", "hrp");
 
             Assert.IsTrue(product != null);
         }

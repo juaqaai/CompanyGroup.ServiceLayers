@@ -109,6 +109,8 @@ companyGroup.webshop = $.sammy(function () {
         loadStructure(true, true, true, true);
         //részletes termékadatlap log lista
         loadCatalogueDetailsLogList();
+
+        loadNewsletterList(['SHIR0061', 'SHIR0058', 'SHIR0059'], [], [], [], true);
     });
 	
 	this.get('#/Index', function (context) {
@@ -146,7 +148,7 @@ companyGroup.webshop = $.sammy(function () {
 			
                 loadCatalogue();
                 showProductList(true);
-				
+                loadNewsletterList(['SHIR0061', 'SHIR0058', 'SHIR0059'], ['A004'], [], [], false);
                 context.redirect('#/' +  manufacturerIdList2 +    category1IdList2  +   category2IdList2  +   category3IdList2 );
                 $("html, body").animate({ scrollTop: 0 }, 100);
             } else if ($(this).attr('id') === 'category1List') {
@@ -2364,6 +2366,35 @@ var productIds = context.params['hidden_productid'];
             }
         });
     });
+    //hírlevelek betöltése
+    var loadNewsletterList = function (newsletterIdList, displayConditionManufacturerList, displayConditionCategory1IdList, displayConditionCategory2IdList, displayIfConditionsAreEmpty) {
+        var newsletterListRequest = {
+            NewsletterIdList: newsletterIdList, //['SHIR0061', 'SHIR0058', 'SHIR0059'],
+            ManufacturerIdList: catalogueRequest.ManufacturerIdList,
+            Category1IdList: catalogueRequest.Category1IdList,
+            Category2IdList: catalogueRequest.Category2IdList,
+            DisplayConditionManufacturerIdList: displayConditionManufacturerList, //[],
+            DisplayConditionCategory1IdList: displayConditionCategory1IdList, //[], 
+            DisplayConditionCategory2IdList: displayConditionCategory2IdList, //[],
+            DisplayIfConditionsAreEmpty: displayIfConditionsAreEmpty //true
+        };
+        $.ajax({
+            type: "POST",
+            url: companyGroup.utils.instance().getNewsletterApiUrl('NewsletterListByFilter'),
+            data: JSON.stringify(newsletterListRequest),
+            contentType: "application/json; charset=utf-8",
+            timeout: 15000,
+            dataType: "json",
+            processData: true,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function () {
+
+            }
+        });
+    };
+
     //struktúra betöltés
     var loadStructure = function (loadManufacturer, loadCategory1, loadCategory2, loadCategory3) {
         $.ajax({

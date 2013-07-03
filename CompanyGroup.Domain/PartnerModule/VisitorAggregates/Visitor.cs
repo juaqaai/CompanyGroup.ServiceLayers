@@ -425,7 +425,10 @@ namespace CompanyGroup.Domain.PartnerModule
         //}
 
         /// <summary>
-        /// fizetési feltételek kalkuláció      
+        /// fizetési feltételek kalkuláció 
+        /// ha nem üres az AX-ben a BSC és a HRP vállalatban a fizetési feltételek beállítás, akkor ellenörzést történik az ATUT beállítás meglétére.
+        /// Ha van a hrp vállalatban ATUT fizetési feltétel, akkor a HRP beállítás lesz érvényben, ha a hrp-ben nincs, de a bsc-ben van, akkor a bsc fizetési feltételek beállítása lesz érvényben.
+        /// Ha sem a hrp, sem pedig a bsc vállalatban nincs fizetési feltétel beállítás, akkor a KP mód kerül visszaadásra 
         /// </summary>
         public string PaymTermId
         {
@@ -445,6 +448,14 @@ namespace CompanyGroup.Domain.PartnerModule
                 }
                 return CompanyGroup.Domain.Core.Constants.PaymentIdKP;
             }
+        }
+
+        /// <summary>
+        /// ha az AX-ben a BSC vagy a HRP vállalatban van ATUT fizetési mód beállítva, akkor igazat ad vissza, ha nincs, akkor hamisat.
+        /// </summary>
+        public bool PaymtermTransferEnabled
+        {
+            get { return this.PaymTermIdHrp.StartsWith("ATUT") || this.PaymTermIdBsc.StartsWith("ATUT"); }
         }
 
         #endregion

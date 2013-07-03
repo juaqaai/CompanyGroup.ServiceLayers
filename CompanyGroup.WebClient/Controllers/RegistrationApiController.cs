@@ -98,7 +98,7 @@ namespace CompanyGroup.WebClient.Controllers
                 //bejelentkezett felhasználó adatainak kiolvasása sütiből
                 CompanyGroup.WebClient.Models.VisitorData visitorData = this.ReadCookie();
 
-                //CompanyGroup.WebClient.Models.Visitor visitor = this.GetVisitor(visitorData);
+                CompanyGroup.WebClient.Models.Visitor visitor; //= this.GetVisitor(visitorData);
 
                 //ha nem volt regisztrációs azonosítója, akkor adatok olvasása az ERP-ből     
                 //if (String.IsNullOrEmpty(visitorData.RegistrationId) && !String.IsNullOrEmpty(visitorData.VisitorId))
@@ -111,11 +111,15 @@ namespace CompanyGroup.WebClient.Controllers
                     CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey request = new CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey(visitorData.RegistrationId, visitorData.VisitorId);
 
                     response = this.PostJSonData<CompanyGroup.Dto.ServiceRequest.GetRegistrationByKey, CompanyGroup.Dto.RegistrationModule.Registration>("Registration", "GetByKey", request);
+
+                    visitor = new CompanyGroup.WebClient.Models.Visitor(response.Visitor);
                 }
                 //ha nincs megkezdett regisztrációja, akkor üreset kell visszaadni
                 else
                 {
                     response = new CompanyGroup.Dto.RegistrationModule.Registration();
+
+                    visitor = this.GetVisitor(visitorData);
                 }
 
                 CompanyGroup.Dto.RegistrationModule.BankAccounts bankAccounts = new CompanyGroup.Dto.RegistrationModule.BankAccounts(response.BankAccounts);
@@ -132,7 +136,7 @@ namespace CompanyGroup.WebClient.Controllers
                                                                                                                           response.InvoiceAddress,
                                                                                                                           response.MailAddress,
                                                                                                                           response.RegistrationId,
-                                                                                                                          new CompanyGroup.WebClient.Models.Visitor(response.Visitor),
+                                                                                                                          visitor,
                                                                                                                           response.WebAdministrator,
                                                                                                                           this.GetCountries());
 

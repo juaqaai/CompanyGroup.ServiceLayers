@@ -80,7 +80,7 @@ namespace CompanyGroup.Data.Test
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
 
-            Product product = productRepository.GetItem("JD990A", "hrp");
+            Product product = productRepository.GetItem(0, "JD990A", "hrp");
 
             shoppingCartItem.SetProduct(product);
 
@@ -103,7 +103,7 @@ namespace CompanyGroup.Data.Test
 
             ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
 
-            Product product = productRepository.GetItem("AMVS238H", "hrp");
+            Product product = productRepository.GetItem(0, "AMVS238H", "hrp");
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
 
